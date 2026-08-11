@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "71d1d9965854d1d4e86e5e7f2a609d6514eabf63ad24ef7d2c55e3caf9e33c05",
+  "catalog_version": "345e7c784c650770702045ceca089de12e1a432c11b2a86c57ff204bd8383d2a",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -1417,6 +1417,14 @@
       "site": "sidney",
       "local_id": "oepa/sidney/1PV00037.npdes.yaml",
       "title": "Hidden Valley Mobile Home Park",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:oepa/sidney/4158406.plan.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "oepa/sidney/4158406.plan.yaml",
+      "title": "Public Sanitary Sewer Relocation Plan",
       "feed": "records"
     },
     {

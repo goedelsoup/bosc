@@ -192,6 +192,36 @@
         "supersedes": []
       },
       {
+        "rel": "oepa/sidney/4158406.pdf",
+        "name": "4158406.pdf",
+        "size_bytes": 20834462,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/sidney/4158414.pdf",
+        "name": "4158414.pdf",
+        "size_bytes": 2050505,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
         "rel": "oepa/sidney/4160653.pdf",
         "name": "4160653.pdf",
         "size_bytes": 103605,

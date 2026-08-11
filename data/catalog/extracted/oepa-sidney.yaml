@@ -30,6 +30,12 @@ storage:
 - relpath: extracted/oepa/sidney/DSW401251911W.epa.yaml
   media_type: application/x-yaml
   lfs: false
+# The approved plan set behind DSWPTI-260517 (#1998) — a companion DOCUMENT read, not a new
+# instrument: it cross-checks the PTI above on internal number DSW-7167 and approval date
+# 2026-06-16. Same producer, license, site scope and provenance class as its siblings here.
+- relpath: extracted/oepa/sidney/4158406.plan.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/sidney/DSW401252256W.epa.yaml
   media_type: application/x-yaml
   lfs: false

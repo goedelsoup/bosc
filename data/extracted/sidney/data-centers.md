@@ -505,8 +505,18 @@ structured in [`incentive-instruments.yaml`](incentive-instruments.yaml)). What 
     it, which makes it a lead, not a source.
 11. **PUCO 25-958-EL-AIR** — the stipulation and the DCT tariff sheets, when the docket is
     reachable (currently WAF-blocked).
-12. **Ohio EPA eDoc `4158406`** — the 20 MB approved sanitary-sewer-relocation plan set, the
-    closest thing on the public record to a campus layout. Known, deliberately not pulled.
+12. ~~**Ohio EPA eDoc `4158406`** — the 20 MB approved sanitary-sewer-relocation plan set.~~
+    **PULLED 2026-08-11 (#1998), and it does not answer the question it was ranked for.** Eight
+    sheets — cover, two of general notes, a demolition plan, four PROFILE sheets — sealed by James
+    D. Whitacre, Advanced Civil Design Inc, E-68154, 2026-04-16; Ohio EPA approved 2026-06-16
+    (internal DSW-7167, cross-checking the PTI already held). **No cooling design**: "cooling",
+    "pump", "force main", "manhole" and every pipe material are absent from its text layer, so the
+    campus MW and cooling method stay `[open]` and `facility` readiness stays `seeded`. It carries
+    no building footprint either. Structured read
+    [`../oepa/sidney/4158406.plan.yaml`](../oepa/sidney/4158406.plan.yaml). The companion
+    **application package (eDoc `4158414`, 18 pp.)** was shelved at the same time but is **unread**
+    — it has NO text layer and needs a rendered/OCR read. It is the more likely of the two to state
+    a design FLOW, so it is the next thing to read for the water thread.
 13. **Unredacted Development Agreement exhibits** — the City published it with sewer and water
     line dimensions blacked out under R.C. 149.433. See "Records posture".
 
@@ -537,6 +547,17 @@ it, all of them documented in the instruments themselves.*
   ([`/DocumentCenter/View/4586`](https://www.sidneyoh.com/DocumentCenter/View/4586/Statutory-Exemptions---Public-Records-PDF).)
   Not ingested — it is the AG's statewide chart, not a Sidney instrument; its **presence on that
   page** is the fact worth recording.
+- **R.C. 149.433 is asserted on the engineering drawings too — as a pre-printed template field.**
+  `[verified]` (#1998.) Every sheet of the approved sewer plan set carries: *"LEGAL NOTICE THIS
+  INFORMATION IS VOLUNTARILY SUBMITTED TO A PUBLIC OFFICE IN EXPECTATION OF PROTECTION FROM
+  DISCLOSURE AS PROVIDED BY SECTION 149.433 OF THE REVISED CODE."* That is the same statute the
+  City wrote by hand beside its redactions, arriving here as a standing claim printed on the
+  drawing template rather than a case-by-case judgement. **And Ohio EPA published the set anyway**,
+  unredacted, on its public eDocument portal, where it was retrieved with a plain HTTP GET. The
+  exemption is a claim by the submitter, not a determination by the agency, and on this record it
+  did not prevent disclosure — which is worth knowing before treating a 149.433 marking as the end
+  of an inquiry.
+
 - **Practical implication** `[inference]`: frame requests to the **instrument or the approval**
   rather than to the engineering drawing, and expect a five-business-day company-notice delay.
 

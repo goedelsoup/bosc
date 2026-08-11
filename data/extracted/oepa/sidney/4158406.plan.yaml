@@ -1,0 +1,128 @@
+# Ohio EPA eDocument 4158406 — the APPROVED plan set behind Surface Water PTI DSWPTI-260517
+# (internal DSW-7167), "Public Sanitary Sewer Relocation", 2388 West Millcreek Road, Sidney.
+# Issue #1998, epic #1275. The PTI itself is already held as oepa/sidney/4160653.pdf; this is the
+# drawing package the PTI approves, and #1383 recorded it as "known, deliberately not pulled".
+#
+# ⚠️ WHY THIS WAS PULLED, AND WHAT IT DID NOT ANSWER. `data-centers.md` ranked this the closest
+# thing on the public record to a campus layout and the best realistic candidate to disclose a
+# COOLING DESIGN — one of only two things that could lift `facility` readiness from `seeded` to
+# `live` (#1630). IT DOES NOT. The word "cooling" does not occur in the set; neither does "pump",
+# "force main", "lift station", "manhole", "diameter" or any pipe material. It is eight sheets of
+# civil work — cover, two sheets of general notes, a demolition plan and four PROFILE sheets — for
+# relocating a public sanitary sewer out from under the campus footprint. The facility domain stays
+# `seeded` and the campus MW and cooling method stay `[open]`. Recorded as a dated negative on a
+# NAMED route, which is worth more than leaving the lead open.
+#
+# TAG VOCABULARY: [verified] printed in the drawing set's own text layer · [inference] reasoned and
+# labelled · [open] not established by this document.
+
+doc_id: edoc-4158406-sanitary-sewer-relocation-plan
+source_path: data/documents/oepa/sidney/4158406.pdf
+kind: plan
+pages_read: [0, 1, 2, 3, 4, 5, 6, 7]
+dpi: 0
+# ⚠️ `dpi: 0` means NO PAGE WAS RASTERIZED — this is a hand read of the set's own native text layer
+# (pypdf, ~1,700-2,200 characters/sheet, CAD-exported). It is the corpus's established convention
+# for a non-render read (21 committed extractions carry it, e.g. `plans/4091286.engineering.yaml`),
+# and it is stated rather than left to be inferred. Nothing here was OCR'd. Contrast the two
+# van-wert files at #2001, which assert `dpi: 150` above a comment saying nothing was OCR'd.
+source_text_excerpt: >-
+  PUBLIC SANITARY SEWER RELOCATION PLAN PERMIT 2388 WEST MILLCREEK ROAD SIDNEY, OHIO 45365 —
+  ADVANCED CIVIL DESIGN, INC / JAMES D. WHITACRE — SMART SERVICES / MITCHELL STRAIN —
+  ISSUE DATE: 09MAR2026 PROJECT NO: 25-0003-1276 — REGISTERED ENGINEER E-68154 4/16/2026 —
+  DSW-7167 06/16/2026
+
+plan:
+  project_name: Public Sanitary Sewer Relocation Plan
+  site_address: 2388 West Millcreek Road, Sidney, Ohio 45365
+  project_no: '25-0003-1276'
+  discipline: Civil — public sanitary sewer relocation (plan, profile and demolition)
+  phase: Permit
+  status: 'PERMIT, revision 0'                 # [verified] the revision block reads "0 09MAR2026 PERMIT"
+  date: '2026-03-09'                           # [verified] "ISSUE DATE: 09MAR2026"
+  scale: '1 inch = 250 feet (cover); 1 inch = 150 feet (demolition plan)'
+  prepared_by:
+    - name: Advanced Civil Design, Inc.
+      discipline: Civil engineer of record
+      location: 781 Science Blvd, Suite 100, Gahanna, OH 43230
+      contact: James D. Whitacre
+      phone: '614.428.7750'
+    - name: Smart Services
+      discipline: Environmental consultant
+      location: 88 W Church Street, Newark, OH 43055
+      contact: Mitchell Strain
+      phone: '740.345.4700'
+  key_features:
+    - 'Sheet list, 8 sheets: cover (1/8), general notes and details, general notes, demolition plan, and four profile sheets'
+    - 'Benchmarks BM#1-BM#4; vertical datum NAVD 1988'
+    - 'Site context drawn: W. Millcreek Rd, S. Vandemark Rd and the railroad'
+    - 'Anti-infiltration/inflow barrier detail (general notes sheet)'
+    - 'Ohio Utilities Protection Service call-before-you-dig notice (800-362-2764 / 8-1-1)'
+  summary: >-
+    The approved drawing package for relocating a public sanitary sewer at the AWS campus site. It
+    establishes WHO designed the work and WHEN it was sealed and approved, and it draws the site's
+    road and rail context — but it carries no building layout, no mechanical or electrical scope,
+    and no process-water information of any kind.
+  note: >-
+    The titleblock is Amazon's own standard template and carries empty fields for MECHANICAL
+    ENGINEER, ELECTRICAL ENGINEER, STRUCTURAL ENGINEER and ARCHITECT — this package is civil-only,
+    and those disciplines are not in it. The same template stamps every sheet CONFIDENTIAL and
+    references the county's "COMMERCIAL PARTIAL PERMITTING PROCESS FOR SHELL BUILDINGS" policy,
+    which is [inference] the permitting track this campus is being built under: shell first, tenant
+    build-out later.
+
+approvals:
+  registered_engineer_seal: 'E-68154, sealed 2026-04-16'   # [verified] the seal block
+  ohio_epa_internal_no: DSW-7167                           # [verified] printed on the cover
+  ohio_epa_approved: '2026-06-16'                          # [verified] printed beside DSW-7167
+  cross_check: >-
+    [verified] Both match the Surface Water Permit to Install already held as
+    `data/documents/oepa/sidney/4160653.pdf` — DSWPTI-260517, internal DSW-7167, effective
+    2026-06-16 (`filename-map.yaml`). The plan set and the permit corroborate each other on
+    number and date, which is what makes this a companion document rather than a new instrument.
+
+# ⚠️ THE RECORDS-POSTURE FINDING, which is the substantive thing this pull produced.
+records_posture:
+  legal_notice_verbatim: >-
+    LEGAL NOTICE THIS INFORMATION IS VOLUNTARILY SUBMITTED TO A PUBLIC OFFICE IN EXPECTATION OF
+    PROTECTION FROM DISCLOSURE AS PROVIDED BY SECTION 149.433 OF THE REVISED CODE.
+  note: >-
+    [verified] R.C. 149.433 — the infrastructure-records exemption — is asserted as a PRINTED
+    TEMPLATE FIELD on the face of the drawing set, not as a case-by-case redaction. This is the
+    third form the same claim takes at this site: handwritten in blue ink beside the redactions in
+    the executed Development Agreement, blacking out Exhibit D edge to edge (#1380, lead
+    `EXHIBIT-D`), and now pre-printed on the engineering drawings.
+  what_actually_happened: >-
+    [verified] AND OHIO EPA PUBLISHED THE SET ANYWAY, unredacted, on its public eDocument portal,
+    where it was retrieved today with a plain HTTP GET. The exemption is a CLAIM by the submitter,
+    not a determination by the agency, and on this record it did not prevent disclosure. That is
+    worth stating precisely because the same statute is the basis for the withholding this site's
+    records posture is otherwise built around.
+
+open_after_this_pull:
+  - what: A cooling design for the campus
+    status: '[open]'
+    note: >-
+      Not in this set and not implied by it. A sanitary sewer relocation is a civil utility job; it
+      would not carry a cooling scope even if one existed. `facility` stays `seeded`.
+  - what: Building footprints / gross floor area
+    status: '[open]'
+    note: >-
+      The set draws roads, rail and benchmarks, not buildings. AWS has still disclosed no floor area.
+  - what: Pipe sizes, lengths, materials, invert elevations and the relocated alignment
+    status: '[open]'
+    note: >-
+      Present in the four PROFILE sheets as DRAWING GEOMETRY, not as extractable text — the text
+      layer carries the titleblock and notes only. Reading them needs a rendered read of sheets
+      4-7, which is a separate job and is NOT done here rather than guessed at.
+
+confidence: high
+warnings:
+  - >-
+    Clean native text layer; nothing OCR'd, nothing rendered. What is absent from this extraction
+    is absent from the TEXT LAYER — the profile sheets carry engineering detail as vector geometry
+    that a text read cannot see. Do not read "no pipe diameter here" as "no pipe diameter in the
+    document"; read it as "not text-extractable, and not yet read from the image".
+  - >-
+    The two firms named are the design team on the titleblock. Neither is the developer, and this
+    set does not name Amazon as a party anywhere in its text layer.

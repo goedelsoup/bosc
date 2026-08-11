@@ -182,6 +182,48 @@ documents:
     acre of two non-forested wetlands, which this modification RE-CLASSIFIES from
     Category 2 to Category 1. Compensatory mitigation: 1.0 forested credit reserved
     at the Norton Run Mitigation Bank. Filling must be completed by 2027-12-16.
+- filename: 4158406.pdf
+  edoc_id: '4158406'
+  permit_id: DSWPTI-260517
+  canonical: oepa-dswpti-260517-sidney-sanitary-sewer-relocation-approved-plan-set-2026-06-16.pdf
+  type: surface-water-pti-approved-plan-set
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4158406
+  sha256: 37cee00f25a6704d6850d3b9dd4aabeeaaa33fe703d0bfab326d680d8dc536e6
+  bytes: 20834462
+  content_type: application/pdf
+  fetched_at: '2026-08-11T18:03:13+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    The APPROVED 8-sheet drawing package behind PTI DSWPTI-260517 (internal DSW-7167) — cover, two
+    general-notes sheets, a demolition plan and four profile sheets. Sealed by James D. Whitacre,
+    Advanced Civil Design Inc (Gahanna), registered engineer E-68154, 2026-04-16; issued for permit
+    2026-03-09; Ohio EPA approved 2026-06-16. Environmental consultant Smart Services (Mitchell
+    Strain, Newark). Pulled in #1998 after #1383 recorded it as "known, deliberately not pulled".
+    IT DOES NOT DISCLOSE A COOLING DESIGN — "cooling", "pump", "force main" and every pipe material
+    are absent from the text layer — so it does not lift facility readiness off `seeded`; that
+    dated negative is the finding. Structured read
+    data/extracted/oepa/sidney/4158406.plan.yaml. Carries an R.C. 149.433 exemption claim
+    pre-printed on every sheet, which Ohio EPA published through anyway.
+- filename: 4158414.pdf
+  edoc_id: '4158414'
+  permit_id: DSWPTI-260517
+  canonical: oepa-dswpti-260517-sidney-sanitary-sewer-relocation-application-package-2026-05-22.pdf
+  type: surface-water-pti-application-package
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4158414
+  sha256: f0bcd545cb10964b07370e4a94c658cb09f87361634191c061b56a6d25f10216
+  bytes: 2050505
+  content_type: application/pdf
+  fetched_at: '2026-08-11T18:03:13+00:00'
+  status: downloaded
+  content_verified: not-yet-read
+  note: >-
+    The application package on the same PTI, shelved in #1998 because the route was open and the
+    bytes are the record. UNREAD, and deliberately so: 18 pages with NO TEXT LAYER (pypdf returns
+    17 characters for the whole document), so it is a scan and needs a rendered/OCR read that is a
+    separate job. Nothing in the corpus cites it yet. It is the more likely of the two to carry a
+    design flow — a PTI application states one where a drawing set does not — so it is the next
+    thing to read for the WATER thread, not for the cooling question.
 - filename: 4160653.pdf
   edoc_id: '4160653'
   permit_id: DSWPTI-260517
@@ -205,7 +247,8 @@ documents:
     days before any discharge to waters of the state; condition AB puts operation
     and maintenance of the relocated sewer on the City of Sidney. The 20 MB approved
     plan set (eDoc 4158406) and the 2 MB application package (eDoc 4158414) are on
-    the same permit and are NOT pulled into the corpus — see regulatory-watch.yaml.
+    the same permit and were BOTH pulled in #1998 — the plan set is read, the application
+    package is shelved unread (no text layer). See regulatory-watch.yaml.
 - filename: 4109706.pdf
   edoc_id: '4109706'
   permit_id: DSW401252256W
