@@ -296,6 +296,23 @@ function coolingUndisclosed(slug: string, facility: FacilityItem | null): boolea
   return coolingMethodUndisclosed(slug) || facility?.cooling_model === "unknown";
 }
 
+/**
+ * A shipped scenario whose intake the RECORD states — the peer of `_contracted_demand` in
+ * `watermark/site/impact_study.py`, and it must stay identical to it (parity suite).
+ *
+ * An undisclosed cooling method usually means the water figures are a bracketed range across
+ * candidate archetypes, and the probe says so. Sidney inverts that: the method is undisclosed but
+ * the gallons are in an executed service agreement, so its intake ships `source: "document"`.
+ * Telling a reader those figures are a bracket would be false — the bracket is the cross-check
+ * sitting beside them, not the headline (#1995).
+ */
+function contractedDemand(slug: string): boolean {
+  if (feedRows(slug, "hydrology-scenarios") === 0) return false;
+  return loadFeed<ScenarioResult[]>("hydrology-scenarios", slug).some(
+    (r) => r.scenario?.cooling_demand?.source === "document" && (r.scenario?.cooling_demand?.value ?? 0) > 0,
+  );
+}
+
 const NA_REASON = "No disclosed project — this chapter is computed the day one is on the record.";
 
 /** The facility-less predicate for project-dependent chapters. */
@@ -452,9 +469,13 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     recordGroups: ["permits-npdes"],
     probe: (slug, facility) =>
       coolingUndisclosed(slug, facility)
-        ? [
-            "cooling method undisclosed — the water figures are a bracketed range across candidate archetypes, not an estimate",
-          ]
+        ? contractedDemand(slug)
+          ? [
+              "cooling method undisclosed — but the water quantity is CONTRACTED, so the figures are a stated account rather than a bracketed range; what stays open is how the heat is rejected, not how much water it takes",
+            ]
+          : [
+              "cooling method undisclosed — the water figures are a bracketed range across candidate archetypes, not an estimate",
+            ]
         : [],
     notApplicable: needsProject,
   },

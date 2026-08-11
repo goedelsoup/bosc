@@ -32,11 +32,22 @@ from the investment-scaled IT-load bracket. The derived archetype basis still ri
 `scenario.basis` as the cross-check, and it is worth reading beside the headline: the contracted
 0.0126 MGD sits far below that basis's 0–4.03 MGD undisclosed-method bracket.
 
-⚠️ **Regenerate with a cold NWIS cache.** `watermark --site <slug> scenario --offline --write` is
-the command, and on a clean checkout it writes `receiving_live: null` — the committed convention
-(Lima's does too). On a machine with a warm `data/cache/hydrology/nwis/` the same command fills
-that field with whatever gage reading is cached, which is a real value but not a reproducible one:
-it lands in the artifact as an unrelated diff on the next person's run.
+⚠️ **These are `live=False` artifacts — the CLI cannot regenerate them.** `watermark scenario
+--write` always evaluates with `live=True`, which fills `receiving_live` from whatever the NWIS
+cache or fixtures happen to hold; the committed files carry `receiving_live: null` and are the
+model's *offline* output, which is exactly what `test_lima_committed_buildout_figures_are_regression_locked`
+pins (`committed == evaluate(buildout, live=False)`). Regenerate with:
+
+```python
+from watermark.config import Settings
+from watermark.hydrology import scenario as sc
+
+s = Settings(site="<slug>", hydro_offline=True)
+for scen in (sc.baseline_scenario(), sc.buildout_scenario(settings=s)):
+    sc.write_scenario(sc.evaluate(scen, settings=s, live=False), settings=s)
+```
+
+`live=True` and `live=False` also differ by a balance warning, so the mode is not cosmetic.
 
 ## Air emissions scenarios (`<slug>.air-*.scenario.yaml`)
 

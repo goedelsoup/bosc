@@ -172,6 +172,9 @@ def load_acute_low_flows(*, settings: Settings | None = None) -> dict[str, Prove
         cite = entry.get("citation")
         source = str(entry.get("source", "document"))
         label = "1Q10 (acute design flow)" if source == "document" else "1Q10 (acute, DERIVED)"
+        # States its own value for the same reason as `_seasonal_value` above: the shared stream
+        # pointer may spell out a different statistic's figure (#1995).
+        label = f"{label} {float(one):g} cfs"
         out[_normalize(str(name))] = ProvenancedValue(
             value=float(one),
             unit="cfs",
@@ -213,7 +216,12 @@ def _seasonal_value(
     """
     if raw is None:
         return None
-    cite = f"{label} — {stream_citation}" if stream_citation else label
+    # The label states THIS field's value, not just its name (#1995). A stream's `citation` is one
+    # pointer shared by every statistic in its table, and an entry whose pointer happens to spell
+    # out a figure — Sidney's says "7Q10 annual 24.0 cfs" — then hands the 29.0 cfs summer 30Q10 a
+    # citation asserting 24.0. A reader checking the value against its own citation finds a
+    # different number, which is the one thing a citation must never do.
+    cite = f"{label} {float(raw):g} cfs — {stream_citation}" if stream_citation else label
     if note:
         cite = f"{cite} ({note})"
     return ProvenancedValue(

@@ -511,6 +511,22 @@ def _cooling_undisclosed(ctx: _Ctx, facility: dict[str, Any] | None) -> bool:
     return False
 
 
+def _contracted_demand(ctx: _Ctx) -> bool:
+    """`study.ts` `contractedDemand` — a shipped scenario whose intake the RECORD states (#1995).
+
+    An undisclosed cooling method usually means the water figures are a bracketed range across
+    candidate archetypes, and the probe says so. Sidney inverts that: the method is undisclosed
+    but the gallons are in an executed service agreement, so its intake ships `source: document`.
+    Telling a reader those figures are a bracket would be false — the bracket is the cross-check
+    sitting beside them, not the headline.
+    """
+    for r in _rows(ctx, "hydrology-scenarios"):
+        demand = ((r.get("scenario") or {}).get("cooling_demand")) or {}
+        if demand.get("source") == "document" and (demand.get("value") or 0) > 0:
+            return True
+    return False
+
+
 def _facility_load_available(ctx: _Ctx) -> bool:
     """`readiness.ts` `facilityLoadAvailable` — the facility domain is instrument-grounded."""
     return ctx.facility_domain == "live"
@@ -537,6 +553,12 @@ def _probes(d: _ChapterDef, ctx: _Ctx, facility: dict[str, Any] | None) -> list[
         ]
     if d.probe == "water-supply":
         if _cooling_undisclosed(ctx, facility):
+            if _contracted_demand(ctx):
+                return [
+                    "cooling method undisclosed — but the water quantity is CONTRACTED, so the "
+                    "figures are a stated account rather than a bracketed range; what stays open "
+                    "is how the heat is rejected, not how much water it takes"
+                ]
             return [
                 "cooling method undisclosed — the water figures are a bracketed range across "
                 "candidate archetypes, not an estimate"

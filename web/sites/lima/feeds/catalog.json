@@ -945,10 +945,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d9517f6572a6bafd9f99dc93c53cebc0d853d9700cc31383ed37364530c5c821",
-      "size_bytes": 335938,
+      "sha256": "353b05de3e6acf5d50abc893fe76691901bbb7c9f6bbd9b8f33e434565fa6e09",
+      "size_bytes": 373236,
       "lfs_materialized": true,
-      "file_count": 13,
+      "file_count": 14,
       "stale": false,
       "asof": null
     },
@@ -1113,8 +1113,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9dc95bb3a5416aff9838c5a1ab9e4f6132d152da3cf504f3cff64c6c084fa628",
-      "size_bytes": 46975,
+      "sha256": "6a5bf812450e721d48543c23c5cda106c497f840ccd6bceee2a5756c095e012c",
+      "size_bytes": 48776,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1238,6 +1238,64 @@
     }
   },
   {
+    "id": "data-centers-west-union",
+    "title": "West Union / Adams County OH — Data-Center Activity Register",
+    "scope": "extracted",
+    "collection": "west-union",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Adams County official AWS page (amazon.adamscountyoh.gov) + its project brochure; PJM TEAC Dayton Supplemental deck 2026-02-03 (Need Dayton-2026-001); Ohio EPA DSW Construction + Industrial NOI general-permit lists (report date 2026-08-05); USACE Nationwide Permit 39 verification 2026-02-18 (via The People's Defender); WCPO I-Team (2026); Ohio Capital Journal / Ballotpedia (Conserve Ohio amendment)",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:west-union",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "data-center",
+      "amazon",
+      "aws",
+      "buck-canyon",
+      "68-yards",
+      "stuart-station",
+      "killen-station",
+      "aes-ohio",
+      "pjm-teac",
+      "adams-county",
+      "west-union",
+      "ohio-river",
+      "sweep"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/west-union/data-centers.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "903d68db78d7410e010b6f4506a61ff3ec413e6c1a31568a8cb3f7636af61576",
+      "size_bytes": 31832,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Adams County official AWS page (amazon.adamscountyoh.gov) + its project brochure; PJM TEAC Dayton Supplemental deck 2026-02-03 (Need Dayton-2026-001); Ohio EPA DSW Construction + Industrial NOI general-permit lists (report date 2026-08-05); USACE Nationwide Permit 39 verification 2026-02-18 (via The People's Defender); WCPO I-Team (2026); Ohio Capital Journal / Ballotpedia (Conserve Ohio amendment)",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "data-centers-wilmington",
     "title": "Wilmington / Clinton Co. OH — Data-Center Activity Register",
     "scope": "extracted",
@@ -1277,8 +1335,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "c309ed627411910a1ec71150648e61e5e01e4d980c5ec208cb62b52045e96d1f",
-      "size_bytes": 25485,
+      "sha256": "6e7c3a26f6f9ee7aa89c144ab1461257b455f4cc2d195dac4fa3920cf31becad",
+      "size_bytes": 29150,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1450,8 +1508,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "7966e519542cea6d87234cc36340745a6871a101f0bbc5f51d7db9fa1ea17ecd",
-      "size_bytes": 161734,
+      "sha256": "c316f13e1903d5fedec84f719c03893c86d9da98d16a17b30cfa1f811a59d4dc",
+      "size_bytes": 165686,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -1465,6 +1523,75 @@
       "confidence": "medium",
       "note": "watermark dmr IN0032191 --start 2023-01-01 --end 2023-12-31 --design-flow 74.0",
       "verified": true
+    }
+  },
+  {
+    "id": "defiance-wwtp-record",
+    "title": "Defiance — NPDES 2PD00013 Permit Set + the Two Enforcement Actions (Extractions)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Two routes. (1) Ohio EPA's eDocument public portal (edocpub.epa.ohio.gov), scripted, searched by Entity Name \"DEFIANCE WWTP\" — 1,097 documents, 950 of them under Secondary ID 2PD00013 — from which six were fetched on 2026-08-05 and committed under data/documents/oepa/defiance/ (see that directory's filename-map.yaml; the portal sends no Content-Disposition, so the docid is the as-served identity and is recorded beside every file). The permit:/ blocks are `watermark extract --kind npdes` output (text-primary over the first six pages plus the page-1 image); everything after them is a reviewed augmentation transcribed page-by-page from each PDF's embedded text layer — these are digitally generated Ohio EPA documents, not scans. (2) EPA ECHO's CWA services for the enforcement record — dfr_rest_services.get_dfr for FRS 110000544082 and case_rest_services.get_case_report for case 05-2024-0328 — read 2026-08-05 against the ICIS-NPDES system extract of 2026-07-31.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:defiance",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "oepa",
+      "defiance",
+      "defiance-county",
+      "maumee-river",
+      "7q10",
+      "dilution",
+      "enforcement",
+      "consent-order",
+      "cso",
+      "sso",
+      "tmdl",
+      "phosphorus",
+      "ohp000001"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/defiance/2PD00013.fs.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/defiance/2PD00013.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/defiance/wwtp-enforcement.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "acfc1d40f49eb4082a3f3f0b81d647513b680e6d59929addd1d0de754d2b5dc0",
+      "size_bytes": 42031,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Two routes. (1) Ohio EPA's eDocument public portal (edocpub.epa.ohio.gov), scripted, searched by Entity Name \"DEFIANCE WWTP\" — 1,097 documents, 950 of them under Secondary ID 2PD00013 — from which six were fetched on 2026-08-05 and committed under data/documents/oepa/defiance/ (see that directory's filename-map.yaml; the portal sends no Content-Disposition, so the docid is the as-served identity and is recorded beside every file). The permit:/ blocks are `watermark extract --kind npdes` output (text-primary over the first six pages plus the page-1 image); everything after them is a reviewed augmentation transcribed page-by-page from each PDF's embedded text layer — these are digitally generated Ohio EPA documents, not scans. (2) EPA ECHO's CWA services for the enforcement record — dfr_rest_services.get_dfr for FRS 110000544082 and case_rest_services.get_case_report for case 05-2024-0328 — read 2026-08-05 against the ICIS-NPDES system extract of 2026-07-31.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -3748,6 +3875,11 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/oepa/sidney/4158406.plan.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/oepa/sidney/DSW401252256W.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -3755,10 +3887,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6356c54ebd74184bd75f3c8847246984bdbc25b7de5d7c2eea128695e341398e",
-      "size_bytes": 18754,
+      "sha256": "04b733f2f11f1150129d056d68c4cdcdd14fb880dadcf2ec34f7b67832b0a96e",
+      "size_bytes": 26723,
       "lfs_materialized": true,
-      "file_count": 7,
+      "file_count": 8,
       "stale": false,
       "asof": null
     },
@@ -4798,14 +4930,39 @@
         "relpath": "extracted/sidney/incentive-instruments.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-10-27-res-80-25-cra-agreement.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-10-27-res-81-25-schools-development-agreement.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-10-27-res-82-25-income-tax-sharing.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2026-04-27-res-26-26-water-and-wastewater-service.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "9840bb0df2d33aa0f7d9bcad4f33874afc52669eb4d1600571266657bec32417",
-      "size_bytes": 49653,
+      "sha256": "6afbe95e3535f5d490e8973395495dbc018387f151dc00e56c19990b195afacb",
+      "size_bytes": 77281,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 6,
       "stale": false,
       "asof": null
     },
@@ -5027,8 +5184,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "87114379b37b05d51220f74e69d9013bee8f43e008df57169e2348380e53e31a",
-      "size_bytes": 165993,
+      "sha256": "ddc5aa94dcd0b70611b60066acc469b7bd7655a07e011a934ae67a46467555fe",
+      "size_bytes": 167817,
       "lfs_materialized": true,
       "file_count": 11,
       "stale": false,
@@ -5469,8 +5626,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "820e8698bb23de7967cd98685c2e8b905d79ef270b3323af2e674a8be31e46c2",
-      "size_bytes": 25936,
+      "sha256": "8e6b38d1528c6e1026921c8e7d8ba7d7760f6f72b93da956009d473279169eb4",
+      "size_bytes": 28575,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -5478,6 +5635,89 @@
     },
     "citation": {
       "source": "Onboarding self-research pass (data/research/onboard-wilmington-*/findings.md); SiteProfile plant_receiving (WWTP NPDES OH0028134, cited); basin._MAINSTEM_GAGES Little Miami brackets. The drainage areas the DAR interpolation multiplies (USGS StreamStats / NWIS) are to-pull — not yet in the corpus.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "wilmington-power-instruments",
+    "title": "Wilmington — the AES Ohio 345 kV build-out, PJM M-3 Need Dayton-2025-002 + OPSB 25-0871-EL-BLN (Extractions)",
+    "scope": "extracted",
+    "collection": "grid",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Eleven captured sources across four routes, plus five blocked-or-negative routes recorded as per-source negatives (PUCO DIS, the opsb.ohio.gov pretty-URL case pages, wnewsj.com, journal-news.com, and PJM's own 2025 TEAC materials). INTERCONNECTION: PJM's Transmission Expansion Advisory Committee \"Dayton Supplemental Projects\" decks for all three 2026 meetings (2026-02-03 item 06, 2026-05-08 item 05, 2026-07-07 item 11), retrieved 2026-08-06 from pjm.com and read from their PDF text layers. The 2026-07-07 deck carries M-3 Need Dayton-2025-002 (the Clinton Substation / Wilmington load ramp), Need Dayton-2025-001 (the Fayette Substation / Jeffersonville ramp) and the joint priced solution; the other two decks are committed because they establish that the Wilmington need appears in the July cycle ONLY, which is a read result rather than a lucky find. SITING: the statutory service copy of AES Ohio's Letter of Notification for OPSB case 25-0871-EL-BLN, obtained from the CITY OF WILMINGTON's own website (wilmingtonohio.gov, served via storage.googleapis.com/proudcity) rather than from the applicant — the custody chain runs through the local government that was served, and is stated in data/documents/grid/wilmington/filename-map.yaml. It is a two-page scan with NO text layer; its identity, dateline and text were read off a 200-DPI render, never from OCR digits or from its filename. APPLICANT MATERIAL: AES Ohio's Fayette-Clinton fact sheet (March 2026), project-need board and FAQ, plus its Fayette Customer East and West project pages — the last two captured because they are where AES, in its own words, attaches the \"1.5 GW\" to Jeffersonville. ARCHIVED: the AES Clinton 345kV Substation Extension project page, recovered from the Internet Archive's single 2023-03-30 capture after the live URL was unpublished (HTTP 403 Drupal \"Access denied\"). SECONDARY: a landowner-side consultancy's public information packet on the intervention filings, tagged [reference] throughout and used only as a finding aid to a docket the PUCO block keeps out of reach. GEOMETRY: the Clinton Substation was located on the Clinton County auditor's CAMA parcel layer — the same layer SiteProfile.parcels_url points at — and measured against the committed corridor geometry at data/reference/wilmington/parcel-assemblage.geojson; OpenStreetMap way/36923781 corroborates the name and voltages as [reference]. No vision extraction pass was run beyond the render read of the two-page service letter.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:wilmington",
+    "cadence": "quarterly",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "opsb",
+      "puco",
+      "siting",
+      "letter-of-notification",
+      "transmission",
+      "345kv",
+      "pjm",
+      "teac",
+      "m3-process",
+      "interconnection",
+      "large-load",
+      "aes-ohio",
+      "dayton-power-and-light",
+      "substation",
+      "data-center",
+      "aws",
+      "amazon",
+      "wilmington",
+      "clinton-county",
+      "fayette-county",
+      "jeffersonville",
+      "intervention",
+      "access-blocked"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/grid/wilmington/clinton-delivery-point.interconnection.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/grid/wilmington/fayette-clinton-345kv.project.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/grid/wilmington/clinton-substation-extension-2021.project.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/wilmington/power-watch.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "8421e4bab536ea22281e3d69d00ef0ff693516d4995bd934e5275446cdbf3727",
+      "size_bytes": 68593,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Eleven captured sources across four routes, plus five blocked-or-negative routes recorded as per-source negatives (PUCO DIS, the opsb.ohio.gov pretty-URL case pages, wnewsj.com, journal-news.com, and PJM's own 2025 TEAC materials). INTERCONNECTION: PJM's Transmission Expansion Advisory Committee \"Dayton Supplemental Projects\" decks for all three 2026 meetings (2026-02-03 item 06, 2026-05-08 item 05, 2026-07-07 item 11), retrieved 2026-08-06 from pjm.com and read from their PDF text layers. The 2026-07-07 deck carries M-3 Need Dayton-2025-002 (the Clinton Substation / Wilmington load ramp), Need Dayton-2025-001 (the Fayette Substation / Jeffersonville ramp) and the joint priced solution; the other two decks are committed because they establish that the Wilmington need appears in the July cycle ONLY, which is a read result rather than a lucky find. SITING: the statutory service copy of AES Ohio's Letter of Notification for OPSB case 25-0871-EL-BLN, obtained from the CITY OF WILMINGTON's own website (wilmingtonohio.gov, served via storage.googleapis.com/proudcity) rather than from the applicant — the custody chain runs through the local government that was served, and is stated in data/documents/grid/wilmington/filename-map.yaml. It is a two-page scan with NO text layer; its identity, dateline and text were read off a 200-DPI render, never from OCR digits or from its filename. APPLICANT MATERIAL: AES Ohio's Fayette-Clinton fact sheet (March 2026), project-need board and FAQ, plus its Fayette Customer East and West project pages — the last two captured because they are where AES, in its own words, attaches the \"1.5 GW\" to Jeffersonville. ARCHIVED: the AES Clinton 345kV Substation Extension project page, recovered from the Internet Archive's single 2023-03-30 capture after the live URL was unpublished (HTTP 403 Drupal \"Access denied\"). SECONDARY: a landowner-side consultancy's public information packet on the intervention filings, tagged [reference] throughout and used only as a finding aid to a docket the PUCO block keeps out of reach. GEOMETRY: the Clinton Substation was located on the Clinton County auditor's CAMA parcel layer — the same layer SiteProfile.parcels_url points at — and measured against the committed corridor geometry at data/reference/wilmington/parcel-assemblage.geojson; OpenStreetMap way/36923781 corroborates the name and voltages as [reference]. No vision extraction pass was run beyond the render read of the two-page service letter.",
       "source_kind": "reference",
       "page": null,
       "pages": null,
@@ -6604,6 +6844,66 @@
     }
   },
   {
+    "id": "echo-ohio-brush-creek-wwtp",
+    "title": "Ohio Brush Creek-basin NPDES discharger inventory (EPA ECHO)",
+    "scope": "reference",
+    "collection": "echo",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "npdes --basin ohio-brush-creek",
+    "connector_ref": "watermark.hydrology.connectors.echo",
+    "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+    "external_url": "https://echo.epa.gov/tools/web-services",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "throttled",
+    "site_scope": "basin:ohio-brush-creek",
+    "cadence": "quarterly",
+    "ttl_days": 180,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "cwa",
+      "ohio-brush-creek",
+      "ohio-river",
+      "wastewater"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/echo/ohio-brush-creek-wwtp.all-npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/ohio-brush-creek-wwtp.huc-counts.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/ohio-brush-creek-wwtp.potw.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "65eabcca7d5c478f354173f66a20c4075270d3c30f76c7628ea9524147d8326b",
+      "size_bytes": 156546,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark npdes --basin ohio-brush-creek",
+      "verified": true
+    }
+  },
+  {
     "id": "economics-baseline",
     "title": "Allen County, OH Economic Baseline (BLS QCEW + US Census ACS)",
     "scope": "reference",
@@ -7591,6 +7891,11 @@
         "lfs": false
       },
       {
+        "relpath": "reference/hydrology/{site}/routing.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "reference/hydrology/lima/sanitary-basis.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -7628,10 +7933,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4127152c22a82b65664b2d6f8f7d23e15583c5c752ae93abed7122054854257f",
-      "size_bytes": 188102,
+      "sha256": "a4ed6161b79ec57a674cc16d1d6a404f3062446feca917018f6a6d9314de623d",
+      "size_bytes": 193517,
       "lfs_materialized": true,
-      "file_count": 21,
+      "file_count": 23,
       "stale": false,
       "asof": null
     },
@@ -7743,8 +8048,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "b181cca88fed8f45aec4018baf5415e031b7cdcfad099683055936744957f483",
-      "size_bytes": 52919,
+      "sha256": "05c7516e0e306f76a64b6f64849a7e6a2c2dc626ad99ce847e130f55ead49e10",
+      "size_bytes": 81117,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -7874,7 +8179,7 @@
     "producer_kind": "connector",
     "command": "reaches --write",
     "connector_ref": "watermark.hydrology.connectors.nldi",
-    "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages)",
+    "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages; Sidney's mainstem + Loramie gages plus two campus-drainage snaps)",
     "external_url": "https://api.water.usgs.gov/nldi",
     "license": "U.S. Government work (public domain)",
     "access_tier": "public",
@@ -7921,19 +8226,39 @@
         "relpath": "reference/hydrology/reaches/fort-wayne.geojson",
         "media_type": "application/geo+json",
         "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/sidney/reach-nav.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/sidney/network.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/sidney/reaches.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/reaches/sidney.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "4bf5c0cc9b20cd6671ca26cca0a199de3ecc4fa869dbf99354aa69636c8d654d",
-      "size_bytes": 161742,
+      "sha256": "4d56c2a5e0b226e3fd5eef015263bfb903d32921466effc75e3dffdb62d2e2bc",
+      "size_bytes": 253553,
       "lfs_materialized": true,
-      "file_count": 6,
+      "file_count": 10,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages)",
+      "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages; Sidney's mainstem + Loramie gages plus two campus-drainage snaps)",
       "source_kind": "connector",
       "page": null,
       "pages": null,
@@ -8335,8 +8660,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5291ce440bc0e1377050ab42863f5669553b5628ea71580ce2fd16405b60fc61",
-      "size_bytes": 32637,
+      "sha256": "9c96252f115d8d9ad79b3ca12b7901a3d099998a697716a878782ffe3f504814",
+      "size_bytes": 32636,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -8602,7 +8927,7 @@
     "site_scope": "state:OH",
     "cadence": "on-demand",
     "ttl_days": null,
-    "last_refreshed": "2026-07-11",
+    "last_refreshed": "2026-08-06",
     "tags": [
       "oepa",
       "npdes",
@@ -8679,8 +9004,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "b7cb1fadd57009ca92c4cbb371182d7141ea7ea3e72482c77742e9e90ffb167d",
-      "size_bytes": 14340,
+      "sha256": "2a70dd340cc5d6363b72f09e9bf11800f649b010fb5f0868db1ca168e0ecbeb2",
+      "size_bytes": 18502,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -9443,6 +9768,56 @@
     }
   },
   {
+    "id": "sidney-watch-items",
+    "title": "Sidney site watch-items (WWTP infrastructure geometry)",
+    "scope": "reference",
+    "collection": "sidney",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022\" (permit 1PD00009*SD / application OH0027421) and the ECHO Great Miami POTW inventory; coordinates from EPA FRS (ECHO lat/lon 40.2709, -84.15031, FRS Registry ID 110002345597)",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
+    "access_tier": "public",
+    "site_scope": "site:sidney",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "sidney",
+      "gis",
+      "geojson",
+      "wwtp",
+      "infrastructure"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/sidney/watch-items.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "f55c92e610908c764777b3fc0662a6b660314c590631eeb80d31f49eeaff3682",
+      "size_bytes": 1580,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022\" (permit 1PD00009*SD / application OH0027421) and the ECHO Great Miami POTW inventory; coordinates from EPA FRS (ECHO lat/lon 40.2709, -84.15031, FRS Registry ID 110002345597)",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "subdivisions",
     "title": "Allen County Political-Subdivision Meeting-Records Registry",
     "scope": "reference",
@@ -9882,7 +10257,7 @@
     "producer_kind": "manual",
     "command": null,
     "connector_ref": null,
-    "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132)",
+    "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132). Clinton Substation added at #1469 — parcel geometry from the Clinton County auditor's CAMA layer (parcel 270-12-10-35-0000-00, DAYTON POWER & LIGHT COMPANY, 25.29 ac; centroid 39.39796, -83.85464), corroborated by OpenStreetMap way/36923781 (name=\"Clinton Substation\", substation=transmission, voltage=\"345000;69000\") 57 m away.",
     "external_url": null,
     "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
     "access_tier": "public",
@@ -9895,7 +10270,10 @@
       "gis",
       "geojson",
       "wwtp",
-      "infrastructure"
+      "infrastructure",
+      "substation",
+      "transmission",
+      "pjm"
     ],
     "storage": [
       {
@@ -9906,15 +10284,15 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9d8f9904a56c8b020dee930eb90a51ebbe1fc145ed0c49994be3e4aa546771ea",
-      "size_bytes": 644,
+      "sha256": "511301efbdc97b26df2094bd90678e775278b36e732d7811381eaa9c7e379d60",
+      "size_bytes": 1998,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132)",
+      "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132). Clinton Substation added at #1469 — parcel geometry from the Clinton County auditor's CAMA layer (parcel 270-12-10-35-0000-00, DAYTON POWER & LIGHT COMPANY, 25.29 ac; centroid 39.39796, -83.85464), corroborated by OpenStreetMap way/36923781 (name=\"Clinton Substation\", substation=transmission, voltage=\"345000;69000\") 57 m away.",
       "source_kind": "reference",
       "page": null,
       "pages": null,
