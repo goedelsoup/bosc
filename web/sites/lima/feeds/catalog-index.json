@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "6c62261b9a0679d13b783089932cce39fc0a5a593a1c32e0e66f955fd66ad155",
-  "contract_version": "2.0.0",
+  "catalog_version": "95e06a9110e9144cab980aff979ab7188fad9fad305e16861f6fe0ec8d4409ba",
+  "contract_version": "2.1.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -1820,6 +1820,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:subdivisions-sidney",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "subdivisions-sidney",
+      "title": "Shelby County OH political subdivisions — meeting-records registry",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:thermal",
       "kind": "dataset",
       "site": "lima",
@@ -3268,6 +3276,22 @@
       "feed": "places"
     },
     {
+      "handle": "record:lima:aedg/paac-records-policy.policy.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "aedg/paac-records-policy.policy.yaml",
+      "title": "Port Authority of Allen County — Public Records Availability + Retention & Destruction Policy",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:aedg/roadwork-development-agreement.rda.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "aedg/roadwork-development-agreement.rda.yaml",
+      "title": "BOSC Roadwork Development Agreement — Port Authority of Allen County / Allen County / Bistrozzi LLC",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:aedg/roundabouts.detail.opc.yaml",
       "kind": "record",
       "site": "lima",
@@ -3281,6 +3305,62 @@
       "site": "lima",
       "local_id": "aedg/roundabouts.summary.opc.yaml",
       "title": "Project BOSC Roadwork (privately funded; BOSC Team deposit to PAAC; dedicated to County on completion)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:aedg/seller-land-packets.land.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "aedg/seller-land-packets.land.yaml",
+      "title": "BOSC/Google data-center land assembly — seller option packets and assignment to Bistrozzi LLC",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:grid/aep-lyka-transmission-2026.project.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "grid/aep-lyka-transmission-2026.project.yaml",
+      "title": "AEP Ohio Lyka Transmission Project — 345kV substation + ~4mi transmission line, Sugar Creek Township, Allen County",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:lacrpc/american-township-zoning.zoning.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "lacrpc/american-township-zoning.zoning.yaml",
+      "title": "American Township (Allen County, OH) Zoning Resolution — the land-use basis for the BOSC/Google data-center site",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:legal/datacenter-legislation/hb983-3744.digest.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "legal/datacenter-legislation/hb983-3744.digest.yaml",
+      "title": "H.B. No. 983, 136th Ohio General Assembly — As Introduced. The \"Data Center Accountability and Citizen Protection Act.\" Enacts a new R.C. Chapter 3744 imposing air/wastewater discharge standards on data-center and associated-power-plant cooling systems, a local citizen-vote requirement, water-supply liability, grid-independence, and a local tax-incentive ban; and amends R.C. 9.66 to strip the confidentiality of data-center development-and-supply agreements.",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:legal/prr-mandamus/cra-agreement.cra.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "legal/prr-mandamus/cra-agreement.cra.yaml",
+      "title": "Allen County CRA No. 1 Agreement with Bistrozzi LLC (data-center tax abatement)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml",
+      "title": "Mutual Non-Disclosure Agreement, Allen County Board of Commissioners <-> Bistrozzi LLC",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:legal/prr-mandamus/prr-production-2026-07-24/cridersville-treatment-agreement-2014.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "legal/prr-mandamus/prr-production-2026-07-24/cridersville-treatment-agreement-2014.yaml",
+      "title": "Wastewater Treatment Agreement — Allen County Commissioners <-> Village of Cridersville, Shawnee Oaks Sewer Sub-District",
       "feed": "records"
     },
     {
@@ -3348,11 +3428,27 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:legal/prr-mandamus/school-district-notice-letters.notice.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "legal/prr-mandamus/school-district-notice-letters.notice.yaml",
+      "title": "AEDG notice letters to Elida + Apollo JVSD of the proposed Bistrozzi CRA abatement",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:legal/prr-mandamus/school-district-notice-resolution.notice.yaml",
       "kind": "record",
       "site": "lima",
       "local_id": "legal/prr-mandamus/school-district-notice-resolution.notice.yaml",
       "title": "Authorizing notice to the Elida Local School District and Apollo Career Center that the Commissioners seek to enter a CRA Agreement with Bistrozzi, LLC and will consider the same agreement on July 10, 2025 or thereafter.",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:legal/records-legislation/hb314-149-43.digest.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "legal/records-legislation/hb314-149-43.digest.yaml",
+      "title": "Sub. H.B. No. 314, 136th Ohio General Assembly — As Passed by the House. Amends R.C. 149.43 (Ohio Public Records Act) to restrict \"harassing or disruptive\" records requests and to let public offices engage private contractors to answer \"voluminous\" requests.",
       "feed": "records"
     },
     {
@@ -3473,6 +3569,22 @@
       "site": "lima",
       "local_id": "permits/3727544.epa.yaml",
       "title": "Project Bosc",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:permits/3727950.wetland.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "permits/3727950.wetland.yaml",
+      "title": "USACE Wetland Determination Data Form — Project BOSC, sampling point WD-1, Sugar Township, Allen County, 2024-08-15",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:permits/3727951.wetland.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "permits/3727951.wetland.yaml",
+      "title": "USACE Wetland Determination Data Form — Project BOSC, sampling point WE-1, Sugar Township, Allen County, 2024-08-15",
       "feed": "records"
     },
     {
@@ -3660,6 +3772,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:plans/4091286.engineering.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "plans/4091286.engineering.yaml",
+      "title": "BOSC Storm Outfall (and the Beery Rd. & Cole St. roundabout)",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:plans/LMA1A-95-SPS-2025-10-28.plan.yaml",
       "kind": "record",
       "site": "lima",
@@ -3716,11 +3836,27 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:recorder/202606250006699.notice.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "recorder/202606250006699.notice.yaml",
+      "title": "Project BOSC",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:regulatory/ohc000006-construction-stormwater-gp.yaml",
       "kind": "record",
       "site": "lima",
       "local_id": "regulatory/ohc000006-construction-stormwater-gp.yaml",
       "title": "General Permit Authorization for Stormwater Discharges Associated with Construction Activity under the NPDES",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:watershed/osu-lima-ag-runoff-treatment.capture.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "watershed/osu-lima-ag-runoff-treatment.capture.yaml",
+      "title": "OSU-Lima Branch Campus Agricultural Runoff Treatment System Project",
       "feed": "records"
     },
     {
@@ -3897,14 +4033,6 @@
       "site": "lima",
       "local_id": "PMP-212",
       "title": "Wetland Mitigation Bank Credit Purchase PMP-212 — correspondence (Project BOSC)",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:amtwp-zoning-2025-09-08",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "amtwp-zoning-2025-09-08",
-      "title": "American Township zoning text amendment — data-center provisions adopted (#09-082025)",
       "feed": "timeline"
     },
     {

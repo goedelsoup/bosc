@@ -320,7 +320,11 @@ def _zoning_events(settings: Settings, scope: CorpusScope | None = None) -> list
     if not relpath_in_scope(rel, scope):
         return []
     data = _load_yaml(settings.extracted_dir / "lacrpc" / "american-township-zoning.zoning.yaml")
-    doc = data.get("document", {}) if isinstance(data.get("document"), dict) else {}
+    # `zoning_code:`, re-keyed from the artifact's original `document:` at #1993 so the site-tier
+    # classifier could claim it as `local-legislation` without claiming the most generic wrapper
+    # word in the repo — which would have silently swept in the next extraction to use it.
+    block = data.get("zoning_code")
+    doc = block if isinstance(block, dict) else {}
     amendment = doc.get("data_center_amendment")
     if not isinstance(amendment, dict) or not amendment.get("date"):
         return []

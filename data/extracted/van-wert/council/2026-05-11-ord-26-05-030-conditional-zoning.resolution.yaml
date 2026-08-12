@@ -1,0 +1,101 @@
+# City of Van Wert Council, 2026-05-11 — Ordinance 26-05-030, classifying the annexed 901.698 ±
+# acres I-2 General Industrial on a §150.12(C) conditional zoning petition. Issue #1993, epic #1267.
+#
+# WHY THIS FILE EXISTS SEPARATELY FROM THE REGISTER, and the PROJECTION and CUSTODY caveats: see
+# the sibling `2026-05-11-ord-26-05-028-annexation.resolution.yaml`. The same three apply verbatim.
+# Every field below is carried from `instruments[2]` of
+# `data/extracted/van-wert/mega-site-instruments.yaml`, read in #1401 by OCR of image-only scans.
+#
+# TAG VOCABULARY: [verified] = read off the document's own page images at the cited page;
+# [inference] = reasoned from [verified] facts, labelled; [open] = not established here.
+
+as_of: '2026-08-12'
+site: van-wert
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1993'
+epic: 'watermark-directory/the-watermark-directory#1267'
+
+source:
+  instrument: city-ordinance-as-introduced
+  file: data/documents/van-wert/council/26-05-030-draft-ordinance.pdf
+  sha256: 'ebb37f7cb5a3557338e1975d5c94c9315e2adf5e34dfd9818c8f5416e06dfc1a'
+  content_verified: ocr
+  projected_from: data/extracted/van-wert/mega-site-instruments.yaml  # `instruments[2]`, #1401
+  read_note: >-
+    Image-only scan, 0 extractable characters. Read in #1401 with pypdfium2 + tesseract at 300 DPI;
+    the Exhibit-A pages of the companion `26-05-030.pdf` are photocopies of photocopies and were
+    re-rendered at 450-500 DPI. Page numbers are 0-based PDF page indices.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    City of Van Wert Ordinance 26-05-030 — amending the City zoning map to designate 901.698 ±
+    acres I-2 General Industrial on a conditional zoning petition filed under Code of Ordinances
+    §150.12(C), passed as an emergency on first and final reading 2026-05-11
+  ordinance_no: '26-05-030'
+  body: Council of the City of Van Wert, Ohio
+  body_kind: city_council
+  committee: Judiciary and Annexation
+  subject_matter: rezoning
+  adopted: '2026-05-11'          # [verified] 5.11.26.pdf p. 4 — the approved minutes
+  outcome: approved
+  emergency: true
+  readings: first and final (statutory rules suspended)
+  petition_filed: '2026-03-09'   # [verified] the §150.12(C) conditional zoning petition
+
+  title_verbatim: >-
+    AN ORDINANCE TO AMEND THE CITY OF VAN WERT ZONING MAP BY APPROVING A CONDITIONAL ZONING
+    PETITION FILED PURSUANT TO VAN WERT CODE OF ORDINANCES SECTION 150.12 (C) TO DESIGNATE CERTAIN
+    REAL PROPERTY CONSISTING OF 901.698+/- ACRES WITH THE I-2, GENERAL INDUSTRIAL ZONING
+    CLASSIFICATION AND DECLARING AN EMERGENCY.
+
+  effect: >-
+    Classifies the 901.698 ± acres as I-2 General Industrial and requires the buffering in Exhibit
+    C where development differs from adjacent residential use.
+
+  conditions_exhibit_c:
+    tag: verified
+    source: 26-05-030.pdf p. 11
+    summary: >-
+      A minimum six-foot mound along each perimeter boundary abutting residentially used or zoned
+      property, carrying a mixed deciduous/evergreen/shrub landscape buffer reaching 75% opacity
+      five years after planting to a total height of 12 feet above ground level. Installed within
+      the minimum pavement setback, may extend inward. A parcel separated only by a public street
+      right-of-way still counts as abutting. Utilities and access drives may cross the buffer.
+      Required ONLY where a parking area, structure, building or permanent equipment will sit
+      within 1,000 linear feet of the shared perimeter. Installed by the earlier of 60 days after
+      pavement, or before any vertical construction.
+    what_it_does_not_contain: >-
+      [verified] This is the whole of Exhibit C, and Exhibit C is the whole of the "conditional" in
+      the conditional zoning. It sets NO noise limit, NO height limit, NO water-supply or discharge
+      condition, NO hours-of-construction limit, NO lighting standard, and no setback beyond the
+      zoning minimum. Read this as a recorded absence in the instrument — the City may hold such
+      conditions elsewhere (a development agreement, a building permit), and none is in the corpus.
+
+  vote:
+    roll_call_recorded: false
+    as_recorded_verbatim: '"Agler seconded; all concurred. Ordinance passed."'
+    note: >-
+      [verified] NO NUMERIC TALLY — a second and "all concurred", not a roll call and not a count.
+
+  source_pages:
+    body: 26-05-030-draft-ordinance.pdf pp. 0-1
+    exhibits: 26-05-030.pdf pp. 0-11
+    passage: 5.11.26.pdf p. 4
+
+  what_this_instrument_does_not_establish:
+    - >-
+      THE CONDITIONS ARE A LANDSCAPE MOUND AND NOTHING ELSE. See `conditions_exhibit_c
+      .what_it_does_not_contain`. A reader who sees "conditional zoning" and infers a negotiated
+      set of operating limits will be wrong about this instrument.
+    - >-
+      IT NAMES NO OPERATOR AND NO LOAD. The ordinance rezones acreage; it states no megawatt
+      figure, no water demand and no tenant.
+  confidence: high
+  warnings:
+    - >-
+      The source PDF is an UNSIGNED pre-passage upload with an unfilled passage clause, posted four
+      days before the vote. Passage rests on the approved minutes.
+    - >-
+      Read entirely by OCR of page images; the Exhibit-A pages are photocopies of photocopies and
+      needed 450-500 DPI re-renders. There is no text layer to check against.

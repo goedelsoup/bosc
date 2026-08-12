@@ -34,7 +34,7 @@ from watermark.site.passages import (
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "2.0.0"
+_CV = "2.1.0"
 
 # The exact bytes `July 1, 2026` decodes to through a ToUnicode CMap shifted down by 0x1D — the
 # start date of van-wert's final effluent limitations as pypdf reads it out of

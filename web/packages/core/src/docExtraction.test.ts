@@ -140,10 +140,12 @@ describe("the join, against the committed Lima bundle", () => {
     expect(dangling).toEqual([]);
   });
 
-  it("extracts 52 of 3,250 documents — 1.6% of the corpus", () => {
+  // 52 -> 68 at contract 2.1.0 (#1993). The classifier recognized 137 of 263 committed
+  // extractions and missed 126; eight new genres publish 32 of them, and Lima holds most.
+  it("extracts 68 of 3,250 documents — 2.1% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
     expect(entries.length).toBe(3250);
-    expect(countExtracted(entries, index)).toBe(52);
+    expect(countExtracted(entries, index)).toBe(68);
   });
 
   it("is near-complete on the instrument collections and absent from the two biggest", () => {
@@ -151,30 +153,36 @@ describe("the join, against the committed Lima bundle", () => {
       documents.map((c) => [c.slug, [countExtracted(c.entries, index), c.entries.length]]),
     );
     // The instrument collections — small, and read.
-    expect(counts.permits).toEqual([26, 35]);
+    // permits +2 (the two USACE wetland determination forms), recorder +1 (the R.C. 1311.04
+    // Notice of Commencement), plans +1 (the SWP3, re-keyed `record:` -> `plan:`) — all #1993.
+    expect(counts.permits).toEqual([28, 35]);
     expect(counts.oepa).toEqual([11, 18]);
-    expect(counts.recorder).toEqual([6, 7]);
-    expect(counts.plans).toEqual([1, 4]);
-    // The two productions that are 84% of the catalog — held, and essentially unread.
-    expect(counts.legal).toEqual([8, 1732]);
+    expect(counts.recorder).toEqual([7, 7]);
+    expect(counts.plans).toEqual([2, 4]);
+    // The two productions that are 84% of the catalog — held, and essentially unread. `legal`
+    // rose 8 -> 15 at #1993 (the CRA agreement, the NDA, the treatment agreement, the school-
+    // district notice letters, both statewide bills), which is 0.9% of 1,732.
+    expect(counts.legal).toEqual([15, 1732]);
     expect(counts.commissioners).toEqual([0, 995]);
   });
 
-  it("counts distinct documents, not records — 5 records name no source file", () => {
+  it("counts distinct documents, not records — 3 records name no source file", () => {
     // 56 -> 57 at contract 1.53.0 (#1438). The new `local-legislation` genre claims a `resolution:`
     // payload block, and Lima's corpus already held one that nothing had ever claimed: Allen County
     // Resolution #494-25, the Commissioners' own authorization of the CRA school-district notice to
     // Elida and Apollo Career Center. It was a real, cited, recorder-stamped extraction that the
     // records taxonomy had no bucket for — the same failure mode #1724 fixed for Urbana, found here
     // by a genre added for another site entirely.
-    expect(records.length).toBe(57);
-    // 4 -> 5 with it, and this one is NOT a connector-sourced record: it carries its source under
-    // `provenance.source_path`, an envelope shape `_source_ref` does not resolve (it reads a
-    // top-level `source_path` or a `source.file`). So the document join is lost even though the
-    // PDF is catalogued. Pre-existing and out of scope here; the count is pinned so a later fix to
-    // `_source_ref` shows up as a deliberate change rather than drift.
-    expect(records.filter((r) => !r.source_doc_rel).length).toBe(5);
-    // Still 52 distinct source documents — the new record adds no join, which is the point above.
-    expect(index.size).toBe(52);
+    // 57 -> 73 at contract 2.1.0 (#1993), eight new genres across one classifier change.
+    expect(records.length).toBe(73);
+    // 5 -> 3, and this is the deliberate change the note below predicted. `_source_ref` now
+    // resolves three further committed provenance shapes — `provenance.source_path` /
+    // `provenance.sources`, the connector read's `meta.sources` (a dict of NAMED lists, so every
+    // list is scanned and not just `primary`), and a top-level `sources:` list of instrument
+    // blocks. Before #1993, 28 of the 32 records it publishes would have carried no join at all.
+    // What remains is genuinely unjoinable: the two OPC artifacts and one FEMA obligation, none of
+    // which names a single source document.
+    expect(records.filter((r) => !r.source_doc_rel).length).toBe(3);
+    expect(index.size).toBe(68);
   });
 });

@@ -46,12 +46,23 @@ const SITE_INVARIANT_ROUTES = new Set(["submit"]);
  * Chrome (the topbar, the site switcher, breadcrumbs, the dateline) legitimately differs per site,
  * so hashing a whole page would make every comparison unequal and the guard vacuous — the leaking
  * timeline pages differed in exactly that way while their event lists were identical. `<article
- * class="prose">` is the content wrapper every per-site page uses.
+ * class="prose">` is the content wrapper every per-site page opens with, and the breadcrumb trail
+ * is the only chrome inside `<main>`; it always PRECEDES that article, which is what lets the
+ * region start there and run to the end of `<main>`.
+ *
+ * ⚠️ It runs to `</main>`, not to the last `</article>`, since #1993. The narrower region stopped
+ * at the prose wrapper and therefore compared a HEADING AND A COUNT — the data itself lives in the
+ * sibling `<div class="rb-list">` (the record group index, the timeline) that sat outside it. Two
+ * sites with entirely different records and the same COUNT hashed identically: `sidney` and
+ * `urbana` each publish one `incentive-package` register, and the guard read that as one site's
+ * record under the other's URL. Widening can only ever REDUCE false positives without weakening
+ * the guard, because a genuine leak — data resolved once and reused — renders the widened region
+ * identically too, count and body alike. It was the count that caught #2005; it did not have to be.
  */
 function contentRegion(html) {
   const start = html.indexOf('<article class="prose"');
   if (start < 0) return null;
-  const end = html.lastIndexOf("</article>");
+  const end = html.indexOf("</main>", start);
   return end > start ? html.slice(start, end) : null;
 }
 

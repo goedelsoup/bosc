@@ -1,10 +1,10 @@
 {
   "site": "west-union",
   "bundle_version": "1.0.0",
-  "contract_version": "2.0.0",
-  "generated_at": "2026-08-06T02:59:28+00:00",
-  "feed_count": 31,
-  "row_total": 399,
+  "contract_version": "2.1.0",
+  "generated_at": "2026-08-12T16:57:22+00:00",
+  "feed_count": 29,
+  "row_total": 400,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -205,7 +205,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 55
+      "count": 56
     },
     {
       "name": "facts",
@@ -222,14 +222,6 @@
       "schema": "schemas/impact-study.schema.json",
       "kind": "collection",
       "count": 15
-    },
-    {
-      "name": "passages",
-      "path": "feeds/passages.ndjson",
-      "media_type": "application/x-ndjson",
-      "schema": "schemas/passages.schema.json",
-      "kind": "collection",
-      "count": 0
     },
     {
       "name": "catalog-index",
@@ -260,14 +252,6 @@
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
-      "kind": "collection",
-      "count": 0
-    },
-    {
-      "name": "passage-embeddings",
-      "path": "feeds/passage-embeddings.ndjson",
-      "media_type": "application/x-ndjson",
-      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }

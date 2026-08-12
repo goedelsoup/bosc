@@ -3,9 +3,12 @@ import type { RecordItem } from "./feeds";
 
 /** Human labels for the contractor-agnostic record groups (mirrors nav.yaml). */
 export const RECORD_GROUP_LABELS: Record<string, string> = {
+  "agency-policy": "Agency policy — records availability & retention",
+  agreements: "Agreements — executed instruments",
   deeds: "Deeds",
   enforcement: "Enforcement — orders & decrees",
   finance: "Financing — loans & awards",
+  "incentive-package": "Incentive packages — per-site instrument registers",
   labor: "Labor — WARN closure & layoff notices",
   "land-assembly": "Land assembly — conveyance chains",
   litigation: "Litigation — filed court instruments",
@@ -15,6 +18,14 @@ export const RECORD_GROUP_LABELS: Record<string, string> = {
   "permits-npdes": "Permits — NPDES",
   "permits-sos": "Business filings — Secretary of State",
   plans: "Plans",
+  // Deliberately NOT "Permits — siting": a Letter of Notification under O.A.C. 4906-6-07 is an
+  // application with a live intervention docket, and one member exists to RETIRE a completed
+  // project from a site's load thread. The heading must be neutral about outcome (#1993).
+  "siting-cases": "Utility siting — cases & filings",
+  "state-legislation": "State legislation — General Assembly bills",
+  "statutory-notices": "Statutory notices — served & recorded",
+  tariffs: "Tariffs — filed electric rate sheets",
+  "wetland-determinations": "Wetland determinations — USACE data forms",
   opc: "Cost estimates (OPC)",
 };
 

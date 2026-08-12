@@ -1,7 +1,7 @@
 {
   "site": "sidney",
-  "catalog_version": "1a218593ce41870546f378e4d1280d3f956816a70c33f6d0f5b9e6984df748e8",
-  "contract_version": "2.0.0",
+  "catalog_version": "716bb644721553f0e7084798ece0657286f8104623eb0887d2d1fbbc18ea9ed8",
+  "contract_version": "2.1.0",
   "atoms": [
     {
       "handle": "concept:sidney:7q10",
@@ -1529,6 +1529,14 @@
       "site": "sidney",
       "local_id": "sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml",
       "title": "City of Sidney Resolution No. 27-26 — authorizing the City Manager to enter into a Development Agreement with Amazon Web Services, Inc., passed 2026-04-27",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/incentive-instruments.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/incentive-instruments.yaml",
+      "title": "Sidney \"Sidney Data Center Campus\" / Project Rey — the City's incentive, service and development instruments, as executed",
       "feed": "records"
     },
     {

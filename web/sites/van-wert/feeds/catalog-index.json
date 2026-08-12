@@ -1,7 +1,7 @@
 {
   "site": "van-wert",
-  "catalog_version": "0f8fac5fb1f3d9fde768d03c3d258bd82367041126a83777524dc4413546e1db",
-  "contract_version": "2.0.0",
+  "catalog_version": "d097bf5e1c3d21c7240fa1306d023f5ecc4389130217845a9050801ae531a99b",
+  "contract_version": "2.1.0",
   "atoms": [
     {
       "handle": "concept:van-wert:7q10",
@@ -1172,6 +1172,14 @@
       "feed": "entities"
     },
     {
+      "handle": "record:van-wert:grid/van-wert/van-wert-haviland-138kv.project.yaml",
+      "kind": "record",
+      "site": "van-wert",
+      "local_id": "grid/van-wert/van-wert-haviland-138kv.project.yaml",
+      "title": "The Van Wert–Haviland transmission line before the Ohio Power Siting Board — the approved rebuild (25-0697-EL-BLN) read through the route-adjustment Letter of Notification that restates it (26-0729-EL-BLN, filed 2026-07-27)",
+      "feed": "records"
+    },
+    {
       "handle": "record:van-wert:oepa/van-wert/2GC08872.approval.npdes.yaml",
       "kind": "record",
       "site": "van-wert",
@@ -1217,6 +1225,30 @@
       "site": "van-wert",
       "local_id": "oepa/van-wert/2PD00006.npdes.yaml",
       "title": "Van Wert WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:van-wert:van-wert/council/2026-05-11-ord-26-05-028-annexation.resolution.yaml",
+      "kind": "record",
+      "site": "van-wert",
+      "local_id": "van-wert/council/2026-05-11-ord-26-05-028-annexation.resolution.yaml",
+      "title": "City of Van Wert Ordinance 26-05-028 — accepting the expedited annexation of 901.698 ± acres from Hoaglin, Pleasant and Ridge Townships into the City of Van Wert, passed as an emergency on first and final reading 2026-05-11",
+      "feed": "records"
+    },
+    {
+      "handle": "record:van-wert:van-wert/council/2026-05-11-ord-26-05-029-data-center-code-amendment.resolution.yaml",
+      "kind": "record",
+      "site": "van-wert",
+      "local_id": "van-wert/council/2026-05-11-ord-26-05-029-data-center-code-amendment.resolution.yaml",
+      "title": "City of Van Wert Ordinance 26-05-029 — amending Code of Ordinances §150.03 to define \"Data Center\" and modify \"Public Service Facility\", and §150.15(h)(1) to add data centers as a permitted use in the I-2 General Industrial district, passed as an emergency on first and final reading 2026-05-11",
+      "feed": "records"
+    },
+    {
+      "handle": "record:van-wert:van-wert/council/2026-05-11-ord-26-05-030-conditional-zoning.resolution.yaml",
+      "kind": "record",
+      "site": "van-wert",
+      "local_id": "van-wert/council/2026-05-11-ord-26-05-030-conditional-zoning.resolution.yaml",
+      "title": "City of Van Wert Ordinance 26-05-030 — amending the City zoning map to designate 901.698 ± acres I-2 General Industrial on a conditional zoning petition filed under Code of Ordinances §150.12(C), passed as an emergency on first and final reading 2026-05-11",
       "feed": "records"
     },
     {

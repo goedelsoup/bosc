@@ -114,10 +114,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d9517f6572a6bafd9f99dc93c53cebc0d853d9700cc31383ed37364530c5c821",
-      "size_bytes": 335938,
+      "sha256": "80d2bda187156b977fe4feffbcd8efd99aad241937e8944c92b83f608282fc9f",
+      "size_bytes": 373954,
       "lfs_materialized": true,
-      "file_count": 13,
+      "file_count": 14,
       "stale": false,
       "asof": null
     },
@@ -1686,7 +1686,7 @@
     "producer_kind": "connector",
     "command": "reaches --write",
     "connector_ref": "watermark.hydrology.connectors.nldi",
-    "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages)",
+    "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages; Sidney's mainstem + Loramie gages plus two campus-drainage snaps)",
     "external_url": "https://api.water.usgs.gov/nldi",
     "license": "U.S. Government work (public domain)",
     "access_tier": "public",
@@ -1733,19 +1733,39 @@
         "relpath": "reference/hydrology/reaches/fort-wayne.geojson",
         "media_type": "application/geo+json",
         "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/sidney/reach-nav.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/sidney/network.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/sidney/reaches.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/reaches/sidney.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "4bf5c0cc9b20cd6671ca26cca0a199de3ecc4fa869dbf99354aa69636c8d654d",
-      "size_bytes": 161742,
+      "sha256": "4d56c2a5e0b226e3fd5eef015263bfb903d32921466effc75e3dffdb62d2e2bc",
+      "size_bytes": 253553,
       "lfs_materialized": true,
-      "file_count": 6,
+      "file_count": 10,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages)",
+      "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages; Sidney's mainstem + Loramie gages plus two campus-drainage snaps)",
       "source_kind": "connector",
       "page": null,
       "pages": null,
@@ -1857,8 +1877,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5291ce440bc0e1377050ab42863f5669553b5628ea71580ce2fd16405b60fc61",
-      "size_bytes": 32637,
+      "sha256": "9c96252f115d8d9ad79b3ca12b7901a3d099998a697716a878782ffe3f504814",
+      "size_bytes": 32636,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -2124,7 +2144,7 @@
     "site_scope": "state:OH",
     "cadence": "on-demand",
     "ttl_days": null,
-    "last_refreshed": "2026-07-11",
+    "last_refreshed": "2026-08-06",
     "tags": [
       "oepa",
       "npdes",
@@ -2201,8 +2221,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "b7cb1fadd57009ca92c4cbb371182d7141ea7ea3e72482c77742e9e90ffb167d",
-      "size_bytes": 14340,
+      "sha256": "2a70dd340cc5d6363b72f09e9bf11800f649b010fb5f0868db1ca168e0ecbeb2",
+      "size_bytes": 18502,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,

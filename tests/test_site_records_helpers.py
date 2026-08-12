@@ -138,3 +138,54 @@ def test_cited_pages_never_invents_a_page() -> None:
     # Junk in a hand-authored list is dropped, not coerced — `bool` is an `int` subclass, so a
     # stray `true` would otherwise become page 2.
     assert _cited_pages({"pages_read": [True, "4", None, -1, 5]}) == (6, None)
+
+
+def test_source_ref_resolves_the_analysis_and_connector_provenance_shapes() -> None:
+    """Three further shapes were in the corpus and used to resolve to nothing (#1993).
+
+    A record with no ``source_doc_rel`` cannot be followed to the instrument it was read from —
+    it stands alone on the page. 28 of the 32 records #1993 publishes carried a provenance
+    pointer the resolver simply did not know how to read.
+    """
+    # The analysis envelope: `provenance.source_path`, and a `provenance.sources` list.
+    assert _source_ref({"provenance": {"source_path": "data/documents/a.pdf"}}) == (
+        "data/documents/a.pdf"
+    )
+    assert _source_ref({"provenance": {"sources": ["data/documents/b.pdf"]}}) == (
+        "data/documents/b.pdf"
+    )
+    # The connector read: `meta.sources` is a dict of NAMED lists, so every list is scanned —
+    # not just `primary`, which is often absent.
+    assert _source_ref({"meta": {"sources": {"self_published": ["data/documents/c.pdf"]}}}) == (
+        "data/documents/c.pdf"
+    )
+    # A top-level `sources:` list of instrument blocks.
+    assert _source_ref({"sources": [{"file": "data/documents/d.pdf"}]}) == "data/documents/d.pdf"
+    # `meta.source_path` — last, so it can only fill a gap.
+    assert _source_ref({"meta": {"source_path": "data/documents/e.pdf"}}) == "data/documents/e.pdf"
+    # The two original shapes still win, in order.
+    assert _source_ref({"source_path": "x.pdf", "provenance": {"source_path": "y.pdf"}}) == "x.pdf"
+    assert _source_ref({}) is None
+
+
+def test_record_title_falls_back_to_the_documents_own_self_description() -> None:
+    """Below every payload probe, so it can only ever replace a filename stem (#1993).
+
+    Two shapes carry it: the digest envelope's top-level ``subject:`` (which ``_WORKING_NOTES``
+    strips from the payload, because it is the title and not a field) and a connector read's
+    ``meta.subject`` / ``meta.title``.
+    """
+    rec = _Record(rel="a/b.yaml", group="agreements", data={"subject": "The Thing"}, payload={})
+    assert _record_title(rec) == "The Thing"
+    rec = _Record(rel="a/b.yaml", group="tariffs", data={"meta": {"title": "Sheet 23"}}, payload={})
+    assert _record_title(rec) == "Sheet 23"
+    # A payload that resolves to a real identifier keeps it.
+    rec = _Record(
+        rel="a/b.yaml",
+        group="agreements",
+        data={"subject": "The Thing"},
+        payload={"entity_name": "ACME LLC"},
+    )
+    assert _record_title(rec) == "ACME LLC"
+    # Nothing to go on → the stem, never an invention.
+    assert _record_title(_Record(rel="a/b.yaml", group="opc", data={}, payload={})) == "b"

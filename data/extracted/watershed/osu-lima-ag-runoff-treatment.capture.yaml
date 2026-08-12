@@ -14,9 +14,17 @@ provenance:
 # This is a SECONDARY summary published by Allen SWCD, not the primary grant
 # instrument. Figures are as-stated on the page; the underlying grant agreement,
 # application, engineering design, and monitoring data are NOT in the corpus yet
-# (see corpus-completeness-audit.md §3 / open_followups below).
+# (see corpus-completeness-audit.md §3 / open_followups below). That disclosure is
+# restated inside `award.warnings` below, because a YAML comment cannot travel into
+# the published record and the record must carry it (#1993).
 
-grant:
+award:
+  warnings:
+  - >-
+    SECONDARY source. Every figure below is as-stated on a summary page published by
+    Allen SWCD (the grantee-administrator), not read off the primary grant instrument.
+    The grant agreement, the application, the engineering design and the monitoring
+    data are not in the corpus.
   project_name: OSU-Lima Branch Campus Agricultural Runoff Treatment System Project
   project_number: ALLENSWCD-FDFARM22
   also_titled: Ohio Agricultural Retention Treatment Systems   # per PI's CV
@@ -32,7 +40,10 @@ grant:
     OSU Sustainability Fund $155,000 (2022-2025), "Water management solutions for a
     long-term regenerative agriculture farming project at the OSU Lima Campus"
     (Shedekar Lead PI, Rehner, Lipschitz) — same campus farm. [verified: CV grant #14]
-  confidence: high       # dollar figure & project number high-confidence (printed); funding source cross-verified from PI CV
+  # The dollar figure and project number are printed and the funding source is cross-verified
+  # from the PI's CV — but the page they are printed on is the grantee's own summary, not the
+  # award instrument, so the record cannot claim `high` (#1993).
+  confidence: medium
 
 location:
   watershed_name: Lost Creek

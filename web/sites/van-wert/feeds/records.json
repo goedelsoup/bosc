@@ -1,5 +1,195 @@
 [
   {
+    "rel": "van-wert/council/2026-05-11-ord-26-05-028-annexation.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Van Wert Ordinance 26-05-028 — accepting the expedited annexation of 901.698 ± acres from Hoaglin, Pleasant and Ridge Townships into the City of Van Wert, passed as an emergency on first and final reading 2026-05-11",
+    "confidence": "high",
+    "warnings": [
+      "The source PDF is an UNSIGNED pre-passage upload with an unfilled passage clause, posted four days before the vote. Passage and the title as read rest on the approved minutes.",
+      "Read entirely by OCR of page images at 300-400 DPI; there is no text layer to check against."
+    ],
+    "fields": {
+      "instrument": "City of Van Wert Ordinance 26-05-028 — accepting the expedited annexation of 901.698 ± acres from Hoaglin, Pleasant and Ridge Townships into the City of Van Wert, passed as an emergency on first and final reading 2026-05-11",
+      "ordinance_no": "26-05-028",
+      "body": "Council of the City of Van Wert, Ohio",
+      "body_kind": "city_council",
+      "committee": "Judiciary and Annexation",
+      "subject_matter": "annexation",
+      "adopted": "2026-05-11",
+      "outcome": "approved",
+      "emergency": true,
+      "readings": "first and final (statutory rules suspended)",
+      "title_as_posted_verbatim": "AN ORDINANCE TO ACCEPT THE EXPEDITED TYPE 2 ANNEXATION OF 901.698+/- ACRES FROM HOAGLIN TOWNSHIP, PLEASANT TOWNSHIP, AND RIDGE TOWNSHIP TO THE CITY OF VAN WERT, OHIO AND DECLARING AN EMERGENCY.",
+      "title_as_passed_verbatim": "AN ORDINANCE TO ACCEPT THE EXPEDITED TYPE 1 ANNEXATION OF 901.698+/- ACRES FROM HOAGLIN TOWNSHIP, PLEASANT TOWNSHIP, AND RIDGE TOWNSHIP TO THE CITY OF VAN WERT, OHIO AND DECLARING AN EMERGENCY.",
+      "effect": "Accepts the annexation of 901.698 ± acres from three townships into the City of Van Wert; directs the Clerk to deliver certified copies to the County Auditor, the County Recorder and the Ohio Secretary of State.",
+      "vote": {
+        "roll_call_recorded": false,
+        "as_recorded_verbatim": "\"Agler seconded; all concurred. Ordinance passed.\"",
+        "note": "[verified] NO NUMERIC TALLY. The approved minutes record a second and \"all concurred\" — not a roll call and not a count. Every one of the three Mega Site ordinances passed this way."
+      },
+      "source_pages": {
+        "body": "26-05-028-draft-ordinance.pdf pp. 0-1",
+        "exhibits": "26-05-028.pdf pp. 0-9",
+        "passage": "5.11.26.pdf p. 3"
+      },
+      "what_this_instrument_does_not_establish": [
+        "WHICH EXPEDITED TYPE THE ENACTED ORDINANCE READS. The City's Law Director framed the difference as \"a typographical error in the agenda only\"; the record shows \"Type 2\" in three places (the 2026-04-27 committee motion, the posted ordinance title, the 2026-05-11 agenda as first published) and \"Type 1\" in one (the title as read at passage). It cannot be settled from any document in this corpus, because no signed or certified copy is public. The resolution route is a certified copy from the Clerk of Council, and/or the annexation transcript filed with the County Recorder and the Secretary of State under this ordinance's own Section 2.",
+        "THE ANNEXATION IS NOT A CONVEYANCE. This act moves a jurisdictional boundary; it transfers no title and names no grantor or grantee. Van Wert's record still carries no conveyance instrument for the Mega Site."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "van-wert/council/2026-05-11-ord-26-05-028-annexation.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "van-wert/council/26-05-028-draft-ordinance.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "van-wert/council/2026-05-11-ord-26-05-029-data-center-code-amendment.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Van Wert Ordinance 26-05-029 — amending Code of Ordinances §150.03 to define \"Data Center\" and modify \"Public Service Facility\", and §150.15(h)(1) to add data centers as a permitted use in the I-2 General Industrial district, passed as an emergency on first and final reading 2026-05-11",
+    "confidence": "high",
+    "warnings": [
+      "The source PDF is an UNSIGNED pre-passage upload with an unfilled passage clause, posted four days before the vote. Passage rests on the approved minutes.",
+      "Read entirely by OCR of page images at 300 DPI; there is no text layer to check against."
+    ],
+    "fields": {
+      "instrument": "City of Van Wert Ordinance 26-05-029 — amending Code of Ordinances §150.03 to define \"Data Center\" and modify \"Public Service Facility\", and §150.15(h)(1) to add data centers as a permitted use in the I-2 General Industrial district, passed as an emergency on first and final reading 2026-05-11",
+      "ordinance_no": "26-05-029",
+      "body": "Council of the City of Van Wert, Ohio",
+      "body_kind": "city_council",
+      "committee": "Judiciary and Annexation",
+      "subject_matter": "zoning_text_amendment",
+      "adopted": "2026-05-11",
+      "outcome": "approved",
+      "emergency": true,
+      "readings": "first and final (statutory rules suspended)",
+      "title_verbatim": "AN ORDINANCE TO AMEND VAN WERT CODE OF ORDINANCES SECTION 150.03 TO ADD THE TERM \"DATA CENTER\" AS A DEFINED TERM AND TO MODIFY THE DEFINITION OF THE TERM \"PUBLIC SERVICE FACILITY\", TO AMEND VAN WERT CODE OF ORDINANCES SECTION 150.15(h)(1) BY ADDING DATA CENTERS AS A PERMITTED USE IN THE I-2 GENERAL INDUSTRIAL ZONING CLASSIFICATION, AND DECLARING AN EMERGENCY.",
+      "effect": "Writes \"Data Center\" into the Van Wert Code of Ordinances for the first time, adds it to the I-2 General Industrial permitted-use list, and rewrites the \"Public Service Facility\" definition.",
+      "new_definition_verbatim": "\"Data Center. A facility comprised of a building or group of buildings designed to incorporate a large number of computer servers used for the storage of, processing, and distribution of large amounts of data, and the accessory equipment and structures necessary to support the critical functions of the facility such as (but not limited to) generators, cooling towers, fuel storage, and electrical equipment.\"",
+      "definition_note": "[verified] The City's own definition names GENERATORS, COOLING TOWERS and FUEL STORAGE as accessory equipment a data center is expected to carry — written into the code in the same sitting that approved a campus the record elsewhere describes as closed-loop and non-evaporative. The definition is generic and permits an evaporative build; it is not a constraint on this campus and does not contradict the closed-loop disclosures. Recorded because the code text, not the press release, is what binds the next applicant.",
+      "public_service_facility_change": "[verified] The amended §150.03 definition adds a footnote to \"power plants or substations\": \"*These facilities can only be operated in the I-2 zoning district.\" Generation and substation siting citywide was narrowed to I-2 in the same ordinance that made data centers an I-2 use.",
+      "permitted_use_list_as_amended": [
+        "General manufacturing",
+        "Manufacturing, sale and storage of building materials",
+        "Transport and trucking terminals",
+        "Wholesale business",
+        "Warehousing",
+        "Food processing",
+        "Public service facility",
+        "Grain elevators and feed mills",
+        "Sexually oriented businesses, subject to § 150.51",
+        "Homeless shelter",
+        "Emergency shelter",
+        "Drop in center",
+        "Permanent supportive housing",
+        "Transitional housing",
+        "Data Center"
+      ],
+      "vote": {
+        "roll_call_recorded": false,
+        "as_recorded_verbatim": "\"Moore seconded; all concurred. Ordinance passed.\"",
+        "note": "[verified] NO NUMERIC TALLY — a second and \"all concurred\", not a roll call and not a count."
+      },
+      "source_pages": {
+        "body": "26-05-029-draft-ordinance.pdf pp. 0-1",
+        "exhibit_a": "26-05-029.pdf pp. 2-3",
+        "passage": "5.11.26.pdf p. 4"
+      },
+      "what_this_instrument_does_not_establish": [
+        "IT IMPOSES NO CONDITION ON A DATA CENTER. The amendment defines the use and permits it in I-2; it sets no water, discharge, noise, height, lighting or generator condition of any kind. Whatever conditions bind this campus are in Ordinance 26-05-030's Exhibit C, which contains only a landscape mound.",
+        "IT NAMES NO OPERATOR. The definition and the use-list entry are generic code text. Nothing in this ordinance joins the term to QTS, to any tenant, or to the annexed acreage."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "van-wert/council/2026-05-11-ord-26-05-029-data-center-code-amendment.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "van-wert/council/26-05-029-draft-ordinance.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "van-wert/council/2026-05-11-ord-26-05-030-conditional-zoning.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Van Wert Ordinance 26-05-030 — amending the City zoning map to designate 901.698 ± acres I-2 General Industrial on a conditional zoning petition filed under Code of Ordinances §150.12(C), passed as an emergency on first and final reading 2026-05-11",
+    "confidence": "high",
+    "warnings": [
+      "The source PDF is an UNSIGNED pre-passage upload with an unfilled passage clause, posted four days before the vote. Passage rests on the approved minutes.",
+      "Read entirely by OCR of page images; the Exhibit-A pages are photocopies of photocopies and needed 450-500 DPI re-renders. There is no text layer to check against."
+    ],
+    "fields": {
+      "instrument": "City of Van Wert Ordinance 26-05-030 — amending the City zoning map to designate 901.698 ± acres I-2 General Industrial on a conditional zoning petition filed under Code of Ordinances §150.12(C), passed as an emergency on first and final reading 2026-05-11",
+      "ordinance_no": "26-05-030",
+      "body": "Council of the City of Van Wert, Ohio",
+      "body_kind": "city_council",
+      "committee": "Judiciary and Annexation",
+      "subject_matter": "rezoning",
+      "adopted": "2026-05-11",
+      "outcome": "approved",
+      "emergency": true,
+      "readings": "first and final (statutory rules suspended)",
+      "petition_filed": "2026-03-09",
+      "title_verbatim": "AN ORDINANCE TO AMEND THE CITY OF VAN WERT ZONING MAP BY APPROVING A CONDITIONAL ZONING PETITION FILED PURSUANT TO VAN WERT CODE OF ORDINANCES SECTION 150.12 (C) TO DESIGNATE CERTAIN REAL PROPERTY CONSISTING OF 901.698+/- ACRES WITH THE I-2, GENERAL INDUSTRIAL ZONING CLASSIFICATION AND DECLARING AN EMERGENCY.",
+      "effect": "Classifies the 901.698 ± acres as I-2 General Industrial and requires the buffering in Exhibit C where development differs from adjacent residential use.",
+      "conditions_exhibit_c": {
+        "tag": "verified",
+        "source": "26-05-030.pdf p. 11",
+        "summary": "A minimum six-foot mound along each perimeter boundary abutting residentially used or zoned property, carrying a mixed deciduous/evergreen/shrub landscape buffer reaching 75% opacity five years after planting to a total height of 12 feet above ground level. Installed within the minimum pavement setback, may extend inward. A parcel separated only by a public street right-of-way still counts as abutting. Utilities and access drives may cross the buffer. Required ONLY where a parking area, structure, building or permanent equipment will sit within 1,000 linear feet of the shared perimeter. Installed by the earlier of 60 days after pavement, or before any vertical construction.",
+        "what_it_does_not_contain": "[verified] This is the whole of Exhibit C, and Exhibit C is the whole of the \"conditional\" in the conditional zoning. It sets NO noise limit, NO height limit, NO water-supply or discharge condition, NO hours-of-construction limit, NO lighting standard, and no setback beyond the zoning minimum. Read this as a recorded absence in the instrument — the City may hold such conditions elsewhere (a development agreement, a building permit), and none is in the corpus."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "as_recorded_verbatim": "\"Agler seconded; all concurred. Ordinance passed.\"",
+        "note": "[verified] NO NUMERIC TALLY — a second and \"all concurred\", not a roll call and not a count."
+      },
+      "source_pages": {
+        "body": "26-05-030-draft-ordinance.pdf pp. 0-1",
+        "exhibits": "26-05-030.pdf pp. 0-11",
+        "passage": "5.11.26.pdf p. 4"
+      },
+      "what_this_instrument_does_not_establish": [
+        "THE CONDITIONS ARE A LANDSCAPE MOUND AND NOTHING ELSE. See `conditions_exhibit_c .what_it_does_not_contain`. A reader who sees \"conditional zoning\" and infers a negotiated set of operating limits will be wrong about this instrument.",
+        "IT NAMES NO OPERATOR AND NO LOAD. The ordinance rezones acreage; it states no megawatt figure, no water demand and no tenant."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "van-wert/council/2026-05-11-ord-26-05-030-conditional-zoning.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "van-wert/council/26-05-030-draft-ordinance.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "oepa/van-wert/2GC08872.approval.npdes.yaml",
     "group": "permits-npdes",
     "title": "QTS Data Center",
@@ -286,5 +476,282 @@
     "source_doc_rel": "oepa/van-wert/2PD00006.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": true
+  },
+  {
+    "rel": "grid/van-wert/van-wert-haviland-138kv.project.yaml",
+    "group": "siting-cases",
+    "title": "The Van Wert–Haviland transmission line before the Ohio Power Siting Board — the approved rebuild (25-0697-EL-BLN) read through the route-adjustment Letter of Notification that restates it (26-0729-EL-BLN, filed 2026-07-27)",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "meta": {
+        "subject": "The Van Wert–Haviland transmission line before the Ohio Power Siting Board — the approved rebuild (25-0697-EL-BLN) read through the route-adjustment Letter of Notification that restates it (26-0729-EL-BLN, filed 2026-07-27)",
+        "kind": "transmission-project",
+        "site": "van-wert",
+        "captured_for": "issue 1408 (epic 1267, readiness(van-wert) — the standing pre-construction watch)",
+        "extracted_at": "2026-08-05",
+        "applicant": "AEP Ohio Transmission Company, Inc.",
+        "method": "The Adjustment LON and its statutory public notice were pulled from the applicant's own project site after PUCO/OPSB's docketing system refused automated retrieval for the fourth time. The LON's nine narrative pages (0-8 of 612) were read from the PDF text layer and are transcribed below with page citations; the remaining 600 pages are map exhibits and easement forms. The file is not committed — it is 88.7 MB — but its sha256 is pinned in data/documents/grid/van-wert/filename-map.yaml, so every quotation here is checkable against exactly the bytes that were read. The public notice IS committed.",
+        "sources": [
+          {
+            "id": "adj-lon",
+            "what": "Letter of Notification, Van Wert–Haviland 138 kV Transmission Line Adjustment Project",
+            "case": "26-0729-EL-BLN",
+            "dated": "2026-07-27",
+            "pages": 612,
+            "committed": false,
+            "read_at": "2026-08-05"
+          },
+          {
+            "id": "adj-pn",
+            "what": "NOTICE OF PROPOSED MAJOR UTILITY FACILITY (the OAC 4906-6-08 public notice)",
+            "case": "26-0729-EL-BLN",
+            "committed": true,
+            "relpath": "data/documents/grid/van-wert/VanWert-Haviland-Adjustment-PublicNotice.pdf"
+          }
+        ]
+      },
+      "dockets": {
+        "original": {
+          "case": "25-0697-EL-BLN",
+          "name": "Van Wert–Haviland 138 kV Transmission Line Project",
+          "track": "Letter of Notification (accelerated), OAC 4906-6-05",
+          "filed": "2025-08-25",
+          "approved": "2025-11-21",
+          "built": false,
+          "tag": "[verified]",
+          "source": "adj-lon p. 1",
+          "verbatim": "\"On August 25, 2025, AEP submitted a Letter of Notification (LON) to OPSB for the Van Wert–Haviland 138 Kilovolt (kV) Transmission Line Project (Project) … The Project was approved by OPSB on November 21, 2025 (OPSB Case No. 25-0697-EL-BLN) but has yet to be constructed.\"",
+          "what_this_corrects": {
+            "tag": "[verified]",
+            "statement": "The register carried this case as unresolved — the 2026-07-10 sweep recorded it as the only grid artifact and press described the LON as awaiting review. It was approved eight months ago. The status was not unknown; it was unlooked-for, because the only route anyone had tried was the blocked one."
+          }
+        },
+        "adjustment": {
+          "case": "26-0729-EL-BLN",
+          "name": "Van Wert–Haviland 138 kV Transmission Line Adjustment Project",
+          "track": "Letter of Notification (accelerated), OAC 4906-6-05",
+          "filed": "2026-07-27",
+          "status": "awaiting OPSB review as of 2026-08-05",
+          "tag": "[verified]",
+          "source": "adj-lon p. 0; adj-pn",
+          "scope": "Minor modifications to the approved centerline and right-of-way — shifts of approximately 10 to 60 feet in three distinct locations, adjusting about 0.6 mile of the line, in the city of Van Wert and portions of Ridge and Pleasant Townships, Van Wert County.",
+          "intervention_deadline": {
+            "tag": "[open]",
+            "why": "The notice gives OPSB 10 days from \"the publication date of this notice\" for motions to intervene, and publication is in a newspaper of general circulation. The captured sheet prints no date of its own. The LON's promise to notice within 7 days of filing brackets publication to on or before 2026-08-03 — a bracket, not a date. Do not compute the deadline from the PDF metadata or the fetch time."
+          }
+        }
+      },
+      "facility": {
+        "tag": "[verified]",
+        "source": "adj-lon pp. 1, 3, 6",
+        "existing_line": {
+          "voltage_kv": 69,
+          "circuits": 1,
+          "length_miles": "~11",
+          "structures": "wooden monopoles",
+          "installed": 1926,
+          "partially_rebuilt": 1974,
+          "conductor_installed": 1926,
+          "connects": "Haviland 138/69 kV Station → Van Wert 69 kV Station (Paulding and Van Wert Counties)"
+        },
+        "rebuilt_as": {
+          "circuits": 2,
+          "designed_kv": 138,
+          "initially_operated_kv": 69,
+          "structures": "steel monopoles (replacing wood)",
+          "length_miles": 10.9,
+          "within_existing_row_miles": 8.7,
+          "within_new_row_miles": 2.2,
+          "conductors": "6 × 1033 kcmil Curlew 54/7 ACSR",
+          "static_wire": "2 × 7#8 Alumoweld",
+          "row_width_ft": 100
+        },
+        "the_correction_that_matters": {
+          "tag": "[verified]",
+          "statement": "This corpus, the register and the onboarding notes all describe this as a \"138 kV line\" or a \"69-kV→138-kV rebuild\". The instrument is narrower and the difference is operational, not cosmetic: the line is being rebuilt as a double circuit **designed** at 138 kV and **initially operated at 69 kV**. On energization it is still a 69 kV line. Calling it a 138 kV line describes its design rating, not the voltage it will run at, and anyone reading the corpus for delivered capacity would be misled. When it is actually cut over to 138 kV, and on what instrument, is [open]."
+        }
+      },
+      "schedule": {
+        "tag": "[verified]",
+        "source": "adj-lon p. 5; adj-pn",
+        "construction_begins": "2026-10",
+        "in_service": "2028-03",
+        "note": "The public notice states the same window less precisely as \"fall 2026\" to \"early 2028\". Press coverage at the original filing said construction would begin in 2025 and conclude late 2026 — that schedule is superseded by roughly fifteen months at the far end, on the applicant's own filing. The site's press-derived timeline was wrong here in the same direction, and for the same reason, as the campus construction timeline #1402 corrected."
+      },
+      "cost": {
+        "tag": "[verified]",
+        "source": "adj-lon p. 7",
+        "estimate_usd": 45877232,
+        "basis": "Class 4 estimate, for the entire Project including the Adjustment Project",
+        "consistency": "\"This amount is consistent with the estimate included in the original OPSB application\" — so the figure covers 25-0697-EL-BLN's full scope, not the adjustment alone.",
+        "recovery": {
+          "tag": "[verified]",
+          "verbatim": "\"Pursuant to the PJM Open Access Transmission Tariffs, Project costs will be recovered in the Company's Federal Energy Regulatory Commission formula rate (Attachment H-20 to the PJM Open Access Transmission Tariffs) and allocated to the AEP Zone.\""
+        },
+        "what_it_settles": {
+          "tag": "[verified]",
+          "statement": "The register carried two unreconciled transmission-cost figures: \"$45M\" for this case, and \"$72 million\" from County Commissioner Thad Lichtensteiger's written comment at the 2026-05-04 hearing. The instrument's own number is $45,877,232, and it is the whole project. The $45M half of that conflict is now [verified] and sourced. The $72M remains unsourced — it may cover a different scope (distribution, substation, or campus-side works that are not this line), and it is not refuted here, only left where it was: a figure a commissioner stated without attribution."
+        },
+        "what_it_does_not_settle": {
+          "tag": "[inference]",
+          "statement": "QTS states it will fund 100% of the grid/energy infrastructure upgrades \"at no cost to existing ratepayers\". This line's $45.9M is recovered through a FERC formula rate and allocated to the AEP Zone — that is, from transmission ratepayers, not from a developer. Those two statements are not yet in conflict, because they are about different things: this is a baseline reliability rebuild AEP justifies on a PJM violation, not a campus interconnection, and QTS's claim is about its own interconnection works. But AEP's own Statement of Need also justifies this line by the Mega Site's load growth. Whether any Mega-Site-driven scope sits inside a ratepayer-recovered project is the question this raises and cannot answer; it is a lead, not a finding. The instrument that would answer it is the campus's interconnection or service agreement, which is not on the record."
+        }
+      },
+      "statement_of_need": {
+        "source": "adj-lon pp. 3-4 (the Adjustment LON restates the original Project's need verbatim)",
+        "engineering_driver": {
+          "tag": "[verified]",
+          "verbatim": "\"The Project (b3359) is required to address baseline thermal criteria violations identified by PJM Interconnection, LLC (PJM) in the 2026 Regional Transmission Expansion Plan summer model, on approximately 1.7 miles of the existing single circuit Van Wert–Haviland 69 kV Transmission Line from the North Van Wert Switch to a structure just north of U.S. Highway 30. The specific violation identified by PJM in the 2026 Regional Transmission Expansion Plan modeling from the loss of Haviland–South Van Wert 69 kV line and the North Delphos 138/69 kV transformer #1 scenario, which causes an overload on the Van Wert–North Van Wert 69 kV single circuit line.\"",
+          "pjm_project_numbers": {
+            "baseline": "b3359",
+            "supplemental": "s3142"
+          },
+          "also_cited": "AEP Ohio's 2025 Long-Term Forecast Report, pages 49 (b3359) and 76-77 (s3142), attached to the LON as Appendix B. Not held in this corpus; a clean, named pull.",
+          "without_the_project": "\"significant load shedding may be required to maintain safe and reliable operation of the transmission and distribution system under the identified thermal overload conditions.\""
+        },
+        "the_mega_site_paragraph": {
+          "tag": "[verified]",
+          "why_it_matters": "THIS IS THE SENTENCE THE CORPUS DID NOT HAVE. Until now the link between this transmission project and the Van Wert Mega Site rested on press coverage, and the register said so. It now rests on the applicant's own filing with the siting board.",
+          "verbatim": "\"The Van Wert Mega Site, an industrial site north of Van Wert, has seen a significant increase in requests for service over the past several years, with 30 requests for transmission service received in the past year. Many of the prospective customers cannot be served by the existing Van Wert area 69 kV network because the load request is too large and would require significant upgrades to the network area. In addition, the site has been certified in Ohio's Job Ready program and has been aggressively marketed. The Project will enable the Company to provide greater flexibility to serve identified load growth at the site.\"",
+          "and_again_on_p4": "\"Furthermore, upgrading the Haviland–Van Wert 69 kV Line will provide greater flexibility in serving the high-priority Van Wert Mega Site and will help draw customers to the Van Wert area.\"",
+          "the_number": 30,
+          "the_number_means": {
+            "tag": "[verified]",
+            "statement": "Thirty requests for TRANSMISSION SERVICE at the Mega Site in the year before the filing — a utility's own count, on a siting filing, of how many prospective customers approached this one industrial site. It is the first quantification of developer interest in the Mega Site from any source other than the developers themselves, and it is a much larger number than the single announced tenant would suggest.",
+            "what_it_is_not": "It is NOT thirty data centers, NOT thirty signed customers, and NOT a megawatt figure. \"Requests for service\" is an inquiry count. The filing gives no year boundaries beyond \"the past year\", no applicant names, and no sizes. Reading it as a pipeline of thirty campuses would be inventing a finding out of a denominator."
+          }
+        },
+        "what_it_still_refuses": {
+          "tag": "[verified]",
+          "statement": "A keyword scan of all 612 pages of the LON returns ZERO occurrences of \"QTS\" and zero of \"data center\". The campus's operator, its announced $10B investment, its 500 MW press bracket and its 2026 annexation appear nowhere in the filing. The Mega Site enters this instrument as a marketed industrial site with load-growth potential — which is what it was before QTS, and what the 2014-2016 Pre-Annexation Agreements (#1401) suggest it was being groomed to be. This filing therefore does NOT ground the campus's load and does not move `SiteFacility.is_instrument_grounded`. The 500 MW stays a `[reference]` bracket."
+        }
+      },
+      "affected_properties": {
+        "source": "adj-lon p. 6, Table 1 — \"Parcels Affected by the Adjustment Project\"",
+        "tag": "[verified]",
+        "table": [
+          {
+            "parcel": "120314600000",
+            "agreement": "Existing Rights Adequate",
+            "obtained": true,
+            "asterisk": false
+          },
+          {
+            "parcel": "120314680000",
+            "agreement": "New Easement",
+            "obtained": false,
+            "asterisk": false
+          },
+          {
+            "parcel": null,
+            "agreement": "New Easement",
+            "obtained": true,
+            "asterisk": true,
+            "note": "printed as \"Parcel with no Parcel Identification Number\""
+          },
+          {
+            "parcel": "120344520200",
+            "agreement": "Supplemental Easement",
+            "obtained": false,
+            "asterisk": true
+          },
+          {
+            "parcel": "120344520202",
+            "agreement": "New Easement",
+            "obtained": true,
+            "asterisk": true
+          },
+          {
+            "parcel": "120344520100",
+            "agreement": "New Easement",
+            "obtained": true,
+            "asterisk": true
+          },
+          {
+            "parcel": "170347180000",
+            "agreement": "New Easement",
+            "obtained": true,
+            "asterisk": true
+          },
+          {
+            "parcel": "120344527803",
+            "agreement": "New Easement",
+            "obtained": true,
+            "asterisk": false
+          }
+        ],
+        "the_campus_parcel": {
+          "tag": "[verified]",
+          "parcel_dashless": "170347180000",
+          "parcel_id": "17-034718.0000",
+          "finding": "Table 1's seventh row is a QTS campus parcel. `170347180000` is the dashless form of `17-034718.0000`, the 362.23-acre parcel that data/reference/van-wert/parcel-assemblage.geojson carries with `owner: QTS VAN WERT LLC` and `parcel_id_dashless: '170347180000'` — an exact string match against the committed geometry, not a reconstruction. It is the largest of the five deeded campus parcels. The table records a New Easement across it, obtained.",
+          "what_this_establishes": "A land relationship, on a regulatory filing: AEP Ohio Transmission holds a transmission easement across the QTS campus. Together with the Statement of Need this is the second independent, instrument-grade tie between this project and the Mega Site, and the first that touches the campus's own deeded ground rather than the site in general.",
+          "what_this_does_not_establish": "That the line serves the campus. A transmission line crossing a parcel is a crossing. This line runs Haviland → Van Wert Substation to fix a PJM thermal violation; the easement lets it cross. No interconnection, no service agreement, no delivery point and no load follows from it, and none is in the filing.",
+          "when_the_easement_arose": {
+            "tag": "[open]",
+            "why": "The asterisk that would answer this is unreliable. Its own footnote reads \"*Included in approved OPSB filling application Case No. 26-0729-EL-BLN\" — but 26-0729 is THIS filing, which awaits review and is not approved; the approved case is 25-0697. The footnote therefore either misnames the case or misuses \"approved\", and it cannot be leaned on to say whether the campus easement predates the adjustment. Recorded, not resolved. The original 25-0697 LON (not pulled) carries its own affected-properties table and would settle it — and would also show whether the easement predates the campus's June 2026 deeds, which is the more interesting question."
+          }
+        }
+      },
+      "adjustments": {
+        "source": "adj-lon pp. 1-2",
+        "tag": "[verified]",
+        "items": [
+          {
+            "id": 1,
+            "where": "just outside the Van Wert Substation",
+            "driver": "\"At the request of the property owner located north of the substation, the approved centerline and ROW were realigned to the southeast and east of the station. This adjustment increases the impact to a landowner impacted by the original Project but would accommodate future land use development proposed by the owner of the parcel where the approved ROW is located.\"",
+            "owner": {
+              "tag": "[open]",
+              "note": "The filing does not name the property owner, and identifying them from the Table 1 parcel list is not attempted here. It is tempting to read \"future land use development proposed by the owner\" as the campus, and that reading is NOT established — the campus is one of several possible owners north of the substation and the filing draws no such line. The route that settles it: Appendix A Exhibit 3 (the 1:6,000 aerial, in the uncommitted LON) shows the adjusted alignment against parcel boundaries; the county CAMA gives the owner."
+            }
+          },
+          {
+            "id": 2,
+            "where": "~0.5 mile northeast of the Van Wert Substation, at U.S. Highway 30",
+            "driver": "ODOT DENIED the originally proposed crossing of U.S. 30 and requested it be relocated farther east. The centerline and ROW were realigned eastward over ~0.3 mile south of U.S. 30, \"while staying west of the solar farm fence line\", shifting 10 to 50 feet.",
+            "note": "A second state agency's denial is the reason this adjustment exists. Also the first appearance of a SOLAR FACILITY adjacent to the Van Wert Substation in this corpus — p. 7 lists land use near the adjustments as \"agricultural land used for row crops, a solar facility, and a recycling facility\". The solar facility is unnamed and unsized here; it is a lead, not a record."
+          },
+          {
+            "id": 3,
+            "where": "east of the State Route 127 / railroad intersection, ~0.5 mile north of U.S. Highway 30",
+            "driver": "The approved ROW traversed the City of Van Wert recycling center, whose planned expansion would have conflicted. Realigned ~60 feet southeast, adding one newly affected owner (parcel 120344527803) who was not affected by the approved project."
+          }
+        ]
+      },
+      "ecology": {
+        "tag": "[verified]",
+        "source": "adj-lon pp. 5, 7",
+        "forested_impact_acres": 1.52,
+        "emf": "\"Not applicable. No occupied residences or institutions are within 100 feet of the route adjustments.\"",
+        "avoided": "wetlands, streams, and known cultural resources eligible for NRHP listing",
+        "land_use_near_adjustments": "agricultural row crops, a solar facility, and a recycling facility"
+      },
+      "the_345kv_thread": {
+        "tag": "[verified negative]",
+        "checked_on": "2026-08-05",
+        "question": "Issue #1408 watched for an \"OPSB Mega Site substation / 345 kV tap\" — the instrument a campus of this announced scale would eventually need.",
+        "finding": "No such filing exists. The only 345 kV asset in the LON's 612 pages is an EXISTING line labelled on the Exhibit 3 map sheets as \"East Lima – Sorenson (OP) 345 kV Line\". AEP's own Ohio regulatory-filings index lists one other 345 kV item touching Van Wert County — the East Lima–Maddox Creek RECONDUCTORING project, an upgrade of existing conductor across Allen, Van Wert and Putnam Counties, not a new station and not a tap. No new substation, no tap, and no campus interconnection filing is on the record for the Van Wert Mega Site as of this check.",
+        "why_the_negative_is_worth_something": "The campus's own construction-stormwater NOI puts earthwork start at 2026-08-03 and completion at 2030-08-03 (#1402), and a 345 kV delivery point for a load of the announced scale is a multi-year OPSB proceeding. Its continued absence is a real constraint on the announced timeline, not merely a gap in our searching — and it is the single grid instrument whose arrival would most change this site's record.",
+        "positive_control": "The route demonstrably surfaces Van Wert transmission filings: the same applicant page and the same regulatory index returned two live Van Wert cases (25-0697, 26-0729), one of them filed nine days before this check. The zero is a zero."
+      }
+    },
+    "approximate_paths": [
+      "adjustments.items.1.where",
+      "facility.existing_line.length_miles"
+    ],
+    "citation": {
+      "source": "grid/van-wert/van-wert-haviland-138kv.project.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
   }
 ]

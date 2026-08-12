@@ -1,7 +1,7 @@
 {
   "site": "west-union",
-  "catalog_version": "990b05a522214711ec1f6d71196d14415c71f9a21fe1d27e6437894ad9f898ca",
-  "contract_version": "2.0.0",
+  "catalog_version": "5b67fe49cbb23c656fbbbb040d52307cbcdbf7b42524f3d1a168166bb0dee731",
+  "contract_version": "2.1.0",
   "atoms": [
     {
       "handle": "concept:west-union:7q10",
@@ -665,6 +665,14 @@
       "site": "west-union",
       "local_id": "datacenter-industry",
       "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:echo-ohio-brush-creek-wwtp",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "echo-ohio-brush-creek-wwtp",
+      "title": "Ohio Brush Creek-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {

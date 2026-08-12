@@ -641,15 +641,64 @@ from watermark.sites import (
 #   The TIER drops to the four record-bearing domains (`backdrop`/`facility`/`places`/`record`);
 #   `inquiry` is reported and never gates. On the committed cohort that PROMOTES two sites —
 #   fort-wayne and wpafb, both already carrying all four live — and demotes none.
-CONTRACT_VERSION = "2.0.0"
+# 2.1.0: the `records` feed's closed RecordGroup enum gains EIGHT genres, closing the gap between
+#   the record a site holds and the record a site shows (#1993). `watermark.site.records._classify`
+#   recognized 137 of the 263 committed extractions and missed 126; a triage of all 126 against the
+#   taxonomy's own rules publishes 32 and excludes 97 (meetings-pipeline machinery, analysis
+#   digests, standing watches, derived footprints, custody manifests, documented absences — each
+#   verified against the code that consumes it), with the remainder spun out. The eight:
+#   * `siting-cases` — a filing in a state utility-siting proceeding for ONE delivery point: an
+#     OPSB certificate application or Letter of Notification, a construction notice, a Staff Report
+#     of Investigation, or the PJM M-3 need that motivates them. Deliberately OUTSIDE the
+#     `permits-*` family and neutral about outcome: an LON under O.A.C. 4906-6-07 is an APPLICATION
+#     with a live intervention docket, and a "Permits —" heading would tell a reader a 29-mile
+#     345 kV line is permitted when the case is pending.
+#   * `tariffs` — a filed retail electric tariff sheet read verbatim at sheet-and-page level (a
+#     Schedule DCT, a Rate GT territory definition). It is neither an authorization nor an award:
+#     it is the price and the conditions a utility has on file for a class of load.
+#   * `agreements` — an executed instrument between a public body and a private party: a mutual
+#     NDA, a roadwork development agreement, an intergovernmental wastewater treatment agreement, a
+#     statutory Community Reinvestment Area agreement. `finance` (`award:`) is a grant or contract
+#     AWARD, and filing a 75%/15-year R.C. 3735.65 exemption there would present an exemption as a
+#     grant — the misfiling #1724 refused; `local-legislation` is the ACT that authorized the
+#     contract, not the contract.
+#   * `incentive-package` — a per-site REGISTER of the incentive and development instruments for
+#     one campus: the executed agreements plus the legislative chain that authorized them. Distinct
+#     from `agreements` for the same reason `land-assembly` is distinct from `deeds` — a record is
+#     one per FILE, and a register cannot honestly be presented as a single executed instrument.
+#   * `state-legislation` — a General Assembly bill read section by section against its own printed
+#     text. NOT `local-legislation`, whose whole discriminator is that a LOCAL body voted it and
+#     journalled it in its own minutes; a statewide bill is a different level of government and, as
+#     introduced, is not law at all.
+#   * `wetland-determinations` — a USACE Wetland Determination Data Form: a dated field delineation
+#     at one sampling point. NOT `permits-epa`, which is an agency ACTION: the form is filled by the
+#     APPLICANT'S consultant, and this corpus's own copy records a USACE field scientist disagreeing
+#     with its negative finding. The corpus loader keeps `wetlands` separate from `actions` for the
+#     same reason.
+#   * `statutory-notices` — a notice a party must SERVE or RECORD under a named R.C. section as a
+#     precondition to a private act: an R.C. 1311.04 Notice of Commencement, an R.C. 3735.671 /
+#     5709.83 notice served on a school district before a tax exemption.
+#   * `agency-policy` — an adopted, signed public-records availability and retention policy of a
+#     public body, produced in a records request. Dated, adopted and signed, so an instrument — but
+#     `plans` is a plan document, `local-legislation` is an act journalled in minutes, and the
+#     `permits-*` family is authorizations.
+#   Enum growth is additive for feed READERS (a pre-2.1 records.json stays valid) but a pre-2.1
+#   records.schema.json rejects the new group values, and `RecordGroup` is ENFORCED — `watermark
+#   export` raises for an affected site until the enum lands, so enum, frontend labels, schema
+#   regeneration and the committed bundles are one atomic change. MINOR, back-compatible for data,
+#   schema refresh required.
+CONTRACT_VERSION = "2.1.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
 # unchanged.
 RecordGroup = Literal[
+    "agency-policy",
+    "agreements",
     "deeds",
     "enforcement",
     "finance",
+    "incentive-package",
     "labor",
     "land-assembly",
     "litigation",
@@ -659,6 +708,11 @@ RecordGroup = Literal[
     "permits-npdes",
     "permits-sos",
     "plans",
+    "siting-cases",
+    "state-legislation",
+    "statutory-notices",
+    "tariffs",
+    "wetland-determinations",
     "opc",
 ]
 # What the frontend document viewer dispatches on — derived from the *real* file

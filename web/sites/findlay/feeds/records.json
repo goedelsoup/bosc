@@ -200,14 +200,6 @@
     "confidence": null,
     "warnings": [],
     "fields": {
-      "as_of": "2026-07-31",
-      "site": "findlay",
-      "strengthens": [
-        "record",
-        "story"
-      ],
-      "issue": "watermark-directory/the-watermark-directory#1463",
-      "epic": "watermark-directory/the-watermark-directory#1265",
       "source": {
         "instrument": "appellate-opinion",
         "file": "data/documents/legal/one-energy-v-allen-twp/2026-Ohio-405.pdf",
@@ -358,11 +350,6 @@
           "detail": "The opinion's entire factual account — turbines, a road renaming, a zoning commission — runs from late 2023 through December 2024 without a single reference to data centers or computing load. The data-center question arrives in Allen Township only in 2026, after the resolution is already adopted and awaiting a referendum. That sequencing is why the adopted resolution has no data-center provision to be found: it was not drafted against that use.\n"
         }
       ],
-      "corrections_to_issue_body": [
-        "The issue body compresses \"resident petitions (141 signatures, BOE-certified 2024-02-26)\" into the causal chain, but ¶13 is explicit that the Board did NOT proceed on the petitions: \"Despite the petitions that had been submitted, the Board elected to proceed with zoning through their own resolution.\" The petitions were certified and presented; the trustees then used their own R.C. 519 track instead.\n",
-        "The issue body gives no appellate case numbers. They are 5-25-02 and 5-25-03 — two consolidated appeals, one per trial-court case.\n",
-        "The issue body says the trial court found \"limited violations ... but the zoning-commission actions stand.\" Accurate, and now sourced: ¶19 quotes the entry directly, and ¶¶40-46 give the three reasons the commission survived.\n"
-      ],
       "open_targets": [
         "The two Common Pleas judgment entries themselves (2024 CV 00038 Doc. No. 79; 2024 CV 00161 Doc. No. 66) — quoted in the opinion but not held. The Clerk of Courts eServices portal timed out on capture; see the access_failures block in the governance filename-map.\n",
         "The SEPARATE ballot-language case that invalidated the May-2025 referendum. Case number [open]. All the corpus holds is the township's own recital (ATZC minutes 2026-07-07) that \"Allen Township's zoning status was revoked by Judge Jonathon Starn.\"\n",
@@ -402,6 +389,415 @@
       "verified": true
     },
     "source_doc_rel": "legal/one-energy-v-allen-twp/2026-Ohio-405.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml",
+    "group": "local-legislation",
+    "title": "Allen Township proposed Section 1521 — DATA CENTERS, and the Section 1520 replacement (ATZC Resolutions 24-04-124M / 24-04-125M, heard 2026-08-19)",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "title": "Allen Township proposed Section 1521 — DATA CENTERS, and the Section 1520 replacement (ATZC Resolutions 24-04-124M / 24-04-125M, heard 2026-08-19)",
+      "status": "proposed",
+      "jurisdiction": "Allen Township, Hancock County, Ohio (unincorporated)",
+      "authority": "R.C. 519.12 — amendment initiated by resolution of the zoning commission",
+      "initiated_by": "Allen Township Zoning Commission (ATZC)",
+      "resolutions": [
+        {
+          "number": "24-04-124M",
+          "subject": "adds a new Section 1521 — DATA CENTERS, plus definitions into Section 201",
+          "adopted": "2026-07-28",
+          "source_file": "data/documents/findlay/governance/Res.DataCenters.pdf",
+          "sha256": "a9cff4ae5cae71ab68150d599be883c853e89b0c0b676101730357c6d9dfdfe2",
+          "moved_by": "John Timmerman",
+          "seconded_by": "Dan Kissell",
+          "roll_call": {
+            "Timmerman": "yes",
+            "Stacy": "yes",
+            "Powell": "yes",
+            "Kissell": "yes",
+            "McGrain": "yes"
+          },
+          "vote": "5-0",
+          "attested_by": "Deb Stacy, Secretary",
+          "hearing": "2026-08-19 at 7:30 p.m., Allen Township Center, 12829 St. Rt. 613, Van Buren",
+          "note": "Attachment A's own \"Resolution No. ____\" line is left BLANK; the number appears only on the two resolution pages. Handwritten throughout.\n"
+        },
+        {
+          "number": "24-04-125M",
+          "subject": "REPLACES Section 1520 (Energy Storage Related to Wind and Solar Facilities) with a technology-neutral Section 1520 — Energy Storage Systems",
+          "adopted": "2026-07-28",
+          "source_file": "data/documents/findlay/governance/Res.ESS_.pdf",
+          "sha256": "f4e4ac399eb47f4a8d097f20b906c5334e61df1295e875b671d4c1f6b850abd1",
+          "hearing": "2026-08-19 at 8:00 p.m., same location",
+          "note": "[inference] The replacement matters independently of its limits: the ADOPTED Sec. 1520 only reaches storage \"related to wind and solar facilities,\" so storage sited to firm a large computing load arguably fell outside it altogether. The amendment closes that by dropping the wind/solar tether.\n"
+        },
+        {
+          "number": "[open]",
+          "subject": "clerical corrections — moves Zoning Commission duties to the Board of Zoning Appeals, renumbers the duplicated Section 1201, adds pools in A-1",
+          "adopted": "2026-07-28",
+          "hearing": "2026-08-19 at 7:00 p.m., same location",
+          "note": "Its resolution PDF was not captured (only the notice page). ⚠️ It is not cosmetic and it is not severable from the data-center amendment — see `interlock` below.\n"
+        }
+      ],
+      "proposed_section_1521": {
+        "permitted_in": [
+          "I-1",
+          "I-2"
+        ],
+        "mechanism": "Conditional use only. \"No person shall cause, allow or maintain the use of a Data Center or Data Center Campus without first having obtained a conditional zoning permit from Zoning Inspector after approval by the Board of Zoning Appeals in accordance with section 1802.\"\n",
+        "lot_and_yard": {
+          "data_center_to_data_center_separation_ft": 5280,
+          "residential_separation_ft": 1250,
+          "max_lot_coverage_pct": 60,
+          "max_building_height": "per the schedule of regulations",
+          "landscape_buffer_ft": 50
+        },
+        "cooling": {
+          "permitted_verbatim": "All data centers shall be air cooled (dry cooling).",
+          "prohibited_verbatim": [
+            "Evaporative cooling systems, including cooling towers, evaporative condensers, and adiabatic cooling systems that consume water through evaporation;\n",
+            "Once-through cooling systems that withdraw water and discharge it without recirculation.",
+            "Closed-loop liquid cooling systems, where water or coolant is continuously recirculated within a sealed system and is not consumed through evaporation.\n"
+          ]
+        },
+        "water": {
+          "groundwater_verbatim": "No regulated use shall utilize groundwater wells, private wells, or other subsurface water sources for operational or cooling purposes.\n",
+          "permitted_sources": [
+            "a municipal water and sewer system",
+            "an approved public utility provider"
+          ],
+          "verification_required": "written verification from the water utility provider demonstrating adequate system capacity to serve the proposed use without negatively impacting existing users\n",
+          "max_daily_gpd": 100000
+        },
+        "electrical": {
+          "max_total_facility_load_mw": 10,
+          "measurement_basis": [
+            "utility interconnection agreements",
+            "electrical engineering plans",
+            "nameplate capacity of installed equipment"
+          ],
+          "phased_development_verbatim": "Developments constructed in phases shall be considered a single site if: Located on contiguous parcels; or Sharing electrical infrastructure, substations, or utility interconnections. The combined load of all phases shall not exceed the 10 MW limit.\n"
+        },
+        "nuisance_standards": {
+          "noise_dba_at_property_line": 40,
+          "lighting_footcandles_at_property_line": 0.5,
+          "vibration_odor_heat": "No vibration, odor, or heat perceptible beyond the property line.",
+          "emergency_generators": "May operate for testing and maintenance between 8 a.m. - 6 p.m. weekdays only, except during power outages.\n"
+        },
+        "anti_circumvention_verbatim": "The Zoning Administrator requires submission of ownership, lease, and utility agreements to determine common control. No data center development shall be artificially divided into multiple parcels, entities, or applications for the purpose of avoiding the requirements of this section.\n",
+        "common_control_factors": [
+          "shared ownership or management",
+          "shared infrastructure",
+          "coordinated development plans",
+          "utility service arrangements"
+        ],
+        "definitions_verbatim": {
+          "data_center": "A facility designed and used primarily for housing computer servers, data storage, networking, or related equipment for the purpose of storing, processing, or distributing electronic data. Data centers shall not be considered warehouses, storage facilities, or distribution centers for zoning purposes. Such facilities may include ancillary offices for employees, network operations, and limited support functions, but shall not include general office space, call centers, or telecommunications towers as the principal use.\n",
+          "data_center_campus": "A group of data center buildings and associated infrastructure located on one or more adjacent parcels under common ownership or control and functioning as an integrated development.\n",
+          "warehousing": "The business operation, or institution of the storing of goods, or merchandise."
+        }
+      },
+      "drafting_record": [
+        {
+          "date": "2026-04-07",
+          "source": "data/documents/findlay/governance/Minutes-4-7-26-ATZC.pdf",
+          "event": "Four weeks before the referendum, Timmerman asked counsel whether the proposed resolution would permit a data center. \"Cindy stated that a data center would not be permitted.\" (Lucinda Land, Assistant Hancock County Prosecutor.)\n"
+        },
+        {
+          "date": "2026-06-02",
+          "source": "data/documents/findlay/governance/Minutes-6-2-26-ATZC.pdf",
+          "event": "Three weeks after the resolution took effect, Land \"recommended that language be drafted for the zoning resolution to state the location, requirements and conditions regarding data centers and battery energy storage systems, BESS.\"\n"
+        },
+        {
+          "date": "2026-07-07",
+          "source": "data/documents/findlay/governance/Minutes-7-7-26-ATZC.pdf",
+          "event": "Stacy circulated data-center language \"written by Hancock County Regional Planning on behalf of Washington Township\"; Timmerman circulated his own draft \"that followed a pattern similar to the wind and solar sections in our adopted zoning resolution book.\" A special drafting meeting was set.\n"
+        },
+        {
+          "date": "2026-07-22",
+          "source": "data/documents/findlay/governance/Minutes-7-22-26-special-ATZC.pdf",
+          "event": "The drafting session. Timmerman \"merged information from Washington Township's language ... and the information that John compiled and wrote on behalf of Allen Township\"; \"Definitions included in Washington Township's language will become a part of Allen Township's language.\" The ESS draft was NOT finished — \"more time was needed to gather information\" — yet both topics were carried into the August 19 hearing.\n",
+          "guests_present": [
+            "Jacob Mercer, Hancock County Regional Planning Commission (author of the Washington Township language)",
+            "Justin Kahl, Hancock County Assistant Prosecutor",
+            "Dan Smies, On-Site Partners",
+            "Jon Cross, Cross Capital Consultant"
+          ],
+          "note": "[verified] that these four attended and are so described in the minutes. ⚠️ The minutes give no affiliation detail beyond these strings, and this repo does NOT here assert who any guest was there for. See the OnSite lead in data/site/findlay/leads.yaml — the similarity between \"On-Site Partners\" and the OnSite entity in the One Power corporate chain is a name match only until an instrument confirms it.\n"
+        }
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "findlay/governance/Res.DataCenters.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml",
+    "group": "local-legislation",
+    "title": "Interstate Capital, LLC — \"Allen Commerce Park\" R.C. 519.12 rezoning application (A-1 Agriculture → I-1 Light Industrial, ~135 ac, Allen Township)",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "title": "Interstate Capital, LLC — \"Allen Commerce Park\" R.C. 519.12 rezoning application (A-1 Agriculture → I-1 Light Industrial, ~135 ac, Allen Township)",
+      "status": "pending",
+      "applicant": "Interstate Capital, LLC",
+      "applicant_address": "260 E. Brown St., Suite 200, Birmingham, MI 48009",
+      "applicant_phone": "248-232-1942",
+      "project_name_on_exhibit": "ALLEN COMMERCE PARK",
+      "authority": "R.C. 519.12 — amendment initiated by petition of a property owner",
+      "received_by": "Dave Smith, Zoning Inspector for Allen Township",
+      "received": "2026-07-01",
+      "application_number": null,
+      "hearing": "2026-08-05 at 7:00 p.m., Allen Township Center, 12829 St. Rt. 613, Van Buren",
+      "hearing_scheduled_by": "ATZC motion 24-04-118M, 2026-07-07 (Timmerman moved, Powell seconded, passed)",
+      "request": {
+        "from_district": "A-1 Agriculture",
+        "to_district": "I-1 Light Industrial",
+        "proposed_use_verbatim": "Warehousing / Manufacturing",
+        "location_verbatim_form": "Vacant Land SR 613",
+        "location_verbatim_minutes": "the NW corner of State Route 613 and Township Road 142"
+      },
+      "parcels": [
+        {
+          "id": "020001015303",
+          "acres": 72.23,
+          "address_on_exhibit": "VACANT LAND OH-613",
+          "current_zoning": "AG AGRICULTURE DISTRICT",
+          "rezone_to": "I-1 LIGHT INDUSTRIAL DISTRICT"
+        },
+        {
+          "id": "02000100123",
+          "acres": 63.068,
+          "address_on_exhibit": "VACANT LAND OH-613",
+          "current_zoning": "AG AGRICULTURE DISTRICT",
+          "rezone_to": "I-1 LIGHT INDUSTRIAL DISTRICT"
+        }
+      ],
+      "total_acres": 135.298,
+      "claims_on_the_exhibit": {
+        "investment_usd": 140000000,
+        "consistency_claim": "CONSISTENT WITH HANCOCK COUNTY COMPREHENSIVE PLAN",
+        "tag": "reference",
+        "note": "Neither the dollar figure nor the comprehensive-plan consistency is independently corroborated. The Hancock County Comprehensive Plan is not in corpus.\n"
+      },
+      "site_context": [
+        "West of I-75, fronting OH-613, bounded east by TR-142 (from the exhibit's base map).",
+        "The county sanitary landfill, zoned I-2 Heavy Industrial, lies to the southwest near TR-109.",
+        "An existing I-1 Light Industrial parcel and an ES Expressway Service band sit between the site and the interstate."
+      ],
+      "buildings_shown": {
+        "count": 2,
+        "square_footage": null,
+        "note": "⚠️ The site-plan inset labels two proposed buildings, but the square-footage digits are NOT legible even at a 500 dpi render of the as-served scan. No figure is recorded rather than a guessed one. [open] — needs a legible copy from the township or the applicant.\n"
+      },
+      "as_received_quirks": [
+        "PARCEL NUMBER DISCREPANCY — RESOLVED 2026-08-02 (#1462), and the as-received forms are preserved above rather than corrected. The application form and the exhibit both write the second parcel `02000100123` (11 digits); the township's own public-hearing notice writes `020001001123` (12 digits). THE NOTICE IS RIGHT: `020001001123` is a live 12-digit LocalParcelID in the Hancock County parcel record (63.09 CAMA ac, situs \"0 STATE RT 613 VAN BUREN 45889\", land use 110 Agr-CAUV-Vacant Land) against the exhibit's 63.068 ac, while `02000100123` matches nothing. The companion parcel `020001015303` also stands (72.25 CAMA ac vs the exhibit's 72.230, situs \"0 STATE RT 613\"), so both tracts are confirmed and the 135.298-ac total is corroborated to within 0.05 ac. [verified] against the OGRIP Ohio statewide parcels public view scoped County='Hancock' (read 2026-08-02) — but see OWNERSHIP-AS-OF-2023 in `analysis` before reading anything into the owner names.\n",
+        "The applicant's exhibit title block reads \"SITE ADDRESS: VACANT LAND OH-613, ALLEN TOWNSHIP, MI\" — Michigan, the applicant's home state, for a parcel in Ohio.\n",
+        "The application form is UNDATED and its Application No. is blank. The 2026-07-01 receipt date is a recital in a different document (the 2026-07-07 minutes).\n"
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "findlay/governance/Application-Zoning-Amendment-Interstate-Capital.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "findlay/governance/allen-twp-zoning-adoption-and-referendum.yaml",
+    "group": "local-legislation",
+    "title": "Allen Township Zoning Resolution",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "name": "Allen Township Zoning Resolution",
+      "jurisdiction": "Allen Township, Hancock County, Ohio (unincorporated area)",
+      "effective": "2026-05-11",
+      "source_file": "data/documents/findlay/governance/Zoning-Book-Effective-05-11-26.pdf",
+      "sha256": "855c35c9ad8b1d51532a58140ec56e5867135338f2df655cf575e7297ffa6b87",
+      "pages": 77,
+      "signed_by": [
+        "Milford Smith - Trustee",
+        "Kevin Flanagan - Trustee",
+        "Roger Clark - Trustee"
+      ],
+      "adoption_chain": {
+        "zoning_commission_public_hearing": "2024-07-05",
+        "township_trustees_public_hearing": "2024-09-09",
+        "date_of_adoption_by_township": "2024-09-09",
+        "date_certified_by_hancock_county_board_of_elections": "2026-05-11",
+        "effective_date": "2026-05-11",
+        "verbatim": "Public Hearing having been held hereon, the provisions of this Resolution are hereby given effect. Effective Date: May 11, 2026. 1. Date of Public Hearing by Zoning Commission: July 5, 2024  2. Date of Public Hearing by Township Trustees: September 9. 2024  3. Date of Adoption by Township: September 9, 2024  4. Date Certified by Hancock County Board of Elections: May 11, 2026\n",
+        "note": "[verified] A twenty-month gap between adoption and effect. The trustees adopted in September 2024; the resolution did not take effect until the SECOND referendum was certified in May 2026. The \"September 9. 2024\" period-for-comma is the instrument's own typography, preserved.\n"
+      },
+      "districts": [
+        {
+          "code": "A-1",
+          "name": "Agricultural District"
+        },
+        {
+          "code": "R-1",
+          "name": "One-Family Residential District"
+        },
+        {
+          "code": "RM-1",
+          "name": "Multiple-Family Residential District"
+        },
+        {
+          "code": "B-1",
+          "name": "Local Business District"
+        },
+        {
+          "code": "B-2",
+          "name": "Community Business District"
+        },
+        {
+          "code": "B-3",
+          "name": "General Business District"
+        },
+        {
+          "code": "ES",
+          "name": "Expressway Service District"
+        },
+        {
+          "code": "I-1",
+          "name": "Light Industrial District"
+        },
+        {
+          "code": "I-2",
+          "name": "General Industrial District"
+        }
+      ],
+      "districts_note": "⚠️ ES is EXPRESSWAY SERVICE, not an energy district. The zoning map's legend lists it among the district fills and it is easy to misread as \"Energy Storage\" in a township whose live amendments concern energy storage. It is the I-75 frontage district.\n",
+      "use_scheme": {
+        "kind": "enumerated / permissive",
+        "verbatim": "no building or land shall be used and no building shall be erected except for one or more of the following specified uses unless otherwise provided in this Resolution\n",
+        "consequence": "[verified] A use not listed is not permitted. This is the mechanism behind counsel's 2026-04-07 statement that \"a data center would not be permitted\" — not a prohibition naming data centers, but the absence of one from every district's list.\n"
+      },
+      "data_center_treatment": {
+        "occurrences_of_the_phrase": 0,
+        "scope_of_search": "all 77 pages, text layer, case-insensitive",
+        "prohibited_in_all_districts": [
+          "Adult Entertainment Establishments",
+          "Commercial Marijuana (cultivation, processing, retail dispensing — medical and adult use)",
+          "Private Landfills"
+        ],
+        "nearest_hooks": [
+          "I-1 Sec. 1101(7) \"All public utilities, including buildings, necessary structures, storage yards and other related uses\" and 1101(12) \"Other uses of a similar character to the above uses.\"\n",
+          "I-2 Sec. 1201 \"Any principal use first permitted in an I-1 District\" plus (1) \"Heating and electric power generating plants\" and (3) \"Any other use which shall be determined by the Zoning Commission, to be of the same general character as the above permitted uses.\"\n"
+        ],
+        "note": "[inference] The only route a data center could take into the adopted book is a similar-character determination by the Zoning Commission under 1101(12) or 1201(3) — a discretionary reading, not an entitlement. That discretion is what the proposed Section 1521 would replace with an express conditional-use standard.\n"
+      },
+      "energy_provisions": {
+        "solar": {
+          "accessory": "Conditionally permitted in all districts, but capped: not more than 25 kW output, not more than 1500 sq ft, owned and operated by the owner of the principal use, on the same parcel, and not for the sale of energy to other users (excess to the local utility is allowed).\n",
+          "non_accessory": "\"Non-Accessory Solar Energy Facilities, otherwise known as Principal Solar Energy Production Facilities shall only be permitted as a conditional use in I-2 districts.\"\n"
+        },
+        "storage_as_adopted": {
+          "section": "Sec. 1520 — Energy Storage Related to Wind and Solar Facilities",
+          "non_accessory": "conditional use in I-2 only, minimum setback 1000 feet from all property lines",
+          "accessory": "conditional zoning permit; \"Shall be used exclusively for on-site use.\"",
+          "note": "[inference] As adopted, the storage rule is TETHERED to wind and solar. Storage sited to firm a large computing load is not obviously \"related to wind and solar facilities.\" Proposed Resolution 24-04-125M replaces this section outright, which removes the tether.\n"
+        },
+        "known_defect": {
+          "description": "Article XII numbers two consecutive sections \"Section 1201\" — PERMITTED USES and AREA AND BULK REQUIREMENTS. [verified] in the text layer, and independently flagged by the township's own 2026-06-02 minutes as \"a renumbering of section 1201 to section 1202 correcting a clerical error.\" The bytes and the minutes agree.\n"
+        }
+      },
+      "referendum": {
+        "contest": "Allen Township Zoning (Unincorporated Area)",
+        "election": "2026 Primary, Hancock County, Ohio",
+        "certified_report_timestamp": "2026-05-11T16:17:22",
+        "source_files": [
+          "data/documents/findlay/governance/2026-PRI-SUM.pdf",
+          "data/documents/findlay/governance/2026-PRI-SOVC.pdf"
+        ],
+        "result": {
+          "for_the_zoning_resolution": {
+            "votes": 503,
+            "pct": 69.48
+          },
+          "against_the_zoning_resolution": {
+            "votes": 221,
+            "pct": 30.52
+          },
+          "total_votes": 724,
+          "ballots_cast": 732,
+          "registered_voters": 1761,
+          "turnout_pct": 41.57,
+          "precincts_reported": "2 of 2"
+        },
+        "by_precinct": [
+          {
+            "precinct": "ALLEN E",
+            "for": 305,
+            "for_pct": 73.67,
+            "against": 109,
+            "against_pct": 26.33,
+            "total_votes": 414,
+            "ballots_cast": 418,
+            "registered": 962
+          },
+          {
+            "precinct": "ALLEN W",
+            "for": 198,
+            "for_pct": 63.87,
+            "against": 112,
+            "against_pct": 36.13,
+            "total_votes": 310,
+            "ballots_cast": 314,
+            "registered": 799
+          }
+        ],
+        "corrections": [
+          "⚠️ The reported unofficial result was 502-221. The CERTIFIED canvass is 503-221. Issue 1463's body carries the unofficial figure; this artifact supersedes it. Both round to ~69%, so no downstream conclusion changes — but the certified number is the one to quote.\n",
+          "⚠️ Registration reconciliation, not an error. [verified] The zoning contest shows ALLEN W with 799 registered voters; the same canvass's countywide turnout table shows ALLEN W with 1,077. The two figures measure different electorates — one contest is put only to the unincorporated area, the other table counts the whole precinct — and must not be reconciled against each other. The 278-voter arithmetic is read off the canvass; WHAT accounts for it is not. [inference] The reduction is consistent with the Village of Van Buren, the only incorporated place lying within Allen Township, being excluded from an unincorporated-area question — but no boundary or precinct-split source in corpus establishes that Van Buren's ALLEN W registration is 278, and the canvass itself never names the excluded area. [open] Confirm against the Hancock County BOE's precinct-to-jurisdiction split before attributing the difference to any named village.\n",
+          "⚠️ 732 ballots cast against 724 votes recorded — 8 ballots on which the question was left blank or spoiled. Use 724 as the denominator for the percentages, as the canvass does.\n"
+        ],
+        "significance": {
+          "tag": "verified",
+          "detail": "The canvass timestamp (2026-05-11) is the same date Article XXIV of the zoning resolution gives as its BOE certification and its effective date. The instrument and the election record agree with each other, which is what makes the effective date safe to assert.\n"
+        },
+        "prior_attempt": {
+          "election": "May 2025",
+          "outcome": "[reference] The first referendum passed and was then invalidated over abbreviated ballot language. The township's own record of the disposition is in its 2026-07-07 zoning commission minutes: a 2025 hearing must be redone \"because Allen Township's zoning status was revoked by Judge Jonathon Starn.\"\n",
+          "ballot_language_objection": "[reference] Contemporary reporting describes the challenged language as stating that the zoning plan would establish Allen Township as an agricultural district. Not verified against a certified ballot; the ballot text itself is [open].\n",
+          "case_number": "[open]",
+          "certified_canvass": "[open] — the Hancock County BOE's published results begin at the November 2025 general; no May-2025 canvass is retrievable from the open web. See `access_failures` in data/documents/findlay/governance/filename-map.yaml.\n",
+          "judge_name_spelling": "The ATZC minutes write \"Jonathon Starn\"; the county directory and the appellate record write \"Jonathan Starn\". Preserved as written in each source, not normalized.\n"
+        }
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "findlay/governance/allen-twp-zoning-adoption-and-referendum.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "findlay/governance/Zoning-Book-Effective-05-11-26.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": false
   },
@@ -629,5 +1025,329 @@
     "source_doc_rel": "oepa/findlay/2PD00008.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": true
+  },
+  {
+    "rel": "grid/findlay/rocky-ford-138kv-2024.project.yaml",
+    "group": "siting-cases",
+    "title": "AEP Ohio's Rocky Ford 138 kV Station + the Ebersole-Fostoria Central #2 cut-in and Rocky Ford-Border Basin tie line — Cass Township, Hancock County, Ohio",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "meta": {
+        "subject": "AEP Ohio's Rocky Ford 138 kV Station + the Ebersole-Fostoria Central #2 cut-in and Rocky Ford-Border Basin tie line — Cass Township, Hancock County, Ohio",
+        "kind": "grid-siting-project",
+        "captured_for": "issue 1464 (epic 1265, readiness(findlay) — grid posture)",
+        "extracted_at": "2026-07-31",
+        "method": "Direct read of the two OPSB filings' own PDF text layers plus AEP's public notice for the same pair. Both case numbers are printed on the filings themselves; nothing here is taken from a docket search or from press.",
+        "sources": {
+          "primary": [
+            {
+              "file": "data/documents/grid/findlay/Rocky Ford 138 kV Station Project Letter of Notification.pdf"
+            },
+            {
+              "file": "data/documents/grid/findlay/Ebersole-Fostoria Center 2 138 kV Cut-In and Rocky Ford-Border Basin 138 kV Tie Line Project Construction Notice.pdf"
+            },
+            {
+              "file": "data/documents/grid/findlay/Rocky Ford 138 kV Station Project Public Notice.pdf"
+            }
+          ],
+          "index": [
+            {
+              "url": "https://www.aeptransmission.com/ohio/filings.php"
+            }
+          ]
+        }
+      },
+      "opsb_cases": {
+        "tag": "[verified]",
+        "statement": "The project is TWO OPSB cases, filed the same day for the same point of interconnection, because Ohio's application-requirement matrix splits them. Both numbers are printed on the filings' own cover pages and repeated in AEP's public notice.",
+        "cases": [
+          {
+            "case_no": "24-0707-EL-BLN",
+            "instrument": "Letter of Notification (O.A.C. 4906-6-05)",
+            "applicant": "AEP Ohio Transmission Company, Inc. (\"AEP Ohio Transco\")",
+            "filed": "2024-09-10",
+            "covers": "Construction of the Rocky Ford 138 kV Station (~6.25 acres). Qualifies as an LON under item (3) of Appendix A to O.A.C. 4906-1-01 — \"Constructing a new electric power transmission substation.\"",
+            "source": "Letter of Notification cover page + B(1), p. 1"
+          },
+          {
+            "case_no": "24-0706-EL-BNR",
+            "instrument": "Construction Notice (O.A.C. 4906-6-05)",
+            "applicant": "Ohio Power Company",
+            "filed": "2024-09-10",
+            "covers": "The Ebersole-Fostoria Central #2 138 kV cut-in and the Rocky Ford-Border Basin 138 kV tie line. Qualifies as a CN under item (1)(a) of the same appendix (new construction/extension of transmission circuits).",
+            "source": "Construction Notice cover page + B(1), p. 1"
+          }
+        ],
+        "note": "Two different applicants — the transmission-only affiliate files the station, the operating company files the lines. Do not collapse them into one filer."
+      },
+      "project": {
+        "tag": "[verified]",
+        "location": {
+          "township": "Cass Township",
+          "county": "Hancock County, Ohio",
+          "landmark": "\"near the intersection of Township Road 238 and County Road 216\" (public notice); topographic quadrangles Arcadia, OH and Bloomdale, OH",
+          "parcel": "130001029770",
+          "source": "LON B(3) p. 2 + B(10)(a) p. 4; CN B(8) p. 4; public notice p. 1"
+        },
+        "station": {
+          "name": "Rocky Ford Station",
+          "voltage_kv": 138,
+          "footprint_acres": 6.25,
+          "equipment": [
+            "16' x 27' drop-in control module",
+            "(3) 138 kV circuit breakers, 3000A",
+            "(3) takeoff structures (2 phase-over-phase, 1 H-frame)"
+          ],
+          "source": "LON B(9)(a) p. 4"
+        },
+        "lines": {
+          "cut_in": "Loop the existing Fostoria-East Lima 138 kV transmission line (specifically the Ebersole-Fostoria Central #2 138 kV circuit) through Rocky Ford Station by extending two single-circuit 138 kV lines of less than 0.1 mile each.",
+          "tie": "One span of 138 kV line, approximately 0.04 mile, from Rocky Ford Station to a Point of Interconnection with the IPP's own 138 kV transmission line.",
+          "conductor": "795 KCM 26/7 ACSR Drake; 100 ft ROW; galvanized steel poles on drilled-pier foundations",
+          "public_notice_summary": "\"less than 0.2 miles of 138-kilovolt (kV) transmission line connecting Rocky Ford Station to a customer facility and an existing 138-kV transmission line\"",
+          "source": "CN B(1) p. 1, B(2) p. 2, B(9)(a) p. 4; public notice p. 1"
+        },
+        "schedule": {
+          "construction_start": "2025-01",
+          "anticipated_in_service": "2025-12",
+          "source": "LON B(6) p. 3; CN B(6) p. 3",
+          "status_as_captured": {
+            "tag": "[open]",
+            "statement": "Whether the station and lines actually energized on the December 2025 schedule is not established by any captured source. AEP's filings state a PLAN; no in-service confirmation, PJM notice, or OPSB compliance filing was captured. Do not write \"in service\" without one."
+          }
+        }
+      },
+      "cost": {
+        "tag": "[verified]",
+        "station_usd": 8700000,
+        "lines_usd": 2214000,
+        "estimate_class": "Class 4",
+        "cost_recovery": "Both filings say the same thing in the same words: \"The costs for this Project will be recovered through total reimbursement by the IPP.\" Neither project is a ratepayer-funded network upgrade — the generator pays.",
+        "source": "LON B(9)(c) p. 4; CN B(9)(c) p. 5",
+        "correction_to_issue_body": {
+          "tag": "[verified]",
+          "statement": "Issue 1464 carried \"~$2.2M\" as the cost of \"Rocky Ford 138 kV Station + Rocky Ford-Border Basin tie.\" The $2,214,000 is the LINE project (24-0706-EL-BNR) alone; the station (24-0707-EL-BLN) is a separate $8,700,000. Combined, the pair is ~$10.9M, all IPP-reimbursed."
+        }
+      },
+      "purpose": {
+        "tag": "[verified]",
+        "statement": "Both filings state the identical need: \"The Border Basin I IPP plans to build a 120 MW Maximum Facility Output (81 MW Capacity) solar generating facility near Arcadia, Ohio. As part of the AE1-146 IPP Interconnection Service Agreement, the Company will be required to connect the proposed facilities to the electric grid.\" Failure to proceed would jeopardize \"the customer's required in-service date per the FERC approved Interconnection Service Agreement.\"",
+        "interconnecting_customer": "Border Basin I, LLC — an Independent Power Producer",
+        "generating_facility_opsb_case": "21-0277-EL-BGN",
+        "pjm_queue_position": "AE1-146",
+        "pjm_network_upgrade": "n8130",
+        "in_aep_long_term_forecast": "2024 Long Term Forecast Report, pp. 109-110 (reproduced at LON Appendix B)",
+        "source": "LON B(1)-B(2) pp. 1-2; CN B(1)-B(2) pp. 1-2",
+        "what_this_is_not": {
+          "tag": "[verified]",
+          "statement": "AE1-146 is a GENERATOR's queue position — Border Basin I's solar plant — and Rocky Ford is the substation built to receive it. It is NOT a large-load interconnection, NOT a data-center service point, and NOT the One Power \"Findlay Megawatt Hub\" +300 MW standalone interconnection this epic is looking for. The two sit in different townships (Cass, near Arcadia, versus the Hub's Allen Township) and answer to different processes: a FERC-jurisdictional generator interconnection agreement versus a retail electric service agreement under AEP Ohio's Schedule DCT. The \"customer facility\" in AEP's public notice is Border Basin I's own station. Anyone reading the county's grid record must not let the presence of a fresh 138 kV substation stand in for the load instrument that is still missing — see megawatt-hub-interconnection.gap.yaml."
+        }
+      },
+      "review": {
+        "tag": "[verified]",
+        "agricultural_district": "Both project areas sit on a parcel enrolled in Ohio's Agricultural District Land program, verified with the Hancock County Auditor's Office on 2024-08-20; the parcel \"will not be eligible and will be withdrawn from the program by the Company.\" Station ~6.25 acres, lines ~1.5 acres.",
+        "land_use": "Hancock County Auditor land use \"Other Agricultural Use with Outbuildings Qualified for Current Use Value\"; field observation found the area entirely agricultural field. No tree clearing anticipated.",
+        "cultural_resources": "Phase I archaeological and history/architectural surveys conducted January 2024. One new archaeological site identified, not recommended NRHP-eligible; six resources fifty years or older in the APE, none recommended eligible. SHPO correspondence received 2024-02-12 agreeing the Project will have no effect on historic properties and that no further coordination is necessary.",
+        "proximity": "No occupied residence or institution within 100 feet (so the EMF section is stated inapplicable); no cemetery, church, school or community facility within 1,000 feet.",
+        "source": "LON B(10)(a)-(c) pp. 4-5; CN B(10)(a)-(c) pp. 5-6"
+      },
+      "central_findlay_project": {
+        "tag": "[verified]",
+        "statement": "Issue 1464 asked for the \"Central Findlay Improvement Project\" OPSB LON case number. There is no OPSB case to find, and the reason is jurisdictional, not a search failure. AEP Ohio's own description of the work is 69 kV — \"Rebuilding four miles of 69-kilovolt (kV) transmission line, installing two miles of overhead 69-kV transmission line and installing one mile of underground 69-kV transmission line\" — and Ohio's siting jurisdiction begins at 100 kV. R.C. 4906.01(B)(2) defines a \"major utility facility\" to include an \"electric transmission line and associated facilities of a design capacity of one hundred kilovolts or more,\" and the O.A.C. 4906-1-01 Appendix A application matrix that produced the two Rocky Ford filings applies to that same class. A 69 kV rebuild is below the threshold, so it generates neither an LON nor a CN. AEP's Ohio regulatory-filings index carries no Central Findlay entry, consistent with that.",
+        "scope_correction": "The issue body described it as \"~4 mi rebuild, ~1 mi underground.\" AEP's own text is three components — 4 mi rebuilt + 2 mi new overhead + 1 mi new underground, all at 69 kV, not 138 kV.",
+        "stated_purpose": "\"These improvements support the area's electrical needs and strengthen the local power grid by replacing aging equipment.\" No customer, load, or data-center connection is stated.",
+        "source": [
+          {
+            "url": "https://www.aepohiowire.com/transmission-northwest/"
+          },
+          {
+            "url": "https://www.aeptransmission.com/ohio/filings.php"
+          }
+        ],
+        "residual_open": {
+          "tag": "[open]",
+          "statement": "The project factsheet URL the issue carried is 404 and AEP's page gives no schedule, cost, or route. A 69 kV rebuild still needs local road/ROW permissions and would appear in AEP Ohio's distribution capital filings at PUCO, so the record is thin rather than closed. Lead CENTRAL-FINDLAY-69KV."
+        }
+      },
+      "corridor_linkage": {
+        "solar_export_load_import": {
+          "tag": "[inference]",
+          "statement": "Border Basin I is one of the two utility-scale solar projects Hancock County's 2022 S.B. 52 restricted-area designation grandfathered (the other is South Branch). Rocky Ford is the transmission instrument that builds one of those two out. Read against the load side of this county's record — a 150 MW contracted compute load already operating at the One Power hub and an undocumented +300 MW of \"available\" capacity beyond it — the county is wiring out 81 MW of solar capacity while its large-load question stays unanswered. The two facts are verified; the framing that joins them is reasoning, and the S.B. 52 designation itself belongs to the governance sub-issue, not this record.",
+          "source": "LON B(2) p. 1 (Border Basin 120 MW MFO / 81 MW capacity); the S.B. 52 restricted-area designation is carried in issue 1464's research refresh and is NOT independently captured here — do not cite this record for it."
+        },
+        "no_new_profile_field": {
+          "tag": "[open]",
+          "statement": "As with the Lima \"Lyka\" record (issue 1476), no SiteProfile/SiteFacility schema field is added for a transmission-siting project. `GridProfile` (src/watermark/grid/model.py) is the connector-generated quantitative backdrop — serving utility, EIA-861 utility profile, EIA-930 BA load, and the campus load share — with `extra=\"forbid\"`; a siting docket, a tariff posture, and a behind-the-meter fleet are corpus instruments, not denominators, and inlining them would put hand-curated prose inside a file the next connector run rewrites. They live here instead, and `_FINDLAY.serving_utility_citation` (the one hand-authored input that reaches grid-profile.yaml) points at them."
+        }
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "grid/findlay/rocky-ford-138kv-2024.project.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "grid/findlay/Rocky Ford 138 kV Station Project Letter of Notification.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "grid/findlay/aep-dct-tariff-posture.yaml",
+    "group": "tariffs",
+    "title": "AEP Ohio Schedule DCT (Data Center Tariff), P.U.C.O. No. 22 Original Sheet Nos. 223-1 to 223-7 — the terms as filed, and which of them bite at the One Power \"Findlay Megawatt Hub\"",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "meta": {
+        "subject": "AEP Ohio Schedule DCT (Data Center Tariff), P.U.C.O. No. 22 Original Sheet Nos. 223-1 to 223-7 — the terms as filed, and which of them bite at the One Power \"Findlay Megawatt Hub\"",
+        "kind": "tariff-posture",
+        "captured_for": "issue 1464 (epic 1265, readiness(findlay) — grid posture)",
+        "extracted_at": "2026-07-31",
+        "method": "Verbatim read of the tariff sheets in Ohio Power Company's own filed tariff book. Every quoted term below is from the sheets, not from a press summary or a law-firm client alert. Procedural history and the appeal are sourced separately and tagged accordingly.",
+        "sources": {
+          "primary": [
+            {
+              "file": "data/documents/grid/findlay/July_24_2026_AEP_Ohio_Tariff_Book.pdf"
+            },
+            {
+              "file": "data/documents/grid/findlay/20250916-item-04f---aep-large-load-request.pdf"
+            },
+            {
+              "url": "https://www.supremecourt.ohio.gov/pdf_viewer/pdf_viewer.aspx?pdf=1000491.pdf&subdirectory=2025-1458%5CDocketItems"
+            }
+          ],
+          "secondary": [
+            {
+              "url": "https://content.govdelivery.com/accounts/OHPUC/bulletins/3e8bb79"
+            },
+            {
+              "url": "https://www.aepohio.com/company/about/rates/data-center-tariff/"
+            },
+            {
+              "url": "https://www.aepohio.com/company/news/view?releaseID=10753"
+            }
+          ]
+        }
+      },
+      "procedural_history": {
+        "tag": "[reference]",
+        "statement": "AEP Ohio filed its Application for Approval of New Tariffs on 2024-05-13 in PUCO Case No. 24-508-EL-ATA. The Commission issued its order adopting a settlement on 2025-07-09 (signatories reported as AEP Ohio, PUCO Staff, the Office of the Ohio Consumers' Counsel, the Ohio Energy Group, Walmart and Ohio Partners for Affordable Energy), ordering AEP Ohio to file updated tariffs and to \"lift its moratorium on connecting new data centers as soon as possible.\" The compliance tariff followed on 2025-07-11 and took effect 2025-07-23.",
+        "why_reference_not_verified": "The Commission's Opinion and Order itself is NOT in the corpus. PUCO's Docketing Information System (dis.puc.state.oh.us) rejects automated retrieval — both the case record and a direct ViewImage document request returned an application-firewall \"Request Rejected\" page on 2026-07-31 — and PUCO's own news page for this order now 404s, leaving a GovDelivery mirror. So the dates and settlement roster above rest on secondary text. The TARIFF TERMS below do not: those are read off the filed sheets.",
+        "the_tariff_dates_itself": {
+          "tag": "[verified]",
+          "statement": "The sheets close the loop on their own origin. Sheet 223-2 defines \"'Effective Date of Schedule DCT' means the date Schedule DCT became effective following the Commission's order in Case No. 24-508-EL-ATA.\"",
+          "source": "tariff book, Original Sheet No. 223-2"
+        },
+        "currently_filed_version": {
+          "tag": "[verified]",
+          "statement": "The sheets captured here are stamped \"Filed pursuant to Order dated April 1, 2026 in Case No. 25-392-EL-AIR / Issued: April 8, 2026 / Effective: April 10, 2026\" — the schedule as re-issued in AEP Ohio's distribution rate case, not the July 2025 compliance sheet. The tariff book compilation itself is dated 2026-07-24. Any comparison against the 2025 original is [open]; the original compliance sheet is not captured.",
+          "source": "tariff book, Original Sheet Nos. 223-1..223-7 and Sheet No. 101-1"
+        },
+        "on_appeal": {
+          "tag": "[verified]",
+          "statement": "The order is on appeal to the Supreme Court of Ohio, Case No. 2025-1458, \"In the Matter of the Application of Ohio Power Company for New Tariffs Related to Data Centers and Mobile Data Centers,\" on appeal from Pub. Util. Comm. Case No. 24-508-EL-ATA. Appellant is The Ohio Manufacturers' Association Energy Group (counsel Kimberly W. Bojko, Carpenter Lipps LLP); the PUCO is appellee and the Office of the Ohio Consumers' Counsel filed a merit brief as intervening appellee on 2026-03-24. OMA's propositions of law run to undue discrimination / equal protection, sufficiency of the evidence, and the specificity of the Commission's reasoning under R.C. 4903.09, plus a contention that the case was an application for an increase in rates under R.C. 4909.18.",
+          "disposition": {
+            "tag": "[open]",
+            "statement": "No decision was located as of 2026-07-31. The tariff is in force pending appeal. Do not write that the tariff has been upheld or vacated."
+          },
+          "source": "Merit Brief of Intervening Appellee, Office of the Ohio Consumers' Counsel, Ohio S.Ct. No. 2025-1458, filed 2026-03-24 (read at supremecourt.ohio.gov; caption + tables of contents; not committed to the corpus)"
+        }
+      },
+      "terms": {
+        "tag": "[verified]",
+        "source": "tariff book, Original Sheet Nos. 223-1 through 223-7",
+        "who_it_applies_to": {
+          "data_center_definition": "\"a centralized facility (a) used primarily or exclusively for electronic information services such as the management, storage, processing, and dissemination of electronic data and information through the use of computer systems, servers, networking equipment, and related components that (b) has an aggregate monthly maximum demand of greater than 25,000 kW. Unless otherwise specified, the term 'Data Center' shall include 'Mobile Data Center.'\"",
+          "mobile_data_center_definition": "the same, but \"(including mining of cryptocurrency)\" and \"has load that is portable and/or distributable, including but not limited to structures that are not affixed to the ground or are easily removed from a location.\"",
+          "availability": "Service is available to customers operating a Data Center that will use, within the initial contract term, a monthly maximum demand greater than 25,000 kW \"at a Single Location or an aggregated Total Customer Contract Capacity in Service Territory of greater than 25,000 kW.\" Mixed sites are swept in whole unless the customer separately meters at its own cost.",
+          "sheet": "223-1, 223-2"
+        },
+        "existing_vs_new_load": {
+          "existing_load": "\"Data Center load for which a letter of agreement or electric service agreement has already been signed by the Effective Date of Schedule DCT.\" It \"does not include Data Center load for which a customer signs a new electric service agreement to expand its Existing Load by more than 25,000 kW of New Load above the contract capacity under the existing electric service agreement after the Effective Date.\" Un-separately-metered expansions cost the whole load its Existing Load status.",
+          "new_load": "\"(a) Data Center load for which a letter of agreement or electric service agreement was signed after the Effective Date of Schedule DCT or (b) Existing Load that signs a new ESA to increase its contract capacity by more than 25,000 kW.\" Expansions of 25,000 kW or less do not convert.",
+          "sheet": "223-2"
+        },
+        "minimum_billing_demand": {
+          "existing_load": "Not less than 60% of the contract capacity or of the highest previously established monthly billing demand in the past 11 months.",
+          "new_load_during_ramp": "Not less than 85% of the customer's Load Ramp Contract Capacity, where the Load Ramp Contract Capacity is itself floored at 50% / 65% / 80% / 90% of Contract Capacity in Years 1 / 2 / 3 / 4.",
+          "new_load_after_ramp": "Not less than the greater of (a) 85% of the highest previously established monthly billing demand in the past 11 months, or (b) the \"Minimum Demand\" table — 15,000 kW plus 85% of the marginal amount over 25,000 kW for a total contract capacity of 25,001-75,000 kW; 57,500 kW plus 100% of the marginal amount over 75,000 kW above that, capped at 85% of total contract capacity.",
+          "aggregation": "\"All New Loads of affiliated companies and companies with common ownership greater than 25,000 kW will be considered in the aggregate\" for the Total Customer Contract Capacity, stacked by energization date. Existing Load is excluded from that aggregate.",
+          "sheet": "223-3, 223-4",
+          "reconciliation_note": "This is where the widely repeated shorthand \"data centers must pay for 85% of contracted capacity\" comes from, and it is close enough to be usable but not precise enough to quote. The 85% is a floor applied to a RAMPED capacity during the ramp and to a rolling 11-month peak (or the Minimum Demand table) afterwards. The Year-4 ramp floor is 90%, which is higher than 85% — the two numbers are not in conflict because they multiply different things. Cite the sheets, not the shorthand."
+        },
+        "contract_term": {
+          "new_load": "\"contracts under the Schedule shall be made for an initial period of not less than the Load Ramp Period plus 8 years. By way of example, the initial period of a Contract for a Data Center with a 4-year Load Ramp Period will be 12 years.\" After the initial term either party needs three years' written notice to terminate or to change Contract Capacity.",
+          "existing_load": "Existing contracts run on their own terms until terminated under those terms; the Company is not required to supply capacity above Contract Capacity except by mutual agreement.",
+          "exit_fee": "\"If after completion of the fifth year of the Contract after the Load Ramp Period the customer chooses to pay an exit fee equal to minimum charges for 36 months after notice of termination, the customer can thereafter terminate the contract.\"",
+          "load_additions": "A new contract is required for any load addition in excess of 100 kW.",
+          "site_control": "\"the customer must designate a specific site at which its Data Center project will be constructed and served by the Company, and the customer must own or have the exclusive right to use the land for this purpose.\"",
+          "sheet": "223-5"
+        },
+        "collateral": {
+          "new_load": "Unless the customer holds both an A-/A3 credit rating and liquidity above ten times the requirement, it must post a guarantee, standby letter of credit, or cash equal to 50% of the total minimum charges for the full contract term, reduced by one year's minimum charges for each year energized with on-time payment.",
+          "sheet": "223-6"
+        },
+        "behind_the_meter_generation": {
+          "interconnection_agreement": "\"Consistent with Ohio Administrative Code Chapter 4901:1-22, Schedule DCT Customers shall enter into an interconnection agreement between the Company and the Customer in advance of connecting any source of power other than the delivery point specified in the Contract. Emergency or backup generation that is not designed to operate in parallel with the Company's system is not subject to the additional requirements in this section.\"",
+          "netting_election": "A customer electing to use behind-the-meter generation to OFFSET its Contract Capacity must keep equipment in place \"to instantaneously curtail load equal to or greater than the behind-the-meter generation output.\" A customer that does NOT elect to net may have service suspended, with Commission approval, if usage exceeds Contract Capacity by more than 1,000 kW.",
+          "sheet": "223-6, 223-7"
+        },
+        "mobile_data_center_attestation": "\"Prior to receiving service, Mobile Data Center customers will be required to provide a sworn statement, under penalty of perjury, that neither the customer nor its corporate parent or affiliates are affiliated with or acting on behalf of any foreign adversary as defined in 15 C.F.R. § 7.4,\" with an immediate disconnection right on a good-faith belief of falsity.",
+        "transmission_voltage_charges": "Schedule codes 297/797 (transmission service voltage): customer charge $6,800/month plus a supplemental customer charge of $20,000/month, the latter expressly \"not a base distribution rate ... and will not apply to Existing Load\"; excess reactive demand $0.95/kVAR beyond 50% of metered kW.",
+        "sheet_ref": "223-3"
+      },
+      "findlay_application": {
+        "scale_test": {
+          "tag": "[inference]",
+          "statement": "MARA Holdings' contracted 150 MW at the One Power Findlay Megawatt Hub is 150,000 kW — six times the 25,000 kW threshold — and the 30 MW currently energized already clears it. Whatever else is unresolved, this is not a site that falls below Schedule DCT on size.",
+          "source": "One Power Co Form S-1 (EDGAR CIK 2039139, filed 2025-01-23) + the tariff's 25,000 kW definition; see data/extracted/findlay/data-centers.md"
+        },
+        "crypto_is_named_in_the_tariff": {
+          "tag": "[verified]",
+          "statement": "The tariff does not leave cryptocurrency mining to interpretation. \"Mobile Data Center\" is defined to reach electronic information services \"(including mining of cryptocurrency)\" with portable or distributable load, and \"Data Center\" is defined to include \"Mobile Data Center\" unless stated otherwise. MARA Holdings, Inc. is a bitcoin miner. A Findlay compute load of that description, taken as a retail customer of AEP Ohio above 25,000 kW, is squarely inside the definition — and it inherits the sworn foreign-adversary attestation, which is the only place in this tariff where a customer must swear to anything.",
+          "guard": "MARA Holdings, Inc. (NASDAQ MARA, ex-Marathon Digital) is NOT Marathon Petroleum Corporation (NYSE MPC, the Findlay-headquartered refiner and a Hancock County NPDES permittee). Never merge them. The distinction is live in this very record: One Power's S-1 lists \"Marathon Petroleum Company LP, Wyandot County, Ohio, 1.5 MW\" as a Wind for Industry customer — a different company, a different county, a different contract."
+        },
+        "who_is_the_retail_customer": {
+          "tag": "[open]",
+          "statement": "The tariff applies to \"the customer,\" and at this hub it is not established who that is. One Power owns the site and built its own transmission-voltage digital substation; MARA leases capacity behind it under a 15-year take-or-pay lease whose \"lease payment is due regardless of whether or not the customer elects to purchase power\" (S-1). So the party holding an electric service agreement with AEP Ohio may be One Power rather than MARA, and One Power describes the hub as a multi-tenant \"electrified industrial park\" for uses spanning fixed and mobile data centers, digital currency mining, electric fleet charging, cathode/anode manufacturing, hydrogen production, indoor farming and additive manufacturing — which is not obviously \"used primarily or exclusively for electronic information services.\" Whether Schedule DCT reaches the hub, reaches its compute tenant, or reaches neither is a question for the ESA, and no ESA, LOA or PUCO filing naming this site was located. Lead HUB-ESA-CUSTOMER."
+        },
+        "the_grandfather_question": {
+          "tag": "[inference]",
+          "statement": "Two dates set up the question. MARA's 150 MW take-or-pay was announced 2024-11-11 and the hub was energized in 2023 — both before Schedule DCT's Effective Date of 2025-07-23. If an LOA or ESA covering that load was signed before that date, it is \"Existing Load,\" billed at a 60% minimum demand rather than 85%, exempt from the $20,000 supplemental transmission customer charge, and left on its own contract terms. The +300 MW is what breaks it: the tariff makes \"Existing Load that signs a new ESA to increase its contract capacity by more than 25,000 kW\" into New Load by definition, and +300 MW is twelve times that trigger. On the tariff's own terms an expansion of that size cannot be taken as Existing Load — it is either separately metered New Load, or it converts the whole site. That conclusion follows from the sheets; whether the premise holds (an executed pre-2025-07-23 instrument) is [open] and turns on the ESA nobody has produced.",
+          "source": "tariff sheets 223-2, 223-3; MARA Holdings release 2024-11-11; One Power Co Form S-1 2025-01-23"
+        },
+        "behind_the_meter_bearing": {
+          "tag": "[inference]",
+          "statement": "The netting provision is the one that reads as if it were written with a site like this one in mind. The hub sits behind One Power's own digital substation, One Power's Hancock County behind-the-meter wind fleet is operating, its Whirlpool Net Zero project in the county is in construction, and AEP has a publicised collaboration to place Bloom fuel cells at data-center customers. Under sheets 223-6/223-7 none of that is free: any non-parallel emergency/backup generation is carved out, but anything designed to operate in parallel needs an interconnection agreement with the Company under O.A.C. 4901:1-22, and electing to net BTM output against Contract Capacity obliges the customer to maintain instantaneous load-curtailment equipment. What the Findlay hub has actually elected is not on any captured record. See behind-the-meter-generation.yaml."
+        },
+        "ratepayer_backdrop": {
+          "tag": "[verified]",
+          "statement": "AEP's own numbers give the scale the tariff is sorting. Its 2025-09-16 PJM LAS presentation puts the Ohio interconnection queue at 38 GW, DCT study requests at 13.0 GW, and the tariff-adjusted figure at 11.1 GW, with AEP Ohio cumulative summer-peak additions of 2,273 MW by 2026, 7,615 MW by 2030 and 22,272 MW \"Ultimate.\" Its 2026-02-13 release reports 5,642 MW of contracts signed under the DCT as of 2026-02-12 against 12,219 MW signed before it, 17,861 MW total through 2035, from 13,022.7 MW that \"asked and paid for a study\" and an original ~30,000 MW of requests — against a customer peak demand of roughly 8,000-10,500 MW today.",
+          "findlay_share_of_it": {
+            "tag": "[open]",
+            "statement": "None of those figures is broken out by county, substation or customer, and neither document mentions Findlay, Hancock County, One Power or MARA. Findlay's share of the 38 GW queue, the 13.0 GW of study requests, or the 5,642 MW of signed DCT contracts is unknown and must not be estimated."
+          },
+          "source": "data/documents/grid/findlay/20250916-item-04f---aep-large-load-request.pdf (slides 3-5, 7); AEP Ohio release 2026-02-13 (aepohio.com releaseID 10753)"
+        }
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "grid/findlay/aep-dct-tariff-posture.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "grid/findlay/July_24_2026_AEP_Ohio_Tariff_Book.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
   }
 ]

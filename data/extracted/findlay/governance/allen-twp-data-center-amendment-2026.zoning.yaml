@@ -6,9 +6,11 @@
 #   data/documents/findlay/governance/Res.ESS_.pdf         (5 pp, image-only, rendered @170dpi)
 # Issue 1463 · sub-issue of 1265.
 #
-# This is CORPUS, not a RecordItem: there is no zoning RecordGroup, and inventing one would
-# mean a contract bump plus a 26-bundle regeneration to publish a proposal that is not yet
-# law. Same call as the four grid artifacts in issue 1464 (the Lima Lyka precedent, 1476).
+# Published as a `local-legislation` record since #1993 — the contract bump and the bundle
+# regeneration this file declined were made there, for eight genres at once. It is a
+# commission resolution, which is an act of a local body; its `status: proposed` is hoisted
+# INTO the block so the record can never read as law, and the `analysis:` block below stays
+# out of the payload.
 #
 # TAG VOCABULARY:
 #   [verified]  — the text of the proposal as it reads on the filed pages, its resolution
@@ -26,9 +28,12 @@ as_of: '2026-07-31'
 site: findlay
 issue: 'watermark-directory/the-watermark-directory#1463'
 epic: 'watermark-directory/the-watermark-directory#1265'
-status: proposed
 
 zoning_amendment:
+  title: >-
+    Allen Township proposed Section 1521 — DATA CENTERS, and the Section 1520 replacement
+    (ATZC Resolutions 24-04-124M / 24-04-125M, heard 2026-08-19)
+  status: proposed
   jurisdiction: Allen Township, Hancock County, Ohio (unincorporated)
   authority: R.C. 519.12 — amendment initiated by resolution of the zoning commission
   initiated_by: Allen Township Zoning Commission (ATZC)
@@ -189,6 +194,10 @@ zoning_amendment:
         any guest was there for. See the OnSite lead in data/site/findlay/leads.yaml — the
         similarity between "On-Site Partners" and the OnSite entity in the One Power corporate
         chain is a name match only until an instrument confirms it.
+
+sources:
+  - data/documents/findlay/governance/Res.DataCenters.pdf
+  - data/documents/findlay/governance/Res.ESS_.pdf
 
 # ------------------------------------------------------------------------------------------
 # ANALYSIS — clearly separated from the text above. Every item is [inference] or [open].

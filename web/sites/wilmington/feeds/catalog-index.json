@@ -1,7 +1,7 @@
 {
   "site": "wilmington",
-  "catalog_version": "7a9bf6c129c6d1eeb071e1ce0f6829cdcc4aa9f01950efc2592df6e6641b2de3",
-  "contract_version": "2.0.0",
+  "catalog_version": "fd083dc59d549a3e68a5f042e72cb5ff8794cdf346e8dcf7e4505e9aaa5a2951",
+  "contract_version": "2.1.0",
   "atoms": [
     {
       "handle": "concept:wilmington:7q10",
@@ -1242,6 +1242,30 @@
       "local_id": "npdes:1PX00010",
       "title": "Wilmington RV Resort",
       "feed": "entities"
+    },
+    {
+      "handle": "record:wilmington:grid/wilmington/clinton-delivery-point.interconnection.yaml",
+      "kind": "record",
+      "site": "wilmington",
+      "local_id": "grid/wilmington/clinton-delivery-point.interconnection.yaml",
+      "title": "PJM M-3 Need Dayton-2025-002 — AES Ohio's disclosed large-load customer request at its Clinton Substation near Wilmington, Ohio, its 35/100/300/500 MW ramp, the transmission solution selected for it, and the question the filing does NOT answer: which of the two Clinton-County data-center corridors the load belongs to",
+      "feed": "records"
+    },
+    {
+      "handle": "record:wilmington:grid/wilmington/clinton-substation-extension-2021.project.yaml",
+      "kind": "record",
+      "site": "wilmington",
+      "local_id": "grid/wilmington/clinton-substation-extension-2021.project.yaml",
+      "title": "The Clinton 345 kV substation extension — a completed 2021-22 AES Ohio reliability and solar-deliverability project, wrongly carried in issue #1469 as a current data-center power instrument",
+      "feed": "records"
+    },
+    {
+      "handle": "record:wilmington:grid/wilmington/fayette-clinton-345kv.project.yaml",
+      "kind": "record",
+      "site": "wilmington",
+      "local_id": "grid/wilmington/fayette-clinton-345kv.project.yaml",
+      "title": "AES Ohio's ~29-mile single-circuit 345 kV line from the Fayette Substation in Jeffersonville to the Clinton Substation near Wilmington — its case number and filing dates as served on the City, the three different lengths its own documents give it, its qualitative need statement, and the intervention docket that a landowner-side summary reports",
+      "feed": "records"
     },
     {
       "handle": "record:wilmington:oepa/wilmington/1II00129.npdes.yaml",
