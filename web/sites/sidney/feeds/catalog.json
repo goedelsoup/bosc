@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "353b05de3e6acf5d50abc893fe76691901bbb7c9f6bbd9b8f33e434565fa6e09",
-      "size_bytes": 373236,
+      "sha256": "d393b79e7bb5a24ad8767c63bf001623dd657fa466c2171ef505cb04c32ba6f2",
+      "size_bytes": 373343,
       "lfs_materialized": true,
       "file_count": 14,
       "stale": false,
@@ -168,8 +168,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6a5bf812450e721d48543c23c5cda106c497f840ccd6bceee2a5756c095e012c",
-      "size_bytes": 48776,
+      "sha256": "c21d1c2dbcb022647dadde70fdc4c0596cc531b78518c7aff69f50a2792b0203",
+      "size_bytes": 48883,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -617,8 +617,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6afbe95e3535f5d490e8973395495dbc018387f151dc00e56c19990b195afacb",
-      "size_bytes": 77281,
+      "sha256": "f67864e2f9e8dbeb1df2d40963267a4fa9fd1b94b45b21c3cd413519f5f76c0c",
+      "size_bytes": 77370,
       "lfs_materialized": true,
       "file_count": 6,
       "stale": false,
@@ -3169,6 +3169,70 @@
     },
     "citation": {
       "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022\" (permit 1PD00009*SD / application OH0027421) and the ECHO Great Miami POTW inventory; coordinates from EPA FRS (ECHO lat/lon 40.2709, -84.15031, FRS Registry ID 110002345597)",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "subdivisions-sidney",
+    "title": "Shelby County OH political subdivisions — meeting-records registry",
+    "scope": "reference",
+    "collection": "subdivisions",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "City of Sidney \"Rules of the City Council, February 2024\" (adopted by ordinance) and the Shelby County \"2024 Township Representatives\" sheet, both committed under data/documents/sidney/reference/; publishing blocks from a read-only discovery pass (`watermark --site sidney subdivisions discover`) folded in by hand",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:sidney",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "subdivisions",
+      "civic",
+      "meetings",
+      "sidney"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/subdivisions/sidney/subdivisions.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "documents/sidney/reference/sidney-council-rules-2024.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/sidney/reference/shelby-township-officials-2024.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/sidney/reference/filename-map.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "33311ff3d27b346beddf62c2bcf9776d746aaa7e555c910c3f6c399d7106ff33",
+      "size_bytes": 310199,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "City of Sidney \"Rules of the City Council, February 2024\" (adopted by ordinance) and the Shelby County \"2024 Township Representatives\" sheet, both committed under data/documents/sidney/reference/; publishing blocks from a read-only discovery pass (`watermark --site sidney subdivisions discover`) folded in by hand",
       "source_kind": "reference",
       "page": null,
       "pages": null,

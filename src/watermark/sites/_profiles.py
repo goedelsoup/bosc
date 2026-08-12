@@ -2743,6 +2743,25 @@ _SIDNEY = SiteProfile(
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "sidney-gis"}),
     design_lat=40.2842,  # [verified] Sidney centroid = NOAA Atlas-14 point
     design_lon=-84.1558,
+    # #1999: the meeting keywords that put a Project Galaxy item in this site's corridor. Each is
+    # an ASSERTION OF RELEVANCE and is cited (#1839), and each must be a slug `keywords.scan_text`
+    # can actually emit — `corridor_subjects` is matched against its fixed vocabulary, not against
+    # free text.
+    #   datacenter    — the City's own page is titled "Proposed Data Center FAQ" (sidneyoh.com/526)
+    #                   and every committed instrument names the use.
+    #   tax_abatement — the CRA abatement is the vehicle: Res. 69-25 designates the area, 80-25
+    #                   authorizes the agreement, 81-25/82-25 divide the proceeds with the two
+    #                   school boards. It is what Council actually voted on.
+    #   annexation    — the campus parcel's zoning/corporate status is a documented CURRENCY GAP
+    #                   (#1379): the City's own annexation layer stops at Ord. A-3145 (2023-08-28)
+    #                   while the auditor's TY2025 tax district already places the parcel inside
+    #                   the corporate limits. The ordinance that closes it is a council item.
+    # ⚠️ `amazon` is deliberately OMITTED even though it is the permittee on every instrument:
+    # `keywords.py` classes it an AMBIGUOUS name that stays in the searchable index `hits` and
+    # never in `subjects`. Overriding that here would make every mention of the retailer
+    # corridor-relevant. `project_galaxy` is not in the vocabulary and is not added: in Ohio EPA's
+    # records that name belongs to a DIFFERENT Amazon campus in Fayette County.
+    corridor_subjects=("datacenter", "tax_abatement", "annexation"),
     corridor_name="Upper Great Miami headwaters corridor",  # [inference] the Sidney mainstem reach (I-75)
     dominant_hsg="D",  # [verified] SSURGO over the committed campus footprint (#1379) — see citation
     hsg_citation=(

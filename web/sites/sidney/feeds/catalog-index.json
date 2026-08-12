@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "8174deba63f382ff1cf7c8cd8beca88c9c67e2016728f3a9664e9e864a0f2f22",
+  "catalog_version": "1a218593ce41870546f378e4d1280d3f956816a70c33f6d0f5b9e6984df748e8",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -1041,6 +1041,14 @@
       "site": "sidney",
       "local_id": "sidney-watch-items",
       "title": "Sidney site watch-items (WWTP infrastructure geometry)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sidney:subdivisions-sidney",
+      "kind": "dataset",
+      "site": "sidney",
+      "local_id": "subdivisions-sidney",
+      "title": "Shelby County OH political subdivisions — meeting-records registry",
       "feed": "catalog"
     },
     {

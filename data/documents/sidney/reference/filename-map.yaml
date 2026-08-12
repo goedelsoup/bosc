@@ -1,0 +1,52 @@
+meta:
+  collection: sidney/reference
+  note: >-
+    Committed reference documents for the Sidney watershed point that are not permits or council
+    legislation — the rosters and codified rules that GROUND the civic registry
+    (data/reference/subdivisions/sidney/subdivisions.yaml). Added for #1999.
+documents:
+- filename: sidney-council-rules-2024.pdf
+  canonical: sidney-rules-of-the-city-council-february-2024.pdf
+  title: City of Sidney — Rules of the City Council, February 2024
+  type: codified-council-rules
+  source_url: https://www.sidneyoh.com/DocumentCenter/View/702/Council-Rules-PDF
+  sha256: 73a4426de1608974a52acce82b15ec391e7b9dc891729b6052187adfe4d0571b
+  bytes: 267863
+  content_type: application/pdf
+  fetched_at: '2026-08-11T21:39:00+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    THE grounding instrument for this site's civic registry, and a legislative instrument rather
+    than a web blurb: 19 pages, adopted and amended by ordinance (its own cover lists eleven
+    amendments, most recently Ordinance A-3171 on 02/12/2024) under the authority of City
+    Charter §2-13, which its own p.2 cites. ⚠️ Adopted BY ordinance, not codified IN the code —
+    the Charter is the codified instrument. §1 REGULAR MEETINGS prints
+    the Council's standing cadence, time and place verbatim, which is exactly the grounded fact
+    the registry schema requires and which no Shelby County roster carries.
+    ⚠️ It also prints a HOLIDAY-SHIFT clause ("When the second or fourth Monday falls on a
+    holiday, the regular meeting shall be held on the following Tuesday or such other day as the
+    Council may determine") and a SECOND meeting series ("Workshop sessions are normally held on
+    the first Monday of each month"). A missing-meeting audit that reads the cadence without the
+    shift clause will report false absences.
+    The CivicPlus filename suffix convention (`COUNCIL RULES 2024_202402130844239442.pdf`) is the
+    same one THREE of the five committed council resolutions carry — 80-25, 81-25 and 82-25 do;
+    26-26 and 27-26 were saved without it.
+- filename: shelby-township-officials-2024.pdf
+  canonical: shelby-county-township-representatives-2024.pdf
+  title: 2024 TOWNSHIP REPRESENTATIVES -- SHELBY COUNTY
+  type: county-officials-roster
+  source_url: https://co.shelby.oh.us/DocumentCenter/View/814/Current-Township-Officials
+  sha256: f4be04766fa18f4084ceea0310204cd58ddc2235eb046e34003b621c27d2db25
+  bytes: 19725
+  content_type: application/pdf
+  fetched_at: '2026-08-11T21:39:00+00:00'
+  status: downloaded
+  content_verified: text-layer
+  note: >-
+    The closest thing Shelby County publishes to Hancock County's "Directory of Officials" — and
+    it is not close. One page, two columns per township (chairman and zoning enforcement officer),
+    personal names and phone numbers. ⚠️ It prints NO meeting cadence and NO township-hall
+    address for any of the 14 townships, which is why every Shelby township in the registry
+    except Clinton carries `meeting_schedule: null` and `office: null`. That is the schema
+    behaving correctly, not a gap in the transcription.

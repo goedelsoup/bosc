@@ -106,4 +106,15 @@ Regenerate: `watermark --site findlay subdivisions discover`
 | --- | --- | --- |
 | `reference/subdivisions/findlay/subdivisions.yaml` | application/x-yaml | no |
 
+### `subdivisions-sidney` — Shelby County OH political subdivisions — meeting-records registry
+
+Source: City of Sidney "Rules of the City Council, February 2024" (adopted by ordinance) and the Shelby County "2024 Township Representatives" sheet, both committed under data/documents/sidney/reference/; publishing blocks from a read-only discovery pass (`watermark --site sidney subdivisions discover`) folded in by hand · License: public record / public domain · Access: public · Site scope: site:sidney · Refresh: on-demand
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/subdivisions/sidney/subdivisions.yaml` | application/x-yaml | no |
+| `documents/sidney/reference/sidney-council-rules-2024.pdf` | application/pdf | yes |
+| `documents/sidney/reference/shelby-township-officials-2024.pdf` | application/pdf | yes |
+| `documents/sidney/reference/filename-map.yaml` | application/x-yaml | no |
+
 <!-- catalog:end -->

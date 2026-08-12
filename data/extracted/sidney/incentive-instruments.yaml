@@ -695,7 +695,8 @@ open_items:
       cite it.
     route: >-
       The City's legislative portal is https://sidneycityoh.documents-on-demand.com/ — reachable
-      but behind a Cloudflare managed JavaScript challenge (HTTP 403 with a
+      but returning HTTP 403 to a default request (originally read as a Cloudflare managed
+      JavaScript challenge — see the correction below) (HTTP 403 with a
       cf_chl challenge page to scripted clients), so it is UNSEARCHED, not empty. Otherwise an
       R.C. 149.43 request to the Sidney City Clerk, 201 W. Poplar St.
   - item: "The three recorded deeds — O.R. 2329 pp. 445, 449, 454 — grantors, instrument numbers, consideration, easements"

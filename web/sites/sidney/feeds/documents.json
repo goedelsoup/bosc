@@ -362,6 +362,36 @@
         "canonical_document_id": null,
         "version": null,
         "supersedes": []
+      },
+      {
+        "rel": "sidney/reference/shelby-township-officials-2024.pdf",
+        "name": "shelby-township-officials-2024.pdf",
+        "size_bytes": 19725,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "sidney/reference/sidney-council-rules-2024.pdf",
+        "name": "sidney-council-rules-2024.pdf",
+        "size_bytes": 267863,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
       }
     ]
   }

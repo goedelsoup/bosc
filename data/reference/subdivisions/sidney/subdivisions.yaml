@@ -1,0 +1,311 @@
+# Sidney (sidney) — political-subdivision public-meeting records registry. Issue #1999.
+#
+# The second peer registry after Findlay's (#1839), and it is grounded DIFFERENTLY, because
+# Shelby County does not publish what Hancock County does.
+#
+# ⚠️ THERE IS NO SHELBY COUNTY "DIRECTORY OF OFFICIALS". Findlay's 32 bodies rest on one
+# county-published roster that prints every body's cadence and office. Shelby County publishes no
+# such document — a dated negative across five routes on 2026-08-11 (county Government index,
+# DocumentCenter, targeted search, the SOS statewide roster, the county board of elections). The
+# nearest county artifact, `shelby-township-officials-2024`, is a single page of chairmen and
+# zoning enforcement officers with NO cadence and NO township-hall address for any of the 14
+# townships. So `meta.grounded_sources` is a LIST, and most bodies here carry
+# `meeting_schedule: null` and `office: null`. That is the schema behaving correctly under
+# Findlay's own rule — a cadence is transcribed from a committed roster or it is not asserted —
+# and it is not a gap in the transcription.
+#
+# What Sidney has instead is stronger for the one body that matters most: the City's RULES OF THE
+# CITY COUNCIL, adopted and amended by ordinance, which print Council's cadence, time and place
+# verbatim. All six Project Galaxy vote dates fall on that printed cadence.
+# ⚠️ They are NOT "codified" — the Rules' own p.2 says their authority derives from City Charter
+# §2-13. The Charter is the codified instrument; the Rules are adopted under it.
+#
+# `publishing:` is a live-web finding folded in BY HAND (`watermark --site sidney subdivisions
+# discover` is read-only and never rewrites this file). See src/watermark/civic/CLAUDE.md.
+meta:
+  site: sidney
+  subject: Shelby County, Ohio political subdivisions — public-meeting records registry
+  description: >-
+    Meeting-holding bodies for the Sidney watershed point (Shelby County, upper Great Miami
+    River). Grounded facts come from the committed sources below; every body whose cadence no
+    committed source prints carries `meeting_schedule: null` with a note recording what WAS
+    observed live and where. The `publishing:` block is the read-only discovery pass folded in by
+    hand and carries its own `discovered:` provenance.
+  grounded_sources:
+    - id: sidney-council-rules-2024
+      file: data/documents/sidney/reference/sidney-council-rules-2024.pdf
+      title: City of Sidney — Rules of the City Council, February 2024
+      asof: "2024-02-12"        # Ordinance A-3171, the most recent amendment on its own cover
+      pages:
+        regular_meetings: 2     # 0-based p.1 — §1 REGULAR MEETINGS
+      note: >-
+        A legislative instrument, not a web blurb: 19 pages, adopted and amended by ordinance
+        eleven times since 1982 under the authority of City Charter §2-13 (its own p.2 says so).
+        ⚠️ Adopted BY ordinance, not codified IN the code — the Charter is the codified
+        instrument. This is the only committed document for this site printing a standing cadence.
+    - id: shelby-township-officials-2024
+      file: data/documents/sidney/reference/shelby-township-officials-2024.pdf
+      title: 2024 TOWNSHIP REPRESENTATIVES -- SHELBY COUNTY
+      asof: "2024"
+      note: >-
+        Grounds township NAMES only. Its sole role words are 'TOWNSHIP CHAIRMAN' and 'TOWNSHIP
+        ZONING ENFORCEMENT OFFICER' — no cadence, no office address, and no governing body — so it
+        can ground `name`/`type` and nothing else. ⚠️ Cite it for the BODY, never for a current
+        officeholder: it disagrees with Clinton Township's own 2026 site on who chairs the board.
+  # Leads for a future pass, recorded so the next check does not re-derive them:
+  #  · https://co.shelby.oh.us/DocumentCenter/View/1509/2026-RPC-Board-Members — a 2026-vintage
+  #    county-published roster enumerating 24 bodies by their RPC representation. Newer than the
+  #    township sheet and broader; it was found by the refutation pass, not the sweep. Not yet
+  #    read, so nothing here is grounded on it.
+  #  · The 2023 predecessor of the township sheet adds a fiscal-officer column the 2024 one drops.
+  county_enumeration:
+    tag: '[verified]'
+    statement: >-
+      Shelby County comprises 14 townships, 8 incorporated villages (Anna, Botkins, Fort Loramie,
+      Kettlersville, Lockington, Port Jefferson, Jackson Center, Russia) and 1 city (Sidney, the
+      county seat).
+    source: https://co.shelby.oh.us/regional-planning-commission/ (read 2026-08-11)
+    note: >-
+      The completeness anchor. This registry enumerates the bodies the Project Galaxy record
+      actually reaches — the City, the county board, the two planning commissions, the campus's
+      own township, and the two school boards that are counterparties to Res. 81-25 / 82-25. The
+      remaining townships and villages are reachable from the committed roster by NAME only, and
+      are deliberately not listed as rows until a source prints something more than a name: a
+      registry of empty rows is not more complete, it is just longer.
+  caveats:
+    - "Meeting cadence is transcribed verbatim from a committed source; the Council Rules' own
+      phrasing is kept rather than normalized to Lima's house style. Where no committed source
+      prints a cadence the field is null and the note records the live-web observation instead —
+      never promoted into the grounded field."
+    - "⚠️ The Council Rules print a HOLIDAY-SHIFT clause and a SECOND meeting series. Regular
+      meetings move to 'the following Tuesday or such other day as the Council may determine'
+      when the second or fourth Monday is a holiday, and workshop sessions run on the FIRST
+      Monday. A missing-meeting audit that reads only 'second and fourth Mondays' will report
+      false absences in holiday months and will miss the workshops entirely."
+    - "⚠️ The same-name trap here is a same-COUNTY trap, and it is worse than Findlay's. Shelby
+      County exists in Ohio, Indiana, Tennessee, Illinois, Iowa, Kentucky, Missouri, Alabama and
+      Texas, and a search for 'Shelby County commissioners' returns Tennessee's first. Separately,
+      the CITY of Shelby, Ohio is in RICHLAND County and is not in Shelby County at all — the
+      same collision the site profile already carries on its EIA utility number. Ohio also has a
+      Clinton Township in Franklin, Fulton, Knox, Seneca, Vinton and Wayne counties; this
+      registry's is Shelby's, tied by the county's own township link."
+    - "`platform: unknown` WITH a `discovered:` block = looked at, CMS not fingerprintable or
+      not in the enum. `unknown` WITHOUT one = not yet looked. Neither ever means the body
+      withholds records, and a null `records_url` is never evidence of withholding."
+
+subdivisions:
+  # ── The City ────────────────────────────────────────────────────────────────
+  - slug: sidney-city-council
+    name: Sidney City Council
+    type: city
+    governing_body: City Council
+    # Verbatim from the Council Rules, §1 REGULAR MEETINGS (0-based p.1), read off the document's
+    # own text layer. The rule's phrasing — including "5:30 P.M. Eastern Time" — is the source.
+    meeting_schedule: >-
+      Regular meetings of the City Council are held on the second and fourth Mondays of each month
+      at 5:30 P.M. Eastern Time, in the City Council Chambers in the Municipal Building. When the
+      second or fourth Monday falls on a holiday, the regular meeting shall be held on the
+      following Tuesday or such other day as the Council may determine.
+    office: 201 W. Poplar Street, Sidney, OH 45365
+    grounded_from: sidney-council-rules-2024
+    note: >-
+      ⚠️ ALL SIX Project Galaxy vote dates fall on this printed cadence:
+      2025-09-08 is the 2nd Monday (Res. 69-25); 2025-10-27 the 4th (Res. 80-25 / 81-25 / 82-25);
+      2026-04-27 the 4th (Res. 26-26 / 27-26). The whole legislative chain sits on regular
+      meetings the rule reaches. ⚠️ But that last step is an `[inference]`, not a reading: the
+      date arithmetic is exact, while "passed AT a regular meeting" is inferred from the date
+      matching the cadence — none of the five committed resolution PDFs says which meeting kind
+      adopted it. The minutes would settle it. Workshop sessions on the first Monday are a
+      SECOND series the rule also prints; they are not enumerated as a separate body here.
+    publishing:
+      website: https://www.sidneyoh.com/293/City-Council
+      records_url: https://sidneycityoh.documents-on-demand.com/
+      platform: unknown
+      discovered:
+        asof: '2026-08-11'
+        method: web
+        note: >-
+          ⚠️ ROUTE CORRECTION — THIS PORTAL IS REACHABLE. It was recorded across this site's
+          record (regulatory-watch.yaml, data-centers.md, the drafted R.C. 149.43 requests) as
+          "Cloudflare-challenged", i.e. an unsearched route. It IS a Cloudflare challenge — the
+          403 carries `cf-mitigated: challenge` and a "Just a moment…" body — but it is triggered
+          by the HTTP/2 FINGERPRINT, not by the client's identity, and one retry defeats it.
+          Verified here: a default HTTP/2 request returns 403, and the SAME request forced to
+          `--http1.1` with a browser UA returns HTTP 200 (28,684 bytes). The portal further exposes an undocumented JSON API
+          (`/meta/rootfolder`, `/meta/docfolder?containerId=<guid>`), confirmed 200 with
+          `application/json`, whose root tree enumerates City Council → Agendas / Agenda Packets /
+          Legislation → Ordinances, Resolutions / Minutes. The COUNCIL-MINUTES lead is therefore
+          answerable from a PUBLIC portal, not only by records request.
+          `platform: unknown` is literal, not evasive: the vendor is Ameriscan Imaging Services
+          "Documents-On-Demand" and the `Platform` enum has no value for it, so no fetcher
+          dispatches. Adding one is its own change.
+          The City ALSO runs a CivicPlus Agenda Center at https://www.sidneyoh.com/AgendaCenter,
+          but it is the newer JS-rendered variant: the repo's own `parse_agenda_center` returns
+          ZERO MeetingDocs against it (verified), i.e. an honest empty and a fetcher gap — never
+          a body that publishes nothing.
+
+  - slug: sidney-city-planning-commission
+    name: Sidney City Planning Commission
+    type: city
+    governing_body: City Planning Commission
+    meeting_schedule: null
+    office: null
+    grounded_from: null
+    note: >-
+      No committed source prints this body's cadence, so the field stays null. ⚠️ The City itself
+      publishes the time TWO different ways on two of its own pages (observed 2026-08-11), which
+      is a second reason not to promote either into a grounded field. It matters to this site
+      because site-plan approval is administrative under Zoning Code §1115.09 — a staff action
+      with no agenda item — so this commission is where a site-plan matter would surface if one
+      ever did.
+    publishing:
+      website: https://www.sidneyoh.com/267/Boards-Commissions
+      records_url: https://sidneycityoh.documents-on-demand.com/
+      platform: unknown
+      discovered:
+        asof: '2026-08-11'
+        method: web
+        note: >-
+          Shares ONE records portal with City Council — the same Documents-On-Demand host, same
+          route correction as above. The City's boards-and-commissions index names 24 bodies
+          across three alphabetical pages; only the ones this record reaches are enumerated here.
+
+  # ── The County ──────────────────────────────────────────────────────────────
+  - slug: shelby-county-commissioners
+    name: Shelby County Board of County Commissioners
+    type: county_department
+    governing_body: Board of County Commissioners
+    meeting_schedule: null
+    office: 129 E. Court Street, Suite 100, Sidney, OH 45365
+    grounded_from: null
+    note: >-
+      ⚠️ The county prints NO meeting day or time anywhere — only the office address and office
+      hours. Its Tuesday-and-Thursday rhythm is derivable ONLY from posted agendas and is an
+      `[inference]`, so the grounded field stays null. This is the same shape Hancock County's
+      board has in the Findlay registry, and the same discipline applies.
+    publishing:
+      website: https://co.shelby.oh.us/228/Board-of-County-Commissioners
+      records_url: https://co.shelby.oh.us/AgendaCenter
+      platform: civicplus
+      discovered:
+        asof: '2026-08-11'
+        method: web
+        note: >-
+          A classic server-rendered CivicPlus Agenda Center that the repo's EXISTING fetcher reads
+          unchanged — verified by running `watermark.civic.fetchers.civicplus.parse_agenda_center`
+          against the live page: 26 MeetingDocs parsed. Two categories are published, the Board of
+          Commissioners and a dormant Local Emergency Planning Committee whose newest document is
+          2019-01-22. This is the one body in this registry that is ingestable today with no new
+          code.
+
+  - slug: shelby-county-regional-planning-commission
+    name: Shelby County Regional Planning Commission
+    type: special_district
+    governing_body: Regional Planning Commission
+    meeting_schedule: null
+    office: null
+    grounded_from: null
+    note: >-
+      This site's peer of Lima's LACRPC and Hancock's RPC. ⚠️ TWO CONFLICTING published cadences
+      (observed 2026-08-11): the City's page and the body's own county-hosted page print different
+      schedules. Neither can be silently preferred, so the field stays null and the conflict is
+      the finding. The commission is also the county's own enumerator of its political
+      subdivisions — the `county_enumeration` above is quoted from its page.
+    publishing:
+      website: https://co.shelby.oh.us/regional-planning-commission/
+      records_url: null
+      platform: unknown
+      discovered:
+        asof: '2026-08-11'
+        method: web
+        note: >-
+          Looked at; no minutes/agenda listing found on either its county-hosted page or the
+          City's page for it. A null `records_url` here means "no online posting located on this
+          date", never that the body withholds records — the records-request route is untried.
+
+  # ── The campus's own township ───────────────────────────────────────────────
+  - slug: clinton-township
+    name: Clinton Township
+    type: township
+    governing_body: Board of Township Trustees
+    meeting_schedule: null
+    office: null
+    grounded_from: shelby-township-officials-2024
+    note: >-
+      ⚠️ `grounded_from` covers the NAME only. The sheet's sole role words are 'TOWNSHIP CHAIRMAN'
+      and 'TOWNSHIP ZONING ENFORCEMENT OFFICER' — it never names a governing body, so
+      `governing_body: Board of Township Trustees` is taken from the county's own live townships
+      page, not from the roster, and is a live-web reading like the cadence below.
+      The township the AWS campus sits in (auditor tax district 01, "CLINTON TWP SIDNEY CORP").
+      The committed roster grounds its NAME only — it prints a chairman and a zoning enforcement
+      officer and no cadence, like every township on that sheet. ⚠️ Clinton is the ONE Shelby
+      township with its own .gov site, and that site printed a cadence when observed 2026-08-11
+      ("third Tuesday of each month at 7:00 PM", P.O. Box 603, Sidney) — recorded here as a
+      live-web observation and deliberately NOT promoted into the grounded field, because a
+      self-published web page is not the committed roster the schema means.
+      ⚠️ `clintontownship.org` is FRANKLIN County's Clinton Township, not this one.
+    publishing:
+      website: https://twpclintonshelbyoh.gov/
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: '2026-08-11'
+        method: web
+        note: >-
+          Hand-built site with officials, cadence and contact details but no minutes or agenda
+          archive located — so `request_only` (the records-request route), not `unknown`. Tied to
+          SHELBY County by the county's own townships page, which links this domain.
+
+  # ── The two school boards party to Res. 81-25 / 82-25 ───────────────────────
+  - slug: sidney-city-schools-board
+    name: Sidney City Schools Board of Education
+    type: special_district
+    governing_body: Board of Education
+    meeting_schedule: null
+    office: 750 S. Fourth Avenue, Sidney, OH 45365
+    grounded_from: null
+    note: >-
+      A counterparty to BOTH Res. 81-25 (development agreement) and Res. 82-25 (income-tax
+      sharing) — the CRA abatement's school-district side, and the body that would have taken up
+      those agreements on its own agenda. Its own page printed "The Board of Education meets at
+      6 PM on the third Monday of the month" when observed 2026-08-11; a live-web observation, not
+      a committed roster, so the grounded field stays null.
+    publishing:
+      website: https://www.sidneycityschools.org/about/board-of-education
+      records_url: https://go.boarddocs.com/oh/sidn/Board.nsf/Public
+      platform: boarddocs
+      discovered:
+        asof: '2026-08-11'
+        method: web
+        note: >-
+          Diligent BoardDocs, verified live (HTTP 200; the served markup carries the `boarddocs`
+          signature). Archive runs December 2018 to present per the district's own pointer. ⚠️
+          `boarddocs` is in the Platform enum but the repo has NO BoardDocs fetcher — only
+          `civicplus` and `generic` exist — so this body is classified today and ingestable only
+          after a fetcher lands.
+
+  - slug: upper-valley-career-center-board
+    name: Upper Valley Career Center Board of Education
+    type: special_district
+    governing_body: Board of Education
+    meeting_schedule: null
+    office: null
+    grounded_from: null
+    note: >-
+      The other counterparty to Res. 81-25 / 82-25. Cadence is `[open]` — no committed or
+      retrievable source prints one.
+    publishing:
+      website: https://www.uppervalleycc.org/page/board-of-education
+      records_url: null
+      platform: unknown
+      discovered:
+        asof: '2026-08-11'
+        method: web
+        note: >-
+          ⚠️ BLOCKED, and blocked in a way that lies. The site sits behind a vendor challenge
+          (Apptegy/Thrillshare with a Fastly edge) that answers a plain connector request with a
+          challenge page — observed as HTTP 403 on one probe and as HTTP 200 carrying a "Client
+          Challenge — JavaScript is disabled" body on another. The 200 case is the dangerous one:
+          a discovery pass that trusts the status code records "looked at, unfingerprinted" for a
+          body it never actually reached. `unknown` here means BLOCKED, and this note is the only
+          thing that distinguishes it from "not yet looked".

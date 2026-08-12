@@ -35,6 +35,15 @@ numbered so a partial denial is legible as a partial denial.
 
 ---
 
+## ⚠️ Before sending 1 or 2 — the portal was mis-diagnosed as blocked
+
+The City's legislative portal `sidneycityoh.documents-on-demand.com` is **open**. It was recorded
+across this record as Cloudflare-challenged; the 403 is an HTTP/2 fingerprint block, and the same
+request over HTTP/1.1 returns 200 with a browsable JSON tree of Council agendas, agenda packets,
+legislation (ordinances **and** resolutions) and **minutes** (#1999). Requests 1 and 2 both target
+records that portal appears to hold. **Search it first.** What survives the search is what should
+be asked for — and an ask that survives it is a much stronger ask.
+
 ## 1 · City Clerk — Council minutes and meeting audio for the six vote dates
 
 **To:** Clerk of Council, City of Sidney, 201 W. Poplar St., Sidney, OH 45365
@@ -67,10 +76,18 @@ public meeting currently appears anywhere in `data/` (#1947).
 > on or about 2025-09-08, designating a city-wide Community Reinvestment Area, together with any
 > exhibit, map or legal description attached to or incorporated by it.
 
-**Why.** The CRA designating legislation is known only through two other instruments' recitals. The
-City does not publish it on the data-center FAQ or in the DocumentCenter, and the legislative
-portal (`sidneycityoh.documents-on-demand.com`) is Cloudflare-challenged — an unsearched route, not
-an absence. ⚠️ Do not ask for "Res. 18-25": that number does not exist and asking for it is what
+**Why.** The CRA designating legislation is known only through two other instruments' recitals, and
+the City does not publish it on the data-center FAQ or in the DocumentCenter.
+
+⚠️ **BUT CHECK THE PORTAL FIRST — this ask may already be answerable without a request.** This
+paragraph said the legislative portal `sidneycityoh.documents-on-demand.com` was
+"Cloudflare-challenged, an unsearched route". That diagnosis was **wrong** (#1999): the 403 comes
+from the **HTTP/2 fingerprint**, not from the client's identity. Forced to HTTP/1.1 with a browser
+UA the same host returns **HTTP 200**, and it exposes an open JSON API (`/meta/rootfolder`,
+`/meta/docfolder?containerId=<guid>`) whose tree enumerates City Council → Agendas / Agenda Packets
+/ Legislation → **Ordinances, Resolutions** / **Minutes**. Search that portal before sending this —
+and before sending request 1 below, whose minutes are on the same host. A request for a record the
+City already publishes wastes the City's time and yours, and weakens the ones that matter. ⚠️ Do not ask for "Res. 18-25": that number does not exist and asking for it is what
 made this instrument unfindable for months (#1380).
 
 ## 3 · Community Development — the site plan as approved

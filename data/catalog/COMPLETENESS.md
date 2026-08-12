@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-12T00:09:25.036816+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-12T01:56:05.707999+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **170** catalogued datasets — **169** reviewed.
-- **170** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **171** catalogued datasets — **170** reviewed.
+- **171** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -81,7 +81,7 @@ Snapshot reconciled: **2026-08-12T00:09:25.036816+00:00**. Regenerate with `wate
 | reference | reference | 3 | 3 | 0 | 0 |
 | reference | rsei | 2 | 2 | 0 | 0 |
 | reference | sidney | 1 | 1 | 0 | 0 |
-| reference | subdivisions | 2 | 2 | 0 | 0 |
+| reference | subdivisions | 3 | 3 | 0 | 0 |
 | reference | thermal | 2 | 2 | 0 | 0 |
 | reference | troy-piqua | 1 | 1 | 0 | 0 |
 | reference | troy-piqua-gis | 1 | 1 | 0 | 0 |
@@ -110,7 +110,7 @@ Snapshot reconciled: **2026-08-12T00:09:25.036816+00:00**. Regenerate with `wate
 | piketon | 53 | 36 | 17 |
 | portsmouth | 54 | 37 | 17 |
 | sandusky | 53 | 36 | 17 |
-| sidney | 62 | 53 | 9 |
+| sidney | 63 | 54 | 9 |
 | springfield | 54 | 44 | 10 |
 | toledo | 58 | 46 | 12 |
 | troy-piqua | 59 | 50 | 9 |
