@@ -7,8 +7,19 @@ the registry the subdivision-records connectors (`src/watermark/civic/`) read: d
 fills the `publishing:` block, and per-platform fetchers then pull each body's
 documents into `data/documents/<slug>/` for the existing OCR/index → timeline path.
 
-Regenerate the discovered fields with `watermark subdivisions discover`; list the
-registry with `watermark subdivisions list`.
+List the registry with `watermark subdivisions list`; probe a body's publishing with
+`watermark subdivisions discover`.
+
+⚠️ **This registry is CURATED, not connector-generated, and that is deliberate.** The
+root rule that a regenerated reference dataset is never hand-edited (because the next
+pull reverts it) governs the connector pulls — ECHO, USGS, NOAA — where a `watermark`
+subcommand *writes* the committed file. Nothing writes this one. `discover` is
+**read-only** by design: it prints findings for review and never rewrites the registry,
+and confirmed results are folded into the YAML **by hand** (`src/watermark/civic/CLAUDE.md`).
+That is what keeps `grounded` and `discovered` from blurring — the grounded fields are
+transcribed from a committed roster and must not be overwritten by a web crawl, and each
+`publishing:` block carries its own `discovered:` provenance instead. The registry is the
+*input* to discovery, not its output.
 
 ## Per-site resolution
 
