@@ -20,9 +20,18 @@ its owner in `meta.site`; `load_registry` refuses to read a registry whose `meta
 disagrees with the active site, so a peer's bodies can never leak into a Lima run (or
 vice versa).
 
-One peer registry exists today: [`findlay/`](findlay/) — Hancock County's 32 bodies,
-grounded in that county's own Directory of Officials and swept 2026-08-01 (#1839, the
-epic-#1520 pilot). Read it with `watermark --site findlay subdivisions list`. Note that
+Two peer registries exist today:
+
+- [`findlay/`](findlay/) — Hancock County's 32 bodies, grounded in that county's own
+  Directory of Officials and swept 2026-08-01 (#1839, the epic-#1520 pilot).
+  `watermark --site findlay subdivisions list` · `… subdivisions discover`
+- [`sidney/`](sidney/) — Shelby County's 7 bodies, swept 2026-08-11 (#1999). Grounded
+  **differently**, and the difference is the point: Shelby County publishes no Directory
+  of Officials, so `grounded_sources` is a *list* and most bodies carry a null cadence.
+  The City's Rules of the City Council carry the one that matters.
+  `watermark --site sidney subdivisions list` · `… subdivisions discover`
+
+Note that
 **Bluffton is in both registries**: it straddles the Allen/Hancock line and each county's
 roster grounds it independently. Three township names (Amanda, Jackson, Marion) are also
 slugs in both — different bodies in different counties, kept apart because the registries
