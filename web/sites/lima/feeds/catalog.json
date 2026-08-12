@@ -945,8 +945,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "353b05de3e6acf5d50abc893fe76691901bbb7c9f6bbd9b8f33e434565fa6e09",
-      "size_bytes": 373236,
+      "sha256": "80d2bda187156b977fe4feffbcd8efd99aad241937e8944c92b83f608282fc9f",
+      "size_bytes": 373954,
       "lfs_materialized": true,
       "file_count": 14,
       "stale": false,
@@ -1113,8 +1113,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6a5bf812450e721d48543c23c5cda106c497f840ccd6bceee2a5756c095e012c",
-      "size_bytes": 48776,
+      "sha256": "d5e98572cb8396a37d1247135d523476f03a6fefb268e42bed6481838654aa1b",
+      "size_bytes": 49494,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -5015,8 +5015,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6afbe95e3535f5d490e8973395495dbc018387f151dc00e56c19990b195afacb",
-      "size_bytes": 77281,
+      "sha256": "22b4cf672d6bcff704ed85cd9de6c142a5c5cc7b9a2f527658c4c6e45b87e68c",
+      "size_bytes": 77724,
       "lfs_materialized": true,
       "file_count": 6,
       "stale": false,
@@ -10021,6 +10021,70 @@
       "confidence": "medium",
       "note": "watermark --site findlay subdivisions discover",
       "verified": true
+    }
+  },
+  {
+    "id": "subdivisions-sidney",
+    "title": "Shelby County OH political subdivisions — meeting-records registry",
+    "scope": "reference",
+    "collection": "subdivisions",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "City of Sidney \"Rules of the City Council, February 2024\" (adopted by ordinance) and the Shelby County \"2024 Township Representatives\" sheet, both committed under data/documents/sidney/reference/; publishing blocks from a read-only discovery pass (`watermark --site sidney subdivisions discover`) folded in by hand",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:sidney",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "subdivisions",
+      "civic",
+      "meetings",
+      "sidney"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/subdivisions/sidney/subdivisions.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "documents/sidney/reference/sidney-council-rules-2024.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/sidney/reference/shelby-township-officials-2024.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/sidney/reference/filename-map.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "722ff6333ae16815a32733217f842f0b22af746a432d6e59d1c6595b56a4aedd",
+      "size_bytes": 311585,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "City of Sidney \"Rules of the City Council, February 2024\" (adopted by ordinance) and the Shelby County \"2024 Township Representatives\" sheet, both committed under data/documents/sidney/reference/; publishing blocks from a read-only discovery pass (`watermark --site sidney subdivisions discover`) folded in by hand",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {

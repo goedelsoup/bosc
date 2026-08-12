@@ -1,7 +1,7 @@
 {
   "site": "findlay",
-  "catalog_version": "2999595ba7fd26e2ece715861970d3814187c91fcd13cf34c04d3f5b26e5ccc0",
-  "contract_version": "2.0.0",
+  "catalog_version": "719c855ab0af99240eec24231988538458bc54709451731ab0c62c4aafeba41b",
+  "contract_version": "2.1.0",
   "atoms": [
     {
       "handle": "concept:findlay:7q10",
@@ -1628,6 +1628,30 @@
       "feed": "records"
     },
     {
+      "handle": "record:findlay:findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml",
+      "title": "Allen Township proposed Section 1521 — DATA CENTERS, and the Section 1520 replacement (ATZC Resolutions 24-04-124M / 24-04-125M, heard 2026-08-19)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml",
+      "title": "Interstate Capital, LLC — \"Allen Commerce Park\" R.C. 519.12 rezoning application (A-1 Agriculture → I-1 Light Industrial, ~135 ac, Allen Township)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:findlay/governance/allen-twp-zoning-adoption-and-referendum.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "findlay/governance/allen-twp-zoning-adoption-and-referendum.yaml",
+      "title": "Allen Township Zoning Resolution",
+      "feed": "records"
+    },
+    {
       "handle": "record:findlay:findlay/governance/litigation-one-energy-v-allen-twp.yaml",
       "kind": "record",
       "site": "findlay",
@@ -1657,6 +1681,22 @@
       "site": "findlay",
       "local_id": "findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
       "title": "Michigan Sugar Company Findlay warehouse",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:grid/findlay/aep-dct-tariff-posture.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "grid/findlay/aep-dct-tariff-posture.yaml",
+      "title": "AEP Ohio Schedule DCT (Data Center Tariff), P.U.C.O. No. 22 Original Sheet Nos. 223-1 to 223-7 — the terms as filed, and which of them bite at the One Power \"Findlay Megawatt Hub\"",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:grid/findlay/rocky-ford-138kv-2024.project.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "grid/findlay/rocky-ford-138kv-2024.project.yaml",
+      "title": "AEP Ohio's Rocky Ford 138 kV Station + the Ebersole-Fostoria Central #2 cut-in and Rocky Ford-Border Basin tie line — Cass Township, Hancock County, Ohio",
       "feed": "records"
     },
     {

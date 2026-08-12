@@ -12,9 +12,12 @@
       },
       "group": {
         "enum": [
+          "agency-policy",
+          "agreements",
           "deeds",
           "enforcement",
           "finance",
+          "incentive-package",
           "labor",
           "land-assembly",
           "litigation",
@@ -24,6 +27,11 @@
           "permits-npdes",
           "permits-sos",
           "plans",
+          "siting-cases",
+          "state-legislation",
+          "statutory-notices",
+          "tariffs",
+          "wetland-determinations",
           "opc"
         ],
         "title": "Group",

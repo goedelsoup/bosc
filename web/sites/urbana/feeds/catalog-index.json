@@ -1,7 +1,7 @@
 {
   "site": "urbana",
-  "catalog_version": "409199637df2113f7d83875516b2879618b3bb8fe11e0afa581b2d86f43f34fc",
-  "contract_version": "2.0.0",
+  "catalog_version": "fe4ff6b6564a15a1669dc613ca7b073e6a79af15fe22a9dc2fe07b5d25eb7a95",
+  "contract_version": "2.1.0",
   "atoms": [
     {
       "handle": "concept:urbana:7q10",
@@ -1122,6 +1122,14 @@
       "local_id": "URB-WATER-METER",
       "title": "The \"office building\" water claim is untestable by any state instrument — and the City holds the only record that could settle it",
       "feed": "leads"
+    },
+    {
+      "handle": "record:urbana:urbana/incentive-instruments.yaml",
+      "kind": "record",
+      "site": "urbana",
+      "local_id": "urbana/incentive-instruments.yaml",
+      "title": "Urbana Technology Hub — the City's incentive and development instruments, as designated, signed and voted",
+      "feed": "records"
     },
     {
       "handle": "record:urbana:urbana/land-assembly.yaml",

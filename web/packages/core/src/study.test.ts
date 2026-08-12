@@ -150,7 +150,14 @@ describe("study verdicts — urbana (confirmed project, screening-only record)",
 
   it("fiscal carries the disclosed investment as a [reference]-register caveat, not a stat", () => {
     const m = studyChapterModel("fiscal", "urbana");
-    expect(m.status).toBe("gap");
+    // `gap` -> `partial` at #1993, which publishes Urbana's incentive register as
+    // `incentive-package`. The chapter is still gap-FIRST — no fiscal feed exists and none is
+    // fabricated — but it can no longer assert "no fiscal instrument is on the record" beside a
+    // records feed showing exactly that instrument. What it now says is missing is the
+    // ACCOUNTING: no auditor's abatement report, no exemption ledger. Still no stat: the
+    // disclosed investment stays a [reference]-register caveat.
+    expect(m.status).toBe("partial");
+    expect(m.statusReasons.join(" ")).toMatch(/the accounting is not/);
     expect(m.stats).toEqual([]);
     expect(m.caveats.join(" ")).toMatch(/\$1\.0B/);
   });

@@ -6,7 +6,10 @@
 #   data/documents/findlay/governance/Application-Zoning-Amendment-Interstate-Capital.pdf
 #   data/documents/findlay/governance/Application-Attachments.pdf
 #   data/documents/findlay/governance/Minutes-7-7-26-ATZC.pdf
-# Issue 1463 · sub-issue of 1265. Corpus, not a RecordItem.
+# Issue 1463 · sub-issue of 1265. Published as a `local-legislation` record since #1993 —
+# a docketed R.C. 519.12 petition the commission took up by motion is an act of a local
+# body. Its `status: pending` is hoisted INTO the block so the record can never read as
+# enacted; the `analysis:` block below stays out of the payload.
 #
 # ⚠️ READ THIS FIRST. The application states its proposed use as "Warehousing / Manufacturing".
 # NOTHING in the corpus connects Interstate Capital, LLC to a data center, and this artifact
@@ -20,9 +23,12 @@ as_of: '2026-07-31'
 site: findlay
 issue: 'watermark-directory/the-watermark-directory#1463'
 epic: 'watermark-directory/the-watermark-directory#1265'
-status: pending
 
-application:
+zoning_application:
+  title: >-
+    Interstate Capital, LLC — "Allen Commerce Park" R.C. 519.12 rezoning application
+    (A-1 Agriculture → I-1 Light Industrial, ~135 ac, Allen Township)
+  status: pending
   applicant: Interstate Capital, LLC
   applicant_address: 260 E. Brown St., Suite 200, Birmingham, MI 48009
   applicant_phone: 248-232-1942
@@ -92,6 +98,11 @@ application:
     - >
       The application form is UNDATED and its Application No. is blank. The 2026-07-01 receipt
       date is a recital in a different document (the 2026-07-07 minutes).
+
+sources:
+  - data/documents/findlay/governance/Application-Zoning-Amendment-Interstate-Capital.pdf
+  - data/documents/findlay/governance/Application-Attachments.pdf
+  - data/documents/findlay/governance/Minutes-7-7-26-ATZC.pdf
 
 # ------------------------------------------------------------------------------------------
 analysis:

@@ -1,5 +1,561 @@
 [
   {
+    "rel": "aedg/paac-records-policy.policy.yaml",
+    "group": "agency-policy",
+    "title": "Port Authority of Allen County — Public Records Availability + Retention & Destruction Policy",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "provenance": {
+        "source_path": "data/documents/aedg/PRR-01-bundle.ocr.pdf",
+        "bundle": "Allen County -- Responsive Records -- Parent PRR.pdf (producing body: Port Authority of Allen County)",
+        "pages": "index pp.80-90 (= bundle 0-based 79-89): Availability Policy p.80; Retention/Destruction Policy pp.81-82; Schedule pp.83-90",
+        "content_verified": "2026-06-07",
+        "evidence": "scan (PAAC public-records production)"
+      },
+      "availability_policy": {
+        "adopted": "2022-07-28",
+        "accepted_by": {
+          "name": "Cynthia Leis",
+          "title": "Executive Director, Port Authority of Allen County",
+          "signature_date": "2022-07-28"
+        },
+        "record_definition": "R.C. 149.011(G) — fixed medium + under jurisdiction of a public office + documents office activities.",
+        "copy_cost": "$0.27 per sheet",
+        "broad_request_denial": "Reserves the right to deny a request that \"broadly asks a public office to search for records containing selected information\" (e.g. \"any and all records containing any reference whatsoever\"); a request must be \"specific\" and particularly describe what is sought; no duty to create a non-existent record. (R.C. 149.43(A)(1)(v) cited)",
+        "non_records_listed": [
+          "attorney-client privileged information",
+          "taxpayer records (Ohio Dept. of Taxation / municipal corporations)",
+          "federal tax returns / IRS return information"
+        ]
+      },
+      "retention_policy": {
+        "adopted": "2022-07-28",
+        "statutes": [
+          "R.C. 149.011",
+          "R.C. 149.43(A)(1)",
+          "R.C. 149.351 (no unauthorized destruction)",
+          "R.C. 149.381 (schedule approval / Ohio History Connection)",
+          "R.C. 149.412 (records commission)",
+          "R.C. 149.40 (creation only as necessary)"
+        ],
+        "econ_dev_trade_secret_carveout": {
+          "statute": "R.C. 4582.58",
+          "text": "\"Financial and proprietary information, including trade secrets, submitted to the Authority (or a nonprofit corporation engaged by the Authority to provide economic development services) by or on behalf of an employer in connection with the relocation, location, expansion, improvement, or preservation of the business of that employer is not a public record subject to ORC 149.43. Any other information submitted by such an employer under those circumstances is not a public record subject to ORC 149.43 until that employer commits in writing to proceed with the relocation, location, expansion, improvement, or preservation.\"",
+          "significance": "A statutory non-record shield for developer-submitted financial/proprietary/trade-secret info, AND for \"any other information\" the employer submits — withheld until the employer commits in writing to proceed. The parenthetical \"nonprofit corporation engaged by the Authority to provide economic development services\" is AEDG: information routed through AEDG (the entity that served the CRA notices and whose President is also the Authority's Executive Director) falls inside the shield. This is the front-end counterpart to the back-end NDA §6 / RDA §9.13 / CRA §22 records-withholding mechanisms: keep the developer's submissions out of \"records\" status to begin with."
+        },
+        "legal_hold": "\"In the event of a lawsuit or threatened lawsuit a legal hold will be announced by legal counsel for the Board identifying relevant records. Records subject to a legal hold shall be retained until the legal hold has been removed.\" (relevant to spoliation given the BOSC mandamus posture)",
+        "records_commission": "Chairperson, fiscal officer of the Board, and legal representative (R.C. 149.412), absent an agreement delegating to the Allen County records commission."
+      },
+      "schedule_highlights": {
+        "public_records_requests": "2 years",
+        "contracts": "8 years after termination (incl. economic-development contracts) -- covers the RDA + CRA",
+        "grant_files": "as required by grant; if unspecified, 5 years after audit + resolution of any litigation/claims/audit findings",
+        "correspondence": "Substantive messages retained per content; messages \"of transitory importance or of no substantive content shall be deleted when of no further administrative value\" (a discretionary email-deletion gap)",
+        "drafts_transient_records": "retain until of no further administrative value (discretionary)",
+        "permanent": [
+          "Minutes of Meetings",
+          "Resolutions of Board",
+          "Organizational Records",
+          "Real Property Records",
+          "Maps/Plats",
+          "Records Retention Forms (RC-1/2/3)"
+        ],
+        "financial_records": "7 years following audit",
+        "bid_records_successful": "statute of limitations per R.C. 2305.06, or 8 years after contract expiration",
+        "bid_records_unsuccessful": "2 years after award / decision not to award"
+      },
+      "org_findings": {
+        "no_employees": {
+          "finding": "Personnel Records schedule entry: \"Having no employees, the Authority has not adopted a policy pertaining to personnel records...\" — the Port Authority of Allen County has NO staff of its own.",
+          "implication": "The Authority must be administered by an external entity. Combined with Cynthia Leis signing the records policy as the Authority's Executive Director while also serving as AEDG President/CEO, the day-to-day operation (incl. records custody for the $14.5M roadwork deal it signed) runs through AEDG. [inference from the no-employees entry + the dual signature]"
+        },
+        "no_maritime_plan": "Plan for Development entry: 'Having no maritime facilities, the Authority has no plan for development pursuant to R.C. 4582.32' (a financing/economic-development port authority, not a port)."
+      },
+      "key_finding_leis_dual_role": {
+        "finding": "Cynthia \"Cindy\" Leis appears in TWO capacities in this corpus: (1) President/CEO of the Allen Economic Development Group (AEDG) -- who drafted/served the CRA school-district notices (school-district-notice-letters.notice.yaml, leisc@aedg.org); and (2) Executive Director of the Port Authority of Allen County -- who signed this public-records policy (2022-07-28) and whose Authority signed the $14.5M Roadwork Development Agreement.",
+        "significance": "The same person leads the economic-development nonprofit that receives developer submissions shielded under R.C. 4582.58 AND directs the public body that (a) is the producing custodian of this PRR bundle, (b) entered the $14.5M roadwork deal with Bistrozzi, and (c) bound itself to the >=5-business-day developer-notice records clause (RDA §9.13). A single locus of control spanning the shield (AEDG-as-recipient) and the custodian (PAAC-as-producer) -- directly material to the \"who is driving the deal and the withholding\" map. [verified: both signatures/roles appear in the corpus; the conflict characterization is inference]"
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "aedg/paac-records-policy.policy.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "aedg/PRR-01-bundle.ocr.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "aedg/roadwork-development-agreement.rda.yaml",
+    "group": "agreements",
+    "title": "BOSC Roadwork Development Agreement — Port Authority of Allen County / Allen County / Bistrozzi LLC",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "provenance": {
+        "source_path": "data/documents/aedg/PRR-01-bundle.ocr.pdf",
+        "bundle": "Allen County -- Responsive Records -- Parent PRR.pdf (328 pp.; producing body: Port Authority of Allen County)",
+        "pages": "Agreement pp.296-312 (index 1-indexed; = bundle 0-based 295-311); Exhibit A (Property) p.313; Exhibit B (Roadwork Improvements) p.314; Exhibit C (Construction Schedule) p.315; Exhibit D (Supporting Information) p.316. The Tetra Tech OPC that Exhibit D incorporates follows at pp.317-328 (already extracted as roundabouts.*.opc.yaml).",
+        "content_verified": "2026-06-07",
+        "evidence": "scan with OCR layer added (PAAC public-records production)"
+      },
+      "parties": {
+        "authority": "PORT AUTHORITY OF ALLEN COUNTY (\"Authority\") — a port authority/body corporate and politic, 144 S. Main St., Suite 200, Lima, OH 45801. Designs and constructs the Roadwork Improvements.",
+        "county": "ALLEN COUNTY, OHIO (\"County\") — Ohio county government; accepts dedication + maintains the roads.",
+        "company": "BISTROZZI LLC (\"Company\") — a Delaware LLC, address 52 East Gay Street, Columbus, OH (the Vorys address), \"together with any permitted successors, assigns or transferees.\" Funds the work.",
+        "company_counsel": "Vorys, Sater, Seymour and Pease — Jill S. Tangeman, Esq. (jstangeman@vorys.com)",
+        "authority_counsel": "Rex H. Huffman, 932 Dixie Hwy, Rossford, OH 43460",
+        "county_counsel": "John R. Willamowski, Jr., Assistant Prosecuting Attorney, Allen County (also notice copy)",
+        "county_engineer": "Brion E. Rhodes, P.E., P.S. — Allen County Engineer (brhodes@allencountyohio.com)",
+        "primary_contacts": {
+          "authority": "Todd Audet",
+          "county": "Brad Niemeyer",
+          "company": null
+        }
+      },
+      "authorization": {
+        "authority_resolution": {
+          "number": "O.729-25",
+          "date": "2025-07-29",
+          "body": "Port Authority of Allen County Board of Directors"
+        },
+        "county_resolution": {
+          "number": "588-25",
+          "date": "2025-07-31",
+          "body": "Allen County Board of County Commissioners"
+        },
+        "fiscal_certificates": [
+          {
+            "body": "Port Authority of Allen County",
+            "statute": "R.C. 5705.41 / 5705.44",
+            "dated": "2025-08-19"
+          },
+          {
+            "body": "Allen County",
+            "Ohio": null,
+            "statute": "R.C. 5705.41 / 5705.44",
+            "dated": "2025-09-12"
+          }
+        ]
+      },
+      "execution": {
+        "effective_date": "2025-09-15",
+        "signatures": [
+          {
+            "party": "Port Authority of Allen County (Board)",
+            "title": "Board Chair",
+            "date": "2025-08-19"
+          },
+          {
+            "party": "Bistrozzi LLC",
+            "title": "Authorized Representative",
+            "date": "2025-09-15"
+          },
+          {
+            "party": "Allen County",
+            "Ohio": null,
+            "signatory": "Cory Noonan",
+            "title": "Commissioner",
+            "date": "2025-08-13"
+          }
+        ]
+      },
+      "project_recital": {
+        "property": "real property in American Township, Allen County (Exhibit A)",
+        "project": "develop, construct (in one or more phases) and operate \"one or more data center(s)\" plus administrative/accessory/support buildings, utility buildings, and related site improvements.",
+        "roadwork_purpose": "public-road improvements near the Property to support construction/operation of the data center(s).",
+        "grant_funding_anticipated": "State of Ohio Roadwork Development (629) Grant and Ohio Dept. of Development Jobs & Commerce Grant (collectively \"Roadwork Development Grants\"), with the Authority as eligible grantee."
+      },
+      "financial_terms": {
+        "company_contribution_usd": 14500000,
+        "contribution_basis": "\"inclusive of all project costs including any admin and legal fees\" (§3.2a). The roadwork is at no cost to the Company beyond this Contribution.",
+        "cost_basis_document": "Exhibit D: the Parties relied on \"the attached itemized cost estimate from Tetra Tech which the Parties received on or about July 17, 2025.\" That estimate is the OPC at bundle pp.317-328 (extracted as data/extracted/aedg/roundabouts.summary.opc.yaml: construction total $14,223,081). The $14.5M Contribution ~= the OPC construction total + ~$277K headroom for admin/legal.",
+        "exhibit_d_typo": "Exhibit D states the Tetra Tech estimate as \"$14,500.00\" — a source typo for $14,500,000.00 (it equals the Company's Contribution and reconciles with the OPC's ~$14.22M construction total). [verbatim transcription; flagged, not corrected in source]",
+        "grant_refund_mechanism": {
+          "summary": "After completion, the Authority certifies Total Cost. If Total Cost < (Company's Contribution + Roadwork Grant Funds + Additional Grant Funds), the Authority pays the difference (the \"Overpayment Amount\") back to the Company within 60 days; grant funds received after itemization are likewise refunded to the Company.",
+          "significance": "Public grant money (the 629 / Jobs & Commerce grants) effectively backfills and can REFUND the private Contribution — so the headline \"$14.5M private contribution\" may be net-reduced by public grants flowing to the Company. The true public/private cost split turns on grant awards not in this document. [inference — flagged; depends on grant amounts]"
+        },
+        "interest": "§5.2 — Authority may hold the Contribution in an interest-bearing account; interest funds Authority operations, not refunded."
+      },
+      "roadwork_scope": {
+        "primary_access": [
+          "Roundabout at North Cole Road & Beery Road (primary access entrance to the Property)"
+        ],
+        "traffic_and_rehab": [
+          "Roundabout at North Cole Road & Bluelick Road",
+          "Roundabout at North Cole Road & SR 115",
+          "North Cole Road rehabilitation",
+          "Bluelick Road rehabilitation",
+          "Roundabout at North Cole Road & Diller Road"
+        ],
+        "beery_road_carveout": "§3.1(a): the Roadwork Improvements do NOT include any changes to Beery Road, including bridge replacement. §3.1(g): the Company separately reserves the right to design/engineer/construct the road improvements at Cole Street & Beery Road itself on 15 days' notice.",
+        "ordering": "§3.1(a) — built in the ranked Exhibit-B order until the Company's Contribution is expended; the Authority is not obligated to complete all if funds run short.",
+        "dedication": "§3.1(h) — each completed Roadway Improvement is dedicated to the County for public use and the County maintains it thereafter (an ongoing public maintenance cost beyond the one-time build)."
+      },
+      "schedule": {
+        "substantial_completion_by": "2027-09-01",
+        "final_completion_by": "2027-12-31"
+      },
+      "property": {
+        "former_owner_neff_farms_inc": [
+          {
+            "parcel": "36-0100-03-002.000",
+            "address": "Cole Street, Lima, OH 45807",
+            "prior_instrument": "OR 2018 Page 2723"
+          },
+          {
+            "parcel": "36-1200-02-001.001",
+            "address": "4110 N. Cole Street, Lima, OH 45801",
+            "prior_instrument": "OR 2018 Page 2723 + OR 2018 Page 7339",
+            "note": "the permitted Project BOSC address"
+          }
+        ],
+        "former_owner_brenneman_trusts": {
+          "trustees": "Kyle C. & Sarah N. Brenneman (Kyle C. Brenneman Living Trust dtd 2023-03-30) and Keaton A. & Kristen M. Brenneman (Keaton A. Brenneman Living Trust dtd 2023-03-02)",
+          "parcels": [
+            "36-1200-03-001.001",
+            "36-1200-03-001.000",
+            "36-1200-03-001.002",
+            "36-1200-03-001.003",
+            "36-1200-03-001.004",
+            "36-1200-03-001.005",
+            "36-1200-03-001.006"
+          ],
+          "address": "West Bluelick Road / 950 West Bluelick Road, Lima, OH 45801",
+          "prior_instrument": "OR 2024 Page 3900 + OR 2024 Page 6115"
+        },
+        "former_owner_pike_run_farms_llc": [
+          {
+            "parcel": "36-1200-03-002.000",
+            "address": "West Bluelick Road, Lima, OH 45801",
+            "prior_instrument": "OR 2024 Page 981"
+          }
+        ],
+        "note": "Three seller groups assembled the campus: Neff (incl. 4110 N. Cole), the Brenneman family trusts (7 parcels), and Pike Run Farms. The bundle's seller packets (Brenneman pp.91-167, Miller, Neff pp.242-276, Neighbors pp.280-295) document the option/assignment chain to Bistrozzi — not yet extracted."
+      },
+      "records_withholding_clause": {
+        "section": "9.13",
+        "public_record_acknowledged": "The Company acknowledges the Agreement is a public record subject to disclosure under Ohio public records law.",
+        "authority_obligations": "The Authority agrees to (a) give the Company written notice AT LEAST FIVE (5) BUSINESS DAYS prior to responding to ALL records requests related to the Company or Project; (b) reasonably cooperate with the Company in responding; (c) disclose only records required to be disclosed under Ohio public records law; and (d) redact, omit, or refuse to provide records not required to be disclosed.",
+        "exemptions_cited": "R.C. 122.36, 122.75, 149.433, 149.45, 718.13, 1333.61 et seq., 5703.21, 5711.101",
+        "savings_clause": "'Nothing in this Agreement shall be interpreted as contrary to the Ohio Public Records Act (R.C. 149.43).'",
+        "significance": "The THIRD contractual records-withholding mechanism in this deal, after the NDA §6 (>=10 business days' developer notice; mutual-nda-bistrozzi.nda.yaml) and the CRA §22 public-records indemnity (cra-agreement.cra.yaml). Here the Authority (a separate public body from the Commissioners) binds itself to a >=5-business-day developer-notice-and-cooperate-on-redaction routine before answering ANY request touching the Company/Project. Same engine, second custodian — corroborates the systemic delay/withholding thesis in bosc-prr-production-2026-06-05.response-index.yaml."
+      },
+      "notable_clauses": {
+        "no_procurement": "§9.17 — \"The performance of any obligations under this Agreement does not require the Company to submit any bid or otherwise participate in any procurement process of the Authority.\" (The Company pays $14.5M and is exempted from competitive procurement; the Authority selects the road contractors via design-build bidding under §3.1(c).)",
+        "assignment": "§9.3 — the Company may assign to any Affiliate / merger successor / asset purchaser / public-offering successor / financing party (incl. R.C. Ch. 4582) WITHOUT Authority approval; the Authority may not assign without the Company's consent.",
+        "no_third_party_beneficiaries": "§9.20 — only the Authority and Company are parties; no third-party (e.g., affected residents) may enforce.",
+        "jury_waiver": "§9.15 — both parties waive jury trial for any claim arising under or connected to the Agreement.",
+        "anti_corruption": "§9.16 — anti-bribery / 'Anything of Value' covenant binding the Authority and its agents.",
+        "no_cross_default": "§8.3 — default under any other Project agreement is not automatically a default here."
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "aedg/roadwork-development-agreement.rda.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "aedg/PRR-01-bundle.ocr.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "legal/prr-mandamus/cra-agreement.cra.yaml",
+    "group": "agreements",
+    "title": "Allen County CRA No. 1 Agreement with Bistrozzi LLC (data-center tax abatement)",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "provenance": {
+        "source_path": "data/documents/legal/prr-mandamus/prr-production-2026-06-05/CRA.pdf",
+        "produced_in": "Allen County public-records production 2026-06-05 (response item 3)",
+        "pages": "Res #548-25 pp.1-2; CRA Agreement pp.3-12; Exhibit A project-site map p.13",
+        "content_verified": "2026-06-07",
+        "evidence": "scan + native text (county-produced PDF)"
+      },
+      "parties": {
+        "county": "Allen County, Ohio — Board of County Commissioners",
+        "commissioners": [
+          "Cory Noonan",
+          "Beth Seibert",
+          "Brian Winegardner"
+        ],
+        "clerk": "Brittany N. Woods",
+        "company": "BISTROZZI LLC (a Delaware limited liability company)",
+        "company_counsel": "Vorys, Sater, Seymour and Pease LLP — Scott J. Ziance (sjziance@vorys.com)"
+      },
+      "authorization": {
+        "cra_resolution": {
+          "number": "304-25",
+          "date": "2025-04-17",
+          "action": "created Allen County CRA No. 1"
+        },
+        "approval_resolution": {
+          "number": "548-25",
+          "date": "2025-07-10",
+          "action": "approved + authorized the CRA Agreement"
+        },
+        "cra_designation_number": "003-99003-396",
+        "effective_date": "2025-07-10",
+        "company_signed": "2025-08-26",
+        "statute": "R.C. 3735.65-3735.70 (the CRA Act)"
+      },
+      "abatement": {
+        "type": "real property tax exemption",
+        "percent": 75,
+        "term_years": 15,
+        "scope": "Per new Building at the Project Site (real property — buildings/structures). The project total may exceed 15 years across phases, but no single Building exceeds 15.",
+        "commencement_window": "no Exemption commences after tax lien date 2040-01-01 (§3)",
+        "end_window": "no Exemption extends beyond tax lien date 2054-01-01 (§3)",
+        "agreement_termination": "Dec 31 of the later of 2055 or the year after the last Exemption (§21)",
+        "real_property_only": true
+      },
+      "company_estimates": {
+        "capital_investment_usd": "~500000000",
+        "jobs": "~50",
+        "annual_payroll_usd": "~4000000",
+        "current_employees": 0,
+        "note": "Jobs/payroll may be employed by the Company or its Affiliates (common-control group); the Parties acknowledge actuals may differ significantly from these estimates."
+      },
+      "school_compensation": {
+        "required": true,
+        "statute": "R.C. 5709.82(B)(1); R.C. 3735.671",
+        "school_district": "Elida Local School District",
+        "jvsd": "Apollo Career Center (JVSD)",
+        "school_board_authorization": {
+          "resolution": "5-25-2",
+          "date": "2025-05-20"
+        },
+        "school_board_authorization_date_note": "RESOLVED 2026-07-13 (issue #1477): the Elida BOE PILOT authorization is a SINGLE event on 2025-05-20 (resolution 5-25-2). Three independent sources agree: (1) this CRA (county-produced); (2) the PAAC board minutes — \"School District PILOT $250,000/yr proposed (Elida board 2025-05-20)\" (paac-board-minutes.minutes.yaml, 2025-03-27 p.39); and (3) contemporaneous news — The Lima News, \"Talks continue for proposed American Township data center\" (2025-05-27), which reports \"On May 20, the Elida Board of Education approved a resolution to accept a Payment in Lieu of Taxes (PILOT) from Bistrozzi, LLC.\" (canonical URL https://www.limaohio.com/top-stories/2025/05/27/talks-continue-for-proposed-american-township-data-center/ — a cited secondary source NOT committed to this corpus; it is a 2025 article outside the #1477 capture set, so no source_file exists, and limaohio.com is bot-gated/uncapturable, see data/documents/limaohio/SOURCES.md). NO SECOND (2026) authorization event was identified in the REVIEWED SOURCES — the search scope was: web searches for Elida BOE / PILOT / data-center coverage across 2025–2026, plus the in-corpus CRA and PAAC minutes; the district's PRIMARY BoardDocs minutes (go.boarddocs.com/oh/eli) were NOT pulled. An unverified research claim of a \"2026-05-20\" PILOT approval is best read as a same-date-different-year artifact (the March 2026 coverage is the Google *reveal*, not a new authorization). Do NOT add a duplicate 2026 PILOT event absent a primary Elida BOE source. Note \"5-25-2\" is the district's own 2025-05-20 resolution numbering (year-month-sequence), not a 2026 date. [verified as to 2025-05-20; the \"no 2026 event\" is a NEGATIVE finding bounded by the reviewed sources above — a primary BoardDocs pull would settle it.]",
+        "amounts_public": false,
+        "statutory_floor": "R.C. 3735.671(A)(2) — the County estimated the compensation equals/exceeds 25% of the foregone taxes (Res #494-25, 2025-06-24); the actual dollar terms are in a separate, non-public School District Compensation Agreement.",
+        "notice_served_by": "Allen Economic Development Group (AEDG), Cynthia Leis (President/CEO), 2025-06-25 — both superintendents (Apollo: Keith Horner; Elida: Joel Mengerink) acknowledged receipt.",
+        "notice_records": [
+          "data/extracted/legal/prr-mandamus/school-district-notice-letters.notice.yaml",
+          "data/extracted/legal/prr-mandamus/school-district-notice-resolution.notice.yaml"
+        ]
+      },
+      "project_site": {
+        "township": "American Township, Allen County, Ohio",
+        "zoning": "M-2",
+        "conditional_use_permit": "2025-02-04",
+        "intended_use": "data center(s) + associated office/utility/support buildings (§13(C))",
+        "exhibit_a": "Project Site map (p.13) — the campus footprint"
+      },
+      "beneficiary_assurance": {
+        "parent_is_fortune_100": true,
+        "quote": "\"The Company's parent is a Fortune 100 Company that is publicly traded and headquartered in the United States.\" [§13(A)]",
+        "company_us_based": true,
+        "note": "The developer's own disclosed assurance about its parent — it does NOT name the parent in this document. Cross-refs the real-party-in-interest thread (entities + USASpending)."
+      },
+      "notable_clauses": {
+        "public_records_indemnity": {
+          "summary": "The Agreement is a public record (R.C. 149.43), but the Company INDEMNIFIES the County and pays its attorney fees if, in a public-records action, the County withheld a Company/Project record it otherwise could have disclosed.",
+          "significance": "A private incentive for the County to withhold Company/Project records — directly relevant to the PRR/mandamus fight (see corpus-completeness-audit.md / the production index)."
+        },
+        "rc_9_66_covenants": "§19 — no false statements for economic-development assistance; no delinquent taxes/moneys to the State.",
+        "transfer": "§14 — assignable to Affiliates / financing parties / successors without County approval (the data-center legal/financing structure).",
+        "contest_valuation": "§6 — the Company may still contest property valuation under R.C. 5715.13/5715.19."
+      }
+    },
+    "approximate_paths": [
+      "company_estimates.annual_payroll_usd",
+      "company_estimates.capital_investment_usd",
+      "company_estimates.jobs"
+    ],
+    "citation": {
+      "source": "legal/prr-mandamus/cra-agreement.cra.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-06-05/CRA.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml",
+    "group": "agreements",
+    "title": "Mutual Non-Disclosure Agreement, Allen County Board of Commissioners <-> Bistrozzi LLC",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "provenance": {
+        "source_path": "data/documents/legal/prr-mandamus/prr-production-2026-06-05/NDA.pdf",
+        "produced_in": "Allen County public-records production 2026-06-05 (response item 1)",
+        "pages": "Res #417-25 p.1 (recorder-stamped); Mutual NDA pp.2-5 (terms pp.2-3, signature blocks pp.4-5)",
+        "recorder_stamp": "JR510 PAGE027",
+        "content_verified": "2026-06-07",
+        "evidence": "scan (county-produced PDF)"
+      },
+      "authorization": {
+        "resolution": "417-25",
+        "date": "2025-05-27",
+        "body": "Allen County Board of County Commissioners (regular session)",
+        "title": "Board of County Commissioners, Allen County, Ohio enters into a Mutual Non-Disclosure Agreement with Bistrozzi, LLC.",
+        "members_present": [
+          "Beth Seibert",
+          "Cory Noonan",
+          "Brian Winegardner"
+        ],
+        "moved_by": "Seibert",
+        "seconded_by": "Winegardner",
+        "vote": {
+          "Noonan": "yes",
+          "Winegardner": "yes",
+          "Seibert": "yes"
+        },
+        "signing_authority": "Brian Winegardner (Board President) authorized to sign on behalf of the Board",
+        "clerk": "Brittany N. Woods",
+        "requested_by": "Assistant Prosecutor John Willamowski Jr. — per the recitals, \"correspondence has been received from Assistant Prosecutor John Willamowski Jr., requesting the Board enter into a Mutual Non-Disclosure Agreement with Bistrozzi, LLC.\" (the County's own counsel originated the NDA)",
+        "stated_purpose": "To exchange confidential information to evaluate whether to enter into a Community Reinvestment Area Agreement, and -- if the parties enter into the CRA -- to fulfill each party's confidentiality obligations to the extent set forth in the NDA. (ties the NDA directly to the CRA at cra-agreement.cra.yaml)"
+      },
+      "parties": {
+        "company": "BISTROZZI LLC -- defined as \"for itself and its parent, subsidiaries and affiliates\" (\"Company\"). The agreement's confidentiality runs to an unnamed parent + affiliate group (cross-refs the Fortune-100 parent assurance in cra-agreement.cra.yaml §13(A) and the real-party-in-interest thread).",
+        "participant": "Allen County Board of Commissioners (\"Participant\")",
+        "company_counsel": "Vorys, Sater, Seymour and Pease LLP -- Scott J. Ziance (sjziance@vorys.com)"
+      },
+      "execution": {
+        "effective_date_rule": "the date the last party signs (§1)",
+        "signatures": [
+          {
+            "party": "Bistrozzi LLC (Company)",
+            "signatory": "Scott J. Ziance",
+            "title": "Its Authorized Signatory",
+            "affiliation": "Vorys, Sater, Seymour and Pease LLP (Company counsel)",
+            "date": "2025-07-01"
+          },
+          {
+            "party": "Allen County Board of Commissioners (Participant)",
+            "signatory": "Brian Winegardner",
+            "title": "President, Board of Commissioners",
+            "date": null
+          }
+        ],
+        "effective_date_resolved": "2025-07-01",
+        "note": "p.4 is the Participant-signed / Company-blank counterpart; p.5 is the fully executed counterpart (Ziance signed 2025-07-01). The NDA predates the CRA approval (Res #548-25, 2025-07-10) and its execution (2025-08-26) -- the confidentiality wrapper went on first."
+      },
+      "terms": {
+        "purpose": "(a) evaluate whether to enter into a CRA Agreement; (b) if the parties enter into a CRA, fulfill each party's confidentiality obligations to the extent incorporated therein (§Purpose).",
+        "confidential_information": "Broadly defined (§2) -- tangible/intangible, oral/visual/electronic, incl. trade secrets, financial, technical (research, development, procedures, algorithms, data, designs, know-how), and business information (operations, planning, marketing, products, negotiations, proposals); includes information learned during facility tours/site visits.",
+        "duty": "Recipient protects with no less than a reasonable degree of care; use only for the Purpose (§§3-4).",
+        "recipient_primary_obligor": "Recipient liable as primary obligor for breaches by its Authorized Personnel, with or without its knowledge (§4).",
+        "term": "Remains in effect until terminated by either party on 30 days' prior written notice; survives as to info disclosed before termination (§8).",
+        "duty_duration": "A Recipient's duty to protect expires 3 years from the date of disclosure; on request, return or destroy all Confidential Information -- unless retention is required by State public record laws (§9).",
+        "no_obligation_to_exchange": "§10 -- imposes no obligation to actually exchange information or proceed with any deal.",
+        "no_ip_transfer": "§11 -- no IP rights conveyed beyond the limited rights to carry out the Purpose.",
+        "equitable_relief": "§12 -- improper disclosure may be irreparable; injunctive relief available.",
+        "assignment": "§13 -- NOT assignable by the Participant (the County) without the Company's prior written consent; the Company may assign or transfer in its sole discretion. (asymmetric -- mirrors CRA §14's affiliate/financing assignability running to the Company's side)",
+        "governing_law": "Ohio law; exclusive venue = state or federal courts in Allen County, Ohio (§16).",
+        "notices": {
+          "county": [
+            "President of the Board: bwinegardner@allencountyohio.com",
+            "Allen County Prosecutor: prosecutor@allencountyohio.com"
+          ],
+          "company": "Bistrozzi LLC c/o Vorys, Sater, Seymour and Pease LLP, 52 East Gay Street, Columbus, OH 43215, Attn: Scott J. Ziance (sjziance@vorys.com), with copy to same."
+        }
+      },
+      "public_records_clause": {
+        "section": "6",
+        "carve_out": "The confidentiality obligation does not apply to information §6(f) \"required to be disclosed by operation of law, court order, public record request or other governmental demand\" (\"Process\").",
+        "county_obligations_when_recipient": "PROVIDED THAT where the Participant (the County) is the Recipient, the County agrees to (i) give the Company PRIOR WRITTEN NOTICE of such Process -- \"at least 10 business days\" -- sufficient to allow the Company to seek a protective order or other remedy; (ii) disclose only such information as is required by law; and (iii) request and seek confidential treatment for any Confidential Information so disclosed, to the extent allowed by law.",
+        "litigation_carveout": "Separately, the NDA imposes no obligation on a Recipient as to Confidential Information disclosed during litigation between Company and Participant, to the extent relevant to the subject of the litigation.",
+        "state_public_record_laws_defined": "\"the public record laws generally applicable to public entities in the State of Ohio, including any exemptions thereto, and any public record laws applicable to the Allen County Board of Commissioners.\"",
+        "significance": "This is the contractual engine of the records delay. By signing §6 the County bound itself, before answering any R.C. 149.43 request touching Bistrozzi material, to (1) tip off the developer at least 10 business days in advance, (2) narrow its own production to the bare legal minimum, and (3) affirmatively pursue confidential treatment / a protective order on the developer's behalf. It converts a neutral records custodian into the developer's notice agent and advocate for nondisclosure -- a private incentive to withhold that parallels the CRA §22 public-records indemnity (cra-agreement.cra.yaml). The ~7-week production delay (request 2026-04-14 -> first batch 2026-06-05) is the predictable output of a built-in 10-business-day developer-notice step layered on top of the §9.66(D) review. Note: §6 still requires the County to disclose what the law requires; it cannot lawfully convert a public record into a secret -- but it manufactures delay and an adversarial posture toward the requester."
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-06-05/NDA.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "legal/prr-mandamus/prr-production-2026-07-24/cridersville-treatment-agreement-2014.yaml",
+    "group": "agreements",
+    "title": "Wastewater Treatment Agreement — Allen County Commissioners <-> Village of Cridersville, Shawnee Oaks Sewer Sub-District",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "meta": {
+        "subject": "Wastewater Treatment Agreement — Allen County Commissioners <-> Village of Cridersville, Shawnee Oaks Sewer Sub-District",
+        "source_path": "data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/14/Shawnee Oaks/Contracts & Agreements/Shawnee Oaks Wastewater Treatment Agreement with the Village of Cridersville 2014.pdf",
+        "executed": "2014-03-10",
+        "method": "visual read of the 8-page scanned agreement (7 pp. text + Exhibit A service-area map); figures/dates read as printed. Village Ordinance 1656 (2014-03-10) authorized the Village side.",
+        "content_verified": "2026-07-24"
+      },
+      "parties": {
+        "county": "Board of County Commissioners, Allen County, Ohio (President + Jay Begg signing; Prosecuting Attorney John Leahy Jr. approved as to form; Clerk/Attest Kelli Singhaus)",
+        "village": "Village of Cridersville (Mayor + Village Solicitor signing)"
+      },
+      "history": [
+        {
+          "date": "1966-08-15",
+          "event": "original County<->Village agreement to treat Shawnee Oaks Sewer Sub-District wastewater"
+        },
+        {
+          "date": "1966-07-25",
+          "event": "Shawnee Oaks Sewer Sub-District established (resolution",
+          "Jr. 53": null,
+          "Page 364)": null
+        },
+        {
+          "date": "1967-05-08",
+          "event": "Allen County Sewer District formed (R.C. 6117.01)"
+        },
+        {
+          "date": "1975-06-09",
+          "event": "sub-district boundaries amended to add Arthur's First and Freyer's Second Subdivisions"
+        }
+      ],
+      "terms": {
+        "structure": "The County owns/maintains the collection system (gravity mains, pumping station, force main) up to the point of connection to the Village's system; the Village receives and TREATS the County's wastewater at the Village WWTP under the Village's own NPDES permit. The County bills and collects the Village's treatment fee from Service-Area customers and remits it to the Village (quarterly invoice, paid within 30 days).",
+        "treatment_fee": "2014 flat rate of $24.71 per month per account (Village may raise per its Rules & Regulations); 2013 connection charge $600 for new customers.",
+        "term": "PERPETUAL agreement from the date of initial treatment (Section 3-... \"Term of Contract\").",
+        "customer_certification": "County certifies the customer-account database to the Village by January 15 each year (Exhibit B).",
+        "termination_mechanism": "[verified] Section 16 — the County may terminate \"whenever ... the County determines in its SOLE DISCRETION that it shall purchase treatment from any other entity or ... construct a wastewater project\" of its own. Procedure: the County first notifies the Village of its intent with cost estimates/plans/specs; the Village then has 120 days to state (A) it has sufficient capacity, (B) it is willing to serve, and (C) its estimated cost; after which the County, again \"in its sole discretion,\" may proceed with the purchase/project, terminating the agreement 120 days from its notice. (Section 14 adds an ordinary default-and-90-day-cure termination for either party; Section 15 routes disputes to non-binding mediation then 3-arbitrator binding arbitration.)"
+      },
+      "open": [
+        "[open] No standalone OEPA-review correspondence or Prosecutor's Office legal analysis of the agreement was identified in the item-14 tree at survey level (item 14 requested both). The reroute engineering/financing records ARE the county's de-facto termination trail; whether a formal termination notice under Section 16 has issued is unconfirmed in the production."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/prr-production-2026-07-24/cridersville-treatment-agreement-2014.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/14/Shawnee Oaks/Contracts & Agreements/Shawnee Oaks Wastewater Treatment Agreement with the Village of Cridersville 2014.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "recorder/202508130008300.deed.yaml",
     "group": "deeds",
     "title": "Limited Warranty Deed",
@@ -753,6 +1309,316 @@
     "source_doc_published": false
   },
   {
+    "rel": "watershed/osu-lima-ag-runoff-treatment.capture.yaml",
+    "group": "finance",
+    "title": "OSU-Lima Branch Campus Agricultural Runoff Treatment System Project",
+    "confidence": "medium",
+    "warnings": [
+      "SECONDARY source. Every figure below is as-stated on a summary page published by Allen SWCD (the grantee-administrator), not read off the primary grant instrument. The grant agreement, the application, the engineering design and the monitoring data are not in the corpus."
+    ],
+    "fields": {
+      "project_name": "OSU-Lima Branch Campus Agricultural Runoff Treatment System Project",
+      "project_number": "ALLENSWCD-FDFARM22",
+      "also_titled": "Ohio Agricultural Retention Treatment Systems",
+      "grantee_administrator": "Allen Soil and Water Conservation District",
+      "beneficiary": "The Ohio State University — Lima Branch Campus (rented crop fields)",
+      "award_usd": 650000.0,
+      "award_usd_osu_portion": 327450.0,
+      "award_program": "Great Lakes Restoration Initiative (GLRI) — subaward through Ohio EPA",
+      "term": "2023-2025",
+      "lead_pi": "Vinayak S. Shedekar (OSU FABE)",
+      "co_investigators": [
+        "T. Rehner",
+        "A. Suniga",
+        "F. Lipschitz"
+      ],
+      "companion_grant": "OSU Sustainability Fund $155,000 (2022-2025), \"Water management solutions for a long-term regenerative agriculture farming project at the OSU Lima Campus\" (Shedekar Lead PI, Rehner, Lipschitz) — same campus farm. [verified: CV grant #14]"
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "watershed/osu-lima-ag-runoff-treatment.capture.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "watershed/osu-lima-ag-runoff.allenswcd.2026-06-06.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "aedg/seller-land-packets.land.yaml",
+    "group": "land-assembly",
+    "title": "BOSC/Google data-center land assembly — seller option packets and assignment to Bistrozzi LLC",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "provenance": {
+        "source_path": "data/documents/aedg/PRR-01-bundle.ocr.pdf",
+        "bundle": "Allen County -- Responsive Records -- Parent PRR.pdf (producing body: Port Authority of Allen County)",
+        "pages": "index pp.91-295 (= bundle 0-based 90-294): Brenneman packet pp.91-168, Miller pp.193-205, Neff pp.242-276, Neighbors pp.280-295. Pages read for this extraction: 91, 158-159, 165, 168, 193, 200, 250/263-264, 270-272, 280-284.",
+        "content_verified": "2026-06-07",
+        "evidence": "scan (PAAC public-records production)"
+      },
+      "mechanism": "The Port Authority of Allen County (PAAC) took 3-year Option-to-Purchase agreements (with a 3-year renewal) on the farm parcels in 2023-2024, then on 2025-07-03 ASSIGNED all the options to Bistrozzi LLC (Vorys / Jill S. Tangeman drove the assignments + exercises); Bistrozzi exercised and closed ~2025-07-14. Each option's Section 21 gave PAAC \"the unrestricted right to assign its rights ... to a nominee of its choice.\" The Neighbors parcel was instead a direct 2025-10 PAAC purchase contract, later assigned to Bistrozzi (2025-10/2026-02).",
+      "sellers": {
+        "brenneman_brothers": {
+          "option": {
+            "seller": "Brenneman Brothers (an Ohio Partnership)",
+            "buyer": "Port Authority of Allen County",
+            "acreage": 81.03,
+            "parcels": [
+              "36-1200-03-001.000",
+              "36-1200-03-001.001",
+              "36-1200-03-001.002",
+              "36-1200-03-001.003",
+              "36-1200-03-001.004",
+              "36-1200-03-001.005",
+              "36-1200-03-001.006"
+            ],
+            "address": "950 West Bluelick Road area, American Township",
+            "initial_option_payment_usd": 1000,
+            "term": "3-year Initial Option Term + 3-year First Renewal (additional $1,000); Purchase Price renegotiated at renewal; option exercisable only for the ENTIRE property",
+            "page": 91
+          },
+          "seller_contacts": [
+            "Brenneman Brothers, 5230 N. Grubb Road, Elida OH 45807",
+            "trustees: Kyle C. & Sarah N. Brenneman, 4845 Sherrick Rd, Lima; Keaton A. & Kristen M. Brenneman"
+          ],
+          "assignment_to_bistrozzi": {
+            "vorys_notice_date": "2025-07-03",
+            "closing": "2025-07-14",
+            "assignor": "Port Authority of Allen County",
+            "assignee": "Bistrozzi LLC (Delaware) -- 2801 Centerville Rd, 1st Floor, PMB 811, Wilmington, DE 19808"
+          },
+          "price_disclosed": false,
+          "cauv_recoupment": true
+        },
+        "miller": {
+          "option": {
+            "seller": "Merle M. Miller and Ruth E. Miller",
+            "buyer": "Port Authority of Allen County",
+            "acreage": 54.94,
+            "parcels": [
+              "36-1200-03-002.000"
+            ],
+            "address": "American Township",
+            "initial_option_payment_usd": 2000,
+            "term": "3-year Initial Option Term + 3-year First Renewal (additional $1,000); Purchase Price renegotiated at renewal",
+            "page": 193
+          },
+          "chain_note": "Parcel 36-1200-03-002.000 is the same parcel RDA Exhibit A (roadwork-development-agreement.rda.yaml) attributes to \"Pike Run Farms, LLC\", and the 2025-07-02 PAAC minutes approved assigning the \"Pike Run Farms, LLC\" option to Bistrozzi. So this parcel ran Miller (2023 option) -> Pike Run Farms LLC -> Bistrozzi. [Miller<->Pike Run relationship not stated in the read pages; flagged.]",
+          "price_disclosed": false
+        },
+        "neff": {
+          "option": {
+            "seller": "Neff Farms, Inc. (an Ohio corporation)",
+            "buyer": "Port Authority of Allen County",
+            "option_effective_date": "2023-06-21",
+            "parcels": [
+              "36-1200-02-001.000",
+              "36-1200-02-001.001",
+              "36-0100-03-002.000"
+            ],
+            "address": "4110 N. Cole Street + Cole Street, Lima (the permitted Project BOSC address is 36-1200-02-001.001)",
+            "page": "250/263"
+          },
+          "acreage_discrepancy": "The Assignment recital states ~81.03 acres for the three Neff parcels (p.264) -- identical to the Brenneman figure, likely a template/copy error -- whereas the 2023-05-18 PAAC minutes describe \"an option on 202.57 acres on the Neff property.\" Recorded as a discrepancy; not resolved here.",
+          "seller_contacts": [
+            "William Neff, 11951 Zerkle Road, Lima OH 45806"
+          ],
+          "assignment_to_bistrozzi": {
+            "vorys_notice_date": "2025-07-03",
+            "closing": "2025-07-14",
+            "assignor": "Port Authority of Allen County",
+            "assignee": "Bistrozzi LLC (Delaware)"
+          },
+          "title": "Chicago Title Insurance Company, Commitment GLW2401175A; Owner's Gap PACA Affidavit by Neff Farms Inc (perishable-ag-commodities title clearance), printed 2025-06-27",
+          "price_disclosed": false
+        },
+        "neighbors": {
+          "contract": {
+            "seller": "James W. Neighbors and Suzanne M. Neighbors (husband and wife)",
+            "buyer": "Port Authority of Allen County",
+            "contract_date": "2025-10",
+            "acreage": 5.0,
+            "parcels": [
+              "36-1200-03-015.000"
+            ],
+            "purchase_price_usd": 600000,
+            "deposit": "Initial $5,000 (escrow: Robert H. Meyer IV, Attorney at Law) + $10,000 additional for the extended inspection",
+            "inspection_period": "90 days (+30-day extension)",
+            "page": "280-284"
+          },
+          "appraisal_note": "Per 2025-02-27 PAAC minutes: the Neighbors appraised their property at $300,000 and the agreed purchase price is $600,000 (2x appraisal).",
+          "assignment_to_bistrozzi": "PAAC assigns the purchase contract to Bistrozzi on closing (2025-10-23 PAAC minutes); Assignment & Assumption executed 2026-02-13 (closing that afternoon)."
+        }
+      },
+      "key_finding_prices_withheld": {
+        "finding": "The actual purchase prices for the assembled data-center land are NOT disclosed in the production. The recorded deeds (data/extracted/recorder/) state only \"valuable consideration paid\", and the DTE-100 Real Property Conveyance Fee Statements for the Brenneman and Neff transfers -- the forms that legally report the sale price for the transfer tax -- were produced with the consideration / total-value dollar fields (lines 7a-7i) left BLANK. The only land price disclosed anywhere is the Neighbors parcel: $600,000 for 5.0 acres (a direct PAAC purchase contract, not an option).",
+        "significance": "The land-assembly cost (a core input to \"what was paid to assemble the ~350-acre campus, and by whom\") is opaque even in the transfer-tax records that are supposed to carry it. A blank DTE-100 on a recorded conveyance is itself a records-completeness flag. Combined with the $600K/5ac Neighbors benchmark (~$120K/ac, 2x appraisal), the missing prices are a quantifiable gap for the public-ledger thread. [the blank-form + Neighbors figures are document; the assembly-cost framing is inference.]"
+      },
+      "cauv_recoupment": {
+        "finding": "The Brenneman and Neff parcels were enrolled in Current Agricultural Use Valuation (CAUV, R.C. 5713.31) -- the farmland property-tax break. Their DTE-102 forms acknowledge that converting the land out of agricultural use triggers a CAUV RECOUPMENT charge (up to 3 years of tax savings, R.C. 5713.30/.34). Taxing district: Elida L.S.D.",
+        "significance": "A one-time tax clawback on conversion, and a marker that productive farmland is being taken out of CAUV for the data center -- relevant to the tax/public-ledger and land-use story."
+      },
+      "actors": [
+        "Jill S. Tangeman, Esq. -- Vorys, Sater, Seymour and Pease (jstangeman@vorys.com) -- drove the assignments/exercises to Bistrozzi",
+        "Larry Vandemark -- Oakridge Realty & Auction Co., 2550 W. Breese Road, Lima -- broker (copied on all notices)",
+        "Rex H. Huffman -- Attorney-at-Law / Notary (PAAC counsel) -- notarized the DTE-102s",
+        "Robert H. Meyer IV, Attorney at Law -- escrow agent (Neighbors)",
+        "Chicago Title Insurance Company -- title (Neff commitment GLW2401175A)"
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "aedg/seller-land-packets.land.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "aedg/PRR-01-bundle.ocr.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "lacrpc/american-township-zoning.zoning.yaml",
+    "group": "local-legislation",
+    "title": "American Township (Allen County, OH) Zoning Resolution — the land-use basis for the BOSC/Google data-center site",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "provenance": {
+        "sources": [
+          "data/documents/lacrpc/February 2026 American Township Zoning Resolution_202603191409369887.pdf"
+        ],
+        "source_pages_0based": {
+          "cover_amendment_block": 0,
+          "definitions_data_center": 20,
+          "definitions_hyperscale": 24,
+          "m1_conditional_uses": 61,
+          "article_11_m2": [
+            63,
+            64,
+            65
+          ],
+          "official_schedule_tables": [
+            77,
+            78
+          ]
+        },
+        "content_verified": "2026-06-07",
+        "evidence": "LACRPC CivicPlus DocumentCenter (id 184), pulled 2026-06-06 — see data/documents/lacrpc/MANIFEST.yaml"
+      },
+      "zoning_code": {
+        "title": "THE AMERICAN TOWNSHIP ZONING RESOLUTION — ALLEN COUNTY, OHIO",
+        "prepared_by": "American Township Zoning Commission; adopted by American Township Board of Trustees",
+        "administration": "American Township Administration Building, 102 Pioneer Rd., Lima, Ohio 45807",
+        "enabling_law": "Ohio Revised Code Chapter 519 (township zoning)",
+        "pages": 241,
+        "amended_and_adopted_by_trustees": [
+          "2021-02-11",
+          "2024-01-08",
+          "2024-08-28",
+          "2025-09-08",
+          "2026-02-09"
+        ],
+        "note": "The PDF contains NO record-of-amendments / change-log page, so which specific amendment introduced the data-center language cannot be content-verified from THIS document. The definitions and the M-2 conditional-use entry are present in the current (2026-02-09) consolidated text. [verified that the language is present; NOT verified which amendment added it from the PDF alone.] Cross-referencing the township's OWN minutes resolves the carrier to the 2025-09-08 text amendment — see ``data_center_amendment`` below. This artifact must NOT stamp every re-adoption date as the data-center change: only 2025-09-08 (Res #09-082025) is the resolved carrier.",
+        "data_center_amendment": {
+          "date": "2025-09-08",
+          "resolution": "#09-082025",
+          "tag": "inference",
+          "basis": "Of the five cover-block re-adoptions, only the 2025-09-08 / 2026-02-09 cycle falls inside the BOSC deal window, and American Township's own minutes content-verify a zoning TEXT amendment on 2025-09-08 — \"Motion ... to approve Resolution #09-082025 relating to zoning text amendments\" (9-8-25 minutes). It is the ONLY zoning text amendment in the corpus and the deal-window vehicle for the Data Center / Hyperscale definitions + M-2 conditional use (11.2.4), which are present in the current (2026-02-09) consolidated text. The 2021-02-11 / 2024-01-08 / 2024-08-28 re-adoptions predate the project and did not carry it; 2026-02-09 is the consolidated re-adoption, not the change. The resolution PDF has no change-log, so this data-center-specific attribution is [inference] corroborated by the township minutes — not [verified].",
+          "corroborating_source": "american-township/meetings/meeting-summaries.yaml"
+        }
+      },
+      "definitions": {
+        "data_center": "\"Data Center: A physical location that stores computing machines and their related hardware equipment. Contains the computing infrastructure that IT systems require, such as servers, data storage drives, and network equipment. It is the physical facility that stores any company's digital data.\"",
+        "hyperscale_data_center": "\"Hyperscale Data Center: A massive data center that provides extreme scalability capabilities and engineered for large scale workloads within an optimized network infrastructure, streamlined network connectivity and minimized latency.\""
+      },
+      "district_m2_general_manufacturing": {
+        "purpose": "\"The purpose of the M-2 General Manufacturing District is to encourage the development of manufacturing facilities of a moderate and heavy nature.\" (11.0)",
+        "permitted_uses_11_1": [
+          "Any permitted use established within the M-1 District (excludes B-1 & B-2 uses)",
+          "Grain elevators, concrete plants and the manufacture, storage and sale of related products",
+          "Metal fabrication and casting plants",
+          "Utility Grid Solar Energy Systems (less than 50 megawatts)",
+          "Manufacturing/assembly/distribution of new automobiles, trucks, boats, household goods, farm + construction equipment, plastic & metal products",
+          "Carpentry, woodworking and machine shops; large-scale home/house furnishings production over 50,000 SF",
+          "Accessory buildings/uses incidental to a principal permitted use (principal building required first)"
+        ],
+        "conditional_uses_11_2": {
+          "requires": "Approval of the Township Board of Zoning Appeals after a public hearing",
+          "the_data_center_entry_11_2_4": "\"Any industrial, manufacturing, storage uses (to include but not limited to electronic data storage facilities, hyper-data centers, data mining facilities, lithium battery manufacturing facilities or plants, or computer chip manufacturing & distribution establishment(s) and those not specifically mentioned above but deemed as acceptable use of the land by the Board of Zoning Appeals).\" (11.2.4)",
+          "other_conditional": [
+            "meat/poultry/game processing (11.2.1)",
+            "chemical plants not emitting corrosive/toxic fumes beyond premises (11.2.2)",
+            "barrow pits (11.2.3)",
+            "one medical/adult-use cannabis retail dispensary (11.2.5)"
+          ]
+        },
+        "prohibited_uses_11_3": {
+          "catchall": "Uses not specifically authorized by the express terms of this Article shall be prohibited",
+          "enumerated": [
+            "junk yards / dumping / salvage / landfill / waste-disposal sites",
+            "habitated RVs/campers",
+            "outdoor junk/inoperable-vehicle accumulation",
+            "trash/debris accumulation (nuisance per se)",
+            "uses dangerous/injurious/noxious to surrounding areas",
+            "amusement arcades / adult-entertainment",
+            "ORC Ch. 3796 marijuana cultivators/processors"
+          ]
+        }
+      },
+      "dimensional_standards_official_schedule_15_1": {
+        "with_central_water_public_sewer": {
+          "min_lot_size_sqft": 20000,
+          "frontage_width_ft": 100,
+          "max_structure_height_ft": 50,
+          "rear_setback_ft": 30
+        },
+        "with_private_well_septic": {
+          "min_lot_size_sqft": 108900,
+          "max_structure_height_ft": 50
+        },
+        "road_setback_11_8": "No portion of a building closer than fifty-five (55) feet to the section line / center of nearest road pavement, EXCEPT State and County Roads which require ninety (90) feet. Plus an ODOT new-/changed-highway provision: within 300 ft of a proposed highway centerline (or 500 ft of an intersection), the Zoning Inspector must notify the ODOT Director and withhold the permit for up to 120 days. (11.8; cross Section 21.4)",
+        "screening_11_9": "For non-residential uses abutting an R-District: a 6-ft solid wall/fence, OR a 15-ft-wide strip planted with an evergreen hedge/shrubs ≥4 ft at planting. (11.9)"
+      },
+      "m1_contrast": {
+        "m1_conditional_10_2_2": "In the M-1 (Light Manufacturing) district, data centers are a conditional use but EXPLICITLY capped: \"Electronic Data Storage Centers, Data Mining Facilities, Electronic Media Storage Device Centers (Data center not to exceed 10,000 square feet); excluding 'hyperscale data centers'.\" (10.2.2) -- i.e. a hyperscale data center is impermissible in M-1 and only reachable in M-2."
+      },
+      "comprehensive_plan_note": {
+        "doc": "data/documents/lacrpc/American Township Comprehensive Plan (PDF).pdf",
+        "content_verified_date": "2009-01",
+        "status": "The American Township Comprehensive Plan predates the project by ~16 years (Jan 2009) and its future-land-use designations are presented on MAP IMAGES, not an extractable text layer; the site-specific designation for the Bluelick Rd / I-75 vicinity could not be content-verified from the text. Whether the M-2 data-center use is consistent with the 2009 future-land-use plan is an OPEN question requiring map review. [not extracted; honest null.]"
+      },
+      "open_questions": [
+        "Is the BOSC site already mapped M-2, or was it rezoned to M-2 (and when / by what township resolution)? Not answerable from the resolution text — needs the Official Zoning Map + rezoning record.",
+        "Has a BZA conditional-use certificate under 11.2.4 issued for the site? Hearing-notice + decision records?",
+        "[RESOLVED — see data_center_amendment] Which amendment added the Data Center / Hyperscale definitions and 11.2.4 resolves to Res #09-082025 (2025-09-08) [inference], via the American Township minutes; still open from the PDF alone (no change-log), so obtaining the text of Res #09-082025 would upgrade this to [verified].",
+        "2009 comp-plan future-land-use designation for the site (map review)."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "lacrpc/american-township-zoning.zoning.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "lacrpc/February 2026 American Township Zoning Resolution_202603191409369887.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "legal/prr-mandamus/school-district-notice-resolution.notice.yaml",
     "group": "local-legislation",
     "title": "Authorizing notice to the Elida Local School District and Apollo Career Center that the Commissioners seek to enter a CRA Agreement with Bistrozzi, LLC and will consider the same agreement on July 10, 2025 or thereafter.",
@@ -788,8 +1654,8 @@
       "note": null,
       "verified": true
     },
-    "source_doc_rel": null,
-    "source_doc_render_class": null,
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-06-05/School District Notice Resolution.pdf",
+    "source_doc_render_class": "pdf",
     "source_doc_published": false
   },
   {
@@ -3248,8 +4114,8 @@
       "note": null,
       "verified": true
     },
-    "source_doc_rel": null,
-    "source_doc_render_class": null,
+    "source_doc_rel": "regulatory/OHC000006.pdf",
+    "source_doc_render_class": "pdf",
     "source_doc_published": false
   },
   {
@@ -3383,6 +4249,179 @@
     "source_doc_published": false
   },
   {
+    "rel": "plans/4091286.engineering.yaml",
+    "group": "plans",
+    "title": "BOSC Storm Outfall (and the Beery Rd. & Cole St. roundabout)",
+    "confidence": "high",
+    "warnings": [
+      "RESOLVED 2026-06-16: the Appendix A coverage record (referenced but not printed in the SWP3 body) was acquired as companion eDoc 4091289 — the Ohio EPA NPDES CGP Approval Letter assigning Facility Permit Number 2GC08747*AG (effective 2026-04-22, under OHC000006). Captured in record.npdes_coverage below. NOTE the per-site coverage number format is 2GC..*AG, NOT an OHC- number (OHC000006 is the general permit).",
+      "Source PDF metadata title is \"SWP3-Beery Rd. Cole St. Roundabout-Draft.docx\" (carries \"Draft\"), but the cover sheet reads as a complete, dated SWP3 (04/16/2026); treated as the working/issued SWP3 of that date.",
+      "Manual review of the text layer (dpi=0 sentinel); acreages/figures are printed in the document body (Construction Site Summary table), high-confidence."
+    ],
+    "fields": {
+      "project_name": "Beery Road and Cole Street Roundabout / BOSC Storm Outfall",
+      "facility_name": "BOSC Storm Outfall (and the Beery Rd. & Cole St. roundabout)",
+      "record_type": "Stormwater Pollution Prevention Plan (SWP3) — NPDES construction-stormwater (Ohio EPA Construction General Permit)",
+      "discipline": "stormwater",
+      "record_date": "2026-04-16",
+      "project_no": "E-80410",
+      "npdes_coverage": {
+        "facility_permit_number": "2GC08747*AG",
+        "general_permit": "OHC000006",
+        "status": "approved (NOI application approved)",
+        "effective_date": "2026-04-22",
+        "expiration_date": "2028-04-22",
+        "director": "John Logue",
+        "permittee": "George J. Igel & Co., Inc. (Christopher Batdorff), 3500 Alum Creek Drive, Columbus OH 43207",
+        "facility_name_as_issued": "Berry Road and Cole Street Roundabout/BOSC Storm Outfall",
+        "facility_location_as_issued": "1363 Berry Road, Elida, Allen County",
+        "source": "data/documents/plans/4091289.pdf",
+        "note": "The approval letter spells the road \"Berry\" (the SWP3 itself reads \"Beery Road\"); the as-issued spelling is preserved here, not corrected. The letter cautions that fill into regulated waters may still require a 401 WQC / Isolated Wetlands Permit — a pointer to the separate campus 401 thread (permits/3788677, 3796349, 3949585). Sequencing note: outfall coverage attached 2026-04-22, BEFORE the SWP3's 2026-05-15 estimated start — the clean contrast to the campus mass-grading, where disturbance (2025-12-08) preceded any recorded coverage (bosc-site-permit-sequence)."
+      },
+      "site_address": "Beery Road & Cole Street intersection, Lima / American Township, Allen County, OH 45801 (40.794819, -84.128202)",
+      "prepared_by": [
+        {
+          "name": "WSP USA Inc.",
+          "discipline": "Civil / stormwater — engineer (SWP3 preparer of record)",
+          "location": "Indianapolis, IN (Thomas C. Campbell, P.E.)"
+        },
+        {
+          "name": "George J. Igel & Company, Inc.",
+          "discipline": "Operator / general contractor",
+          "location": "Columbus, OH (Christopher A. Batdorff; SWP3 coordinator John Powers; 24-hr emergency Joe Sharp)"
+        }
+      ],
+      "design_parameters": [
+        {
+          "parameter": "total property size",
+          "value": "5.87",
+          "unit": "acres"
+        },
+        {
+          "parameter": "total area disturbed",
+          "value": "5.71",
+          "unit": "acres"
+        },
+        {
+          "parameter": "max area disturbed at one time",
+          "value": "5.71",
+          "unit": "acres"
+        },
+        {
+          "parameter": "roundabout disturbance (component)",
+          "value": "5.6",
+          "unit": "acres"
+        },
+        {
+          "parameter": "BOSC Storm Outfall disturbance (component, overlaps the roundabout)",
+          "value": "1.56",
+          "unit": "acres"
+        },
+        {
+          "parameter": "impervious area before construction",
+          "value": "0.95",
+          "unit": "acres"
+        },
+        {
+          "parameter": "runoff coefficient (Rv) before construction",
+          "value": "0.66"
+        },
+        {
+          "parameter": "proposed on-site impervious area",
+          "value": "2.05",
+          "unit": "acres"
+        },
+        {
+          "parameter": "proposed runoff coefficient (Rv)",
+          "value": "0.64"
+        },
+        {
+          "parameter": "roundabout geometry",
+          "value": "140 ft x 160 ft diameter, 15 ft center truck apron (oval, new alignment)"
+        },
+        {
+          "parameter": "Beery Road improvements length",
+          "value": "0.10",
+          "unit": "miles"
+        },
+        {
+          "parameter": "Cole Street improvements length",
+          "value": "0.24",
+          "unit": "miles"
+        },
+        {
+          "parameter": "estimated construction start",
+          "value": "2026-05-15"
+        },
+        {
+          "parameter": "estimated construction completion",
+          "value": "2027-12-31"
+        },
+        {
+          "parameter": "receiving water",
+          "value": "Pike Run (tributary of the Ottawa River) — site drains east-to-west via subsurface tile; the BOSC Storm Outfall channel terminates at Pike Run (Point 1)"
+        }
+      ],
+      "components": [
+        {
+          "name": "BOSC Storm Outfall channel",
+          "category": "stormwater",
+          "note": "New outfall ditch/channel terminating at Pike Run (Point 1); constructed in Storm Outfall Phases 1-2 (start 2026-05-15). Disturbs ~1.56 ac."
+        },
+        {
+          "name": "Beery/Cole roundabout",
+          "category": "roadway",
+          "quantity": "140 ft x 160 ft",
+          "note": "Oval roundabout on new alignment with 15 ft center truck apron; new storm sewers, curb & gutter. Disturbs ~5.6 ac."
+        },
+        {
+          "name": "storm sewers / curb & gutter",
+          "category": "stormwater",
+          "note": "New storm sewers serving the roundabout and outfall."
+        }
+      ],
+      "key_features": [
+        "Existing land use: open agricultural row crops; existing drainage east-to-west, largely subsurface tile, ultimately to Pike Run → Ottawa River.",
+        "No on-site streams or wetlands within the Limits of Disturbance. A PUBGx freshwater pond sits west of the roundabout / north of the BOSC Storm Outfall channel and will not be impacted.",
+        "Surface Water Impact Determination letter included (Appendix I); no activities require Section 401 authorization or antidegradation review by Ohio EPA.",
+        "Soils (NRCS): TkA Thackery loam, AkA Alvada loam (hydric), WeA Westland-Rensselaer (hydric), SrA Sloan silty clay loam (frequently flooded), SfB Shawtown loam, HrB Houcktown loam (hydric), GaB Gallman loam — HSG mostly B/D.",
+        "BMP sequence: Storm Outfall Phase 1-2 (start 2026-05-15, end 2026-12-31) then Roundabout phases — MOT devices, inlet protection, silt fence, ditch check dams, construction entrances, dewatering filter bags / sediment basin.",
+        "Appendices A-I: A = NOI + Ohio EPA Authorization Email/Approval Letter; B = Site Maps & Drawings; C = Grading & Stabilization Activities Log; D = Site Inspection Forms; E = Corrective Action Log; F = Subcontractor Certifications; G = Delegation of Authority; H = SWP3 Training Log; I = Surface Water Impact Determination letter."
+      ],
+      "summary": "NPDES construction-stormwater (SWP3) plan for the Beery Rd. & Cole St. roundabout and the co-located BOSC Storm Outfall channel — operator George J. Igel & Co., engineer WSP USA (Thomas C. Campbell, P.E.), prepared 2026-04-16, construction 2026-05-15 → 2027-12-31. Total disturbed 5.71 ac (roundabout 5.6 + outfall 1.56, overlapping). The site drains via tile to Pike Run → Ottawa; the BOSC Storm Outfall channel discharges to Pike Run. This is a roadwork-program (AEDG/PAAC roundabout) plan that also builds the data-center campus's storm outfall.",
+      "note": "Ohio EPA eDocument 4091286. Stormwater Pollution Prevention Plan (SWP3) for the Beery Road & Cole Street Roundabout / BOSC Storm Outfall, American Township (Lima), Allen County, OH (40.794819, -84.128202). Prepared for George J. Igel & Company, Inc. (operator/contractor; Christopher A. Batdorff) by WSP USA Inc. (Thomas C. Campbell, P.E., Indianapolis), project E-80410, dated 2026-04-16; estimated construction 2026-05-15 to 2027-12-31. New oval roundabout (140 ft x 160 ft, 15 ft center truck apron) on new alignment plus the BOSC Storm Outfall channel and new storm sewers; 5.71 ac disturbed total (roundabout 5.6 ac + outfall 1.56 ac, overlapping; property 5.87 ac). Receiving water Pike Run (tributary of the Ottawa River) — the BOSC Storm Outfall channel terminates at Pike Run. No on-site streams/wetlands within the LOD (a PUBGx pond nearby is not impacted); a Surface Water Impact Determination letter is in Appendix I and no Section 401 / antidegradation review is required. The Appendix A NOI + Ohio EPA CGP authorization were acquired 2026-06-16 as companion eDoc 4091289 (the approval letter): Facility Permit Number 2GC08747*AG, effective 2026-04-22 under OHC000006 (record.npdes_coverage). Two new corridor parties surface here: George J. Igel & Co. (contractor) and WSP USA (engineer — also named on the campus architectural sheets per docs/COMPUTE.md)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "plans/4091286.engineering.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "plans/4091286.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "plans/LMA1A-95-SPS-2025-10-28.plan.yaml",
     "group": "plans",
     "title": "American Industrial Park Site",
@@ -3455,6 +4494,885 @@
     },
     "source_doc_rel": "plans/bistrozzi-plans/LMA1A-95-SPS-2025-10-28.odg",
     "source_doc_render_class": "office",
+    "source_doc_published": false
+  },
+  {
+    "rel": "grid/aep-lyka-transmission-2026.project.yaml",
+    "group": "siting-cases",
+    "title": "AEP Ohio Lyka Transmission Project — 345kV substation + ~4mi transmission line, Sugar Creek Township, Allen County",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "meta": {
+        "subject": "AEP Ohio Lyka Transmission Project — 345kV substation + ~4mi transmission line, Sugar Creek Township, Allen County",
+        "kind": "grid-siting-project",
+        "captured_for": "issue",
+        "extracted_at": "2026-07-11",
+        "method": "manual read of AEP's own captured fact sheet/map text+graphic layers, cross-checked against opsb.ohio.gov and AEP's regulatory-filings index (no case found); figures quoted from AEP's own materials, customer attribution sourced to secondary press and labelled accordingly",
+        "sources": {
+          "primary": [
+            {
+              "file": "data/documents/grid/aep-lyka-2026/Lyka_ProjectFactsheet_V2.pdf"
+            },
+            {
+              "file": "data/documents/grid/aep-lyka-2026/Lyka_MapPoster2.pdf"
+            },
+            {
+              "url": "https://www.ohiohistory.org/wp-content/uploads/2026/03/SubmissionsReceivedApril2026.pdf"
+            }
+          ],
+          "secondary": [
+            {
+              "url": "https://www.limaohio.com/top-stories/2026/04/21/aep-ohio-plans-substation-on-google-property-4-miles-of-power-lines/"
+            },
+            {
+              "url": "https://www.limaohio.com/top-stories/2026/05/06/aep-seeks-comment-on-new-substation/"
+            },
+            {
+              "url": "https://www.hometownstations.com/news/allen_county/aep-hosts-open-house-on-proposed-lyka-transmission-project-in-allen-county/article_98493891-7226-4d03-afca-c071a93c2d9d.html"
+            },
+            {
+              "url": "https://www.blufftonicon.com/news/2026/04/21/aep-ohio-open-house-planned-power-grid-upgrades-allen-county"
+            }
+          ]
+        }
+      },
+      "project": {
+        "name": "Lyka Transmission Project",
+        "tag": "[verified]",
+        "applicant": "AEP Ohio (AEP Ohio Transmission Company, Inc.)",
+        "scope": {
+          "substation": {
+            "name": "Lyka Substation",
+            "location": "On a customer-owned parcel between N West St and N Cole St, Sugar Creek Township, Allen County",
+            "source": "Lyka_ProjectFactsheet_V2.pdf p.1 (\"What\")"
+          },
+          "line": {
+            "length_miles": "~4",
+            "voltage_kv": 345,
+            "connects_to": "An existing transmission line located north of West Hook-Waltz and Tudor roads, Sugar Creek Township",
+            "structures": "Steel monopole; typical height 140-170 ft; typical ROW width ~150 ft",
+            "final_route": null,
+            "source": "Lyka_ProjectFactsheet_V2.pdf p.1-2, Lyka_MapPoster2.pdf"
+          }
+        },
+        "purpose": {
+          "tag": "[verified]",
+          "statement": "\"Supports economic development,\" \"meets the growing energy demand in the area,\" and \"provides service for a commercial customer's facility.\"",
+          "source": "Lyka_ProjectFactsheet_V2.pdf p.1 (\"Why\")"
+        },
+        "named_customer": {
+          "tag": "[open]",
+          "statement": "Neither AEP's project page nor its fact sheet names a customer. AEP staff (Brian Recker, Project Outreach Specialist) told local press \"We're not able to disclose specifically any customers\" (LimaOhio.com, 2026-05-06/07).",
+          "source": "Lyka_ProjectFactsheet_V2.pdf p.1 (customer not named); https://www.limaohio.com/top-stories/2026/05/06/aep-seeks-comment-on-new-substation/ (published 2026-05-07, Recker quote, secondary)"
+        }
+      },
+      "schedule": {
+        "tag": "[verified]",
+        "source": "Lyka_ProjectFactsheet_V2.pdf p.1 (\"Project Schedule\" table)",
+        "project_announcement_and_virtual_open_house": "Spring 2026",
+        "project_open_house": {
+          "planned": "Spring 2026",
+          "actual_date": "2026-05-06",
+          "note": "Reconciles the only apparent date conflict in press coverage: the Bluffton Icon (2026-04-21) and an earlier LimaOhio.com piece (2026-04-21, \"AEP Ohio plans substation on Google property...\") were published ~2 weeks BEFORE the event, announcing the then-upcoming 2026-05-06 open house — they are not a second, earlier open house. LimaOhio.com's follow-up (2026-05-06, published 2026-05-07, \"AEP seeks comment on new substation\") confirms the open house was held Wednesday evening, i.e. 2026-05-06, matching AEP's own fact sheet. No genuine 04-21-vs-05-06 discrepancy — one is the announcement date, the other the event date."
+        },
+        "right_of_way_communications": "Spring 2026 - Fall 2028",
+        "regulatory_filing_with_opsb": {
+          "planned": "Early 2027",
+          "filed": null
+        },
+        "anticipated_opsb_decision": "Spring 2027",
+        "construction": "Fall 2027 - Summer 2028",
+        "facilities_placed_in_service": "Summer 2028",
+        "restoration_activities": "Summer 2028 - Fall 2028",
+        "caveat": "*Timeline subject to change — printed on AEP's own fact sheet."
+      },
+      "opsb_case_status": {
+        "tag": "[verified]",
+        "statement": "As of this capture (2026-07-11), no Ohio Power Siting Board case number has been filed or assigned for the Lyka Transmission Project. AEP's own schedule places the regulatory filing at \"Early 2027\" and an anticipated decision at \"Spring 2027\" — both still in the future relative to this capture. Direct searches of opsb.ohio.gov's case listings and AEP's own Ohio regulatory-filings index (https://www.aeptransmission.com/ohio/filings.php) turned up no matching case as of 2026-07-11.",
+        "source": "Lyka_ProjectFactsheet_V2.pdf p.1 (schedule table); opsb.ohio.gov + aeptransmission.com/ohio/filings.php (absence, searched 2026-07-11)",
+        "distinct_from": {
+          "tag": "[verified]",
+          "statement": "A separate Ohio History Connection (State Historic Preservation Office) project-review submission — OHPO project ID 2026ALL68059, titled \"Lyka Station STATCOM Project,\" received 2026-04-08, projected response 2026-05-07 — is not the Ohio Power Siting Board certificate proceeding for the substation + transmission line. It runs on a distinct statutory review track (state historic-preservation consultation) from the OPSB siting process this project record otherwise tracks.",
+          "source": "https://www.ohiohistory.org/wp-content/uploads/2026/03/SubmissionsReceivedApril2026.pdf",
+          "same_site_relationship": {
+            "tag": "[inference]",
+            "statement": "The \"STATCOM\" name and the shared \"Lyka\" site name suggest this OHPO submission covers a related but narrower scope than the 345kV substation/transmission project — a STATCOM/reactive-power installation at the same site — but the submissions log itself does not state that relationship; it is reasoned from the shared name/site, not read off the record.",
+            "source": "https://www.ohiohistory.org/wp-content/uploads/2026/03/SubmissionsReceivedApril2026.pdf (project title/site only; relationship not stated by the record)"
+          }
+        }
+      },
+      "google_bistrozzi_attribution": {
+        "tag": "[inference]",
+        "statement": "AEP's own materials never name a customer. Secondary local press, however, directly and repeatedly ties the project to the Google/Bistrozzi \"Bosc\" campus: LimaOhio.com's 2026-04-21 headline and lede state \"AEP Ohio plans substation on Google property\" and \"The plan calls for building the Lyka Substation on Google's under-construction property between North West and North Cole streets in Sugar Creek Township\" — the same block AEP's fact sheet describes, and the same address the corpus already documents as the Bistrozzi LLC \"Bosc\" campus (4110 N Cole St; data/extracted/permits/4132514.epa.yaml). Companion coverage (hometownstations.com, Yahoo/LimaOhio 2026-05-06/07) similarly places the substation \"close to the Google data center under construction\" while noting AEP declined to confirm the customer \"for privacy reasons.\" No OPSB filing, AEP project page, or AEP fact sheet corroborates this directly — it rests entirely on secondary reporting, so it stays [inference], not [verified], per the standing evidentiary discipline for the Google/Bistrozzi identity (docs/investigative-method/ENRICHMENT.md; data/entities/profiles/relation-classes.yaml's existing `GOOGLE: possible_end_user` annotation, which the same discipline keeps off-graph absent a naming instrument).",
+        "would_upgrade_to_verified_with": [
+          "An OPSB application or certificate naming the customer/load",
+          "An AEP Ohio filing, tariff record, or public statement naming Google/Bistrozzi"
+        ],
+        "source": "https://www.limaohio.com/top-stories/2026/04/21/aep-ohio-plans-substation-on-google-property-4-miles-of-power-lines/ (quoted directly above); https://www.hometownstations.com/news/allen_county/aep-hosts-open-house-on-proposed-lyka-transmission-project-in-allen-county/article_98493891-7226-4d03-afca-c071a93c2d9d.html (2026-05-06, \"close to the Google data center under construction\" / declined-to-confirm quote); Lyka_ProjectFactsheet_V2.pdf p.1 (customer not named, contrast)"
+      },
+      "corridor_linkage": {
+        "closes_the_air_permit_grid_punt": {
+          "tag": "[verified]",
+          "statement": "OEPA Air PTI P0138965's Response to Comments explicitly referred grid/power questions to PUCO/the utility, out of the air permit's scope (\"Power Grid (referred to PUCO / utility)\"). This is the first primary-utility-project instrument in the corpus that begins to answer that referral — AEP Ohio is building dedicated 345kV interconnection infrastructure in the same township, on schedule to be in-service Summer 2028.",
+          "source": "data/extracted/permits/4132514.epa.yaml (Response to Comments, \"Power Grid\" topic); Lyka_ProjectFactsheet_V2.pdf"
+        },
+        "serving_utility_corroboration": {
+          "tag": "[inference]",
+          "statement": "A new, dedicated 345kV substation and transmission line sited in the same township as the Bosc campus corroborates (does not newly establish) the existing AEP Ohio serving-utility finding — grounded in the relator data appendix's AEP Ohio tariff citation and Allen County commissioners' Res #974-25 (AEP-Ohio Power three-phase-service agreement) — but does not by itself confirm the Bosc campus is the specific Lyka customer (see google_bistrozzi_attribution above).",
+          "source": "Lyka_ProjectFactsheet_V2.pdf; data/extracted/legal/select-committee-2026/relator-testimony/bosc-data-appendix-2026-06-01.md (25 MW AEP Ohio tariff threshold); data/documents/commissioners/meetings/M121825.pdf (Res #974-25, 2025-12-18, AEP-Ohio Power three-phase-service agreement); these are the same underlying records src/watermark/sites/_profiles.py's Lima `serving_utility_citation` cites"
+        },
+        "no_new_facility_field": {
+          "tag": "[open]",
+          "statement": "`SiteFacility`/`SiteProfile` (src/watermark/sites/_model.py) has no substation/transmission/interconnection-queue knob — modeling this project as a schema field was considered and deferred (per issue #1476's \"consider\") pending a named customer/interconnection agreement; it would otherwise require either fabricating a Bosc-specific MW/queue figure this project does not disclose, or adding a field this repo's one other analogous case (Urbana #1327, site-plan-grounded) also chose to carry as extraction prose rather than a new Pydantic field."
+        }
+      }
+    },
+    "approximate_paths": [
+      "project.scope.line.length_miles"
+    ],
+    "citation": {
+      "source": "grid/aep-lyka-transmission-2026.project.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "grid/aep-lyka-2026/Lyka_ProjectFactsheet_V2.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "legal/datacenter-legislation/hb983-3744.digest.yaml",
+    "group": "state-legislation",
+    "title": "H.B. No. 983, 136th Ohio General Assembly — As Introduced. The \"Data Center Accountability and Citizen Protection Act.\" Enacts a new R.C. Chapter 3744 imposing air/wastewater discharge standards on data-center and associated-power-plant cooling systems, a local citizen-vote requirement, water-supply liability, grid-independence, and a local tax-incentive ban; and amends R.C. 9.66 to strip the confidentiality of data-center development-and-supply agreements.",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "provenance": {
+        "source": "data/documents/legal/datacenter-legislation/hb983_00_IN.pdf",
+        "canonical": "ohio-hb983-136ga-as-introduced-datacenter-3744-2026.pdf",
+        "sha256": "ff8b8fc736ba5fc7f0f9a80d63afa231e310df0d17f9537b76d0452f6286d8c7",
+        "pages": 21,
+        "content_verified": "2026-07-31",
+        "version": "As Introduced",
+        "general_assembly": "136th (2025-2026)",
+        "introduced": "2026-07-28",
+        "note": "Provision reads below are tagged [verified] — they trace to the cited section and printed page of the bill text (printed page N equals PDF page N for this document). The relevance-to-the-corpus synthesis is tagged [inference]; unresolved questions (enacted text, whether the bill advances, definitional edges) are [open]. R.C. 9.66's strike/underline amendatory markup is lost in the plain text layer; verify exact new-vs-existing wording against the source PDF and against existing R.C. 9.66 before quoting in a filing. This is a single as-introduced version — there is no introduced->passed diff to track yet."
+      },
+      "versions_ingested": [
+        {
+          "version": "As Introduced",
+          "file": "data/documents/legal/datacenter-legislation/hb983_00_IN.pdf",
+          "sha256": "ff8b8fc736ba5fc7f0f9a80d63afa231e310df0d17f9537b76d0452f6286d8c7",
+          "pages": 21,
+          "bill": "H.B. No. 983",
+          "cosponsors": 4
+        }
+      ],
+      "bill": {
+        "number": "H.B. No. 983",
+        "short_title": "Data Center Accountability and Citizen Protection Act",
+        "title": "To amend section 9.66 and to enact sections 3744.01 through 3744.12 of the Revised Code to impose various requirements concerning data centers, to name this act the Data Center Accountability and Citizen Protection Act, and to declare an emergency.",
+        "primary_sponsors": [
+          "Rep. Gross",
+          "Rep. Teska"
+        ],
+        "cosponsors": [
+          "Rep. Barhorst",
+          "Rep. Mullins",
+          "Rep. Dean",
+          "Rep. Swearingen"
+        ],
+        "emergency": {
+          "tag": "verified",
+          "section": "Section 4",
+          "location": "printed p. 21",
+          "note": "Declared an emergency measure; would take immediate effect ON PASSAGE (requires a two-thirds vote of each house). It has NOT passed — only \"Introduced\" was recorded at capture — so the immediate-effect clause is prospective, not operative. [open: whether the bill advances at all.]"
+        },
+        "vehicle": "Amends R.C. 9.66 in the standard Ohio amendatory form (Section 1 re-enacts the section with a new division (D)(2); Section 2 repeals the existing section — NOT a wholesale repeal of 9.66) and enacts a new Chapter 3744 (sixteen sections)."
+      },
+      "definitions": {
+        "tag": "verified",
+        "section": "R.C. 3744.01",
+        "location": "printed pp. 4-6",
+        "key_terms": {
+          "data_center": "One or more buildings/facilities/infrastructure on a single parcel or contiguous/ aggregated parcels used primarily or exclusively for digital information services (management, storage, processing, dissemination of electronic data) OR virtual currency mining, with a PEAK ELECTRIC LOAD EXCEEDING ONE MEGAWATT. The 1 MW floor and the crypto-mining inclusion are the scope gates for every downstream duty.",
+          "expanded_data_center": "An existing data center seeking to add buildings/infrastructure housing server components with a peak load >1 MW. Expressly EXCLUDES expansions needed to build an on-site water-treatment facility sized to meet state wastewater-discharge requirements (i.e., adding compliance treatment capacity is not a triggering \"expansion\").",
+          "associated_power_generating_facility": "An electric generating facility built primarily to supply electricity to a data center. Pulled into nearly every data-center duty in the chapter (the vote, the permit bars, the discharge/emissions regime, the water-burden liability).",
+          "closed_loop_system": "A sealed cooling/heat-removal system whose working fluid does not contact the ambient atmosphere and does not expose/emit/discharge air, water vapor, or wastewater to outdoor air/water/soils, except during scheduled maintenance/repairs.",
+          "open_loop_system": "A cooling/heat-removal system that directly exposes/emits/discharges air, water vapor, or wastewater to the ambient atmosphere. Open-loop is the trigger for the harshest existing-facility duties (Sec. 3744.04(D) permit revocation; 3744.041 air-assessment; 3744.042 controls).",
+          "voter_approved_data_center": "A data center approved by a citizen vote under Sec. 3744.02."
+        },
+        "note": "\"Best available control technology,\" \"wastewater treatment facility,\" and the metals/glycols/organics (incl. PFAS) chemistry are used throughout but not separately defined here; the standards are delegated to director rulemaking (Sec. 3744.03)."
+      },
+      "section_9_66_amendment": {
+        "tag": "verified",
+        "section": "R.C. 9.66(D)",
+        "location": "printed p. 4 (new (D)(2)); Section 2 repeal at printed p. 21",
+        "existing_lever": "Existing R.C. 9.66(D) makes individualized compensation/payroll information submitted to a political subdivision, port authority, or tax-incentive-review council by an applicant/recipient of economic-development assistance CONFIDENTIAL and not a public record under R.C. 149.43. This is the \"sibling confidentiality lever\" the H.B. 314 records-legislation digest flags and the select-committee-2026 record covers as part of the R.C. 9.66(D) dispute.",
+        "change": [
+          {
+            "tag": "verified",
+            "division": "(D)(2) [new]",
+            "finding": "NEW carve-out FROM the confidentiality: \"Division (D)(1) of this section does not apply to any development and supply agreement related to a data center or associated power generating facility.\" Read with Sec. 3744.10, this switches OFF the 9.66(D) confidentiality for exactly the class of agreements a data-center deal runs through.",
+            "direction": "transparency-expanding"
+          }
+        ],
+        "drafting_note": "The as-passed text renumbers existing (D) to (D)(1) (the plain text layer shows the artifact \"(D)(D)(1)\"); the operative existing language is unchanged and the only substantive addition is (D)(2). Verify against current R.C. 9.66 before quoting."
+      },
+      "chapter_3744": {
+        "citizen_vote": {
+          "tag": "verified",
+          "section": "R.C. 3744.02",
+          "location": "printed pp. 6-8",
+          "summary": "A CITIZEN VOTE is required before any new or expanded data center (INCLUDING its associated power generating facility) may be approved, in EVERY city, village, or township located within FIVE MILES of the proposed perimeter.",
+          "mechanics": [
+            "The owner submits a written approval request to the local legislative authority / township trustees, with a plain description of facility type, size, location, associated power infrastructure, closed-loop-system details, and projected noise/light emission levels and range. [(B)]",
+            "The legislative authority/trustees certify the question to the board(s) of elections of every county containing a jurisdiction within 5 miles; the question goes to electors at the next election held at least NINETY DAYS after certification. [(C)]",
+            "A SIMPLE MAJORITY of votes cast approves. [(D)]",
+            "The ballot must plainly describe the facility and be posted on the board of elections web site at least 30 days before the election. [(E)]",
+            "Except per (K), the vote must occur BEFORE any permit, zoning approval, or development-and-supply agreement is executed; approvals or permits granted without a completed vote are VOID. [(F)]",
+            "Approval under this section is required in ADDITION to (and before) any local zoning; approval does not guarantee the center may operate. [(G)]",
+            "No emergency order, administrative action, or development agreement may substitute for or circumvent the vote. [(H)]",
+            "After a rejection, the owner may not resubmit for TWO YEARS. [(I)]",
+            "An official who authorizes development/expansion without the vote is guilty of misconduct in office under R.C. 3.07; a zoning-board member who does so is subject to immediate removal. [(J)]"
+          ],
+          "carve_out": {
+            "division": "(K)",
+            "finding": "Does not apply to a new/expanded center already under ACTIVE CONSTRUCTION with all required permits before the effective date. A center that has all permits but has NOT begun construction must CEASE until it obtains voter approval; if later approved, previously issued director-of-EPA permits remain valid so long as it stays compliant."
+          }
+        },
+        "epa_rulemaking": {
+          "tag": "verified",
+          "section": "R.C. 3744.03",
+          "location": "printed pp. 8-10",
+          "summary": "Within ONE YEAR, the director of environmental protection shall adopt Chapter 119 rules setting air-emission and wastewater-discharge safety standards and limits for data centers and associated power plants, IN ADDITION to existing R.C. Ch. 3704 (air) and 6111 (water) standards.",
+          "mechanics": [
+            "Standards for the discharge/emission of all NONREGULATED metals, glycols, and organics — INCLUDING PFAS — used in or produced by cooling systems/towers or present in discharged wastewater. [(A)(1)]",
+            "Wastewater and air sampling/testing requirements. [(A)(2)]",
+            "Attached air-cleaning and emissions-control facility requirements. [(A)(3)]",
+            "Best-available-control-technology (BACT) standards. [(A)(4)]",
+            "Any other limits the director deems necessary. [(A)(5)]",
+            "Standards must be posted on the EPA web site. [(B)]",
+            "The director SHALL NOT issue any operating/discharge/emissions permit to a center or power plant that does not meet these rules, and shall NOT grant any waiver or exemption. [(C)]"
+          ]
+        },
+        "existing_centers_duties": {
+          "tag": "verified",
+          "section": "R.C. 3744.04",
+          "location": "printed pp. 10-11",
+          "summary": "Beginning EIGHTEEN MONTHS after the effective date, an existing data center may not discharge wastewater without an attached treatment facility ensuring compliance, and may not operate unless it (and any associated power plant/equipment) uses BACT for metals and organics including PFAS (activated carbon and ion exchange to be considered in the BACT review). [(B)]",
+          "mechanics": [
+            "Existing centers must comply with all chapter air/water standards and are subject to penalties, including Sec. 3744.08 and R.C. Ch. 3704/6111. [(C)]",
+            "The director SHALL REVOKE an existing center's or power plant's permit(s) if it (1) operates an OPEN LOOP SYSTEM and (2) is out of compliance with (B) or any chapter/permit standard. [(D)]"
+          ]
+        },
+        "existing_open_loop_air_assessment": {
+          "tag": "verified",
+          "section": "R.C. 3744.041",
+          "location": "printed pp. 11-12",
+          "summary": "An existing OPEN-LOOP center must complete an independent air-quality and public-health impact assessment within 90 days and annually thereafter, and conduct independent biologic testing of cooling-tower emissions twice a year (May/June and Sept/Oct). The assessing entity is selected and supervised by the director; results are submitted within 30 days and posted; the OWNER pays all costs."
+        },
+        "existing_open_loop_power_controls": {
+          "tag": "verified",
+          "section": "R.C. 3744.042",
+          "location": "printed p. 12",
+          "summary": "Within 18 months, the owner of an existing OPEN-LOOP associated power plant must install and use attached air-cleaning and emissions-control facilities per the Sec. 3744.03 rules."
+        },
+        "voter_approved_center_permitting": {
+          "tag": "verified",
+          "section": "R.C. 3744.05",
+          "location": "printed pp. 12-14",
+          "summary": "For a voter-approved NEW/expanded center (and its power plant — including a combustion turbine, natural-gas plant, or other generation built primarily to serve it), the director SHALL NOT issue an operating/discharge/emissions permit unless the center and facility (1) use a CLOSED-LOOP system and (2) comply with the chapter and rules. [(A)]",
+          "mechanics": [
+            "No operation without an attached wastewater-treatment facility ensuring compliance. [(B)]",
+            "No permit-to-install under R.C. Ch. 6111 without an owner-submitted plan describing the design and expected wastewater discharges. [(C)]",
+            "Post-construction wastewater-discharge testing (incl. the power plant) must be provided to the director BEFORE the NPDES permit issues and before full operations. [(D)]",
+            "All required testing results must be authenticated by the CEO's signature; a false certification of a PILOT-SCALE test result is falsification under R.C. 2921.13 and exposes the CEO to criminal prosecution. [(E)]",
+            "Owner must use BACT and minimize water consumption using best available methodologies. [(F)]",
+            "Owner is subject to Sec. 3744.08 and R.C. Ch. 3704/6111 penalties. [(G)]"
+          ]
+        },
+        "permit_specification": {
+          "tag": "verified",
+          "section": "R.C. 3744.06",
+          "location": "printed pp. 14-15",
+          "summary": "A permit-to-install issued under R.C. Ch. 3704 or 6111 to a data center or power plant must specify (A) all applicable discharge/emission limits, INCLUDING for chemicals that were previously non-regulated, and (B) that non-compliance exposes the owner to Sec. 3744.08 and Ch. 3704/6111 penalties."
+        },
+        "chemical_disclosure": {
+          "tag": "verified",
+          "section": "R.C. 3744.061",
+          "location": "printed pp. 15-16",
+          "summary": "A data-center owner must disclose ALL chemicals, cooling agents, and wastewater-treatment substances (and their concentrations, and any changes) to (1) the director and (2) the local legislative authority; both must publicly post the disclosures on their web sites before operations begin and before any change.",
+          "mechanics": [
+            "All discharged wastewater must meet the Sec. 3744.03 safety/discharge standards for all contained chemicals before discharge. [(C)]",
+            "An INDEPENDENT third-party water-testing company selected and supervised by the director must test before any discharge or recycling; results are submitted within 30 days and posted within 30 days. [(D)]",
+            "The OWNER pays all testing/assessment/monitoring costs. [(E)]"
+          ]
+        },
+        "metering_and_sampling": {
+          "tag": "verified",
+          "section": "R.C. 3744.062",
+          "location": "printed p. 16",
+          "summary": "The owner must install meters monitoring chemical-additive levels in non-contact water supplies, sample wastewater discharge and air emissions WEEKLY (may sample continuously), and adjust chemical levels accordingly. Associated-power-plant cooling emissions must be sampled in spring and fall to control biologics including Legionella."
+        },
+        "water_supply_burden": {
+          "tag": "verified",
+          "section": "R.C. 3744.07",
+          "location": "printed pp. 16-18",
+          "summary": "If a data center or power plant places a burden on the LOCAL WATER SUPPLY that reduces water pressure or supply to any residence/business within a FIVE-MILE RADIUS, the owner bears FULL financial responsibility for correcting the impact AND pays a fine of $5,000 PER DAY until resolved.",
+          "covered_costs": [
+            "Water-infrastructure upgrades to restore pressure. [(A)(1)]",
+            "Water towers / storage facilities. [(A)(2)]",
+            "Temporary water-supply measures during construction/operations. [(A)(3)]",
+            "Costs related to negative impacts on AQUIFERS serving public/private entities. [(A)(4)]",
+            "Full reimbursement to any municipality/township/water district for expenditures addressing the impact. [(A)(5)]"
+          ],
+          "mechanics": [
+            "The owner must take BASELINE water-pressure and supply measurements before construction and submit them to the ODNR Division of Water Resources chief. [(B)]",
+            "REBUTTABLE PRESUMPTION: the owner is responsible for any burden if, at any time within the 5-mile radius, measured pressure/supply is below the submitted baseline; the owner bears the full burden of rebutting it. [(C)]"
+          ]
+        },
+        "enforcement_and_penalties": {
+          "tag": "verified",
+          "section": "R.C. 3744.08",
+          "location": "printed pp. 18-19",
+          "summary": "A graduated enforcement ladder for exceeding any federal or state discharge/emission standard (including the newly established limits for previously unregulated chemicals).",
+          "mechanics": [
+            "Written warning on exceedance; owner must correct within 10 business days and report within 10 business days. [(A)(1)-(3)]",
+            "Fine of NOT LESS THAN $10,000/day until compliant, collected by the director and disbursed EVENLY to municipalities/townships within 5 miles that are in violation of the safe levels, into their general funds. [(A)(4)]",
+            "If still non-compliant after 10 days, the fine rises to $25,000/day (same disbursement). [(B)(1)]",
+            "The director issues written notice that operating permits will be revoked if not compliant within 30 days. [(B)(2)]",
+            "After 30 days' notice, non-compliance on wastewater -> the director SHALL REVOKE the NPDES permit (R.C. Ch. 6111); on air -> revoke the permit to operate (R.C. Ch. 3704). [(B)(3)-(4)]"
+          ]
+        },
+        "grid_independence": {
+          "tag": "verified",
+          "section": "R.C. 3744.09",
+          "location": "printed pp. 19-20",
+          "summary": "All voter-approved data centers and the expanded portions of expanded centers must generate 100% of their own electricity via on-site/off-grid associated power facilities [(A)], be built and operated FULLY INDEPENDENTLY OF THE PUBLIC GRID [(B)], and Ohio RATEPAYERS SHALL BEAR NO COST associated with the center's power generation or grid infrastructure under any circumstances [(C)]."
+        },
+        "development_agreement_disclosure": {
+          "tag": "verified",
+          "section": "R.C. 3744.10",
+          "location": "printed p. 20",
+          "summary": "Full public disclosure of ALL development-and-supply agreements is required; all such agreements are public records under R.C. 149.43 WITHOUT EXCEPTION; R.C. 9.66(D)(1) does not apply to them; no public official may be penalized for disclosing one; and any such agreement in effect before passage is VOID after passage, with that information available via public-records request. (The operative pair with the Sec. 9.66(D)(2) carve-out.)"
+        },
+        "revolving_door": {
+          "tag": "verified",
+          "section": "R.C. 3744.11",
+          "location": "printed p. 20",
+          "summary": "No person who participated in drafting/revising OPSB or PUCO rules may represent any applicant before those bodies for three years; and no person who represented a data-center or power-plant applicant may take any position at OPSB, PUCO, or a related state agency for three years."
+        },
+        "tax_incentive_ban": {
+          "tag": "verified",
+          "section": "R.C. 3744.12",
+          "location": "printed pp. 20-21",
+          "summary": "No political subdivision may authorize a LOCAL TAX INCENTIVE (the abatement/exemption programs under R.C. Ch. 725, 1728, and the 5709 CRA/TIF/enterprise-zone sections) for a data center or power plant on or after the effective date; a violating authorization is VOID [(B)]. Neither the tax commissioner nor a county auditor may approve a data-center tax exemption under R.C. 5715.27 on or after the effective date [(C)]."
+        }
+      },
+      "related": [
+        "R.C. 9.66 — the amended section; the confidentiality lever also covered in the select-committee record and the HB 314 digest",
+        "R.C. Chapter 3744 — the enacted chapter (this bill)",
+        "R.C. 149.43 — the Public Records Act that Sec. 3744.10 routes data-center agreements into; corpus refs in docs/legal/mandamus-analysis.md",
+        "data/extracted/legal/select-committee-2026/witness-submissions.digest.yaml — the parallel 136th-GA data-center hearing record (R.C. 9.66(D) repeal, DCTE subsidy, ratepayer-cost dispute)",
+        "data/extracted/legal/records-legislation/hb314-149-43.digest.yaml — the sibling records-legislation read; shares the R.C. 9.66(D) / 149.43 confidentiality lever",
+        "docs/legal/mandamus-analysis.md — the PRR mandamus posture the transparency provisions bear on"
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/datacenter-legislation/hb983-3744.digest.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "legal/datacenter-legislation/hb983_00_IN.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "legal/records-legislation/hb314-149-43.digest.yaml",
+    "group": "state-legislation",
+    "title": "Sub. H.B. No. 314, 136th Ohio General Assembly — As Passed by the House. Amends R.C. 149.43 (Ohio Public Records Act) to restrict \"harassing or disruptive\" records requests and to let public offices engage private contractors to answer \"voluminous\" requests.",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "provenance": {
+        "source": "data/documents/legal/records-legislation/hb314_02_PH.pdf",
+        "canonical": "ohio-sub-hb314-136ga-as-passed-house-149-43-2026.pdf",
+        "sha256": "1465f0aa947445c7df341ec1610ce71ead6f9f3de8627ca4012d8f7693fbf1c9",
+        "pages": 48,
+        "content_verified": "2026-07-22",
+        "version": "As Passed by the House",
+        "general_assembly": "136th (2025-2026)",
+        "note": "Provision reads are tagged [verified] — they trace to the cited division/page of the bill text. The relevance-to-the-relator synthesis is tagged [inference]; unresolved questions are [open]. Strike/underline amendatory markup is lost in the text layer; verify exact new-vs-existing wording against the source PDF and against existing R.C. 149.43 before quoting in a filing."
+      },
+      "versions_ingested": [
+        {
+          "version": "As Introduced",
+          "file": "data/documents/legal/records-legislation/hb314_00_IN.pdf",
+          "sha256": "8190af27093c8add2431ea0433eab6c1e821c0e8a44db1e61cedb9cc25720c77",
+          "pages": 42,
+          "bill": "H.B. No. 314",
+          "cosponsors": 0
+        },
+        {
+          "version": "As Passed by the House",
+          "file": "data/documents/legal/records-legislation/hb314_02_PH.pdf",
+          "sha256": "1465f0aa947445c7df341ec1610ce71ead6f9f3de8627ca4012d8f7693fbf1c9",
+          "pages": 48,
+          "bill": "Sub. H.B. No. 314",
+          "cosponsors": 6
+        }
+      ],
+      "substitute_changes": {
+        "tiered_fee_schedule_added": [
+          {
+            "tag": "verified",
+            "change": "hours-tier-fee-schedule-added",
+            "division": "(B)(1)(b)",
+            "introduced": "No hours-based fee schedule anywhere in the introduced text (0 textual hits).",
+            "passed": "NEW: a POLITICAL SUBDIVISION may, instead of copies at cost, charge a fee tiered on the total \"hours to produce\" per request: 1-10 hours NO CHARGE; 11-20 hours up to $25; 21-30 up to $50; 31-40 up to $100; more than 40 hours up to $200. Paired with a new fee-estimate duty ((B)(1)(c): the office must provide each requester an estimate of the fee) and the new (A)(23) \"hours to produce\" definition (which counts private-contractor hours).",
+            "direction": "mixed"
+          },
+          {
+            "tag": "verified",
+            "change": "anti-splitting-combination-power-added",
+            "division": "(B)(1)(b)",
+            "passed": "NEW: if the office has a reasonable basis to suspect a requester split related requests to duck the fee tiers, it may COMBINE the requests' hours in calculating the fee.",
+            "direction": "office-protective"
+          },
+          {
+            "tag": "verified",
+            "change": "unreasonable-combination-aggrieved-ground-added",
+            "division": "(C)(1)",
+            "passed": "NEW counterweight: an \"unreasonable combination of the person's requests for the purpose of calculating fees under division (B)(1)(b)\" is itself an enumerated ground of aggrievement feeding the complaint/mandamus paths.",
+            "direction": "requester-protective"
+          }
+        ],
+        "harassing_or_disruptive_action": [
+          {
+            "tag": "verified",
+            "change": "prospective-ban-capped",
+            "division": "(B)(2)(c)(iii)",
+            "introduced": "A future-request order \"remains in force INDEFINITELY unless the order provides for its expiration after a specified period of time.\"",
+            "passed": "The order runs \"for a period of up to FIVE YEARS\"; a request in violation lets the court extend it for a period at the court's discretion.",
+            "direction": "requester-protective"
+          },
+          {
+            "tag": "verified",
+            "change": "anonymous-circumvention-fine-added",
+            "division": "(B)(2)(c)(iii)",
+            "passed": "NEW: a person who submits a request anonymously to circumvent an order may be fined up to $100 per violation.",
+            "direction": "office-protective"
+          },
+          {
+            "tag": "verified",
+            "change": "requester-fee-shift-added",
+            "division": "(B)(2)(c)(iv)",
+            "introduced": "No fee recovery for a requester who defeats the office's action.",
+            "passed": "NEW (B)(2)(c)(iv): if the court finds the requests were NOT intended to harass or disrupt, it MAY award the requester reasonable attorney's fees and litigation expenses against the office that sued (subject to R.C. 9.86). This inserted a new clause and renumbered the exemptions list from introduced (iv) to passed (v).",
+            "direction": "requester-protective"
+          }
+        ],
+        "voluminous_contractor_route": [
+          {
+            "tag": "verified",
+            "change": "fee-cap-added",
+            "division": "(B)(6)(b)(i)",
+            "introduced": "Office \"may include the cost of the contractor's services in calculating the cost involved in providing the copy\" — no explicit ceiling.",
+            "passed": "NEW ceiling: including contractor cost \"does not permit\" charging \"a fee in excess of the highest permissible fee\" in the existing fee structure.",
+            "direction": "requester-protective"
+          },
+          {
+            "tag": "verified",
+            "change": "contractor-duties-clause-added",
+            "division": "(B)(6)(b)(ii)",
+            "passed": "NEW: the contractor must promptly dispose of copies, return originals, not use the records for profit outside the engagement, and not disclose redacted information.",
+            "direction": "guardrail"
+          }
+        ],
+        "victim_video_fee_waiver_and_renumbering": [
+          {
+            "tag": "verified",
+            "change": "victim-video-fee-waiver-inserted",
+            "division": "(B)(11)",
+            "introduced": "Absent (the video-cost machinery — $75/hr, $750 cap — was in both versions, but with no victim waiver).",
+            "passed": "NEW (B)(11): law enforcement / prosecutors shall not charge the video-record preparation fee when the requester is the victim (or the victim's counsel or insurer), on an affidavit that the video is used to investigate the harm.",
+            "direction": "requester-protective"
+          },
+          {
+            "tag": "verified",
+            "change": "stale-cross-references-left-behind",
+            "division": "(B)(2)(c)(vii) and (A)(1)(ccc)",
+            "finding": "A DRAFTING ERROR in the as-passed text. Inserting the new (B)(11) waiver pushed the public-defender request-for-evidence division from introduced (B)(11) to passed (B)(12) — but (B)(2)(c)(vii) (the pre-suit evidence-demand gate) and (A)(1)(ccc) (the non-public status of evidence produced) still cite \"division (B)(11)\", which in the as-passed text is the victim video fee waiver. Read literally, both provisions now point at the wrong division; the evidence division's own text ((B)(12)) says \"pursuant to this division.\" Watch whether the Senate corrects the references."
+          }
+        ],
+        "net_read": {
+          "tag": "inference",
+          "note": "The committee did far more than balance the harass/disrupt action at the edges. It added an entire hours-tier fee schedule for political subdivisions — free under 10 hours, a payable meter up to $200/request above that, with an anti-splitting combination power — which is the fee structure the contractor costs feed and the concrete meaning of the (B)(6)(b) \"highest permissible fee\" cap. On the harass/disrupt action it softened the worst edge (indefinite ban → 5-year cap) and added a fee-shift for a wrongly-sued requester, while adding anti-circumvention teeth. The tolling provision (B)(2)(c)(ii) — the sharpest lever against the corpus's delay theory — was present in BOTH versions and survived unchanged."
+        }
+      },
+      "bill": {
+        "number": "Sub. H.B. No. 314",
+        "title": "To amend section 149.43 of the Revised Code to restrict harassing or disruptive public records requests and permit private contractors to respond to voluminous public records requests.",
+        "primary_sponsors": [
+          "Rep. Isaacsohn",
+          "Rep. Ray"
+        ],
+        "cosponsors": [
+          "Rep. Abrams",
+          "Rep. Brennan",
+          "Rep. Miller, J.",
+          "Rep. Russo",
+          "Rep. Schmidt",
+          "Rep. Young"
+        ],
+        "vehicle": "Substitute bill; amends R.C. 149.43 in full and (Section 2) repeals the existing section — the standard amendatory form, not a wholesale rewrite of the Act."
+      },
+      "new_mechanisms": {
+        "harassing_or_disruptive_action": {
+          "tag": "verified",
+          "division": "(B)(2)(c)",
+          "location": "bill body ≈ printed pp. 28-30 (PDF pp. 27-29)",
+          "summary": "Creates an affirmative court action FOR the public office. Where a requester submits multiple related or unrelated requests to the same office and, based on the VOLUME or the REPEATED NATURE of the requests, the office \"has reason to believe\" they are intended to harass the office or to disrupt its essential functions, the office may sue the requester in common pleas court (county where the office is located) to limit or deny the requests.",
+          "mechanics": [
+            "Proceeds as an ordinary civil action under the Ohio Rules of Civil Procedure; the requester gets notice and an opportunity to be heard. [(B)(2)(c)(ii)]",
+            "TOLLING: while the action or any appeal is pending, the office's duty to respond to the requests is tolled. [(B)(2)(c)(ii)]",
+            "On a preponderance finding of harass/disrupt intent, the court may limit or deny the requests. [(B)(2)(c)(iii)]",
+            "If the court also finds the requester likely to submit future harassing/disrupting requests, it may enjoin future requests to that office for up to FIVE YEARS; a violation can extend the order. [(B)(2)(c)(iii)]",
+            "A person who requests anonymously to circumvent such an order may be fined up to $100 per violation. [(B)(2)(c)(iii)]"
+          ],
+          "requester_fee_shift": {
+            "tag": "verified",
+            "division": "(B)(2)(c)(iv)",
+            "summary": "If the court determines the requests were NOT intended to harass or disrupt, it MAY award the requester (against the office that sued) reasonable attorney's fees and litigation expenses incurred in the action — discretionary (\"may\"), and subject to R.C. 9.86 (immunity)."
+          },
+          "exemptions_from_the_action": {
+            "tag": "verified",
+            "division": "(B)(2)(c)(v)-(vii)",
+            "does_not_apply_to": [
+              "A journalist as defined in (B)(9)(c).",
+              "A pro se litigant requesting records pertaining to litigation in which the pro se litigant is a NAMED PARTY.",
+              "A state agency / public college or university / public defender / other government attorney (and their staff/agents), with a carve-back for a public defender's non-work-scope requests."
+            ],
+            "guardrails": [
+              "No court shall limit, deny, or restrict a listed requester's access under this division. [(B)(2)(c)(vi)]",
+              "An office may not bring the action against a known/suspected public defender unless the requester fails to answer a (B)(11) request for evidence within 5 business days. [(B)(2)(c)(vii)]"
+            ],
+            "evidence_demand": {
+              "division": "(B)(12) as passed (introduced (B)(11))",
+              "note": "The demand-documentary-evidence power is PUBLIC-DEFENDER-SPECIFIC — an office that knows/believes a requester is a public defender may require proof the records relate to the defender's work scope; attorney-client / work-product materials cannot be compelled, and the evidence produced is itself non-public ((A)(1)(ccc)). There is NO general power to demand proof that a requester falls within the other exemptions (journalist, pro se). CAUTION: the bill's own cross-references in (B)(2)(c)(vii) and (A)(1)(ccc) still say \"(B)(11)\" — which, as passed, is the victim video fee waiver — a renumbering artifact of the substitute (see substitute_changes.victim_video_fee_waiver_and_renumbering)."
+            }
+          }
+        },
+        "private_contractor_for_voluminous_requests": {
+          "tag": "verified",
+          "division": "(B)(6)(b)",
+          "location": "bill body ≈ printed pp. 31-32 (PDF pp. 30-31)",
+          "summary": "If a request is \"voluminous and it is therefore reasonable to do so,\" the office may engage a private contractor to respond — INCLUDING making required redactions — on the office's behalf, and may include the contractor's services in the cost to produce the records.",
+          "mechanics": [
+            "Fee cap: including contractor cost may NOT push the fee above the highest permissible fee in the (B)(1)(b) hours-tier structure — concretely, $200/request for a political subdivision. [(B)(6)(b)(i)]",
+            "Contractor duties: promptly dispose of copies, return originals, not use records for profit outside the engagement, and not disclose redacted information. [(B)(6)(b)(ii)]",
+            "'Hours to produce' (A)(23) — the meter the (B)(1)(b) fee tiers run on — expressly includes hours worked by a private contractor engaged under (B)(6)(b).",
+            "In the promptness/mandamus inquiry, a court SHALL NOT consider whether engaging a private contractor would have produced records faster. [bill body ≈ printed p. 23 / PDF p. 22]"
+          ]
+        },
+        "tiered_fee_schedule_for_political_subdivisions": {
+          "tag": "verified",
+          "division": "(B)(1)(b)-(c) + (A)(23) + (C)(1)",
+          "location": "bill body ≈ printed pp. 24-25; added by the committee substitute (absent from the introduced text)",
+          "summary": "A political subdivision may, INSTEAD of providing copies at cost, charge a fee tiered on the total \"hours to produce\" the request: 1-10 hours no charge; 11-20 up to $25; 21-30 up to $50; 31-40 up to $100; over 40 hours up to $200. \"Hours to produce\" ((A)(23)) counts employee AND engaged-contractor hours.",
+          "mechanics": [
+            "Anti-splitting: on a reasonable basis to suspect a requester split related requests to duck the tiers, the office may combine the requests' hours in calculating the fee. [(B)(1)(b)]",
+            "Fee estimate: an office adopting the schedule must give each requester an estimate of the fee. [(B)(1)(c)]",
+            "Counterweight: an 'unreasonable combination' of requests for fee-calculation purposes is an enumerated ground of aggrievement in (C)(1) — it feeds the complaint/mandamus paths."
+          ]
+        }
+      },
+      "unchanged_load_bearing_provisions": [
+        {
+          "tag": "verified",
+          "division": "(C)(3)",
+          "location": "≈ printed p. 40 (PDF p. 39)",
+          "finding": "The statutory-damages engine is intact: $100 per business day of non-compliance with a (B) obligation, from the day the requester files a mandamus action, to a $1,000 cap; injury \"conclusively presumed\"; \"not a penalty\" but compensation for lost use. The mandamus remedy the corpus is pursuing survives this bill."
+        },
+        {
+          "tag": "verified",
+          "division": "(C)(1)(b)",
+          "finding": "The mandamus path (aggrieved requester → writ + court costs + statutory damages, attorney's fees available) remains the requester's mechanism. HB 314 adds a SEPARATE, office-initiated (B) action; it does not replace division (C)."
+        }
+      ],
+      "related": [
+        "R.C. 149.43 — the amended statute; corpus refs in docs/legal/mandamus-analysis.md",
+        "docs/legal/mandamus-analysis.md — the PRR mandamus this bill's (B) mechanisms bear on",
+        "data/extracted/legal/select-committee-2026/ — the parallel 136th-GA data-center hearing record (HB 184 / R.C. 9.66(D) is the sibling confidentiality lever)"
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/records-legislation/hb314-149-43.digest.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "legal/records-legislation/hb314_02_PH.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "legal/prr-mandamus/school-district-notice-letters.notice.yaml",
+    "group": "statutory-notices",
+    "title": "AEDG notice letters to Elida + Apollo JVSD of the proposed Bistrozzi CRA abatement",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "statute": "R.C. 3735.671 and 5709.83",
+      "re": "proposed Community Reinvestment Area Agreement (CRA property-tax abatement)",
+      "date_sent": "2025-06-25",
+      "consideration_date": "on or after 2025-07-10 (County to formally consider approval)",
+      "served_by": {
+        "org": "Allen Economic Development Group (AEDG)",
+        "signatory": "Cynthia \"Cindy\" Leis, President/CEO",
+        "contact_email": "leisc@aedg.org",
+        "address": "144 S. Main Street, Suite 200, Lima, OH 45801",
+        "phone": "419.222.7706",
+        "note": "AEDG — not the County clerk — drafted and served the statutory school-district notices and is the local economic-development entity coordinating the abatement."
+      },
+      "project_terms_stated": {
+        "company": "BISTROZZI LLC",
+        "use": "data center (one or more phases)",
+        "jobs": "~50",
+        "annual_payroll_usd": "~4000000",
+        "capital_investment_usd": "~500000000",
+        "abatement": "15-year / 75% real-property tax exemption per Building"
+      },
+      "recipients": [
+        {
+          "district": "Apollo Career Center (JVSD)",
+          "address": "3325 Shawnee Rd, Lima, OH 45806",
+          "superintendent": "Keith Horner",
+          "received": {
+            "by": "Keith Horner",
+            "title": "Superintendent",
+            "date": "2025-06-25"
+          }
+        },
+        {
+          "district": "Elida Local School District (Board of Education)",
+          "address": "4380 Sunnydale Ave, Elida, OH 45807",
+          "superintendent": "Joel Mengerink",
+          "received": {
+            "by": "Joel Mengerink",
+            "title": "Superintendent",
+            "date": "2025-06-25"
+          }
+        }
+      ]
+    },
+    "approximate_paths": [
+      "project_terms_stated.annual_payroll_usd",
+      "project_terms_stated.capital_investment_usd",
+      "project_terms_stated.jobs"
+    ],
+    "citation": {
+      "source": "legal/prr-mandamus/school-district-notice-letters.notice.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-06-05/School District Notice Letters.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "recorder/202606250006699.notice.yaml",
+    "group": "statutory-notices",
+    "title": "Project BOSC",
+    "confidence": "high",
+    "warnings": [
+      "Notarized/sworn 2026-01-23 but not recorded until 2026-06-25 — a ~5-month gap between execution and recording.",
+      "Item 1's APN list includes 36-1200-02-001.000, which is NOT conveyed by any of the three deeds re-recorded in the attached exhibit (202508130008300, 202508130008316, 202508130008312) and does not otherwise appear in the committed corpus as a Bistrozzi conveyance — it surfaces only as the Auditor's parent parcel that 36-1200-02-001.001 (the 25-ac portion actually conveyed by 202508130008312 Exhibit C) was split from, and as part of the original 2023 Neff PAAC option (data/extracted/aedg/seller-land-packets.land.yaml). Flagged as a possible outstanding deed / corpus gap, not resolved here.",
+      "Pages 3-21 (the form's own \"Exhibit A\" cover, though it actually bundles three separately-recorded deeds) are a re-recording of three ALREADY-COMMITTED Bistrozzi deeds — 202508130008300 (pp.3-12, 7 parcels), 202508130008316 (pp.13-16, 1 parcel), and 202508130008312 (pp.17-21, 2 parcels) — confirmed by instrument-number/page-stamp cross-check against data/extracted/recorder/*.deed.yaml. Not independently re-extracted here to avoid double-counting the conveyances; only this notice's own first 2 pages were read."
+    ],
+    "fields": {
+      "project_name": "Project BOSC",
+      "site_address": "W. Bluelick Road, Lima, OH 45801 (near the corner of North Cole Street and W. Bluelick Road)",
+      "legal_description": "Data center site near the corner of North Cole Street and W. Bluelick Road, Lima, Allen County, Ohio; full legal description carried in the attached exhibit (a re-recording of already-committed deeds 202508130008300, 202508130008316, and 202508130008312).",
+      "building_footprint_sf": 283497,
+      "parcel_ids": [
+        "36-1200-03-001.000",
+        "36-1200-03-001.001",
+        "36-1200-03-001.002",
+        "36-1200-03-001.003",
+        "36-1200-03-001.004",
+        "36-1200-03-001.005",
+        "36-1200-03-001.006",
+        "36-1200-03-002.000",
+        "36-1200-02-001.000",
+        "36-1200-02-001.001",
+        "36-0100-03-002.000"
+      ],
+      "improvement_description": "Groundwork to build out the facilities including water/septic/electric/and fiber infrastructure. Plus road installation.",
+      "owner_lessee": "Bistrozzi LLC, 2801 Centerville Road, Wilmington, DE 19808",
+      "fee_owner": null,
+      "designee": null,
+      "original_contractors": [
+        "Turner Construction Company, 66 Hudson Boulevard East, New York, NY 10001, (212) 229-6000"
+      ],
+      "contract_execution_date": "2025-05-15",
+      "lending_institutions": [],
+      "surety": "None Required",
+      "instrument_no": "202606250006699",
+      "recording_date": "2026-06-25",
+      "notarized_date": "2026-01-23",
+      "preparer": "Timothy Chadwick",
+      "county": "Allen",
+      "note": "Recorded 6/25/2026 1:07 PM, fee $211.00, by Mona S. Losh, Allen County Recorder (T20260005454, V:2026 P:06699); marked \"Non-compliant Form / Additional Fee Collected.\" Notary: Tiffany A. Shriver (comm. expires 2030-12-19). Item 4 (fee owner) and item 5 (designee) both state \"Same as above\" (i.e. Bistrozzi LLC). Page 1 cites \"Ohio G.S. 13-1104\" and page 2 cites \"section 1311.06 of the Revised Code\" — the G.S. cite is almost certainly a boilerplate-form typo for Ohio R.C. 1311.04 (Notice of Commencement), the statute this form implements."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "recorder/202606250006699.notice.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "recorder/bistrozzi-notices/202606250006699.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3727950.wetland.yaml",
+    "group": "wetland-determinations",
+    "title": "USACE Wetland Determination Data Form — Project BOSC, sampling point WD-1, Sugar Township, Allen County, 2024-08-15",
+    "confidence": "high",
+    "warnings": [
+      "Datum field reads 'North' on the form — this is a compass orientation label, not a geodetic datum; true datum is unspecified. Longitude sign inferred as negative (western Ohio, ~-84°).",
+      "Landform field is recorded as 'soybean field' (the crop/land-use description entered by the investigator rather than a geomorphic term such as terrace or flat).",
+      "USACE field scientist noted feature was considered a wetland due to farming disturbance to the vegetation layer — Hydrophytic Vegetation is No due to disturbance, yet Hydric Soil and Wetland Hydrology are both Yes; overall determination is Not a Wetland (No)."
+    ],
+    "fields": {
+      "title": "USACE Wetland Determination Data Form — Project BOSC, sampling point WD-1, Sugar Township, Allen County, 2024-08-15",
+      "project_site": "Project BOSC",
+      "applicant": "Bistrozzi LLC",
+      "investigators": [
+        "BDL"
+      ],
+      "city_county": "Sugar Township/Allen",
+      "state": "OH",
+      "region": "Midwest",
+      "sampling_date": "2024-08-15",
+      "sampling_point": "WD-1",
+      "landform": "soybean field",
+      "slope_pct": 0.0,
+      "latitude": 40.802104,
+      "longitude": -84.123293,
+      "datum": "North",
+      "soil_map_unit": "Westland-Rensselaer complex, 0 to 1 percent slopes (WeA)",
+      "nwi_classification": "none",
+      "hydrophytic_vegetation_present": false,
+      "hydric_soil_present": true,
+      "wetland_hydrology_present": true,
+      "is_wetland": false,
+      "dominant_species": [
+        "Amaranthus retroflexus",
+        "Portulaca oleracea",
+        "Cyperus esculentus"
+      ],
+      "note": "Remarks: No crops growing. USACE field scientist considered feature a wetland due to farming disturbance to vegetation layer. Hydric soil indicator: Redox Dark Surface (F6). Hydrology indicators checked: Inundation Visible on Aerial Imagery (B7), Sparsely Vegetated Concave Surface (B8); secondary: Saturation Visible on Aerial Imagery (C9), Stunted or Stressed Plants (D1), Geomorphic Position (D2). Prevalence Index = 3.89."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3727950.wetland.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3727950.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3727951.wetland.yaml",
+    "group": "wetland-determinations",
+    "title": "USACE Wetland Determination Data Form — Project BOSC, sampling point WE-1, Sugar Township, Allen County, 2024-08-15",
+    "confidence": "high",
+    "warnings": [
+      "Datum field reads 'North' on the form — this appears to be a label artifact (the form prints 'Datum: North' meaning NAD83/geographic north reference), not a true datum name; treated as printed.",
+      "Landform field is recorded as 'soybean field' which is atypical for this field (normally hillside, terrace, flat, etc.) but matches the image exactly.",
+      "USACE field scientist noted the feature was considered a wetland due to farming disturbance to the vegetation layer — is_wetland is recorded as No per the checked Summary of Findings box, consistent with hydrophytic vegetation being absent due to disturbance.",
+      "Local relief is 'concave'; Sparsely Vegetated Concave Surface (B8) and Inundation Visible on Aerial Imagery (B7) are checked as primary hydrology indicators; secondary indicators include Saturation Visible on Aerial Imagery (C9), Stunted or Stressed Plants (D1), and Geomorphic Position (D2)."
+    ],
+    "fields": {
+      "title": "USACE Wetland Determination Data Form — Project BOSC, sampling point WE-1, Sugar Township, Allen County, 2024-08-15",
+      "project_site": "Project BOSC",
+      "applicant": "Bistrozzi LLC",
+      "investigators": [
+        "BDL"
+      ],
+      "city_county": "Sugar Township/Allen",
+      "state": "OH",
+      "region": "Midwest",
+      "sampling_date": "2024-08-15",
+      "sampling_point": "WE-1",
+      "landform": "soybean field",
+      "slope_pct": 0.0,
+      "latitude": 40.802056,
+      "longitude": -84.123712,
+      "datum": "North",
+      "soil_map_unit": "Westland-Rensselaer complex, 0 to 1 percent slopes (WeA)",
+      "nwi_classification": "none",
+      "hydrophytic_vegetation_present": false,
+      "hydric_soil_present": true,
+      "wetland_hydrology_present": true,
+      "is_wetland": false,
+      "dominant_species": [
+        "Amaranthus retroflexus",
+        "Portulaca oleracea",
+        "Cyperus esculentus"
+      ],
+      "note": "No crops growing at time of visit. Hydrophytic vegetation absent (No X checked); Hydric Soil present (Yes X); Wetland Hydrology present (Yes X); Overall wetland determination: No. USACE field scientist considered feature a wetland due to farming disturbance to vegetation layer. Soil profile 0-12 inches: matrix 10YR 3/2 (95%), redox concentration 10YR 6/8 (5%, Type C, Loc M), Loamy/Clayey texture. Hydric soil indicator: Redox Dark Surface (F6) checked."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3727951.wetland.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3727951.pdf",
+    "source_doc_render_class": "pdf",
     "source_doc_published": false
   }
 ]

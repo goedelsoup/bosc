@@ -281,13 +281,13 @@
       "facilityKey": "van-wert-mega-site",
       "status": "gap",
       "statusReasons": [
-        "no fiscal instrument is on the record"
+        "no fiscal accounting and no incentive instrument is on the record"
       ],
       "stats": [],
       "gaps": [
         {
           "wouldScreen": "what tax revenue is being traded away and for how long, before the trade is approved.",
-          "missingRecord": "the abatement agreement, the school-board resolution, and the county auditor's abatement report — all public records, none produced into this record.",
+          "missingRecord": "the county auditor's abatement report and the year-by-year exemption ledger — public records, none produced into this record. Where the agreement itself is on the record it states the TERMS of the trade, never its cost to the taxing bodies.",
           "producer": "the county auditor, the school board, and the enterprise-zone/CRA agreement itself",
           "leadIds": null
         }
@@ -304,13 +304,24 @@
     "model": {
       "id": "governance",
       "facilityKey": "van-wert-mega-site",
-      "status": "partial",
-      "statusReasons": [
-        "the record carries no legislative instrument and no minutes — the decision path has not been produced for this site"
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Legislative instruments",
+          "value": "3",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "resolutions, ordinances, zoning applications as docketed, and filed court instruments on this site's record",
+          "source": null,
+          "warn": null
+        }
       ],
-      "stats": [],
       "gaps": [],
-      "caveats": []
+      "caveats": [
+        "An instrument on the record says what was moved, not what was decided — some are pending or proposed, and the deliberation that produced any of them lives in minutes and audio that are separate records."
+      ]
     }
   },
   {

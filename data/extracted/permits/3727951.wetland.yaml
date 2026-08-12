@@ -90,6 +90,11 @@ source_text_excerpt: 'Project/Site:
 
   Woody Vine Strat'
 determination:
+  # A record page headed by a filename stem is unreadable, so the form names itself from
+  # its own fields — project, sampling point, date (#1993). Not a claim; a heading.
+  title: >-
+    USACE Wetland Determination Data Form — Project BOSC, sampling point WE-1,
+    Sugar Township, Allen County, 2024-08-15
   confidence: high
   warnings:
   - 'Datum field reads ''North'' on the form — this appears to be a label artifact

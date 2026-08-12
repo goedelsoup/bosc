@@ -1,0 +1,117 @@
+# City of Van Wert Council, 2026-05-11 — Ordinance 26-05-029, writing "Data Center" into the Van
+# Wert Code of Ordinances and making it a permitted I-2 use. Issue #1993, epic #1267.
+#
+# WHY THIS FILE EXISTS SEPARATELY FROM THE REGISTER, and the PROJECTION and CUSTODY caveats: see
+# the sibling `2026-05-11-ord-26-05-028-annexation.resolution.yaml`. The same three apply verbatim.
+# Every field below is carried from `instruments[1]` of
+# `data/extracted/van-wert/mega-site-instruments.yaml`, read in #1401 by OCR of image-only scans.
+#
+# TAG VOCABULARY: [verified] = read off the document's own page images at the cited page;
+# [inference] = reasoned from [verified] facts, labelled; [open] = not established here.
+
+as_of: '2026-08-12'
+site: van-wert
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1993'
+epic: 'watermark-directory/the-watermark-directory#1267'
+
+source:
+  instrument: city-ordinance-as-introduced
+  file: data/documents/van-wert/council/26-05-029-draft-ordinance.pdf
+  sha256: '736be373da1a881a132efd6adca07465998e8f05266e4792574a17eba82ceccd'
+  content_verified: ocr
+  projected_from: data/extracted/van-wert/mega-site-instruments.yaml  # `instruments[1]`, #1401
+  read_note: >-
+    Image-only scan, 0 extractable characters. Read in #1401 with pypdfium2 + tesseract at 300 DPI.
+    The amended code text quoted below is Exhibit A, which is bound into the companion
+    `26-05-029.pdf` (pp. 2-3) rather than into the body. Page numbers are 0-based PDF page indices.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    City of Van Wert Ordinance 26-05-029 — amending Code of Ordinances §150.03 to define "Data
+    Center" and modify "Public Service Facility", and §150.15(h)(1) to add data centers as a
+    permitted use in the I-2 General Industrial district, passed as an emergency on first and final
+    reading 2026-05-11
+  ordinance_no: '26-05-029'
+  body: Council of the City of Van Wert, Ohio
+  body_kind: city_council
+  committee: Judiciary and Annexation
+  subject_matter: zoning_text_amendment
+  adopted: '2026-05-11'          # [verified] 5.11.26.pdf p. 4 — the approved minutes
+  outcome: approved
+  emergency: true
+  readings: first and final (statutory rules suspended)
+
+  title_verbatim: >-
+    AN ORDINANCE TO AMEND VAN WERT CODE OF ORDINANCES SECTION 150.03 TO ADD THE TERM "DATA CENTER"
+    AS A DEFINED TERM AND TO MODIFY THE DEFINITION OF THE TERM "PUBLIC SERVICE FACILITY", TO AMEND
+    VAN WERT CODE OF ORDINANCES SECTION 150.15(h)(1) BY ADDING DATA CENTERS AS A PERMITTED USE IN
+    THE I-2 GENERAL INDUSTRIAL ZONING CLASSIFICATION, AND DECLARING AN EMERGENCY.
+
+  effect: >-
+    Writes "Data Center" into the Van Wert Code of Ordinances for the first time, adds it to the
+    I-2 General Industrial permitted-use list, and rewrites the "Public Service Facility"
+    definition.
+
+  new_definition_verbatim: >-
+    "Data Center. A facility comprised of a building or group of buildings designed to incorporate
+    a large number of computer servers used for the storage of, processing, and distribution of
+    large amounts of data, and the accessory equipment and structures necessary to support the
+    critical functions of the facility such as (but not limited to) generators, cooling towers,
+    fuel storage, and electrical equipment."
+  definition_note: >-
+    [verified] The City's own definition names GENERATORS, COOLING TOWERS and FUEL STORAGE as
+    accessory equipment a data center is expected to carry — written into the code in the same
+    sitting that approved a campus the record elsewhere describes as closed-loop and
+    non-evaporative. The definition is generic and permits an evaporative build; it is not a
+    constraint on this campus and does not contradict the closed-loop disclosures. Recorded because
+    the code text, not the press release, is what binds the next applicant.
+  public_service_facility_change: >-
+    [verified] The amended §150.03 definition adds a footnote to "power plants or substations":
+    "*These facilities can only be operated in the I-2 zoning district." Generation and substation
+    siting citywide was narrowed to I-2 in the same ordinance that made data centers an I-2 use.
+  permitted_use_list_as_amended:
+    - General manufacturing
+    - Manufacturing, sale and storage of building materials
+    - Transport and trucking terminals
+    - Wholesale business
+    - Warehousing
+    - Food processing
+    - Public service facility
+    - Grain elevators and feed mills
+    - 'Sexually oriented businesses, subject to § 150.51'
+    - Homeless shelter
+    - Emergency shelter
+    - Drop in center
+    - Permanent supportive housing
+    - Transitional housing
+    - Data Center
+
+  vote:
+    roll_call_recorded: false
+    as_recorded_verbatim: '"Moore seconded; all concurred. Ordinance passed."'
+    note: >-
+      [verified] NO NUMERIC TALLY — a second and "all concurred", not a roll call and not a count.
+
+  source_pages:
+    body: 26-05-029-draft-ordinance.pdf pp. 0-1
+    exhibit_a: 26-05-029.pdf pp. 2-3
+    passage: 5.11.26.pdf p. 4
+
+  what_this_instrument_does_not_establish:
+    - >-
+      IT IMPOSES NO CONDITION ON A DATA CENTER. The amendment defines the use and permits it in
+      I-2; it sets no water, discharge, noise, height, lighting or generator condition of any kind.
+      Whatever conditions bind this campus are in Ordinance 26-05-030's Exhibit C, which contains
+      only a landscape mound.
+    - >-
+      IT NAMES NO OPERATOR. The definition and the use-list entry are generic code text. Nothing in
+      this ordinance joins the term to QTS, to any tenant, or to the annexed acreage.
+  confidence: high
+  warnings:
+    - >-
+      The source PDF is an UNSIGNED pre-passage upload with an unfilled passage clause, posted four
+      days before the vote. Passage rests on the approved minutes.
+    - >-
+      Read entirely by OCR of page images at 300 DPI; there is no text layer to check against.

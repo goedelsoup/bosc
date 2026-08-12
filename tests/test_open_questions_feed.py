@@ -24,7 +24,7 @@ from watermark.site.open_questions import (
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "2.0.0"
+_CV = "2.1.0"
 
 # A hypotheses feed's rows (id → number/name/question), as they appear in an assembled bundle.
 # `question` arrived at contract 1.52.0 (#1917); `_HYPS_PRE_152` is the same feed without it,

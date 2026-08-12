@@ -141,7 +141,7 @@ def _render_stormwater_pathway_note(emit: Callable[[str], None], settings: Setti
     if not path.is_file():
         return
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    rec = data.get("record") or {}
+    rec = data.get("plan") or {}
     params = {p.get("parameter"): p for p in rec.get("design_parameters") or []}
     disturbed = (params.get("total area disturbed") or {}).get("value")
     firms = rec.get("prepared_by") or []

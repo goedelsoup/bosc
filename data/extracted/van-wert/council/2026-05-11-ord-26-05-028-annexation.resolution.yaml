@@ -1,0 +1,113 @@
+# City of Van Wert Council, 2026-05-11 — Ordinance 26-05-028, accepting the expedited annexation
+# of 901.698 ± acres from Hoaglin, Pleasant and Ridge Townships. Issue #1993, epic #1267.
+#
+# WHY THIS FILE EXISTS SEPARATELY FROM THE REGISTER. `data/extracted/van-wert/mega-site-instruments.yaml`
+# is a compiled instrument SET: one file covering three ordinances, the statutory public hearing,
+# two council meetings, the land geometry, a chronology, the discrepancies and the public comment.
+# `watermark.site.records` yields ONE record per file, so the set can only ever publish as one
+# thing, and a compilation is honestly neither a legislative act nor a conveyance. These three
+# siblings are the ACTS themselves, one per ordinance — which is what `local-legislation` means
+# (#1438) and what the study's `governance` chapter reads. The set keeps its role as the overview;
+# nothing here restates its chronology, its public comment or its land geometry. Same call, same
+# shape, as Sidney's five council resolutions (#2003).
+#
+# ⚠️ THIS IS A PROJECTION OF A COMMITTED READ, NOT A NEW ONE. Every field below is carried
+# verbatim from the `instruments[0]` entry of that register, which was read in #1401 by rendering
+# these image-only scans at 300 DPI (targeted 400/450/500 DPI re-reads where ambiguous) — the PDFs
+# carry NO text layer. Nothing here was re-read, re-derived or added; the source page locators are
+# the register's own. Cite the source PDFs, or the register, never this file as an independent read.
+#
+# ⚠️ CUSTODY. No signed or certified as-passed copy of this ordinance is public. Every ordinance
+# PDF in this collection was uploaded 2026-05-07 17:10 UTC — FOUR DAYS BEFORE the 2026-05-11 vote —
+# and prints an unfilled "Passed this ___ day of ___, 2026" with unsigned signature lines. The fact
+# of passage, and the title as read, are evidenced by the approved MINUTES (`5.11.26.pdf`), not by
+# the ordinance file. See `data/documents/van-wert/council/filename-map.yaml`.
+#
+# TAG VOCABULARY (per CLAUDE.md / evidentiary-discipline):
+#   [verified]  — read off the document's own page images at the cited page.
+#   [inference] — reasoned from [verified] facts, labelled.
+#   [open]      — not established by this instrument.
+
+as_of: '2026-08-12'
+site: van-wert
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1993'
+epic: 'watermark-directory/the-watermark-directory#1267'
+
+source:
+  instrument: city-ordinance-as-introduced
+  file: data/documents/van-wert/council/26-05-028-draft-ordinance.pdf
+  sha256: '039823955abb314a99f96cab530d30292aec5bd37fdcfe82b6460aa78ef56d7a'
+  content_verified: ocr
+  projected_from: data/extracted/van-wert/mega-site-instruments.yaml  # `instruments[0]`, #1401
+  read_note: >-
+    Image-only scan, 0 extractable characters. Read in #1401 with pypdfium2 + tesseract
+    (`watermark.civic.indexer.ocr_pdf`) at 300 DPI, with a 400-DPI re-render to settle the
+    Type 1 / Type 2 discrepancy below. Page numbers are 0-based PDF page indices.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    City of Van Wert Ordinance 26-05-028 — accepting the expedited annexation of 901.698 ± acres
+    from Hoaglin, Pleasant and Ridge Townships into the City of Van Wert, passed as an emergency
+    on first and final reading 2026-05-11
+  ordinance_no: '26-05-028'
+  body: Council of the City of Van Wert, Ohio
+  body_kind: city_council
+  committee: Judiciary and Annexation
+  subject_matter: annexation
+  adopted: '2026-05-11'          # [verified] 5.11.26.pdf p. 3 — the approved minutes, not the PDF
+  outcome: approved
+  emergency: true
+  readings: first and final (statutory rules suspended)
+
+  # ⚠️ THE TITLE IS NOT THE SAME IN THE TWO PLACES THE RECORD CARRIES IT. Both readings were
+  # confirmed VISUALLY at 400 DPI in #1401, so this is a discrepancy in the record and not an OCR
+  # artifact. It is carried on the face of the record because the two statutes are different
+  # procedures: R.C. 709.022 (expedited type 1) and R.C. 709.023 (expedited type 2).
+  title_as_posted_verbatim: >-
+    AN ORDINANCE TO ACCEPT THE EXPEDITED TYPE 2 ANNEXATION OF 901.698+/- ACRES FROM HOAGLIN
+    TOWNSHIP, PLEASANT TOWNSHIP, AND RIDGE TOWNSHIP TO THE CITY OF VAN WERT, OHIO AND DECLARING AN
+    EMERGENCY.
+  title_as_passed_verbatim: >-
+    AN ORDINANCE TO ACCEPT THE EXPEDITED TYPE 1 ANNEXATION OF 901.698+/- ACRES FROM HOAGLIN
+    TOWNSHIP, PLEASANT TOWNSHIP, AND RIDGE TOWNSHIP TO THE CITY OF VAN WERT, OHIO AND DECLARING AN
+    EMERGENCY.
+
+  effect: >-
+    Accepts the annexation of 901.698 ± acres from three townships into the City of Van Wert;
+    directs the Clerk to deliver certified copies to the County Auditor, the County Recorder and
+    the Ohio Secretary of State.
+
+  vote:
+    roll_call_recorded: false
+    as_recorded_verbatim: '"Agler seconded; all concurred. Ordinance passed."'
+    note: >-
+      [verified] NO NUMERIC TALLY. The approved minutes record a second and "all concurred" — not a
+      roll call and not a count. Every one of the three Mega Site ordinances passed this way.
+
+  source_pages:
+    body: 26-05-028-draft-ordinance.pdf pp. 0-1
+    exhibits: 26-05-028.pdf pp. 0-9   # metes and bounds: Parcel One 776.565 ac + Parcel Two 125.133 ac, and the plat
+    passage: 5.11.26.pdf p. 3
+
+  what_this_instrument_does_not_establish:
+    - >-
+      WHICH EXPEDITED TYPE THE ENACTED ORDINANCE READS. The City's Law Director framed the
+      difference as "a typographical error in the agenda only"; the record shows "Type 2" in three
+      places (the 2026-04-27 committee motion, the posted ordinance title, the 2026-05-11 agenda as
+      first published) and "Type 1" in one (the title as read at passage). It cannot be settled from
+      any document in this corpus, because no signed or certified copy is public. The resolution
+      route is a certified copy from the Clerk of Council, and/or the annexation transcript filed
+      with the County Recorder and the Secretary of State under this ordinance's own Section 2.
+    - >-
+      THE ANNEXATION IS NOT A CONVEYANCE. This act moves a jurisdictional boundary; it transfers no
+      title and names no grantor or grantee. Van Wert's record still carries no conveyance
+      instrument for the Mega Site.
+  confidence: high
+  warnings:
+    - >-
+      The source PDF is an UNSIGNED pre-passage upload with an unfilled passage clause, posted four
+      days before the vote. Passage and the title as read rest on the approved minutes.
+    - >-
+      Read entirely by OCR of page images at 300-400 DPI; there is no text layer to check against.

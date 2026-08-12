@@ -145,6 +145,7 @@ _NA_REASON = "No disclosed project — this chapter is computed the day one is o
 # `GOVERNANCE_GROUPS`).
 _ASSEMBLY_GROUPS = ("land-assembly", "deeds")
 _GOVERNANCE_GROUPS = ("local-legislation", "litigation")
+_FISCAL_GROUPS = ("incentive-package",)
 
 _SCREEN_CHAPTER_IDS = (
     "water-supply",
@@ -312,9 +313,18 @@ _CHAPTERS: tuple[_ChapterDef, ...] = (
                 "what tax revenue is being traded away and for how long, "
                 "before the trade is approved."
             ),
+            # Reworded at #1993, in the same change that made it false. Until then this read "the
+            # abatement agreement, the school-board resolution, and the county auditor's abatement
+            # report — all public records, none produced into this record", and #1993 publishes
+            # exactly those first two at Lima (`agreements` — the Allen County CRA No. 1 Agreement
+            # with Bistrozzi LLC; `statutory-notices` — the R.C. 3735.671 school-district notice
+            # letters) and the whole executed package at Sidney and Urbana. A chapter must never
+            # assert an absence beside a feed showing the thing. What is genuinely missing at every
+            # site in the fleet is the ACCOUNTING, not the instrument.
             missing_record=(
-                "the abatement agreement, the school-board resolution, and the county auditor's "
-                "abatement report — all public records, none produced into this record."
+                "the county auditor's abatement report and the year-by-year exemption ledger — "
+                "public records, none produced into this record. Where the agreement itself is on "
+                "the record it states the TERMS of the trade, never its cost to the taxing bodies."
             ),
             producer=(
                 "the county auditor, the school board, and the enterprise-zone/CRA agreement itself"
@@ -645,7 +655,22 @@ def _derive(
     if d.derive == "data":
         return ("data", [])
     if d.derive == "fiscal":
-        return ("gap", ["no fiscal instrument is on the record"])
+        # Gap-first by design — no fiscal FEED exists and none is fabricated — but not blind to the
+        # record any more (#1993). `incentive-package` is the one group whose definition is
+        # sufficient on its own: a per-site register of the incentive and development instruments
+        # for one campus. `agreements` deliberately does NOT gate here even though Lima's CRA
+        # agreement sits in it, because that group also holds an NDA and an intergovernmental
+        # treatment agreement — membership alone would not justify the claim, and a site whose only
+        # `agreements` row was an NDA would flip on nothing.
+        if _record_group_rows(ctx, _FISCAL_GROUPS) > 0:
+            return (
+                "partial",
+                [
+                    "the incentive instruments are on the record, but the accounting is not — no "
+                    "auditor's abatement report and no exemption ledger says what the trade cost"
+                ],
+            )
+        return ("gap", ["no fiscal accounting and no incentive instrument is on the record"])
     # balance: an aggregate verdict over the screened chapters (never fiscal's designed gap,
     # never itself): all data ⇒ data; anything on the record ⇒ partial; nothing ⇒ gap.
     statuses = [
@@ -1093,12 +1118,20 @@ def _compose_governance(ctx: _Ctx, _facility: dict[str, Any] | None) -> _Composi
                 value=str(instruments),
                 evidence="verified",
                 basis="grounded",
-                sub="resolutions, ordinances, and filed court instruments on this site's record",
+                sub=(
+                    "resolutions, ordinances, zoning applications as docketed, and filed court "
+                    "instruments on this site's record"
+                ),
             ),
         ),
+        # Reworded at #1993, which publishes two Allen Township instruments that are NOT enacted —
+        # a commission-initiated text amendment (`proposed`) and a docketed private petition
+        # (`pending`). Each carries its own `status` inside the payload; the caveat must not say
+        # "enacted" over a count that includes them.
         caveats=(
-            "An instrument on the record says what was enacted, not what was decided — the "
-            "deliberation that produced it lives in minutes and audio that are separate records.",
+            "An instrument on the record says what was moved, not what was decided — some are "
+            "pending or proposed, and the deliberation that produced any of them lives in minutes "
+            "and audio that are separate records.",
         ),
     )
 

@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
 # The expected bundle contract version (kept in step with `watermark.site.feeds.CONTRACT_VERSION`);
 # the fresh-export assertions below pin it so a bump lands here in one place.
-_CV = "2.0.0"
+_CV = "2.1.0"
 # The per-site offline bundles (#727): a full `watermark export` per registered site, the
 # committed input the Astro build reads with no Python step (`web/sites/<slug>/`).
 COMMITTED_BUNDLES = REPO_ROOT / "web" / "sites"
@@ -791,13 +791,24 @@ def test_findlay_exports_at_reference_tier(site_bundle: Callable[[str], Path]) -
     # instrument set, the TMDL phosphorus-allocation chain, the WARN pair and the Brownfield
     # Round 11 awards; #1463 added the filed appellate opinion. Note the two record-bearing
     # collections: ``oepa/findlay/**`` reaches this site because ``*/findlay`` is derived from the
-    # slug (#1405), which also subtracts it from Lima's reference-build scope (#1505).
+    # slug (#1405), which also subtracts it from Lima's reference-build scope (#1505). #1993 added
+    # five more without a single new document: three Allen Township zoning acts (the adopted
+    # resolution with its certified 503-221 referendum, the proposed Section 1521 data-center
+    # amendment, the docketed Interstate Capital petition — all `local-legislation`, two of them
+    # NOT enacted and each carrying its own `status` on its face), AEP Ohio's Schedule DCT tariff
+    # posture, and the Rocky Ford 138 kV siting case. Every one was a reviewed, cited extraction
+    # the taxonomy had no bucket for.
     records = _rows(out, _feeds_by_name(out)["records"])
     assert {r["rel"] for r in records} == {
         "findlay/brownfield/round-11-hancock-2026.award.yaml",
         "findlay/flood/fema-fma-obligation-2026.epa.yaml",
         "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
+        "findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml",
+        "findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml",
+        "findlay/governance/allen-twp-zoning-adoption-and-referendum.yaml",
         "findlay/governance/litigation-one-energy-v-allen-twp.yaml",
+        "grid/findlay/aep-dct-tariff-posture.yaml",
+        "grid/findlay/rocky-ford-138kv-2024.project.yaml",
         "findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml",
         "findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml",
         "findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
@@ -805,7 +816,7 @@ def test_findlay_exports_at_reference_tier(site_bundle: Callable[[str], Path]) -
         "oepa/findlay/2PD00008.fs.npdes.yaml",
         "oepa/findlay/2PD00008.npdes.yaml",
     }, f"unexpected findlay records feed, got {sorted(r['rel'] for r in records)}"
-    assert len(records) == 10
+    assert len(records) == 15
     # The WARN pair publishes under ``labor`` — the group added for #1460 (contract 1.47.0),
     # because a state-filed plant-closing notice is not a permit, an order, an award, a deed or
     # a pleading, and filing it under the nearest of those would misrepresent the instrument.
@@ -813,21 +824,40 @@ def test_findlay_exports_at_reference_tier(site_bundle: Callable[[str], Path]) -
         "findlay/warn/goodyear-tall-timbers-mold-2026.warn.yaml",
         "findlay/warn/michigan-sugar-findlay-2025.warn.yaml",
     }
-    # #1463's governance ingest contributes exactly ONE record, and it needed no new group: the
-    # structured read of *One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees*, 2026-Ohio-405
-    # carries a ``case:`` block, so it publishes into the ``litigation`` group added for #1724.
-    # Every other governance artifact — the adopted township zoning resolution, the proposed
-    # data-center amendment, the SB 52 gap, the city moratorium gap, the timeline — is corpus,
-    # NOT a record: there is no zoning ``RecordGroup`` and minting one to publish a proposal
-    # that is not yet law would cost a contract bump plus a fleet-wide bundle regeneration.
+    # #1463's governance ingest contributed exactly one record at the time — the structured read
+    # of *One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees*, 2026-Ohio-405, which carries a
+    # ``case:`` block and publishes into the ``litigation`` group added for #1724.
     assert {r["rel"] for r in records if r["group"] == "litigation"} == {
         "findlay/governance/litigation-one-energy-v-allen-twp.yaml",
     }
-    assert not [
-        r
-        for r in records
-        if r["rel"].startswith("findlay/governance/") and r["group"] != "litigation"
-    ], "only the filed court instrument may publish as a record from the governance set"
+    # THREE MORE PUBLISH SINCE #1993, and the reason they did not is now void. Each of these files
+    # carried a note saying it must stay corpus because "there is no zoning RecordGroup and minting
+    # one to publish a proposal that is not yet law would cost a contract bump plus a fleet-wide
+    # bundle regeneration". #1993 paid that cost once, for eight genres. They are ``local-
+    # legislation`` on that group's own discriminator — the ACT, not its subject: a zoning
+    # commission's own resolution and a docketed R.C. 519.12 petition it takes up by motion are
+    # both acts of a local body, the same way a rezoning and a tax abatement are.
+    #
+    # The SB 52 gap, the city-moratorium gap and the governance timeline stay corpus and NOT
+    # records — a documented absence (``status: not-in-corpus``) must never publish as a record,
+    # because that asserts an instrument the corpus does not hold.
+    governance = {r["rel"]: r for r in records if r["rel"].startswith("findlay/governance/")}
+    assert {rel: r["group"] for rel, r in governance.items()} == {
+        "findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml": "local-legislation",
+        "findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml": "local-legislation",
+        "findlay/governance/allen-twp-zoning-adoption-and-referendum.yaml": "local-legislation",
+        "findlay/governance/litigation-one-energy-v-allen-twp.yaml": "litigation",
+    }, f"unexpected findlay governance records: {sorted(governance)}"
+    # NOTHING HERE IS LAW EXCEPT THE ADOPTED RESOLUTION, and the record has to say so on its face.
+    # Two of the three are pending or proposed, and their `status` is hoisted INTO the payload
+    # block precisely so a reader of the record — not of the YAML — sees it. Without the hoist,
+    # `status` sat at the top level of a BLOCK-keyed file and never reached the feed at all.
+    amendment = governance["findlay/governance/allen-twp-data-center-amendment-2026.zoning.yaml"]
+    assert amendment["fields"]["status"] == "proposed"
+    petition = governance["findlay/governance/allen-twp-rezoning-interstate-capital-2026.yaml"]
+    assert petition["fields"]["status"] == "pending"
+    # And the `analysis:` block — this repo's own reading — must NOT travel with them.
+    assert "analysis" not in amendment["fields"] and "analysis" not in petition["fields"]
 
     # The site's source-document catalog spans all four in-scope collections: the permit set
     # under ``oepa/``, the WARN + brownfield + governance instruments under ``findlay/``, the
@@ -844,10 +874,16 @@ def test_findlay_exports_at_reference_tier(site_bundle: Callable[[str], Path]) -
     # which is also what keeps a Hancock County siting docket out of Lima's whole-tree reference
     # build (#1505) — the ``grid/`` collection root is otherwise basin-shared.
     assert "grid/findlay/Rocky Ford 138 kV Station Project Letter of Notification.pdf" in docs
-    # ...and the grid-posture extractions are deliberately NOT records: a siting docket and a
-    # tariff posture get no ``RecordGroup``, exactly as the Lima "Lyka" project record chose
-    # (#1476), so those four YAML files add nothing to the ``records`` feed.
-    assert not [r for r in records if r["rel"].startswith("grid/")]
+    # ...and TWO of the four grid-posture extractions publish since #1993, which gave the genres
+    # the groups they had been denied. Both keyed on ``meta.kind``, the third classification
+    # mechanism: a payload block cannot discriminate them because their identity lives in the
+    # envelope, not in a block name. The remaining two — the Megawatt Hub interconnection GAP and
+    # the behind-the-meter generation census — stay corpus: one is a documented absence and the
+    # other a compiled census, and neither is an instrument.
+    assert {r["rel"]: r["group"] for r in records if r["rel"].startswith("grid/")} == {
+        "grid/findlay/aep-dct-tariff-posture.yaml": "tariffs",
+        "grid/findlay/rocky-ford-138kv-2024.project.yaml": "siting-cases",
+    }
     # ``legal/one-energy-v-allen-twp/**`` reaches this site the same way — by being named in
     # ``_FINDLAY.corpus_relpaths`` — and it is filed by CASE rather than by site, following the
     # ``legal/thor-v-urbana`` precedent that Urbana's scope established (#1724).
@@ -880,10 +916,19 @@ def test_urbana_record_domain_publishes_its_worked_corpus(urbana_bundle: Path) -
 
     records = _rows(urbana_bundle, _feeds_by_name(urbana_bundle)["records"])
     by_rel = {r["rel"]: r for r in records}
+    # #1993 added the third: the City's incentive register, as `incentive-package`. That group is
+    # deliberately NOT `agreements` — a register is one file covering many instruments, and
+    # `load_records` yields one record per file, so presenting it as a single executed agreement
+    # would be the `land-assembly`-vs-`deeds` error made from the other side. The rule keys on
+    # `development_agreement:`, the one block Urbana's register shares with Sidney's; keying on
+    # `cra_agreement:` would have claimed Sidney and left Urbana — whose central finding is that
+    # NO R.C. 3735.671 CRA agreement exists — unpublished.
     assert set(by_rel) == {
+        "urbana/incentive-instruments.yaml",
         "urbana/land-assembly.yaml",
         "urbana/litigation-thor-v-urbana.yaml",
     }, f"urbana records feed drifted, got {sorted(by_rel)}"
+    assert by_rel["urbana/incentive-instruments.yaml"]["group"] == "incentive-package"
     assert by_rel["urbana/land-assembly.yaml"]["group"] == "land-assembly"
 
     filing = by_rel["urbana/litigation-thor-v-urbana.yaml"]
@@ -1172,11 +1217,17 @@ def test_bowling_green_exports_at_case_tier_on_committed_assembly_geometry(
     by_group: dict[str, int] = {}
     for r in records:
         by_group[r["group"]] = by_group.get(r["group"], 0) + 1
+    # #1993 added the last two without a new document: the Apollo Power Generation Facility's OPSB
+    # siting case and FirstEnergy's Schedule DCT tariff posture. `siting-cases` is deliberately
+    # outside the `permits-*` family — an application with a live intervention docket must not
+    # render under a heading that tells a reader it is permitted.
     assert by_group == {
         "land-assembly": 1,
         "local-legislation": 7,
         "permits-epa": 3,
         "permits-npdes": 2,
+        "siting-cases": 1,
+        "tariffs": 1,
     }, f"unexpected bowling-green record genres: {by_group}"
     # The instrument that inverts the press account of the 2026-07-07 vote must be in the feed and
     # must still carry its roll call — this is the single most correction-bearing record on the site.
@@ -1295,14 +1346,26 @@ def test_van_wert_exports_at_case_tier_on_committed_campus_geometry(
     # wastewater plant and `2GC08872` is the PRIVATE QTS campus's construction-stormwater
     # coverage (#1402). Both discharge to Town Creek — a finding about the water, not a
     # relationship between the permits.
+    #
+    # #1993 added four more and flipped `governance` `partial` -> `data` with three of them: the
+    # City's own emergency ordinances of 2026-05-11 (annexation, the code amendment that first
+    # defined "Data Center" in Van Wert, the conditional rezoning), split out of the compiled
+    # instrument set as ACTS because a record is one per FILE. The fourth is the Van Wert-Haviland
+    # OPSB case, the one `siting-cases` row in the fleet with no committed source document — its
+    # 612-page Letter of Notification is deliberately uningested, and a page cite is never
+    # invented, so it publishes with a null join rather than a guessed one.
     rels = sorted(r["rel"] for r in _rows(bundle, _feeds_by_name(bundle)["records"]))
     assert rels == [
+        "grid/van-wert/van-wert-haviland-138kv.project.yaml",
         "oepa/van-wert/2GC08872.approval.npdes.yaml",
         "oepa/van-wert/2GC08872.noi.npdes.yaml",
         "oepa/van-wert/2PD00006.36a58063.npdes.yaml",
         "oepa/van-wert/2PD00006.f8aaad0a.npdes.yaml",
         "oepa/van-wert/2PD00006.fs.npdes.yaml",
         "oepa/van-wert/2PD00006.npdes.yaml",
+        "van-wert/council/2026-05-11-ord-26-05-028-annexation.resolution.yaml",
+        "van-wert/council/2026-05-11-ord-26-05-029-data-center-code-amendment.resolution.yaml",
+        "van-wert/council/2026-05-11-ord-26-05-030-conditional-zoning.resolution.yaml",
     ]
 
     # The geometry that activated the domain is the recorded holding, not a stub — and the whole

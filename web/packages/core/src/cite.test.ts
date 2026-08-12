@@ -145,9 +145,11 @@ describe("corpusPathsIn", () => {
 
 describe("citedSourcesIn", () => {
   it("resolves what the site holds and silently drops what it does not", () => {
-    const text = `data/extracted/${LIMA_PERMIT} and data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml`;
-    // The CRA extraction is a real committed artifact but is NOT projected into the records
-    // feed, so it has no record screen — one resolves, one doesn't, and nothing is invented.
+    const text = `data/extracted/${LIMA_PERMIT} and data/extracted/commissioners/bosc-resolution-ledger.yaml`;
+    // The resolution ledger is a real committed artifact but is NOT projected into the records
+    // feed — it is a cross-document compilation, a read of other reads, which the taxonomy
+    // deliberately excludes — so it has no record screen. One resolves, one doesn't, and nothing
+    // is invented. (This used the CRA agreement until #1993, which publishes it as `agreements`.)
     const sources = citedSourcesIn(text, "lima");
     expect(sources.map((s) => s.key)).toEqual([LIMA_PERMIT]);
   });

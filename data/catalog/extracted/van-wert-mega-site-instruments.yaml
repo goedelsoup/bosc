@@ -28,6 +28,23 @@ storage:
 - relpath: extracted/van-wert/mega-site-instruments.md
   media_type: text/markdown
   lfs: false
+# The three emergency ordinances as ACTS, one file per instrument (issue 1993), projected from the
+# `instruments` block of the set above — same producer, same license, same site scope, same
+# provenance class, so they belong to this dataset rather than a new one. Split out because
+# `watermark.site.records` yields ONE record per file: the set can only ever publish as a single
+# row, and a compilation of three ordinances, a public hearing, two meetings, the land geometry and
+# the public comment is honestly neither a legislative act nor a conveyance. These publish as
+# `local-legislation`, which is what the impact study's `governance` chapter reads. Same call and
+# same shape as Sidney's five council resolutions (issue 2003).
+- relpath: extracted/van-wert/council/2026-05-11-ord-26-05-028-annexation.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/van-wert/council/2026-05-11-ord-26-05-029-data-center-code-amendment.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/van-wert/council/2026-05-11-ord-26-05-030-conditional-zoning.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: static
 provenance: document

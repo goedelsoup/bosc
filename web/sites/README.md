@@ -59,11 +59,19 @@ Notes on what's committed here vs. a raw export:
   entries; the frontend degrades to declaring-absent (`hasFeed` → `[]`), and if the manifest
   declared them without the files the static build would `ENOENT`.
 
-  **`van-wert` is a deliberate exception** (#1963 / #1966) and ships its 243-row `passages.ndjson`
-  committed. **Do not run the drop step on it** — a blanket regen loop that applies the snippet to
-  every slug silently deletes committed retrieval evidence, which is how it bit #1969. Its
-  `passage-embeddings.ndjson` is committed too but empty (the `--no-embeddings` artifact), so the
-  manifest declares a 0-count feed against a 0-byte file, which is valid and must stay declared.
+  **`van-wert` and `sidney` are deliberate exceptions** (#1963 / #1966) and ship their 243-row and
+  219-row `passages.ndjson` committed. **Do not run the drop step on either** — a blanket regen loop
+  that applies the snippet to every slug silently deletes committed retrieval evidence, which is how
+  it bit #1969 and, with sidney, #1993. Their `passage-embeddings.ndjson` are committed too but
+  empty (the `--no-embeddings` artifact), so the manifest declares a 0-count feed against a 0-byte
+  file, which is valid and must stay declared.
+
+  **The list above is not the authority — `git ls-files` is.** It went stale within one issue of
+  being written. Derive the exception set instead:
+
+  ```
+  git ls-files 'sites/*/feeds/passages.ndjson' | cut -d/ -f2
+  ```
 
 ## Drift guard
 

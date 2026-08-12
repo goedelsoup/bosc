@@ -1,7 +1,7 @@
 {
   "site": "bowling-green",
-  "catalog_version": "76e20ec7f884c8f5ecbe05d9cc93af4c4da22283ddc8eaa1a06999e287ae1f3f",
-  "contract_version": "2.0.0",
+  "catalog_version": "a4e3c10fb15a024ad874d1fa7e3139fc04e61c20d5d352b4d01d0e3651a23133",
+  "contract_version": "2.1.0",
   "atoms": [
     {
       "handle": "concept:bowling-green:7q10",
@@ -1329,6 +1329,22 @@
       "site": "bowling-green",
       "local_id": "bowling-green/planning-commission/2026-liames-and-schaller-rezoning-applications.resolution.yaml",
       "title": "Wood County Planning Commission — the Liames LLC thirteen-parcel and A. Schaller Limited Partnership rezoning applications, Middleton Township Section 19, 2026",
+      "feed": "records"
+    },
+    {
+      "handle": "record:bowling-green:grid/bowling-green/apollo-power-generation-facility.yaml",
+      "kind": "record",
+      "site": "bowling-green",
+      "local_id": "grid/bowling-green/apollo-power-generation-facility.yaml",
+      "title": "The Apollo Power Generation Facility siting case — 350 MW net behind-the-meter gas generation plus ~119.5 MW / 239 MWh of battery storage, certified by automatic approval on the accelerated letter-of-notification track with no public hearings, and expressly barred from interconnecting to the grid",
+      "feed": "records"
+    },
+    {
+      "handle": "record:bowling-green:grid/bowling-green/firstenergy-dct-tariff-posture.yaml",
+      "kind": "record",
+      "site": "bowling-green",
+      "local_id": "grid/bowling-green/firstenergy-dct-tariff-posture.yaml",
+      "title": "The retail-tariff posture over a Wood County large load — the pending FirstEnergy Schedule DCT (PUCO 26-0697-EL-ATA), the AEP Schedule DCT precedent and its appeal, and the Toledo Edison sheets that actually govern in the meantime",
       "feed": "records"
     },
     {

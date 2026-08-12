@@ -291,19 +291,12 @@
     "model": {
       "id": "fiscal",
       "facilityKey": "cmh-232",
-      "status": "gap",
+      "status": "partial",
       "statusReasons": [
-        "no fiscal instrument is on the record"
+        "the incentive instruments are on the record, but the accounting is not — no auditor's abatement report and no exemption ledger says what the trade cost"
       ],
       "stats": [],
-      "gaps": [
-        {
-          "wouldScreen": "what tax revenue is being traded away and for how long, before the trade is approved.",
-          "missingRecord": "the abatement agreement, the school-board resolution, and the county auditor's abatement report — all public records, none produced into this record.",
-          "producer": "the county auditor, the school board, and the enterprise-zone/CRA agreement itself",
-          "leadIds": null
-        }
-      ],
+      "gaps": [],
       "caveats": [
         "Disclosed investment: $3.0B — the operator's own announcement, not an instrument; the abatement agreement that would price the trade is not on the record."
       ]
@@ -325,14 +318,14 @@
           "unit": null,
           "evidence": "verified",
           "basis": "grounded",
-          "sub": "resolutions, ordinances, and filed court instruments on this site's record",
+          "sub": "resolutions, ordinances, zoning applications as docketed, and filed court instruments on this site's record",
           "source": null,
           "warn": null
         }
       ],
       "gaps": [],
       "caveats": [
-        "An instrument on the record says what was enacted, not what was decided — the deliberation that produced it lives in minutes and audio that are separate records."
+        "An instrument on the record says what was moved, not what was decided — some are pending or proposed, and the deliberation that produced any of them lives in minutes and audio that are separate records."
       ]
     }
   },

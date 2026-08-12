@@ -16,11 +16,26 @@ so the site shipped a zero-length ``records`` feed and a ``record`` domain that 
 over a corpus that was neither absent nor thin (#1724). A genre earns a group when the corpus
 carries the artifact; it does not need an extractor to have produced it.
 
+Classification runs three mechanisms, in this order, and the order is the safety property
+(#1993). A **payload block** (``_BLOCK_TO_GROUP``) claims a file whose subject fields live under
+one key. A **whole-document block** (``_WHOLE_DOC_BLOCK_TO_GROUP``) claims one whose subject is
+spread across the top level, and publishes the document minus its envelope and this repo's own
+working notes. Last, a ``meta.kind`` **value allowlist** (``_META_KIND_TO_GROUP``) claims the
+genres no payload block can discriminate, because their identity lives in the envelope rather
+than in a block name — a grid siting case, a filed tariff sheet. That third mechanism must never
+be expressed as a ``meta`` entry in either block map: 77 committed extractions carry a top-level
+``meta:`` dict, so such an entry would publish every meetings manifest, corpus index, completeness
+audit, standing watch and site footprint in the tree, and steal both Fort Wayne IDEM permits and
+the OPC summary out of their correct groups. The allowlist, evaluated last, is what makes the
+mechanism safe.
+
 What is deliberately *not* a record: the derived per-site models (``bosc-site-footprint.yaml``
 — the profile's ``footprint_relpath`` input), the corpus indexes and manifests (``meta:`` +
-``documents:``), and the analysis digests (``kind:``/``subject:``/``provenance:``). Those are
-compiled *from* the record or *about* it; publishing them as records would float a site's
-record domain on its own scaffolding.
+``documents:``), the meetings pipeline's own machinery (the ``meetings`` feed already publishes
+``meeting-summaries.yaml``, so a record would double-count the same evidence), the standing
+watches, and the analysis digests (``kind:``/``subject:``/``provenance:``). Those are compiled
+*from* the record or *about* it; publishing them as records would float a site's record domain on
+its own scaffolding.
 """
 
 from __future__ import annotations
@@ -67,6 +82,42 @@ _BLOCK_TO_GROUP: dict[str, str] = {
     # is a grant or contract award, and filing a land-use vote under either would present a
     # zoning act as something it is not.
     "resolution": "local-legislation",
+    # A USACE Wetland Determination Data Form (Midwest regional supplement) — a dated field
+    # delineation at one sampling point, read off the form's own page images: investigator,
+    # coordinates, soil map unit, the three regulatory indicators, and the overall finding.
+    # `determination:` is already a first-class genre one tier down — `watermark.pipeline.corpus`
+    # routes it to `wetland` behind `WetlandExtraction` — and this classifier is supposed to be
+    # WIDER than that loader, not narrower; the key was simply never added (#1993).
+    # NOT `permits-epa`. That group is an agency ACTION and renders as "Permits — Ohio EPA /
+    # USACE". The form is filled by the APPLICANT'S consultant, and this corpus's own copy
+    # records a USACE field scientist disagreeing with its negative finding. Publishing it under
+    # an agency heading would tell the reader the agency determined there is no wetland; it did
+    # not. The corpus loader keeps `wetlands` a separate bucket from `actions` for this reason.
+    "determination": "wetland-determinations",
+    # A notice a party must SERVE or RECORD under a named R.C. section as a precondition to a
+    # private act: an R.C. 1311.04 Notice of Commencement recorded before construction, an
+    # R.C. 3735.671 / 5709.83 notice served on a school district before a tax exemption (#1993).
+    # The discriminator is the ACT — a statutorily compelled notice — not its subject, which is
+    # why a mechanic's-lien precondition and a school-district abatement notice share a group.
+    # The key is `statutory_notice` and NOT the bare `notice`, for exactly the reason
+    # `layoff_notice` is not `notice`: `notice:` is ALSO the public-notice block on an NPDES
+    # permit read (`oepa/findlay/2PD00008.1abaf306.npdes.yaml` carries both `permit:` and
+    # `notice:`). Claiming the short key would keep that permit in `permits-npdes` only by
+    # accident of dict insertion order — an invariant invisible in this file and destroyed by
+    # any future reordering. Two committed files were re-keyed instead; the ordering trick was
+    # refused deliberately.
+    "statutory_notice": "statutory-notices",
+    # Two shapes of one act, both under R.C. 519.12: a zoning commission's own resolution
+    # initiating or replacing a section of the township zoning text, and a docketed application
+    # by a property owner that the commission takes up by motion and sets for hearing (#1993).
+    # Both are `local-legislation` on that group's own discriminator — the ACT, not its subject —
+    # and neither needs a group of its own. Each block carries its instrument's own `status`
+    # (`proposed` / `pending`), hoisted INTO the block so a record can never read as enacted.
+    # `zoning_application` and NOT the bare `application`: the corpus is full of other
+    # applications (WPCLF/OWDA loan applications, air-permit applications), and a bare key would
+    # sweep a loan application into the legislative group.
+    "zoning_amendment": "local-legislation",
+    "zoning_application": "local-legislation",
 }
 # OPC estimates are whole-document (summary/detail/page) — no single block key.
 _OPC_KEYS = frozenset({"estimate", "sub_estimates", "estimate_template"})
@@ -82,9 +133,99 @@ _OPC_KEYS = frozenset({"estimate", "sub_estimates", "estimate_template"})
 #                   `deeds` group, which is instrument-level — a per-deed vision read of a
 #                   recorder PDF. A register is a compiled chain sourced to a county CAMA layer,
 #                   and filing it under `deeds` would present it as an instrument read.
+#   `sellers`     — the produced-instrument peer of `conveyances`: one entry per seller's
+#                   option-to-purchase packet with grantor/grantee, acreage, parcel IDs and the
+#                   assignment/closing chain, read off page images of a records production rather
+#                   than a county CAMA layer. Same register genre, so the same group; keying to
+#                   the block alone would drop the mechanism, the blank DTE-100 conveyance-fee
+#                   finding, and the CAUV recoupment (#1993).
+#   `zoning_code` — an adopted township zoning resolution in CONSOLIDATED form: the in-force text
+#                   as re-adopted, with the definitions and district articles that govern a
+#                   campus. `local-legislation` because it is still an act of the trustees, but
+#                   whole-document on purpose: the substance is spread across `definitions`, the
+#                   district articles and the dimensional schedule, and the payload must carry
+#                   the file's own `tag: inference` on which re-adoption introduced the
+#                   data-center language. The key is `zoning_code` and not the committed
+#                   artifact's original `document:`, which is the most generic wrapper word in
+#                   this repo and would silently claim the next extraction that used it.
+#   `bill`        — a General Assembly bill read section by section against its own printed text.
+#                   NOT `local-legislation`: that group is "an act of a LOCAL legislative body,
+#                   journalled in its own minutes", and the whole discriminator is the body that
+#                   voted. A statewide bill is a different level of government and, as introduced
+#                   or as passed by one chamber, is not law at all — the payload keeps
+#                   `provenance.version` so the record renders as pending, never enacted.
+#                   Whole-document because `bill:` is a pure identity stub (number, title,
+#                   sponsors); every provision read sits beside it.
+#   `retention_policy`
+#                 — an adopted, signed public-records availability + retention policy of a public
+#                   body, produced in a records request. It is an instrument (dated, adopted,
+#                   signed), not a compilation, but no group fits: `plans` is a plan document,
+#                   `local-legislation` is an act journalled in minutes, and the `permits-*`
+#                   family is authorizations. Whole-document because the subject is spread across
+#                   `availability_policy` / `retention_policy` / `schedule_*`.
+#   `development_agreement`
+#                 — a per-site REGISTER of the incentive and development instruments for one
+#                   campus: the executed agreements plus the legislative chain that authorized
+#                   them, one file per site. Deliberately NOT `agreements`, which is
+#                   instrument-level — this is the `conveyances`/`deeds` line drawn again, and the
+#                   group NAME carries it, because `load_records` yields ONE record per file and a
+#                   register cannot honestly be presented as a single executed instrument. It is
+#                   keyed on `development_agreement` and not `cra_agreement` because that is the
+#                   one block the two committed registers share; their vocabularies otherwise
+#                   differ (`cra_agreement`/`legislative_chain`/`land_acquisition` vs `cra`/
+#                   `no_cra_agreement`/`disclosed_economics`), and a single-site rule would leave
+#                   the other site unpublished. If a SINGLE executed development agreement is ever
+#                   extracted on its own, key it `parties:` so it lands in `agreements`, not here.
+#   `parties`     — an executed instrument between a public body and a private party: a mutual
+#                   NDA, a roadwork development agreement, an intergovernmental wastewater
+#                   treatment agreement, a statutory Community Reinvestment Area agreement. No
+#                   existing group fits: `finance` (`award:`) is a grant or contract AWARD, and
+#                   filing a 75%/15-year R.C. 3735.65 tax exemption there would present an
+#                   exemption as a grant — the misfiling #1724 refused. `local-legislation` is the
+#                   ACT that authorized the contract, not the contract. Whole-document because
+#                   `parties:` names only the counterparties; the terms, execution and authorizing
+#                   resolutions sit beside it.
+#                   MUST BE LAST. `findlay/governance/litigation-one-energy-v-allen-twp.yaml`
+#                   carries both `case:` and `parties:`, and `case` must keep it. (A consent order
+#                   carrying `parties:` is already safe — `order:` is a BLOCK key, and the block
+#                   map is scanned before this one.)
 _WHOLE_DOC_BLOCK_TO_GROUP: dict[str, str] = {
     "case": "litigation",
     "conveyances": "land-assembly",
+    "sellers": "land-assembly",
+    "zoning_code": "local-legislation",
+    "bill": "state-legislation",
+    "retention_policy": "agency-policy",
+    "development_agreement": "incentive-package",
+    "parties": "agreements",  # last — see the note above
+}
+# Genres a payload block cannot discriminate, because the artifact's identity lives in its
+# `meta.kind` rather than in a block name (#1993). This is the SAME rule shape the IDEM permits
+# already use, generalized — and it is evaluated LAST, after both block maps and after the OPC
+# and IDEM checks, so it can never steal a file that a payload block already claims.
+#
+# It must never be expressed as a `meta` entry in either block map: 77 committed extractions
+# carry a top-level `meta:` dict, the whole-document map is scanned before the IDEM rule, and
+# such an entry would publish every meetings manifest, corpus index, completeness audit, standing
+# watch and site footprint in the tree while stealing both Fort Wayne IDEM permits and the OPC
+# summary out of their correct groups. The value allowlist is the entire safety property.
+#
+#   siting-cases — a filing in a state utility-siting proceeding for ONE delivery point: an OPSB
+#     certificate application or Letter of Notification, a construction notice, a Staff Report of
+#     Investigation, or the PJM M-3 need that motivates them. Deliberately NOT in the `permits-*`
+#     family: an LON under O.A.C. 4906-6-07 is an APPLICATION with a live intervention docket, and
+#     a "Permits —" heading would tell a reader a 29-mile 345 kV line is permitted when the case is
+#     pending. The group name is neutral about outcome and about currency, because one member
+#     exists precisely to RETIRE a completed 2021 project from a site's data-center load thread.
+#   tariffs — a filed retail electric tariff sheet read verbatim at sheet-and-page level (a
+#     Schedule DCT, a Rate GT territory definition). NOT keyed on `terms:`, which collides
+#     tree-wide with two executed contracts and would misfile a treatment agreement as a tariff.
+_META_KIND_TO_GROUP: dict[str, str] = {
+    "grid-siting-project": "siting-cases",
+    "opsb-siting-case": "siting-cases",
+    "transmission-project": "siting-cases",
+    "grid-interconnection-need": "siting-cases",
+    "tariff-posture": "tariffs",
 }
 # Envelope keys that are provenance, not subject fields — rendered separately.
 _ENVELOPE = frozenset(
@@ -98,6 +239,36 @@ _ENVELOPE = frozenset(
         "source_text_excerpt",
     }
 )
+# Keys that are the REPO's workflow and the repo's argument, not the document's content. They are
+# stripped from whole-document payloads alongside `_ENVELOPE` (#1993). Without this, every
+# whole-document record publishes `issue:`/`epic:`/`acceptance:` (an issue's acceptance criteria)
+# and `thesis:`/`relevance:`/`bosc_relevance:` (this repo's reading of the document) as if they
+# were fields read off the instrument — which is the "floats a site's record domain on its own
+# scaffolding" failure this module's docstring names, arriving through the payload instead of
+# through the file list.
+#
+# `subject` is stripped because it is the record's TITLE, not a field — `_record_title` reads it
+# off the raw document instead. Deliberately NOT stripped: `limitations`, `open_targets`,
+# `open_questions`, `warnings`, `confidence`, `discrepancies`, `provenance`, `source`/`sources`.
+# Those are the record's own statement of what it does not establish and where it came from,
+# which is exactly what a record must carry.
+_WORKING_NOTES = frozenset(
+    {
+        "as_of",
+        "site",
+        "issue",
+        "epic",
+        "strengthens",
+        "acceptance",
+        "subject",
+        "relevance",
+        "bosc_relevance",
+        "thesis",
+        "cross_refs",
+        "corrections_to_issue_body",
+        "corrections_to_the_register",
+    }
+)
 
 
 @dataclass
@@ -106,6 +277,11 @@ class _Record:
     group: str
     data: dict[str, Any]
     payload: dict[str, Any] = field(default_factory=dict)
+
+
+def _whole_doc_payload(data: dict[str, Any]) -> dict[str, Any]:
+    """The document minus its provenance envelope and the repo's own working notes."""
+    return {k: v for k, v in data.items() if k not in _ENVELOPE and k not in _WORKING_NOTES}
 
 
 def _classify(data: Any) -> tuple[str, dict[str, Any]] | None:
@@ -119,19 +295,21 @@ def _classify(data: Any) -> tuple[str, dict[str, Any]] | None:
     for block, group in _WHOLE_DOC_BLOCK_TO_GROUP.items():
         body = data.get(block)
         if isinstance(body, dict | list) and body:
-            return group, {k: v for k, v in data.items() if k not in _ENVELOPE}
+            return group, _whole_doc_payload(data)
     if any(k in data for k in _OPC_KEYS):
         body = data.get("estimate")
-        payload = (
-            body
-            if isinstance(body, dict)
-            else {k: v for k, v in data.items() if k not in _ENVELOPE}
-        )
+        payload = body if isinstance(body, dict) else _whole_doc_payload(data)
         return "opc", payload
-    # IDEM permit records: a `meta` block with `kind: idem` (Indiana state permits).
     meta = data.get("meta")
-    if isinstance(meta, dict) and meta.get("kind") == "idem":
-        return "permits-idem", meta
+    if isinstance(meta, dict):
+        # IDEM permit records: a `meta` block with `kind: idem` (Indiana state permits).
+        if meta.get("kind") == "idem":
+            return "permits-idem", meta
+        # The `meta.kind` allowlist — last, so it can never steal a block-claimed file.
+        kind = meta.get("kind")
+        allowlisted = _META_KIND_TO_GROUP.get(kind) if isinstance(kind, str) else None
+        if allowlisted is not None:
+            return allowlisted, _whole_doc_payload(data)
     return None
 
 
@@ -166,6 +344,21 @@ def _record_title(rec: _Record) -> str:
         body = payload.get(block)
         if isinstance(body, dict):
             val = body.get(key)
+            if isinstance(val, str) and val.strip():
+                return val.strip()
+    # Last tier before the filename (#1993): the DOCUMENT's own self-description, read off the raw
+    # extraction rather than the payload. Two shapes carry it — the digest envelope's top-level
+    # `subject:` (which `_WORKING_NOTES` strips from the payload, because it is the title and not
+    # a field) and the connector-read's `meta.subject`/`meta.title`. It sits below every payload
+    # probe so a record that resolves to a real identifier keeps it; this can only ever replace a
+    # filename stem. Without it, most of the records #1993 publishes rendered as bare stems —
+    # `van-wert-haviland-138kv.project`, and two different sites both reading
+    # `incentive-instruments`.
+    for holder in (rec.data, rec.data.get("meta")):
+        if not isinstance(holder, dict):
+            continue
+        for key in ("subject", "title"):
+            val = holder.get(key)
             if isinstance(val, str) and val.strip():
                 return val.strip()
     return Path(rec.rel).stem
@@ -244,6 +437,18 @@ def _approx_paths(value: Any, prefix: str = "") -> list[str]:
     return out
 
 
+def _source_file(value: Any) -> str | None:
+    """The corpus path out of one source entry, which may be a bare string or a block."""
+    if isinstance(value, str):
+        return value.strip() or None
+    if isinstance(value, dict):
+        for key in ("file", "source_path", "source", "path"):
+            candidate = value.get(key)
+            if isinstance(candidate, str) and candidate.strip():
+                return candidate.strip()
+    return None
+
+
 def _source_ref(data: dict[str, Any]) -> Any:
     """The extraction's pointer at the source document it was read from.
 
@@ -251,12 +456,43 @@ def _source_ref(data: dict[str, Any]) -> Any:
     instrument carries a ``source:`` provenance block instead, whose ``file`` names the same
     corpus path (#1724) — resolving both is what lets such a record link to its instrument in
     the documents catalog rather than standing alone.
+
+    Three further shapes are in the committed corpus and used to resolve to nothing (#1993): the
+    analysis envelope's ``provenance.source_path`` / ``provenance.sources`` (the CRA agreement,
+    the seller packets, both statewide bills), the connector read's ``meta.sources`` — a dict of
+    named LISTS (``primary``, ``self_published_archived``, …), so every list is scanned and not
+    just ``primary`` — and a top-level ``sources:`` list of instrument blocks (the per-site
+    incentive registers).
     """
     direct = data.get("source_path")
     if direct is not None:
         return direct
     source = data.get("source")
-    return source.get("file") if isinstance(source, dict) else None
+    if isinstance(source, dict) and (hit := _source_file(source)):
+        return hit
+    provenance = data.get("provenance")
+    if isinstance(provenance, dict):
+        if hit := _source_file(provenance):
+            return hit
+        listed = provenance.get("sources")
+        if isinstance(listed, list) and listed and (hit := _source_file(listed[0])):
+            return hit
+    meta = data.get("meta")
+    for holder in (meta if isinstance(meta, dict) else {}, data):
+        listed = holder.get("sources")
+        if isinstance(listed, dict):
+            for entries in listed.values():
+                if isinstance(entries, list) and entries and (hit := _source_file(entries[0])):
+                    return hit
+        elif isinstance(listed, list) and listed and (hit := _source_file(listed[0])):
+            return hit
+    # Last, so it can only ever fill a gap: the connector envelope's own `meta.source_path`.
+    # `meta.source`/`meta.sources` are frequently prose ("Ohio EPA eDoc 4091289") rather than a
+    # path, which `_normalize_source_rel` then rejects — that is why this runs after the lists
+    # above rather than short-circuiting them.
+    if isinstance(meta, dict) and (hit := _source_file(meta)):
+        return hit
+    return None
 
 
 def _normalize_source_rel(source_path: Any) -> str | None:

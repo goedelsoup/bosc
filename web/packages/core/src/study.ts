@@ -373,6 +373,8 @@ const recordGroupRows = (slug: string, groups: readonly string[]): number =>
 const ASSEMBLY_GROUPS = ["land-assembly", "deeds"] as const;
 /** The decision-path vocabulary `governance` screens on. */
 const GOVERNANCE_GROUPS = ["local-legislation", "litigation"] as const;
+/** Mirrors `impact_study._FISCAL_GROUPS` (#1993). */
+const FISCAL_GROUPS = ["incentive-package"] as const;
 
 // --- the chapter registry ----------------------------------------------------------------
 
@@ -673,8 +675,9 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     requiredFeeds: [],
     gap: {
       wouldScreen: "what tax revenue is being traded away and for how long, before the trade is approved.",
+      // Reworded at #1993, in the same change that made it false — see `impact_study.py`.
       missingRecord:
-        "the abatement agreement, the school-board resolution, and the county auditor's abatement report — all public records, none produced into this record.",
+        "the county auditor's abatement report and the year-by-year exemption ledger — public records, none produced into this record. Where the agreement itself is on the record it states the TERMS of the trade, never its cost to the taxing bodies.",
       producer: "the county auditor, the school board, and the enterprise-zone/CRA agreement itself",
     },
     references: [],
@@ -686,8 +689,19 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
     // stay this chapter's named gap and are never scaffolded from the authorization.
     recordGroups: ["finance", "local-legislation"],
     notApplicable: needsProject,
-    // Curated-only, gap-first by design: no fiscal feed exists, and none is fabricated.
-    derive: () => ({ status: "gap", reasons: ["no fiscal instrument is on the record"] }),
+    // Gap-first by design — no fiscal FEED exists and none is fabricated — but not blind to the
+    // record any more (#1993). `incentive-package` is the one group whose definition is sufficient
+    // on its own; `agreements` deliberately does not gate here, because it also holds an NDA and an
+    // intergovernmental treatment agreement.
+    derive: (slug) =>
+      recordGroupRows(slug, FISCAL_GROUPS) > 0
+        ? {
+            status: "partial",
+            reasons: [
+              "the incentive instruments are on the record, but the accounting is not — no auditor's abatement report and no exemption ledger says what the trade cost",
+            ],
+          }
+        : { status: "gap", reasons: ["no fiscal accounting and no incentive instrument is on the record"] },
   },
   {
     id: "governance",
@@ -1207,12 +1221,12 @@ const COMPOSERS: Record<string, (slug: string, facility: FacilityItem | null) =>
           value: String(instruments),
           evidence: "verified",
           basis: "grounded",
-          sub: "resolutions, ordinances, and filed court instruments on this site's record",
+          sub: "resolutions, ordinances, zoning applications as docketed, and filed court instruments on this site's record",
         },
       ],
       gaps: [],
       caveats: [
-        "An instrument on the record says what was enacted, not what was decided — the deliberation that produced it lives in minutes and audio that are separate records.",
+        "An instrument on the record says what was moved, not what was decided — some are pending or proposed, and the deliberation that produced any of them lives in minutes and audio that are separate records.",
       ],
     };
   },

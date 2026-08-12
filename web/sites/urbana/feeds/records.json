@@ -1,13 +1,481 @@
 [
   {
+    "rel": "urbana/incentive-instruments.yaml",
+    "group": "incentive-package",
+    "title": "Urbana Technology Hub — the City's incentive and development instruments, as designated, signed and voted",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "sources": [
+        {
+          "instrument": "council-meeting-packet",
+          "file": "data/documents/urbana/council/2024-11-19_regular_meeting_packet.pdf",
+          "sha256": "c3a6b0cdedc8801fa6f95276c4c1e32ea0b49f6dbcc00ceaf362a4a34b9f6a7d",
+          "content_verified": "ocr",
+          "carries": "Ord. 4612-24 (pp. 180-181) + Exhibit A, the Pre-Annexation Agreement (pp. 182-188)"
+        },
+        {
+          "instrument": "council-minutes-approved",
+          "file": "data/documents/urbana/council/2024-12-17_approved_city_council_meeting_minutes.pdf",
+          "sha256": "07d6c875cf04d53c0946c26e489c577fa91fcbb5d9f0ca781d98ba7c1b3aa538",
+          "content_verified": "ocr",
+          "carries": "Ord. 4612-24 / 4613-24 / 4614-24 roll calls"
+        },
+        {
+          "instrument": "council-minutes-approved",
+          "file": "data/documents/urbana/council/2025-10-21_approved_city_council_meeting_minutes.pdf",
+          "sha256": "d26d24f65411187c08023bfa121594063b3898d79c41aa28d5ffe6a5f7b9102a",
+          "content_verified": "ocr",
+          "carries": "The R.C. 3735.66 public hearing on CRA #2; Ord. 4631-25 second reading"
+        },
+        {
+          "instrument": "council-meeting-packet",
+          "file": "data/documents/urbana/council/2025-11-04_regular_meeting_packet.pdf",
+          "sha256": "14ad9dfb43f152ac64e487644d014cebde1ee5ccf14b10fa8ccb72f91a5136a7",
+          "content_verified": "ocr",
+          "carries": "Ord. 4631-25 full text (pp. 45-50) + Exhibits A-1 / B / C (pp. 51-110)"
+        },
+        {
+          "instrument": "council-minutes-approved",
+          "file": "data/documents/urbana/council/2025-11-04_approved_city_council_meeting_minutes.pdf",
+          "sha256": "7614a8373c053f9ba93129f4b9364a841e0479007be8982629a1dfa1a3ae33ae",
+          "content_verified": "ocr",
+          "carries": "Ord. 4631-25 roll call, 5-2"
+        },
+        {
+          "instrument": "city-public-notice",
+          "file": "data/documents/urbana/council/data_center_timeline_public_notice_2.26.26.docx.pdf",
+          "sha256": "760b4844ff2f2637bf55695f252281c44410875c67097ad87a384c1cc40c547e",
+          "content_verified": "text-layer",
+          "carries": "The City's eight-point overview of what it did and did not sign"
+        },
+        {
+          "instrument": "developer-disclosure-posted-by-city",
+          "file": "data/documents/urbana/council/project_overview_-_urbana_technolody_hub.pdf",
+          "sha256": "d2749bde23e243a7d91e74a9c7efdcb5d4868071ce26d92717429dfbfaa84464",
+          "content_verified": "none",
+          "carries": "The 65/55 dB offer and the tax-revenue figures"
+        }
+      ],
+      "development_agreement": {
+        "authorizing_ordinance": {
+          "number": "4612-24",
+          "title": "An ordinance authorizing the Director of Administration to enter into a pre-annexation agreement with Urbana0624C, LLC.\n",
+          "readings_required": 3,
+          "public_hearing_required": false,
+          "department_requesting": "Community Development",
+          "sponsor": "Councilman Pat Thackery",
+          "first_reading": "2024-11-19",
+          "second_reading": "2024-12-03",
+          "passed": "2024-12-17",
+          "vote": "5-0",
+          "moved_by": "Councilwoman Amy Jumper",
+          "seconded_by": "Councilwoman Stephanie Truelove"
+        },
+        "counterparty": {
+          "name": "Urbana0624C, LLC",
+          "form": "an Ohio Limited Liability Company",
+          "mailing_address": "720 E. Broad Street, Columbus, OH 43215",
+          "role_in_agreement": "defined term in Exhibit A: the 'Company' or 'Developer'",
+          "identified_by_city_as": "Highland",
+          "registered_agent": null,
+          "members": null,
+          "address_corroboration": "[inference, strong] 720 E. Broad Street, Columbus is the SAME street address the OEPA §401 WQC preliminary-JD cover (eDoc 3938251) carries for \"Highland Realty Development LLC / Urbana Owner I LLC, 720 E Broad St Suite 200, Columbus\" (highland55-findings.md; land-assembly.yaml flagged it [open]). Two independent primary instruments — a City ordinance exhibit (2024-11) and an OEPA permit filing — put the project's development vehicle at that address, and the City names the entity \"Highland\". A shared address is not corporate identity, so common control stays [inference] pending the Ohio SoS pull; but this is materially more than the address coincidence the corpus previously carried.\n"
+        },
+        "agreement": {
+          "status": "draft-attached-as-exhibit",
+          "property": {
+            "description": "0 US Route 68 South, Urbana OH 43078, Urbana Township, Champaign County",
+            "acres": 191.589,
+            "company_interest": "in contract to purchase",
+            "additional_acres_in_petition": 28.397,
+            "total_annexation_acres": 219.986,
+            "current_zoning": "U-1 (Rural District), Urbana Township",
+            "zoning_sought": "PUD (Commercial Industrial)"
+          },
+          "petition": {
+            "statute": "R.C. 709.023 — Expedited Type II",
+            "landowner_petitioners": [
+              "Board of Commissioners of Champaign County, OH",
+              "Organ Farms LLC",
+              "Governing Board of the Madison-Champaign Educational Service Center",
+              "Urbana Health Facilities, LLC"
+            ],
+            "agent": "Andrew Wecker, Wright and Moore Law Company, LPA, 137 North Sandusky St., Delaware, OH 43015",
+            "filed": "2024-12-03",
+            "company_obligations": [
+              "prepare the petition, maps and plats at its own expense; pay the county filing fees",
+              "file within 30 days after execution of the Agreement",
+              "take all reasonable actions to cause the current owners NOT to withdraw their names from the petition during the annexation or any subsequent administrative or legal action\n"
+            ]
+          },
+          "city_obligations": [
+            "enact the R.C. Ch. 709 service and zoning-buffer resolutions within 20 days of petition filing",
+            "provide centralized water and sanitary sewer — 'projected to come online at some point in the future'",
+            "promptly cooperate and assist the Owner, its successors or assignees, to facilitate annexation, zoning and development",
+            "accept a complete application to rezone the entire property to PUD (Commercial Industrial) and conduct hearings"
+          ],
+          "detachment_clause": {
+            "text": "In the event that the Property is annexed but the Property is then not rezoned in a manner that is satisfactory to Developer, or if Developer exhausts its appeals of the City of Urbana zoning determination, or the proposed rezoning is subject to referendum and/or rejected by the voters, and/or if water and sewer capacity is not made available to service the development of the Property in order to satisfy the Developer's schedule, The City of Urbana agrees to execute a petition to detach the entire Property from its jurisdiction upon the request of Developer or Company.\n",
+            "significance": "[verified as a term] The City pre-committed, in December 2024, to de-annex the entire property on the developer's demand if the zoning did not come out to the developer's satisfaction. Every trigger in the clause has since arguably occurred (the M-1 data-center use was repealed by Ord. 4635-26 on 2026-06-16). Whether the clause has been invoked, and whether it survives as an enforceable term of an EXECUTED agreement, is [open] — the federal complaint does not plead it (litigation-thor-v-urbana.yaml).\n"
+          },
+          "governing_law": "Ohio"
+        },
+        "companion_ordinances": [
+          {
+            "number": "4613-24",
+            "title": "An ordinance adopting a statement of services to be provided to parcels consisting of approximately 219.986 acres, more or less, in Urbana Township",
+            "basis": "R.C. Ch. 709 statement of services",
+            "vote": "5-0",
+            "note": "Properties already using City services pay the inside-City rate once annexation takes effect."
+          },
+          {
+            "number": "4614-24",
+            "title": "An ordinance relating to land use and zoning buffers for territory consisting of approximately 219.986 acres, more or less, in Urbana Township",
+            "basis": "R.C. Ch. 709 land use / zoning buffers",
+            "vote": "5-0"
+          }
+        ]
+      },
+      "cra": {
+        "ordinance": {
+          "number": "4631-25",
+          "title": "An ordinance establishing and describing the boundaries of Community Reinvestment Area #2 in the City of Urbana, and authorizing and approving related matters.\n",
+          "authority": "R.C. 3735.65 through 3735.70",
+          "department_requesting": "Community Development",
+          "sponsor": "Councilman Pat Thackery",
+          "hearing_advertised": "2025-10-10",
+          "public_hearing_held": "2025-10-21",
+          "first_reading": "2025-10-07",
+          "second_reading": "2025-10-21",
+          "passed": "2025-11-04",
+          "vote": "5-2",
+          "voted_yes": [
+            "Davis",
+            "Truelove",
+            "Thackery",
+            "Collier",
+            "Bean"
+          ],
+          "voted_no": [
+            "Scott",
+            "Jumper"
+          ],
+          "predecessor_cra": {
+            "area": "Community Reinvestment Area #1",
+            "original": "Ordinance No. 4348 (2010)",
+            "amended": [
+              "Ordinance No. 4348, as Amended, passed 2011-02-22",
+              "Ordinance No. 4574-22, passed 2022-07-05"
+            ],
+            "still_in_effect": true
+          }
+        },
+        "exemption_ceilings": {
+          "basis": "the increase in assessed valuation resulting from improvements",
+          "negotiated": "case-by-case, in advance of the commencement of construction or remodeling (R.C. 3735.67)",
+          "written_agreement_required": "R.C. 3735.671",
+          "tiers": [
+            {
+              "kind": "remodeling of existing commercial/industrial",
+              "max_years": 15,
+              "max_percent": 100,
+              "condition": "construction-materials cost at least $100,000"
+            },
+            {
+              "kind": "new commercial or industrial construction",
+              "max_years": 15,
+              "max_percent": 100
+            },
+            {
+              "kind": "new commercial/industrial on the site of a 'megaproject'",
+              "max_years": 30,
+              "max_percent": null,
+              "condition": "owned and occupied by a 'megaproject operator' as defined in ORC 122.17(A)(12), or — if not on a megaproject site — owned and occupied by a 'megaproject supplier' meeting ORC 122.17(A)(13)(b).\n"
+            }
+          ]
+        },
+        "megaproject_gate": {
+          "statutory_thresholds": {
+            "megaproject": "At least $1 billion in fixed-asset investment OR at least $75 million in Ohio employee payroll; PLUS an average hourly wage of at least 300% of the federal minimum wage; PLUS the unique-site/robust-utilities condition (or the semiconductor/HQ/R&D alternative).\n",
+            "megaproject_supplier_b": "$100 million fixed-asset investment and $10 million Ohio employee payroll"
+          },
+          "codification_caveat": "[open] The current codification places \"megaproject\" at (A)(11), \"megaproject operator\" at (A)(12) and \"megaproject supplier\" at (A)(13); Ord. 4631-25 §Four(c) attributes BOTH \"megaproject\" and \"megaproject operator\" to (A)(12). Whether the ordinance tracks an earlier numbering or mis-cites needs a byte-level read of the codified section.\n",
+          "designation_authority": "Ohio Tax Credit Authority (R.C. 122.17)",
+          "project_status": "[inference] The disclosed ~$1B investment would meet the investment prong, but the 300%-of- federal-minimum-wage floor and the site condition are unevidenced, and with 30-80 permanent jobs the $75M-payroll prong is plainly not met. No megaproject designation for this project was found (see negative_searches). The 30-year tier is therefore unavailable to it on this record — it depends on a state designation nobody has shown exists.\n",
+          "what_staff_told_council": "[verified as said] Asked at the 2025-10-21 public hearing what constitutes a megaproject, Community Development Manager Doug Crabill answered that \"he believes it requires a billion-dollar investment.\" That is one prong of a disjunctive test and omits the wage floor.\n"
+        },
+        "administration": {
+          "housing_officer": "designated by the Director of Administration via an Appointment Letter",
+          "application_required": "a CRA Application on the form on file with the Clerk of Council, filed with the Housing Officer",
+          "council_approval": "required prior to the City's execution of any CRA Agreement",
+          "annual_monitoring_fee": "set by the Director of Finance; due at execution and each anniversary",
+          "housing_council": "the previously established Housing Council (R.C. 3735.69) — annual inspection; hears R.C. 3735.70 appeals",
+          "tirc": "Champaign County Tax Incentive Review Council — annual compliance review of all CRA Agreements",
+          "odod_gate": "§Eleven — the Housing Officer SHALL NOT authorize any CRA Exemption until the Director of the Ohio Department of Development assigns or affirms a unique designation number for CRA #2; R.C. 3735.672 annual reports are due to ODOD by March 31 of each year the City has entered a CRA Agreement.\n",
+          "odod_number_confirmed": null,
+          "revocation_grounds": [
+            "real-estate taxes not subject to the exemption delinquent >12 months without an approved county payment arrangement",
+            "zoning, building or health code violations outstanding >6 months",
+            "neglect of maintenance/repair, after the first year",
+            "material failure of the CRA Agreement"
+          ]
+        },
+        "boundary": {
+          "described_as": "\"the parcels in the City of Urbana identified by the maps below and outlined in yellow, as identified by the records of the Champaign County Auditor as of tax year 2024, including as the parcels may be split, re-combined, or combined from time to time\"\n",
+          "map_sheets": [
+            "Northeast",
+            "Dellinger Road",
+            "Northwest",
+            "West Annexation",
+            "South Annexation"
+          ],
+          "south_annexation_parcels": [
+            {
+              "parcel": "K48-25-11-01-30-005-00",
+              "acres": 7.09,
+              "owner": "URBANA OWNER II LLC"
+            },
+            {
+              "parcel": "K48-25-11-01-30-006-00",
+              "acres": 90.0,
+              "owner": "URBANA OWNER II LLC"
+            },
+            {
+              "parcel": "K48-25-11-01-36-001-00",
+              "acres": 85.29,
+              "owner": "BOARD OF COUNTY COMMISSIONERS"
+            },
+            {
+              "parcel": "K48-25-11-01-36-002-00",
+              "acres": 8.05,
+              "owner": "MADISON-CHAMPAIGN ESC"
+            },
+            {
+              "parcel": "K48-25-11-01-36-003-00",
+              "acres": 2.69,
+              "owner": "URBANA HEALTH FACILITIES LLC"
+            },
+            {
+              "parcel": "K48-25-11-01-36-004-00",
+              "acres": 14.33,
+              "owner": "URBANA HEALTH FACILITIES LLC"
+            },
+            {
+              "parcel": "K48-25-11-01-37-001-00",
+              "acres": 9.21,
+              "owner": "BOARD OF COUNTY COMMISSIONERS"
+            },
+            {
+              "parcel": "K48-25-11-01-37-002-00",
+              "acres": 2.66,
+              "owner": "MADISON-CHAMPAIGN ESC"
+            },
+            {
+              "parcel": "K48-25-11-01-37-003-00",
+              "acres": 0.76,
+              "owner": "URBANA HEALTH FACILITIES LLC"
+            }
+          ],
+          "south_annexation_total_acres": 220.08,
+          "owner_source": "Champaign County auditor CAMA (parcel_joined FeatureServer 0), pulled 2026-08-01 — the same layer land-assembly.yaml uses. Owners are CURRENT, not as of the 2024 tax year the ordinance keys to.\n"
+        },
+        "assembly_coverage": {
+          "inside_cra2": {
+            "parcels": [
+              "K48-25-11-01-30-005-00",
+              "K48-25-11-01-30-006-00"
+            ],
+            "owner": "Urbana Owner II LLC",
+            "acres": 97.09,
+            "note": "conveyed from Organ Farms 2026-06-12 (OR606/3352) — see land-assembly.yaml"
+          },
+          "outside_cra2": [
+            {
+              "parcel": "K48-25-11-01-30-001-00",
+              "owner": "Urbana Owner I LLC",
+              "acres": 47.637
+            },
+            {
+              "parcel": "K48-25-11-01-32-005-00",
+              "owner": "Highland55 Investments LLC",
+              "acres": 85.619
+            }
+          ],
+          "outside_acres": 133.256,
+          "finding": "[verified] Of the 230.346 recorded acres in the Thor assembly (land-assembly.yaml), only 97.09 ac — the two Urbana Owner II parcels — fall inside Community Reinvestment Area #2. The 133.256 ac bought FIRST, from Brand Investments (the \"Vance Brands\" parcel and the 85.6-ac parcel south of Rittal), are NOT in Exhibit B on any of its five map sheets. CRA #2's South Annexation area is the 219.986-ac ANNEXED territory, not the developer's assembly.\n",
+          "jurisdiction_check": "[verified] The exclusion is a CHOICE, not a jurisdictional artefact: all four assembly parcels lie 100% inside the Urbana corporation limits. Tested 2026-08-01 by intersecting the committed parcel geometry (reference/urbana/parcel-assemblage.geojson) against the Champaign County GIS `Municipal_Boundaries` layer, NAME='Urbana' (the layer carries the 2025 annexation — the Organ Farms parcels -30-005/-30-006 fall inside it — so it is not pre-annexation stale). A city CRA may only cover territory in the city; these parcels were eligible and were left out.\n",
+          "annexation_precision": "[verified] The two Brand parcels were in the City but were NOT among the nine parcels annexed by Ord. 4619-25: that petition's owners were the County Commissioners, Organ Farms LLC, the Madison-Champaign ESC and Urbana Health Facilities LLC — Brand Investments is not among them, and the nine CRA-2 South parcels match those four owners exactly (220.08 ac by auditor acreage vs the ordinance's 219.986 ac). NOTE that BOTH the City's public notice AND the federal complaint describe the 47-ac and 80-ac purchases as being \"in the newly zoned and annexed territory\" — loose on this point, and in near-identical wording in both documents.\n",
+          "caveat": "[inference] The Project Overview places the building \"on the NW side of the property adjacent to the Rittal facility,\" which reads onto the Highland55 parcel — i.e. outside CRA #2. The site plan is not in corpus, so the footprint's parcel cannot be fixed [verified]; and Exhibit B's own \"as the parcels may be split, re-combined, or combined from time to time\" language means a later re-plat could change coverage. What is [verified] is the enacted parcel list.\n"
+        }
+      },
+      "no_cra_agreement": {
+        "finding": "[verified] No R.C. 3735.671 CRA Agreement between the City of Urbana and any Thor/Highland entity has ever been presented to, or approved by, City Council. Ord. 4631-25 §Five makes Council approval a precondition to execution, so a Council record is dispositive: every approved minute from 2025-01-07 through 2026-07-07 was read, and the agendas for 2026-07-21 and 2026-08-04 (the current one) carry no such item.\n",
+        "city_own_statement": "[verified as the City's own words] The City's public notice states flatly: \"There are no Community Reinvestment Agreements with the developer,\" \"Other than the Pre-Annexation Agreement, there are no contracts between the developer and the City,\" \"No 'deals' have been made,\" and \"No Non-Disclosure Agreements have been signed.\"\n",
+        "on_the_record_denials": [
+          {
+            "date": "2025-10-21",
+            "speaker": "Doug Crabill, Community Development Manager",
+            "context": "answering a Council question about a potential data center",
+            "said": "the City has not engaged in any agreements"
+          },
+          {
+            "date": "2025-11-04",
+            "speaker": "Mark Feinstein, Director of Law",
+            "said": "\"the legislation is to create an area, not an agreement\"; \"there are no current agreements on the table\"; \"A CRA doesn't have anything to do with data centers\"\n",
+            "cross_reference": "Feinstein contrasted Urbana's action with Sidney's: \"what happened in Sidney is an agreement.\" Sidney is a separate registered BOSC site (#1275) — noted as the City's own comparison, NOT as an evidentiary bridge between the two projects.\n"
+          }
+        ],
+        "consequence_for_the_disclosed_terms": "The 65 dB day / 55 dB night limits the corpus carried as disclosed CRA terms are, on this record, an OFFER and nothing more: the Project Overview says the project is \"offering to commit to decibel limits via a formal CRA agreement.\" No ordinance imposes them, no agreement contains them, and Ord. 4631-25 contains no acoustic condition of any kind. Urbana's enforceable noise constraint on this project is currently zero.\n"
+      },
+      "negative_searches": [
+        {
+          "target": "A CRA Agreement or any incentive agreement before Council",
+          "scope": "37 approved council minutes 2025-01-07 → 2026-07-07, plus the 2026-07-21 and 2026-08-04 agendas",
+          "result": "none — the only CRA items are the area designation and Housing Council appointments (Res. 2655-26)",
+          "tag": "verified"
+        },
+        {
+          "target": "JobsOhio / Ohio Department of Development / Ohio Tax Credit Authority / R.C. 122.175",
+          "scope": "the same 37 approved minutes (full-text search)",
+          "result": "ZERO occurrences of JobsOhio, ODOD, Tax Credit Authority, 122.17 or 122.175 in any 2025-2026 Urbana council minute",
+          "tag": "verified"
+        },
+        {
+          "target": "A state award or R.C. 122.175 data-center sales-tax exemption for the project",
+          "scope": "open-web search, 2026-08-01",
+          "result": "No JobsOhio award and no Ohio Tax Credit Authority approval naming Thor Equities, Highland, Urbana0624C or the Urbana Technology Hub was found. R.C. 122.175 requires a Tax Credit Authority agreement and a $100M+ qualifying investment; nothing indicates one was sought.\n",
+          "tag": "reference",
+          "caveat": "an open-web negative is weaker than a registry negative — the registries below are unreachable"
+        },
+        {
+          "target": "ODOD CRA registry + R.C. 3735.672 annual reports (would show any executed agreement and the CRA #2 designation number)",
+          "result": "UNREACHABLE from this environment — development.ohio.gov returns HTTP 404 on every path",
+          "tag": "open"
+        },
+        {
+          "target": "Ohio Secretary of State business filing for Urbana0624C, LLC (registered agent, members)",
+          "result": "UNREACHABLE — businesssearch.ohiosos.gov returns HTTP 403 (same block recorded in #1328)",
+          "tag": "open"
+        },
+        {
+          "target": "Champaign County Auditor tax rates / effective millage",
+          "result": "UNREACHABLE — champaigncountyauditor.org and four other county hosts fail DNS; tax.ohio.gov returns 404",
+          "tag": "open"
+        }
+      ],
+      "disclosed_economics": {
+        "source": "the Project Overview the City posted (developer-authored)",
+        "tag": "reference",
+        "as_written": {
+          "city_total_annual_usd": 3000000,
+          "schools_annual_usd": 2800000,
+          "schools_drawn_from_total": true,
+          "jobs_operations": "30-80",
+          "jobs_construction": "1,000+",
+          "investment_usd": 1000000000,
+          "noise_offer": {
+            "day_db": 65,
+            "night_db": 55,
+            "vehicle": "a formal CRA agreement",
+            "status": "offered, never executed"
+          },
+          "noise_investment": "tens of millions in noise-dampening technology"
+        },
+        "correction": {
+          "what_the_corpus_said": "~$5.8M/yr combined city + school tax (datacenter-facility.md §1); #1354 states ~$6M/yr",
+          "what_the_source_says": "The two figures MUST NOT be added. The Project Overview states the schools' \">$2,800,000\" is drawn \"(from the total revenue)\" — i.e. it is a component of the \">$3,000,000\", not an addend. The disclosed aggregate is therefore \"over $3,000,000\" annually, roughly half what the corpus and the issue text carried.\n",
+          "tag": "verified"
+        },
+        "reconciliation": {
+          "auditor_basis": {
+            "assembly_land_value_usd": 2687630,
+            "assembly_improvement_value_usd": 0,
+            "cauv_parcels": 3,
+            "note": "Because the CRA exempts only \"the increase in assessed valuation resulting from improvements\" and the assembly currently carries ZERO improvement value, the whole of a ~$1B build would be the exemptible increase. The land stays on the roll either way.\n"
+          },
+          "implied_millage_inversion": "Ohio assesses real property at 35% of true value, so a $1B improvement is ~$350M of assessed value. For that to yield only the disclosed \">$3,000,000\" a year across ALL taxing bodies implies an effective rate of about 8.6 mills — far below any plausible Ohio commercial effective rate. The disclosed figure therefore CANNOT represent unabated property tax on the improvement. It is consistent only with (a) a substantial abatement of the improvement value, plus (b) revenue that a CRA does not abate — municipal income tax on construction and operations payroll, and any negotiated school compensation.\n",
+          "corroborating_city_datum": "[verified] The City's own share of the property tax is small: Resolution 2721-25 (considered 2025-10-21, FAILED 2-5) would have reduced \"the City of Urbana's share of the General Fund (Inside) property tax collection from 1.8 mills to 1.5 mills.\" At 1.8 mills the City's own unabated take on $350M of assessed improvement would be ~$630,000/yr — well under the \">$3,000,000\" attributed to \"the City of Urbana,\" which reinforces that the disclosed figure is a jurisdiction-wide, mixed-source number rather than a municipal property-tax line.\n",
+          "school_consent_threshold": "[verified as said] Urbana City Schools treasurer Mandy Hildebrand told the 2025-10-21 hearing that the statute allows up to a 75% abatement without going to the school board, that the board \"has questions whenever a 100% abatement is asked for,\" that recent requests have been under 100%, and that revenue sharing becomes possible when total payroll exceeds $2 million. She was explicit that she spoke neither for nor against the designation.\n",
+          "unresolved": "[open] The effective millage for the Urbana City School District tax district, and Urbana's municipal income-tax rate, are both needed to close this arithmetic. Neither the county auditor nor the Ohio Department of Taxation is reachable from this environment.\n"
+        },
+        "land_spend_reconciliation": {
+          "city_statement": "\"the developer entered into agreements with the participating property owners for approximately $5,000,000\" and, more specifically, \"purchases of 47 acres ... for just over $2 million, and in November the developer purchased just over 80 acres ... for just over $3 million.\"\n",
+          "deed_record": [
+            {
+              "deed": "OR601/4948",
+              "recorded": "2025-08-22",
+              "acres": 47.637,
+              "usd": 2143665
+            },
+            {
+              "deed": "OR603/1927",
+              "recorded": "2025-11-18",
+              "acres": 85.619,
+              "usd": 3210712.5
+            }
+          ],
+          "subtotal_usd": 5354377.5,
+          "finding": "The City's \"approximately $5,000,000\" reconciles EXACTLY to the two Brand Investments deeds recorded before the notice was written — $5,354,377.50 — and its \"47 acres\"/\"just over 80 acres\" match the recorded 47.637 ac and 85.619 ac. The third conveyance (Organ Farms → Urbana Owner II, $3,398,150, recorded 2026-06-12) postdates the notice; all three total $8,752,527.50. This is a clean two-source corroboration of the land-assembly register AND it confirms the City treats the Urbana Owner I / Highland55 SPEs as \"the developer.\"\n"
+        }
+      },
+      "guards": [
+        {
+          "name": "area-designation is not an agreement",
+          "error": "Secondary summaries state that in November 2025 \"the city council approved a Community Reinvestment Area agreement it negotiated with Thor, creating a tax abatement for the project.\" That is WRONG on the primary record. Ord. 4631-25 designated a geographic AREA with ceilings; the City's own notice says there are no CRA agreements; and the Director of Law told Council on the night of the vote that \"there are no current agreements on the table.\" Never cite a Nov-2025 Urbana \"CRA agreement\" or an abatement percentage.\n"
+        },
+        {
+          "name": "the 65/55 dB limits are not enforceable",
+          "error": "Do not describe the noise limits as conditions of a CRA, of the zoning, or of any approval. They are terms the developer OFFERED for an agreement that does not exist.\n"
+        },
+        {
+          "name": "do not add the two tax figures",
+          "error": "\">$3M city\" + \">$2.8M schools\" is a double count — the source says the schools' figure comes from the total. The disclosed aggregate is \"over $3,000,000.\"\n"
+        },
+        {
+          "name": "the filename date is not a date",
+          "error": "The City's public notice is named \"...2.26.26.docx.pdf\" but carries NO date in its body. Do not cite 2026-02-26 as its verified date.\n"
+        },
+        {
+          "name": "Urbana0624C is the City's identification, not a corporate record",
+          "error": "The City writes \"Urbana0624C, LLC (which is Highland)\". No Ohio SoS filing has been read. Treat common control with the Thor SPE graph as a strongly corroborated [inference].\n"
+        }
+      ],
+      "open_targets": [
+        "The EXECUTED Pre-Annexation Agreement — signed, dated, with its Exhibits B & C legal descriptions (R.C. 149.43 request to the City).",
+        "Whether the §3(c) detachment clause has been invoked by the developer, and the City's response.",
+        "The CRA Application form on file with the Clerk of Council (Ord. 4631-25 §Five) — and whether any was ever filed for this project.",
+        "The ODOD-assigned designation number for CRA #2, and ODOD's R.C. 3735.672 annual reports.",
+        "Ohio SoS filing for Urbana0624C, LLC — registered agent, members, formation date.",
+        "The Champaign County TIRC annual report — it reviews every CRA Agreement in the county.",
+        "The Champaign County Auditor tax-rate sheet (effective millage) and Urbana's municipal income-tax rate.",
+        "The 2026-02-17 council packet — the meeting the Project Overview appears to accompany.",
+        "The September-2024 real-estate purchase agreement between the Champaign Economic Partnership / Board of County Commissioners and Urbana0624C, LLC (reported, not sourced)."
+      ]
+    },
+    "approximate_paths": [
+      "disclosed_economics.correction.what_the_corpus_said"
+    ],
+    "citation": {
+      "source": "urbana/incentive-instruments.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "urbana/council/2024-11-19_regular_meeting_packet.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "urbana/land-assembly.yaml",
     "group": "land-assembly",
     "title": "Urbana Technology Hub (Thor Equities) — SR-55 & S US-68, Urbana Township",
     "confidence": null,
     "warnings": [],
     "fields": {
-      "as_of": "2026-07-09",
-      "site": "urbana",
       "county": "Champaign County, OH (FIPS 39021)",
       "assembly": "Urbana Technology Hub (Thor Equities) — SR-55 & S US-68, Urbana Township",
       "sources": {
@@ -239,14 +707,6 @@
     "confidence": null,
     "warnings": [],
     "fields": {
-      "as_of": "2026-07-10",
-      "site": "urbana",
-      "strengthens": [
-        "record",
-        "story"
-      ],
-      "issue": "watermark-directory/the-watermark-directory#1329",
-      "epic": "watermark-directory/the-watermark-directory#1263",
       "source": {
         "instrument": "federal-complaint",
         "file": "data/documents/legal/thor-v-urbana/1.pdf",
