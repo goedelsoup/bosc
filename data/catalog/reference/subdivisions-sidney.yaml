@@ -1,0 +1,48 @@
+id: subdivisions-sidney
+title: Shelby County OH political subdivisions — meeting-records registry
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    City of Sidney "Rules of the City Council, February 2024" (adopted by ordinance) and the
+    Shelby County "2024 Township Representatives" sheet, both committed under
+    data/documents/sidney/reference/; publishing blocks from a read-only discovery pass
+    (`watermark --site sidney subdivisions discover`) folded in by hand
+license: public record / public domain
+access_tier: public
+site_scope: site:sidney
+storage:
+- relpath: reference/subdivisions/sidney/subdivisions.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: documents/sidney/reference/sidney-council-rules-2024.pdf
+  media_type: application/pdf
+  lfs: true
+- relpath: documents/sidney/reference/shelby-township-officials-2024.pdf
+  media_type: application/pdf
+  lfs: true
+- relpath: documents/sidney/reference/filename-map.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- subdivisions
+- civic
+- meetings
+- sidney
+notes: >-
+  The second peer civic registry after Findlay's (#1839), and grounded differently because Shelby
+  County publishes no equivalent of Hancock County's "Directory of Officials" — a dated negative
+  across five routes on 2026-08-11, so `grounded_sources` is a LIST and most bodies carry
+  `meeting_schedule: null`. What this site has instead is stronger for the body that matters: the
+  City's codified Council Rules, adopted by ordinance, print the cadence verbatim, and all six
+  Project Galaxy vote dates fall on it with no inference. ⚠️ The registry also carries the route
+  correction that came out of the discovery pass: the City's legislative portal
+  `sidneycityoh.documents-on-demand.com` is reachable — the Cloudflare 403 is triggered by the
+  HTTP/2 fingerprint, not the client, and the host answers HTTP/1.1 with a browsable JSON API. Seven bodies:
+  City Council, City Planning Commission, the county board (civicplus, ingestable today with the
+  existing fetcher — verified at 26 parsed MeetingDocs), the county RPC, Clinton Township (the
+  campus's own), and the two school boards party to Res. 81-25 / 82-25.

@@ -427,7 +427,7 @@ Full watch log, per-route negatives and next-check queries:
   primary source. What the SOS record would add is the Ohio foreign-registration date, the
   statutory agent and the agent's address.*
 - **The City's own legislative portal:** `[open]` — **route negative as of 2026-08-01**.
-  `sidneycityoh.documents-on-demand.com` sits behind a **Cloudflare managed JavaScript
+  `sidneycityoh.documents-on-demand.com` returned HTTP 403 and was read as a **Cloudflare managed JavaScript
   challenge** (HTTP 403 + `cf_chl` interstitial). It is the route to Resolution **69-25** and to
   any council minutes; it is **unsearched, not empty**. The five data-center resolutions were
   obtained instead from the City's own DocumentCenter, linked off the FAQ.
@@ -464,7 +464,7 @@ structured in [`incentive-instruments.yaml`](incentive-instruments.yaml)). What 
 1. **City of Sidney Resolution 69-25** — the CRA designating legislation itself (2025-09-08,
    city-wide). Its terms are `[verified]` only through two instruments' recitals. The City does
    not publish it on the FAQ or in the DocumentCenter; the legislative portal
-   (`sidneycityoh.documents-on-demand.com`) is Cloudflare-challenged. R.C. 149.43 request to the
+   (`sidneycityoh.documents-on-demand.com`) was read as Cloudflare-challenged — ⚠️ **corrected #1999: the route is OPEN over HTTP/1.1** (see below). R.C. 149.43 request to the
    Sidney City Clerk, 201 W. Poplar St.
 2. **City of Sidney site plan as approved** — administrative under Zoning Code §1115.09, so it
    surfaces as a staff action, not an agenda item: an R.C. 149.43 request to the Community
