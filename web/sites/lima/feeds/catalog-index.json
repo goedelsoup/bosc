@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "14f989e877ce2a7e4e7274c512daafbce99746ed6aa8d8f71064569acca5d6c1",
+  "catalog_version": "6c62261b9a0679d13b783089932cce39fc0a5a593a1c32e0e66f955fd66ad155",
   "contract_version": "2.0.0",
   "atoms": [
     {
@@ -1616,7 +1616,15 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "ohio-waterwells-allen",
-      "title": "Allen County, OH water-well-log census (Ohio DNR)",
+      "title": "Ohio DNR water-well-log census — Allen",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:ohio-waterwells-shelby",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "ohio-waterwells-shelby",
+      "title": "Ohio DNR water-well-log census — Shelby",
       "feed": "catalog"
     },
     {
@@ -1761,6 +1769,14 @@
       "site": "lima",
       "local_id": "shawnee-township-meetings",
       "title": "Shawnee Township Trustee Meeting Records",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:sidney-groundwater",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "sidney-groundwater",
+      "title": "Sidney / Shelby County OH — groundwater and the aquifer-scope resolution",
       "feed": "catalog"
     },
     {

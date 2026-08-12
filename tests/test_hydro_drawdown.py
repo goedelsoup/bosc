@@ -146,12 +146,13 @@ def test_dewatering_finding_is_surfaced(hydro_settings: Settings) -> None:
     )
     cap = next(f for f in dd.drawdown_findings(r) if f.check == "drawdown-aquifer-capacity")
     assert cap.ok is False  # cannot sustain
-    # The verdict names the BRACKET's deep end and reports the central estimate beside it
-    # (#1997): unqualified "DEWATERS the aquifer" reads as a prediction, and at a small
-    # stress — Sidney's contracted 0.013 MGD — that would be a wild overclaim off a wide
-    # literature-K bracket rather than a finding.
-    assert "DEWATERING bound" in cap.detail and "municipal surface water" in cap.detail
-    assert "central estimate" in cap.detail and "BRACKET's deep end" in cap.detail
+    # The verdict is the CENTRAL cone, which is what the `dewaters` field has always declared
+    # itself to be (#1997). Keyed on the bracket's deep end it fired for almost any rate in a
+    # low-transmissivity aquifer — Sidney's contracted 0.0126 MGD published `dewaters: true`
+    # off a central cone of 8.3 ft against 116 ft of thickness. Lima earns the verdict on its
+    # central cone, so its finding is unchanged; that is the check on the change.
+    assert "DEWATERS the aquifer" in cap.detail and "municipal surface water" in cap.detail
+    assert "CENTRAL cone" in cap.detail
 
 
 def test_sustainable_scenario_does_not_dewater(hydro_settings: Settings) -> None:

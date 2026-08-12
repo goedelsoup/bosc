@@ -3883,14 +3883,19 @@
         "relpath": "extracted/oepa/sidney/DSW401252256W.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/sidney/4214600.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "04b733f2f11f1150129d056d68c4cdcdd14fb880dadcf2ec34f7b67832b0a96e",
-      "size_bytes": 26723,
+      "sha256": "1216c74c77504b4a0637b094be4a0b332396f80caaf60f06532c75f105228f57",
+      "size_bytes": 36627,
       "lfs_materialized": true,
-      "file_count": 8,
+      "file_count": 9,
       "stale": false,
       "asof": null
     },
@@ -4895,6 +4900,57 @@
     }
   },
   {
+    "id": "sidney-groundwater",
+    "title": "Sidney / Shelby County OH — groundwater and the aquifer-scope resolution",
+    "scope": "extracted",
+    "collection": "sidney",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio DNR well-log census (R.C. 1521.05, reference/ohio-waterwells/shelby.csv); the original Federal Register notice 53 FR 15876 (govinfo package FR-1988-05-04, page images); the U.S. EPA national Sole Source Aquifer layer and Ohio EPA's SWAP and hydro/Aquifers MapServers; EPA SDWIS for PWSID OH7501214; the City of Sidney's Consumer Confidence Reports and Comprehensive Plan",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:sidney",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "groundwater",
+      "aquifer",
+      "sole-source-aquifer",
+      "wellfield",
+      "drawdown",
+      "sidney"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/sidney/groundwater.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "928068871bda892f015bee5bdbf18faf45ac845f1d82e2f42e41e16c3191b78c",
+      "size_bytes": 11921,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio DNR well-log census (R.C. 1521.05, reference/ohio-waterwells/shelby.csv); the original Federal Register notice 53 FR 15876 (govinfo package FR-1988-05-04, page images); the U.S. EPA national Sole Source Aquifer layer and Ohio EPA's SWAP and hydro/Aquifers MapServers; EPA SDWIS for PWSID OH7501214; the City of Sidney's Consumer Confidence Reports and Comprehensive Plan",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "sidney-incentive-instruments",
     "title": "Sidney — AWS \"Project Rey\" Incentive, Service and Development Instruments",
     "scope": "extracted",
@@ -5021,8 +5077,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8d0ad598b2db9a99865918ce073a10afb1e2496d0e81603337e52369ce017e80",
-      "size_bytes": 46056,
+      "sha256": "cbb369c7e7a67f98c571727a9ecb76795f106113c2b86830ec1c68f4e85a0504",
+      "size_bytes": 65727,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -9286,7 +9342,7 @@
   },
   {
     "id": "ohio-waterwells-allen",
-    "title": "Allen County, OH water-well-log census (Ohio DNR)",
+    "title": "Ohio DNR water-well-log census — Allen",
     "scope": "reference",
     "collection": "ohio-waterwells",
     "status": "reviewed",
@@ -9331,6 +9387,57 @@
       "pages": null,
       "confidence": "medium",
       "note": "watermark waterwells --county Allen",
+      "verified": true
+    }
+  },
+  {
+    "id": "ohio-waterwells-shelby",
+    "title": "Ohio DNR water-well-log census — Shelby",
+    "scope": "reference",
+    "collection": "ohio-waterwells",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "waterwells --county Shelby",
+    "connector_ref": "watermark.hydrology.connectors.ohio_waterwells",
+    "source": "Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05 (contractor completion/sealing logs), public ArcGIS MapServer (layer 0)",
+    "external_url": "https://waterwells.ohiodnr.gov/",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "site:sidney",
+    "cadence": "annual",
+    "ttl_days": 365,
+    "last_refreshed": null,
+    "tags": [
+      "waterwells",
+      "groundwater",
+      "ohio-dnr",
+      "aquifer",
+      "drawdown",
+      "sidney"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/ohio-waterwells/shelby.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "f912e493f7e395e6d429dc295b9da829a65096b1b5cf9e2b80a56e22ce9c2508",
+      "size_bytes": 530408,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05 (contractor completion/sealing logs), public ArcGIS MapServer (layer 0)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark waterwells --county Shelby",
       "verified": true
     }
   },
