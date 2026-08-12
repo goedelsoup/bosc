@@ -535,8 +535,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "99cc6f976cdf4e9693b68a39095646f96c2f1a60c9505470063635b0149a8184",
-      "size_bytes": 11355,
+      "sha256": "928068871bda892f015bee5bdbf18faf45ac845f1d82e2f42e41e16c3191b78c",
+      "size_bytes": 11921,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -2645,7 +2645,7 @@
   },
   {
     "id": "ohio-waterwells-shelby",
-    "title": "Shelby County, OH water-well-log census (Ohio DNR)",
+    "title": "Ohio DNR water-well-log census — Shelby",
     "scope": "reference",
     "collection": "ohio-waterwells",
     "status": "reviewed",

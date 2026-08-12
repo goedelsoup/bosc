@@ -6,7 +6,7 @@
       "value": 3.92,
       "unit": "MGD",
       "source": "assumption",
-      "citation": "Campus cooling makeup (buildout central, data/scenarios/buildout.scenario.yaml) framed as a HYPOTHETICAL groundwater pumping stress. The campus draws municipal SURFACE water; no on-site production well or withdrawal permit is on record ([open]).",
+      "citation": "Campus cooling makeup (derived) — 275 MW x 1.8 L/kWh / evap fraction framed as a HYPOTHETICAL groundwater pumping stress. The campus draws municipal SURFACE water; no on-site production well or withdrawal permit is on record ([open]).",
       "confidence": "low",
       "asof": null,
       "low": null,
@@ -43,7 +43,7 @@
     "value": 47.0,
     "unit": "ft",
     "source": "derived",
-    "citation": "Theis cone apex (r=0.5 ft, t=365 d) on the LIMESTONE aquifer, Q=3.92 MGD [inference]. CAPPED at the saturated thickness -- the low-transmissivity end of the bracket exceeds it, i.e. the aquifer DEWATERS and cannot sustain this rate.",
+    "citation": "Theis cone apex (r=0.5 ft, t=365 d) on the LIMESTONE aquifer, Q=3.92 MGD [inference]. CAPPED at the saturated thickness -- the central cone reaches it, i.e. the aquifer DEWATERS and cannot sustain this rate.",
     "confidence": "medium",
     "asof": null,
     "low": 46.8,
@@ -167,7 +167,7 @@
   "tag": "inference",
   "caveats": [
     "Hypothetical pumping stress: the campus draws municipal SURFACE water; no groundwater withdrawal is on record. Q is [inference], the cone is a screen, never a headline.",
-    "The low-transmissivity end of the bracket drives the cone past the saturated thickness: the local aquifer CANNOT sustain this rate -- corroborating the campus's reliance on municipal surface water.",
+    "The CENTRAL cone reaches the saturated thickness: the local aquifer CANNOT sustain this rate -- corroborating the campus's reliance on municipal surface water.",
     "Theis assumes a confined, homogeneous, fully-penetrating aquifer at constant Q -- a screening idealization, not a calibrated model.",
     "No specific capacity: the well-log service reports a static level and a test yield but not the pumping level during the test.",
     "Transmissivity is a literature-K x census-thickness bracket, not a measured value."

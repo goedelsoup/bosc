@@ -129,10 +129,16 @@ withheld from `headline_makeup()` so no caller can publish it. Sidney would have
 **0.0126 MGD** — 285× smaller, on the record since #1995, and drawn from municipal surface water.
 Fixed to prefer the stated quantity, the same rule #1995 applied to the buildout scenario.
 
-As screened: apex drawdown **8.6 ft** central (bracket 0.1–116 ft against a 116 ft saturated
-thickness), **318** domestic census wells within the `[inference]` 23,908 ft radius of influence.
-The `dewaters` flag is a **bracket-level** verdict — the deepest plausible cone, at the lowest
-transmissivity — not a prediction, and the finding text now says so.
+As screened: apex drawdown **8.3 ft** central against a **116 ft** saturated thickness (bracket
+0.1–116 ft), **318** domestic census wells within the `[inference]` 23,908 ft radius of influence.
+**`dewaters` is false here**, and that too was wrong until this issue: the flag was keyed on the
+bracket's *deepest* plausible cone (highest Q, lowest transmissivity), which fires for almost any
+rate in a low-transmissivity aquifer — so a 0.0126 MGD contracted makeup was publishing a
+categorical "the aquifer cannot sustain this" off a central cone of 8 ft. It now carries the
+central case, which is what the field always declared itself to be. The low-transmissivity end
+still reaches the thickness and is retained as a **bounded caveat**: it bounds the concern, it does
+not settle it. (Lima's dewatering finding is untouched — its central cone reaches its own 47 ft
+thickness on its own, which is the check on the change.)
 
 ## What did not survive
 

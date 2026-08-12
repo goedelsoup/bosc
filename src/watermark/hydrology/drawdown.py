@@ -190,7 +190,10 @@ def cooling_makeup_scenario(
         or "Campus cooling makeup (buildout central, data/scenarios/buildout.scenario.yaml)"
     )
     pumping = ProvenancedValue.assume(
-        round(makeup_mgd, 3),
+        # NOT rounded (#1997): a stated makeup is traceable to the instrument that states it, and
+        # `round(x, 3)` published Sidney's contracted 0.0126 MGD as 0.013 — a figure its own
+        # citation does not contain. Rounding is a display concern; the value keeps its precision.
+        makeup_mgd,
         "MGD",
         f"{basis} framed as a HYPOTHETICAL groundwater pumping stress. The campus draws municipal "
         "SURFACE water; no on-site production well or withdrawal permit is on record ([open]).",
@@ -325,10 +328,21 @@ def compute_drawdown(
     s_deep = apex(q_high, t_pv.low_or_value)
     s_shallow = apex(q_low, t_pv.high_or_value)
 
-    # Dewatering is a BRACKET-level verdict: flag it whenever the deepest plausible cone (highest
-    # Q, lowest transmissivity) exceeds the saturated thickness -- consistent with the capped
-    # bracket high below, and conservative for a screen that bounds the "area well concerns".
-    dewaters = b is not None and s_deep > b
+    # Dewatering is the CENTRAL-T verdict -- what this field has always said it was ("Whether the
+    # central-T cone exceeds the saturated thickness"), and what the computation now does (#1997).
+    # It was keyed on the bracket's DEEP end (highest Q, lowest transmissivity), which flags
+    # true for almost any rate in a low-transmissivity aquifer: at Sidney a 0.0126 MGD contracted
+    # makeup published `dewaters: true` on a central cone of 8.6 ft against 116 ft of saturated
+    # thickness. A boolean named `dewaters` is read categorically by any consumer that does not
+    # also read the prose beside it, so it has to carry the central case.
+    #
+    # Lima's finding is unaffected and that is the check on this change: its central cone reaches
+    # the thickness on its own (the cap below binds at the central value), so "pumping a
+    # hyperscale load from this aquifer dewaters it" still stands where it was earned.
+    dewaters = b is not None and s_central >= b
+    # The deep end is retained as a BOUNDED caveat rather than a verdict: still worth reporting
+    # for a screen that exists to bound the "area well concerns", never a claim about the aquifer.
+    deep_end_dewaters = b is not None and s_deep > b and not dewaters
 
     # Report capped at the saturated thickness: past b the analytical value is unphysical
     # (the aquifer is dewatered), so cap and flag rather than print an impossible number.
@@ -342,10 +356,16 @@ def compute_drawdown(
             f"Theis cone apex (r={well_radius_ft} ft, t={t_days:g} d) on the {material.material} "
             f"aquifer, Q={scenario.pumping_mgd.value:g} MGD [inference]. "
             + (
-                "CAPPED at the saturated thickness -- the low-transmissivity end of the bracket "
-                "exceeds it, i.e. the aquifer DEWATERS and cannot sustain this rate."
+                "CAPPED at the saturated thickness -- the central cone reaches it, i.e. the "
+                "aquifer DEWATERS and cannot sustain this rate."
                 if dewaters
-                else "Bracket spans the transmissivity range."
+                else (
+                    "Bracket spans the transmissivity range; its HIGH end is capped at the "
+                    "saturated thickness -- the low-transmissivity end reaches it while the "
+                    "central estimate does not, which bounds the concern rather than settling it."
+                    if deep_end_dewaters
+                    else "Bracket spans the transmissivity range."
+                )
             )
         ),
         low=cap(min(s_shallow, s_deep)),
@@ -389,9 +409,18 @@ def compute_drawdown(
     if dewaters:
         caveats.insert(
             1,
-            "The low-transmissivity end of the bracket drives the cone past the saturated "
-            "thickness: the local aquifer CANNOT sustain this rate -- corroborating the campus's "
-            "reliance on municipal surface water.",
+            "The CENTRAL cone reaches the saturated thickness: the local aquifer CANNOT sustain "
+            "this rate -- corroborating the campus's reliance on municipal surface water.",
+        )
+    elif deep_end_dewaters:
+        # The bounded form of the same observation (#1997): worth reporting, because bounding the
+        # "area well concerns" is what this screen is for — but it is a statement about the
+        # bracket's pessimistic end, not about the aquifer, and it must not read as one.
+        caveats.insert(
+            1,
+            "The low-transmissivity end of the bracket reaches the saturated thickness while the "
+            "central estimate stays well below it. That BOUNDS the concern; it does not establish "
+            "that the aquifer cannot sustain this rate, and `dewaters` is false accordingly.",
         )
 
     return DrawdownResult(
@@ -452,13 +481,11 @@ def drawdown_findings(result: DrawdownResult) -> list[HydroFinding]:
             detail=(
                 (
                     f"Hypothetical {result.scenario.pumping_mgd.value:g} MGD groundwater pumping "
-                    "reaches the DEWATERING bound: the low-transmissivity end of the bracket "
-                    f"drives apex drawdown to the {result.saturated_thickness_ft:g} ft saturated "
-                    f"thickness (central estimate {s.value:g} ft, bracket "
-                    f"{s.low_or_value:g}-{s.high_or_value:g}). The verdict is the BRACKET's deep "
-                    "end, not the central case -- which is what makes it a bound on the 'area "
-                    "well concerns' rather than a prediction. The campus is on municipal surface "
-                    "water; no on-site production well is on record."
+                    f"DEWATERS the aquifer: the CENTRAL cone reaches the "
+                    f"{result.saturated_thickness_ft:g} ft saturated thickness (bracket "
+                    f"{s.low_or_value:g}-{s.high_or_value:g}) -- it cannot sustain this rate. "
+                    "The campus is on municipal surface water; no on-site production well is on "
+                    "record."
                 )
                 if result.dewaters
                 else (
