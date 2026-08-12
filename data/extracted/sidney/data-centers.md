@@ -426,11 +426,16 @@ Full watch log, per-route negatives and next-check queries:
   Agreement Project Summary), so entity type and formation jurisdiction are `[verified]` from a
   primary source. What the SOS record would add is the Ohio foreign-registration date, the
   statutory agent and the agent's address.*
-- **The City's own legislative portal:** `[open]` — **route negative as of 2026-08-01**.
-  `sidneycityoh.documents-on-demand.com` returned HTTP 403 and was read as a **Cloudflare managed JavaScript
-  challenge** (HTTP 403 + `cf_chl` interstitial). It is the route to Resolution **69-25** and to
-  any council minutes; it is **unsearched, not empty**. The five data-center resolutions were
-  obtained instead from the City's own DocumentCenter, linked off the FAQ.
+- **The City's own legislative portal:** `[open]` — ⚠️ **route corrected 2026-08-11 (#1999); it is
+  REACHABLE.** `sidneycityoh.documents-on-demand.com` returns HTTP 403 to a **default (HTTP/2)**
+  request — a genuine Cloudflare challenge (`cf-mitigated: challenge`) — and that was read as a
+  host-wide block. It is not one: the trigger is the **HTTP/2 fingerprint**, not the client. The
+  same request forced to **HTTP/1.1** with a browser UA returns **HTTP 200**, and the host exposes
+  a JSON tree (`/meta/rootfolder`) enumerating City Council → Agendas / Agenda Packets /
+  Legislation → **Ordinances, Resolutions** / **Minutes**. It is the route to Resolution **69-25**
+  and to any council minutes, and it is now **searchable — neither has been pulled yet**, which is
+  a retrieval job rather than a blocked route. The five data-center resolutions were obtained
+  instead from the City's own DocumentCenter, linked off the FAQ.
 - **Shelby County Recorder:** `[open]` — **route negative as of 2026-08-01**.
   `search.shelbyco.net/eservices/` answers HTTP 200 but is an Apache-Wicket application that
   posts a browser fingerprint before it will run a search; index stated to run from 1989-07-01.
@@ -463,8 +468,10 @@ structured in [`incentive-instruments.yaml`](incentive-instruments.yaml)). What 
 
 1. **City of Sidney Resolution 69-25** — the CRA designating legislation itself (2025-09-08,
    city-wide). Its terms are `[verified]` only through two instruments' recitals. The City does
-   not publish it on the FAQ or in the DocumentCenter; the legislative portal
-   (`sidneycityoh.documents-on-demand.com`) was read as Cloudflare-challenged — ⚠️ **corrected #1999: the route is OPEN over HTTP/1.1** (see below). R.C. 149.43 request to the
+   not publish it on the FAQ or in the DocumentCenter. ⚠️ **Search the legislative portal before
+   requesting it** (#1999): `sidneycityoh.documents-on-demand.com` was read as Cloudflare-blocked,
+   but the 403 is an HTTP/2 fingerprint block and the host answers **HTTP/1.1 with 200** and a
+   browsable Resolutions tree. Still unpulled. Failing that, an R.C. 149.43 request to the
    Sidney City Clerk, 201 W. Poplar St.
 2. **City of Sidney site plan as approved** — administrative under Zoning Code §1115.09, so it
    surfaces as a staff action, not an agenda item: an R.C. 149.43 request to the Community

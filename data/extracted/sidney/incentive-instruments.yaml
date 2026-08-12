@@ -694,11 +694,15 @@ open_items:
       nothing. Its content is [verified] only through the recitals of two instruments that do
       cite it.
     route: >-
-      The City's legislative portal is https://sidneycityoh.documents-on-demand.com/ — reachable
-      but returning HTTP 403 to a default request (originally read as a Cloudflare managed
-      JavaScript challenge — see the correction below) (HTTP 403 with a
-      cf_chl challenge page to scripted clients), so it is UNSEARCHED, not empty. Otherwise an
-      R.C. 149.43 request to the Sidney City Clerk, 201 W. Poplar St.
+      ⚠️ CORRECTED 2026-08-11 (#1999) — the portal is SEARCHABLE and this resolution is simply
+      UNPULLED. https://sidneycityoh.documents-on-demand.com/ returns HTTP 403 to a DEFAULT
+      (HTTP/2) request — a real Cloudflare challenge — which was read as a host-wide block. The
+      trigger is the HTTP/2 fingerprint, not the client: the same request over HTTP/1.1 with a
+      browser UA returns HTTP 200, and the host exposes a JSON tree
+      (/meta/rootfolder, /meta/docfolder?containerId=) carrying City Council -> Legislation ->
+      Resolutions. So 69-25's absence from this corpus is a retrieval job, not a blocked route,
+      and the R.C. 149.43 request to the Sidney City Clerk drafted for it should not be sent
+      until that portal has been searched.
   - item: "The three recorded deeds — O.R. 2329 pp. 445, 449, 454 — grantors, instrument numbers, consideration, easements"
     tag: "[open]"
     checked: "2026-08-01"

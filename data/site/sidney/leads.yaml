@@ -378,8 +378,14 @@ leads:
     (Res. 80-25, 81-25 and 82-25) and 2026-04-27 (Res. 26-26 and 27-26). The corpus holds five of
     the six as executed instruments; the sixth, Res. 69-25, it does not hold at all — that gap is
     its own lead, RES-69-25. And it holds the record of none of the three meetings.
-    The route to minutes and audio is the same Cloudflare-challenged
-    legislative portal that holds Res. 69-25, route negative as of 2026-08-01. What they would
+    ⚠️ THE ROUTE IS OPEN — corrected 2026-08-11 (#1999). Minutes and audio route through the
+    same legislative portal that holds Res. 69-25, and that portal was recorded as
+    "Cloudflare-challenged, route negative as of 2026-08-01". The 403 is triggered by the
+    HTTP/2 fingerprint, not by the client: the same request over HTTP/1.1 with a browser UA
+    returns HTTP 200, and the host exposes a JSON tree of Council agendas, legislation and
+    MINUTES. Neither the minutes nor Res. 69-25 has been pulled yet, so this lead stays
+    UNANSWERED — but it is now a retrieval job, not a blocked route, and the records request
+    drafted for it should not be sent until that portal has been searched. What they would
     supply that the executed instruments cannot: who spoke, what was asked, and what the City said
     in answer on the record. This matters for a second reason. Organized local opposition to this
     campus is reported in secondary and advocacy sources — WHIO's community-meeting coverage and

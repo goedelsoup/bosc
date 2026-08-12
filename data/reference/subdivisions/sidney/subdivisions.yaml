@@ -89,6 +89,12 @@ meta:
       same collision the site profile already carries on its EIA utility number. Ohio also has a
       Clinton Township in Franklin, Fulton, Knox, Seneca, Vinton and Wayne counties; this
       registry's is Shelby's, tied by the county's own township link."
+    - "⚠️ A grounded field is null unless a COMMITTED source prints it — which here means only
+      the two documents above. Five of the seven bodies therefore carry a null cadence AND a null
+      office AND (for Clinton Township) a null governing body, even where a live page states them
+      plainly. Those live readings are kept in each body's `note` with the date they were read.
+      This looks like a thinner registry than Findlay's and is the same discipline: Findlay's
+      county roster prints cadences and offices, so its fields are filled; Shelby's does not."
     - "`platform: unknown` WITH a `discovered:` block = looked at, CMS not fingerprintable or
       not in the enum. `unknown` WITHOUT one = not yet looked. Neither ever means the body
       withholds records, and a null `records_url` is never evidence of withholding."
@@ -106,7 +112,11 @@ subdivisions:
       at 5:30 P.M. Eastern Time, in the City Council Chambers in the Municipal Building. When the
       second or fourth Monday falls on a holiday, the regular meeting shall be held on the
       following Tuesday or such other day as the Council may determine.
-    office: 201 W. Poplar Street, Sidney, OH 45365
+    # The Rules name the place as "the City Council Chambers in the Municipal Building" and print
+    # no street address — checked: no "Poplar", no "201 W", no ZIP anywhere in the document. So
+    # `office` is null and the address the City publishes live (201 W. Poplar Street, Sidney, OH
+    # 45365, read 2026-08-11) stays in this note, unpromoted.
+    office: null
     grounded_from: sidney-council-rules-2024
     note: >-
       ⚠️ ALL SIX Project Galaxy vote dates fall on this printed cadence:
@@ -176,11 +186,13 @@ subdivisions:
     type: county_department
     governing_body: Board of County Commissioners
     meeting_schedule: null
-    office: 129 E. Court Street, Suite 100, Sidney, OH 45365
+    office: null
     grounded_from: null
     note: >-
-      ⚠️ The county prints NO meeting day or time anywhere — only the office address and office
-      hours. Its Tuesday-and-Thursday rhythm is derivable ONLY from posted agendas and is an
+      ⚠️ The county prints NO meeting day or time anywhere — only an office address and office
+      hours, and only on its own live page. Both grounded fields are therefore null: the address
+      '129 E. Court Street, Suite 100, Sidney, OH 45365' was READ LIVE on 2026-08-11 and is
+      recorded here rather than promoted, because no committed source carries it. Its Tuesday-and-Thursday rhythm is derivable ONLY from posted agendas and is an
       `[inference]`, so the grounded field stays null. This is the same shape Hancock County's
       board has in the Findlay registry, and the same discipline applies.
     publishing:
@@ -227,15 +239,16 @@ subdivisions:
   - slug: clinton-township
     name: Clinton Township
     type: township
-    governing_body: Board of Township Trustees
+    governing_body: null
     meeting_schedule: null
     office: null
     grounded_from: shelby-township-officials-2024
     note: >-
-      ⚠️ `grounded_from` covers the NAME only. The sheet's sole role words are 'TOWNSHIP CHAIRMAN'
-      and 'TOWNSHIP ZONING ENFORCEMENT OFFICER' — it never names a governing body, so
-      `governing_body: Board of Township Trustees` is taken from the county's own live townships
-      page, not from the roster, and is a live-web reading like the cadence below.
+      ⚠️ `grounded_from` covers the NAME only, so every other grounded field is null. The sheet's
+      sole role words are 'TOWNSHIP CHAIRMAN' and 'TOWNSHIP ZONING ENFORCEMENT OFFICER' — it never
+      names a governing body. 'Board of Township Trustees' is the county's own live-page wording
+      (and the ORC's), but neither is the committed roster the schema means, so the field is null
+      rather than filled from the next-best thing.
       The township the AWS campus sits in (auditor tax district 01, "CLINTON TWP SIDNEY CORP").
       The committed roster grounds its NAME only — it prints a chairman and a zoning enforcement
       officer and no cadence, like every township on that sheet. ⚠️ Clinton is the ONE Shelby
@@ -262,9 +275,12 @@ subdivisions:
     type: special_district
     governing_body: Board of Education
     meeting_schedule: null
-    office: 750 S. Fourth Avenue, Sidney, OH 45365
+    office: null
     grounded_from: null
     note: >-
+      Both grounded fields are null for the same reason: the district's own page is a live-web
+      source, not a committed roster. Read there on 2026-08-11 and recorded rather than promoted:
+      office '750 S. Fourth Avenue, Sidney, OH 45365'.
       A counterparty to BOTH Res. 81-25 (development agreement) and Res. 82-25 (income-tax
       sharing) — the CRA abatement's school-district side, and the body that would have taken up
       those agreements on its own agenda. Its own page printed "The Board of Education meets at
