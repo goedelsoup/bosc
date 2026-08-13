@@ -20,6 +20,8 @@ gap is tracked as an open lead (``WWTP-PARAM-ASSIM`` in ``data/site/leads.yaml``
 
 from __future__ import annotations
 
+import math
+
 from watermark.config import Settings
 from watermark.hydrology.lowflow import _normalize, load_acute_low_flows, load_low_flows
 from watermark.hydrology.model import (
@@ -45,8 +47,17 @@ def _q(value: float) -> str:
     (a 47% overstatement) and "0.00:1" — a ratio of literally zero, which reads as a missing
     measurement rather than the network's most effluent-dominated reach. An exact 0.0 keeps
     "0.00": the Ottawa's cited 1Q10 really is zero, and that is a finding, not a rounding.
+
+    The widened branch computes the decimal places instead of using ``:.2g``, because ``g``
+    STRIPS TRAILING ZEROS and so delivers one significant figure precisely when the second one
+    is a zero (#1265). Findlay's chronic dilution 0.0090484 printed "0.009" and Lima's 0.006987
+    printed "0.007" — the two most effluent-dominated reaches on the network, each rendered a
+    digit shorter than the guard above intends, and each disagreeing with the study's own
+    ``fmtMult`` rendering of the same ratio.
     """
-    return f"{value:.2g}" if value and abs(value) < 0.01 else f"{value:.2f}"
+    if value and abs(value) < 0.01:
+        return f"{value:.{1 - math.floor(math.log10(abs(value)))}f}"
+    return f"{value:.2f}"
 
 
 def dilution_flag(
