@@ -1,0 +1,94 @@
+# City of Sidney Council, 2025-10-13 — Resolution No. 74-25, seating two members of the CRA Housing
+# Council. Issue #1998, epic #1275.
+#
+# A routine appointment act, committed for its DATE. Ten days after Council passed it, the body it
+# seats "unanimously resolved to recommend that City Council approve" the Amazon CRA Agreement —
+# the single sentence Council was given before granting a thirty-year abatement.
+#
+# ⚠️ THAT PROXIMITY IS A FACT AND NOT AN ARGUMENT. The resolution names no project, no company and
+# no agreement, and nothing read here says the appointments were made with the recommendation in
+# view. Record the ten days; do not write a motive.
+#
+# TAG VOCABULARY: [verified] = read off the instrument's own page images; [open] = not established.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/council/74-25 - CRA Housing Council Appointments - J Dunson and M Verhotz.pdf
+  sha256: fd8830d79066fc2c390ef961ababe93d26a7ff7f5a97a10c78eb2427d1c61f9d
+  content_verified: ocr
+  read_note: >-
+    Image-only journal scan; read via watermark.civic.indexer.ocr_pdf at 300 DPI. Retrieved
+    2026-08-13 over HTTP/1.1; the agent-reported hash was independently reproduced by a second pull
+    before shelving.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    City of Sidney Resolution No. 74-25 — confirming the Mayor's appointment of Jackie Dunson and
+    appointing Matthew Verhotz to the Community Reinvestment Area Housing Council, passed 2025-10-13
+  resolution_no: '74-25'
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: appointment
+  adopted: '2025-10-13'                       # [verified] "Passed this 13th day of October 2025."
+  journal_pages: ['0319']
+  outcome: approved
+  title_verbatim: >-
+    A RESOLUTION CONFIRMING THE APPOINTMENT OF JACKIE DUNSON AND APPOINTING MATTHEW VERHOTZ TO THE
+    COMMUNITY REINVESTMENT AREA HOUSING COUNCIL
+
+  appointments:
+    tag: verified
+    entries:
+      - member: Jackie Dunson
+        mechanism: mayoral appointment CONFIRMED by Council
+        term_expires: '2028-10-31'
+        verbatim: >-
+          SECTION 1. That the appointment of Jackie Dunson by the mayor to the Community
+          Reinvestment Area Housing Council, which term expires on October 31, 2028, is hereby
+          confirmed.
+      - member: Matthew Verhotz
+        mechanism: appointed BY Council
+        term_expires: '2028-10-31'
+        verbatim: >-
+          SECTION 2. That Matthew Verhotz is hereby appointed to the Community Reinvestment Area
+          Housing Council, which term expires on October 31, 2028.
+    note: >-
+      [verified] The two mechanisms differ and the instrument keeps them distinct — Res. 84-22 §7
+      gives the Mayor two seats and Council two, and this act exercises one of each. Both members
+      are among the five present at the body's 2026-02-05 meeting.
+    ⚠️_no_outgoing_members_named: >-
+      This resolution names NO predecessor and no vacancy. Which seats these are, and who held them
+      before, is [open] on the face of the instrument — the Council minutes of 2025-10-13 are the
+      route, and they are unpulled.
+
+  ⚠️_ten_days:
+    tag: verified
+    fact: >-
+      Passed 2025-10-13. The CRA Housing Council met on 2025-10-23 and recommended the Amazon CRA
+      Agreement; Council authorized it by Res. 80-25 on 2025-10-27.
+    guard: >-
+      A DATE, NOT A MOTIVE. The resolution names no project and no company. Two of the five members
+      who sat on 2025-10-23 had been seated ten days earlier — that is all this establishes, and it
+      must not be written as anything more.
+
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: false
+    note: '[open] Instrument form only. The 2025-10-13 Council minutes are on the same portal, unpulled.'
+
+  what_this_instrument_does_not_establish:
+    - 'WHO CHAIRED the 2025-10-23 meeting. Officers were elected 2026-02-05, after it.'
+    - 'THE FULL ROSTER on 2025-10-23. Five members are named at the February meeting; Res. 84-22 §7 creates seven seats, only four of which are ever filled by a Council resolution.'
+    - 'ANY LINK TO THE ABATEMENT. It names neither.'
+  confidence: high
+  warnings:
+    - >-
+      OCR of an image-only journal page. The passage line and both section texts were read cleanly;
+      the Attest block degrades to "Cl" and the signatures are ink and are not read.

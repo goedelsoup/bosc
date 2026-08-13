@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "1c86a8ec145cbfb820609aea213791a271b43f81e954629ea04e04defa28dea8",
+  "catalog_version": "793627e492c2fdc0d4b420c20d7fae56f5c1bdb99f10be84e20f243cd7b24d6e",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -1412,6 +1412,14 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:sidney:TIRC",
+      "kind": "lead",
+      "site": "sidney",
+      "local_id": "TIRC",
+      "title": "The body that reviews this abatement every year publishes nothing, anywhere",
+      "feed": "leads"
+    },
+    {
       "handle": "record:sidney:oepa/sidney/1GC10596.approval.npdes.yaml",
       "kind": "record",
       "site": "sidney",
@@ -1553,6 +1561,14 @@
       "site": "sidney",
       "local_id": "sidney/council/2025-09-22-ord-a-3236-guard-shacks.resolution.yaml",
       "title": "City of Sidney Ordinance No. A-3236 — adopting amendments to the Zoning Code, including §1111.05(u) guard shacks and floodplain updates, passed 2025-09-22",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2025-10-13-res-74-25-cra-housing-council-appointments.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-10-13-res-74-25-cra-housing-council-appointments.resolution.yaml",
+      "title": "City of Sidney Resolution No. 74-25 — confirming the Mayor's appointment of Jackie Dunson and appointing Matthew Verhotz to the Community Reinvestment Area Housing Council, passed 2025-10-13",
       "feed": "records"
     },
     {

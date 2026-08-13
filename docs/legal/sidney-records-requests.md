@@ -65,6 +65,35 @@ carries minutes, not audio.
 > hypothesis and are genuinely blocked over both protocols; those negatives are dated in
 > `data/extracted/sidney/regulatory-watch.yaml` → `route_retests`.
 
+## 0 · City Clerk — the CRA Housing Council minutes of 2025-10-23
+
+**To:** Clerk of Council, City of Sidney, 201 W. Poplar St., Sidney, OH 45365
+
+> Under R.C. 149.43, I request a copy of the **minutes of the meeting of the City-Wide Community
+> Reinvestment Area Housing Council held on October 23, 2025**, as approved by that body on
+> February 5, 2026, together with the agenda for that meeting and any written recommendation it
+> transmitted to City Council regarding the Community Reinvestment Area Agreement with Amazon Data
+> Services, Inc.
+
+**Why this one is first now.** It asks for a **document the City's own record says exists**. This is
+not a request to search for something: the Housing Council's agenda of 2026-02-05 lists as item 2
+*"Approval of minutes: October 23, 2025"*, and that meeting's minutes record *"A motion was made by
+R. Reiss to approve the October 23, 2025 meeting minutes; G. Snyder seconded the motion. The motion
+passed unanimously upon vote."* `[verified]` — two instruments of the same body, both committed at
+[`data/documents/sidney/cra-housing-council/`](../../data/documents/sidney/cra-housing-council/).
+**The City cannot answer that no record was made.**
+
+**What it would settle.** That meeting is the whole of the deliberation Council was given before
+granting a thirty-year abatement — one sentence in a 123-page agenda packet: *"The CRA Housing
+Council met on October 23, 2025, and unanimously resolved to recommend that City Council approve the
+Agreement."* No minutes and no written recommendation are attached anywhere in that packet. The
+minutes would name who was present, who moved, whether anyone dissented, and what was asked.
+
+**Why the portal is not the route.** Both of the body's containers hold only a 2026 folder — verified
+by enumeration, not assumed. And the gap is routine: the body's own 2026-05-29 agenda shows the
+**2026-05-04** minutes are also unpublished. *Publication lag, not suppression* — which is exactly
+why a records request, rather than another look at the portal, is the answer.
+
 ## 1b · City Clerk — meeting audio for the three vote dates
 
 **To:** Clerk of Council, City of Sidney, 201 W. Poplar St., Sidney, OH 45365

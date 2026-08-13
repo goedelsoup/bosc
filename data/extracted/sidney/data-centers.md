@@ -153,6 +153,31 @@ Amazon-owned, **cooling-water-discharging** Ohio data center that is **not this 
     annexed and zoned its campus. Sidney's definition precedes Van Wert's by about twelve and a half
     months and its own campus zoning by three. *Two sequences; nothing in either record makes one a
     response to the other.*
+- **The body that recommended the abatement, and the body that reviews it.** `[verified]` The
+  **City-Wide Community Reinvestment Area Housing Council** — created by Res. 84-22 §7, seven seats
+  — "unanimously resolved to recommend" the Amazon CRA Agreement on **2025-10-23**. Its members are
+  named for the first time in this corpus by its own minutes of 2026-02-05: Rick Reiss, Jackie
+  Dunson, Michael Jannides, Matthew Verhotz, Greg Snyder
+  ([source](../../documents/sidney/cra-housing-council/CRA%20Housing%20Council%20Minutes%20February%2005,%202026.pdf), p. 1).
+  - ⚠️ **THE 2025-10-23 MINUTES EXIST AND WERE FORMALLY ADOPTED.** Two instruments of that body say
+    so: its 2026-02-05 agenda item 2, *"Approval of minutes: October 23, 2025"*, and that meeting's
+    minutes, *"A motion was made by R. Reiss to approve the October 23, 2025 meeting minutes; G.
+    Snyder seconded the motion. The motion passed unanimously upon vote."* They are **not published**
+    — both portal containers hold only a 2026 folder, verified by enumeration. That is an absence of
+    **publication, not of record**, and it makes a records request able to *name* the document. See
+    [`docs/legal/sidney-records-requests.md`](../../../docs/legal/sidney-records-requests.md) §0.
+  - ⚠️ **It has no continuing oversight of this abatement.** Its own 2026-03-05 minutes record the
+    Community Development Director: the Housing Council reviews only 1- and 2-family housing
+    abatements, and *"Industrial properties that have been granted an abatement will be reviewed by
+    the **Tax Incentive Review Council**"* for annual continuation. **The TIRC has no container on
+    the City's portal at all** — 18 bodies and 43 leaf containers enumerated — and nothing it has
+    done is in this corpus. Lead `TIRC`. *"Publishes nothing" is not "does not meet."*
+  - **Officers were elected 2026-02-05**, after the recommendation, so **who chaired the 2025-10-23
+    meeting is named by no document read.** `[open]` Res. 74-25 (2025-10-13) seated two of the five
+    members **ten days before** it.
+  - The body **had no regular meeting schedule** as late as May 2026 — its own agendas carry
+    "Establishment of a regular monthly meeting schedule" as a live item, and its weekday moves
+    Thursday → Monday → Friday. ⚠️ Whatever was adopted mid-2026 cannot be back-applied to 2025.
 - **Dominant hydrologic soil group:** **D** — SSURGO/SDA 64-point grid over the committed parcel
   geometry (2026-07-31): D 62 pts (96.9%) + C/D 2 pts (3.1%); dominant map units Blount and
   Glynwood silt loams, *end moraine*. `[verified]`

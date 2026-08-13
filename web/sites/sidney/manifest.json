@@ -2,9 +2,9 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-13T13:23:06+00:00",
+  "generated_at": "2026-08-13T14:00:03+00:00",
   "feed_count": 37,
-  "row_total": 843,
+  "row_total": 848,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 27
+      "count": 28
     },
     {
       "name": "timeline",
@@ -117,7 +117,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 21
+      "count": 22
     },
     {
       "name": "rsei",
@@ -261,7 +261,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 19
+      "count": 20
     },
     {
       "name": "impact-study",
@@ -293,7 +293,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 126
+      "count": 127
     },
     {
       "name": "corpus-nodes",
@@ -301,7 +301,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 126
+      "count": 127
     },
     {
       "name": "ask-embeddings",

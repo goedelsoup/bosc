@@ -180,6 +180,60 @@ subdivisions:
           route correction as above. The City's boards-and-commissions index names 24 bodies
           across three alphabetical pages; only the ones this record reaches are enumerated here.
 
+  - slug: sidney-cra-housing-council
+    name: City-Wide Community Reinvestment Area Housing Council
+    type: city
+    governing_body: City-Wide Community Reinvestment Area Housing Council
+    meeting_schedule: null
+    office: Council Chambers, City Hall, 201 W Poplar St
+    grounded_from:
+      - data/documents/sidney/council/84-22 - Establishing CRA based on Community Boundaries.pdf
+      - data/documents/sidney/cra-housing-council/CRA Housing Council Agenda February 05, 2026.pdf
+      - data/documents/sidney/cra-housing-council/CRA Housing Council Agenda May 04, 2026.pdf
+    note: >-
+      Added 2026-08-13 (#1998 tail). ⚠️ THIS ROW EXISTS BECAUSE ITS ABSENCE HAD BEEN ASSERTED AS
+      PRESENCE — the corpus's Res. 84-22 extraction claimed this body was "one of the seven bodies
+      in subdivisions.yaml" when it was not one of them. #1998 struck the false claim; this is the
+      other half of that correction.
+      CREATED BY Res. 84-22 §7, which prints its composition verbatim: "two (2) members appointed
+      by the Mayor, two (2) members appointed by the City Council, and one (1) member appointed by
+      the Planning Commission", the majority of whom "shall then appoint two (2) additional members
+      who shall be residents within the area", three-year terms. SEVEN seats, of which only four
+      are ever filled by a Council resolution — which is why the appointment record looks
+      incomplete and is not.
+      ⚠️ `meeting_schedule` IS NULL AND NOW GROUNDED RATHER THAN MERELY UNSOURCED. This body had no
+      regular schedule: its own 2026-05-04 agenda carries "Establishment of a regular monthly
+      meeting schedule for the CRA Housing Council" as item 5, its 2026-05-29 agenda still carries
+      the schedule as item 4, and the observed meetings move both weekday and hour (Thursday 3:00
+      pm, then Monday, then Friday). Whatever was adopted mid-2026 MUST NOT be back-applied to 2025.
+      `office` is read from the printed header of the body's own agendas — a City instrument, not a
+      live-web read. Equating the Council Rules' "Municipal Building" with "City Hall" would be a
+      further inference and is not made here.
+      WHY IT MATTERS TO THIS SITE — this is the body that, on 2025-10-23, "unanimously resolved to
+      recommend that City Council approve" the Amazon CRA Agreement, which is the single sentence
+      Council was given for a thirty-year abatement. ⚠️ It has NO CONTINUING OVERSIGHT of that
+      abatement: its own minutes of 2026-03-05 record the Community Development Director stating
+      that it reviews only 1- and 2-family housing abatements, and that "Industrial properties that
+      have been granted an abatement will be reviewed by the Tax Incentive Review Council". THAT
+      body has no container on this portal and no row here.
+      ⚠️ Its self-designation is "CITY-WIDE" CRA Housing Council, which disambiguates it from the
+      "Greater Downtown CRA Housing Council" of Res. 79-21 / 66-20.
+    publishing:
+      website: https://www.sidneyoh.com/267/Boards-Commissions
+      records_url: https://sidneycityoh.documents-on-demand.com/
+      platform: documents-on-demand
+      discovered:
+        asof: '2026-08-13'
+        method: portal
+        note: >-
+          Its own containers on the shared Documents-On-Demand host — parent
+          00ac9418-d831-f111-a491-000c29a59557, Minutes 8ea56988-d831-f111-a491-000c29a59557,
+          Agenda 1c6ff647-d831-f111-a491-000c29a59557 — reached over HTTP/1.1 (the identical
+          request returns 403 over HTTP/2). ⚠️ BOTH CONTAINERS HOLD ONLY A 2026 FOLDER, verified by
+          enumeration. The 2025-10-23 minutes are therefore not published here — an absence of
+          PUBLICATION, not of record: the body's own 2026-02-05 agenda and minutes each show those
+          minutes were agendized and formally adopted.
+
   # ── The County ──────────────────────────────────────────────────────────────
   - slug: shelby-county-commissioners
     name: Shelby County Board of County Commissioners
