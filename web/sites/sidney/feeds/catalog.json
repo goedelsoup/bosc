@@ -628,14 +628,24 @@
         "relpath": "extracted/sidney/council/2026-02-23-res-14-26-consolidation-plat.resolution.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-07-28-ord-a-3225-annexation-243-acres.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-07-28-ord-a-3226-zoning-243-acres-iim.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "df5628d601a19adacbdf39153b0dfea022219ab4b06de79013662ab59ec3bcb2",
-      "size_bytes": 119424,
+      "sha256": "0b760b3404986c3037567be7258eafcb150402ab488ce7d54bb232f317160aef",
+      "size_bytes": 135237,
       "lfs_materialized": true,
-      "file_count": 9,
+      "file_count": 11,
       "stale": false,
       "asof": null
     },

@@ -97,6 +97,28 @@ legislative_chain:
         is an image. A recital is a party's account of another instrument — the distinction this
         register learned the hard way, twice — so the number is tagged for what it is rather than
         promoted to a direct read. To settle it, read 84-22's remaining pages or ODOD's own record.
+    monitoring_fee:
+      tag: verified
+      section: '§5, as originally adopted 2022-10-10'
+      verbatim: >-
+        An annual monitoring fee to the City of Sidney of one percent ( 1 % ) of the amount of the
+        incentives, or a minimum of Five Hundred Dollars ($500.00), up to a maximum of Twenty-five
+        Hundred Dollars ($2,500.00) annually is required for commercial and industrial projects.
+      source:
+        file: data/documents/sidney/council/84-22 - Establishing CRA based on Community Boundaries.pdf
+        journal_pages: ['0299', '0300']
+        read: text layer, confirmed by independent 300-dpi OCR
+      ⚠️_re_attributed: >-
+        RE-ATTRIBUTED 2026-08-13 (#1998 tail). This sat under Res. 69-25 as "§5, as amended", which
+        made a 2022 figure read as though the 2025 expansion had set a $2,500 annual administration
+        cap on a $3 billion project. It did not: 69-25 restated §5 and left the fee unchanged. The
+        cap is still worth knowing — it is what the City charges to administer an exemption of any
+        size — but it is 84-22's. Same error class as the designation mis-attribution corrected in
+        #1998, one subsection away, and found the same way: by re-reading a committed instrument
+        instead of reasoning from the file that cites it. ⚠️ The FIRST correction was narrative
+        only — the key stayed nested under 69-25's megaproject block, so a structured consumer
+        still read it as a property of the thirty-year tier. Correcting prose without moving the
+        key is half a fix.
     note: >-
       ⚠️ THIS, NOT RES. 69-25, IS THE DESIGNATING ACT — and the register said otherwise until #1998
       read both instruments directly. §4 as adopted here tops out at FIFTEEN years / 100% for new
@@ -131,17 +153,10 @@ legislative_chain:
         authorized the agreement. [verified] as a SEQUENCE from two instruments and the minutes of
         both meetings. [open] as a motive: 69-25 names no project, no company and no parcel, and
         its stated reason is the recent annexations.
-      monitoring_fee: >-
-        ⚠️ RE-ATTRIBUTED 2026-08-13. This read "[verified] §5, as amended: 1% of the incentives,
-        minimum $500, MAXIMUM $2,500 a year" and sat under Res. 69-25 — which made it read as though
-        the 2025 expansion set a $2,500 annual administration cap on a $3 billion project. It did
-        not. Those figures are the ORIGINAL 2022 text of Res. 84-22 §5, word for word, in a file
-        this corpus already held. 69-25 restated the section and left the fee unchanged. The cap is
-        still worth knowing — it is what the City charges to administer an exemption of any size —
-        but it is 84-22's, and dating it to 2025 made it look like a decision taken about THIS
-        campus. Same error class as the designation mis-attribution corrected in #1998, one
-        subsection away, and found the same way: by re-reading a committed instrument instead of
-        reasoning from the file that cites it.
+      monitoring_fee_note: >-
+        The monitoring fee is NOT a property of this clause. 69-25 restated §5 and left it
+        unchanged; the figures are Res. 84-22's, and they are recorded there. See that entry's
+        `monitoring_fee`.
     note: >-
       ⚠️ CORRECTED at #1998. The register carried this as the DESIGNATING legislation, reasoning
       from the CRA Agreement's and Res. 82-25's recitals. Read directly, it amends and expands

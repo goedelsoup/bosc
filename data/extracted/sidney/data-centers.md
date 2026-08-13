@@ -110,10 +110,13 @@ Amazon-owned, **cooling-water-discharging** Ohio data center that is **not this 
 - **Zoning district: IIM — Industry / Innovation / Manufacturing Zone.** `[verified]` City of
   Sidney **Ordinance A-3226**, passed **2025-07-28**, §1: *"be, and the same hereby is, zoned IIM -
   Industry / Innovation / Manufacturing Zone"*, with §2 amending the Zoning Map to match. The land
-  was annexed the same night by **A-3225**. Both are committed at
-  [`data/documents/sidney/ordinances/`](../../documents/sidney/ordinances/) and extracted at
-  [`sidney/council/`](council/). *This closes an `[open]` carried since onboarding, and it was
-  always a records question rather than a GIS one.*
+  was annexed the same night by **A-3225** ([source](../../documents/sidney/ordinances/A-3225%20-%20Annexing%20243.092%20Acres%20-%20Joslin-Drees.pdf),
+  p. 1 — the 243.092-acre description; [extraction](council/2025-07-28-ord-a-3225-annexation-243-acres.resolution.yaml)).
+  A-3226 §1 and §2 are on journal page 0231
+  ([source](../../documents/sidney/ordinances/A-3226%20-%20Zoning%20243.092%20IIM%20-%20Joslin-Drees%20Annexation.pdf),
+  p. 1; [extraction](council/2025-07-28-ord-a-3226-zoning-243-acres-iim.resolution.yaml)).
+  *This closes an `[open]` carried since onboarding, and it was always a records question rather
+  than a GIS one.*
   - **Why the City's own GIS could not answer it, now instrument-grounded.** The published zoning
     REST layer (`SidneyGIS_AllLayers/MapServer/270`, "officially adopted October 24, 2016") has a
     **hole** at the campus parcel — zoning, corp-limits and annexation layers all miss its interior
@@ -121,7 +124,8 @@ Amazon-owned, **cooling-water-discharging** Ohio data center that is **not this 
     `26-03-429-009` → CC). That diagnosis was correct and stays. **What was wrong was the cause.**
     The reason is **Ordinance A-3210**, the official map in force, which recites its own coverage:
     *"incorporates all the rezoning, annexation, or detachment ordinances from July 25, 2022, to
-    **January 13, 2025**."* That window closes **five and a half months before A-3226 zoned the
+    **January 13, 2025**"* ([source](../../documents/sidney/ordinances/A-3210%20-%20New%20Zoning%20Map,%20Sidney,%20Ohio.pdf),
+    p. 1, third WHEREAS). That window closes **five and a half months before A-3226 zoned the
     campus.** The map is not stale by neglect of one parcel; it is a snapshot that ends before the
     event. The superseding map, **A-3270** (passed 2026-07-27, effective 2026-08-10), is the first
     whose window contains A-3226 — *whether the campus is drawn as IIM on it is `[open]`; this

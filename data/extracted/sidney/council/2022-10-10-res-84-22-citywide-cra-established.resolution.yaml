@@ -91,10 +91,23 @@ resolution:
         SECTION 6. To administer and implement the provisions of this Resolution, the Community
         Development Director for the City is designated as the Housing Officer as described in
         Revised Code Sections 3735.65 through 3735.70.
-      officeholder: >-
-        [inference] The office is designated BY TITLE. That the title-holder is Barbara Dulworth
-        composes this section with the staff-attendance lines of the Council minutes — two verified
-        reads, joined. No document read here says "Barbara Dulworth is the Housing Officer."
+      journal_page: '0299'
+      officeholder:
+        tag: inference
+        name: Barbara Dulworth
+        reasoning: >-
+          The office is designated BY TITLE ("the Community Development Director for the City").
+          That the title-holder is Barbara Dulworth composes this section with a staff-attendance
+          line naming her in that role — two verified reads, joined. NO DOCUMENT READ HERE SAYS
+          "Barbara Dulworth is the Housing Officer", which is why this is [inference] and not
+          [verified].
+        title_holder_source:
+          file: data/documents/sidney/council/City Council Minutes September 08, 2025.pdf
+          page: 0
+          verbatim: 'Community Development Director Barbara Dulworth'
+          note: >-
+            She is named in the same role in the attendance rolls of the 2025-10-27 and 2026-02-23
+            minutes, both also committed. Any one of the three carries it.
     housing_council:
       tag: verified
       verbatim: >-
@@ -112,11 +125,29 @@ resolution:
         and the last two are co-opted by the members themselves. That is why appointment resolutions
         can never account for the whole body, and it explains an appointment record that otherwise
         looks incomplete.
-      it_is_a_live_body: >-
-        [verified] The 2025-10-27 Council minutes record that "the CRA Housing Council met on
-        October 23, 2025, and unanimously resolved to recommend that City Council approve" the
-        Amazon CRA agreement, and the City's resolution index carries appointments to it (Res.
-        74-25, 37-26, 38-26).
+      it_is_a_live_body:
+        tag: verified
+        recommendation:
+          verbatim: >-
+            The CRA Housing Council met on October 23, 2025, and unanimously resolved to recommend
+            that City Council approve the Agreement.
+          source:
+            file: data/documents/sidney/council/City Council Minutes October 27, 2025.pdf
+            page: 3
+            read: ocr at 300 dpi — this file is image-only
+          ⚠️: >-
+            This sentence is a RECITAL — the Council clerk's account of a different body's meeting,
+            not that body's own record. The Housing Council's minutes for 2025-10-23 are not
+            published on the City portal. Do not cite this for anything the Housing Council
+            decided beyond the fact of the recommendation.
+        appointments:
+          tag: reference
+          note: >-
+            The City's published Resolutions container carries appointment acts to this body — Res.
+            74-25 (2025), 37-26 and 38-26 (2026). ⚠️ [reference] BY TITLE ONLY: the container
+            listing was enumerated but none of the three has been pulled or read, so the seats,
+            terms and members they name are not established here.
+            Route: Documents-On-Demand, Resolutions container ed39b349-35b5-4408-97f9-bc135fd019c0.
       ⚠️_not_in_the_civic_registry: >-
         CORRECTED 2026-08-13. This entry previously read "It is one of the seven bodies in
         data/reference/subdivisions/sidney/subdivisions.yaml (#1999)." THAT IS FALSE, and it was
