@@ -800,9 +800,18 @@ def _compose_project(ctx: _Ctx, facility: dict[str, Any] | None) -> _Composition
                     if grounded
                     else "screening bracket — no instrument grounds it yet"
                 ),
+                # Both labels answer "what grounds this bracket", so both key on `grounded` —
+                # the facility domain's own instrument test. Keying `source` on the air permit
+                # ALONE collapsed the four `ItLoadGrounding` grades to a binary and reported a
+                # filed disclosure as a screening estimate: Findlay's load is a take-or-pay
+                # capacity in an SEC Form S-1, and reading "screening estimate" beside "grounded
+                # by an instrument on the record" contradicted the stat's own subtitle. Never
+                # collapse a screening bracket with a permit/disclosure figure (epic #1626).
                 source=(
                     "air permit (committed)"
                     if facility.get("air_permit_citation")
+                    else "filed disclosure"
+                    if grounded
                     else "screening estimate"
                 ),
             )

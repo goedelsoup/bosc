@@ -999,7 +999,15 @@ const COMPOSERS: Record<string, (slug: string, facility: FacilityItem | null) =>
         sub: grounded
           ? "bracket grounded by an instrument on the record"
           : "screening bracket — no instrument grounds it yet",
-        source: facility.air_permit_citation ? "air permit (committed)" : "screening estimate",
+        // Keyed on `grounded`, the same predicate as `sub` above — see the Python peer in
+        // `watermark.site.impact_study._compose_project`. Keying this on the air permit ALONE
+        // collapsed the four `ItLoadGrounding` grades to a binary and reported a filed disclosure
+        // as a screening estimate (Findlay's SEC Form S-1 take-or-pay load, #1265).
+        source: facility.air_permit_citation
+          ? "air permit (committed)"
+          : grounded
+            ? "filed disclosure"
+            : "screening estimate",
       });
     }
     stats.push({

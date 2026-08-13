@@ -2,9 +2,9 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-12T16:46:12+00:00",
-  "feed_count": 33,
-  "row_total": 665,
+  "generated_at": "2026-08-13T16:05:15+00:00",
+  "feed_count": 35,
+  "row_total": 805,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -256,6 +256,14 @@
       "count": 15
     },
     {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 140
+    },
+    {
       "name": "catalog-index",
       "path": "feeds/catalog-index.json",
       "media_type": "application/json",
@@ -284,6 +292,14 @@
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }

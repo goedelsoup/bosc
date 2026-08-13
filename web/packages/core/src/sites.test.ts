@@ -108,6 +108,28 @@ describe("sites registry — the Watermark network (#304)", () => {
     });
   });
 
+  it("promotes Findlay to selectable on Fort Wayne parity — a facility grounded without an air permit (#1265)", () => {
+    const fin = SITES.find((s) => s.slug === "findlay");
+    expect(fin?.selectable).toBe(true);
+    expect(fin?.status).toBe("live");
+    // Findlay is the first promotion at REFERENCE tier since Fort Wayne, so the parity claim is
+    // against Fort Wayne and Lima — not against the Troy-Piqua/Sidney `case`-tier line. What
+    // distinguishes it: `facility` is live on a filed disclosure (One Power's SEC Form S-1 —
+    // "30 MW operating / 150 MW take-or-pay" to MARA Holdings), NOT on a committed air permit.
+    // It is the network's first `ItLoadGrounding.DISCLOSURE` site, which is why the study's IT-load
+    // stat reads "filed disclosure" where Lima's and Fort Wayne's read "air permit (committed)".
+    const finReadiness = loadManifest("findlay").readiness;
+    expect(finReadiness).toEqual(loadManifest("fort-wayne").readiness);
+    expect(finReadiness?.tier).toBe("reference");
+    expect(finReadiness?.domains).toEqual({
+      backdrop: "live",
+      facility: "live",
+      places: "live",
+      record: "live",
+      inquiry: "live",
+    });
+  });
+
   it("routes every site under /network/<slug>; Lima uses its canonical watershed name", () => {
     for (const s of SITES) {
       if (s.slug === ACTIVE_SITE_SLUG) expect(s.href).toBe("/network/american-sugar-creek-allen-co");
@@ -115,15 +137,15 @@ describe("sites registry — the Watermark network (#304)", () => {
     }
   });
 
-  it("comingSoonSites() is every non-selectable site (not Lima, Urbana, Fort Wayne, Troy-Piqua, or Sidney), each carrying a tracking issue", () => {
+  it("comingSoonSites() is every non-selectable site (not Lima, Urbana, Fort Wayne, Troy-Piqua, Sidney, or Findlay), each carrying a tracking issue", () => {
     const soon = comingSoonSites();
     expect(soon.some((s) => s.slug === ACTIVE_SITE_SLUG)).toBe(false);
     expect(soon.some((s) => s.slug === "fort-wayne")).toBe(false); // Fort Wayne is now selectable (#741)
     expect(soon.some((s) => s.slug === "troy-piqua")).toBe(false); // Troy-Piqua is now selectable (#1872)
     expect(soon.some((s) => s.slug === "sidney")).toBe(false); // Sidney is now selectable (#1992)
+    expect(soon.some((s) => s.slug === "findlay")).toBe(false); // Findlay is now selectable (#1265)
     expect(soon.map((s) => s.slug)).toEqual([
       "defiance",
-      "findlay",
       "toledo",
       "bowling-green",
       "van-wert",
@@ -467,7 +489,7 @@ describe("siteForPath — the switcher's current-site resolution (#316)", () => 
 
   it("strips a non-root Astro base before matching", () => {
     expect(siteForPath("/app/network/american-sugar-creek-allen-co/site/", "/app")?.slug).toBe("lima");
-    expect(siteForPath("/app/network/findlay", "/app")).toBeNull(); // coming-soon → neutral, even with a base
+    expect(siteForPath("/app/network/bryan", "/app")).toBeNull(); // coming-soon → neutral, even with a base
     expect(siteForPath("/network/american-sugar-creek-allen-co/site/", "/")?.slug).toBe("lima"); // base "/" is a no-op
   });
 });
