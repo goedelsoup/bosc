@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "bfd97970809ddbdbaf7a6167d7a45d76dc555d2977ecfb08af2e232b33ed4aff",
+  "catalog_version": "6712be2604ec0956b170f541b4ca8425b91b14eb17d790913c11d093c60f0aa7",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -1497,6 +1497,22 @@
       "site": "sidney",
       "local_id": "sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml",
       "title": "City of Sidney Resolution No. 84-22 — repealing four predecessor resolutions, implementing R.C. 3735.65-3735.70, establishing and describing the boundaries of the City-Wide Community Reinvestment Area, designating a Housing Officer and creating a Housing Council, passed 2022-10-10",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2025-07-28-ord-a-3225-annexation-243-acres.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-07-28-ord-a-3225-annexation-243-acres.resolution.yaml",
+      "title": "City of Sidney Ordinance No. A-3225 — accepting the annexation of 243.092 acres in the north half of Section 3, Township 7 North, Range 6 East, Clinton Township, Shelby County, passed 2025-07-28",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2025-07-28-ord-a-3226-zoning-243-acres-iim.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-07-28-ord-a-3226-zoning-243-acres-iim.resolution.yaml",
+      "title": "City of Sidney Ordinance No. A-3226 — zoning 243.092 annexed acres in the north half of Section 3, Clinton Township, as IIM (Industry / Innovation / Manufacturing) and amending the Zoning Map to match, passed 2025-07-28",
       "feed": "records"
     },
     {

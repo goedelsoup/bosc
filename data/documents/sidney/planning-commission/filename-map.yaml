@@ -1,0 +1,60 @@
+meta:
+  subject: >
+    Canonical filename map for sidney/planning-commission/ — the Sidney Planning Commission's own
+    approved minutes on the AWS campus land. Two documents, and the pair is the point: the meeting
+    at which the Commission DECLINED to recommend zoning the campus, and the only meeting between
+    that refusal and the ordinance Council passed anyway (#1998 tail).
+  note: >-
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), files keep their as-received portal
+    `fileName`. `content_verified` is read from each document's own printed meeting header.
+  retrieved: "2026-08-13"
+  source_base_url: "https://sidneycityoh.documents-on-demand.com/document/"
+  route: >-
+    Documents-On-Demand over HTTP/1.1. Container: Planning Commission > Minutes, guid
+    d09c5926-e785-e411-ac9d-001fbc00ed84, 24 year folders.
+  why_this_body: >-
+    The Commission is the body that reviews a zoning establishment before Council acts. The corpus
+    held NOTHING from it until this pass, and what it holds is the strongest governance finding on
+    this site.
+
+documents:
+  - filename: Planning Commission Minutes June 16, 2025.pdf
+    portal_document_id: "be6b9126-f660-f111-a49b-000c29a59557"
+    canonical: sidney-planning-commission-minutes-2025-06-16-approved.pdf
+    type: planning-commission-minutes-approved
+    date: "2025-06-16"
+    content_verified: text-layer   # printed header "MINUTES ... June 16, 2025"
+    pages: 8
+    sha256: "b3121f2248b5edf7f4c40cda3c3abe2f7a01f73a1207ce3b52d643fec1be3fae"
+    bytes: 720298
+    carries:
+      - "⚠️ THE REFUSAL. Case PRZM2025-0006, Joslin establishment of zoning: a motion to recommend that Council APPROVE the zoning 'Motion failed with the following vote: M. Asher- no / P. Miller- no / A. Sakhalkar- no / D. Gross- no' — FOUR MEMBERS PRESENT, ALL FOUR NO, including the mover and the seconder."
+      - "⚠️ NOTE THE FORM: this is a motion to RECOMMEND APPROVAL that failed. It is NOT a vote to recommend denial, and it leaves no recommendation on the table. Do not restate it as 'the Commission recommended denial'."
+      - "The ANNEXATION was recommended the same night on a different case and a different tally — 'Motion passed with the following vote: M. Asher- yes / P. Miller- yes / A. Sakhalkar- no / D. Gross- yes' — with A. Sakhalkar, who moved it, voting no."
+      - "Community Development Director B. Dulworth on the record immediately after the failure: 'establishment of zoning is required for the annexed parcels and an establishment of zoning request will come before the Board again.' It did not — see the July 21 minutes."
+      - "NINETEEN RESIDENTS NAMED WITH STREET ADDRESSES speaking against or questioning the campus land. This is the earliest primary-source public objection in this corpus, and it predates by TEN MONTHS the 2026-04-27 Council objections the corpus had called the first."
+      - "The separate 53-acre Shelby County Commissioners tract (PRZM2025-0005) deadlocked 2-2 — 'Motion neither passed or failed' in the clerk's own words. Neither zoning recommendation carried that night."
+      - "City Planner T. Hurysz on the record: 'the City has not received a development plan, only a request for annexation.' A dated negative against the construction chronology."
+    notes: >-
+      ⚠️ CUSTODY: this is the AMENDED text, approved 2025-08-18. Read from the native text layer.
+      Speaker names are given as the clerk prints them; Kelly Snider's address appears as 1186
+      Stephens Road on one page and 1180 on another — an internal inconsistency in the minutes,
+      recorded and NOT silently reconciled.
+
+  - filename: Planning Commission Minutes July 21, 2025.pdf
+    portal_document_id: "a801811b-f660-f111-a49b-000c29a59557"
+    canonical: sidney-planning-commission-minutes-2025-07-21-approved.pdf
+    type: planning-commission-minutes-approved
+    date: "2025-07-21"
+    content_verified: text-layer   # printed header "MINUTES ... July 21, 2025"
+    pages: 3
+    sha256: "5007c9d04dcdb0d0e555dfee2b1ec36d3ee8429fe980b4b01e45a4dfd48f3dd8"
+    bytes: 688006
+    carries:
+      - "A LOAD-BEARING NEGATIVE, HELD AS A DOCUMENT. This is the ONLY Planning Commission meeting between the 2025-06-16 refusal and the 2025-07-28 ordinance that zoned the campus anyway."
+      - "Case-insensitive counts over its full text layer (6,711 characters, all three pages readable): JOSLIN 0 · ANNEX 0 · establishment 0 · 243 0 · Millcreek 0 · Mill Creek 0 · Vandemark 0 · Drees 0 · Amazon 0 · 'data center' 0."
+      - "Its own docket is PRZM2025-0007, PRZM2025-0008 and four PRLT cases — none of them the Joslin zoning."
+    notes: >-
+      Shelved precisely because a negative this consequential must be held as a document rather than
+      asserted as a claim. The zoning establishment Dulworth said would 'come before the Board
+      again' did not come back before Council enacted it.

@@ -94,7 +94,7 @@
             "tag": "verified",
             "verbatim": "(e) Up to thirty (30) years, and up to one hundred percent (100%) if the commercial or industrial structure is situated on the site of a megaproject and is owned and occupied by a megaproject operator (as such terms are defined in Ohio Revised Code Section 122.17(A)(12)) …",
             "why_it_matters": "The 30-year / 100% exemption in the CRA Agreement below rests on this clause, and the clause did not exist until this resolution added it — seven weeks before Res. 80-25 authorized the agreement. [verified] as a SEQUENCE from two instruments and the minutes of both meetings. [open] as a motive: 69-25 names no project, no company and no parcel, and its stated reason is the recent annexations.",
-            "monitoring_fee": "[verified] §5, as amended: 1% of the incentives, minimum $500, MAXIMUM $2,500 a year."
+            "monitoring_fee": "⚠️ RE-ATTRIBUTED 2026-08-13. This read \"[verified] §5, as amended: 1% of the incentives, minimum $500, MAXIMUM $2,500 a year\" and sat under Res. 69-25 — which made it read as though the 2025 expansion set a $2,500 annual administration cap on a $3 billion project. It did not. Those figures are the ORIGINAL 2022 text of Res. 84-22 §5, word for word, in a file this corpus already held. 69-25 restated the section and left the fee unchanged. The cap is still worth knowing — it is what the City charges to administer an exemption of any size — but it is 84-22's, and dating it to 2025 made it look like a decision taken about THIS campus. Same error class as the designation mis-attribution corrected in #1998, one subsection away, and found the same way: by re-reading a committed instrument instead of reasoning from the file that cites it."
           },
           "note": "⚠️ CORRECTED at #1998. The register carried this as the DESIGNATING legislation, reasoning from the CRA Agreement's and Res. 82-25's recitals. Read directly, it amends and expands Res. 84-22. Both readings of the corpus before this one were wrong in the same direction — \"Resolution 18-25 … October 2025\" (the pre-#1380 register), then \"the designating legislation is Res. 69-25\" (#1380) — and each was corrected only by reading one document closer to the source. The `-06A` suffix on the area number was the standing clue."
         },
@@ -758,8 +758,19 @@
         "dwelling_extension": "[verified] A DWELLING's exemption may be extended up to ten additional years for a certified historic structure — the only path past fifteen years in the resolution as adopted, and it does not reach commercial or industrial property."
       },
       "administration": {
-        "housing_officer": "[verified] designated by this resolution; the officeholder is not named in the text read.",
-        "housing_council": "[verified] Created by this resolution. It is a live body: the 2025-10-27 minutes record that \"the CRA Housing Council met on October 23, 2025, and unanimously resolved to recommend that City Council approve\" the Amazon CRA agreement, and the City's 2026 resolution index carries appointments to it (Res. 37-26, 38-26, 74-25). It is one of the seven bodies in data/reference/subdivisions/sidney/subdivisions.yaml (#1999)."
+        "housing_officer": {
+          "tag": "verified",
+          "verbatim": "SECTION 6. To administer and implement the provisions of this Resolution, the Community Development Director for the City is designated as the Housing Officer as described in Revised Code Sections 3735.65 through 3735.70.",
+          "officeholder": "[inference] The office is designated BY TITLE. That the title-holder is Barbara Dulworth composes this section with the staff-attendance lines of the Council minutes — two verified reads, joined. No document read here says \"Barbara Dulworth is the Housing Officer.\""
+        },
+        "housing_council": {
+          "tag": "verified",
+          "verbatim": "SECTION 7. That a \"Community Reinvestment Area Housing Council\" shall be created, consisting of two (2) members appointed by the Mayor, two (2) members appointed by the City Council, and one (1) member appointed by the Planning Commission. The majority of the members shall then appoint two (2) additional members who shall be residents within the area. Terms of the members of the Housing Council shall be for three (3) years. An unexpired term resulting from a vacancy in the Housing Council shall be filled in the same manner as the initial appointment was made.",
+          "seats": 7,
+          "why_the_composition_matters": "[verified] SEVEN SEATS, and only FOUR are ever filled by a Council resolution (two Mayor-confirmed, two Council-appointed). The fifth is the Planning Commission's appointment and the last two are co-opted by the members themselves. That is why appointment resolutions can never account for the whole body, and it explains an appointment record that otherwise looks incomplete.",
+          "it_is_a_live_body": "[verified] The 2025-10-27 Council minutes record that \"the CRA Housing Council met on October 23, 2025, and unanimously resolved to recommend that City Council approve\" the Amazon CRA agreement, and the City's resolution index carries appointments to it (Res. 74-25, 37-26, 38-26).",
+          "⚠️_not_in_the_civic_registry": "CORRECTED 2026-08-13. This entry previously read \"It is one of the seven bodies in data/reference/subdivisions/sidney/subdivisions.yaml (#1999).\" THAT IS FALSE, and it was written here in #1998 without checking: the registry's seven bodies are the City Council, the City Planning Commission, the County Commissioners, the County Regional Planning Commission, Clinton Township, and the two school boards. The Housing Council is not among them. It has its own containers on the City portal (Minutes 8ea56988-d831-f111-a491-000c29a59557, Agenda 1c6ff647-d831-f111-a491-000c29a59557) and belongs in that registry; adding it needs its own grounding documents and is its own change."
+        }
       },
       "vote": {
         "roll_call_recorded": false,
@@ -787,6 +798,179 @@
       "verified": true
     },
     "source_doc_rel": "sidney/council/84-22 - Establishing CRA based on Community Boundaries.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2025-07-28-ord-a-3225-annexation-243-acres.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Ordinance No. A-3225 — accepting the annexation of 243.092 acres in the north half of Section 3, Township 7 North, Range 6 East, Clinton Township, Shelby County, passed 2025-07-28",
+    "confidence": "high",
+    "warnings": [
+      "Clean native text layer with the bound journal's usual character drops (\"ofland\"), preserved in quotation. The five-parcel list carries the same `.IXIl` garble flagged in the A-3226 extraction."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Ordinance No. A-3225 — accepting the annexation of 243.092 acres in the north half of Section 3, Township 7 North, Range 6 East, Clinton Township, Shelby County, passed 2025-07-28",
+      "ordinance_no": "A-3225",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "annexation",
+      "adopted": "2025-07-28",
+      "outcome": "approved",
+      "territory": {
+        "tag": "verified",
+        "acres": 243.092,
+        "verbatim": "Situated in the north half of Section 3, Township 7 North, Range 6 East Clinton Township, Shelby County, Ohio, being the following 5 parcels ofland;",
+        "note": "[verified] THE NORTH HALF of Section 3. The 53-acre Shelby County Commissioners tract annexed by A-3211 and zoned by A-3227 is in the SOUTHEAST QUARTER of the same section — a separate tract that the CRA expansion also covered and that is NOT the campus. Same section number is not the same land.",
+        "parcels_note": "The same five-parcel list as A-3226, with the same absence of any role word for the five named persons. See that file's `parcels` block rather than restating it here."
+      },
+      "statutory_authority": {
+        "tag": "verified",
+        "r_c_709_provision_cited": null,
+        "only_revised_code_citation": "R.C. 121.22 (open meetings finding)",
+        "stated_authority_verbatim": "the Annexation Agreement entered between the City of Sidney and Board of Township Trustees of Clinton Township … on or about March 24, 2025",
+        "consequence": "[open] WHICH EXPEDITED TYPE this annexation proceeded under. Ohio's R.C. 709.022 / .023 / .024 are different procedures with different consequences for township taxation and for what the annexed territory remains subject to. This ordinance names none of them.",
+        "instrument_to_pull": {
+          "name": "City of Sidney / Clinton Township Board of Trustees Annexation Agreement",
+          "dated": "on or about 2025-03-24",
+          "in_corpus": false,
+          "note": "⚠️ The date is the City's own account of a document nobody has read. A-3211 (passed 2025-03-10) says in its body that the City \"is working toward an Annexation Agreement\" while its attached Petition recites that a certified executed copy is attached as Exhibit C. The Petition is undated on its face, so this is a SEQUENCING OBSERVATION, not a contradiction."
+        }
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": false,
+        "note": "[open] Same instrument form as its siblings — enacting clause, passage date, Attest line, no vote. The Council minutes of 2025-07-28 carry it and are on the same portal, unpulled."
+      },
+      "what_this_instrument_does_not_establish": [
+        "THE EXPEDITED TYPE. See `statutory_authority`. This is the single most answerable `[open]` the ordinance opens, and the route is the Annexation Agreement it names.",
+        "ANY CONVEYANCE. An annexation moves a jurisdictional boundary; it transfers no title and names no grantor or grantee. The deeds were recorded 2025-11-24, roughly four months AFTER this act — so the land was annexed and zoned industrial BEFORE Amazon Data Services took title, a sequence the corpus can now state from instruments.",
+        "ANY CONNECTION TO A DATA CENTER. The ordinance names no project and no company."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-07-28-ord-a-3225-annexation-243-acres.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/ordinances/A-3225 - Annexing 243.092 Acres - Joslin-Drees.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2025-07-28-ord-a-3226-zoning-243-acres-iim.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Ordinance No. A-3226 — zoning 243.092 annexed acres in the north half of Section 3, Clinton Township, as IIM (Industry / Innovation / Manufacturing) and amending the Zoning Map to match, passed 2025-07-28",
+    "confidence": "high",
+    "warnings": [
+      "Clean native text layer, but the bound journal's scan drops and merges characters throughout (\"ofland\", \"Nwnber\", \"Maiy\", \"raikoad\", \"24 3. 092\", `.IXIl`). Every quotation above preserves them. No figure or parcel identifier is affected except the `.IXIl` suffix, which is flagged."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Ordinance No. A-3226 — zoning 243.092 annexed acres in the north half of Section 3, Clinton Township, as IIM (Industry / Innovation / Manufacturing) and amending the Zoning Map to match, passed 2025-07-28",
+      "ordinance_no": "A-3226",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "zoning_establishment",
+      "adopted": "2025-07-28",
+      "outcome": "approved",
+      "attest": "I, Kari Egbert, Clerk of Council",
+      "zoning_classification": {
+        "tag": "verified",
+        "district": "IIM",
+        "district_name": "Industry / Innovation / Manufacturing Zone",
+        "verbatim_section_1": "be, and the same hereby is, zoned IIM - Industry / Innovation / Manufacturing Zone.",
+        "verbatim_section_2": "SECTION 2. That the Zoning Map for the City of Sidney, Ohio, be, and the same hereby is, amended to reflect the inclusion of such 24 3. 092 acres of land as an IIM - Industry / Innovation / Manufacturing Zone.",
+        "transcription_note": "\"24 3. 092\" is the bound journal's scan rendered by the text layer; the figure is 243.092 and appears cleanly elsewhere in the same instrument. Quoted as extracted, not repaired.",
+        "corroborated_by": [
+          "[verified] Council minutes 2026-02-23 — the City Planner placed the property \"in the IIM - Industry/Innovation/Manufacturing Zone\" while presenting Res. 14-26. A co-equal City record, and independent of this ordinance.",
+          "[verified] Ordinance A-3227 zones the separate 53-acre county tract with the identical acronym expansion."
+        ],
+        "note": "Corroboration is not the basis. The `[verified]` fact rests on THIS ordinance alone, which is the enacted operative text and needs no corroborator."
+      },
+      "parcels": {
+        "tag": "verified",
+        "verbatim": "being the following 5 parcels ofland; 1) Ellen D. Joslin, Trustee and Ellen D. Joslin, Successor Trustee, 23 88 Millcreek Rd., Sidney OH 45365 -Parcel Number 02-2603226.IXIl 2) Parcel 2: William W. Joslin and Ann B. Joslin, No address, Parcel Nwnber 02-2603126.001 3) Parcel 3: Maiy Ellen Drees, 2522 Millcreek Rd., … Parcel Nwnber 02-2603251.002 4) Parcel 4: Tract 1 Maiy Ellen Drees, … 02-2603201.001 5) Tract 2 Maiy Ellen Drees, … 02-2603251.001;",
+        "transcription_note": "Journal-scan artifacts preserved: \"ofland\" for \"of land\", \"Nwnber\" for \"Number\", \"Maiy\" for \"Mary\", \"23 88\" for \"2388\". ⚠️ Parcel 1's suffix reads `.IXIl` in the text layer. That it is `.001` is `[inference]` — the legible prefix, the fact that it is the only unmatched predecessor, and the `2388 Millcreek Rd.` situs the corpus already carries. Recorded as a garble, NOT normalised.",
+        "joins_the_corpus": {
+          "tag": "verified",
+          "note": "Four of the five match the predecessor tracts the corpus already recites, digit for digit; the fifth by prefix. THE JOIN IS PARCEL IDENTITY, ABUTTERS AND SITUS — not acreage. An acreage match alone would not establish that this ordinance is about this campus."
+        },
+        "⚠️_no_role_word": {
+          "tag": "verified",
+          "finding": "The ordinance uses NO role word for any of the five persons — not \"owner\", not \"petitioner\", not \"grantor\", not \"applicant\", not \"agent\". The same sentence writes \"owned by\" for the two ABUTTERS (John A. Clark Jr., Bridget Douglas). The drafter had the word and did not use it here.",
+          "why_it_matters": "These names are the closest this corpus has come to the deed grantors, and they are NOT established as grantors by this document. The Planning Commission's own case caption gives the annexation petitioner as a fourth person entirely — JACKSON B. REYNOLDS — in a capacity that record does not state. The grantors stay `[open]` until the Recorder deeds are pulled."
+        }
+      },
+      "abutters": {
+        "tag": "verified",
+        "note": "Parcel numbers and acreages the corpus did not have, read off the west-line call.",
+        "entries": [
+          {
+            "name": "John A. Clark Jr.",
+            "acres": 6.48,
+            "parcel": "02-26-03-101-001"
+          },
+          {
+            "name": "Bridget Douglas",
+            "acres": 1.49,
+            "parcel": "02-26-03-102-001",
+            "transcription_note": "the text layer renders this `02-2&03-102-001`"
+          },
+          {
+            "name": "Mill Creek Subdivisions Nos. 1-4",
+            "note": "plat cites the corpus already carries"
+          }
+        ]
+      },
+      "survey": {
+        "tag": "verified",
+        "firm": "Farnsworth Group, Inc.",
+        "surveyor": "David R. Barnhart, P.S.",
+        "closes_at_acres": 243.092,
+        "note": "⚠️ A SECOND, INDEPENDENT SURVEY of the same ground. The Development Agreement's Exhibit A is also Farnsworth but under Justin A. Bischof, P.S. #8596, closing at 243.0924. Two surveyors, two closings, agreeing to three decimals. ⚠️ Barnhart's registration number #7646 is NOT Lot 7646 (O.R. 2329/454). Unrelated identifiers that must never be conflated."
+      },
+      "north_boundary_divergence": {
+        "tag": "open",
+        "this_instrument": "the south right-of-way line of the New York Central Lines, LLC raikoad",
+        "the_corpus_elsewhere": "the CSX Transportation right-of-way (D.V. 381 p. 290) — Res. 27-26 Exhibit A",
+        "note": "[verified] as two readings; whether they name the same interest is [open]. RECORD THE DIVERGENCE, DO NOT HARMONIZE IT. (\"raikoad\" is the text layer's rendering of \"railroad\".)"
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": false,
+        "note": "[open] The RECORD OF ORDINANCES page carries the enacting clause, the passage date and the Attest line only — the form of the instrument, not a gap in the read. The vote is in the Council minutes of 2025-07-28, which are on the same portal and were NOT pulled in this pass. That is the next retrieval, and it is cheap."
+      },
+      "what_this_instrument_does_not_establish": [
+        "ANY REASON. It carries no WHEREAS clauses at all and does not mention the Planning Commission, which had declined to recommend this zoning 0-4 six weeks earlier. What Council was told about that refusal is `[open]`.",
+        "WHETHER A FAVOURABLE RECOMMENDATION WAS REQUIRED. That is a question about Ohio law and the City's own code, and no document read here answers it.",
+        "THAT ANY OF THE FIVE NAMED PERSONS IS A GRANTOR. See `parcels.⚠️_no_role_word`.",
+        "WHAT THE CAMPUS MAY DO ON IIM LAND. The use table lives in the zoning code (A-3219), not here."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-07-28-ord-a-3226-zoning-243-acres-iim.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/ordinances/A-3226 - Zoning 243.092 IIM - Joslin-Drees Annexation.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": false
   },

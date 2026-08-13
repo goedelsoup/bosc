@@ -19,7 +19,14 @@ producer:
     thirty-year megaproject tier), Resolution 14-26 (2026-02-23, accepting the consolidation
     plat), and the approved Council minutes of 2025-09-08, 2025-10-27 and 2026-04-27. The
     2025-10-27 minutes are image-only (zero extractable characters) and were read by OCR at 300
-    DPI; the other two carry a native text layer.
+    DPI; the other two carry a native text layer. EXTENDED AGAIN 2026-08-13 (the issue 1998 tail)
+    with the LAND-USE SPINE off the same portal - Ordinance A-3225 (annexation of the 243.092
+    acres, 2025-07-28), Ordinance A-3226 (which zones it IIM the same night and closes this site's
+    standing zoning question), and Ordinance A-3210 (the official zoning map whose declared
+    coverage window ends 2025-01-13, which is why the City's own GIS could not answer it) -
+    together with the Sidney Planning Commission minutes of 2025-06-16 and 2025-07-21 and the
+    Council minutes of 2026-02-23. Every agent-reported sha256 was independently reproduced by a
+    second pull before shelving.
 license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:sidney
@@ -61,6 +68,15 @@ storage:
 - relpath: extracted/sidney/council/2026-02-23-res-14-26-consolidation-plat.resolution.yaml
   media_type: application/x-yaml
   lfs: false
+# The LAND-USE SPINE (the issue 1998 tail) - same producer, same license, same site scope, same
+# provenance class. A-3226 is the instrument that closes this site's standing zoning question;
+# A-3225 is the annexation it attaches to and passed the same night.
+- relpath: extracted/sidney/council/2025-07-28-ord-a-3225-annexation-243-acres.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2025-07-28-ord-a-3226-zoning-243-acres-iim.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: on-demand
 provenance: document
@@ -79,8 +95,11 @@ tags:
 - sidney
 notes: 'Clause-level structured read of what the City of Sidney actually signed for the Amazon
   campus (issue 1380). It corrects facts this site''s register previously carried as
-  [verified] from the City FAQ, the trade press or an advocacy site: the CRA legislation is
-  Res. 69-25 of 2025-09-08 (city-wide), not "Res. 18-25, October 2025"; the PILOT is capped at
+  [verified] from the City FAQ, the trade press or an advocacy site: the CRA was ESTABLISHED
+  city-wide by Res. 84-22 of 2022-10-10 and EXPANDED by Res. 69-25 of 2025-09-08 (which also added
+  the 30-year megaproject tier) - not "Res. 18-25, October 2025", and 69-25 is not itself the
+  designating act, which this note asserted until both instruments were read directly at issue
+  1998; the PILOT is capped at
   $46,000,000 over 14 years with a SEPARATE $4,000,000 initial payment, not $50M over 15; the
   schools'' half divides $21,220,529 to Sidney City Schools and $3,779,471 to Upper Valley Career
   Center, not $25M to Sidney; the NDA is dated 2023-12-19, not mid-2025; projected cooling-water

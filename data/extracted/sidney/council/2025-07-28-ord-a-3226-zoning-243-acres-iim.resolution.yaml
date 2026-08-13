@@ -1,0 +1,169 @@
+# City of Sidney Council, 2025-07-28 — Ordinance A-3226, zoning the annexed 243.092 acres
+# IIM (Industry / Innovation / Manufacturing). Issue #1998, epic #1275.
+#
+# THIS INSTRUMENT CLOSES THE CORPUS'S ZONING `[open]`. Since onboarding, Sidney's campus zoning has
+# been unanswerable: the City's published GIS layer does not show it, and #1379 recorded that as a
+# currency hole rather than as an absence of zoning. Both readings were right, and A-3210 says why
+# in its own recitals — the official map in force incorporates ordinances only "from July 25, 2022,
+# to January 13, 2025", a window that closes five and a half months BEFORE this ordinance. The
+# campus was never unzoned. The map was never current.
+#
+# ⚠️ AND READ THE SEQUENCE, WHICH IS THE LARGER FINDING. Six weeks before Council passed this, the
+# City's own Planning Commission was asked to recommend exactly this zoning and REFUSED — a motion
+# to recommend approval failed with all four members present voting no, the mover and the seconder
+# among them. The Community Development Director said on the record that the request "will come
+# before the Board again." The only Commission meeting in the intervening gap carries no such case
+# (JOSLIN 0, ANNEX 0, 243 0 over its full text). Council enacted it anyway.
+#   THIS ORDINANCE CARRIES NO WHEREAS CLAUSES AND DOES NOT MENTION THE PLANNING COMMISSION.
+#   Whether a favourable recommendation was legally required, and what Council was told about the
+#   refusal, are both `[open]`. Write the sequence; the instruments state no reason.
+#
+# TAG VOCABULARY: [verified] = read off this ordinance's own page images/text layer;
+# [inference] = reasoned from [verified] facts, labelled; [open] = not established here.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record, places]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/ordinances/A-3226 - Zoning 243.092 IIM - Joslin-Drees Annexation.pdf
+  sha256: 27ba8230637e88d3b3f5b2939fe9a66d0f2dc5c570fb4c9e0f0dcebce03d5f72
+  content_verified: text-layer
+  read_note: >-
+    Read from the PDF's own native text layer (pypdf, ~4,220 characters over three pages). Retrieved
+    2026-08-13 through the City's Documents-On-Demand portal over HTTP/1.1. The hash above was
+    reported by a research agent and INDEPENDENTLY REPRODUCED by a second pull before shelving.
+pages_read: [0, 1, 2]
+
+resolution:
+  instrument: >-
+    City of Sidney Ordinance No. A-3226 — zoning 243.092 annexed acres in the north half of Section
+    3, Clinton Township, as IIM (Industry / Innovation / Manufacturing) and amending the Zoning Map
+    to match, passed 2025-07-28
+  ordinance_no: A-3226
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: zoning_establishment
+  adopted: '2025-07-28'                       # [verified] "Passed this 28th day of July, 2025."
+  outcome: approved
+  attest: 'I, Kari Egbert, Clerk of Council'  # [verified] machine-printed; the signatures are ink and are NOT read
+
+  # ------------------------------------------------------------------------------------------
+  # THE ANSWER
+  # ------------------------------------------------------------------------------------------
+  zoning_classification:
+    tag: verified
+    district: IIM
+    district_name: Industry / Innovation / Manufacturing Zone
+    verbatim_section_1: >-
+      be, and the same hereby is, zoned IIM - Industry / Innovation / Manufacturing Zone.
+    verbatim_section_2: >-
+      SECTION 2. That the Zoning Map for the City of Sidney, Ohio, be, and the same hereby is,
+      amended to reflect the inclusion of such 24 3. 092 acres of land as an IIM - Industry /
+      Innovation / Manufacturing Zone.
+    transcription_note: >-
+      "24 3. 092" is the bound journal's scan rendered by the text layer; the figure is 243.092 and
+      appears cleanly elsewhere in the same instrument. Quoted as extracted, not repaired.
+    corroborated_by:
+      - '[verified] Council minutes 2026-02-23 — the City Planner placed the property "in the IIM - Industry/Innovation/Manufacturing Zone" while presenting Res. 14-26. A co-equal City record, and independent of this ordinance.'
+      - '[verified] Ordinance A-3227 zones the separate 53-acre county tract with the identical acronym expansion.'
+    note: >-
+      Corroboration is not the basis. The `[verified]` fact rests on THIS ordinance alone, which is
+      the enacted operative text and needs no corroborator.
+
+  # ------------------------------------------------------------------------------------------
+  # THE FIVE PARCELS — and the role word the drafter did not use
+  # ------------------------------------------------------------------------------------------
+  parcels:
+    tag: verified
+    verbatim: >-
+      being the following 5 parcels ofland; 1) Ellen D. Joslin, Trustee and Ellen D. Joslin,
+      Successor Trustee, 23 88 Millcreek Rd., Sidney OH 45365 -Parcel Number 02-2603226.IXIl
+      2) Parcel 2: William W. Joslin and Ann B. Joslin, No address, Parcel Nwnber 02-2603126.001
+      3) Parcel 3: Maiy Ellen Drees, 2522 Millcreek Rd., … Parcel Nwnber 02-2603251.002
+      4) Parcel 4: Tract 1 Maiy Ellen Drees, … 02-2603201.001 5) Tract 2 Maiy Ellen Drees, …
+      02-2603251.001;
+    transcription_note: >-
+      Journal-scan artifacts preserved: "ofland" for "of land", "Nwnber" for "Number", "Maiy" for
+      "Mary", "23 88" for "2388". ⚠️ Parcel 1's suffix reads `.IXIl` in the text layer. That it is
+      `.001` is `[inference]` — the legible prefix, the fact that it is the only unmatched
+      predecessor, and the `2388 Millcreek Rd.` situs the corpus already carries. Recorded as a
+      garble, NOT normalised.
+    joins_the_corpus:
+      tag: verified
+      note: >-
+        Four of the five match the predecessor tracts the corpus already recites, digit for digit;
+        the fifth by prefix. THE JOIN IS PARCEL IDENTITY, ABUTTERS AND SITUS — not acreage. An
+        acreage match alone would not establish that this ordinance is about this campus.
+    ⚠️_no_role_word:
+      tag: verified
+      finding: >-
+        The ordinance uses NO role word for any of the five persons — not "owner", not "petitioner",
+        not "grantor", not "applicant", not "agent". The same sentence writes "owned by" for the
+        two ABUTTERS (John A. Clark Jr., Bridget Douglas). The drafter had the word and did not use
+        it here.
+      why_it_matters: >-
+        These names are the closest this corpus has come to the deed grantors, and they are NOT
+        established as grantors by this document. The Planning Commission's own case caption gives
+        the annexation petitioner as a fourth person entirely — JACKSON B. REYNOLDS — in a capacity
+        that record does not state. The grantors stay `[open]` until the Recorder deeds are pulled.
+
+  abutters:
+    tag: verified
+    note: 'Parcel numbers and acreages the corpus did not have, read off the west-line call.'
+    entries:
+      - {name: John A. Clark Jr., acres: 6.48, parcel: '02-26-03-101-001'}
+      - {name: Bridget Douglas, acres: 1.49, parcel: '02-26-03-102-001', transcription_note: 'the text layer renders this `02-2&03-102-001`'}
+      - {name: Mill Creek Subdivisions Nos. 1-4, note: 'plat cites the corpus already carries'}
+
+  survey:
+    tag: verified
+    firm: Farnsworth Group, Inc.
+    surveyor: David R. Barnhart, P.S. #7646
+    closes_at_acres: 243.092
+    note: >-
+      ⚠️ A SECOND, INDEPENDENT SURVEY of the same ground. The Development Agreement's Exhibit A is
+      also Farnsworth but under Justin A. Bischof, P.S. #8596, closing at 243.0924. Two surveyors,
+      two closings, agreeing to three decimals.
+      ⚠️ Barnhart's registration number #7646 is NOT Lot 7646 (O.R. 2329/454). Unrelated
+      identifiers that must never be conflated.
+
+  north_boundary_divergence:
+    tag: open
+    this_instrument: 'the south right-of-way line of the New York Central Lines, LLC raikoad'
+    the_corpus_elsewhere: 'the CSX Transportation right-of-way (D.V. 381 p. 290) — Res. 27-26 Exhibit A'
+    note: >-
+      [verified] as two readings; whether they name the same interest is [open]. RECORD THE
+      DIVERGENCE, DO NOT HARMONIZE IT. ("raikoad" is the text layer's rendering of "railroad".)
+
+  # ------------------------------------------------------------------------------------------
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: false
+    note: >-
+      [open] The RECORD OF ORDINANCES page carries the enacting clause, the passage date and the
+      Attest line only — the form of the instrument, not a gap in the read. The vote is in the
+      Council minutes of 2025-07-28, which are on the same portal and were NOT pulled in this pass.
+      That is the next retrieval, and it is cheap.
+
+  what_this_instrument_does_not_establish:
+    - >-
+      ANY REASON. It carries no WHEREAS clauses at all and does not mention the Planning Commission,
+      which had declined to recommend this zoning 0-4 six weeks earlier. What Council was told about
+      that refusal is `[open]`.
+    - >-
+      WHETHER A FAVOURABLE RECOMMENDATION WAS REQUIRED. That is a question about Ohio law and the
+      City's own code, and no document read here answers it.
+    - >-
+      THAT ANY OF THE FIVE NAMED PERSONS IS A GRANTOR. See `parcels.⚠️_no_role_word`.
+    - >-
+      WHAT THE CAMPUS MAY DO ON IIM LAND. The use table lives in the zoning code (A-3219), not here.
+  confidence: high
+  warnings:
+    - >-
+      Clean native text layer, but the bound journal's scan drops and merges characters throughout
+      ("ofland", "Nwnber", "Maiy", "raikoad", "24 3. 092", `.IXIl`). Every quotation above preserves
+      them. No figure or parcel identifier is affected except the `.IXIl` suffix, which is flagged.

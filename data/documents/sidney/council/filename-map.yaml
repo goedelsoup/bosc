@@ -319,3 +319,26 @@ documents:
       - "AWS to contribute UP TO $8,000,000 for Millcreek Road: three-laning between Fair and Kuther, a roundabout at Millcreek/Fair, and a Millcreek/Kuther improvement expressly for Cargill's expansion"
       - "…against a $1,956,906 ODOD Roadwork Development Grant and a $275,000 ODOT Jobs & Commerce Grant — $10,231,906 available, roughly $2.0M above the engineer's estimate"
       - "PUBLIC OPPOSITION ON THE RECORD — questions on pretreatment quality standards, reporting and monitoring, tap-in costs, meter monitoring, billing against the reserve and fines; and on noise, vibration, power supply, environmental and health impacts and the city's financial condition"
+
+  - filename: City Council Minutes February 23, 2026.pdf
+    portal_document_id: "500389bc-431d-f111-a48c-000c29a59557"
+    canonical: sidney-council-minutes-2026-02-23.pdf
+    type: council-minutes-approved
+    date: "2026-02-23"
+    content_verified: text-layer   # body header "MINUTES OF THE REGULAR MEETING OF SIDNEY CITY COUNCIL / … February 23, 2026"
+    pages: 8
+    sha256: "951f37033769939a6ba397632eb0fcf801d74146c58384a9914eb3eb65be8fb7"
+    bytes: 933521
+    carries:
+      - "⚠️ THE LOT NUMBER, FROM A CO-EQUAL CITY RECORD OF THE SAME ACT. City Planner Hurysz presented Res. 14-26 as legislation 'that would create one new lot (#7658) from three existing lots located at the at the n01ih west corner of Millcreek Road, Fair Road, and South Vandemark Road' — where the resolution's own §1 says Lot No. 7647. `7658` appears once in these minutes; `7647` appears zero times."
+      - "…and it places the property 'in the IIM - Industry/Innovation/Manufacturing Zone' — independent corroboration of the zoning A-3226 establishes."
+      - "The stated purpose of the replat: 'to consolidate the existing lots so that the property could be fully used without encroachments over lot lines; which is prohibited under Section 1101.18 of the Zoning Code.'"
+      - "TWELVE RESIDENTS NAMED WITH STREET ADDRESSES in audience comments."
+      - "A town-hall meeting planned for 2026-03-06 at the Shelby County Fairgrounds 'by a local group of concerned citizens'."
+      - "City Manager Crusey that 'two agreements were currently under negotiations'; Mayor Barhorst that 'there has been no discussion on pausing the development'."
+      - "An executive session under R.C. 121.22(G)(3) — pending or imminent court action — and (G)(8), economic development involving Community Reinvestment Areas. ⚠️ The minutes do NOT say what the court action is and do not connect it to the campus."
+    notes: >-
+      Native text layer with the usual journal artifacts (`n01ih` for north, `rep lat` for replat) —
+      preserved where quoted. Pulled in the #1998 tail sweep, which also established that a Sidney
+      clerk journals a DIVIDED vote by name and an undivided one as an outcome only; the 2022-10-10
+      minutes are the control for that convention.

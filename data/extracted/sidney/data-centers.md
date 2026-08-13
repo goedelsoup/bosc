@@ -107,14 +107,25 @@ Amazon-owned, **cooling-water-discharging** Ohio data center that is **not this 
 - **Abutting owners of record** (from the same legal description): Mill Creek Subdivision Nos. 1–4
   (Plat Book 5 p. 96; 7 p. 23; 7 p. 34; 7 p. 47), **Bridget Douglas** (O.R. 2269 p. 659) and
   **John A. Clark, Jr.** (O.R. 2319 p. 5821). `[verified]`
-- **Zoning district:** `[open]` — the City of Sidney publishes a zoning REST layer
-  (`SidneyGIS_AllLayers/MapServer/270`, 9 districts, "officially adopted October 24, 2016") but
-  the campus parcel falls in a **hole** in it: zoning, corp-limits and annexation layers all miss
-  the parcel's interior point while its two district-01 neighbours hit all three (SEMCORP
-  `26-03-301-001` → IIM; DP&L `26-03-429-009` → CC), and the annexation layer stops at ordinance
-  A-3145 (2023-08-28). Since the auditor's TY2025 tax district already places the parcel inside
-  the corporate limits, this is a **currency gap**, not an unzoned site. Instrument to pull: the
-  City of Sidney annexation / rezoning ordinance for the campus.
+- **Zoning district: IIM — Industry / Innovation / Manufacturing Zone.** `[verified]` City of
+  Sidney **Ordinance A-3226**, passed **2025-07-28**, §1: *"be, and the same hereby is, zoned IIM -
+  Industry / Innovation / Manufacturing Zone"*, with §2 amending the Zoning Map to match. The land
+  was annexed the same night by **A-3225**. Both are committed at
+  [`data/documents/sidney/ordinances/`](../../documents/sidney/ordinances/) and extracted at
+  [`sidney/council/`](council/). *This closes an `[open]` carried since onboarding, and it was
+  always a records question rather than a GIS one.*
+  - **Why the City's own GIS could not answer it, now instrument-grounded.** The published zoning
+    REST layer (`SidneyGIS_AllLayers/MapServer/270`, "officially adopted October 24, 2016") has a
+    **hole** at the campus parcel — zoning, corp-limits and annexation layers all miss its interior
+    point while its two district-01 neighbours hit all three (SEMCORP `26-03-301-001` → IIM; DP&L
+    `26-03-429-009` → CC). That diagnosis was correct and stays. **What was wrong was the cause.**
+    The reason is **Ordinance A-3210**, the official map in force, which recites its own coverage:
+    *"incorporates all the rezoning, annexation, or detachment ordinances from July 25, 2022, to
+    **January 13, 2025**."* That window closes **five and a half months before A-3226 zoned the
+    campus.** The map is not stale by neglect of one parcel; it is a snapshot that ends before the
+    event. The superseding map, **A-3270** (passed 2026-07-27, effective 2026-08-10), is the first
+    whose window contains A-3226 — *whether the campus is drawn as IIM on it is `[open]`; this
+    record makes no visual claim about a map raster.*
 - **Dominant hydrologic soil group:** **D** — SSURGO/SDA 64-point grid over the committed parcel
   geometry (2026-07-31): D 62 pts (96.9%) + C/D 2 pts (3.1%); dominant map units Blount and
   Glynwood silt loams, *end moraine*. `[verified]`
@@ -550,7 +561,11 @@ structured in [`incentive-instruments.yaml`](incentive-instruments.yaml)). What 
    16–30 of the abatement on the megaproject certification it establishes (R.C. 122.17(A)(11)–(12)).
    Route: Ohio Department of Development / Tax Credit Authority meeting minutes and agreements.
 7. **City of Sidney annexation / rezoning ordinance** for the campus parcel — the instrument that
-   would close the zoning `[open]` the city's published GIS layers cannot (see "Zoning district").
+   ~~would close the zoning `[open]`~~ — ✅ **DONE 2026-08-13.** A-3225 (annexation) and A-3226
+   (zoning, IIM) are pulled, read and extracted; see "Zoning district". ⚠️ A-3225 cites **no R.C.
+   709 provision at all** — its stated authority is a **City / Clinton Township Annexation
+   Agreement of ~2025-03-24** that is not in this corpus, so the *expedited annexation type* stays
+   `[open]` and that agreement is the new thing to pull.
 8. **The grading plan and storm water report** on file with the City Engineering Department.
    *New lead* — both are recited on the face of the grading permit. Expect R.C. 149.433 to be
    asserted over parts (see "Records posture").

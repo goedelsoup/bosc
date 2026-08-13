@@ -1,0 +1,109 @@
+# City of Sidney Council, 2025-07-28 — Ordinance A-3225, accepting the annexation of 243.092 acres
+# from Clinton Township. Issue #1998, epic #1275.
+#
+# The act that brought the campus ground into the City, passed the same night as the ordinance that
+# zoned it IIM (A-3226, its sibling in this directory). Read together they are the land's legal
+# entry into Sidney; read apart, neither is complete.
+#
+# ⚠️ THE INTERESTING THING IS WHAT IT DOES NOT CITE. A regex over the whole instrument returns
+# exactly ONE Revised Code citation — 121.22, the open-meetings finding every Sidney act carries.
+# There is NO R.C. 709 provision anywhere in it. Its stated authority is instead a contract: "the
+# Annexation Agreement entered between the City of Sidney and Board of Township Trustees of Clinton
+# Township … on or about March 24, 2025" — an instrument that is NOT in this corpus. So the
+# EXPEDITED ANNEXATION TYPE stays `[open]`, and that agreement is a new, named thing to pull.
+#   Contrast the City's own companion annexation of the 53-acre county tract five months earlier
+#   (A-3211), which names R.C. 709.16 in terms, attaches its petition, and declares an emergency.
+#   The same Council drafted both.
+#
+# TAG VOCABULARY: [verified] = read off this ordinance's own text layer; [inference] = reasoned
+# from [verified] facts, labelled; [open] = not established here.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record, places]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/ordinances/A-3225 - Annexing 243.092 Acres - Joslin-Drees.pdf
+  sha256: 9729514f50e1d5735a2e4ce3fa625904cb098cae73dad9df3b91da468a769c3d
+  content_verified: text-layer
+  read_note: >-
+    Read from the PDF's own native text layer (pypdf, ~4,435 characters over three pages). Retrieved
+    2026-08-13 through the City's Documents-On-Demand portal over HTTP/1.1; the agent-reported hash
+    was independently reproduced by a second pull before shelving.
+pages_read: [0, 1, 2]
+
+resolution:
+  instrument: >-
+    City of Sidney Ordinance No. A-3225 — accepting the annexation of 243.092 acres in the north
+    half of Section 3, Township 7 North, Range 6 East, Clinton Township, Shelby County, passed
+    2025-07-28
+  ordinance_no: A-3225
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: annexation
+  adopted: '2025-07-28'                       # [verified] "Passed this 28th day of July 2025 ."
+  outcome: approved
+
+  territory:
+    tag: verified
+    acres: 243.092
+    verbatim: >-
+      Situated in the north half of Section 3, Township 7 North, Range 6 East Clinton Township,
+      Shelby County, Ohio, being the following 5 parcels ofland;
+    note: >-
+      [verified] THE NORTH HALF of Section 3. The 53-acre Shelby County Commissioners tract annexed
+      by A-3211 and zoned by A-3227 is in the SOUTHEAST QUARTER of the same section — a separate
+      tract that the CRA expansion also covered and that is NOT the campus. Same section number is
+      not the same land.
+    parcels_note: >-
+      The same five-parcel list as A-3226, with the same absence of any role word for the five named
+      persons. See that file's `parcels` block rather than restating it here.
+
+  statutory_authority:
+    tag: verified
+    r_c_709_provision_cited: null
+    only_revised_code_citation: 'R.C. 121.22 (open meetings finding)'
+    stated_authority_verbatim: >-
+      the Annexation Agreement entered between the City of Sidney and Board of Township Trustees of
+      Clinton Township … on or about March 24, 2025
+    consequence: >-
+      [open] WHICH EXPEDITED TYPE this annexation proceeded under. Ohio's R.C. 709.022 / .023 / .024
+      are different procedures with different consequences for township taxation and for what the
+      annexed territory remains subject to. This ordinance names none of them.
+    instrument_to_pull:
+      name: City of Sidney / Clinton Township Board of Trustees Annexation Agreement
+      dated: 'on or about 2025-03-24'          # [verified] as recited HERE — a recital, not a read
+      in_corpus: false
+      note: >-
+        ⚠️ The date is the City's own account of a document nobody has read. A-3211 (passed
+        2025-03-10) says in its body that the City "is working toward an Annexation Agreement" while
+        its attached Petition recites that a certified executed copy is attached as Exhibit C. The
+        Petition is undated on its face, so this is a SEQUENCING OBSERVATION, not a contradiction.
+
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: false
+    note: >-
+      [open] Same instrument form as its siblings — enacting clause, passage date, Attest line, no
+      vote. The Council minutes of 2025-07-28 carry it and are on the same portal, unpulled.
+
+  what_this_instrument_does_not_establish:
+    - >-
+      THE EXPEDITED TYPE. See `statutory_authority`. This is the single most answerable `[open]`
+      the ordinance opens, and the route is the Annexation Agreement it names.
+    - >-
+      ANY CONVEYANCE. An annexation moves a jurisdictional boundary; it transfers no title and names
+      no grantor or grantee. The deeds were recorded 2025-11-24, roughly four months AFTER this act
+      — so the land was annexed and zoned industrial BEFORE Amazon Data Services took title, a
+      sequence the corpus can now state from instruments.
+    - >-
+      ANY CONNECTION TO A DATA CENTER. The ordinance names no project and no company.
+  confidence: high
+  warnings:
+    - >-
+      Clean native text layer with the bound journal's usual character drops ("ofland"), preserved
+      in quotation. The five-parcel list carries the same `.IXIl` garble flagged in the A-3226
+      extraction.
