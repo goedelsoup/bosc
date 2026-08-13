@@ -408,7 +408,10 @@ leads:
     MEETING AUDIO is the route that would change that, and it is not on the portal — it remains an
     R.C. 149.43 ask to the Sidney City Clerk. Also unpulled: the minutes of 2022-10-10 (Res.
     84-22) and 2026-02-23 (Res. 14-26, the consolidation plat), both retrievable on the same
-    portal, which holds Council minutes back to 1857.
-  source: data/documents/sidney/council/filename-map.yaml (the three minutes files) · data/extracted/sidney/council/*.resolution.yaml (the vote blocks)
+    portal. Its coverage is `[verified]` by enumeration, not by the portal's own claim about
+    itself - one GET of /meta/docfolder?containerId= on each container returns the full year-folder
+    list, and on 2026-08-13 the Minutes container returned 170 folders ending 1859, 1858, 1857 and
+    the Resolutions container 51 ending 1978, 1977, 1976.
+  source: data/documents/sidney/council/filename-map.yaml (the three minutes files, and the second-route block that records the API and the enumeration) · data/extracted/sidney/regulatory-watch.yaml (route_retests) · data/extracted/sidney/council/*.resolution.yaml (the vote blocks)
   issue: 1998
   note: 'the walk deferred out of #1947 can now cite a divided vote and dated public objections — but still not a person outside City government'
