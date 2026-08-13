@@ -1,0 +1,91 @@
+# City of Sidney Council, 2025-03-10 — Ordinance A-3211, annexing the 53-acre Shelby County
+# Commissioners tract. Issue #1998, epic #1275.
+#
+# ⚠️ NOT THE CAMPUS — see the sibling A-3227 extraction. It is committed as THE CONTRAST CASE that
+# makes the campus annexation's silences legible: the same Council, five months earlier, drafted an
+# annexation that names its statute, attaches its petition, and declares an emergency. A-3225 does
+# none of those things.
+#
+# TAG VOCABULARY: [verified] = read off the ordinance's own text layer; [open] = not established.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/ordinances/A-3211 - Annexation of 53.083 Acres - Shelby County Commissioners.pdf
+  sha256: 2477c972ad7e72fc81c3e90627fb188dba00306e49eddd2f8e0538451626149b
+  content_verified: text-layer
+  read_note: >-
+    Native text layer for the body and the attached Petition. The survey exhibits are image-only and
+    are NOT read here. Hash independently reproduced before shelving.
+pages_read: [0, 1, 2]
+
+resolution:
+  instrument: >-
+    City of Sidney Ordinance No. A-3211 — annexing a 53-acre tract from the Shelby County
+    Commissioners under R.C. 709.16, as an emergency measure, passed 2025-03-10
+  ordinance_no: A-3211
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: annexation
+  adopted: '2025-03-10'                       # [verified] "Passed this 10th day of March 2025."
+  outcome: approved
+
+  statutory_authority:
+    tag: verified
+    cited: R.C. 709.16
+    verbatim: >-
+      The undersigned petitioner, the Council of the City Sidney, Shelby County, Ohio (the
+      "Petitioner") … hereby petitions to annex the Territory … pursuant to Ohio Revised Code
+      Section 709.16, said actions being authorized by Ordinance No. A-3211 .
+    ⚠️_the_contrast: >-
+      [verified] THE CITY COUNCIL IS ITSELF THE PETITIONER here. On the campus annexation (A-3225)
+      the City merely ACCEPTED, cited no R.C. 709 provision at all, and rested on a Clinton Township
+      Annexation Agreement not in this corpus. Two annexations, five months apart, same Council,
+      opposite postures. ⚠️ What R.C. 709.16 provides is outside these documents and is not asserted.
+
+  emergency_clause:
+    tag: verified
+    verbatim: >-
+      SECTION 3. That it is hereby determined to be an emergency measure, necessary to protect the
+      health, safety, and well-being of the citizens as it is imperative to meet the necessity of
+      expeditiously meeting the deadline for the next meeting of the Shelby County Board of
+      Commissioners.
+    note: >-
+      [verified] The only emergency declaration among the four land ordinances. An emergency removes
+      the referendum window. ⚠️ The boilerplate recites health and safety; THE STATED REASON IS A
+      CALENDAR. Record the gap between the two rather than either alone.
+
+  territory:
+    tag: verified
+    parcel: '02-2603-476.001'
+    verbatim: 'The Territory proposed to be annexed is identified as Parcel Number 02-2603-476.001, and is contiguous with the City of Sidney, Ohio.'
+    acreage_note: >-
+      The ordinance TITLE says 53.083. Its companion zoning ordinance A-3227 says 53.16 in its title
+      and §2 while its surveyed description says 53.083. See that extraction for the four-way split.
+
+  sequencing_observation:
+    tag: verified
+    note: >-
+      This ordinance's body says the City "is working toward an Annexation Agreement" with Clinton
+      Township, while its attached Petition recites that a certified executed copy is attached as
+      Exhibit C — and A-3225 later dates that agreement to "on or about March 24, 2025", two weeks
+      AFTER this passage. ⚠️ The Petition is UNDATED on its face, so this is a sequencing
+      observation and NOT a contradiction. Exhibit C is also a recital — the City's own account of a
+      document nobody has read.
+
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: false
+    note: '[open] Instrument form only; the 2025-03-10 Council minutes are unpulled.'
+
+  what_this_instrument_does_not_establish:
+    - 'ANYTHING ABOUT THE AWS CAMPUS. Different tract, different petitioner, four months earlier.'
+    - 'THE CONTENTS OF THE ANNEXATION AGREEMENT. Exhibit C is recited, not read; the exhibits are image-only.'
+  confidence: high
+  warnings:
+    - 'The attached survey exhibits are image-only and were not read. Every claim above is from the text-layer body or Petition.'

@@ -842,6 +842,200 @@
     "source_doc_published": false
   },
   {
+    "rel": "sidney/council/2025-03-10-ord-a-3211-annexation-53-acres-county.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Ordinance No. A-3211 — annexing a 53-acre tract from the Shelby County Commissioners under R.C. 709.16, as an emergency measure, passed 2025-03-10",
+    "confidence": "high",
+    "warnings": [
+      "The attached survey exhibits are image-only and were not read. Every claim above is from the text-layer body or Petition."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Ordinance No. A-3211 — annexing a 53-acre tract from the Shelby County Commissioners under R.C. 709.16, as an emergency measure, passed 2025-03-10",
+      "ordinance_no": "A-3211",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "annexation",
+      "adopted": "2025-03-10",
+      "outcome": "approved",
+      "statutory_authority": {
+        "tag": "verified",
+        "cited": "R.C. 709.16",
+        "verbatim": "The undersigned petitioner, the Council of the City Sidney, Shelby County, Ohio (the \"Petitioner\") … hereby petitions to annex the Territory … pursuant to Ohio Revised Code Section 709.16, said actions being authorized by Ordinance No. A-3211 .",
+        "⚠️_the_contrast": "[verified] THE CITY COUNCIL IS ITSELF THE PETITIONER here. On the campus annexation (A-3225) the City merely ACCEPTED, cited no R.C. 709 provision at all, and rested on a Clinton Township Annexation Agreement not in this corpus. Two annexations, five months apart, same Council, opposite postures. ⚠️ What R.C. 709.16 provides is outside these documents and is not asserted."
+      },
+      "emergency_clause": {
+        "tag": "verified",
+        "verbatim": "SECTION 3. That it is hereby determined to be an emergency measure, necessary to protect the health, safety, and well-being of the citizens as it is imperative to meet the necessity of expeditiously meeting the deadline for the next meeting of the Shelby County Board of Commissioners.",
+        "note": "[verified] The only emergency declaration among the four land ordinances. An emergency removes the referendum window. ⚠️ The boilerplate recites health and safety; THE STATED REASON IS A CALENDAR. Record the gap between the two rather than either alone."
+      },
+      "territory": {
+        "tag": "verified",
+        "parcel": "02-2603-476.001",
+        "verbatim": "The Territory proposed to be annexed is identified as Parcel Number 02-2603-476.001, and is contiguous with the City of Sidney, Ohio.",
+        "acreage_note": "The ordinance TITLE says 53.083. Its companion zoning ordinance A-3227 says 53.16 in its title and §2 while its surveyed description says 53.083. See that extraction for the four-way split."
+      },
+      "sequencing_observation": {
+        "tag": "verified",
+        "note": "This ordinance's body says the City \"is working toward an Annexation Agreement\" with Clinton Township, while its attached Petition recites that a certified executed copy is attached as Exhibit C — and A-3225 later dates that agreement to \"on or about March 24, 2025\", two weeks AFTER this passage. ⚠️ The Petition is UNDATED on its face, so this is a sequencing observation and NOT a contradiction. Exhibit C is also a recital — the City's own account of a document nobody has read."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": false,
+        "note": "[open] Instrument form only; the 2025-03-10 Council minutes are unpulled."
+      },
+      "what_this_instrument_does_not_establish": [
+        "ANYTHING ABOUT THE AWS CAMPUS. Different tract, different petitioner, four months earlier.",
+        "THE CONTENTS OF THE ANNEXATION AGREEMENT. Exhibit C is recited, not read; the exhibits are image-only."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-03-10-ord-a-3211-annexation-53-acres-county.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/ordinances/A-3211 - Annexation of 53.083 Acres - Shelby County Commissioners.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2025-04-28-ord-a-3219-data-center-use-created.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Ordinance No. A-3219 — adopting amendments to the Zoning Code, including the creation of the \"Warehouse – Data Center\" use and its definition, passed 2025-04-28",
+    "confidence": "high",
+    "warnings": [
+      "The governing use-table cell is ILLEGIBLE in the text layer (`!:`) and was read from a page render. Any future re-check must render the page; a text-layer read of this ordinance cannot confirm or refute the by-right finding."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Ordinance No. A-3219 — adopting amendments to the Zoning Code, including the creation of the \"Warehouse – Data Center\" use and its definition, passed 2025-04-28",
+      "ordinance_no": "A-3219",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "zoning_text_amendment",
+      "adopted": "2025-04-28",
+      "outcome": "approved",
+      "definition": {
+        "tag": "verified",
+        "read": "text-layer",
+        "locator": "Exhibit A, GLOSSARY – USES, letter w (sheet foot \"SIDNEY, OHIO ZONING CODE 145\")",
+        "verbatim": "Warehouse — Data Center. A facility used for the remote storage, processing, or distribution of large amounts of data that is greater than 50,000 square feet.",
+        "transcription_note": "The text layer inserts a stray apostrophe (\"A 'facility used\"); an independent 300-DPI render has none, so it is an extraction artifact and is excluded from the quotation.",
+        "is_new": "[verified] The whole definition is rendered in RED UNDERLINE, and the exhibit's own legend reads \"Red Underline = NEW / Red Strike Through = REMOVE\". The ordinance is the adding instrument on its own face.",
+        "⚠️_the_floor": {
+          "threshold_sq_ft": 50000,
+          "note": "A data facility of 50,000 sq ft or LESS is not a \"Warehouse – Data Center\" under this code, and no other listed use covers it. What such a facility would be permitted as, and where, is [open]."
+        }
+      },
+      "permitted_use": {
+        "tag": "verified",
+        "read": "300-dpi page render (the cell is illegible in the text layer)",
+        "locator": "Exhibit A, Chapter 1103 use table, p.2 (sheet foot \"SIDNEY, OHIO ZONING CODE 22 UPDATED THROUGH NOVEMBER 25, 2024\")",
+        "finding": "The row \"Warehouse – Data Center\" carries a single entry — P, permitted by right — in the \"Industry/ Innov./Manuf. Zone (IIM)\" column. All eight other district columns on that row are BLANK.",
+        "districts_on_the_table": [
+          "R-1",
+          "R-2",
+          "R-3",
+          "CC",
+          "NC",
+          "HC",
+          "IIM",
+          "CSD",
+          "TND"
+        ],
+        "both_marked_new": "[verified] The row label AND the P are both in red underline, i.e. NEW under the exhibit's own legend.",
+        "how_the_column_was_identified": "Against the rendered header band, and cross-checked against the P's of \"Warehouse - Large Format\", \"Storage - Contractor\" and \"Storage - Commercial Gases\", which sit in the same column. ⚠️ The column was NOT inferred from the filename or from the ordinance title.",
+        "consequence": "[inference], and the reasoning is the code's own scheme: a P is by-right, so a data center in the IIM zone requires no conditional-use permit, no variance and no BZA hearing. This is why there is no BZA or Planning Commission record of a data-center approval to find. Report it as a structural absence, never as a corpus gap."
+      },
+      "the_sequence": {
+        "tag": "verified",
+        "note": "Every date below is content-verified from the instrument's own passage clause, so the ORDER is solid. What it means is not asserted.",
+        "entries": [
+          {
+            "date": "2025-04-28",
+            "event": "A-3219 creates the \"Warehouse – Data Center\" use, P by right in IIM only"
+          },
+          {
+            "date": "2025-06-16",
+            "event": "The Planning Commission declines 0-4 to recommend zoning the campus IIM"
+          },
+          {
+            "date": "2025-07-28",
+            "event": "A-3225 annexes the 243.092 acres and A-3226 zones them IIM"
+          },
+          {
+            "date": "2025-09-08",
+            "event": "Res. 69-25 adds the thirty-year megaproject exemption tier"
+          },
+          {
+            "date": "2025-10-27",
+            "event": "Res. 80-25 authorizes the CRA Agreement at 30 years / 100%"
+          }
+        ],
+        "⚠️_it_names_nothing": "A-3219 names no project, no company and no parcel — and a Commission member asked on the record why the category was needed at all (see `deliberation`). Whether it was drafted with this campus in view is [open]. The chronology is a fact; the motive is not in any document read here."
+      },
+      "deliberation": {
+        "tag": "verified",
+        "source": {
+          "file": "data/documents/sidney/planning-commission/Planning Commission Minutes March 17, 2025.pdf",
+          "case": "PZCA2025-0002"
+        },
+        "the_question": "A. Sakhalkar asked for clarification on why the proposed code is specifically calling out data centers when the code currently lists warehouse- small format and large format; noting that a data center should fall under one of those existing uses.",
+        "the_answer": "T. Hurysz replied that the city is being inclusive to different types of uses that may or may not come into the city. Data Centers was not a specific use listed before, but the proposal is to add it. He also noted that the terms for warehouses- small and large format pertains to the literal storage of physical goods and materials. Since a data center stores information, staff feels the distinction needs to be added.",
+        "note": "[verified] This is the only recorded deliberation on why Sidney created a data-center use, and it names no project. The Commission recommended the amendments; Council adopted them six weeks later."
+      },
+      "subsequent_amendments": {
+        "tag": "verified",
+        "finding": "SIDNEY HAS NOT REVISITED THE USE SINCE. The two later zoning-code amendments in the City's Ordinances container — A-3236 (2025-09-22) and A-3255 (2026-02-23) — carry ZERO mentions of data centers between them.",
+        "sweep": "The negative rests on a full enumeration of the Ordinances container's 2025 and 2026 year folders (49 and 22 documents), of which the zoning-code amendments were opened and read.",
+        "both_committed": [
+          "data/documents/sidney/ordinances/A-3236 - Adopting Zoning Code Amendments.pdf",
+          "data/documents/sidney/ordinances/A-3255 - Amending Zoning Code.pdf"
+        ]
+      },
+      "cross_site": {
+        "tag": "verified",
+        "note": "Van Wert wrote \"Data Center\" into its own code by Ord. 26-05-029 on 2026-05-11, alongside the annexation and zoning of ITS campus the same night. Sidney's definition precedes Van Wert's by about twelve and a half months, and Sidney's definition precedes its own campus zoning by three. TWO SEQUENCES, WRITTEN SEPARATELY. Nothing here supports a claim that either city was responding to the other. See data/extracted/van-wert/council/.",
+        "⚠️_the_briefed_negative": "The research that produced this file was briefed with Van Wert as the network's example and the implication that Sidney had none. That was wrong, and it is recorded here so the next reader does not inherit it."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": false,
+        "note": "[open] The RECORD OF ORDINANCES page carries the enacting clause, the passage date and the Attest line only. The Council minutes of 2025-04-28 are on the same portal, unpulled."
+      },
+      "what_this_instrument_does_not_establish": [
+        "ANY CONNECTION TO THE CAMPUS. It names no project, no company and no parcel, and predates the campus's annexation by three months.",
+        "WHAT A DATA CENTER MAY DO once permitted. The use table grants the use; operating conditions — noise, water, generators, hours — are elsewhere in the code or nowhere, and this ordinance imposes none. ⚠️ Contrast Van Wert, whose conditional-zoning ordinance carried a landscape mound and nothing else: neither city attached operating conditions to a data center.",
+        "COVERAGE BELOW 50,000 SQ FT. See `definition.⚠️_the_floor`."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-04-28-ord-a-3219-data-center-use-created.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        11
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/ordinances/A-3219 - Adopting Amendments to the Zoning Code.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "sidney/council/2025-07-28-ord-a-3225-annexation-243-acres.resolution.yaml",
     "group": "local-legislation",
     "title": "City of Sidney Ordinance No. A-3225 — accepting the annexation of 243.092 acres in the north half of Section 3, Township 7 North, Range 6 East, Clinton Township, Shelby County, passed 2025-07-28",
@@ -1015,6 +1209,68 @@
     "source_doc_published": false
   },
   {
+    "rel": "sidney/council/2025-07-28-ord-a-3227-zoning-53-acres-county.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Ordinance No. A-3227 — zoning the annexed Shelby County Commissioners tract in the southeast quarter of Section 3 as IIM, passed 2025-07-28",
+    "confidence": "high",
+    "warnings": [
+      "Journal-scan artifacts throughout, preserved in quotation. The acreage conflict is in the instrument, not in the read."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Ordinance No. A-3227 — zoning the annexed Shelby County Commissioners tract in the southeast quarter of Section 3 as IIM, passed 2025-07-28",
+      "ordinance_no": "A-3227",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "zoning_establishment",
+      "adopted": "2025-07-28",
+      "outcome": "approved",
+      "zoning_classification": "IIM - Industry / Innovation / Manufacturing Zone",
+      "zoning_verbatim": "be, and the same hereby is, zoned IIM - Industry / Innovation / Manufacturing Zone.",
+      "not_the_campus": {
+        "tag": "verified",
+        "verbatim": "Situate in the southeast quaiter of Section 3, Town 7 Nmth, Range 6 East, Clinton Township, Shelby County, State of Ohio. Commencing at an iron pin in a monument box found at the southeast comer of the southeast quarter of Section 3. Said point also being at the centerline of Vandemark Road.",
+        "note": "The campus is in the NORTH HALF of Section 3 (A-3225). The CRA expansion of Res. 69-25 covered both tracts, which is why the Council minutes of 2025-09-08 mention them together — that is not a reason to merge them. Journal artifacts (\"quaiter\", \"Nmth\", \"comer\") preserved."
+      },
+      "⚠️_acreage_conflict_inside_one_instrument": {
+        "tag": "verified",
+        "title": "AN ORDINANCE ZONING A 53.16 ACRE TRACT",
+        "legal_description_closes": "Containing 53 .083 acres more or less, subject to all easements of record.",
+        "section_2": "amended to reflect the inclusion of the 5 3 .16-acre tract as an IIM - Industry / Innovation / Manufacturing Zone",
+        "finding": "TWO FIGURES, ONE DOCUMENT, 0.077 ACRES APART. 53.083 is the only figure that ever appears inside a SURVEYED description; 53.16 appears in this ordinance's title and §2, in A-3211's title, in the Planning Commission's case caption for PRZM2025-0005, and in the Council minutes of 2025-09-08. Four City records divide on one tract.",
+        "not_resolved": "[open]. The 0.077-acre difference is NOT explained by the roadway dedications shown on A-3211's exhibits (1.808 ac and 0.041 ac). Answered without being resolved."
+      },
+      "planning_commission": {
+        "tag": "verified",
+        "note": "Its zoning recommendation DEADLOCKED on 2025-06-16, case PRZM2025-0005 — \"M. Asher- yes / P. Miller- no / A. Sakhalkar- no / D. Gross- yes\" — which the clerk recorded as \"Motion neither passed or failed\". ⚠️ Quote that phrasing; do NOT restate a 2-2 tie as \"failed\". Neither of the two zoning recommendations put to the Commission that night carried."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": false,
+        "note": "[open] Instrument form only; the 2025-07-28 Council minutes are unpulled."
+      },
+      "what_this_instrument_does_not_establish": [
+        "ANYTHING ABOUT THE AWS CAMPUS. Different tract, different owner, different quarter-section."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-07-28-ord-a-3227-zoning-53-acres-county.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/ordinances/A-3227 - Zoning 53.16 IIM - County Commissioners Annexation.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml",
     "group": "local-legislation",
     "title": "City of Sidney Resolution No. 69-25 — authorizing the expansion of the City's Sidney City-Wide Community Reinvestment Area and amending Resolution 84-22, passed 2025-09-08",
@@ -1115,6 +1371,80 @@
       "verified": true
     },
     "source_doc_rel": "sidney/council/69-25 - Amending Resolution 84-22 - Expanding CRA Boundaries.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2025-09-22-ord-a-3236-guard-shacks.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Ordinance No. A-3236 — adopting amendments to the Zoning Code, including §1111.05(u) guard shacks and floodplain updates, passed 2025-09-22",
+    "confidence": "high",
+    "warnings": [
+      "Native text layer with journal-scan artifacts, preserved in quotation."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Ordinance No. A-3236 — adopting amendments to the Zoning Code, including §1111.05(u) guard shacks and floodplain updates, passed 2025-09-22",
+      "ordinance_no": "A-3236",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "zoning_text_amendment",
+      "adopted": "2025-09-22",
+      "outcome": "approved",
+      "guard_shacks": {
+        "tag": "verified",
+        "section": "§1111.05(u)",
+        "iim_only_verbatim": "Guard shacks are permitted in the IIM Zone only.",
+        "limits": [
+          "Permitted in any yard, on the same zoning lot as the principal building",
+          "Minimum 15 feet from every property line and 10 feet from the principal building",
+          "Maximum 199 square feet total gross floor area",
+          "Maximum 18 feet in height from grade"
+        ],
+        "note": "[verified] The IIM zone is the campus's zone (Ord. A-3226). This is the second use the City confined to IIM alone, after the data-center use itself."
+      },
+      "⚠️_defect_in_the_enacted_text": {
+        "tag": "verified",
+        "read": "text layer AND 300-dpi render of p.7",
+        "section": "§1117.02 definition",
+        "verbatim": "Guard Shack. A structure located on private property for the purpose of manually or electronically monitoring pedestrian and / or vehicular traffic and promoting security by substantially impeding or restricting ingress or egress to said property. A guard shack shall not be",
+        "finding": "THE DEFINITION STOPS MID-SENTENCE. \"A guard shack shall not be \" is followed immediately by the next glossary entry, \"Historic structure:\". The render shows the red-underlined NEW text simply ending — there is no strikethrough, no continuation and no missing page. The City adopted an unfinished sentence.",
+        "why_it_is_not_an_artifact": "Confirmed from the page image, not only the text layer, and struck-through text elsewhere in the same exhibit does still render — so an extraction failure does not explain it."
+      },
+      "data_centers": {
+        "tag": "verified",
+        "mentions": 0,
+        "note": "A clean negative over the whole ordinance. Together with A-3255 (2026-02-23, also zero), this establishes that Sidney has not revisited the data-center use since creating it in A-3219."
+      },
+      "⚠️_timing_is_not_causation": {
+        "tag": "verified",
+        "fact": "This ordinance's public hearing was held 2025-09-08 — the same meeting that passed Res. 69-25's thirty-year megaproject tier — and it returned for deliberation on 2025-09-22.",
+        "guard": "RECORD THE COINCIDENCE, WRITE NO CAUSAL CLAIM. Neither instrument names the other; neither names any data center; the Council minutes of 2025-09-08 present the amendments as ODNR/FEMA floodplain updates and clarifications."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": false,
+        "note": "[open] Enacting clause, passage date and Attest line only. The 2025-09-22 minutes are unpulled."
+      },
+      "what_this_instrument_does_not_establish": [
+        "ANY LINK TO THE CAMPUS. It names no project, no company and no parcel.",
+        "WHAT A GUARD SHACK MAY NOT BE. The sentence that would have said so is truncated in the adopted text."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-09-22-ord-a-3236-guard-shacks.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        8
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/ordinances/A-3236 - Adopting Zoning Code Amendments.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": false
   },
@@ -1612,6 +1942,62 @@
       "verified": true
     },
     "source_doc_rel": "sidney/council/27-26 - Authorizing Infrastructure Development Agreement - Amazon Web Services.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2026-07-27-ord-a-3270-current-zoning-map.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Ordinance No. A-3270 — adopting a new official Zoning Map incorporating the rezoning, annexation and detachment ordinances from 2025-03-10 to 2026-06-08, passed 2026-07-27",
+    "confidence": "high",
+    "warnings": [
+      "The map sheet (p.2, 0-based) is a large raster and was deliberately not interpreted."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Ordinance No. A-3270 — adopting a new official Zoning Map incorporating the rezoning, annexation and detachment ordinances from 2025-03-10 to 2026-06-08, passed 2026-07-27",
+      "ordinance_no": "A-3270",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "zoning_map",
+      "adopted": "2026-07-27",
+      "effective": "2026-08-10",
+      "outcome": "approved",
+      "coverage_window": {
+        "tag": "verified",
+        "from": "2025-03-10",
+        "to": "2026-06-08",
+        "verbatim": "the rezoning, annexation~ or detachment ordinances from March 10, 2025, to June 8, 2026",
+        "why_it_matters": "[verified] This window CONTAINS A-3226 (2025-07-28) and A-3227, where its predecessor A-3210's window (\"July 25, 2022, to January 13, 2025\") did not. The campus was never unzoned; the official map simply ended before the event, and this is the first map that could show it.",
+        "transcription_note": "The tilde in \"annexation~\" is a scan artifact, preserved."
+      },
+      "⚠️_no_visual_claim": {
+        "tag": "open",
+        "note": "Whether the campus is actually DRAWN as IIM on this map's raster is NOT established here. The raster was not read, and reading a polygon off a map image is a different kind of claim from reading a recital. The zoning itself rests on A-3226's operative text and needs no map."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": false,
+        "note": "[open] Instrument form only; the 2026-07-27 Council minutes are unpulled."
+      },
+      "what_this_instrument_does_not_establish": [
+        "THE CAMPUS POLYGON. See `⚠️_no_visual_claim`.",
+        "WHETHER THE CITY GIS SERVICE HAS BEEN REFRESHED to this map. That is a question about a web service, not about this ordinance."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2026-07-27-ord-a-3270-current-zoning-map.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/ordinances/A-3270 - Adopting a New Zoning Map.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": false
   },

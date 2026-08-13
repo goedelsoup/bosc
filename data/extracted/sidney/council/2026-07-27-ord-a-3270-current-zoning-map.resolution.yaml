@@ -1,0 +1,67 @@
+# City of Sidney Council, 2026-07-27 — Ordinance A-3270, adopting the current official zoning map.
+# Issue #1998, epic #1275.
+#
+# The half of the GIS story its predecessor could not tell. A-3210 (2025-02-24) explains why the
+# City's published layer could not show the campus's zoning: its declared window ends 2025-01-13,
+# five and a half months before A-3226 zoned it. THIS is the first official map whose window
+# contains that ordinance.
+#
+# TAG VOCABULARY: [verified] = read off the ordinance's own text layer; [open] = not established.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record, places]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/ordinances/A-3270 - Adopting a New Zoning Map.pdf
+  sha256: 4c852c8b6b302d905be288d9627ed899c19b06e62c88f58a6b4a11f5a4caacda
+  content_verified: text-layer
+  read_note: >-
+    Native text layer for the recitals and the passage clause. Page 3 is the map RASTER and is not
+    read; no visual claim is made from it. Hash independently reproduced before shelving.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    City of Sidney Ordinance No. A-3270 — adopting a new official Zoning Map incorporating the
+    rezoning, annexation and detachment ordinances from 2025-03-10 to 2026-06-08, passed 2026-07-27
+  ordinance_no: A-3270
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: zoning_map
+  adopted: '2026-07-27'                       # [verified] "Passed this 27th day of July 2026"
+  effective: '2026-08-10'
+  outcome: approved
+
+  coverage_window:
+    tag: verified
+    from: '2025-03-10'
+    to: '2026-06-08'
+    verbatim: 'the rezoning, annexation~ or detachment ordinances from March 10, 2025, to June 8, 2026'
+    why_it_matters: >-
+      [verified] This window CONTAINS A-3226 (2025-07-28) and A-3227, where its predecessor A-3210's
+      window ("July 25, 2022, to January 13, 2025") did not. The campus was never unzoned; the
+      official map simply ended before the event, and this is the first map that could show it.
+    transcription_note: 'The tilde in "annexation~" is a scan artifact, preserved.'
+
+  ⚠️_no_visual_claim:
+    tag: open
+    note: >-
+      Whether the campus is actually DRAWN as IIM on this map's raster is NOT established here. The
+      raster was not read, and reading a polygon off a map image is a different kind of claim from
+      reading a recital. The zoning itself rests on A-3226's operative text and needs no map.
+
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: false
+    note: '[open] Instrument form only; the 2026-07-27 Council minutes are unpulled.'
+
+  what_this_instrument_does_not_establish:
+    - 'THE CAMPUS POLYGON. See `⚠️_no_visual_claim`.'
+    - 'WHETHER THE CITY GIS SERVICE HAS BEEN REFRESHED to this map. That is a question about a web service, not about this ordinance.'
+  confidence: high
+  warnings:
+    - 'The map sheet (p.2, 0-based) is a large raster and was deliberately not interpreted.'

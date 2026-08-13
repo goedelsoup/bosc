@@ -81,3 +81,119 @@ documents:
       raster and NO visual claim is made here about the campus polygon. The superseding map is
       A-3270 (passed 2026-07-27, effective 2026-08-10), whose window does contain A-3226 — not
       pulled in this pass.
+
+# ── The ZONING CODE layer (#1998 tail, slice 2) ────────────────────────────────────────────────
+# Slice 1 answered what the campus IS zoned. These answer what that zoning MEANS, and when the
+# City decided it.
+  - filename: A-3219 - Adopting Amendments to the Zoning Code.pdf
+    portal_document_id: "69fbe3f1-95eb-4fb9-b25e-25a0862d3d86"
+    canonical: sidney-ord-a-3219-zoning-code-data-center-use-2025-04-28.pdf
+    type: council-ordinance
+    date: "2025-04-28"
+    content_verified: text-layer   # "Passed this 28TH day of April 2025."
+    pages: 11
+    sha256: "d2d7f3c061aa6a798125eb863baf54d805ee28a4bcccce7860ace0cbd3a89d01"
+    bytes: 6833689
+    carries:
+      - "THE ORDINANCE THAT PUT DATA CENTERS IN SIDNEY'S ZONING CODE. Exhibit A, GLOSSARY - USES, letter w: 'Warehouse - Data Center. A facility used for the remote storage, processing, or distribution of large amounts of data that is greater than 50,000 square feet.'"
+      - "⚠️ A 50,000 SQ FT FLOOR. A data facility at or below that size is not a 'Warehouse - Data Center' under this code and has no listed use at all."
+      - "The Chapter 1103 use table (p.2): the row 'Warehouse - Data Center' carries a single P — PERMITTED BY RIGHT — in the 'Industry/ Innov./Manuf. Zone (IIM)' column, and NOTHING in the other eight district columns (R-1, R-2, R-3, CC, NC, HC, CSD, TND)."
+      - "Both the row label and the P are in RED UNDERLINE, and the exhibit's own legend reads 'Red Underline = NEW / Red Strike Through = REMOVE' — so the ordinance is the ADDING instrument, on its own face."
+      - "Sheet foot: 'SIDNEY, OHIO ZONING CODE 22 UPDATED THROUGH NOVEMBER 25, 2024'."
+    notes: >-
+      ⚠️ THE USE-TABLE CELL IS NOT READABLE FROM THE TEXT LAYER — pypdf renders it as `!:`. It was
+      read from a 300-DPI page render, and the column identified against the rendered header band
+      and against the P's of Warehouse - Large Format, Storage - Contractor and Storage - Commercial
+      Gases in the same column. The definition text, by contrast, extracts cleanly. ⚠️ The text
+      layer inserts a stray apostrophe ("A 'facility used"); the render has none, so the apostrophe
+      is an extraction artifact and is excluded from the quotation above.
+
+  - filename: A-3236 - Adopting Zoning Code Amendments.pdf
+    portal_document_id: "6bb1dc7e-3eb5-41ea-bd14-9f15c7b17608"
+    canonical: sidney-ord-a-3236-zoning-code-guard-shacks-2025-09-22.pdf
+    type: council-ordinance
+    date: "2025-09-22"
+    content_verified: text-layer   # "Passed this 22nd day of September 2025"
+    pages: 10
+    sha256: "77cf48a33b35d8a966a0ce9c09beb9d7d6b067991f2143fb89abdd3bb5a79686"
+    bytes: 6696662
+    carries:
+      - "§1111.05(u) GUARD SHACKS, permitted 'in the IIM Zone only' — max 199 sq ft, max 18 ft tall, min 15 ft from every property line and 10 ft from the principal building, allowed in any yard."
+      - "⚠️ A DEFECT IN THE ENACTED TEXT. The matching §1117.02 definition stops mid-sentence: 'A guard shack shall not be ' — and the next line begins 'Historic structure:'. CONFIRMED FROM A 300-DPI RENDER, not just the text layer: the red-underlined NEW text simply ends there. The City adopted an unfinished sentence."
+      - "A clean [verified] NEGATIVE: zero mentions of data centers anywhere in the ordinance."
+    notes: >-
+      This is the ordinance whose public hearing was held 2025-09-08 — the same meeting that passed
+      Res. 69-25's thirty-year megaproject tier — and which returned for deliberation 2025-09-22.
+      ⚠️ THE TIMING IS A DOCUMENTED COINCIDENCE AND NOTHING MORE: neither instrument names the
+      other, and neither names any data center. Do not write a causal claim from a shared calendar.
+
+  - filename: A-3255 - Amending Zoning Code.pdf
+    portal_document_id: "b29c2e07-8da9-4da0-913d-dbbd8c11ae9c"
+    canonical: sidney-ord-a-3255-zoning-code-amendment-2026-02-23.pdf
+    type: council-ordinance
+    date: "2026-02-23"
+    content_verified: text-layer   # "Passed this 23rd day of February 2026"
+    pages: 3
+    sha256: "da2f93d0f1c14f1af6bd1ea304f8545e6195fefdcafa290ac781eafa4a7f47dd"
+    bytes: 1434309
+    carries:
+      - "THE CLOSING NEGATIVE on the code question: the most recent zoning-code amendment in the container carries ZERO mentions of data centers. Sidney has not revisited the use since creating it in April 2025."
+    notes: >-
+      Shelved for the negative it establishes. A negative is only as good as the sweep behind it,
+      and the sweep here is the Ordinances container's own 2025 and 2026 year folders, enumerated
+      in full.
+
+  - filename: A-3211 - Annexation of 53.083 Acres - Shelby County Commissioners.pdf
+    portal_document_id: "bcf2c74c-76fe-ef11-a43f-000c29a59557"
+    canonical: sidney-ord-a-3211-annexation-53-acres-county-2025-03-10.pdf
+    type: council-ordinance
+    date: "2025-03-10"
+    content_verified: text-layer   # "Passed this 10th day of March 2025."
+    pages: 6
+    sha256: "2477c972ad7e72fc81c3e90627fb188dba00306e49eddd2f8e0538451626149b"
+    bytes: 1157769
+    carries:
+      - "THE CONTRAST CASE that makes A-3225's silences legible. Where the campus annexation cites no R.C. 709 provision at all, this one names 'Ohio Revised Code Section 709.16' in terms, on its attached Petition."
+      - "Its petitioner is THE CITY COUNCIL ITSELF — the opposite posture from the campus annexation, where the City merely accepted a petition brought to it."
+      - "An EMERGENCY CLAUSE — the only one of the four land ordinances to carry one. ⚠️ Its stated reason is scheduling: 'imperative to meet the necessity of expeditiously meeting the deadline for the next meeting of the Shelby County Board of Commissioners.' An emergency declaration removes the referendum window; the boilerplate recites health and safety, and the actual reason given is a calendar."
+      - "Territory identified as Parcel Number 02-2603-476.001. Attached Petition and survey exhibits."
+    notes: >-
+      ⚠️ NOT THE CAMPUS. Committed so that a future reader cannot mistake it for one — see A-3227.
+      The exhibits are image-only.
+
+  - filename: A-3227 - Zoning 53.16 IIM - County Commissioners Annexation.pdf
+    portal_document_id: "44658eee-cf0c-4fac-9e52-011041d33a99"
+    canonical: sidney-ord-a-3227-zoning-53-acres-iim-2025-07-28.pdf
+    type: council-ordinance
+    date: "2025-07-28"
+    content_verified: text-layer   # passed the same night as A-3225/A-3226
+    pages: 3
+    sha256: "1949e96ac1f88fc4c8d4ee73d4c9d7a471bfa8a9a755eced76a0400191ac1a1b"
+    bytes: 1117247
+    carries:
+      - "⚠️ AN ACREAGE CONFLICT INSIDE A SINGLE INSTRUMENT. Its title: 'AN ORDINANCE ZONING A 53.16 ACRE TRACT'. Its own legal description closes: 'Containing 53 .083 acres more or less, subject to all easements of record.' Its §2 then says '5 3 .16-acre tract'. Two figures, one document, 0.077 acres apart."
+      - "⚠️ IT IS NOT THE CAMPUS, and the description proves it: 'Situate in the southeast quaiter of Section 3, Town 7 Nmth, Range 6 East, Clinton Township' — where the campus (A-3225) is in the NORTH HALF of the same section. Same section number, different land."
+      - "A second, independent expansion of the IIM acronym: 'zoned IIM - Industry / Innovation / Manufacturing Zone.'"
+    notes: >-
+      The 53.083 figure is the only one that ever appears inside a SURVEYED description; 53.16
+      appears in titles, in §2, in the Planning Commission caption and in the Council minutes. The
+      conflict is recorded, not resolved — the 0.077-acre difference is not explained by the
+      roadway dedications shown on A-3211's exhibits. Journal-scan artifacts ("quaiter", "Nmth",
+      "5 3 .16") preserved in quotation.
+
+  - filename: A-3270 - Adopting a New Zoning Map.pdf
+    portal_document_id: "b9c99d90-9676-469a-9721-7eb89ea9bf0d"
+    canonical: sidney-ord-a-3270-zoning-map-2026-07-27.pdf
+    type: council-ordinance
+    date: "2026-07-27"
+    content_verified: text-layer   # "Passed this 27th day of July 2026"
+    pages: 3
+    sha256: "4c852c8b6b302d905be288d9627ed899c19b06e62c88f58a6b4a11f5a4caacda"
+    bytes: 11624778
+    carries:
+      - "THE CURRENT OFFICIAL ZONING MAP, and the first whose declared window CONTAINS the campus zoning: it 'incorporates all the rezoning, annexation, or detachment ordinances from March 10, 2025, to June 8, 2026' — where its predecessor A-3210 stopped at 2025-01-13."
+      - "Effective 2026-08-10. Page 3 is the map raster, so the corpus can hold the official map rather than depend on a live REST service."
+    notes: >-
+      ⚠️ NO VISUAL CLAIM IS MADE HERE ABOUT THE CAMPUS POLYGON. That the map's window contains
+      A-3226 is read from the ordinance's own recital; whether the campus is DRAWN as IIM on the
+      raster is a separate question and is [open].
