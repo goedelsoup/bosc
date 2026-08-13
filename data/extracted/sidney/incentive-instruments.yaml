@@ -291,7 +291,11 @@ cra_agreement:
       less than that amount.
     source:
       file: data/documents/sidney/council/City Council Agenda Packet October 27, 2025.pdf
-      page: 64                                # 0-based; the Council Action Summary for Res. 80-25
+      page: 64                                # 0-BASED INDEX — a viewer shows this as PDF page 65
+      page_note: >-
+        The corpus's `pages_read` convention is 0-based, so this field is too. Stated explicitly
+        because "page 64" in prose sends a reader to the page BEFORE the one that carries the
+        figure. The Council Action Summary for Res. 80-25 is PDF page 65 of 123.
       kind: city staff summary, not an instrument
     ⚠️_two_hedges_travel_with_it:
       - 'The estimate hedges itself: "may be more or less than that amount".'

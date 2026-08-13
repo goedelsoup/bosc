@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-13T14:24:12.971217+00:00'
+reconciled_at: '2026-08-13T14:45:22.284063+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -1422,8 +1422,8 @@ entries:
     site_scope: site:sidney
   sidney-incentive-instruments:
     exists: true
-    sha256: ebb8a8fdae89f54355f83ddcfcdd0613ae0b0ea7d250ed27bc5631f6729a4623
-    size_bytes: 176386
+    sha256: 04a9f0e5d8d994309e54c5628bd448fee29bbe6f07746275b80ba6f66be935a7
+    size_bytes: 176680
     lfs_materialized: true
     file_count: 17
     missing: []
