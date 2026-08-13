@@ -90,14 +90,12 @@
       "gaps": [
         {
           "wouldScreen": "a single consumptive-draw figure against the receiving water's low-flow floor.",
-          "missingRecord": "any record of how the facility rejects heat — a water contract, a wastewater permit, or a cooling-plant spec; until one surfaces, the water figures stay a bracketed range across candidate archetypes.",
+          "missingRecord": "any record of how the facility rejects heat — a water contract, a wastewater permit, or a cooling-plant spec; until one surfaces there is no quantity to screen, and no buildout is modelled here at all.",
           "producer": "the water utility, the wastewater permit file, or the operator's own engineering disclosure",
           "leadIds": null
         }
       ],
-      "caveats": [
-        "The draw is set against the receiving water's cited design low flow as a worst-case, basin-scale bound — a screening comparison, not a withdrawal claim."
-      ]
+      "caveats": []
     }
   },
   {

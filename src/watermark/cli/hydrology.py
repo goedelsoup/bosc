@@ -974,6 +974,26 @@ def scenario(
             )
             raise typer.Exit(code=1) from None
     if baseline_only:
+        # Every one of these knobs parameterizes the BUILDOUT, which this mode does not run — so
+        # accepting them would silently discard the operator's input and write a file that looks
+        # like it honoured them. Refuse instead: on this path the buildout's absence is an
+        # evidentiary claim, and a flag that says otherwise contradicts it.
+        conflicting = [
+            flag
+            for flag, supplied in (
+                ("--cooling-demand", cooling_demand is not None),
+                ("--consumptive-fraction", consumptive_fraction is not None),
+                ("--cooling-model", cooling_model is not None),
+            )
+            if supplied
+        ]
+        if conflicting:
+            console.print(
+                f"[red]--baseline-only cannot be combined with {', '.join(conflicting)}[/] — "
+                "those parameterize the buildout scenario, which this mode does not run. "
+                "Drop the override, or drop --baseline-only to model a buildout with it."
+            )
+            raise typer.Exit(code=1)
         _baseline_only_scenario(scenario_stage, settings=settings, write=write)
         return
     base, build, delta = hydro_stage.run_scenarios(

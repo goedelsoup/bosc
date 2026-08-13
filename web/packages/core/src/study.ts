@@ -958,6 +958,20 @@ const COOLING_GAP: StudyGapFinding = {
   producer: "the water utility, the wastewater permit file, or the operator's own engineering disclosure",
 };
 
+/**
+ * The same ask where NOTHING was modelled (#1265). `COOLING_GAP` closes on "the water figures
+ * stay a bracketed range across candidate archetypes" — true for a site whose buildout ran across
+ * archetypes, false for one whose scenario set is baseline-only, where there are no water figures
+ * at all. Naming a range the feed does not contain is the same class of claim as the "worst-case
+ * 0.0" this chapter already suppresses, so the no-draw case gets its own copy.
+ */
+const NO_DRAW_GAP: StudyGapFinding = {
+  wouldScreen: "a single consumptive-draw figure against the receiving water's low-flow floor.",
+  missingRecord:
+    "any record of how the facility rejects heat — a water contract, a wastewater permit, or a cooling-plant spec; until one surfaces there is no quantity to screen, and no buildout is modelled here at all.",
+  producer: "the water utility, the wastewater permit file, or the operator's own engineering disclosure",
+};
+
 /** The load-instrument ask, shared by the power chapter's screening-bracket state. */
 const LOAD_INSTRUMENT_GAP: StudyGapFinding = {
   wouldScreen:
@@ -1086,13 +1100,21 @@ const COMPOSERS: Record<string, (slug: string, facility: FacilityItem | null) =>
       });
       if (floor) stats.push(floor);
     }
-    const gaps = coolingUndisclosed(slug, facility) ? [COOLING_GAP] : [];
+    // Both the gap copy and the caveat describe a DRAW. On a baseline-only set there isn't one,
+    // so the standard gap's "the water figures stay a bracketed range across candidate
+    // archetypes" names a range no row contains, and the caveat's "The draw is set against …"
+    // asserts a screening comparison that was never run (#1265). Swap in the no-draw gap and
+    // drop the caveat rather than publishing either claim.
+    const modelled = modelledCampusDraw(slug);
+    const gaps = coolingUndisclosed(slug, facility) ? [modelled ? COOLING_GAP : NO_DRAW_GAP] : [];
     return {
       stats,
       gaps,
-      caveats: [
-        "The draw is set against the receiving water's cited design low flow as a worst-case, basin-scale bound — a screening comparison, not a withdrawal claim.",
-      ],
+      caveats: modelled
+        ? [
+            "The draw is set against the receiving water's cited design low flow as a worst-case, basin-scale bound — a screening comparison, not a withdrawal claim.",
+          ]
+        : [],
     };
   },
 

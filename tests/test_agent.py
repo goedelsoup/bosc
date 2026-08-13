@@ -35,6 +35,7 @@ async def test_program_overview_reads_committed_summary() -> None:
 
 async def test_reference_tools_do_not_serve_lima_data_off_home(
     monkeypatch: pytest.MonkeyPatch,
+    hydro_settings: Settings,
 ) -> None:
     # #424: a per-site run must NOT be silently handed Lima's reference record.
     # timeline/entities now serve the active site's own corpus (per-site scoped via
@@ -46,9 +47,11 @@ async def test_reference_tools_do_not_serve_lima_data_off_home(
     # own balance instead of the notice. That is the stronger form of this test's guarantee,
     # not a weakening of it: the tool answers from this site's WPCC, and Lima's periplus WWTP
     # graph must not appear anywhere in the answer.
-    monkeypatch.setattr(
-        tools, "get_settings", lambda: Settings(site="findlay", data_dir=REPO_ROOT / "data")
-    )
+    # Offline hydrology settings (the `hydro_settings` wiring + this slug): now that Findlay has
+    # a committed watch-items graph, `hydrology_balance` really runs its balance here, and the
+    # suite is hermetic — no connector call may reach the network (tests/CLAUDE.md).
+    findlay_settings = hydro_settings.model_copy(update={"site": "findlay"})
+    monkeypatch.setattr(tools, "get_settings", lambda: findlay_settings)
 
     # hydrology_balance serves FINDLAY's own committed WWTP graph — its one permitted
     # discharger, screened against its own cited at-outfall design low flow.
