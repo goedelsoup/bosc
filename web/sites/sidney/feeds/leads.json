@@ -220,6 +220,17 @@
     "note": null
   },
   {
+    "id": "TIRC",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "The body that reviews this abatement every year publishes nothing, anywhere",
+    "detail": "The CRA Housing Council recommended the Amazon abatement on 2025-10-23 — and it has no continuing oversight of it. Its own minutes of 2026-03-05 record the Community Development Director explaining the split - \"the Housing Council will only review granted 1-family and 2-family housing abatements and recommend whether or not the abatements should continue as part of the annual review. Industrial properties that have been granted an abatement will be reviewed by the Tax Incentive Review Council to determine if they will recommend the continuation of abatements on each individual property.\" `[verified]` So the ANNUAL CONTINUATION DECISION on an abatement the City itself values at $180-350 million over thirty years sits with the Tax Incentive Review Council. ⚠️ THAT BODY HAS NO CONTAINER ON THE CITY'S PORTAL AT ALL - 18 top-level bodies and 43 leaf containers were enumerated in one request and it is not among them - and it has no row in data/reference/subdivisions/sidney/subdivisions.yaml. Nothing it has ever done is in this corpus. ⚠️ \"Publishes nothing on this portal\" must never become \"does not meet\" - a TIRC is a creature of statute (R.C. 5709.85, unread here), and its composition, cadence and duties are all `[open]`. Routes, in order - read R.C. 5709.85 for what a TIRC must be and must do; ask the City whether one has been convened for this CRA and for its reports; and check whether the County maintains one, since an industrial abatement can fall under a county TIRC. The first review of this campus's abatement is the first checkable event.\n",
+    "source": "data/documents/sidney/cra-housing-council/CRA Housing Council Minutes March 05, 2026.pdf · data/reference/subdivisions/sidney/subdivisions.yaml (the CRA Housing Council row, which records the split)",
+    "issue": 1998,
+    "note": "the abatement runs thirty years; the body that reviews it annually has produced no public record this corpus can find"
+  },
+  {
     "id": "COUNCIL-MINUTES",
     "kind": "question",
     "status": "review",

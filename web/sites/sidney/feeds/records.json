@@ -1449,6 +1449,78 @@
     "source_doc_published": false
   },
   {
+    "rel": "sidney/council/2025-10-13-res-74-25-cra-housing-council-appointments.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Resolution No. 74-25 — confirming the Mayor's appointment of Jackie Dunson and appointing Matthew Verhotz to the Community Reinvestment Area Housing Council, passed 2025-10-13",
+    "confidence": "high",
+    "warnings": [
+      "OCR of an image-only journal page. The passage line and both section texts were read cleanly; the Attest block degrades to \"Cl\" and the signatures are ink and are not read."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Resolution No. 74-25 — confirming the Mayor's appointment of Jackie Dunson and appointing Matthew Verhotz to the Community Reinvestment Area Housing Council, passed 2025-10-13",
+      "resolution_no": "74-25",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "appointment",
+      "adopted": "2025-10-13",
+      "journal_pages": [
+        "0319"
+      ],
+      "outcome": "approved",
+      "title_verbatim": "A RESOLUTION CONFIRMING THE APPOINTMENT OF JACKIE DUNSON AND APPOINTING MATTHEW VERHOTZ TO THE COMMUNITY REINVESTMENT AREA HOUSING COUNCIL",
+      "appointments": {
+        "tag": "verified",
+        "entries": [
+          {
+            "member": "Jackie Dunson",
+            "mechanism": "mayoral appointment CONFIRMED by Council",
+            "term_expires": "2028-10-31",
+            "verbatim": "SECTION 1. That the appointment of Jackie Dunson by the mayor to the Community Reinvestment Area Housing Council, which term expires on October 31, 2028, is hereby confirmed."
+          },
+          {
+            "member": "Matthew Verhotz",
+            "mechanism": "appointed BY Council",
+            "term_expires": "2028-10-31",
+            "verbatim": "SECTION 2. That Matthew Verhotz is hereby appointed to the Community Reinvestment Area Housing Council, which term expires on October 31, 2028."
+          }
+        ],
+        "note": "[verified] The two mechanisms differ and the instrument keeps them distinct — Res. 84-22 §7 gives the Mayor two seats and Council two, and this act exercises one of each. Both members are among the five present at the body's 2026-02-05 meeting.",
+        "⚠️_no_outgoing_members_named": "This resolution names NO predecessor and no vacancy. Which seats these are, and who held them before, is [open] on the face of the instrument — the Council minutes of 2025-10-13 are the route, and they are unpulled."
+      },
+      "⚠️_ten_days": {
+        "tag": "verified",
+        "fact": "Passed 2025-10-13. The CRA Housing Council met on 2025-10-23 and recommended the Amazon CRA Agreement; Council authorized it by Res. 80-25 on 2025-10-27.",
+        "guard": "A DATE, NOT A MOTIVE. The resolution names no project and no company. Two of the five members who sat on 2025-10-23 had been seated ten days earlier — that is all this establishes, and it must not be written as anything more."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": false,
+        "note": "[open] Instrument form only. The 2025-10-13 Council minutes are on the same portal, unpulled."
+      },
+      "what_this_instrument_does_not_establish": [
+        "WHO CHAIRED the 2025-10-23 meeting. Officers were elected 2026-02-05, after it.",
+        "THE FULL ROSTER on 2025-10-23. Five members are named at the February meeting; Res. 84-22 §7 creates seven seats, only four of which are ever filled by a Council resolution.",
+        "ANY LINK TO THE ABATEMENT. It names neither."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-10-13-res-74-25-cra-housing-council-appointments.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/council/74-25 - CRA Housing Council Appointments - J Dunson and M Verhotz.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "sidney/council/2025-10-27-res-80-25-cra-agreement.resolution.yaml",
     "group": "local-legislation",
     "title": "City of Sidney Resolution No. 80-25 — authorizing the City Manager to enter into a Community Reinvestment Area Agreement with Amazon Data Services, Inc., passed 2025-10-27",

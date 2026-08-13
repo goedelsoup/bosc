@@ -1,0 +1,101 @@
+meta:
+  subject: >
+    Canonical filename map for sidney/cra-housing-council/ — the City-Wide Community Reinvestment
+    Area Housing Council, created by Res. 84-22 §7, which recommended the Amazon CRA Agreement on
+    2025-10-23 (#1998 tail, slice 3).
+  note: >-
+    Files keep their as-received portal `fileName`. `content_verified` is read from each document's
+    own printed meeting header — every one of these carries its date in the header block.
+  retrieved: "2026-08-13"
+  source_base_url: "https://sidneycityoh.documents-on-demand.com/document/"
+  route: >-
+    Documents-On-Demand over HTTP/1.1. Parent container 00ac9418-d831-f111-a491-000c29a59557;
+    Minutes 8ea56988-d831-f111-a491-000c29a59557; Agenda 1c6ff647-d831-f111-a491-000c29a59557.
+  ⚠️_container_scope: >-
+    BOTH containers hold ONLY a 2026 year folder, verified by enumerating each with
+    /meta/docfolder?containerId=. There is no 2025 folder. So the 2025-10-23 minutes are not on this
+    portal — which is a fact about PUBLICATION, and NOT a fact about whether the record exists. Two
+    instruments below prove it does.
+
+documents:
+  - filename: CRA Housing Council Agenda February 05, 2026.pdf
+    portal_document_id: "37022e45-e73f-f111-a494-000c29a59557"
+    canonical: sidney-cra-housing-council-agenda-2026-02-05.pdf
+    type: cra-housing-council-agenda
+    date: "2026-02-05"
+    content_verified: text-layer   # header "Thursday, February 05, 2026"
+    pages: 1
+    sha256: "9c064c85c237aded0d2e0c94da5544f3b6b9ae52f5fda86bf4b1046f283f012a"
+    bytes: 391806
+    carries:
+      - "⚠️ ITEM 2: 'Approval of minutes: October 23, 2025' — the first of two independent instruments establishing that a written record of the Amazon-recommendation meeting was made and put to a vote."
+      - "The body's own name for itself: 'City-Wide Community Reinvestment Area Housing Council' — which disambiguates it from the 'Greater Downtown CRA Housing Council' of Res. 79-21 / 66-20."
+      - "Its office, printed in the header: 'Council Chambers, City Hall, 201 W Poplar St'."
+
+  - filename: CRA Housing Council Minutes February 05, 2026.pdf
+    portal_document_id: "4735dd95-e03f-f111-a494-000c29a59557"
+    canonical: sidney-cra-housing-council-minutes-2026-02-05.pdf
+    type: cra-housing-council-minutes
+    date: "2026-02-05"
+    content_verified: text-layer
+    pages: 2
+    sha256: "5df6cbb0b97473400194ea974ca062ba3baa3df499b7d5f7c4dea5fa2fda388a"
+    bytes: 304239
+    carries:
+      - "⚠️ THE ADOPTION, verbatim: 'A motion was made by R. Reiss to approve the October 23, 2025 meeting minutes; G. Snyder seconded the motion. The motion passed unanimously upon vote.' The minutes of the meeting that recommended the Amazon abatement were drafted, agendized and ADOPTED."
+      - "THE FIRST NAMING OF THE MEMBERS anywhere in this corpus — 'Members present: Rick Reiss, Jackie Dunson, Michael Jannides, Matthew Verhotz, and Greg Snyder.' Five of the seven seats Res. 84-22 §7 creates."
+      - "Staff attending: Barbara Dulworth (Community Development Director), Petra Sloan (Community Economic Development Manager), Lisa Philipps and Kent Blackford (Permit Technicians), Jon Crusey (City Manager)."
+      - "⚠️ OFFICERS WERE ELECTED AT THIS MEETING — Jannides Chair, Snyder Vice-Chair, both on 2026-02-05, i.e. AFTER the October 2025 recommendation. So WHO CHAIRED the 2025-10-23 meeting is named by no document read here."
+      - "The meeting ran 3:00 pm to 3:10 pm."
+
+  - filename: CRA Housing Council Minutes March 05, 2026.pdf
+    portal_document_id: "3976d49f-e03f-f111-a494-000c29a59557"
+    canonical: sidney-cra-housing-council-minutes-2026-03-05.pdf
+    type: cra-housing-council-minutes
+    date: "2026-03-05"
+    content_verified: text-layer
+    pages: 3
+    sha256: "e82f981d8d27d6a2ffa33c38c2a5760fc6691dd826e052179e2678e8630f619c"
+    bytes: 307129
+    carries:
+      - "⚠️ THE TIRC. 'B Dulworth clarified that the Housing Council will only review granted 1-family and 2-family housing abatements and recommend whether or not the abatements should continue as part of the annual review. Industrial properties that have been granted an abatement will be reviewed by the Tax Incentive Review Council to determine if they will recommend the continuation of abatements on each individual property.'"
+      - "So the body that RECOMMENDED the Amazon abatement has NO continuing oversight of it. The annual continuation decision on an abatement the City itself values at $180-350M sits with a body that has no container on this portal at all."
+      - "The Housing Council's own scope, from the same exchange: 1- and 2-family homes; 'three or more units' are treated otherwise."
+
+  - filename: CRA Housing Council Minutes April 02, 2026.pdf
+    portal_document_id: "634c797e-f247-f111-a496-f9d1c270c334"
+    canonical: sidney-cra-housing-council-minutes-2026-04-02.pdf
+    type: cra-housing-council-minutes
+    date: "2026-04-02"
+    content_verified: text-layer
+    pages: 2
+    sha256: "8f7b082172bc7f4062e141de24860540a3b0576e643c9b051a15353c5516b5cd"
+    bytes: 300520
+    carries:
+      - "Completes the three published 2026 meetings and the roster continuity."
+
+  - filename: CRA Housing Council Agenda May 04, 2026.pdf
+    portal_document_id: "ccadc45d-7d45-f111-a495-000c29a59557"
+    canonical: sidney-cra-housing-council-agenda-2026-05-04.pdf
+    type: cra-housing-council-agenda
+    date: "2026-05-04"
+    content_verified: text-layer   # header "Monday, May 04, 2026"
+    pages: 1
+    sha256: "b5ecb2da82e9b1b20c52a6cbadd4a72ca9b732b4ccca45d5b373be351d589817"
+    bytes: 393496
+    carries:
+      - "⚠️ ITEM 5: 'Establishment of a regular monthly meeting schedule for the CRA Housing Council' — the body had NO regular schedule as of May 2026 and was still trying to set one."
+      - "The weekday moves: Thursday (February) → Monday (this) → Friday (May 29)."
+
+  - filename: CRA Housing Council Agenda May 29, 2026.pdf
+    portal_document_id: "e4e2ba09-905a-f111-a49a-000c29a59557"
+    canonical: sidney-cra-housing-council-agenda-2026-05-29.pdf
+    type: cra-housing-council-agenda
+    date: "2026-05-29"
+    content_verified: text-layer   # header "Friday, May 29, 2026"
+    pages: 1
+    sha256: "077de5587eab5b26f8faed0729774a95febe9b0634d5f6039b06fcfb4e8ed224"
+    bytes: 407363
+    carries:
+      - "ITEM 2: 'Approval of minutes: May 4th, 2026' — proving a SECOND set of this body's minutes is also unpublished. That is what makes the 2025-10-23 gap read as routine publication lag rather than as targeted suppression."
+      - "Item 4 shows the meeting schedule still unsettled a month later."

@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-13T13:23:56.174084+00:00'
+reconciled_at: '2026-08-13T13:58:50.796670+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -212,8 +212,8 @@ entries:
     site_scope: basin-shared
   data-centers:
     exists: true
-    sha256: 8e33db8f4d642ebbe1cc277f9161d4db33ad31168602a37f673235c716444c27
-    size_bytes: 382501
+    sha256: 3684dbf9b5df427370bbc9b30aa1715eb2569847b9071a454ae7ea943eaa878b
+    size_bytes: 384899
     lfs_materialized: true
     file_count: 14
     missing: []
@@ -242,8 +242,8 @@ entries:
     site_scope: site:ottawa
   data-centers-sidney:
     exists: true
-    sha256: cff7395df7d7e5de4a09e34167ac93d682fbb391ab7415ae7f9e5c33192ce105
-    size_bytes: 58041
+    sha256: b036a43f0607189266b5e1db6e2953b31c422a92f56f8f825b82388ff5df4cd2
+    size_bytes: 60439
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -1422,10 +1422,10 @@ entries:
     site_scope: site:sidney
   sidney-incentive-instruments:
     exists: true
-    sha256: 52270843d0cd62db29be95b4c46d813357698c05ebfcb3d6a656723b1b3f78bb
-    size_bytes: 164518
+    sha256: 390a1b5be4919be83cab8400a7704d8374636202b2219a15507c804198c77ed9
+    size_bytes: 169135
     lfs_materialized: true
-    file_count: 16
+    file_count: 17
     missing: []
     asof: null
     stale: false
@@ -1472,8 +1472,8 @@ entries:
     site_scope: site:findlay
   subdivisions-sidney:
     exists: true
-    sha256: 722ff6333ae16815a32733217f842f0b22af746a432d6e59d1c6595b56a4aedd
-    size_bytes: 311585
+    sha256: edfeff3d83f15689ea4fff5cb7769860b531af5817f3ee46196aad54e77b6220
+    size_bytes: 315488
     lfs_materialized: true
     file_count: 4
     missing: []

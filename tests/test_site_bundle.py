@@ -1100,7 +1100,11 @@ def test_sidney_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None
     # The board is the site's OWN, not Lima's, and it carries the evidence discipline a lead
     # store owes: every row `[open]` or `[inference]`, never `verified` (#796).
     leads = _rows(site_bundle("sidney"), _feeds_by_name(site_bundle("sidney"))["leads"])
-    assert len(leads) == 21
+    # 21 -> 22 at #1998: the Tax Incentive Review Council, which holds the ANNUAL CONTINUATION
+    # authority over this campus's thirty-year abatement and publishes nothing anywhere this corpus
+    # can reach — not one of the City portal's 43 leaf containers, and no row in the civic registry.
+    assert len(leads) == 22
+    assert "TIRC" in {lead["id"] for lead in leads}
     assert {lead["tag"] for lead in leads} <= {"open", "inference"}
     # The lead that exists to keep a refuted premise from coming back (#1379 inverted the HSG the
     # 2026-06 onboarding scaffolding had inferred from a buried-valley aquifer that isn't there).

@@ -101,6 +101,12 @@ storage:
 - relpath: extracted/sidney/council/2026-07-27-ord-a-3270-current-zoning-map.resolution.yaml
   media_type: application/x-yaml
   lfs: false
+# The CRA Housing Council appointment act (the issue 1998 tail, slice 3), committed for its date -
+# it seats two of the five members who sat ten days later on the meeting that recommended the
+# Amazon abatement.
+- relpath: extracted/sidney/council/2025-10-13-res-74-25-cra-housing-council-appointments.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: on-demand
 provenance: document
