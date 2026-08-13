@@ -25,7 +25,31 @@ collections:      # whole data/documents/<slug> trees, e.g.  - aedg
   # records and auto-publish by the same standing basis (#1370).
   # review: { by: goedelsoup, date: 2026-07-10, result: publish, basis: public-epa-agency-records }
   - oepa
-globs: []         # fnmatch globs over the data/documents rel, e.g.  - 'permits/*/*.pdf'
+  # The whole Findlay collection — 171 files (#1265): the Hancock County Commissioners' and
+  # Allen Township trustees' meeting minutes, the township zoning book + map, the WARN
+  # notices, the Round 11 brownfield award, the county officials' directory and the official
+  # election canvass. All are Ohio public records held by the county, the township, or the
+  # State, published here on the same basis as the OEPA collection above.
+  #
+  # C2 PII sweep run over all 166 readable files before clearing (#281). Findings: ZERO SSNs,
+  # dates of birth or account numbers; 6 email addresses, every one an official .gov or a
+  # township fiscal officer's posted business address; 205 distinct phone numbers, of which
+  # two are the Commissioners' office lines repeated across the minutes and essentially all
+  # the rest sit in ONE file (see the withhold below); and no residential addresses at all —
+  # the street/road figures are road-resurfacing appropriations (TR 114, CR 140) and county
+  # buildings (courthouse, BMV, Agricultural Services). Executive sessions record only the
+  # fact and the statutory purpose, never content. The election canvass is precinct-level
+  # aggregate with no voter-level data.
+  # review: { by: goedelsoup, date: 2026-08-13, result: publish, basis: public-county-township-records }
+  - findlay
+globs:            # fnmatch globs over the data/documents rel, e.g.  - 'permits/*/*.pdf'
+  # Findlay's grid instruments — the AEP large-load request, the Rocky Ford 138 kV station
+  # LON + public notice, the Ebersole-Fostoria construction notice, and the AEP Ohio tariff
+  # book (#1265/#1464). Utility and PUCO filings, all public. A GLOB rather than the `grid`
+  # collection ON PURPOSE: `data/documents/grid/` is shared across eight sites, so clearing
+  # the collection would publish seven other sites' grid documents that no review has covered.
+  # review: { by: goedelsoup, date: 2026-08-13, result: publish, basis: public-utility-filings }
+  - 'grid/findlay/*'
 documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/foo.pdf
   # The AEDG PRR-01 bundle — the full 328-page Port Authority public-records production.
   # Only pp. 317-327 (the six Tetra Tech OPC estimates) are the curated exhibit slice; the
@@ -72,6 +96,14 @@ documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/
   - "legal/prr-mandamus/prr-production-2026-06-12-aswcd/Mr. Parent Records request.pdf"
   - "legal/prr-mandamus/prr-production-2026-06-12-aswcd/Parent Records Request.pdf"
 
+  # One Energy v. Allen Township, 2026-Ohio-405 — the published appellate decision in the
+  # township zoning fight behind Findlay's governance record (#1265/#1463). A court's own
+  # published opinion. An EXACT rel, not the `legal` collection: that tree is 2,383 files
+  # spanning the select-committee record, the PRR mandamus production and the web-vendor
+  # audit, none of which this review covers.
+  # review: { by: goedelsoup, date: 2026-08-13, result: publish, basis: published-court-decision }
+  - legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
 # DECLARATIVE OPT-OUT — carve specific rels back out of the cleared scope above. A withhold
 # rule WINS over everything, including the auto-included exhibits, so this is the authoritative
 # way to keep a single file (a CBI page, a PII-bearing recorded instrument, a captured page
@@ -84,4 +116,17 @@ documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/
 #     - aedg/PRR-01-bundle.ocr.pdf   # example only — not withheld; PRR bundle is cleared whole
 #   globs: []
 #   collections: []
-withhold: {}
+withhold:
+  documents:
+    # Hancock County's 2026 Directory of Officials. Cleared boundary (the `findlay`
+    # collection), carved back out: 17 pages listing every county office and all 18 townships'
+    # trustees and fiscal officers with what are plainly PERSONAL mobile numbers — the
+    # township's own office line is printed separately on the same entry. That is ~200 named
+    # individuals' personal contact details in one file, and the whole file is a finding aid:
+    # nothing in the Findlay record rests on it, so publishing it buys no evidentiary value
+    # for a real aggregation cost. The county publishes the PDF itself; re-serving it from a
+    # searchable public site is a different act, and this is the file the C2 sweep flagged.
+    # The corpus keeps it — withhold is exposure control, not removal, so the research agent
+    # and the committed record are unaffected.
+    # review: { by: goedelsoup, date: 2026-08-13, result: withhold, basis: aggregated-personal-contact-details }
+    - "findlay/reference/2026 Directory of Officials_202604131412522342.pdf"
