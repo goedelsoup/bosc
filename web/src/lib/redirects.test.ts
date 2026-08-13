@@ -106,6 +106,33 @@ describe("public/_redirects", () => {
       "/network/:site/economy/economics-baseline",
       "301",
     ]);
+    // Findlay's `flagpole` walk was absorbed into its study (#1970) and its content + registry
+    // entry deleted (#1971), but neither added a redirect — so eight deployed addresses 404'd.
+    // `comingSoon` held the walk's CONTENT, never its URL (`siteRegistersWalk` gates route
+    // emission on registration, not on readability or selectability), so these were live.
+    // Each points at the chapter that absorbed it, which is not always the same word: `ground`
+    // was the township zoning vote and landed in `governance`, and `water` + `phosphorus` were
+    // merged into `discharge` as one fraction's denominator and numerator.
+    for (const [chapter, target] of [
+      ["who", "project"],
+      ["water", "discharge"],
+      ["phosphorus", "discharge"],
+      ["power", "power"],
+      ["flood", "stormwater"],
+      ["ground", "governance"],
+    ]) {
+      expect(RULES).toContainEqual([
+        `/network/findlay/walk/flagpole/${chapter}`,
+        `/network/findlay/study/${target}`,
+        "301",
+      ]);
+    }
+    expect(RULES).toContainEqual([
+      "/network/findlay/walk/flagpole/contents",
+      "/network/findlay/study",
+      "301",
+    ]);
+    expect(RULES).toContainEqual(["/network/findlay/walk/flagpole", "/network/findlay/study", "301"]);
   });
 
   it("chains the older watershed rule onto the baseline's new home, in that order", () => {

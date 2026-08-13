@@ -106,3 +106,29 @@
 # fire before the static asset — the page would work in dev, in the build, and in the link check,
 # and 301 away in production only. `src/lib/redirects.test.ts` guards that.
 /network/hypotheses     /research/hypotheses                                                   301
+
+# The absorbed walks (#1970/#1971). Findlay's `flagpole` was `comingSoon` — HELD, not unrouted:
+# `siteRegistersWalk` gates route emission on REGISTRATION, "readable, `hidden`, or `comingSoon`
+# alike, and deliberately NOT `selectable`", so a held walk holds its content and never its URL.
+# Eight Findlay routes were therefore live and deployed. #1970 moved the prose into the study and
+# #1971 deleted the content and the registry entry, but neither added a redirect, so every one of
+# those addresses has been a 404 since.
+#
+# Each chapter points at the study chapter that ABSORBED it, verified against the prose rather
+# than the filename: `who`→project, `water`+`phosphorus`→discharge (merged in #1970 — they are the
+# denominator and numerator of one fraction), `power`→power, `flood`→stormwater, and `ground`→
+# governance (its subject was the township zoning vote, not groundwater; the absorbed text is
+# byte-identical). The walk home and its contents page land on the study index, which is the
+# study's own front matter and the nearest thing to the walk's opening.
+#
+# Spelled with the literal slug rather than `:site`: only Findlay ever registered `flagpole`, so
+# a `:site` wildcard would mint redirects for addresses that never existed on any other site.
+# Lima's project-bosc is untouched above and still readable.
+/network/findlay/walk/flagpole/who        /network/findlay/study/project                      301
+/network/findlay/walk/flagpole/water      /network/findlay/study/discharge                    301
+/network/findlay/walk/flagpole/phosphorus /network/findlay/study/discharge                    301
+/network/findlay/walk/flagpole/power      /network/findlay/study/power                        301
+/network/findlay/walk/flagpole/flood      /network/findlay/study/stormwater                   301
+/network/findlay/walk/flagpole/ground     /network/findlay/study/governance                   301
+/network/findlay/walk/flagpole/contents   /network/findlay/study                              301
+/network/findlay/walk/flagpole            /network/findlay/study                              301
