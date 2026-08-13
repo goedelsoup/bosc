@@ -76,6 +76,20 @@
             "cra_area_number_tag": "[verified: recital]",
             "cra_area_number_source": "Recited in Res. 69-25, journal page 0297. ⚠️ NOT read off Res. 84-22 itself: the pages of 84-22 read here (0-3, the operative sections) state no ODOD area number, and its Exhibit A is an image. A recital is a party's account of another instrument — the distinction this register learned the hard way, twice — so the number is tagged for what it is rather than promoted to a direct read. To settle it, read 84-22's remaining pages or ODOD's own record."
           },
+          "monitoring_fee": {
+            "tag": "verified",
+            "section": "§5, as originally adopted 2022-10-10",
+            "verbatim": "An annual monitoring fee to the City of Sidney of one percent ( 1 % ) of the amount of the incentives, or a minimum of Five Hundred Dollars ($500.00), up to a maximum of Twenty-five Hundred Dollars ($2,500.00) annually is required for commercial and industrial projects.",
+            "source": {
+              "file": "data/documents/sidney/council/84-22 - Establishing CRA based on Community Boundaries.pdf",
+              "journal_pages": [
+                "0299",
+                "0300"
+              ],
+              "read": "text layer, confirmed by independent 300-dpi OCR"
+            },
+            "⚠️_re_attributed": "RE-ATTRIBUTED 2026-08-13 (#1998 tail). This sat under Res. 69-25 as \"§5, as amended\", which made a 2022 figure read as though the 2025 expansion had set a $2,500 annual administration cap on a $3 billion project. It did not: 69-25 restated §5 and left the fee unchanged. The cap is still worth knowing — it is what the City charges to administer an exemption of any size — but it is 84-22's. Same error class as the designation mis-attribution corrected in #1998, one subsection away, and found the same way: by re-reading a committed instrument instead of reasoning from the file that cites it. ⚠️ The FIRST correction was narrative only — the key stayed nested under 69-25's megaproject block, so a structured consumer still read it as a property of the thirty-year tier. Correcting prose without moving the key is half a fix."
+          },
           "note": "⚠️ THIS, NOT RES. 69-25, IS THE DESIGNATING ACT — and the register said otherwise until #1998 read both instruments directly. §4 as adopted here tops out at FIFTEEN years / 100% for new commercial and industrial construction; there is no thirty-year tier and no reference to R.C. 122.17 anywhere in it."
         },
         {
@@ -94,7 +108,7 @@
             "tag": "verified",
             "verbatim": "(e) Up to thirty (30) years, and up to one hundred percent (100%) if the commercial or industrial structure is situated on the site of a megaproject and is owned and occupied by a megaproject operator (as such terms are defined in Ohio Revised Code Section 122.17(A)(12)) …",
             "why_it_matters": "The 30-year / 100% exemption in the CRA Agreement below rests on this clause, and the clause did not exist until this resolution added it — seven weeks before Res. 80-25 authorized the agreement. [verified] as a SEQUENCE from two instruments and the minutes of both meetings. [open] as a motive: 69-25 names no project, no company and no parcel, and its stated reason is the recent annexations.",
-            "monitoring_fee": "⚠️ RE-ATTRIBUTED 2026-08-13. This read \"[verified] §5, as amended: 1% of the incentives, minimum $500, MAXIMUM $2,500 a year\" and sat under Res. 69-25 — which made it read as though the 2025 expansion set a $2,500 annual administration cap on a $3 billion project. It did not. Those figures are the ORIGINAL 2022 text of Res. 84-22 §5, word for word, in a file this corpus already held. 69-25 restated the section and left the fee unchanged. The cap is still worth knowing — it is what the City charges to administer an exemption of any size — but it is 84-22's, and dating it to 2025 made it look like a decision taken about THIS campus. Same error class as the designation mis-attribution corrected in #1998, one subsection away, and found the same way: by re-reading a committed instrument instead of reasoning from the file that cites it."
+            "monitoring_fee_note": "The monitoring fee is NOT a property of this clause. 69-25 restated §5 and left it unchanged; the figures are Res. 84-22's, and they are recorded there. See that entry's `monitoring_fee`."
           },
           "note": "⚠️ CORRECTED at #1998. The register carried this as the DESIGNATING legislation, reasoning from the CRA Agreement's and Res. 82-25's recitals. Read directly, it amends and expands Res. 84-22. Both readings of the corpus before this one were wrong in the same direction — \"Resolution 18-25 … October 2025\" (the pre-#1380 register), then \"the designating legislation is Res. 69-25\" (#1380) — and each was corrected only by reading one document closer to the source. The `-06A` suffix on the area number was the standing clue."
         },
@@ -761,14 +775,40 @@
         "housing_officer": {
           "tag": "verified",
           "verbatim": "SECTION 6. To administer and implement the provisions of this Resolution, the Community Development Director for the City is designated as the Housing Officer as described in Revised Code Sections 3735.65 through 3735.70.",
-          "officeholder": "[inference] The office is designated BY TITLE. That the title-holder is Barbara Dulworth composes this section with the staff-attendance lines of the Council minutes — two verified reads, joined. No document read here says \"Barbara Dulworth is the Housing Officer.\""
+          "journal_page": "0299",
+          "officeholder": {
+            "tag": "inference",
+            "name": "Barbara Dulworth",
+            "reasoning": "The office is designated BY TITLE (\"the Community Development Director for the City\"). That the title-holder is Barbara Dulworth composes this section with a staff-attendance line naming her in that role — two verified reads, joined. NO DOCUMENT READ HERE SAYS \"Barbara Dulworth is the Housing Officer\", which is why this is [inference] and not [verified].",
+            "title_holder_source": {
+              "file": "data/documents/sidney/council/City Council Minutes September 08, 2025.pdf",
+              "page": 0,
+              "verbatim": "Community Development Director Barbara Dulworth",
+              "note": "She is named in the same role in the attendance rolls of the 2025-10-27 and 2026-02-23 minutes, both also committed. Any one of the three carries it."
+            }
+          }
         },
         "housing_council": {
           "tag": "verified",
           "verbatim": "SECTION 7. That a \"Community Reinvestment Area Housing Council\" shall be created, consisting of two (2) members appointed by the Mayor, two (2) members appointed by the City Council, and one (1) member appointed by the Planning Commission. The majority of the members shall then appoint two (2) additional members who shall be residents within the area. Terms of the members of the Housing Council shall be for three (3) years. An unexpired term resulting from a vacancy in the Housing Council shall be filled in the same manner as the initial appointment was made.",
           "seats": 7,
           "why_the_composition_matters": "[verified] SEVEN SEATS, and only FOUR are ever filled by a Council resolution (two Mayor-confirmed, two Council-appointed). The fifth is the Planning Commission's appointment and the last two are co-opted by the members themselves. That is why appointment resolutions can never account for the whole body, and it explains an appointment record that otherwise looks incomplete.",
-          "it_is_a_live_body": "[verified] The 2025-10-27 Council minutes record that \"the CRA Housing Council met on October 23, 2025, and unanimously resolved to recommend that City Council approve\" the Amazon CRA agreement, and the City's resolution index carries appointments to it (Res. 74-25, 37-26, 38-26).",
+          "it_is_a_live_body": {
+            "tag": "verified",
+            "recommendation": {
+              "verbatim": "The CRA Housing Council met on October 23, 2025, and unanimously resolved to recommend that City Council approve the Agreement.",
+              "source": {
+                "file": "data/documents/sidney/council/City Council Minutes October 27, 2025.pdf",
+                "page": 3,
+                "read": "ocr at 300 dpi — this file is image-only"
+              },
+              "⚠️": "This sentence is a RECITAL — the Council clerk's account of a different body's meeting, not that body's own record. The Housing Council's minutes for 2025-10-23 are not published on the City portal. Do not cite this for anything the Housing Council decided beyond the fact of the recommendation."
+            },
+            "appointments": {
+              "tag": "reference",
+              "note": "The City's published Resolutions container carries appointment acts to this body — Res. 74-25 (2025), 37-26 and 38-26 (2026). ⚠️ [reference] BY TITLE ONLY: the container listing was enumerated but none of the three has been pulled or read, so the seats, terms and members they name are not established here. Route: Documents-On-Demand, Resolutions container ed39b349-35b5-4408-97f9-bc135fd019c0."
+            }
+          },
           "⚠️_not_in_the_civic_registry": "CORRECTED 2026-08-13. This entry previously read \"It is one of the seven bodies in data/reference/subdivisions/sidney/subdivisions.yaml (#1999).\" THAT IS FALSE, and it was written here in #1998 without checking: the registry's seven bodies are the City Council, the City Planning Commission, the County Commissioners, the County Regional Planning Commission, Clinton Township, and the two school boards. The Housing Council is not among them. It has its own containers on the City portal (Minutes 8ea56988-d831-f111-a491-000c29a59557, Agenda 1c6ff647-d831-f111-a491-000c29a59557) and belongs in that registry; adding it needs its own grounding documents and is its own change."
         }
       },
