@@ -92,15 +92,29 @@ resolution:
       minutes journal the seven names for this item and only this item, which is why the divided
       vote is legible at all: the same clerk records an uncontested item as "passed unanimously"
       with no names. The minutes record no stated reason for either NO vote. [open]
+    roll_call_provenance: >-
+      ⚠️ TWO LINES OF THE SAME PAGE, and they carry different things. The SURNAME and the VOTE of
+      each entry above are the roll-call line's own — it reads "Barhorst: yes; Huelskamp: yes;
+      Milligan: yes; Roddy: yes; Thurber: no; VanMatre: yes; Wagner: no" and carries no first name
+      and no title. The FIRST NAMES and the ROLES are taken from the ATTENDANCE ROLL earlier on the
+      same page ("Mayor Mike Barhorst presiding", "Vice Mayor Wagner", and the councilmember list),
+      not from the roll call. Recorded because the two are different reads and a consumer must be
+      able to tell which part of an entry came from which line.
     name_transcription_note: >-
-      The OCR of the attendance roll renders "Darryl Thurber" as "Darryl! Thurber" and the City
-      Planner as both "Hursyz" and "Hurysz" on the same page. Names are given here in the spelling
-      the roll-call line itself uses; the artifacts are recorded, not silently normalised.
+      The OCR of that attendance roll renders "Darryl Thurber" as "Darryl! Thurber" and the City
+      Planner as both "Hursyz" and "Hurysz" on the same page. "Darryl" is given above in its
+      ordinary spelling and the artifact is recorded here rather than silently dropped; the
+      surnames need no such note because the roll-call line reads them cleanly.
     source:
       file: data/documents/sidney/council/City Council Minutes October 27, 2025.pdf
       content_verified: ocr
-    signatories: null                         # [open] — the Mayor/Clerk signatures are ink on the
-                                              # scan; the text layer carries only the "Attest:" label.
+
+  # A fact about the RESOLUTION scan, not about the minutes — so it sits outside `vote`, whose
+  # `source` is the minutes PDF. Dedented at #1998 review: a consumer reading `vote.source` as the
+  # provenance for everything inside `vote` would have attributed this to the wrong document.
+  signatories: null                           # [open] — the Mayor/Clerk signatures are ink on the
+                                              # resolution scan; its text layer carries only the
+                                              # "Attest:" label.
 
   what_this_instrument_does_not_establish:
     - >-

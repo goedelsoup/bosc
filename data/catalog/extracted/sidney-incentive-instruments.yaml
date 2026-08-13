@@ -17,8 +17,9 @@ producer:
     HTTP/1.1 returns 200. That route supplied Resolution 84-22 (2022-10-10, the act that
     established the City-Wide CRA), Resolution 69-25 (2025-09-08, which expands it and adds the
     thirty-year megaproject tier), Resolution 14-26 (2026-02-23, accepting the consolidation
-    plat), and the approved Council minutes of 2025-09-08, 2025-10-27 and 2026-04-27 - the last
-    of which is image-only and was read by OCR at 300 DPI.
+    plat), and the approved Council minutes of 2025-09-08, 2025-10-27 and 2026-04-27. The
+    2025-10-27 minutes are image-only (zero extractable characters) and were read by OCR at 300
+    DPI; the other two carry a native text layer.
 license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:sidney

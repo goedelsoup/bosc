@@ -169,7 +169,7 @@ Amazon-owned, **cooling-water-discharging** Ohio data center that is **not this 
 Full structured read, clause by clause: [`incentive-instruments.yaml`](incentive-instruments.yaml).
 Source bytes: [`data/documents/sidney/council/`](../../documents/sidney/council/).
 
-- **The chain of legislation.** `[verified]` Seven resolutions, all now in the corpus:
+- **The chain of legislation.** `[verified]` Eight resolutions, all now in the corpus:
   **84-22** (2022-10-10) **establishing** the City-Wide CRA · **69-25** (2025-09-08) **expanding**
   it and adding a thirty-year megaproject tier · **80-25 / 81-25 / 82-25** (all 2025-10-27) — the
   CRA Agreement, the school distribution agreement, the income-tax sharing agreement · **14-26**

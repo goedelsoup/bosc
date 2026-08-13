@@ -76,8 +76,13 @@ resolution:
     source:
       file: data/documents/sidney/council/City Council Minutes October 27, 2025.pdf
       content_verified: ocr
-    signatories: null                         # [open] — the Mayor/Clerk signatures are ink on the
-                                              # scan; the text layer carries only the "Attest:" label.
+
+  # A fact about the RESOLUTION scan, not about the minutes — so it sits outside `vote`, whose
+  # `source` is the minutes PDF. Dedented at #1998 review: a consumer reading `vote.source` as the
+  # provenance for everything inside `vote` would have attributed this to the wrong document.
+  signatories: null                           # [open] — the Mayor/Clerk signatures are ink on the
+                                              # resolution scan; its text layer carries only the
+                                              # "Attest:" label.
 
   what_this_instrument_does_not_establish:
     - >-

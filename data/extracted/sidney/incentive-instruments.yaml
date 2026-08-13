@@ -89,7 +89,14 @@ legislative_chain:
     in_corpus: true                           # data/extracted/sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml
     state_certification:
       designator: "Director, Ohio Department of Development"
-      cra_area_number: "149-72424-06"         # [verified] — recited in Res. 69-25, journal page 0297
+      cra_area_number: "149-72424-06"
+      cra_area_number_tag: "[verified: recital]"
+      cra_area_number_source: >-
+        Recited in Res. 69-25, journal page 0297. ⚠️ NOT read off Res. 84-22 itself: the pages of
+        84-22 read here (0-3, the operative sections) state no ODOD area number, and its Exhibit A
+        is an image. A recital is a party's account of another instrument — the distinction this
+        register learned the hard way, twice — so the number is tagged for what it is rather than
+        promoted to a direct read. To settle it, read 84-22's remaining pages or ODOD's own record.
     note: >-
       ⚠️ THIS, NOT RES. 69-25, IS THE DESIGNATING ACT — and the register said otherwise until #1998
       read both instruments directly. §4 as adopted here tops out at FIFTEEN years / 100% for new
@@ -102,8 +109,15 @@ legislative_chain:
     in_corpus: true                           # data/extracted/sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml
     state_certification:
       designator: "Director, Ohio Department of Development"
-      effective: "2025-09-19"                 # [verified] — Res. 82-25 recitals
-      cra_area_number: "149-72424-06A"        # [verified] — Res. 82-25 recitals; the EXPANSION's number
+      effective: "2025-09-19"
+      cra_area_number: "149-72424-06A"
+      tag: "[verified: recital]"
+      source: >-
+        Both values are recited in Res. 82-25 and NOT stated in Res. 69-25 itself, which is now in
+        the corpus and read: 69-25 §8 only AUTHORIZES the Community Development Director to
+        petition ODOD for approval of the expanded CRA. So the certification date and the `-06A`
+        number are still a third party's account, tagged as such. That the suffix reconciles with
+        84-22's `-06` is what makes the recital credible — it is not what makes it a direct read.
     creates_the_thirty_year_tier:
       tag: verified
       verbatim: >-
@@ -730,11 +744,19 @@ open_items:
     tag: "[closed]"
     closed: "2026-08-13"                      # #1998
     resolution: >-
-      PULLED AND READ. data/documents/sidney/council/69-25 - Amending Resolution 84-22 - Expanding
-      CRA Boundaries.pdf, extracted at data/extracted/sidney/council/2025-09-08-res-69-25-cra-
-      expansion-and-megaproject-tier.resolution.yaml — together with Res. 84-22, which it amends
-      and which is the act that actually established the CRA. Reading it CORRECTED this register:
-      69-25 expands, it does not designate.
+      PULLED AND READ. Source bytes:
+      "data/documents/sidney/council/69-25 - Amending Resolution 84-22 - Expanding CRA Boundaries.pdf".
+      Extraction:
+      "data/extracted/sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml".
+      ⚠️ Both paths are on their own unbroken line ON PURPOSE. A `>-` folded scalar turns every line
+      break into a space, so a wrap falling INSIDE a filename publishes a path with a space in it —
+      one that resolves to nothing. An earlier draft of this entry did exactly that and shipped the
+      dead path into the records feed, where the citation layer lifts `data/…` strings out of prose.
+      The malformed string is deliberately not reproduced here, because writing it out would put it
+      back in the feed. Never let a fold fall inside a path.
+      Committed together with Res. 84-22, which it amends and which is the act that actually
+      established the CRA. Reading it CORRECTED this register: 69-25 expands, it does not
+      designate.
     how: >-
       The three-step route was: this item's own 2026-08-11 correction (the 403 is an HTTP/2
       fingerprint, not a host block) -> `curl --http1.1` -> /meta/docfolder?containerId= on the
