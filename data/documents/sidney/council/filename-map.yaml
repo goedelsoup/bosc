@@ -342,3 +342,25 @@ documents:
       preserved where quoted. Pulled in the #1998 tail sweep, which also established that a Sidney
       clerk journals a DIVIDED vote by name and an undivided one as an outcome only; the 2022-10-10
       minutes are the control for that convention.
+
+  - filename: City Council Agenda Packet October 27, 2025.pdf
+    portal_document_id: "39df941a-d7b0-f011-a473-000c29a59557"
+    canonical: sidney-council-agenda-packet-2025-10-27.pdf
+    type: council-agenda-packet
+    date: "2025-10-27"
+    content_verified: text-layer   # cover + the Council Action Summaries carry the meeting date
+    pages: 123
+    sha256: "b495333f3f0ce9800bf81face8f74dece7de097f87e11d218a8b637ae16decf6"
+    bytes: 17140653
+    lfs: true
+    carries:
+      - "⚠️ THE CITY'S OWN ESTIMATE OF WHAT THE ABATEMENT IS WORTH — p.64 (0-based), the Council Action Summary for Res. 80-25: 'The estimated value of the abatement is in the range of $180 to 350 million over 30 years.' Against the $50,000,000 the company pays. Two hedges travel with it and must never be dropped: 'The tax abatement estimates are based upon actual construction costs and val uations for similar buildings in Ohio: tax valuation, and therefore the value of the abatement, may be more or less than that amount', and the standing footer 'The summary document is for informational purposes only and is not a record of the official action taken by the City of Sidney Council.'"
+      - "The megaproject test AS GIVEN TO COUNCIL, on the same page: 'a project with at least a $1 billion investment or the creation of at least $75 million in annual payroll. The proposed project meets the requirements to be designated a megaproject by the Director of the Department of Development of the State of Ohio.' ⚠️ 'MEETS THE REQUIREMENTS TO BE DESIGNATED' is eligibility asserted by staff, present tense — not a designation stated as made."
+      - "The whole of what Council was given about the recommending body: 'The CRA Housing Council met on October 23, 2025, and unanimously resolved to recommend that City Council approve the Agreement.' ⚠️ Across 123 pages NO Housing Council minutes and NO written recommendation are attached."
+      - "The 75 jobs / $6,750,000 payroll / ~$3 billion investment figures, and the `01-` parcel spelling."
+    notes: >-
+      ⚠️ A STAFF SUMMARY, NOT AN INSTRUMENT — the packet says so itself, on every page that carries
+      one. Its value here is provenance rather than novelty: the corpus already carried the
+      $180-350M range tagged `[reference]` to an advocacy site (one of the two that mislabel this
+      campus "Project Galaxy"). The City published the same range itself, and that is a better
+      source for the same number. 17 MB — Git LFS.

@@ -1,0 +1,38 @@
+meta:
+  subject: >
+    Authenticated Ohio Revised Code sections this corpus reasons against, pulled from the
+    Legislative Service Commission's own authenticated PDF series rather than from a code publisher
+    or a party's paraphrase (#1998 tail).
+  note: >-
+    NOT filed under a site. A statute is no watershed point's record, and several sites reason
+    against the same section. The effective date is part of the filename because the series is
+    versioned.
+  retrieved: "2026-08-13"
+
+documents:
+  - filename: 122.17-10-3-2023.pdf
+    source_url: "https://codes.ohio.gov/assets/laws/revised-code/authenticated/1/122/122.17/10-3-2023/122.17-10-3-2023.pdf"
+    canonical: ohio-rc-122-17-effective-2023-10-03.pdf
+    type: statute-authenticated
+    date: "2023-10-03"
+    content_verified: text-layer   # the authenticated header carries the effective date
+    pages: 15
+    sha256: "2e1a5176b72eea3eb4b2096ce56f4273b88c729fabc2716ccce9db7c9b70a81b"
+    bytes: 270881
+    carries:
+      - "(A)(11) — \"Megaproject\" means a project in this state that meets ALL of the following requirements, (a) through (d). ⚠️ FOUR CUMULATIVE PRONGS, two of which are themselves disjunctive."
+      - "(A)(11)(b) — a wage floor NOBODY in the City record mentions: the operator agrees to compensate the project's employees at 'an average hourly wage of at least three hundred per cent of the federal minimum wage under 29 U.S.C. 206, exclusive of employee benefits'."
+      - "(A)(11)(c) — the prong the City DID give Council: at least $1,000,000,000 'as adjusted under division (V)(1)' in FIXED-ASSET INVESTMENTS, or at least $75,000,000 'as adjusted' in OHIO EMPLOYEE PAYROLL AT THE PROJECT."
+      - "(A)(12) — \"Megaproject operator\" is the SEPARATE definition. ⚠️ Res. 69-25 cites (A)(12) for BOTH terms while citing (A)(13)(b) correctly for supplier."
+      - "(V) — beginning in 2025 and every fifth year after, the tax commissioner SHALL adjust both thresholds in September by the GDP deflator. ⚠️ Res. 69-25 passed 2025-09-08, the same month the first statutory adjustment was due."
+      - "(D)(11) — the Megaproject Certificate the director issues annually, on which CRA Agreement §12 hangs abatement years 16-30."
+      - "(D)(12) — an annual ECONOMIC IMPACT REPORT, including at (e) 'The number of employees working at the site of the megaproject and the counties in which those employees reside', and closing: 'Any information contained in the report is a public record for purposes of section 149.43 of the Revised Code and shall be published on the department of development's web site.'"
+    notes: >-
+      ⚠️ DO NOT ASSERT A 2026-07-01 DUE DATE for the (D)(12) report. The same sentence reads "due on
+      or before the first day of July of each year, BEGINNING IN THE YEAR SPECIFIED IN THE AGREEMENT
+      with the tax credit authority", and this corpus does not hold that agreement. Division (D)
+      prescribes what an AGREEMENT must contain, and (D)(12) is framed "for which the megaproject
+      operator IS DESIGNATED" — so the report exists only if the agreement carries the requirement
+      and only if a designation was made, which is itself [open]. Frame any request conditionally:
+      ask for the report AND for the agreement provision requiring it; the second survives even if
+      the first returns nothing.

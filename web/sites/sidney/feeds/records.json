@@ -259,6 +259,26 @@
           },
           "total_payments_usd": 50000000
         },
+        "⚠️_value_forgone": {
+          "tag": "verified",
+          "range_usd": [
+            180000000,
+            350000000
+          ],
+          "over_years": 30,
+          "verbatim": "The estimated value of the abatement is in the range of $180 to 350 million over 30 years. The tax abatement estimates are based upon actual construction costs and val uations for similar buildings in Ohio: tax valuation, and therefore the value of the abatement, may be more or less than that amount.",
+          "source": {
+            "file": "data/documents/sidney/council/City Council Agenda Packet October 27, 2025.pdf",
+            "page": 64,
+            "kind": "city staff summary, not an instrument"
+          },
+          "⚠️_two_hedges_travel_with_it": [
+            "The estimate hedges itself: \"may be more or less than that amount\".",
+            "The packet carries a standing footer on these pages: \"The summary document is for informational purposes only and is not a record of the official action taken by the City of Sidney Council.\""
+          ],
+          "why_it_is_here": "⚠️ THIS FILE DOCUMENTED THE $50,000,000 THE COMPANY PAYS IN EXHAUSTIVE DETAIL — the $46M PILOT cap, the fourteen-year schedule, the separate $4M initial payment, the 84.9/15.1 split between two school boards, the year-by-year shape — AND CARRIED NO FIGURE AT ALL FOR THE VALUE FORGONE. On the City's own arithmetic the abatement is 3.6x to 7x the payments. A register that prices one side of a trade to the dollar and the other side not at all is not neutral.",
+          "provenance_note": "The corpus already carried this range, tagged [reference] to an advocacy site — one of the two third-party trackers that mislabel this campus \"Project Galaxy\" (a name belonging to a DIFFERENT Amazon campus in Fayette County). The City published the same range itself. Prefer the City packet; the value here is provenance, not novelty."
+        },
         "megaproject": {
           "tca_authorization_date": "2025-10-08",
           "instrument": "Sixth Amendment to Tax Credit Agreement, authorized by the Ohio Tax Credit Authority",
@@ -267,6 +287,41 @@
             "R.C. 122.17(A)(12)"
           ],
           "claim": "the Company's Ohio investment and operations qualify as a 'megaproject' and it as a 'megaproject operator'",
+          "⚠️_the_statutory_test_is_four_prongs_not_one": {
+            "tag": "verified",
+            "source": {
+              "file": "data/documents/legal/ohio-revised-code/122.17-10-3-2023.pdf",
+              "division": "(A)(11)(a)-(d)"
+            },
+            "finding": "R.C. 122.17(A)(11) defines a megaproject as a project \"that meets ALL of the following requirements\" (a) through (d) — four cumulative prongs, two of which are themselves disjunctive. Both City renderings reduce it to prong (c). The 2025-09-08 Council minutes hedge slightly (\"such as at least $1 billion in capital investment or creating $75 million in annual payroll\"); the 2025-10-27 agenda packet states it flatly.",
+            "the_prong_nobody_mentioned": "(b) — the operator agrees to compensate the project's employees \"at an average hourly wage of at least three hundred per cent of the federal minimum wage under 29 U.S.C. 206, exclusive of employee benefits\". No City document in this corpus mentions a wage floor.",
+            "three_wording_drifts_in_the_city_paraphrase": [
+              "\"capital investment\" for the statute's FIXED-ASSET INVESTMENTS",
+              "\"annual payroll\" for OHIO EMPLOYEE PAYROLL AT THE PROJECT",
+              "the indexation qualifier (\"as adjusted under division (V)(1)\") dropped entirely"
+            ],
+            "indexation": "[verified] Division (V): beginning in 2025 and every fifth year after, the tax commissioner SHALL adjust both dollar thresholds in September by the GDP deflator. ⚠️ Res. 69-25 passed 2025-09-08 — the same month the first statutory adjustment was due. $1B/$75M were the correct 2025 figures; any post-2025 statement of the test must use the certified values.",
+            "⚠️_res_69_25_miscites_it": "[verified] Res. 69-25 clause (e) reads \"(as such terms are defined in Ohio Revised Code Section 122.17(A)(12))\" — plural \"terms\", single citation, correct only for \"megaproject operator\". \"Megaproject\" is at (A)(11). The same clause cites (A)(13)(b) CORRECTLY for megaproject supplier, and the CRA Agreement's own (A)(11)-(12) pairing is correct — so the two City instruments do not cite the statute the same way."
+          },
+          "⚠️_the_state_record_of_2025_10_08": {
+            "tag": "verified",
+            "source": {
+              "file": "data/documents/sidney/state/Ohio Tax Credit Authority Meeting Minutes 10.8.2025.pdf",
+              "page": 1
+            },
+            "what_it_says": "Under OTHER BUSINESS — \"Amazon Data Services, Inc. / The Authority approved the following changes: Add Shelby County as an eligible project county. Add Clinton County as an eligible project county. Add Madison County as an eligible project county. … The vote was 3-0.\"",
+            "what_it_does_not_say": "The word \"megaproject\" does not appear in the document, nor \"sixth amendment\", nor \"122.17\", nor \"certificate\", nor \"designat\", nor \"Sidney\".",
+            "⚠️_state_it_carefully": "THE DEFENSIBLE STATEMENT IS THAT THE TCA'S OWN MINUTES CORROBORATE THE ACT AND ARE SILENT ON THE CHARACTERIZATION — not that the two records fail to corroborate each other. The silence is WEAK evidence: this genre carries no statutory language for ANY item, and none of the five new-project entries recites a definition either. An earlier draft of this finding overreached exactly that way and was narrowed by two independent reviewers.",
+            "cross_site": "[verified] Shelby County (Sidney) and Clinton County (Wilmington) were made eligible IN THE SAME MOTION. Both are sites in this corpus.",
+            "downstream_inference": "[inference] Because the action ADDS counties to an EXISTING agreement, that agreement — and any megaproject status under it — predates 2025-10-08. R.C. 122.17(A)(12) supplies the hook. The instrument to pull is the ORIGINAL agreement and the TCA meeting that approved it."
+          },
+          "⚠️_a_state_published_check_exists": {
+            "tag": "verified",
+            "division": "R.C. 122.17(D)(12)",
+            "finding": "A megaproject operator must submit an annual economic impact report, which at (e) reports \"The number of employees working at the site of the megaproject and the counties in which those employees reside\" — and the statute closes: \"Any information contained in the report is a public record for purposes of section 149.43 of the Revised Code and shall be published on the department of development's web site.\"",
+            "why_it_matters": "It is the only state-published, officer-certified check on the 75-jobs / $6,750,000-payroll estimate the City accepted, and the statute pre-declares it a public record, so a request faces no exemption argument about the record's character.",
+            "⚠️_do_not_assert_a_due_date": "The same sentence reads \"due on or before the first day of July of each year, BEGINNING IN THE YEAR SPECIFIED IN THE AGREEMENT with the tax credit authority\" — and this corpus does not hold that agreement. (D)(12) is also framed \"for which the megaproject operator IS DESIGNATED\", and the designation is itself [open]. Ask conditionally: for any report under (D)(12) AND for the agreement provision requiring it. The second survives if the first returns nothing."
+          },
           "enforcement_hook": "[verified] §12 — the City may terminate or suspend the exemption for years 16 THROUGH 30 if the Company neither holds a current Megaproject Certificate nor makes the annual certification under §3(b). Years 1-15 carry no such condition.",
           "in_corpus": false
         },

@@ -1,0 +1,37 @@
+meta:
+  subject: >
+    State-level records bearing on the Sidney campus that are NOT City records — currently the Ohio
+    Tax Credit Authority's own minutes of the meeting the CRA Agreement recites (#1998 tail).
+  note: >-
+    Files keep their as-received names from the publishing agency's own URL. `content_verified` is
+    read from each document's printed meeting header.
+  retrieved: "2026-08-13"
+
+documents:
+  - filename: Ohio Tax Credit Authority Meeting Minutes 10.8.2025.pdf
+    source_url: "https://dam.assets.ohio.gov/image/upload/development.ohio.gov/about/taxcreditminutes/Meeting_Minutes_10.8.2025.pdf"
+    canonical: ohio-tax-credit-authority-minutes-2025-10-08.pdf
+    type: state-board-minutes
+    date: "2025-10-08"
+    content_verified: text-layer
+    pages: 3
+    sha256: "f4132d75cd0f8b3d1aab658360a0f8c61b347844b51b263c83cf73efce75584b"
+    bytes: 146007
+    carries:
+      - "THE STATE BODY'S OWN RECORD OF THE ACT THE CRA AGREEMENT RECITES. Under OTHER BUSINESS: 'Amazon Data Services, Inc. / The Authority approved the following changes: Add Shelby County as an eligible project county. Add Clinton County as an eligible project county. Add Madison County as an eligible project county. / Lindner made a motion to accept staff recommendation and Evangelista seconded, McGraw and Kelly abstained. / The vote was 3-0. All present voted yes.'"
+      - "⚠️ SIDNEY AND WILMINGTON WERE MADE ELIGIBLE IN THE SAME MOTION — Shelby County is Sidney's, Clinton County is Wilmington's, and both are sites in this corpus."
+      - "IT IS SILENT ON THE MEGAPROJECT CHARACTERIZATION. Programmatic counts over the full text: megaproject 0 · 'mega project' 0 · 'sixth amendment' 0 · amendment 0 · 122.17 0 · certificate 0 · designat 0 · sidney 0. shelby 1 · clinton 1 · madison 1 · amazon 1."
+    notes: >-
+      ⚠️ THE SILENCE IS WEAK EVIDENCE AND MUST BE STATED AS SUCH. This genre carries no statutory or
+      instrument language for ANY item — all seven Other Business entries are one-line "The
+      Authority approved the following changes", and none of the five new-project entries recites a
+      statutory definition either. THE DEFENSIBLE STATEMENT IS: the TCA's own minutes CORROBORATE
+      the act and are SILENT on the characterization. NOT "the two records fail to corroborate each
+      other". An earlier draft of this finding overreached exactly that way and was narrowed by two
+      independent reviewers.
+      [inference], and sound: because the action ADDS counties to an EXISTING agreement, that
+      agreement — and any megaproject status under it — predates 2025-10-08. R.C. 122.17(A)(12)
+      supplies the hook ("becomes a megaproject operator effective the first day of the calendar
+      year in which the taxpayer and the tax credit authority enter into an agreement under
+      division (D)"). The instrument to pull is the ORIGINAL agreement and the TCA meeting that
+      approved it.
