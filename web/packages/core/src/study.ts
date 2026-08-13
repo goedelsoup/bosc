@@ -1173,11 +1173,17 @@ const COMPOSERS: Record<string, (slug: string, facility: FacilityItem | null) =>
     return { stats, gaps, caveats };
   },
 
-  fiscal(_slug, facility) {
+  // #1993 made this chapter's DERIVE record-aware and left the caveat below asserting the same
+  // absence one line further down, at every site whose register #1993 publishes. Gated on the
+  // same groups (#2000) — half a fix is how a contradiction survives a correction.
+  fiscal(slug, facility) {
     const caveats: string[] = [];
     if (facility?.disclosed_investment_usd != null) {
+      const disclosed = `Disclosed investment: $${(facility.disclosed_investment_usd / 1e9).toFixed(1)}B`;
       caveats.push(
-        `Disclosed investment: $${(facility.disclosed_investment_usd / 1e9).toFixed(1)}B — the operator's own announcement, not an instrument; the abatement agreement that would price the trade is not on the record.`,
+        recordGroupRows(slug, FISCAL_GROUPS) > 0
+          ? `${disclosed} — the operator's own figure, carried into the incentive instruments as a recital. Those instruments ARE on the record; what is not is the accounting that would price what the trade cost the taxing bodies.`
+          : `${disclosed} — the operator's own announcement, not an instrument; the abatement agreement that would price the trade is not on the record.`,
       );
     }
     return { stats: [], gaps: [], caveats };
