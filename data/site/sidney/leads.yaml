@@ -12,24 +12,32 @@ leads:
 # The instruments still to pull (#1380 residue) ------------------------------------------------
 - id: RES-69-25
   kind: question
-  status: unanswered
+  status: review
   tag: open
-  title: Pull Resolution 69-25 — the CRA designating legislation is known only through recitals
+  title: Resolution 69-25 — pulled, and it is not what the recitals said it was
   detail: >
-    The founding instrument of the whole abatement chain, and the corpus does not hold it. Its
-    terms are `[verified]` only through two other instruments' recitals: adopted 2025-09-08, it
-    designates a CITY-WIDE Community Reinvestment Area rather than a project-specific envelope,
-    and the Director of the Ohio Department of Development certified the area effective 2025-09-19
-    as CRA area # 149-72424-06A. Both the CRA Agreement's recitals and Resolution 82-25's state it
-    independently, which is why it is `[verified]` at all. The City publishes it neither on the
-    data-center FAQ nor in its DocumentCenter, and the legislative portal that would hold it sits
-    behind a Cloudflare managed JavaScript challenge. Route: an R.C. 149.43 request to the Sidney
-    City Clerk, 201 W. Poplar St. Guard: this register once named "Resolution 18-25, October 2025"
-    as the CRA instrument — no such legislation exists in the chain, which is precisely why it was
-    never findable. Do not reintroduce that number.
-  source: data/extracted/sidney/incentive-instruments.yaml (CRA Agreement + Res. 82-25 recitals) · data/extracted/sidney/data-centers.md "Instruments to pull" §1
-  issue: 1380
-  note: route negative 2026-08-01 — sidneycityoh.documents-on-demand.com answers HTTP 403 with a cf_chl interstitial; unsearched, not empty
+    ANSWERED 2026-08-13. This lead asked for the CRA legislation the corpus knew only through two
+    instruments' recitals. It is now committed and read, and so is the resolution it amends —
+    and the reading corrected the register twice over. Res. 69-25 does NOT designate the CRA. Its
+    own second recital names the designating act: Resolution 84-22, adopted 2022-10-10, which
+    "created and established the Sidney City-Wide Community Reinvestment Area" under ODOD
+    designation # 149-72424-06. 69-25 EXPANDS that area to be coterminous with the City and
+    amends its §4 — and what it adds to §4 is the whole point. Res. 84-22 as adopted capped
+    commercial and industrial exemptions at FIFTEEN years. 69-25 restated §4 and added clause (e)
+    "Up to thirty (30) years, and up to one hundred percent (100%)" for a megaproject under R.C.
+    122.17(A)(12). Seven weeks later Res. 80-25 authorized a CRA Agreement carrying a 30-year
+    100% exemption. The SEQUENCE is `[verified]` from both instruments and the minutes of both
+    meetings; the motive is not — 69-25 names no project, no company and no parcel, and its stated
+    reason is the recent annexations. WHAT STAYS OPEN is the designation itself. The 2025-10-27
+    minutes say the project "meets the requirements to be designated a megaproject by the Director
+    of the Department of Development" — eligibility asserted by staff, present tense, not a
+    designation stated as made. No ODOD certification is in the corpus. That is the next pull.
+    Guard, unchanged: this register once named "Resolution 18-25, October 2025" as the CRA
+    instrument. No such legislation exists. Do not reintroduce that number.
+  source: data/extracted/sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml · data/extracted/sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml
+  issue: 1998
+  note: 'the route was never blocked — the 403 was an HTTP/2 fingerprint, and one retry over HTTP/1.1 opened 51 year folders of resolutions'
+
 - id: SITE-PLAN
   kind: question
   status: unanswered
@@ -362,38 +370,45 @@ leads:
     buried-valley outwash assumption would have given. What is NOT established either way is the
     designation itself: no EPA sole-source-aquifer boundary has been pulled into this corpus, so
     whether the Sidney well fields sit inside a designated area, and what a campus upgradient of
-    them on the moraine would mean for one, are both `[open]`. Pull the EPA Region 5 designation
-    and its boundary before making a claim in either direction. Guard: never restore the
-    buried-valley framing for the campus footprint on the strength of the well field's.
-  source: data/extracted/sidney/data-centers.md "Dominant hydrologic soil group" · data/research/onboard-sidney-sidney-data-center-activity-recei-2026-06-22/findings.md (the superseded premise) · data/concepts/ssa.md
-  issue: 1379
-# The public side of the record, which this corpus does not hold at all ------------------------
+    them on the moraine would mean for one, were both `[open]` when this lead was written.
+    ANSWERED 2026-08-11 by #1997, and this text is left standing because the refuted premise is
+    what the lead exists to keep out. The EPA designation WAS pulled: the campus sits 2,702 m
+    (1.68 mi) OUTSIDE the designated Buried Valley Aquifer System, in no part of it, while the
+    City's Washington Township well field is 97.17% inside and its Great Miami bedrock field is
+    0% inside. So the answer splits — the well field's sole-source framing is real, the campus's
+    never was, and the two must not be merged. Guard, unchanged and now doubly grounded: never
+    restore the buried-valley framing for the campus footprint on the strength of the well
+    field's.
+  source: data/extracted/sidney/groundwater.md (#1997) · data/extracted/sidney/data-centers.md "Dominant hydrologic soil group" · data/concepts/ssa.md
+  issue: 1997
+# The public side of the record — the minutes are in since #1998; the audio and the speakers are not
 - id: COUNCIL-MINUTES
   kind: question
-  status: unanswered
+  status: review
   tag: open
-  title: Council minutes and meeting audio for the six votes — and why no person may be named yet
+  title: The three vote meetings are on the record — and one of the six votes was not unanimous
   detail: >
-    Six resolutions passed across three council meetings: 2025-09-08 (Res. 69-25), 2025-10-27
-    (Res. 80-25, 81-25 and 82-25) and 2026-04-27 (Res. 26-26 and 27-26). The corpus holds five of
-    the six as executed instruments; the sixth, Res. 69-25, it does not hold at all — that gap is
-    its own lead, RES-69-25. And it holds the record of none of the three meetings.
-    ⚠️ THE ROUTE IS OPEN — corrected 2026-08-11 (#1999). Minutes and audio route through the
-    same legislative portal that holds Res. 69-25, and that portal was recorded as
-    "Cloudflare-challenged, route negative as of 2026-08-01". The 403 is triggered by the
-    HTTP/2 fingerprint, not by the client: the same request over HTTP/1.1 with a browser UA
-    returns HTTP 200, and the host exposes a JSON tree of Council agendas, legislation and
-    MINUTES. Neither the minutes nor Res. 69-25 has been pulled yet, so this lead stays
-    UNANSWERED — but it is now a retrieval job, not a blocked route, and the records request
-    drafted for it should not be sent until that portal has been searched. What they would
-    supply that the executed instruments cannot: who spoke, what was asked, and what the City said
-    in answer on the record. This matters for a second reason. Organized local opposition to this
-    campus is reported in secondary and advocacy sources — WHIO's community-meeting coverage and
-    stopohiodatacenters.org/shelby-county, both cited in the register as lead sources rather than
-    primary ones — but NO named group, NO named individual and NO dated public meeting is captured
-    anywhere in this corpus. Until the minutes, the audio or contemporaneous local reporting are
-    ingested, nothing on this site may be attributed to a person. Route: an R.C. 149.43 request to
-    the Sidney City Clerk covering minutes and audio for those three meetings.
-  source: data/extracted/sidney/data-centers.md "The chain of legislation" and "Sources" · data/extracted/sidney/regulatory-watch.yaml (route_hazards, the legislative portal)
-  issue: 1381
-  note: 'the Project Rey walk deferred out of this issue (#1947) needs this — a walk cannot narrate a public fight the corpus cannot cite'
+    ANSWERED IN PART 2026-08-13. The minutes of all three meetings that passed this campus's
+    legislation are committed and read — 2025-09-08, 2025-10-27 (image-only, OCR'd at 300 DPI)
+    and 2026-04-27 — and every one of the six votes now has its mover, its second and its result
+    on the record where the resolution pages journal none of them. FIVE PASSED UNANIMOUSLY. THE
+    SIXTH DID NOT. Res. 82-25, the income-tax-sharing agreement with Sidney City Schools and
+    Upper Valley Career Center, drew a recorded roll call — "Barhorst yes; Huelskamp yes;
+    Milligan yes; Roddy yes; Thurber no; VanMatre yes; Wagner no" — and passed 5-2. It is the only
+    item on any of the three nights the clerk journalled by name, which is why the division is
+    legible at all. The minutes record no stated reason for either NO vote. Public opposition is
+    now `[verified]` and on the City's own record for the first time, on 2026-04-27, on
+    pretreatment standards, monitoring, tap-in costs, billing against the capacity reserve, fines,
+    noise, vibration, power supply, environmental and health impacts and the city's finances.
+    WHAT STAYS OPEN, and why this lead is not closed. The minutes NAME NO MEMBER OF THE PUBLIC
+    and give no count — "a number of people present", "those from the public speaking". So the
+    original constraint holds unchanged: organized local opposition is reported in secondary and
+    advocacy sources, but no named group and no named individual outside City government is
+    captured anywhere in this corpus, and nothing on this site may be attributed to a person. The
+    MEETING AUDIO is the route that would change that, and it is not on the portal — it remains an
+    R.C. 149.43 ask to the Sidney City Clerk. Also unpulled: the minutes of 2022-10-10 (Res.
+    84-22) and 2026-02-23 (Res. 14-26, the consolidation plat), both retrievable on the same
+    portal, which holds Council minutes back to 1857.
+  source: data/documents/sidney/council/filename-map.yaml (the three minutes files) · data/extracted/sidney/council/*.resolution.yaml (the vote blocks)
+  issue: 1998
+  note: 'the walk deferred out of #1947 can now cite a divided vote and dated public objections — but still not a person outside City government'

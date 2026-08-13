@@ -1103,7 +1103,7 @@
     "id": "question/lead-council-minutes",
     "node_class": "question",
     "kind": "lead",
-    "label": "Council minutes and meeting audio for the six votes — and why no person may be named yet",
+    "label": "The three vote meetings are on the record — and one of the six votes was not unanimous",
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
@@ -1224,11 +1224,11 @@
     "id": "question/lead-res-69-25",
     "node_class": "question",
     "kind": "lead",
-    "label": "Pull Resolution 69-25 — the CRA designating legislation is known only through recitals",
+    "label": "Resolution 69-25 — pulled, and it is not what the recitals said it was",
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
-    "lines": 24,
+    "lines": 23,
     "updated": null
   },
   {

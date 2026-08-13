@@ -20,7 +20,8 @@ The standing watch and its dated negatives live in
 > executed instruments contradict them. The PILOT is **$46M over 14 years**, not $50M over 15; the
 > **$50M** figure is the PILOT cap **plus a separate $4M initial payment**, and the schools' half
 > is **$21.2M to Sidney City Schools and $3.8M to Upper Valley Career Center**, not $25M to
-> Sidney. The CRA legislation is **Res. 69-25 of 2025-09-08**, not "Res. 18-25, October 2025".
+> Sidney. The CRA was **established by Res. 84-22 of 2022-10-10** and **expanded by Res. 69-25 of
+> 2025-09-08** — not "Res. 18-25, October 2025", and 69-25 is not itself the designating act.
 > The **NDA is dated 2023-12-19**, not mid-2025. Projected cooling-water **consumption** is
 > **3.44M gal/yr**, not 4.6M — that figure is the withdrawal. Each correction is carried below
 > with the instrument that makes it.
@@ -168,15 +169,56 @@ Amazon-owned, **cooling-water-discharging** Ohio data center that is **not this 
 Full structured read, clause by clause: [`incentive-instruments.yaml`](incentive-instruments.yaml).
 Source bytes: [`data/documents/sidney/council/`](../../documents/sidney/council/).
 
-- **The chain of legislation.** `[verified]` Five resolutions over six months:
-  **69-25** (2025-09-08) designating the CRA · **80-25 / 81-25 / 82-25** (all 2025-10-27) — the CRA
-  Agreement, the school distribution agreement, the income-tax sharing agreement · **26-26 / 27-26**
-  (both 2026-04-27) — water/wastewater service and public infrastructure.
-  *The register previously named "Resolution 18-25 … October 2025" as the CRA instrument. No such
-  legislation exists in this chain. The designating legislation is **Resolution 69-25, adopted
-  2025-09-08**, and it designates a **City-Wide** Community Reinvestment Area, not a
-  project-specific envelope. Both the CRA Agreement's recitals and Resolution 82-25's recitals
-  state it independently. Res. 69-25 itself is `[open]` — see "Instruments to pull".*
+- **The chain of legislation.** `[verified]` Seven resolutions, all now in the corpus:
+  **84-22** (2022-10-10) **establishing** the City-Wide CRA · **69-25** (2025-09-08) **expanding**
+  it and adding a thirty-year megaproject tier · **80-25 / 81-25 / 82-25** (all 2025-10-27) — the
+  CRA Agreement, the school distribution agreement, the income-tax sharing agreement · **14-26**
+  (2026-02-23) accepting the consolidation plat · **26-26 / 27-26** (both 2026-04-27) —
+  water/wastewater service and public infrastructure.
+  *Three readings of this chain, each closer to the source. The register first named "Resolution
+  18-25 … October 2025" — no such legislation exists. #1380 corrected that to "the designating
+  legislation is Res. 69-25", reasoning from two instruments' recitals. #1998 pulled 69-25 itself
+  and corrected it again: **69-25 amends and expands; the act that established the CRA is Res.
+  84-22 of 2022-10-10**, ODOD designation # 149-72424-06. The register's `-06A` was the
+  expansion's number, so the two reconcile — the suffix was the standing clue.*
+- **⚠️ The thirty-year exemption did not exist until seven weeks before it was granted.**
+  `[verified]` Res. 84-22 §4 as adopted caps commercial and industrial exemptions at **fifteen
+  years**. Res. 69-25 restated §4 in its entirety and added clause **(e)** — *"Up to thirty (30)
+  years, and up to one hundred percent (100%) if the commercial or industrial structure is situated
+  on the site of a **megaproject** and is owned and occupied by a megaproject operator (as such
+  terms are defined in Ohio Revised Code Section 122.17(A)(12))"*. On **2025-10-27**, seven weeks
+  later, Res. 80-25 authorized a CRA Agreement carrying a 30-year / 100% exemption, and the minutes
+  of that meeting recite 69-25 as the authority: *"Per the Ohio Revised Code, and the recently
+  adopted revised Sidney City-Wide CRA, property tax abatements for up to 30 years can be approved
+  for megaprojects."* **The sequence is `[verified]` from both instruments and the minutes of both
+  meetings. The motive is not `[open]` so much as unstated:** 69-25 names no project, no company
+  and no parcel, and its stated reason is the recent annexations. Write the sequence; do not write
+  the motive.
+- **What the megaproject test actually requires.** `[verified]` As Community Development Director
+  Dulworth put it to Council on 2025-09-08: *"at least $1 billion in capital investment or creating
+  $75 million in annual payroll"*, with ODOD certifying. On 2025-10-27 she told Council the campus
+  is a *"total investment of approximately three billion dollars"* creating **75 new jobs** over
+  2028-2030 at an estimated annual payroll of **$6,750,000**. ⚠️ So it clears the test on the
+  **investment prong only** — the payroll is about **9%** of the payroll threshold. ⚠️ And the
+  designation itself is `[open]`: the minutes say the project *"meets the requirements to be
+  designated"* a megaproject, which is eligibility asserted by staff, not a designation stated as
+  made. **No ODOD certification is in this corpus.**
+- **⚠️ One of the six votes was not unanimous.** `[verified]` from the approved minutes, pulled at
+  #1998. Res. 69-25, 80-25, 81-25, 26-26 and 27-26 each "passed unanimously". **Res. 82-25 — the
+  income-tax-sharing agreement with Sidney City Schools and Upper Valley Career Center — passed
+  5–2**: *"Barhorst: yes; Huelskamp: yes; Milligan: yes; Roddy: yes; Thurber: no; VanMatre: yes;
+  Wagner: no."* It is the only item across the three meetings the clerk journalled by name, which
+  is why the division is legible at all. The minutes record no stated reason for either NO vote.
+  ⚠️ Note what this means about the resolution pages: they carry the enacting clause, the passage
+  date and an Attest line and **never a vote** — so a divided vote is invisible in the instrument
+  and visible only in the minutes.
+- **Public objection enters the record on 2026-04-27.** `[verified]` The minutes record that "a
+  number of people present raised questions and concerns" about pretreatment quality standards,
+  reporting and monitoring, tap-in costs, meter connection monitoring, billing against the capacity
+  reserve and fines; and that "those from the public speaking" raised noise, vibration, power
+  supply, environmental and health impacts and the city's financial condition. ⚠️ **They are not
+  named and not counted.** Nothing on this site may still be attributed to a person outside City
+  government; the meeting audio is the remaining route (#1947).
 - **State certification of the CRA:** the Director of the Ohio Department of Development
   designated the area **effective 2025-09-19** as CRA area **# 149-72424-06A**. `[verified]`
   Source: Res. 82-25 recitals.
@@ -426,16 +468,22 @@ Full watch log, per-route negatives and next-check queries:
   Agreement Project Summary), so entity type and formation jurisdiction are `[verified]` from a
   primary source. What the SOS record would add is the Ohio foreign-registration date, the
   statutory agent and the agent's address.*
-- **The City's own legislative portal:** `[open]` — ⚠️ **route corrected 2026-08-11 (#1999); it is
-  REACHABLE.** `sidneycityoh.documents-on-demand.com` returns HTTP 403 to a **default (HTTP/2)**
-  request — a genuine Cloudflare challenge (`cf-mitigated: challenge`) — and that was read as a
-  host-wide block. It is not one: the trigger is the **HTTP/2 fingerprint**, not the client. The
-  same request forced to **HTTP/1.1** with a browser UA returns **HTTP 200**, and the host exposes
-  a JSON tree (`/meta/rootfolder`) enumerating City Council → Agendas / Agenda Packets /
-  Legislation → **Ordinances, Resolutions** / **Minutes**. It is the route to Resolution **69-25**
-  and to any council minutes, and it is now **searchable — neither has been pulled yet**, which is
-  a retrieval job rather than a blocked route. The five data-center resolutions were obtained
-  instead from the City's own DocumentCenter, linked off the FAQ.
+- **The City's own legislative portal:** ✅ **OPEN, and pulled from — 2026-08-13 (#1998).**
+  `sidneycityoh.documents-on-demand.com` returns HTTP 403 to a **default (HTTP/2)** request — a
+  genuine Cloudflare challenge (`cf-mitigated: challenge`) — and that was read, across five
+  artifacts and two drafted records requests, as a host-wide block. **It never was one.** The
+  trigger is the **HTTP/2 fingerprint**, not the client: forced to **HTTP/1.1** with a browser UA
+  the same host returns **HTTP 200** and an unauthenticated JSON API — `/meta/rootfolder`,
+  `/meta/docfolder?containerId=<guid>`, `/document/<guid>/<fileName>.pdf`. Behind it: City Council
+  **Legislation** (Ordinances and Resolutions, **51 year folders back to 1976**) and **Minutes**
+  (**170 year folders back to 1857**), plus Agendas and Agenda Packets, and the same for the
+  Planning Commission, the Zoning Board of Appeals, the **CRA Housing Council**, the Records
+  Commission and nine other bodies. Res. 84-22, Res. 69-25, Res. 14-26 and the approved minutes of
+  all three vote meetings came through it in minutes. ⚠️ Second trap on the same host:
+  `/meta/childfolders?parentId=`, which the page's own JavaScript calls, returns the app shell to a
+  scripted client and reads as "empty" — use `docfolder`, which returns the whole subtree.
+  **Generalize it: a 403 to a scripted client may be a protocol-fingerprint block. Retry over
+  HTTP/1.1 before recording a route negative.**
 - **Shelby County Recorder:** `[open]` — **route negative as of 2026-08-01**.
   `search.shelbyco.net/eservices/` answers HTTP 200 but is an Apache-Wicket application that
   posts a browser fingerprint before it will run a search; index stated to run from 1989-07-01.
@@ -466,13 +514,15 @@ grading permit are done** (#1380, 2026-08-01 — Res. 80-25 / 81-25 / 82-25 / 26
 their executed agreements, in `data/documents/sidney/council/` and `data/documents/sidney/permits/`,
 structured in [`incentive-instruments.yaml`](incentive-instruments.yaml)). What remains:
 
-1. **City of Sidney Resolution 69-25** — the CRA designating legislation itself (2025-09-08,
-   city-wide). Its terms are `[verified]` only through two instruments' recitals. The City does
-   not publish it on the FAQ or in the DocumentCenter. ⚠️ **Search the legislative portal before
-   requesting it** (#1999): `sidneycityoh.documents-on-demand.com` was read as Cloudflare-blocked,
-   but the 403 is an HTTP/2 fingerprint block and the host answers **HTTP/1.1 with 200** and a
-   browsable Resolutions tree. Still unpulled. Failing that, an R.C. 149.43 request to the
-   Sidney City Clerk, 201 W. Poplar St.
+1. ~~**City of Sidney Resolution 69-25**~~ — ✅ **DONE 2026-08-13 (#1998)**, off the legislative
+   portal, together with **Res. 84-22** (which it amends and which is the act that actually
+   established the CRA), **Res. 14-26** (the consolidation plat acceptance) and the approved
+   minutes of all three vote meetings. Reading it corrected this record twice: 69-25 expands
+   rather than designates, and it is the instrument that created the thirty-year megaproject tier.
+   **The drafted R.C. 149.43 requests for the resolution and the minutes were never sent and
+   should not be.** What is still worth asking for is the meeting **audio**, which the portal does
+   not carry — see [`docs/legal/sidney-records-requests.md`](../../../docs/legal/sidney-records-requests.md) §1b.
+   The next pull needs no request either: **ODOD's megaproject certification**, if one exists.
 2. **City of Sidney site plan as approved** — administrative under Zoning Code §1115.09, so it
    surfaces as a staff action, not an agenda item: an R.C. 149.43 request to the Community
    Development Director. Yields the building count. *The Development Agreement confirms a site

@@ -23,7 +23,7 @@
 #                 statute read through a fetched page.
 #   [inference] — arithmetic this record derives by combining cited figures (the cycles of
 #                 concentration back-solved from makeup and blowdown; the headroom shares).
-#   [open]      — not in corpus (Res. 69-25 itself; the recorded deeds; the Ohio SOS
+#   [open]      — not in corpus (the recorded deeds; the Ohio SOS
 #                 registrations; the approved site plan; the redacted infrastructure details).
 
 as_of: "2026-08-01"
@@ -83,19 +83,49 @@ sources:
 # 1. THE CHAIN OF LEGISLATION — five resolutions over six months, in the order they bind.
 # =============================================================================================
 legislative_chain:
-  - ref: "Res. 69-25"
-    adopted: "2025-09-08"                     # [verified] — recited in BOTH the CRA Agreement and Res. 82-25
-    subject: "Designation of the City of Sidney City-Wide Community Reinvestment Area under R.C. 3735.65-.70"
-    in_corpus: false                          # [open] — the City does not publish it; see `open_items`
+  - ref: "Res. 84-22"
+    adopted: "2022-10-10"                     # [verified] — read off the instrument (#1998)
+    subject: "ESTABLISHING the City of Sidney City-Wide Community Reinvestment Area under R.C. 3735.65-.70, designating a Housing Officer and creating a Housing Council"
+    in_corpus: true                           # data/extracted/sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml
+    state_certification:
+      designator: "Director, Ohio Department of Development"
+      cra_area_number: "149-72424-06"         # [verified] — recited in Res. 69-25, journal page 0297
     note: >-
-      The register carried the CRA legislation as "Resolution 18-25 … October 2025". That is
-      wrong on both the number and the month, and it is why no such instrument could be found.
-      The designating legislation is Resolution No. 69-25, adopted 2025-09-08, and the CRA it
-      designates is CITY-WIDE, not a project-specific envelope.
+      ⚠️ THIS, NOT RES. 69-25, IS THE DESIGNATING ACT — and the register said otherwise until #1998
+      read both instruments directly. §4 as adopted here tops out at FIFTEEN years / 100% for new
+      commercial and industrial construction; there is no thirty-year tier and no reference to
+      R.C. 122.17 anywhere in it.
+
+  - ref: "Res. 69-25"
+    adopted: "2025-09-08"                     # [verified] — read off the instrument (#1998)
+    subject: "EXPANDING the City-Wide CRA to be coterminous with the City, and amending Res. 84-22 §4 to add a thirty-year megaproject exemption tier"
+    in_corpus: true                           # data/extracted/sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml
     state_certification:
       designator: "Director, Ohio Department of Development"
       effective: "2025-09-19"                 # [verified] — Res. 82-25 recitals
-      cra_area_number: "149-72424-06A"        # [verified] — Res. 82-25 recitals
+      cra_area_number: "149-72424-06A"        # [verified] — Res. 82-25 recitals; the EXPANSION's number
+    creates_the_thirty_year_tier:
+      tag: verified
+      verbatim: >-
+        (e) Up to thirty (30) years, and up to one hundred percent (100%) if the commercial or
+        industrial structure is situated on the site of a megaproject and is owned and occupied by
+        a megaproject operator (as such terms are defined in Ohio Revised Code Section
+        122.17(A)(12)) …
+      why_it_matters: >-
+        The 30-year / 100% exemption in the CRA Agreement below rests on this clause, and the
+        clause did not exist until this resolution added it — seven weeks before Res. 80-25
+        authorized the agreement. [verified] as a SEQUENCE from two instruments and the minutes of
+        both meetings. [open] as a motive: 69-25 names no project, no company and no parcel, and
+        its stated reason is the recent annexations.
+      monitoring_fee: >-
+        [verified] §5, as amended: 1% of the incentives, minimum $500, MAXIMUM $2,500 a year.
+    note: >-
+      ⚠️ CORRECTED at #1998. The register carried this as the DESIGNATING legislation, reasoning
+      from the CRA Agreement's and Res. 82-25's recitals. Read directly, it amends and expands
+      Res. 84-22. Both readings of the corpus before this one were wrong in the same direction —
+      "Resolution 18-25 … October 2025" (the pre-#1380 register), then "the designating
+      legislation is Res. 69-25" (#1380) — and each was corrected only by reading one document
+      closer to the source. The `-06A` suffix on the area number was the standing clue.
 
   - ref: "Res. 80-25"
     adopted: "2025-10-27"                     # [verified]
@@ -647,8 +677,16 @@ records_posture:
 corrections_to_the_register:
   - field: "CRA legislation"
     was: "Resolution 18-25 (Sidney City Council), October 2025 — [verified]"
-    now: "Resolution 69-25, adopted 2025-09-08, designating a CITY-WIDE CRA; the abatement agreement is Res. 80-25, 2025-10-27"
-    source: "CRA Agreement recitals; Res. 82-25 recitals"
+    then: "Resolution 69-25, adopted 2025-09-08, DESIGNATING a CITY-WIDE CRA (#1380, from recitals)"
+    now: >-
+      Resolution 84-22, adopted 2022-10-10, ESTABLISHED the City-Wide CRA (ODOD #149-72424-06);
+      Resolution 69-25, adopted 2025-09-08, EXPANDED it (#149-72424-06A) and added the thirty-year
+      megaproject tier its §4 had never carried; the abatement agreement is Res. 80-25, 2025-10-27
+    source: "Res. 84-22 and Res. 69-25 themselves (#1998) — not their recitals"
+    note: >-
+      Three readings, each closer to the source than the last. A recital is a party's account of
+      another instrument, and this one was accurate about the number and the date while wrong
+      about the ACT.
   - field: "PILOT"
     was: "$50 million total over 15 years — $25 million to City of Sidney, $25 million to Sidney City Schools — [verified]"
     now: >-
@@ -688,24 +726,25 @@ corrections_to_the_register:
 # 11. STILL OPEN — with the route, so the next pull is a task and not a search.
 # =============================================================================================
 open_items:
-  - item: "Resolution 69-25 — the CRA designating legislation itself"
-    tag: "[open]"
-    checked: "2026-08-01"
-    negative: >-
-      The City's data-center FAQ publishes five resolutions and does not include this one; the
-      City's Document Center index does not surface it; a web search on the number returns
-      nothing. Its content is [verified] only through the recitals of two instruments that do
-      cite it.
-    route: >-
-      ⚠️ CORRECTED 2026-08-11 (#1999) — the portal is SEARCHABLE and this resolution is simply
-      UNPULLED. https://sidneycityoh.documents-on-demand.com/ returns HTTP 403 to a DEFAULT
-      (HTTP/2) request — a real Cloudflare challenge — which was read as a host-wide block. The
-      trigger is the HTTP/2 fingerprint, not the client: the same request over HTTP/1.1 with a
-      browser UA returns HTTP 200, and the host exposes a JSON tree
-      (/meta/rootfolder, /meta/docfolder?containerId=) carrying City Council -> Legislation ->
-      Resolutions. So 69-25's absence from this corpus is a retrieval job, not a blocked route,
-      and the R.C. 149.43 request to the Sidney City Clerk drafted for it should not be sent
-      until that portal has been searched.
+  - item: "Resolution 69-25 — the CRA legislation itself"
+    tag: "[closed]"
+    closed: "2026-08-13"                      # #1998
+    resolution: >-
+      PULLED AND READ. data/documents/sidney/council/69-25 - Amending Resolution 84-22 - Expanding
+      CRA Boundaries.pdf, extracted at data/extracted/sidney/council/2025-09-08-res-69-25-cra-
+      expansion-and-megaproject-tier.resolution.yaml — together with Res. 84-22, which it amends
+      and which is the act that actually established the CRA. Reading it CORRECTED this register:
+      69-25 expands, it does not designate.
+    how: >-
+      The three-step route was: this item's own 2026-08-11 correction (the 403 is an HTTP/2
+      fingerprint, not a host block) -> `curl --http1.1` -> /meta/docfolder?containerId= on the
+      Resolutions container, which returns 51 year folders and every document in them. The whole
+      pull took minutes. The R.C. 149.43 request drafted for this resolution was never sent and
+      should not be.
+    lesson: >-
+      ⚠️ This corpus recorded "blocked" for this host in five artifacts and two drafted public-
+      records requests before anyone retried the request over HTTP/1.1. A 403 to a scripted client
+      may be a protocol-fingerprint block. Retry before recording a route negative.
   - item: "The three recorded deeds — O.R. 2329 pp. 445, 449, 454 — grantors, instrument numbers, consideration, easements"
     tag: "[open]"
     checked: "2026-08-01"

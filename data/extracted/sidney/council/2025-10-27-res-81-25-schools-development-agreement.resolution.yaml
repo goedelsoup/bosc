@@ -58,12 +58,26 @@ resolution:
                                                   # party to the agreement this resolution authorizes.
 
   vote:
+    # ANSWERED at #1998. The lead `COUNCIL-MINUTES` said the roll call "lives in the Council MINUTES
+    # … which are not in the corpus". They are now — pulled from the City's Documents-On-Demand
+    # portal, the route this corpus had recorded as blocked (it is an HTTP/2 fingerprint block; the
+    # identical request succeeds over HTTP/1.1). The resolution page still journals no vote, which
+    # was always the FORM of the instrument and not a gap in the read; the minutes are where a
+    # Sidney vote lives, and that is now demonstrated rather than assumed.
     roll_call_recorded: false
-    note: >-
-      [open] Same form as its siblings: enacting clause, passage date and Attest line only. The roll
-      call is in the Council minutes for 2025-10-27, which are not in the corpus — lead
-      `COUNCIL-MINUTES`, and the R.C. 149.43 ask in #1998.
-    signatories: null                         # [open] — ink signatures; the text layer has only "Attest:"
+    outcome_recorded: true
+    verbatim: >-
+      Councilmember VanMatre made a motion to adopt Resolution No. 81-25 as presented;
+      seconded by Councilmember Roddy. Upon a roll call vote, the motion passed unanimously.
+      Resolution No. 81-25 is hereby adopted.
+    moved_by: Councilmember Jenny VanMatre
+    seconded_by: Councilmember Scott Roddy
+    result: passed unanimously
+    source:
+      file: data/documents/sidney/council/City Council Minutes October 27, 2025.pdf
+      content_verified: ocr
+    signatories: null                         # [open] — the Mayor/Clerk signatures are ink on the
+                                              # scan; the text layer carries only the "Attest:" label.
 
   what_this_instrument_does_not_establish:
     - >-

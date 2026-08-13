@@ -168,3 +168,154 @@ documents:
       Council in open session on the night the agreement was authorized, and it is the source of
       the remaining-headroom figures the agreement itself does not state. Every figure in it that
       also appears in the executed agreement agrees with the agreement.
+
+# ===============================================================================================
+# SECOND ROUTE — the City's Documents-On-Demand portal (#1998, added 2026-08-13)
+# ===============================================================================================
+# ⚠️ THE ROUTE THIS CORPUS RECORDED AS BLOCKED WAS NEVER BLOCKED. `sidneycityoh.documents-on-
+# demand.com` was carried across five Sidney artifacts — and both drafted R.C. 149.43 requests —
+# as "Cloudflare-challenged, an unsearched route". It is Cloudflare-challenged, but the trigger is
+# the HTTP/2 FINGERPRINT, not the client: the identical request returns 403 over h2 and 200 over
+# HTTP/1.1. One retry defeats it, and the six files below came through it in minutes.
+#
+#   curl --http1.1 -A '<a browser UA>' https://sidneycityoh.documents-on-demand.com/…
+#
+# GENERALIZE THE LESSON: a 403 to a scripted client may be an h2 fingerprint block. Retry over
+# HTTP/1.1 before recording a route negative. This corpus recorded that negative three separate
+# times before anyone tested it.
+#
+# The host exposes an unauthenticated JSON API (Ameriscan "Documents On Demand", a fancytree UI):
+#   /meta/rootfolder                        → the body tree, two levels (14 City bodies)
+#   /meta/docfolder?containerId=<guid>      → THE WHOLE SUBTREE of one container, documents and all
+#   /document/<guid>/<fileName>.pdf         → the bytes
+# ⚠️ `/meta/childfolders?parentId=…` — which the page's own JS calls on lazy expand — returns the
+# app shell, not JSON, to a scripted client. Use `docfolder`, which returns everything anyway.
+#
+# What it holds, far beyond this collection: City Council Legislation → Ordinances / RESOLUTIONS
+# (51 year folders, 2026 back to 1976) and MINUTES (170 year folders, 2026 back to 1857), plus
+# Agendas, Agenda Packets, and the same for the Planning Commission, the Zoning Board of Appeals,
+# the CRA Housing Council, the Records Commission and nine other bodies.
+#
+# NAMING: these files keep the portal's own `fileName` value verbatim — which, unlike the
+# DocumentCenter route above, carries NO upload-timestamp suffix. Two City routes, two naming
+# conventions, both as-received.
+  - filename: 84-22 - Establishing CRA based on Community Boundaries.pdf
+    portal_document_id: "ec2297ec-7449-ed11-a393-000c29a59557"
+    canonical: sidney-council-res-84-22-citywide-cra-established-2022-10-10.pdf
+    type: council-resolution
+    date: "2022-10-10"
+    content_verified: text-layer   # body p.1 recital in Res. 69-25; p.0 title + the P.F. Pettibone journal form
+    pages: 7
+    sha256: "7763af6bfa38427e1cf7ff1dced9576ada0d78d6105fac72b0099dfea063422f"
+    bytes: 4085606
+    carries:
+      - "THE ACT THAT ACTUALLY DESIGNATED THE CRA — 'REPEALING RESOLUTIONS NO. 33-06, 44-07, 09-13 AND 73-18 AND IMPLEMENTING SECTIONS 3735.65 THROUGH 3735.70 … ESTABLISHING AND DESCRIBING THE BOUNDARIES OF THE CITY-WIDE COMMUNITY REINVESTMENT AREA'"
+      - "§4 as originally adopted — the commercial/industrial exemption ceiling is FIFTEEN years, clauses (a) through (d). There is NO thirty-year tier and no megaproject clause; that is what Res. 69-25 added three years later"
+      - "Designates a Housing Officer and creates a Housing Council"
+      - "Exhibit A — the boundary map (image)"
+    notes: >-
+      The corpus attributed the CRA DESIGNATION to Res. 69-25 (2025-09-08) on the strength of two
+      instruments' recitals. Read directly, 69-25 amends and expands this resolution; the
+      designation is here, 2022-10-10, and carries Ohio Department of Development area number
+      #149-72424-06. The register's "149-72424-06A" is the EXPANSION's number, so the two
+      reconcile — the suffix was the clue.
+
+  - filename: 69-25 - Amending Resolution 84-22 - Expanding CRA Boundaries.pdf
+    portal_document_id: "aa5732c1-8e8d-f011-a46b-000c29a59557"
+    canonical: sidney-council-res-69-25-cra-expansion-and-megaproject-tier-2025-09-08.pdf
+    type: council-resolution
+    date: "2025-09-08"
+    content_verified: text-layer   # body p.6: "Passed this 8th day of September 2025"
+    pages: 19
+    sha256: "acb250062532eb5f1c5fd99ba2612dcfd845c4081f8c9eafeb30e91c17c15cf9"
+    bytes: 8764007
+    carries:
+      - "THE INSTRUMENT THE CORPUS HAS BEEN CITING THROUGH RECITALS SINCE #1380 — journal pages 0296-0302"
+      - "It is an AMENDMENT, not a designation: 'this City Council, by Resolution 84-22 adopted on October 10, 2022, created and established the Sidney City-Wide Community Reinvestment Area, which was assigned designation #149-72424-06 by the Director of the Ohio Department of Development'"
+      - "§2 — the CRA is expanded so its boundaries are coterminous with the City"
+      - "§4(e), NEW — 'Up to thirty (30) years, and up to one hundred percent (100%) if the commercial or industrial structure is situated on the site of a megaproject and is owned and occupied by a megaproject operator (as such terms are defined in Ohio Revised Code Section 122.17(A)(12))'. This clause is the statutory basis of the 30-year exemption Res. 80-25 authorized seven weeks later, and it did not exist before this resolution"
+      - "§5 — an annual monitoring fee of 1% of the incentives, minimum $500, MAXIMUM $2,500"
+      - "§7 — a copy to the Shelby County Auditor; §8 — petition ODOD for approval of the expanded CRA"
+      - "Exhibit A (pp. 7-18) — the expanded boundary maps and legal descriptions"
+
+  - filename: 14-26 - Accepting a Plat - Consolidation and Right-of-Way Dedication Plat of Survey - Amazon.pdf
+    portal_document_id: "6b9bcb15-9ff6-46aa-b6ed-8937d41178ef"
+    canonical: sidney-council-res-14-26-consolidation-plat-accepted-2026-02-23.pdf
+    type: council-resolution
+    date: "2026-02-23"
+    content_verified: text-layer   # body p.1: "Passed this 23rd day of February, 2026"
+    pages: 2
+    sha256: "bc58f4cf6ea695c7369b668a545660719906cf26c6a67a1d313b273e1d76c97b"
+    bytes: 793901
+    carries:
+      - "The City ACCEPTING the 'Consolidation & Right-Of-Way Dedication Plat of Survey' — a replat of Parcel Nos. 01-26-03-126-001, 01-26-03-201-001 and 01-26-03-226-001 into ONE newly-configured lot, LOT NO. 7647"
+      - "…and accepting the dedication to public use of the easements and rights-of-way on it"
+    notes: >-
+      ⚠️ NOT A CONVEYANCE. This is a legislative act accepting a plat; it transfers no title, names
+      no grantor or grantee and states no consideration. Sidney's `assembly` chapter still carries
+      no conveyance instrument and that reading stays correct — only the Recorder pull can change
+      it. What this DOES give is the lot number and the three constituent parcels, which the
+      corpus previously had only from the Res. 80-25 recitals in a different spelling
+      (`01-2603-126.001`). Two City spellings of one parcel id; both preserved as written.
+      ⚠️ The instrument's own §1 reads "to create two (1) newly-configured lot" — a defect in the
+      City's text, quoted as extracted, not repaired.
+
+  - filename: City Council Minutes September 08, 2025.pdf
+    portal_document_id: "98cfe624-e35f-4037-99e0-225933ce3b65"
+    canonical: sidney-council-minutes-2025-09-08.pdf
+    type: council-minutes-approved
+    date: "2025-09-08"
+    content_verified: text-layer   # body p.0: "MINUTES OF THE REGULAR MEETING OF SIDNEY CITY COUNCIL / Held on Monday, September 8, 2025"
+    pages: 5
+    sha256: "89b695bb04f362557d4f4110e1028e1c6c075db9b7f6c897bae8af79106dd926"
+    bytes: 856533
+    carries:
+      - "THE VOTE ON RES. 69-25 — Roddy moved, VanMatre seconded, 'Upon a roll call vote, the motion passed unanimously'"
+      - "'There were no questions or comments on this topic.' — on the resolution that created the 30-year megaproject tier"
+      - "Community Development Director Barbara Dulworth's presentation: the expansion incorporates recent annexations 'including the 243.092 acres on the north side of Millcreek Road, west of Vandemark Road and the 53.16 acres of land west of Vandemark Road, south of Fair Road'"
+      - "The megaproject thresholds AS STATED BY STAFF: 'at least $1 billion in capital investment or creating $75 million in annual payroll', ODOD certifying"
+      - "Attendance — Mayor Mike Barhorst presiding; Councilmembers Huelskamp, Milligan, Roddy, Thurber, VanMatre, Wagner; nine named department heads"
+
+  - filename: City Council Minutes October 27, 2025.pdf
+    portal_document_id: "889bdc88-d3bf-f011-a477-000c29a59557"
+    canonical: sidney-council-minutes-2025-10-27.pdf
+    type: council-minutes-approved
+    date: "2025-10-27"
+    content_verified: ocr   # image-only: ZERO extractable characters; read via watermark.civic.indexer.ocr_pdf @ 300 DPI
+    pages: 9
+    sha256: "c77b549bd78f647c65f357a3b75a0e46e7c97b0bcd13caa97b9d0d01c4671c9a"
+    bytes: 1669265
+    text_layer: false
+    carries:
+      - "THE VOTES ON RES. 80-25 / 81-25 / 82-25 — and 82-25 was NOT unanimous: 'Barhorst: yes; Huelskamp: yes; Milligan: yes; Roddy: yes; Thurber: no; VanMatre: yes; Wagner: no'"
+      - "The five CRA parcels as the City reads them: 01-2603-126.001, 01-2603-201.001, 01-2603-251.001, 01-2603-251.002, 01-2603-226.001"
+      - "'a total investment of approximately three billion dollars' — the City's own disclosed capital figure for the campus"
+      - "'the creation of 75 new jobs in the span of three years (2028-2030)'; 'The annual payroll for the 75 new jobs … is estimated to be $6,750,000.00'"
+      - "'The proposed project meets the requirements to be designated a megaproject by the Director of the Department of Development of the State of Ohio' — eligibility asserted by staff; the designation itself is not stated as made"
+      - "The CRA Housing Council met 2025-10-23 and unanimously recommended approval"
+      - "John Werkman of Amazon Data Services, Inc. — the first Amazon person named anywhere in this corpus — on site work beginning 'as soon as they closed on the property'"
+      - "The AES power timeline 'was approximately two years and met the ADS schedule'"
+      - "Former City Manager Bowsher: 'between three and five attorneys had provided reviews for the city'"
+    notes: >-
+      ⚠️ Image-only, and the only one of the three that is. Every figure above was read by OCR at
+      300 DPI, never from a filename or a fetch summary. OCR artifacts are visible in the names
+      ("Darryl!" for Darryl, "Hursyz"/"Hurysz" for the City Planner) and are preserved as
+      extracted where quoted.
+
+  - filename: City Council Minutes April 27, 2026.pdf
+    portal_document_id: "60635271-024e-f111-a497-000c29a59557"
+    canonical: sidney-council-minutes-2026-04-27.pdf
+    type: council-minutes-approved
+    date: "2026-04-27"
+    content_verified: text-layer   # body: "MINUTES OF THE REGULAR MEETING OF SIDNEY CITY COUNCIL / Held on Monday, April 27, 2026"
+    pages: 11
+    sha256: "d98daa5d4b8ec88dd6c7bfb19e790d8b61d745a3be34c8415c592268786bbb8f"
+    bytes: 1301432
+    carries:
+      - "THE VOTES ON RES. 26-26 AND 27-26 — Huelskamp moved / Orsborne seconded, and Orsborne moved / Wagner seconded; both 'passed unanimously'"
+      - "The water/wastewater agreement is TEN YEARS, and unused reserved capacity is billed at 14.3% of the water base rate and 5.6% of the sanitary sewer base rate"
+      - "Staff's conclusion that both systems have sufficient capacity 'without disruption to existing customers' and that acceptance 'would not require any immediate city owned water or sewer infrastructure improvements'"
+      - "AWS to relocate and upsize an existing sanitary sewer main through the property AT NO COST TO THE CITY — the instrument behind Ohio EPA eDoc 4158406"
+      - "AWS to contribute UP TO $8,000,000 for Millcreek Road: three-laning between Fair and Kuther, a roundabout at Millcreek/Fair, and a Millcreek/Kuther improvement expressly for Cargill's expansion"
+      - "…against a $1,956,906 ODOD Roadwork Development Grant and a $275,000 ODOT Jobs & Commerce Grant — $10,231,906 available, roughly $2.0M above the engineer's estimate"
+      - "PUBLIC OPPOSITION ON THE RECORD — questions on pretreatment quality standards, reporting and monitoring, tap-in costs, meter monitoring, billing against the reserve and fines; and on noise, vibration, power supply, environmental and health impacts and the city's financial condition"

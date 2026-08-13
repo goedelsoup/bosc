@@ -2,9 +2,9 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-12T17:34:37+00:00",
+  "generated_at": "2026-08-13T03:50:32+00:00",
   "feed_count": 37,
-  "row_total": 833,
+  "row_total": 836,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 17
+      "count": 20
     },
     {
       "name": "timeline",

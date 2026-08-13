@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "716bb644721553f0e7084798ece0657286f8104623eb0887d2d1fbbc18ea9ed8",
+  "catalog_version": "bfd97970809ddbdbaf7a6167d7a45d76dc555d2977ecfb08af2e232b33ed4aff",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -1296,7 +1296,7 @@
       "kind": "lead",
       "site": "sidney",
       "local_id": "COUNCIL-MINUTES",
-      "title": "Council minutes and meeting audio for the six votes — and why no person may be named yet",
+      "title": "The three vote meetings are on the record — and one of the six votes was not unanimous",
       "feed": "leads"
     },
     {
@@ -1384,7 +1384,7 @@
       "kind": "lead",
       "site": "sidney",
       "local_id": "RES-69-25",
-      "title": "Pull Resolution 69-25 — the CRA designating legislation is known only through recitals",
+      "title": "Resolution 69-25 — pulled, and it is not what the recitals said it was",
       "feed": "leads"
     },
     {
@@ -1492,6 +1492,22 @@
       "feed": "records"
     },
     {
+      "handle": "record:sidney:sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml",
+      "title": "City of Sidney Resolution No. 84-22 — repealing four predecessor resolutions, implementing R.C. 3735.65-3735.70, establishing and describing the boundaries of the City-Wide Community Reinvestment Area, designating a Housing Officer and creating a Housing Council, passed 2022-10-10",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml",
+      "title": "City of Sidney Resolution No. 69-25 — authorizing the expansion of the City's Sidney City-Wide Community Reinvestment Area and amending Resolution 84-22, passed 2025-09-08",
+      "feed": "records"
+    },
+    {
       "handle": "record:sidney:sidney/council/2025-10-27-res-80-25-cra-agreement.resolution.yaml",
       "kind": "record",
       "site": "sidney",
@@ -1513,6 +1529,14 @@
       "site": "sidney",
       "local_id": "sidney/council/2025-10-27-res-82-25-income-tax-sharing.resolution.yaml",
       "title": "City of Sidney Resolution No. 82-25 — authorizing the City Manager to enter into an Income Tax Sharing Agreement with the Sidney City Schools and Upper Valley Career Center Boards of Education regarding the Community Reinvestment Area tax abatement for Amazon Data Services, Inc., passed 2025-10-27",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2026-02-23-res-14-26-consolidation-plat.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2026-02-23-res-14-26-consolidation-plat.resolution.yaml",
+      "title": "City of Sidney Resolution No. 14-26 — accepting the plat titled \"Consolidation & Right-Of-Way Dedication Plat of Survey\", a replat of three parcels into Lot No. 7647, and accepting the dedication of the easements and rights-of-way on it, passed 2026-02-23",
       "feed": "records"
     },
     {

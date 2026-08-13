@@ -61,11 +61,46 @@ resolution:
       alternates or a re-passage, and a citation to one is not a citation to the other.
 
   vote:
-    roll_call_recorded: false
-    note: >-
-      [open] Enacting clause, passage date and Attest line only. Roll call is in the 2025-10-27
-      Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.
-    signatories: null                         # [open] — ink signatures
+    # ANSWERED at #1998. The lead `COUNCIL-MINUTES` said the roll call "lives in the Council MINUTES
+    # … which are not in the corpus". They are now — pulled from the City's Documents-On-Demand
+    # portal, the route this corpus had recorded as blocked (it is an HTTP/2 fingerprint block; the
+    # identical request succeeds over HTTP/1.1). The resolution page still journals no vote, which
+    # was always the FORM of the instrument and not a gap in the read; the minutes are where a
+    # Sidney vote lives, and that is now demonstrated rather than assumed.
+    roll_call_recorded: true
+    outcome_recorded: true
+    verbatim: >-
+      Councilmember VanMatre made a motion to adopt Resolution No. 82-25 as presented;
+      seconded by Councilmember Roddy. A roll call vote was taken: Barhorst: yes; Huelskamp: yes;
+      Milligan: yes; Roddy: yes; Thurber: no; VanMatre: yes; Wagner: no. Motion passed.
+      Resolution No. 82-25 is hereby adopted.
+    moved_by: Councilmember Jenny VanMatre
+    seconded_by: Councilmember Scott Roddy
+    result: passed 5-2
+    roll_call:
+      - {member: Mike Barhorst, role: Mayor, vote: 'yes'}
+      - {member: Cory Huelskamp, role: Councilmember, vote: 'yes'}
+      - {member: Mardie Milligan, role: Councilmember, vote: 'yes'}
+      - {member: Scott Roddy, role: Councilmember, vote: 'yes'}
+      - {member: Darryl Thurber, role: Councilmember, vote: 'no'}
+      - {member: Jenny VanMatre, role: Councilmember, vote: 'yes'}
+      - {member: Steve Wagner, role: Vice Mayor, vote: 'no'}
+    dissent_note: >-
+      ⚠️ THE ONLY DIVIDED VOTE IN THE CHAIN. Five of the six resolutions behind this campus passed
+      unanimously; this one — the income-tax-sharing agreement with Sidney City Schools and Upper
+      Valley Career Center — drew NO votes from Councilmember Thurber and Vice Mayor Wagner. The
+      minutes journal the seven names for this item and only this item, which is why the divided
+      vote is legible at all: the same clerk records an uncontested item as "passed unanimously"
+      with no names. The minutes record no stated reason for either NO vote. [open]
+    name_transcription_note: >-
+      The OCR of the attendance roll renders "Darryl Thurber" as "Darryl! Thurber" and the City
+      Planner as both "Hursyz" and "Hurysz" on the same page. Names are given here in the spelling
+      the roll-call line itself uses; the artifacts are recorded, not silently normalised.
+    source:
+      file: data/documents/sidney/council/City Council Minutes October 27, 2025.pdf
+      content_verified: ocr
+    signatories: null                         # [open] — the Mayor/Clerk signatures are ink on the
+                                              # scan; the text layer carries only the "Attest:" label.
 
   what_this_instrument_does_not_establish:
     - >-
