@@ -26,7 +26,13 @@ producer:
     coverage window ends 2025-01-13, which is why the City's own GIS could not answer it) -
     together with the Sidney Planning Commission minutes of 2025-06-16 and 2025-07-21 and the
     Council minutes of 2026-02-23. Every agent-reported sha256 was independently reproduced by a
-    second pull before shelving.
+    second pull before shelving. SLICE 2 adds the ZONING CODE layer off the same route - A-3219
+    (2025-04-28, which creates the "Warehouse - Data Center" use and makes it permitted by right in
+    the IIM zone alone), A-3236 and A-3255 (the two later code amendments, which mention data
+    centers zero times between them), A-3211 and A-3227 (the separate 53-acre county tract, shelved
+    so a sweep cannot mistake it for the campus), A-3270 (the current official map, the first whose
+    window contains the campus zoning), and the Planning Commission minutes of 2025-03-17 and
+    2026-02-18. Every hash independently reproduced.
 license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:sidney
@@ -75,6 +81,24 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/sidney/council/2025-07-28-ord-a-3226-zoning-243-acres-iim.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+# The ZONING CODE layer (the issue 1998 tail, slice 2): what IIM means, when the City created the
+# data-center use, and the two county-tract ordinances committed so a sweep cannot mistake that
+# tract for the campus.
+- relpath: extracted/sidney/council/2025-04-28-ord-a-3219-data-center-use-created.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2025-09-22-ord-a-3236-guard-shacks.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2025-03-10-ord-a-3211-annexation-53-acres-county.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2025-07-28-ord-a-3227-zoning-53-acres-county.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2026-07-27-ord-a-3270-current-zoning-map.resolution.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:

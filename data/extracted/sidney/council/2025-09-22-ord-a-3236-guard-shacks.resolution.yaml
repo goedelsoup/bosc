@@ -1,0 +1,95 @@
+# City of Sidney Council, 2025-09-22 — Ordinance A-3236, zoning-code amendments including the
+# guard-shack regime. Issue #1998, epic #1275.
+#
+# Committed for two reasons, one of them a clean negative and one of them a defect.
+#
+# TAG VOCABULARY: [verified] = read off the ordinance's own text layer or a page render, as stated
+# per claim; [inference] = labelled; [open] = not established here.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/ordinances/A-3236 - Adopting Zoning Code Amendments.pdf
+  sha256: 77cf48a33b35d8a966a0ce9c09beb9d7d6b067991f2143fb89abdd3bb5a79686
+  content_verified: text-layer
+  read_note: >-
+    Native text layer for the passage clause and the code text; the truncation finding below was
+    additionally confirmed from a 300-DPI render of p.7, because asserting that a city enacted an
+    unfinished sentence needs an image and not an extraction. Hash independently reproduced.
+pages_read: [0, 1, 7]
+
+resolution:
+  instrument: >-
+    City of Sidney Ordinance No. A-3236 — adopting amendments to the Zoning Code, including
+    §1111.05(u) guard shacks and floodplain updates, passed 2025-09-22
+  ordinance_no: A-3236
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: zoning_text_amendment
+  adopted: '2025-09-22'                       # [verified] "Passed this 22nd day of September 2025"
+  outcome: approved
+
+  guard_shacks:
+    tag: verified
+    section: §1111.05(u)
+    iim_only_verbatim: 'Guard shacks are permitted in the IIM Zone only.'
+    limits:
+      - 'Permitted in any yard, on the same zoning lot as the principal building'
+      - 'Minimum 15 feet from every property line and 10 feet from the principal building'
+      - 'Maximum 199 square feet total gross floor area'
+      - 'Maximum 18 feet in height from grade'
+    note: >-
+      [verified] The IIM zone is the campus's zone (Ord. A-3226). This is the second use the City
+      confined to IIM alone, after the data-center use itself.
+
+  ⚠️_defect_in_the_enacted_text:
+    tag: verified
+    read: text layer AND 300-dpi render of p.7
+    section: §1117.02 definition
+    verbatim: >-
+      Guard Shack. A structure located on private property for the purpose of manually or
+      electronically monitoring pedestrian and / or vehicular traffic and promoting security by
+      substantially impeding or restricting ingress or egress to said property. A guard shack shall
+      not be
+    finding: >-
+      THE DEFINITION STOPS MID-SENTENCE. "A guard shack shall not be " is followed immediately by
+      the next glossary entry, "Historic structure:". The render shows the red-underlined NEW text
+      simply ending — there is no strikethrough, no continuation and no missing page. The City
+      adopted an unfinished sentence.
+    why_it_is_not_an_artifact: >-
+      Confirmed from the page image, not only the text layer, and struck-through text elsewhere in
+      the same exhibit does still render — so an extraction failure does not explain it.
+
+  data_centers:
+    tag: verified
+    mentions: 0
+    note: >-
+      A clean negative over the whole ordinance. Together with A-3255 (2026-02-23, also zero), this
+      establishes that Sidney has not revisited the data-center use since creating it in A-3219.
+
+  ⚠️_timing_is_not_causation:
+    tag: verified
+    fact: >-
+      This ordinance's public hearing was held 2025-09-08 — the same meeting that passed Res. 69-25's
+      thirty-year megaproject tier — and it returned for deliberation on 2025-09-22.
+    guard: >-
+      RECORD THE COINCIDENCE, WRITE NO CAUSAL CLAIM. Neither instrument names the other; neither
+      names any data center; the Council minutes of 2025-09-08 present the amendments as ODNR/FEMA
+      floodplain updates and clarifications.
+
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: false
+    note: '[open] Enacting clause, passage date and Attest line only. The 2025-09-22 minutes are unpulled.'
+
+  what_this_instrument_does_not_establish:
+    - 'ANY LINK TO THE CAMPUS. It names no project, no company and no parcel.'
+    - 'WHAT A GUARD SHACK MAY NOT BE. The sentence that would have said so is truncated in the adopted text.'
+  confidence: high
+  warnings:
+    - 'Native text layer with journal-scan artifacts, preserved in quotation.'

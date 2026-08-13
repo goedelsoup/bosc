@@ -1,0 +1,81 @@
+# City of Sidney Council, 2025-07-28 — Ordinance A-3227, zoning the separate 53-acre Shelby County
+# Commissioners tract IIM. Issue #1998, epic #1275.
+#
+# ⚠️ THIS IS NOT THE CAMPUS, AND THAT IS WHY IT IS COMMITTED. It shares the campus's section number,
+# its passage date, its zoning district and an acreage in the same range, and a future reader
+# sweeping on any of those will land on it. Its own legal description places it in the SOUTHEAST
+# QUARTER of Section 3; the campus (A-3225) is in the NORTH HALF. Same section, different land.
+#
+# TAG VOCABULARY: [verified] = read off the ordinance's own text layer; [open] = not established.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/ordinances/A-3227 - Zoning 53.16 IIM - County Commissioners Annexation.pdf
+  sha256: 1949e96ac1f88fc4c8d4ee73d4c9d7a471bfa8a9a755eced76a0400191ac1a1b
+  content_verified: text-layer
+  read_note: 'Native text layer. Hash independently reproduced before shelving.'
+pages_read: [0, 1, 2]
+
+resolution:
+  instrument: >-
+    City of Sidney Ordinance No. A-3227 — zoning the annexed Shelby County Commissioners tract in
+    the southeast quarter of Section 3 as IIM, passed 2025-07-28
+  ordinance_no: A-3227
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: zoning_establishment
+  adopted: '2025-07-28'
+  outcome: approved
+  zoning_classification: 'IIM - Industry / Innovation / Manufacturing Zone'
+  zoning_verbatim: 'be, and the same hereby is, zoned IIM - Industry / Innovation / Manufacturing Zone.'
+
+  not_the_campus:
+    tag: verified
+    verbatim: >-
+      Situate in the southeast quaiter of Section 3, Town 7 Nmth, Range 6 East, Clinton Township,
+      Shelby County, State of Ohio. Commencing at an iron pin in a monument box found at the
+      southeast comer of the southeast quarter of Section 3. Said point also being at the centerline
+      of Vandemark Road.
+    note: >-
+      The campus is in the NORTH HALF of Section 3 (A-3225). The CRA expansion of Res. 69-25 covered
+      both tracts, which is why the Council minutes of 2025-09-08 mention them together — that is
+      not a reason to merge them. Journal artifacts ("quaiter", "Nmth", "comer") preserved.
+
+  ⚠️_acreage_conflict_inside_one_instrument:
+    tag: verified
+    title: 'AN ORDINANCE ZONING A 53.16 ACRE TRACT'
+    legal_description_closes: 'Containing 53 .083 acres more or less, subject to all easements of record.'
+    section_2: 'amended to reflect the inclusion of the 5 3 .16-acre tract as an IIM - Industry / Innovation / Manufacturing Zone'
+    finding: >-
+      TWO FIGURES, ONE DOCUMENT, 0.077 ACRES APART. 53.083 is the only figure that ever appears
+      inside a SURVEYED description; 53.16 appears in this ordinance's title and §2, in A-3211's
+      title, in the Planning Commission's case caption for PRZM2025-0005, and in the Council minutes
+      of 2025-09-08. Four City records divide on one tract.
+    not_resolved: >-
+      [open]. The 0.077-acre difference is NOT explained by the roadway dedications shown on
+      A-3211's exhibits (1.808 ac and 0.041 ac). Answered without being resolved.
+
+  planning_commission:
+    tag: verified
+    note: >-
+      Its zoning recommendation DEADLOCKED on 2025-06-16, case PRZM2025-0005 — "M. Asher- yes /
+      P. Miller- no / A. Sakhalkar- no / D. Gross- yes" — which the clerk recorded as "Motion
+      neither passed or failed". ⚠️ Quote that phrasing; do NOT restate a 2-2 tie as "failed".
+      Neither of the two zoning recommendations put to the Commission that night carried.
+
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: false
+    note: '[open] Instrument form only; the 2025-07-28 Council minutes are unpulled.'
+
+  what_this_instrument_does_not_establish:
+    - 'ANYTHING ABOUT THE AWS CAMPUS. Different tract, different owner, different quarter-section.'
+  confidence: high
+  warnings:
+    - 'Journal-scan artifacts throughout, preserved in quotation. The acreage conflict is in the instrument, not in the read.'

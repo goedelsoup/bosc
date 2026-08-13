@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "6712be2604ec0956b170f541b4ca8425b91b14eb17d790913c11d093c60f0aa7",
+  "catalog_version": "1c86a8ec145cbfb820609aea213791a271b43f81e954629ea04e04defa28dea8",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -1500,6 +1500,22 @@
       "feed": "records"
     },
     {
+      "handle": "record:sidney:sidney/council/2025-03-10-ord-a-3211-annexation-53-acres-county.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-03-10-ord-a-3211-annexation-53-acres-county.resolution.yaml",
+      "title": "City of Sidney Ordinance No. A-3211 — annexing a 53-acre tract from the Shelby County Commissioners under R.C. 709.16, as an emergency measure, passed 2025-03-10",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2025-04-28-ord-a-3219-data-center-use-created.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-04-28-ord-a-3219-data-center-use-created.resolution.yaml",
+      "title": "City of Sidney Ordinance No. A-3219 — adopting amendments to the Zoning Code, including the creation of the \"Warehouse – Data Center\" use and its definition, passed 2025-04-28",
+      "feed": "records"
+    },
+    {
       "handle": "record:sidney:sidney/council/2025-07-28-ord-a-3225-annexation-243-acres.resolution.yaml",
       "kind": "record",
       "site": "sidney",
@@ -1516,11 +1532,27 @@
       "feed": "records"
     },
     {
+      "handle": "record:sidney:sidney/council/2025-07-28-ord-a-3227-zoning-53-acres-county.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-07-28-ord-a-3227-zoning-53-acres-county.resolution.yaml",
+      "title": "City of Sidney Ordinance No. A-3227 — zoning the annexed Shelby County Commissioners tract in the southeast quarter of Section 3 as IIM, passed 2025-07-28",
+      "feed": "records"
+    },
+    {
       "handle": "record:sidney:sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml",
       "kind": "record",
       "site": "sidney",
       "local_id": "sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml",
       "title": "City of Sidney Resolution No. 69-25 — authorizing the expansion of the City's Sidney City-Wide Community Reinvestment Area and amending Resolution 84-22, passed 2025-09-08",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2025-09-22-ord-a-3236-guard-shacks.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2025-09-22-ord-a-3236-guard-shacks.resolution.yaml",
+      "title": "City of Sidney Ordinance No. A-3236 — adopting amendments to the Zoning Code, including §1111.05(u) guard shacks and floodplain updates, passed 2025-09-22",
       "feed": "records"
     },
     {
@@ -1569,6 +1601,14 @@
       "site": "sidney",
       "local_id": "sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml",
       "title": "City of Sidney Resolution No. 27-26 — authorizing the City Manager to enter into a Development Agreement with Amazon Web Services, Inc., passed 2026-04-27",
+      "feed": "records"
+    },
+    {
+      "handle": "record:sidney:sidney/council/2026-07-27-ord-a-3270-current-zoning-map.resolution.yaml",
+      "kind": "record",
+      "site": "sidney",
+      "local_id": "sidney/council/2026-07-27-ord-a-3270-current-zoning-map.resolution.yaml",
+      "title": "City of Sidney Ordinance No. A-3270 — adopting a new official Zoning Map incorporating the rezoning, annexation and detachment ordinances from 2025-03-10 to 2026-06-08, passed 2026-07-27",
       "feed": "records"
     },
     {

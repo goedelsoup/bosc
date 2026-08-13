@@ -130,6 +130,29 @@ Amazon-owned, **cooling-water-discharging** Ohio data center that is **not this 
     event. The superseding map, **A-3270** (passed 2026-07-27, effective 2026-08-10), is the first
     whose window contains A-3226 — *whether the campus is drawn as IIM on it is `[open]`; this
     record makes no visual claim about a map raster.*
+- **Data centers in the Sidney zoning code:** **defined 2025-04-28**, and **permitted by right in
+  IIM only.** `[verified]` Ordinance **A-3219** Exhibit A adds the glossary entry *"Warehouse — Data
+  Center. A facility used for the remote storage, processing, or distribution of large amounts of
+  data that is greater than 50,000 square feet"* and marks a single **P** in the
+  Industry/Innovation/Manufacturing column of the Chapter 1103 use table, with all eight other
+  district columns blank
+  ([source](../../documents/sidney/ordinances/A-3219%20-%20Adopting%20Amendments%20to%20the%20Zoning%20Code.pdf),
+  definition p. 10, use table p. 2; [extraction](council/2025-04-28-ord-a-3219-data-center-use-created.resolution.yaml)).
+  - ⚠️ **By right means no conditional-use permit, no variance and no BZA hearing was ever required.**
+    The absence of any Board of Zoning Appeals record for this campus is **structural**, and must
+    never be reported as a gap in the corpus.
+  - ⚠️ **The use-table cell is illegible in the PDF text layer** (`!:`) and was read from a 300-DPI
+    render, with the column identified against the rendered header band. A text-layer read of A-3219
+    cannot confirm or refute the by-right finding; re-checks must render the page.
+  - **A 50,000 sq ft floor.** A data facility at or below that size is not a "Warehouse – Data
+    Center" under this code and has no listed use at all. `[open]`
+  - **Sidney has not revisited the use since.** The two later zoning-code amendments — A-3236
+    (2025-09-22) and A-3255 (2026-02-23) — carry **zero** mentions of data centers between them,
+    over a full enumeration of the Ordinances container's 2025 and 2026 folders. `[verified]`
+  - **Cross-site:** Van Wert wrote the term into its own code on 2026-05-11, the same night it
+    annexed and zoned its campus. Sidney's definition precedes Van Wert's by about twelve and a half
+    months and its own campus zoning by three. *Two sequences; nothing in either record makes one a
+    response to the other.*
 - **Dominant hydrologic soil group:** **D** — SSURGO/SDA 64-point grid over the committed parcel
   geometry (2026-07-31): D 62 pts (96.9%) + C/D 2 pts (3.1%); dominant map units Blount and
   Glynwood silt loams, *end moraine*. `[verified]`

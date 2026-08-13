@@ -1,0 +1,181 @@
+# City of Sidney Council, 2025-04-28 — Ordinance A-3219, the zoning-code amendment that created
+# the "Warehouse – Data Center" use. Issue #1998, epic #1275.
+#
+# THIS IS THE INSTRUMENT THAT MADE A DATA CENTER A THING SIDNEY'S CODE RECOGNISES — and it made it
+# a use permitted BY RIGHT, in one district only, three months before the campus was zoned into
+# that district and six months before the CRA agreement was signed.
+#
+# ⚠️ A BRIEFED NEGATIVE THAT WAS WRONG. When this research was commissioned, the corpus's working
+# assumption was that Van Wert was the network's example of a city writing "data center" into its
+# code — Ord. 26-05-029, May 2026 — and that Sidney had not. Sidney did it FIRST, by about twelve
+# and a half months. Two sequences; write both, and do not write a race between them.
+#
+# ⚠️ WHAT FOLLOWS FROM "PERMITTED BY RIGHT". A P in the use table means no conditional-use permit,
+# no variance and no Board of Zoning Appeals hearing is required for a data center in the IIM zone.
+# That is why no BZA or Planning Commission record of a data-center APPROVAL exists to look for —
+# the absence is structural, not a gap in the corpus, and it must never be reported as one.
+#
+# TAG VOCABULARY: [verified] = read off this ordinance's own text layer or a page render, as stated
+# per claim; [inference] = reasoned from [verified] facts, labelled; [open] = not established here.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/ordinances/A-3219 - Adopting Amendments to the Zoning Code.pdf
+  sha256: d2d7f3c061aa6a798125eb863baf54d805ee28a4bcccce7860ace0cbd3a89d01
+  content_verified: text-layer
+  read_note: >-
+    The passage clause and the GLOSSARY definition are read from the native text layer. THE USE
+    TABLE IS NOT — pypdf renders the governing cell as `!:`, so it was read from a 300-DPI page
+    render of p.2 and the column identified against the rendered header band. Both reads are
+    labelled per claim below. Retrieved 2026-08-13 over HTTP/1.1; the agent-reported hash was
+    independently reproduced by a second pull before shelving.
+pages_read: [0, 1, 2, 10]
+
+resolution:
+  instrument: >-
+    City of Sidney Ordinance No. A-3219 — adopting amendments to the Zoning Code, including the
+    creation of the "Warehouse – Data Center" use and its definition, passed 2025-04-28
+  ordinance_no: A-3219
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: zoning_text_amendment
+  adopted: '2025-04-28'                       # [verified] "Passed this 28TH day of April 2025."
+  outcome: approved
+
+  # ------------------------------------------------------------------------------------------
+  definition:
+    tag: verified
+    read: text-layer
+    locator: 'Exhibit A, GLOSSARY – USES, letter w (sheet foot "SIDNEY, OHIO ZONING CODE 145")'
+    verbatim: >-
+      Warehouse — Data Center. A facility used for the remote storage, processing, or distribution
+      of large amounts of data that is greater than 50,000 square feet.
+    transcription_note: >-
+      The text layer inserts a stray apostrophe ("A 'facility used"); an independent 300-DPI render
+      has none, so it is an extraction artifact and is excluded from the quotation.
+    is_new: >-
+      [verified] The whole definition is rendered in RED UNDERLINE, and the exhibit's own legend
+      reads "Red Underline = NEW / Red Strike Through = REMOVE". The ordinance is the adding
+      instrument on its own face.
+    ⚠️_the_floor:
+      threshold_sq_ft: 50000
+      note: >-
+        A data facility of 50,000 sq ft or LESS is not a "Warehouse – Data Center" under this code,
+        and no other listed use covers it. What such a facility would be permitted as, and where,
+        is [open].
+
+  permitted_use:
+    tag: verified
+    read: 300-dpi page render (the cell is illegible in the text layer)
+    locator: 'Exhibit A, Chapter 1103 use table, p.2 (sheet foot "SIDNEY, OHIO ZONING CODE 22 UPDATED THROUGH NOVEMBER 25, 2024")'
+    finding: >-
+      The row "Warehouse – Data Center" carries a single entry — P, permitted by right — in the
+      "Industry/ Innov./Manuf. Zone (IIM)" column. All eight other district columns on that row are
+      BLANK.
+    districts_on_the_table: [R-1, R-2, R-3, CC, NC, HC, IIM, CSD, TND]
+    both_marked_new: >-
+      [verified] The row label AND the P are both in red underline, i.e. NEW under the exhibit's own
+      legend.
+    how_the_column_was_identified: >-
+      Against the rendered header band, and cross-checked against the P's of "Warehouse - Large
+      Format", "Storage - Contractor" and "Storage - Commercial Gases", which sit in the same
+      column. ⚠️ The column was NOT inferred from the filename or from the ordinance title.
+    consequence: >-
+      [inference], and the reasoning is the code's own scheme: a P is by-right, so a data center in
+      the IIM zone requires no conditional-use permit, no variance and no BZA hearing. This is why
+      there is no BZA or Planning Commission record of a data-center approval to find. Report it as
+      a structural absence, never as a corpus gap.
+
+  the_sequence:
+    tag: verified
+    note: >-
+      Every date below is content-verified from the instrument's own passage clause, so the ORDER is
+      solid. What it means is not asserted.
+    entries:
+      - {date: '2025-04-28', event: 'A-3219 creates the "Warehouse – Data Center" use, P by right in IIM only'}
+      - {date: '2025-06-16', event: 'The Planning Commission declines 0-4 to recommend zoning the campus IIM'}
+      - {date: '2025-07-28', event: 'A-3225 annexes the 243.092 acres and A-3226 zones them IIM'}
+      - {date: '2025-09-08', event: 'Res. 69-25 adds the thirty-year megaproject exemption tier'}
+      - {date: '2025-10-27', event: 'Res. 80-25 authorizes the CRA Agreement at 30 years / 100%'}
+    ⚠️_it_names_nothing: >-
+      A-3219 names no project, no company and no parcel — and a Commission member asked on the
+      record why the category was needed at all (see `deliberation`). Whether it was drafted with
+      this campus in view is [open]. The chronology is a fact; the motive is not in any document
+      read here.
+
+  deliberation:
+    tag: verified
+    source:
+      file: data/documents/sidney/planning-commission/Planning Commission Minutes March 17, 2025.pdf
+      case: PZCA2025-0002
+    the_question: >-
+      A. Sakhalkar asked for clarification on why the proposed code is specifically calling out data
+      centers when the code currently lists warehouse- small format and large format; noting that a
+      data center should fall under one of those existing uses.
+    the_answer: >-
+      T. Hurysz replied that the city is being inclusive to different types of uses that may or may
+      not come into the city. Data Centers was not a specific use listed before, but the proposal is
+      to add it. He also noted that the terms for warehouses- small and large format pertains to the
+      literal storage of physical goods and materials. Since a data center stores information, staff
+      feels the distinction needs to be added.
+    note: >-
+      [verified] This is the only recorded deliberation on why Sidney created a data-center use, and
+      it names no project. The Commission recommended the amendments; Council adopted them six weeks
+      later.
+
+  subsequent_amendments:
+    tag: verified
+    finding: >-
+      SIDNEY HAS NOT REVISITED THE USE SINCE. The two later zoning-code amendments in the City's
+      Ordinances container — A-3236 (2025-09-22) and A-3255 (2026-02-23) — carry ZERO mentions of
+      data centers between them.
+    sweep: >-
+      The negative rests on a full enumeration of the Ordinances container's 2025 and 2026 year
+      folders (49 and 22 documents), of which the zoning-code amendments were opened and read.
+    both_committed:
+      - data/documents/sidney/ordinances/A-3236 - Adopting Zoning Code Amendments.pdf
+      - data/documents/sidney/ordinances/A-3255 - Amending Zoning Code.pdf
+
+  cross_site:
+    tag: verified
+    note: >-
+      Van Wert wrote "Data Center" into its own code by Ord. 26-05-029 on 2026-05-11, alongside the
+      annexation and zoning of ITS campus the same night. Sidney's definition precedes Van Wert's by
+      about twelve and a half months, and Sidney's definition precedes its own campus zoning by
+      three. TWO SEQUENCES, WRITTEN SEPARATELY. Nothing here supports a claim that either city was
+      responding to the other. See data/extracted/van-wert/council/.
+    ⚠️_the_briefed_negative: >-
+      The research that produced this file was briefed with Van Wert as the network's example and
+      the implication that Sidney had none. That was wrong, and it is recorded here so the next
+      reader does not inherit it.
+
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: false
+    note: >-
+      [open] The RECORD OF ORDINANCES page carries the enacting clause, the passage date and the
+      Attest line only. The Council minutes of 2025-04-28 are on the same portal, unpulled.
+
+  what_this_instrument_does_not_establish:
+    - >-
+      ANY CONNECTION TO THE CAMPUS. It names no project, no company and no parcel, and predates the
+      campus's annexation by three months.
+    - >-
+      WHAT A DATA CENTER MAY DO once permitted. The use table grants the use; operating conditions —
+      noise, water, generators, hours — are elsewhere in the code or nowhere, and this ordinance
+      imposes none. ⚠️ Contrast Van Wert, whose conditional-zoning ordinance carried a landscape
+      mound and nothing else: neither city attached operating conditions to a data center.
+    - >-
+      COVERAGE BELOW 50,000 SQ FT. See `definition.⚠️_the_floor`.
+  confidence: high
+  warnings:
+    - >-
+      The governing use-table cell is ILLEGIBLE in the text layer (`!:`) and was read from a page
+      render. Any future re-check must render the page; a text-layer read of this ordinance cannot
+      confirm or refute the by-right finding.
