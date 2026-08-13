@@ -1908,6 +1908,56 @@
     }
   },
   {
+    "id": "findlay-watch-items",
+    "title": "Findlay site watch-items (WPCC infrastructure geometry)",
+    "scope": "reference",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024\" (permit 2PD00008, renewal suffix UD / application OH0025135), structured read at data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml; outfall coordinates (41.049722, -83.667778) from the modification-suffix VD public notice's discharge-location table",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "findlay",
+      "gis",
+      "geojson",
+      "wwtp",
+      "infrastructure"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/findlay/watch-items.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "89515b48a8c31cefdc6a11036fd2584e2621f07821ad4c6605c25137cd2c3d87",
+      "size_bytes": 2106,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024\" (permit 2PD00008, renewal suffix UD / application OH0025135), structured read at data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml; outfall coordinates (41.049722, -83.667778) from the modification-suffix VD public notice's discharge-location table",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "gleif",
     "title": "Corridor Entity LEIs (GLEIF)",
     "scope": "reference",
@@ -2359,10 +2409,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "a4ed6161b79ec57a674cc16d1d6a404f3062446feca917018f6a6d9314de623d",
-      "size_bytes": 193517,
+      "sha256": "4d20e0f4c85ee287a8b7a68b75794cfdf1d208d62618962cb42a9892920aeffc",
+      "size_bytes": 197469,
       "lfs_materialized": true,
-      "file_count": 23,
+      "file_count": 24,
       "stale": false,
       "asof": null
     },

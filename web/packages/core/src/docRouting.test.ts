@@ -87,9 +87,9 @@ describe("isRoutableDoc — measured against the committed Lima corpus", () => {
   // Pinned counts. These are the whole argument that this is a precise filter and not a
   // heuristic: if a corpus change moves them, that belongs in review, not in a silent
   // route-count drift.
-  it("excludes exactly 54 of 3,250 entries (1.7%)", () => {
+  it("excludes exactly 54 of 3,251 entries (1.7%)", () => {
     const entries = limaEntries();
-    expect(entries.length).toBe(3250);
+    expect(entries.length).toBe(3251);
     expect(entries.filter((e) => !isRoutableDoc(e))).toHaveLength(54);
   });
 

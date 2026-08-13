@@ -1,1 +1,149 @@
-[]
+[
+  {
+    "scenario": {
+      "name": "baseline",
+      "description": "Current municipal loop, no data-center cooling draw.",
+      "cooling_model": "off",
+      "cooling_demand": {
+        "value": 0.0,
+        "unit": "MGD",
+        "source": "assumption",
+        "citation": "baseline: no campus cooling load",
+        "confidence": "low",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "consumptive_fraction": {
+        "value": 0.0,
+        "unit": "fraction",
+        "source": "assumption",
+        "citation": "baseline",
+        "confidence": "low",
+        "asof": null,
+        "low": null,
+        "high": null
+      },
+      "basis": null
+    },
+    "cooling_model": "off",
+    "consumptive_loss": {
+      "value": 0.0,
+      "unit": "cfs",
+      "source": "derived",
+      "citation": "0 MGD x 0 consumptive (scenario baseline)",
+      "confidence": "medium",
+      "asof": null,
+      "low": null,
+      "high": null
+    },
+    "receiving_7q10": {
+      "value": 0.21,
+      "unit": "cfs",
+      "source": "document",
+      "citation": "Ohio EPA NPDES fact sheet 2PD00008*UD (Findlay WPCC, PN 205259, 2024-08-09), Table 12 'Instream Conditions and Discharger Flow', printed p. 28 — basis 'USGS Gages 04188300 and 04189000' (the 30Q10 rows cite 04188300 alone). Discharge location Blanchard River RM 56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 (printed p. 7). Source: data/documents/oepa/findlay/2PD00008.fs.pdf; structured read data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml.",
+      "confidence": "high",
+      "asof": null,
+      "low": null,
+      "high": null
+    },
+    "receiving_summer_30q10": {
+      "value": 0.31,
+      "unit": "cfs",
+      "source": "document",
+      "citation": "summer 30Q10 0.31 cfs — Ohio EPA NPDES fact sheet 2PD00008*UD (Findlay WPCC, PN 205259, 2024-08-09), Table 12 'Instream Conditions and Discharger Flow', printed p. 28 — basis 'USGS Gages 04188300 and 04189000' (the 30Q10 rows cite 04188300 alone). Discharge location Blanchard River RM 56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 (printed p. 7). Source: data/documents/oepa/findlay/2PD00008.fs.pdf; structured read data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml. (The network's most effluent-dominated reach by a wide margin: 15 MGD (23.208 cfs) against a 0.21 cfs 7Q10 is ~110x, and Ohio EPA computes the acute dilution ratio as 1.0 outright (printed p. 13, '(0.17 cfs + 23.2 cfs) / 23.2 cfs') — at design flow the Blanchard below RM 56.42 IS the effluent. Do NOT screen this plant against the derived at-gage Blanchard 7Q10 (8.67 cfs): gage 04189000 sits BELOW this outfall and below the Findlay Reservoir low-flow augmentation return, so that denominator contains this discharge. See low-flow-7q10.derived.yaml `regulation` / `cross_check_gages`.)",
+      "confidence": "high",
+      "asof": null,
+      "low": null,
+      "high": null
+    },
+    "receiving_1q10": {
+      "value": 0.17,
+      "unit": "cfs",
+      "source": "document",
+      "citation": "driest-day 1Q10 0.17 cfs — Ohio EPA NPDES fact sheet 2PD00008*UD (Findlay WPCC, PN 205259, 2024-08-09), Table 12 'Instream Conditions and Discharger Flow', printed p. 28 — basis 'USGS Gages 04188300 and 04189000' (the 30Q10 rows cite 04188300 alone). Discharge location Blanchard River RM 56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 (printed p. 7). Source: data/documents/oepa/findlay/2PD00008.fs.pdf; structured read data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml. (The network's most effluent-dominated reach by a wide margin: 15 MGD (23.208 cfs) against a 0.21 cfs 7Q10 is ~110x, and Ohio EPA computes the acute dilution ratio as 1.0 outright (printed p. 13, '(0.17 cfs + 23.2 cfs) / 23.2 cfs') — at design flow the Blanchard below RM 56.42 IS the effluent. Do NOT screen this plant against the derived at-gage Blanchard 7Q10 (8.67 cfs): gage 04189000 sits BELOW this outfall and below the Findlay Reservoir low-flow augmentation return, so that denominator contains this discharge. See low-flow-7q10.derived.yaml `regulation` / `cross_check_gages`.)",
+      "confidence": "high",
+      "asof": null,
+      "low": null,
+      "high": null
+    },
+    "receiving_live": null,
+    "receiving_water_name": "Blanchard River",
+    "campus_routed_discharge": null,
+    "balance": {
+      "nodes": [
+        {
+          "node": {
+            "id": "findlay-wpcc",
+            "name": "Findlay WPCC",
+            "role": "wwtp",
+            "receiving_water": "Blanchard River (Findlay WPCC outfall, RM 56.42)",
+            "lat": 41.049722,
+            "lon": -83.667778
+          },
+          "inflow": null,
+          "consumptive_use": null,
+          "return_flow": {
+            "value": 23.20843127476999,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "findlay-wpcc (15.0 MGD design) — Ohio EPA \"Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024\" for NPDES 2PD00008*UD / application OH0025135, City of Findlay Water Pollution Control Center, 1201 South River Road — outfall 001 to the Blanchard River at RM 56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 (printed p. 7); Table 12 \"Instream Conditions and Discharger Flow\" (printed p. 28) gives the average design flow as 23.208 cfs (15 MGD) and the reach 7Q10 as 0.21 cfs annual (1Q10 0.17, summer 30Q10 0.31, harmonic mean 1.84; USGS gages 04188300 + 04189000), and the fact sheet computes the acute dilution ratio as 1.0 outright at printed p. 13. Permit effective 2024-11-01, expires 2029-10-31; the *VD modification is effective 2026-02-01 against the same expiration. Source data/documents/oepa/findlay/2PD00008.fs.pdf; structured read data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml. [verified]",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "stormwater": null
+        }
+      ],
+      "tier": "tier0",
+      "warnings": [
+        "no abstraction node configured for site 'findlay'; the water balance omits the intake reach."
+      ]
+    },
+    "assimilative": [
+      {
+        "receiving_water": "Blanchard River (Findlay WPCC outfall, RM 56.42)",
+        "discharger": "Findlay WPCC",
+        "design_low_flow": {
+          "value": 0.21,
+          "unit": "cfs",
+          "source": "document",
+          "citation": "Ohio EPA NPDES fact sheet 2PD00008*UD (Findlay WPCC, PN 205259, 2024-08-09), Table 12 'Instream Conditions and Discharger Flow', printed p. 28 — basis 'USGS Gages 04188300 and 04189000' (the 30Q10 rows cite 04188300 alone). Discharge location Blanchard River RM 56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 (printed p. 7). Source: data/documents/oepa/findlay/2PD00008.fs.pdf; structured read data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml.",
+          "confidence": "high",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "discharge": {
+          "value": 23.20843127476999,
+          "unit": "cfs",
+          "source": "document",
+          "citation": "findlay-wpcc (15.0 MGD design) — Ohio EPA \"Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024\" for NPDES 2PD00008*UD / application OH0025135, City of Findlay Water Pollution Control Center, 1201 South River Road — outfall 001 to the Blanchard River at RM 56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 (printed p. 7); Table 12 \"Instream Conditions and Discharger Flow\" (printed p. 28) gives the average design flow as 23.208 cfs (15 MGD) and the reach 7Q10 as 0.21 cfs annual (1Q10 0.17, summer 30Q10 0.31, harmonic mean 1.84; USGS gages 04188300 + 04189000), and the fact sheet computes the acute dilution ratio as 1.0 outright at printed p. 13. Permit effective 2024-11-01, expires 2029-10-31; the *VD modification is effective 2026-02-01 against the same expiration. Source data/documents/oepa/findlay/2PD00008.fs.pdf; structured read data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml. [verified]",
+          "confidence": "high",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "upstream_returns": null,
+        "dilution_ratio": 0.0090484357824,
+        "flag": "violation",
+        "effluent_credited_ratio": null,
+        "effluent_credited_flag": null,
+        "acute_low_flow": {
+          "value": 0.17,
+          "unit": "cfs",
+          "source": "document",
+          "citation": "1Q10 (acute design flow) 0.17 cfs — Ohio EPA NPDES fact sheet 2PD00008*UD (Findlay WPCC, PN 205259, 2024-08-09), Table 12 'Instream Conditions and Discharger Flow', printed p. 28 — basis 'USGS Gages 04188300 and 04189000' (the 30Q10 rows cite 04188300 alone). Discharge location Blanchard River RM 56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 (printed p. 7). Source: data/documents/oepa/findlay/2PD00008.fs.pdf; structured read data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml.",
+          "confidence": "high",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "acute_dilution_ratio": 0.0073249242048,
+        "acute_flag": "violation",
+        "detail": "Blanchard River (Findlay WPCC outfall, RM 56.42) 7Q10 0.21 cfs vs discharge 23.21 cfs -> 0.009:1 chronic dilution (violation); acute 1Q10 0.17 cfs -> 0.0073:1 (violation)"
+      }
+    ]
+  }
+]

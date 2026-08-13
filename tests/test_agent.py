@@ -42,15 +42,23 @@ async def test_reference_tools_do_not_serve_lima_data_off_home(
     # own flood-mitigation record set (#1465: the FEMA FMA obligation + the USACE feasibility
     # Review Plan), so these tools return FINDLAY's own events/entities, NOT Lima's cross-site
     # record. hydrology_balance runs per-site only for sites that committed their own
-    # watch-items.geojson (#829); Findlay has none, so it keeps the notice rather than
-    # silently falling back to Lima's periplus WWTP graph.
+    # watch-items.geojson (#829) — and since #1265 Findlay HAS one, so it now serves Findlay's
+    # own balance instead of the notice. That is the stronger form of this test's guarantee,
+    # not a weakening of it: the tool answers from this site's WPCC, and Lima's periplus WWTP
+    # graph must not appear anywhere in the answer.
     monkeypatch.setattr(
         tools, "get_settings", lambda: Settings(site="findlay", data_dir=REPO_ROOT / "data")
     )
 
-    # hydrology_balance still returns a scoped notice for a site with no committed WWTP graph.
+    # hydrology_balance serves FINDLAY's own committed WWTP graph — its one permitted
+    # discharger, screened against its own cited at-outfall design low flow.
     hydro_text = (await tools.hydrology_balance.handler({}))["content"][0]["text"]
-    assert hydro_text.startswith("[scope]") and "findlay" in hydro_text and "#424" in hydro_text
+    assert hydro_text.startswith("[scope]") and "findlay" in hydro_text
+    assert "Findlay WPCC" in hydro_text
+    assert "Blanchard River (Findlay WPCC outfall, RM 56.42)" in hydro_text
+    # Lima's periplus plants are the thing that must never bleed through here (#424/#829).
+    for lima_plant in ("Lima WWTP", "American II", "American Bath", "Shawnee II"):
+        assert lima_plant not in hydro_text
 
     # entities and timeline now serve findlay's OWN flood corpus (#1465), not Lima's — so
     # Lima-specific records must not leak through.

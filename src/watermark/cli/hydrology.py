@@ -18,6 +18,7 @@ from watermark.cli._base import (
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
+    from types import ModuleType
 
     from watermark.hydrology.model import HsgDrainageBasis, ProvenancedValue
     from watermark.hydrology.thermal import ThermalFlowScreen
@@ -876,6 +877,52 @@ def storm_discharge(
     )
 
 
+def _baseline_only_scenario(scenario_stage: ModuleType, *, settings: Settings, write: bool) -> None:
+    """Evaluate and report the baseline alone — the no-buildout case (#1265).
+
+    A buildout scenario needs a campus demand. Where the facility's cooling method is
+    undisclosed AND no metered or contracted quantity is on the record,
+    :func:`watermark.hydrology.scenario.buildout_scenario` REFUSES rather than defaulting to
+    the archetype bracket envelope, because that envelope is a span across candidate designs,
+    not a demand anyone disclosed. Findlay is the network's first such site: MARA discloses no
+    water draw at the One Power hub, and its own register records that no facility screen is
+    run until a water-service agreement, an NPDES industrial permit, or a cooling spec
+    discloses one.
+
+    What survives is the site's RECEIVING WATER: the permitted municipal discharge screened
+    against its own cited design low flow. That is a fact about the river regardless of what
+    the campus does, and withholding it would publish less than the record supports. So the
+    baseline is written on its own, and the absence of a buildout file is itself the
+    evidentiary statement — the scenario set says no campus draw is modelled here.
+    """
+    base = scenario_stage.evaluate(scenario_stage.baseline_scenario(), settings=settings)
+    console.print(
+        "[bold]Baseline only[/] — no campus draw modelled. "
+        "[dim]No buildout: the cooling method and the water quantity are both undisclosed, "
+        "so a demand would have to be invented.[/]"
+    )
+    rw = base.receiving_water_name or "receiving water"
+    q7 = base.receiving_7q10
+    if q7 is not None:
+        tag = "cited" if q7.source == "document" else q7.source
+        console.print(f"{rw} design low flow (7Q10): [bold]{q7.value:g} cfs[/] ({tag})")
+    else:
+        console.print(f"[dim]No committed 7Q10 for {rw}.[/]")
+    if not base.assimilative:
+        console.print(
+            "[yellow]No assimilative screen[/] — the site commits no watch-items/routing pair, "
+            "so no permitted discharger is resolved against that low flow."
+        )
+    for check in base.assimilative:
+        colour = "red" if check.flag == "violation" else "yellow" if check.flag == "tight" else ""
+        style = f"[bold {colour}]" if colour else "[bold]"
+        console.print(f"\n{style}{check.discharger}[/] → {check.receiving_water}\n  {check.detail}")
+    for warning in base.balance.warnings:
+        console.print(f"[yellow]warning[/] {warning}")
+    if write:
+        wrote(scenario_stage.write_scenario(base, settings=settings))
+
+
 @app.command()
 def scenario(
     cooling_demand: float | None = typer.Option(
@@ -894,6 +941,15 @@ def scenario(
         help=(
             "Override the cooling archetype (off | evaporative_tower | once_through | "
             "closed_loop_dry | hybrid_adiabatic | unknown). Default: the site facility's model."
+        ),
+    ),
+    baseline_only: bool = typer.Option(
+        False,
+        "--baseline-only",
+        help=(
+            "Model ONLY the baseline — no campus draw. For a site where both the cooling "
+            "method and the water quantity are undisclosed, so a buildout would have to "
+            "invent its own demand."
         ),
     ),
     write: bool = typer.Option(False, "--write", help="Persist results under data/scenarios/."),
@@ -917,6 +973,9 @@ def scenario(
                 f"choose one of: {', '.join(m.value for m in CoolingModelType)}"
             )
             raise typer.Exit(code=1) from None
+    if baseline_only:
+        _baseline_only_scenario(scenario_stage, settings=settings, write=write)
+        return
     base, build, delta = hydro_stage.run_scenarios(
         cooling_demand_mgd=cooling_demand,
         consumptive_fraction=consumptive_fraction,

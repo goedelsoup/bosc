@@ -1,0 +1,44 @@
+id: findlay-watch-items
+title: Findlay site watch-items (WPCC infrastructure geometry)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Derived from Ohio EPA "Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024"
+    (permit 2PD00008, renewal suffix UD / application OH0025135), structured read at
+    data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml; outfall coordinates
+    (41.049722, -83.667778) from the modification-suffix VD public notice's
+    discharge-location table
+license: Public record (Ohio R.C. 149.43 / U.S. Government work)
+access_tier: public
+site_scope: site:findlay
+storage:
+- relpath: reference/findlay/watch-items.geojson
+  media_type: application/geo+json
+  lfs: false
+refresh:
+  cadence: static
+provenance: reference
+tags:
+- findlay
+- gis
+- geojson
+- wwtp
+- infrastructure
+# A folded block scalar, not a plain one: this text contains lines that would otherwise begin
+# with a YAML indicator character (the permit suffix *VD reads as an ALIAS at the start of a
+# plain-scalar line), which is a parse error rather than a formatting nit.
+notes: >-
+  Per-site watch-items GeoJSON for Findlay; consumed by balance._default_watch_items() as the
+  site-specific override (takes precedence over the Lima periplus import) and un-gates
+  hydrology_balance via balance.has_site_watch_items (#829/#1265). One feature — the Findlay
+  WPCC (id=findlay-wpcc, matching the profile's plant_receiving key; 15 MGD average design
+  flow, outfall 001 to the Blanchard River at RM 56.42, NPDES permit 2PD00008 — renewal
+  suffix UD, modification suffix VD — application OH0025135). The summary states exactly ONE "N MGD" token on purpose — the 40 MGD peak
+  hydraulic is omitted because balance._design_mgd's prose fallback reads a second token as a
+  flow EXPANSION. The structured design flow it actually uses is in the companion
+  reference/hydrology/findlay/routing.yaml. NOTE the plant is a Water Pollution Control
+  CENTER, not a "WWTP" — until #1265 the balance decided what counted as a plant by a
+  title-suffix test on "WWTP" and dropped this 15 MGD permitted discharger silently; the
+  routing table's declaration is now what establishes the role.

@@ -945,8 +945,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "80d2bda187156b977fe4feffbcd8efd99aad241937e8944c92b83f608282fc9f",
-      "size_bytes": 373954,
+      "sha256": "3684dbf9b5df427370bbc9b30aa1715eb2569847b9071a454ae7ea943eaa878b",
+      "size_bytes": 384899,
       "lfs_materialized": true,
       "file_count": 14,
       "stale": false,
@@ -1113,8 +1113,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d5e98572cb8396a37d1247135d523476f03a6fefb268e42bed6481838654aa1b",
-      "size_bytes": 49494,
+      "sha256": "b036a43f0607189266b5e1db6e2953b31c422a92f56f8f825b82388ff5df4cd2",
+      "size_bytes": 60439,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -1508,8 +1508,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "c316f13e1903d5fedec84f719c03893c86d9da98d16a17b30cfa1f811a59d4dc",
-      "size_bytes": 165686,
+      "sha256": "44acb85a246c7736059ad4f6abceb4b33ae9e649674e7f90723c211dd61cdfb4",
+      "size_bytes": 166211,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -1894,8 +1894,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "3c4167956f817d6d18ea754d6ead6a3d1d8fa282a85e52cd8a2a59578836ef7d",
-      "size_bytes": 111692,
+      "sha256": "13f8c241e261c4f6d9c76b98a86609044db4efcada124f661b63ec537dd3daf3",
+      "size_bytes": 113192,
       "lfs_materialized": true,
       "file_count": 9,
       "stale": false,
@@ -2337,8 +2337,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "0275d52568eea92271cec5451ca893dd081a8218cb4cabc48e1278496fac1dfc",
-      "size_bytes": 21894,
+      "sha256": "f128ba865f51859e31a2cc028ba27bdb57ad3537b24e98b2cd0e0708447f91ac",
+      "size_bytes": 21897,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -2572,8 +2572,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "014e8c99525758d1800537f7b60989e89f9b807966079b9890240af97b6825f6",
-      "size_bytes": 33473,
+      "sha256": "919f90b5f9cd90674ac3efef3d1fb45b71cce3c34afb669f02a0929ce4338ac2",
+      "size_bytes": 33483,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -4407,8 +4407,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "94cd9d867364deed7fbf171901e7daa5f5a86a6eaea60bf85c612e000bf1de76",
-      "size_bytes": 91600,
+      "sha256": "4ff8b0ee4ed9f3afb574c71fa95a16ebde34adc18f6a543fb2fd5846949098d7",
+      "size_bytes": 92226,
       "lfs_materialized": true,
       "file_count": 29,
       "stale": false,
@@ -4632,8 +4632,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "b9829e06d1cb9a476efd6e7823da7fb93a42e951e1dbedecb3dda0cb1615a176",
-      "size_bytes": 17369,
+      "sha256": "e6c9a85f0a3cd6c168419b7b6363cb98cb94ec9067688a105db00053f61e55f9",
+      "size_bytes": 17367,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -4712,8 +4712,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6bd44507c6e510e405fa13eb910ef9bc283c64fc4ab0a4d0901b3b327afb2263",
-      "size_bytes": 13139,
+      "sha256": "a2d10183ad8a046b34408791317dea1ebf093805d0187ed0e48e439e942c860d",
+      "size_bytes": 13149,
       "lfs_materialized": true,
       "file_count": 7,
       "stale": false,
@@ -4959,7 +4959,7 @@
     "producer_kind": "manual",
     "command": null,
     "connector_ref": null,
-    "source": "City of Sidney legislative record — Resolutions 80-25, 81-25 and 82-25 (all adopted 2025-10-27) and 26-26 and 27-26 (both adopted 2026-04-27), each published with its executed agreement; the City staff water/sewer presentation of 2026-04-27; and the City Engineering Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and data/documents/sidney/permits/filename-map.yaml.",
+    "source": "City of Sidney legislative record — Resolutions 80-25, 81-25 and 82-25 (all adopted 2025-10-27) and 26-26 and 27-26 (both adopted 2026-04-27), each published with its executed agreement; the City staff water/sewer presentation of 2026-04-27; and the City Engineering Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and data/documents/sidney/permits/filename-map.yaml. EXTENDED 2026-08-13 (issue 1998) through a SECOND City route - the Documents-On-Demand legislative portal (sidneycityoh.documents-on-demand.com), which this record had carried as Cloudflare-blocked and which is not. The 403 is an HTTP/2 fingerprint block, and the identical request over HTTP/1.1 returns 200. That route supplied Resolution 84-22 (2022-10-10, the act that established the City-Wide CRA), Resolution 69-25 (2025-09-08, which expands it and adds the thirty-year megaproject tier), Resolution 14-26 (2026-02-23, accepting the consolidation plat), and the approved Council minutes of 2025-09-08, 2025-10-27 and 2026-04-27. The 2025-10-27 minutes are image-only (zero extractable characters) and were read by OCR at 300 DPI; the other two carry a native text layer. EXTENDED AGAIN 2026-08-13 (the issue 1998 tail) with the LAND-USE SPINE off the same portal - Ordinance A-3225 (annexation of the 243.092 acres, 2025-07-28), Ordinance A-3226 (which zones it IIM the same night and closes this site's standing zoning question), and Ordinance A-3210 (the official zoning map whose declared coverage window ends 2025-01-13, which is why the City's own GIS could not answer it) - together with the Sidney Planning Commission minutes of 2025-06-16 and 2025-07-21 and the Council minutes of 2026-02-23. Every agent-reported sha256 was independently reproduced by a second pull before shelving. SLICE 2 adds the ZONING CODE layer off the same route - A-3219 (2025-04-28, which creates the \"Warehouse - Data Center\" use and makes it permitted by right in the IIM zone alone), A-3236 and A-3255 (the two later code amendments, which mention data centers zero times between them), A-3211 and A-3227 (the separate 53-acre county tract, shelved so a sweep cannot mistake it for the campus), A-3270 (the current official map, the first whose window contains the campus zoning), and the Planning Commission minutes of 2025-03-17 and 2026-02-18. Every hash independently reproduced.",
     "external_url": null,
     "license": "Public record (Ohio R.C. 149.43)",
     "access_tier": "public",
@@ -5011,19 +5011,74 @@
         "relpath": "extracted/sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2026-02-23-res-14-26-consolidation-plat.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-07-28-ord-a-3225-annexation-243-acres.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-07-28-ord-a-3226-zoning-243-acres-iim.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-04-28-ord-a-3219-data-center-use-created.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-09-22-ord-a-3236-guard-shacks.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-03-10-ord-a-3211-annexation-53-acres-county.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-07-28-ord-a-3227-zoning-53-acres-county.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2026-07-27-ord-a-3270-current-zoning-map.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/sidney/council/2025-10-13-res-74-25-cra-housing-council-appointments.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "22b4cf672d6bcff704ed85cd9de6c142a5c5cc7b9a2f527658c4c6e45b87e68c",
-      "size_bytes": 77724,
+      "sha256": "04a9f0e5d8d994309e54c5628bd448fee29bbe6f07746275b80ba6f66be935a7",
+      "size_bytes": 176680,
       "lfs_materialized": true,
-      "file_count": 6,
+      "file_count": 17,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "City of Sidney legislative record — Resolutions 80-25, 81-25 and 82-25 (all adopted 2025-10-27) and 26-26 and 27-26 (both adopted 2026-04-27), each published with its executed agreement; the City staff water/sewer presentation of 2026-04-27; and the City Engineering Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and data/documents/sidney/permits/filename-map.yaml.",
+      "source": "City of Sidney legislative record — Resolutions 80-25, 81-25 and 82-25 (all adopted 2025-10-27) and 26-26 and 27-26 (both adopted 2026-04-27), each published with its executed agreement; the City staff water/sewer presentation of 2026-04-27; and the City Engineering Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and data/documents/sidney/permits/filename-map.yaml. EXTENDED 2026-08-13 (issue 1998) through a SECOND City route - the Documents-On-Demand legislative portal (sidneycityoh.documents-on-demand.com), which this record had carried as Cloudflare-blocked and which is not. The 403 is an HTTP/2 fingerprint block, and the identical request over HTTP/1.1 returns 200. That route supplied Resolution 84-22 (2022-10-10, the act that established the City-Wide CRA), Resolution 69-25 (2025-09-08, which expands it and adds the thirty-year megaproject tier), Resolution 14-26 (2026-02-23, accepting the consolidation plat), and the approved Council minutes of 2025-09-08, 2025-10-27 and 2026-04-27. The 2025-10-27 minutes are image-only (zero extractable characters) and were read by OCR at 300 DPI; the other two carry a native text layer. EXTENDED AGAIN 2026-08-13 (the issue 1998 tail) with the LAND-USE SPINE off the same portal - Ordinance A-3225 (annexation of the 243.092 acres, 2025-07-28), Ordinance A-3226 (which zones it IIM the same night and closes this site's standing zoning question), and Ordinance A-3210 (the official zoning map whose declared coverage window ends 2025-01-13, which is why the City's own GIS could not answer it) - together with the Sidney Planning Commission minutes of 2025-06-16 and 2025-07-21 and the Council minutes of 2026-02-23. Every agent-reported sha256 was independently reproduced by a second pull before shelving. SLICE 2 adds the ZONING CODE layer off the same route - A-3219 (2025-04-28, which creates the \"Warehouse - Data Center\" use and makes it permitted by right in the IIM zone alone), A-3236 and A-3255 (the two later code amendments, which mention data centers zero times between them), A-3211 and A-3227 (the separate 53-acre county tract, shelved so a sweep cannot mistake it for the campus), A-3270 (the current official map, the first whose window contains the campus zoning), and the Planning Commission minutes of 2025-03-17 and 2026-02-18. Every hash independently reproduced.",
       "source_kind": "reference",
       "page": null,
       "pages": null,
@@ -5077,8 +5132,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "cbb369c7e7a67f98c571727a9ecb76795f106113c2b86830ec1c68f4e85a0504",
-      "size_bytes": 65727,
+      "sha256": "494097a0b3dc58b0a8aac1284b612a5f2b545f9bdcf41db63dd78aaa8d2bee8e",
+      "size_bytes": 70985,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -5240,8 +5295,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "ddc5aa94dcd0b70611b60066acc469b7bd7655a07e011a934ae67a46467555fe",
-      "size_bytes": 167817,
+      "sha256": "db79cbddca878a3d7c25dc8dc24b9071b1394bcb17455ce5dc603367a4556663",
+      "size_bytes": 167941,
       "lfs_materialized": true,
       "file_count": 11,
       "stale": false,
@@ -5431,14 +5486,29 @@
         "relpath": "extracted/van-wert/mega-site-instruments.md",
         "media_type": "text/markdown",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/council/2026-05-11-ord-26-05-028-annexation.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/council/2026-05-11-ord-26-05-029-data-center-code-amendment.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/council/2026-05-11-ord-26-05-030-conditional-zoning.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "cebe5cc3620ef2fcf1c522bbb2a2fc4fdac06784d69917b3c3865d7bf9f7021b",
-      "size_bytes": 74520,
+      "sha256": "f5b221d31f5ef5c297f6c7e342c57bb988b4ffda5f87486985e698e497011b2a",
+      "size_bytes": 92464,
       "lfs_materialized": true,
-      "file_count": 2,
+      "file_count": 5,
       "stale": false,
       "asof": null
     },
@@ -5629,8 +5699,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "1d32b846a2251c42211a79025438d858de56db29ea39e6519a352c4cfc4fea63",
-      "size_bytes": 37960,
+      "sha256": "fb75efa54c5da29b5bd695f4b3e1e7689330462f49239a18d29753ffedab5b79",
+      "size_bytes": 38581,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -7538,6 +7608,56 @@
     }
   },
   {
+    "id": "findlay-watch-items",
+    "title": "Findlay site watch-items (WPCC infrastructure geometry)",
+    "scope": "reference",
+    "collection": "findlay",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024\" (permit 2PD00008, renewal suffix UD / application OH0025135), structured read at data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml; outfall coordinates (41.049722, -83.667778) from the modification-suffix VD public notice's discharge-location table",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
+    "access_tier": "public",
+    "site_scope": "site:findlay",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "findlay",
+      "gis",
+      "geojson",
+      "wwtp",
+      "infrastructure"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/findlay/watch-items.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "89515b48a8c31cefdc6a11036fd2584e2621f07821ad4c6605c25137cd2c3d87",
+      "size_bytes": 2106,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024\" (permit 2PD00008, renewal suffix UD / application OH0025135), structured read at data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml; outfall coordinates (41.049722, -83.667778) from the modification-suffix VD public notice's discharge-location table",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "gleif",
     "title": "Corridor Entity LEIs (GLEIF)",
     "scope": "reference",
@@ -7989,10 +8109,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "a4ed6161b79ec57a674cc16d1d6a404f3062446feca917018f6a6d9314de623d",
-      "size_bytes": 193517,
+      "sha256": "4d20e0f4c85ee287a8b7a68b75794cfdf1d208d62618962cb42a9892920aeffc",
+      "size_bytes": 197469,
       "lfs_materialized": true,
-      "file_count": 23,
+      "file_count": 24,
       "stale": false,
       "asof": null
     },
@@ -10070,8 +10190,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "722ff6333ae16815a32733217f842f0b22af746a432d6e59d1c6595b56a4aedd",
-      "size_bytes": 311585,
+      "sha256": "edfeff3d83f15689ea4fff5cb7769860b531af5817f3ee46196aad54e77b6220",
+      "size_bytes": 315488,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,

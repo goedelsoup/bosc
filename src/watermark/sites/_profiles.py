@@ -450,9 +450,20 @@ _FINDLAY = SiteProfile(
             "(USGS gages 04188300 + 04189000), design flow 23.208 cfs, acute dilution ratio 1.0 "
             "(p. 13) — data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml",
         ),
-    },  # [verified: OEPA 2PD00008*UD fact sheet]. Key is the future watch-item id (#829) —
-    # Findlay has no committed watch-items.geojson yet, so the routed balance does not read this
-    # entry; it is the cited datum of record until that file lands, and the two must match then.
+    },  # [verified: OEPA 2PD00008*UD fact sheet]. The key IS the watch-item id (#829): since
+    # #1265 the site commits data/reference/findlay/watch-items.geojson, so the routed balance
+    # reads this entry and the two ids match.
+    # ⚠️ The display name above is "Blanchard River at River Mile 56.42" and is UNSAFE as a lookup
+    # key: `lowflow._normalize` strips an "at …" suffix, collapsing it to the bare "blanchard
+    # river" — which in the committed tables is the DERIVED at-gage proxy 8.67 cfs that #1458
+    # retired for this outfall (USGS 04189000 is regulated and sits BELOW this discharge, so it
+    # measures this plant's own effluent plus the reservoir augmentation return). Screening
+    # against it would credit this outfall with ~41x the dilution it has. So the lookup goes
+    # through the permit-scoped, parenthesized reach key below, which survives `_normalize`
+    # intact and cannot collide with the bare river; the name above is for display only. Same
+    # key data/reference/hydrology/findlay/routing.yaml uses (#1995's convention, on the reach
+    # that established it).
+    receiving_low_flow_key="Blanchard River (Findlay WPCC outfall, RM 56.42)",
     abstraction_gage="04189000",  # [inference] the primary Blanchard gage near Findlay
     # refill (the water-balance supply model is not yet designed for Findlay)
     supply_gage_primary="TODO",  # [open] refill supply gage — pending the site's water-balance model

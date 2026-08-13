@@ -109,12 +109,22 @@ def _fmt_ranged(
 
 
 def _fmt_mult(m: float) -> str:
-    """``format.ts`` ``fmtMult`` — a ratio multiple: integer at ≥10, else one decimal."""
+    """``format.ts`` ``fmtMult`` — a ratio multiple: integer at ≥10, else significant decimals.
+
+    Shares :func:`_stat_decimals`'s vanish-guard, for the same reason and one the ratio case
+    needs even more (#1265). A fixed single decimal renders every dilution below 0.05 as
+    **"0.0x"** - and a dilution ratio is precisely where the significant digits all sit to the
+    right of the point. Lima's tightest chronic dilution is 0.006987 and Findlay's is 0.009048;
+    both published as "0.0x", which reads as *nothing* rather than as the two most
+    effluent-dominated reaches on the network. `watermark.hydrology.basin._ratio_text` had
+    already learned this on the artifact side ("two decimals silently flattens the whole
+    violation band"); this is the same rule on the display side.
+    """
     if not math.isfinite(m):
         return f"∞{_MULT_SIGN}"
-    return (
-        f"{_js_num(_js_round(m))}{_MULT_SIGN}" if m >= 10 else f"{_js_to_fixed(m, 1)}{_MULT_SIGN}"
-    )
+    if m >= 10:
+        return f"{_js_num(_js_round(m))}{_MULT_SIGN}"
+    return f"{_js_to_fixed(m, _stat_decimals(m))}{_MULT_SIGN}"
 
 
 # --- the chapter registry (the `study.ts` mirror) -----------------------------------------
@@ -547,6 +557,29 @@ def _air_application_filed(ctx: _Ctx) -> bool:
     return False
 
 
+def _modelled_campus_draw(ctx: _Ctx) -> bool:
+    """`study.ts` `modelledCampusDraw`: does ANY scenario actually model a campus draw? (#1265)
+
+    A scenario set is not required to contain a buildout. Where the cooling method AND the
+    water quantity are both undisclosed, ``buildout_scenario`` refuses to invent a demand, so
+    the site commits the baseline alone (``watermark scenario --baseline-only``) and the
+    receiving water's own burden is what the set carries.
+
+    That distinction has to reach the prose, because a baseline-only set otherwise reads as a
+    *finding*: the worst-case draw across it is 0.0, which is not a worst case — it is the
+    absence of a modelled one — and the undisclosed-method caveat would describe a bracketed
+    range across archetypes that no row in the set contains.
+    """
+    for r in _rows(ctx, "hydrology-scenarios"):
+        scenario = r.get("scenario") or {}
+        model = r.get("cooling_model") or scenario.get("cooling_model")
+        if model is not None and model != "off":
+            return True
+        if (scenario.get("cooling_demand") or {}).get("value"):
+            return True
+    return False
+
+
 def _cooling_undisclosed(ctx: _Ctx, facility: dict[str, Any] | None) -> bool:
     """`study.ts` `coolingUndisclosed`: the scenario rows' probe (#1057) OR the facility row."""
     if facility is not None and facility.get("cooling_model") == "unknown":
@@ -608,6 +641,14 @@ def _probes(d: _ChapterDef, ctx: _Ctx, facility: dict[str, Any] | None) -> list[
                     "cooling method undisclosed — but the water quantity is CONTRACTED, so the "
                     "figures are a stated account rather than a bracketed range; what stays open "
                     "is how the heat is rejected, not how much water it takes"
+                ]
+            if not _modelled_campus_draw(ctx):
+                # Neither disclosed method nor disclosed quantity, so nothing was modelled at
+                # all — say that, rather than describing a bracket the set does not contain.
+                return [
+                    "no campus water draw is on the record — neither a disclosed cooling method "
+                    "nor a metered or contracted quantity — so no buildout is modelled here; "
+                    "what stands is the receiving water's own existing burden"
                 ]
             return [
                 "cooling method undisclosed — the water figures are a bracketed range across "
@@ -859,15 +900,20 @@ def _compose_water_supply(ctx: _Ctx, facility: dict[str, Any] | None) -> _Compos
         ):
             worst = r
     if worst is not None:
-        s = _pv_stat(
-            "Worst-case consumptive draw",
-            worst.get("consumptive_loss"),
-            "inference",
-            basis="modeled",
-            sub=f"scenario: {(worst.get('scenario') or {}).get('name')}",
-        )
-        if s is not None:
-            stats.append(s)
+        # Only a set that MODELS a campus draw has a worst case. On a baseline-only set the
+        # figure is 0.0, and publishing "worst-case consumptive draw: 0.0" would state as a
+        # screened result what is really an unscreened question (#1265). The receiving water's
+        # low flow below is cited and stands on its own either way.
+        if _modelled_campus_draw(ctx):
+            s = _pv_stat(
+                "Worst-case consumptive draw",
+                worst.get("consumptive_loss"),
+                "inference",
+                basis="modeled",
+                sub=f"scenario: {(worst.get('scenario') or {}).get('name')}",
+            )
+            if s is not None:
+                stats.append(s)
         floor = _pv_stat(
             "Receiving low flow (7Q10)",
             worst.get("receiving_7q10"),

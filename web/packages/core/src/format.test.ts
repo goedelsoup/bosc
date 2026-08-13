@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { fmtCount, fmtPct, fmtRanged, fmtUsd, hasRange } from "./format";
+import { fmtCount, fmtMult, fmtPct, fmtRanged, fmtUsd, hasRange } from "./format";
 
 describe("hasRange", () => {
   it("is false with no bounds", () => {
@@ -63,5 +63,27 @@ describe("the provenanced formatters (#1918)", () => {
     expect(fmtUsd(null)).toBe("—");
     expect(fmtCount(undefined)).toBe("—");
     expect(fmtPct(undefined)).toBe("—");
+  });
+});
+
+describe("fmtMult — a dilution ratio never renders as zero (#1265)", () => {
+  // Must stay identical to `_fmt_mult` in watermark/site/impact_study.py; the parity suite pins
+  // the two derivations equal over every committed bundle. `fmtMult` shares `statDecimals`'s
+  // vanish-guard, which it needs even more: a dilution ratio is precisely where the significant
+  // digits all sit to the right of the point.
+  it("keeps two significant figures below the one-decimal floor", () => {
+    // The network's two real tightest chronic dilutions. Both published as "0.0×" before the
+    // guard — which reads as *no dilution problem* rather than as the two most
+    // effluent-dominated reaches on the network.
+    expect(fmtMult(0.006987209098378379)).toBe("0.0070×"); // Lima
+    expect(fmtMult(0.0090484357824)).toBe("0.0090×"); // Findlay
+    expect(fmtMult(0.04308778944)).toBe("0.043×");
+  });
+
+  it("is unchanged at the scale it already handled", () => {
+    expect(fmtMult(0.42010594704)).toBe("0.4×");
+    expect(fmtMult(2.2159434569142853)).toBe("2.2×"); // Sidney
+    expect(fmtMult(12.4)).toBe("12×"); // integer at >= 10
+    expect(fmtMult(Number.POSITIVE_INFINITY)).toBe("∞×");
   });
 });

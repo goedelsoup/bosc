@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "findlay-wpcc",
+        "title": "Findlay WPCC",
+        "type": "infrastructure",
+        "priority": "high",
+        "status": "active",
+        "summary": "City of Findlay Water Pollution Control Center (NPDES 2PD00008*UD, modified *VD / application OH0025135), 1201 South River Road, Findlay, Hancock County; outfall 001 to the Blanchard River at RM 56.42 (→ Auglaize → Maumee → Lake Erie; HUC 04100008-03-04, Ohio EPA river code 04-160). Average design flow 15 MGD [Ohio EPA \"Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024\" (2PD00008*UD, PN 205259, 2024-08-09), Table 12 \"Instream Conditions and Discharger Flow\", printed p. 28 — average design flow 23.208 cfs]. A CSO community (10 combined-sewer overflow outfalls; 12 further outfalls reclassified as SSOs). WLA design low flow: 7Q10 0.21 cfs AT THE OUTFALL (USGS gages 04188300 + 04189000) — the permit-scoped cited value, not the derived at-gage Blanchard proxy. The plant discharges ~110x its receiving water's design low flow, and Ohio EPA computes the acute dilution ratio as 1.0 outright (printed p. 13): at design flow the Blanchard below RM 56.42 IS the effluent.",
+        "note": "Peak hydraulic capacity is 40 MGD and is deliberately NOT stated in the summary above: `balance._design_mgd` falls back to a regex over this prose when no structured value is present, and a second `N MGD` token reads as a flow EXPANSION and raises a spurious warning. The structured, document-cited 15.0 comes from data/reference/hydrology/findlay/routing.yaml, which wins outright — this prose is only the fallback, kept unambiguous so the fallback would also be correct. ⚠️ The receiving water is named here for READERS; the assimilative lookup key is the parenthesized reach key in routing.yaml, never this prose (see that file's header for why an \"at RM ...\" name is unsafe as a key)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-83.667778, 41.049722]
+      }
+    }
+  ]
+}

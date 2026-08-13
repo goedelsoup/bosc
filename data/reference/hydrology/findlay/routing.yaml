@@ -1,0 +1,47 @@
+# Discharge routing for the Findlay, OH watershed point (#1265).
+#
+# One plant, one outfall, one receiving reach. Two things this file supplies, both
+# load-bearing:
+#
+# 1. The STRUCTURED `design_flow_mgd` that `watermark.hydrology.balance` reads as the numerator
+#    of the assimilative screen (WS-22, issue 1622). Without it the balance falls back to a
+#    regex over the watch-items summary prose, logging `hydro.design_flow.regex_fallback` — and
+#    a load-bearing number must not be sourced by regex over prose.
+#
+# 2. The `receiving_water` NAME, which is how `assimilative.check_assimilative` looks the cited
+#    design low flow up. That lookup runs both sides through `lowflow._normalize`, which
+#    deliberately strips an "at …" suffix — so the natural-reading "Blanchard River at River
+#    Mile 56.42" (which is exactly how `SiteProfile.plant_receiving` spells this plant's receiver
+#    for display) would collapse to the bare "blanchard river". In the committed tables the bare
+#    name is NOT this reach: it belongs to the derived at-gage screening proxy, 8.67 cfs, which
+#    #1458 RETIRED for this outfall precisely because USGS 04189000 is a regulated gage sitting
+#    BELOW this outfall — that denominator contains this plant's own discharge plus the Findlay
+#    Reservoir low-flow augmentation return. Crediting this outfall with it overstates its
+#    available dilution by ~41x (8.67 / 0.21) and turns a screen Ohio EPA itself computes as a
+#    `violation` into a far softer number. That is the same trap #1992 fixed on the basin-screen
+#    side and #1995 fixed on the balance side at Sidney.
+#
+#    So the name here is the REACH KEY verbatim — the permit-scoped entry #1458 added,
+#    `blanchard river (findlay wpcc outfall, rm 56.42)`, bound to `permits: [OH0025135,
+#    2PD00008]`. `_normalize` leaves a parenthesized reach suffix intact, so it resolves exactly
+#    and cannot collide with the bare river. The Blanchard's two cited reaches (#1458) ESTABLISHED
+#    this convention — Sidney was the first routing table to exercise it (#1995); this is the
+#    first time the reach that set the rule is the one being routed.
+#
+# No `bosc_routing` block: the BOSC forcemains are a Lima-loop object and a sibling site never
+# inherits them (#829).
+#
+# WHICH design flow. The committed value is the permitted AVERAGE design flow, 15 MGD (23.208 cfs
+# in the fact sheet's own units). The 40 MGD peak hydraulic capacity is deliberately not the
+# modelled value: the assimilative screen characterises the discharge on record against a design
+# LOW flow, and pairing a peak-wet-weather discharge with a 7Q10 would screen a condition that
+# does not co-occur — which at a CSO community like Findlay is the exact condition that does NOT
+# coincide with the drought flow.
+
+wwtp_receiving:
+  findlay-wpcc:
+    receiving_water: "Blanchard River (Findlay WPCC outfall, RM 56.42)"
+    design_flow_mgd: 15.0  # permitted average design flow; peak hydraulic is 40 (not modelled)
+    status: confirmed
+    confidence: high
+    citation: 'Ohio EPA "Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024" for NPDES 2PD00008*UD / application OH0025135, City of Findlay Water Pollution Control Center, 1201 South River Road — outfall 001 to the Blanchard River at RM 56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 (printed p. 7); Table 12 "Instream Conditions and Discharger Flow" (printed p. 28) gives the average design flow as 23.208 cfs (15 MGD) and the reach 7Q10 as 0.21 cfs annual (1Q10 0.17, summer 30Q10 0.31, harmonic mean 1.84; USGS gages 04188300 + 04189000), and the fact sheet computes the acute dilution ratio as 1.0 outright at printed p. 13. Permit effective 2024-11-01, expires 2029-10-31; the *VD modification is effective 2026-02-01 against the same expiration. Source data/documents/oepa/findlay/2PD00008.fs.pdf; structured read data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml. [verified]'

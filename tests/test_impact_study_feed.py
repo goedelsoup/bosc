@@ -257,7 +257,15 @@ def test_js_number_formatting() -> None:
     assert _js_round(2.5) == 3.0  # Math.round half-up, not banker's
     assert _js_to_fixed(5.64, 2) == "5.64"
     assert _js_to_fixed(0.25, 1) == "0.3"  # toFixed on the exact binary value
-    assert _fmt_mult(0.04308778944) == "0.0\u00d7"
+    # A ratio below 0.05 keeps two significant figures instead of flattening to "0.0x" (#1265).
+    # These are the network's two real dilution ratios: Lima's tightest chronic screen and
+    # Findlay's. Both published as "0.0x" before the vanish-guard, which reads as *no dilution
+    # problem* rather than as the two most effluent-dominated reaches on the network.
+    assert _fmt_mult(0.04308778944) == "0.043\u00d7"
+    assert _fmt_mult(0.006987209098378379) == "0.0070\u00d7"
+    assert _fmt_mult(0.0090484357824) == "0.0090\u00d7"
+    assert _fmt_mult(0.42010594704) == "0.4\u00d7"  # >= 0.05 is unchanged: one decimal
+    assert _fmt_mult(2.2159434569142853) == "2.2\u00d7"
     assert _fmt_mult(12.4) == "12\u00d7"
     assert _fmt_ranged(4.9, None, None, 1) == "4.9"
     assert _fmt_ranged(250.0, 200.0, 300.0, 1) == "250 ± ~50"  # symmetric band → ±
