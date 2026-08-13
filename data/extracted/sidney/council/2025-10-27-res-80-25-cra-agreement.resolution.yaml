@@ -71,13 +71,24 @@ resolution:
       `entity_mismatch` in the register's `legislative_chain`.
 
   vote:
+    # ANSWERED at #1998. The lead `COUNCIL-MINUTES` said the roll call "lives in the Council MINUTES
+    # … which are not in the corpus". They are now — pulled from the City's Documents-On-Demand
+    # portal, the route this corpus had recorded as blocked (it is an HTTP/2 fingerprint block; the
+    # identical request succeeds over HTTP/1.1). The resolution page still journals no vote, which
+    # was always the FORM of the instrument and not a gap in the read; the minutes are where a
+    # Sidney vote lives, and that is now demonstrated rather than assumed.
     roll_call_recorded: false
-    note: >-
-      [open] The RECORD OF ORDINANCES page carries the enacting clause, the passage date and the
-      Attest line ONLY — no motion, no second, no roll call, no vote tally. This is the form of the
-      instrument, not a gap in the read: a Sidney resolution page does not journal its own vote. The
-      roll call lives in the Council MINUTES for 2025-10-27, which are not in the corpus. That is
-      lead `COUNCIL-MINUTES` (`data/site/sidney/leads.yaml`) and the R.C. 149.43 ask in #1998.
+    outcome_recorded: true
+    verbatim: >-
+      Councilmember Huelskamp made a motion to adopt Resolution No. 80-25 as presented;
+      seconded by Vice Mayor Wagner. Upon a roll call vote, the motion passed unanimously.
+      Resolution No. 80-25 is hereby adopted.
+    moved_by: Councilmember Cory Huelskamp
+    seconded_by: Vice Mayor Steve Wagner
+    result: passed unanimously
+    source:
+      file: data/documents/sidney/council/City Council Minutes October 27, 2025.pdf
+      content_verified: ocr
     signatories: null                         # [open] — the Mayor/Clerk signatures are ink on the
                                               # scan; the text layer carries only the "Attest:" label.
 

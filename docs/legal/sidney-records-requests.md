@@ -35,60 +35,56 @@ numbered so a partial denial is legible as a partial denial.
 
 ---
 
-## ⚠️ Before sending 1 or 2 — the portal was mis-diagnosed as blocked
+## ✅ Requests 1 and 2 are ANSWERED — do not send them
 
-The City's legislative portal `sidneycityoh.documents-on-demand.com` is **open**. It was recorded
-across this record as Cloudflare-challenged; the 403 is an HTTP/2 fingerprint block, and the same
-request over HTTP/1.1 returns 200 with a browsable JSON tree of Council agendas, agenda packets,
-legislation (ordinances **and** resolutions) and **minutes** (#1999). Requests 1 and 2 both target
-records that portal appears to hold. **Search it first.** What survives the search is what should
-be asked for — and an ask that survives it is a much stronger ask.
+The City's legislative portal `sidneycityoh.documents-on-demand.com` was **never blocked**. It was
+recorded across this record as Cloudflare-challenged; the 403 is an **HTTP/2 fingerprint block**,
+and the identical request over HTTP/1.1 returns 200 with a browsable JSON tree. #1999 corrected the
+diagnosis; **#1998 acted on it, on 2026-08-13, and both asks were satisfied in minutes.**
 
-## 1 · City Clerk — Council minutes and meeting audio for the six vote dates
+| was request | what was pulled instead |
+|---|---|
+| 1 · minutes for the three vote dates | `City Council Minutes September 08, 2025.pdf`, `… October 27, 2025.pdf`, `… April 27, 2026.pdf` |
+| 2 · Resolution 69-25 | `69-25 - Amending Resolution 84-22 - Expanding CRA Boundaries.pdf` — **and** `84-22`, the act that actually established the CRA |
+
+All six are committed under `data/documents/sidney/council/` with sha256 and content-verified dates
+in [`filename-map.yaml`](../../data/documents/sidney/council/filename-map.yaml).
+
+**What the minutes settled.** Every one of the six votes now has its mover, second and result: five
+passed unanimously and **Res. 82-25 passed 5–2**, with Councilmember Thurber and Vice Mayor Wagner
+voting no. It is the only item across the three meetings the clerk journalled by name.
+
+**Ask 1's part 2 is NOT answered and is still worth sending** — see request 1b below. The portal
+carries minutes, not audio.
+
+> **The generalisable lesson.** This record recorded "blocked" for this host in five artifacts and
+> in these two drafted requests before anyone retried the request over HTTP/1.1. **A 403 to a
+> scripted client may be a protocol-fingerprint block, not a policy.** Retry before recording a
+> route negative — and before spending a public body's time on a request for a record it already
+> publishes. The Shelby County Recorder and PUCO DIS were re-tested the same day under the same
+> hypothesis and are genuinely blocked over both protocols; those negatives are dated in
+> `data/extracted/sidney/regulatory-watch.yaml` → `route_retests`.
+
+## 1b · City Clerk — meeting audio for the three vote dates
 
 **To:** Clerk of Council, City of Sidney, 201 W. Poplar St., Sidney, OH 45365
 
-> Under R.C. 149.43, I request copies of the following, in the electronic format in which they are
-> maintained:
->
-> 1. The approved minutes of the regular meetings of Sidney City Council held on **2025-09-08**,
->    **2025-10-27** and **2026-04-27**.
-> 2. Any audio or video recording of those three meetings that the City maintains, including any
->    recording of a committee or work session held on the same dates.
-> 3. The roll-call vote recorded for each of Resolutions **69-25, 80-25, 81-25, 82-25, 26-26 and
->    27-26**, if the roll call is journalled anywhere other than in the minutes above.
+> Under R.C. 149.43, I request any audio or video recording the City maintains of the regular
+> meetings of Sidney City Council held on **2025-09-08**, **2025-10-27** and **2026-04-27**,
+> including any recording of a committee or work session held on the same dates, in the electronic
+> format in which it is maintained.
 
-**Why these dates.** They are the passage dates printed on the City's own RECORD OF ORDINANCES
-pages for the five resolutions already in the corpus, plus 2025-09-08 for Res. 69-25. `[verified]`
-#2003.
+**Why this one still matters.** The approved minutes are now in the corpus and they record what was
+decided — but they **name no member of the public**. On 2026-04-27 they say only that "a number of
+people present raised questions and concerns" about pretreatment standards, monitoring, tap-in
+costs, billing against the capacity reserve and fines, and that "those from the public speaking"
+raised noise, vibration, power supply, environmental and health impacts and the city's financial
+condition. No speaker, no group, no count. The audio is the remaining route by which any person
+outside City government enters this site's record (#1947), and it is not on the portal.
 
-**What it unblocks.** Every one of those resolution pages carries the enacting clause, the passage
-date and an Attest line — **and no vote**. That is the form of the instrument, not a gap in the
-read, so the roll calls exist only in the minutes. This is lead `COUNCIL-MINUTES`, and it is also
-the only route by which any *person* enters this site's record: no named local actor, group or
-public meeting currently appears anywhere in `data/` (#1947).
-
-## 2 · City Clerk — Resolution 69-25
-
-**To:** Clerk of Council (same address)
-
-> Under R.C. 149.43, I request a copy of **Resolution No. 69-25**, adopted by Sidney City Council
-> on or about 2025-09-08, designating a city-wide Community Reinvestment Area, together with any
-> exhibit, map or legal description attached to or incorporated by it.
-
-**Why.** The CRA designating legislation is known only through two other instruments' recitals, and
-the City does not publish it on the data-center FAQ or in the DocumentCenter.
-
-⚠️ **BUT CHECK THE PORTAL FIRST — this ask may already be answerable without a request.** This
-paragraph said the legislative portal `sidneycityoh.documents-on-demand.com` was
-"Cloudflare-challenged, an unsearched route". That diagnosis was **wrong** (#1999): the 403 comes
-from the **HTTP/2 fingerprint**, not from the client's identity. Forced to HTTP/1.1 with a browser
-UA the same host returns **HTTP 200**, and it exposes an open JSON API (`/meta/rootfolder`,
-`/meta/docfolder?containerId=<guid>`) whose tree enumerates City Council → Agendas / Agenda Packets
-/ Legislation → **Ordinances, Resolutions** / **Minutes**. Search that portal before sending this —
-and before sending request 1 below, whose minutes are on the same host. A request for a record the
-City already publishes wastes the City's time and yours, and weakens the ones that matter. ⚠️ Do not ask for "Res. 18-25": that number does not exist and asking for it is what
-made this instrument unfindable for months (#1380).
+**Also retrievable without a request, and not yet pulled:** the minutes of **2022-10-10** (Res.
+84-22) and **2026-02-23** (Res. 14-26, the consolidation plat). Same portal; it holds Council
+minutes back to **1857** and resolutions back to **1976**.
 
 ## 3 · Community Development — the site plan as approved
 

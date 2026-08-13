@@ -1,0 +1,100 @@
+# City of Sidney Council, 2026-02-23 — Resolution No. 14-26, accepting the "Consolidation &
+# Right-Of-Way Dedication Plat of Survey". Issue #1998, epic #1275.
+#
+# ⚠️ THIS IS NOT A CONVEYANCE, AND IT MUST NOT BE READ AS ONE. Sidney's `assembly` chapter reads
+# "the record carries no conveyance instrument", and that stays correct after this file. A council
+# resolution accepting a plat is a LEGISLATIVE ACT: it transfers no title, names no grantor or
+# grantee, and states no consideration. The three deeds recited in the CRA agreement's Exhibit A
+# are still unread, and only a Shelby County Recorder pull can change that — a route re-tested and
+# re-confirmed blocked on 2026-08-13 (see `route_negatives` in
+# data/extracted/sidney/regulatory-watch.yaml).
+#
+# What it DOES give the record, for the first time from a primary instrument: the lot number the
+# five CRA parcels were consolidated into, and the City's own second spelling of those parcel ids.
+#
+# TAG VOCABULARY: [verified] = printed on the City's own RECORD OF ORDINANCES page;
+# [inference] = reasoned from [verified] facts, labelled; [open] = not established here.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/council/14-26 - Accepting a Plat - Consolidation and Right-of-Way Dedication Plat of Survey - Amazon.pdf
+  sha256: bc58f4cf6ea695c7369b668a545660719906cf26c6a67a1d313b273e1d76c97b
+  content_verified: text-layer
+  read_note: >-
+    HAND-READ from the PDF's own native text layer (pypdf), two pages. Retrieved 2026-08-13
+    through the City's Documents-On-Demand portal over HTTP/1.1.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    City of Sidney Resolution No. 14-26 — accepting the plat titled "Consolidation & Right-Of-Way
+    Dedication Plat of Survey", a replat of three parcels into Lot No. 7647, and accepting the
+    dedication of the easements and rights-of-way on it, passed 2026-02-23
+  resolution_no: '14-26'
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: plat_acceptance
+  adopted: '2026-02-23'                       # [verified] "Passed this 23rd day of February, 2026."
+  journal_pages: ['0059', '0060']
+  title_verbatim: >-
+    A RESOLUTION ACCEPTING THE PLAT TITLED "CONSOLIDATION & RIGHT-OF-WAY DEDICATION PLAT OF
+    SURVEY"
+  outcome: approved
+
+  operative_text_verbatim: >-
+    SECTION 1. That the Plat titled "Consolidation & Right-Of-Way Dedication Plat of Survey",
+    being a replat of Parcel Nos. 01-26-03-126-001; 01-26-03-201-001; and 01-26-03-226-001 to
+    create two (1) newly-configured lot being Lot No. 7647, be and the same is hereby approved and
+    accepted, and the dedication to public use of the easements and rights-of-way thereon be, and
+    the same is hereby accepted and confirmed.
+  transcription_note: >-
+    "to create two (1) newly-configured lot" is a defect in the City's own text — the numeral and
+    the word disagree, and the noun is singular. Quoted as extracted rather than repaired; the lot
+    number is singular and unambiguous.
+
+  new_lot: '7647'
+  constituent_parcels:                        # [verified] as spelled in THIS instrument
+    - '01-26-03-126-001'
+    - '01-26-03-201-001'
+    - '01-26-03-226-001'
+  parcel_id_spelling_note: >-
+    ⚠️ TWO CITY SPELLINGS OF THE SAME IDS. The 2025-10-27 minutes list the CRA parcels as
+    01-2603-126.001, 01-2603-201.001, 01-2603-251.001, 01-2603-251.002 and 01-2603-226.001; this
+    resolution writes three of them as 01-26-03-126-001, 01-26-03-201-001 and 01-26-03-226-001.
+    Both are preserved as written. [inference] The two forms differ only in punctuation and denote
+    the same parcels. ⚠️ THE PLAT COVERS THREE OF THE FIVE — the two `-251` parcels are not in it.
+    Whether they were replatted separately, were already configured, or were excluded is [open].
+
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: false
+    note: >-
+      [open] The minutes of 2026-02-23 were not pulled — this resolution sits outside the six
+      votes #1998 named. They are retrievable on the same portal (Minutes → 2026 → "City Council
+      Minutes February 23, 2026", document id 500389bc-431d-f111-a48c-000c29a59557).
+
+  what_this_instrument_does_not_establish:
+    - >-
+      IT IS NOT A CONVEYANCE. No title moves, no grantor or grantee is named, no consideration is
+      stated. It does not touch the `assembly` gap and must never be cited as if it did.
+    - >-
+      THE PLAT ITSELF IS NOT IN THE CORPUS. This resolution ACCEPTS a plat; the surveyed document
+      — its bearings, its dedicated right-of-way widths, its recording reference — is a separate
+      instrument, recorded with the Shelby County Recorder, and is [open]. The register cites it
+      as Plat V37 P50 from a secondary source.
+    - >-
+      IT NAMES NO COMPANY. "Amazon" appears in the City's FILENAME for this document, not in the
+      resolution's text. The join to the campus is through the parcel numbers, which the
+      2025-10-27 minutes tie to Amazon Data Services.
+  confidence: high
+  warnings:
+    - >-
+      Clean native text layer; the journal form's page rules bleed into the extraction as runs of
+      "=" and "_", and "determined"/"committees" lose letters to the embedded font ("detennined",
+      "c01mnittees"). Quoted as extracted. No figure or identifier is affected.

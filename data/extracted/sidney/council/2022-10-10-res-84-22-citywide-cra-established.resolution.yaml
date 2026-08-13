@@ -1,0 +1,118 @@
+# City of Sidney Council, 2022-10-10 — Resolution No. 84-22, establishing the City-Wide Community
+# Reinvestment Area. Issue #1998, epic #1275.
+#
+# WHY A 2022 RESOLUTION IS IN A 2025 DATA-CENTER RECORD. The corpus attributed the CRA designation
+# to Res. 69-25 (2025-09-08), on the strength of two later instruments' recitals — and #1380
+# recorded that as a CORRECTION to an earlier error ("Resolution 18-25, October 2025"). Read
+# directly, 69-25 amends and expands; the designation is here, three years earlier. This file is
+# committed so the chain is complete and so the thirty-year exemption has a legible before-state:
+# §4 of THIS resolution stops at fifteen years, and clause (e) — the megaproject tier the Amazon
+# agreement uses — did not exist until 69-25 added it.
+#
+# ⚠️ It names no project and no company. It is the general municipal program the campus's
+# agreement was later negotiated under, and nothing more.
+#
+# TAG VOCABULARY: [verified] = printed on the City's own RECORD OF ORDINANCES page;
+# [inference] = reasoned from [verified] facts, labelled; [open] = not established here.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/council/84-22 - Establishing CRA based on Community Boundaries.pdf
+  sha256: 7763af6bfa38427e1cf7ff1dced9576ada0d78d6105fac72b0099dfea063422f
+  content_verified: text-layer
+  read_note: >-
+    HAND-READ from the PDF's own native text layer (pypdf). The journal form is the older
+    "P.F. Pettibone & Co." stock, not the Form 30043 the 2025-26 resolutions use. Retrieved
+    2026-08-13 through the City's Documents-On-Demand portal over HTTP/1.1.
+pages_read: [0, 1, 2, 3]
+
+resolution:
+  instrument: >-
+    City of Sidney Resolution No. 84-22 — repealing four predecessor resolutions, implementing
+    R.C. 3735.65-3735.70, establishing and describing the boundaries of the City-Wide Community
+    Reinvestment Area, designating a Housing Officer and creating a Housing Council, passed
+    2022-10-10
+  resolution_no: '84-22'
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: tax_incentive
+  adopted: '2022-10-10'                       # [verified] — recited on journal page 0297 of Res. 69-25
+  journal_pages: ['296', '297', '298', '299']
+  title_verbatim: >-
+    A RESOLUTION REPEALING RESOLUTIONS NO. 33-06, 44-07, 09-13 AND 73-18 AND IMPLEMENTING SECTIONS
+    3735.65 THROUGH 3735.70 OF THE OHIO REVISED CODE, ESTABLISHING AND DESCRIBING THE BOUNDARIES
+    OF THE CITY-WIDE COMMUNITY REINVESTMENT AREA IN THE CITY OF SIDNEY AND DESIGNATING A HOUSING
+    OFFICER TO ADMINISTER THE PROGRAM AND CREATING A HOUSING COUNCIL
+  outcome: approved
+  statute: R.C. 3735.65-3735.70               # [verified] — named in the title
+
+  odod_designation: '149-72424-06'            # [verified] — recited in Res. 69-25, journal page 0297
+  repeals: ['33-06', '44-07', '09-13', '73-18']
+
+  establishment:
+    verbatim: >-
+      SECTION 2. Pursuant to Ohio Rev. Code § 3735.66, the City-Wide CRA is hereby established in
+      the area delineated by a boundary as indicated on the map attached hereto as Exhibit A.
+    housing_survey: >-
+      [verified] The R.C. 3735.66 survey of housing is recited as "on file at the City Hall, 201
+      West Poplar Street" and is NOT attached to the resolution. [open] — not in corpus.
+
+  # ------------------------------------------------------------------------------------------
+  # THE BEFORE-STATE. This is why the file matters to the campus record.
+  # ------------------------------------------------------------------------------------------
+  exemption_ceiling_as_adopted:
+    tag: verified
+    commercial_industrial_new_construction: >-
+      (d) Up to fifteen (15) years, and up to one hundred percent (100%) for the construction of
+      new commercial (including residential with more than two units) and industrial structures,
+      the term and percentage of which shall be negotiated on a case-by-case basis in advance of
+      construction occurring.
+    highest_tier_in_this_resolution: 15 years / 100%
+    no_megaproject_clause: >-
+      [verified] §4 as adopted runs (a) through (d) and ends there. There is no clause (e), no
+      thirty-year tier, and no reference to R.C. 122.17 anywhere in this instrument. The
+      thirty-year megaproject tier was added by Res. 69-25 on 2025-09-08 — seven weeks before Res.
+      80-25 authorized a 30-year / 100% CRA Agreement with Amazon Data Services.
+    dwelling_extension: >-
+      [verified] A DWELLING's exemption may be extended up to ten additional years for a certified
+      historic structure — the only path past fifteen years in the resolution as adopted, and it
+      does not reach commercial or industrial property.
+
+  administration:
+    housing_officer: '[verified] designated by this resolution; the officeholder is not named in the text read.'
+    housing_council: >-
+      [verified] Created by this resolution. It is a live body: the 2025-10-27 minutes record that
+      "the CRA Housing Council met on October 23, 2025, and unanimously resolved to recommend that
+      City Council approve" the Amazon CRA agreement, and the City's 2026 resolution index carries
+      appointments to it (Res. 37-26, 38-26, 74-25). It is one of the seven bodies in
+      data/reference/subdivisions/sidney/subdivisions.yaml (#1999).
+
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: false
+    note: >-
+      [open] The minutes of 2022-10-10 were not pulled. The RECORD OF ORDINANCES page carries the
+      enacting clause and the passage date only — the form of the instrument, not a gap in the
+      read. The vote is retrievable: City Council Minutes for 2022 are on the same portal, under
+      the Minutes container's 2022 year folder.
+
+  what_this_instrument_does_not_establish:
+    - >-
+      THE BOUNDARY. Exhibit A is the map and it is an image; it is not read here. What the
+      City-Wide CRA covered in 2022 is [open], and Res. 69-25 states it was expanded more than
+      once between then and 2025.
+    - >-
+      ANY CONNECTION TO THE CAMPUS. This resolution predates every campus instrument by three
+      years and names no project. It is program legislation.
+  confidence: high
+  warnings:
+    - >-
+      Clean native text layer, but the older Pettibone journal form scans worse than the Form
+      30043 stock: page rules bleed into the text as runs of "=" and the section headings lose
+      spacing. Quoted as extracted. Pages 4-6 are Exhibit A (the boundary map) and were not read.

@@ -1,0 +1,196 @@
+# City of Sidney Council, 2025-09-08 — Resolution No. 69-25, expanding the City-Wide Community
+# Reinvestment Area and adding a thirty-year megaproject exemption tier. Issue #1998, epic #1275.
+#
+# THE INSTRUMENT THE CORPUS HAS BEEN CITING THROUGH RECITALS SINCE #1380. #2003 authored five
+# council resolutions and deliberately did NOT scaffold a sixth: "Res. 69-25 is absent — FIVE
+# files, not six. The CRA designating legislation is known only through recitals; the City doesn't
+# publish it. Scaffolding a sixth would assert an unread instrument." That was the right call, and
+# the premise was wrong on one word: the City DOES publish it, on a portal this corpus had
+# recorded as blocked. See the second-route block in
+# `data/documents/sidney/council/filename-map.yaml`.
+#
+# ⚠️ READ FIRST — TWO THINGS THE CORPUS HAD WRONG, both now read off the instrument itself.
+#
+#   1. 69-25 IS NOT THE DESIGNATING ACT. Its own second recital: "this City Council, by Resolution
+#      84-22 adopted on October 10, 2022, created and established the Sidney City-Wide Community
+#      Reinvestment Area, which was assigned designation #149-72424-06 by the Director of the Ohio
+#      Department of Development". 69-25 EXPANDS that area and AMENDS that resolution. The
+#      register's "#149-72424-06A, effective 2025-09-19" is the expansion's number — the "A"
+#      suffix was the clue, and the two reconcile rather than conflict. 84-22 is committed
+#      alongside this file.
+#
+#   2. THE THIRTY-YEAR TERM DID NOT EXIST BEFORE THIS RESOLUTION. Res. 84-22 §4 as adopted ends at
+#      clause (d): fifteen years for new commercial and industrial construction. This resolution
+#      restates §4 in its entirety and adds clause (e) — up to thirty years, up to 100%, for a
+#      megaproject under R.C. 122.17(A)(12). Seven weeks later Res. 80-25 authorized a CRA
+#      Agreement carrying a 30-year / 100% exemption. The SEQUENCE is [verified] from two
+#      instruments and the minutes of both meetings. The CAUSATION is not: this resolution names
+#      no project, no company and no parcel, and its stated reason is the recent annexations.
+#      Write the sequence; do not write the motive.
+#
+# TAG VOCABULARY (per CLAUDE.md / evidentiary-discipline):
+#   [verified]  — printed on the City's own RECORD OF ORDINANCES page, or recorded in the approved
+#                 minutes of the meeting that adopted it.
+#   [inference] — reasoned from [verified] facts, labelled.
+#   [open]      — not established by this instrument.
+
+as_of: '2026-08-13'
+site: sidney
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#1998'
+epic: 'watermark-directory/the-watermark-directory#1275'
+
+source:
+  instrument: city-council-record-of-ordinances
+  file: data/documents/sidney/council/69-25 - Amending Resolution 84-22 - Expanding CRA Boundaries.pdf
+  sha256: acb250062532eb5f1c5fd99ba2612dcfd845c4081f8c9eafeb30e91c17c15cf9
+  content_verified: text-layer
+  read_note: >-
+    HAND-READ from the PDF's own native text layer (pypdf); nothing was OCR'd and no page was
+    rendered. The scan is of the City's bound RECORD OF ORDINANCES form (Government Forms and
+    Supplies Form 30043), so the printed journal page numbers are legible and are carried below as
+    the citable locator. Retrieved 2026-08-13 through the City's Documents-On-Demand portal over
+    HTTP/1.1 — the same request returns 403 over HTTP/2, which is why this corpus carried the
+    route as blocked for five artifacts before anyone retried it.
+pages_read: [0, 1, 2, 3, 4, 5, 6]
+
+resolution:
+  instrument: >-
+    City of Sidney Resolution No. 69-25 — authorizing the expansion of the City's Sidney City-Wide
+    Community Reinvestment Area and amending Resolution 84-22, passed 2025-09-08
+  resolution_no: '69-25'
+  body: Council of the City of Sidney, Ohio
+  body_kind: city_council
+  subject_matter: tax_incentive
+  adopted: '2025-09-08'                       # [verified] "Passed this 8th day of September 2025."
+  journal_pages: ['0296', '0297', '0298', '0299', '0300', '0301', '0302']
+  title_verbatim: >-
+    A RESOLUTION AUTHORIZING THE EXPANSION OF THE CITY'S SIDNEY CITY-WIDE COMMUNITY REINVESTMENT
+    AREA AND AMENDING RESOLUTION 84-22
+  outcome: approved
+  statute: R.C. 3735.65-3735.70               # [verified] — recited in the instrument as "the CRA Act"
+
+  amends:
+    resolution_no: '84-22'
+    adopted: '2022-10-10'                     # [verified] — recited on journal page 0297
+    what_it_did: >-
+      Created and established the Sidney City-Wide Community Reinvestment Area, assigned
+      designation #149-72424-06 by the Director of the Ohio Department of Development.
+    in_corpus: data/extracted/sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml
+
+  # ------------------------------------------------------------------------------------------
+  # WHAT IT DOES — the operative sections, quoted where they carry a figure or a condition.
+  # ------------------------------------------------------------------------------------------
+  expansion:
+    verbatim: >-
+      SECTION 2. Pursuant to Section 3735.66 of the CRA Act, the City-Wide CRA is hereby amended
+      and expanded to include the Expanded Area.
+    effect: >-
+      [verified] The expansion is stated in §1 to leave the City-Wide CRA "having boundaries which
+      are currently coterminous with the City". The Expanded Area is described and depicted on the
+      instrument's Exhibit A (pp. 7-18), which is image-only and NOT read here.
+    what_the_minutes_add: >-
+      [verified] Community Development Director Barbara Dulworth told Council the expansion
+      "would extend the city Community Reinvestment Area (CRA) boundaries to incorporate the
+      recent annexations, including the 243.092 acres on the north side of Millcreek Road, west of
+      Vandemark Road and the 53.16 acres of land west of Vandemark Road, south of Fair Road."
+      Source: data/documents/sidney/council/City Council Minutes September 08, 2025.pdf p. 2.
+    note: >-
+      [inference] "The north side of Millcreek Road, west of Vandemark Road" is the same locator
+      the Res. 80-25 recitals use for the Amazon Data Services project site. The minutes do not
+      join the two, and this resolution names no project; recorded as a locator match, not a
+      finding.
+
+  megaproject_tier:
+    tag: verified
+    new_in_this_resolution: true
+    journal_page: '0300'
+    verbatim: >-
+      (e) Up to thirty (30) years, and up to one hundred percent (100%) if the commercial or
+      industrial structure is situated on the site of a megaproject and is owned and occupied by a
+      megaproject operator (as such terms are defined in Ohio Revised Code Section 122.17(A)(12)),
+      or is not situated on the site of a megaproject but is owned and occupied by a megaproject
+      supplier that meets the requirements described in Ohio Revised Code Section 122.17(A)(13)(b)
+    ceiling_before_this_resolution: >-
+      [verified] Res. 84-22 §4 as adopted ran (a) through (d) and stopped at FIFTEEN years / 100%
+      for new commercial and industrial construction. It contains no thirty-year tier and no
+      reference to R.C. 122.17.
+    thresholds_as_stated_to_council: >-
+      [verified] "large-scale development project meeting specific investment or payroll
+      thresholds, such as at least $1 billion in capital investment or creating $75 million in
+      annual payroll. She noted that the Ohio Department of Development (ODOD) was responsible for
+      certifying megaprojects." — the minutes of this meeting, p. 2. These are STAFF'S
+      characterisation of R.C. 122.17(A)(12); the statute itself is not quoted in the instrument.
+    downstream: >-
+      [verified] Res. 80-25 (2025-10-27) authorized a CRA Agreement whose exemption is 30 years at
+      100%. [verified] The minutes of THAT meeting recite this resolution as the authority: "Per
+      the Ohio Revised Code, and the recently adopted revised Sidney City-Wide CRA, property tax
+      abatements for up to 30 years can be approved for megaprojects or megaproject operators."
+    what_is_still_open: >-
+      [open] Whether the Ohio Department of Development has in fact DESIGNATED this campus a
+      megaproject. The 2025-10-27 minutes say only that the project "meets the requirements to be
+      designated" — eligibility asserted by staff, in the present tense, not a designation stated
+      as made. No ODOD certification is in the corpus.
+
+  monitoring_fee:
+    tag: verified
+    journal_page: '0301'
+    verbatim: >-
+      SECTION 5. An annual monitoring fee to the City of Sidney of one percent (1%) of the amount
+      of the incentives, or a minimum of Five Hundred Dollars ($500.00), up to a maximum of
+      Twenty-five Hundred Dollars ($2,500.00) annually is required for commercial and industrial
+      projects.
+    note: >-
+      [verified] The fee is 1% of the incentives but CAPPED AT $2,500 a year. Recorded because the
+      cap is a fact about the instrument, not an argument: it is what the City charges to
+      administer an exemption of any size, including a thirty-year one.
+
+  other_sections:
+    - '[verified] §3 — all residential, commercial and industrial properties in the Expanded Area, consistent with applicable zoning, are eligible.'
+    - '[verified] §6 — "Except as amended hereby, Resolution 84-22 shall remain in full force and effect."'
+    - '[verified] §7 — a copy of the Resolution goes to the Shelby County Auditor, sent by the Community Development Director.'
+    - '[verified] §8 — the Community Development Director is authorized to petition the ODOD Director for approval of the expanded City-Wide CRA under R.C. 3735.66.'
+    - '[verified] §9 — the R.C. 121.22 open-meetings finding.'
+
+  # ------------------------------------------------------------------------------------------
+  # THE VOTE — from the approved minutes, which is where a Sidney resolution's vote lives.
+  # ------------------------------------------------------------------------------------------
+  vote:
+    roll_call_recorded: false
+    outcome_recorded: true
+    verbatim: >-
+      Councilmember Roddy made a motion to adopt Resolution No. 69-25 as presented; seconded by
+      Councilmember VanMatre. Upon a roll call vote, the motion passed unanimously. Resolution No.
+      69-25 is hereby adopted.
+    moved_by: Councilmember Scott Roddy
+    seconded_by: Councilmember Jenny VanMatre
+    result: passed unanimously
+    source:
+      file: data/documents/sidney/council/City Council Minutes September 08, 2025.pdf
+      pages: '2-3'                            # 0-based
+    note: >-
+      [verified] A roll call WAS taken; the minutes record its outcome and not its individual
+      votes. That is the form of these minutes for an uncontested item — contrast Res. 82-25 on
+      2025-10-27, where the same clerk journalled seven names because the vote was divided.
+    deliberation: >-
+      [verified] "There were no questions or comments on this topic." Recorded verbatim because it
+      is the whole of the public deliberation on the clause that created the thirty-year tier.
+
+  what_this_instrument_does_not_establish:
+    - >-
+      IT NAMES NO PROJECT, NO COMPANY AND NO PARCEL. Every word about Amazon, the campus or the
+      data center in this file comes from the MINUTES or from a later instrument, and is labelled
+      as such. A reader must not cite this resolution for the campus.
+    - >-
+      THE EXPANDED AREA IS NOT READ. Exhibit A (pp. 7-18) is the boundary map and legal
+      description, and it is image-only. The two annexation acreages above are the minutes'
+      account of it, not a reading of the exhibit. [open]
+    - >-
+      IT GRANTS NOTHING. §4 sets ceilings to be "negotiated on a case-by-case basis in advance of
+      construction"; the grant is the CRA Agreement, authorized separately by Res. 80-25.
+  confidence: high
+  warnings:
+    - >-
+      Clean native text layer, no OCR — but the scan is of a bound journal and the embedded font
+      substitutes some letter pairs and drops others ("fonnal" for formal, "SE CTI ON" for
+      SECTION). Quoted as extracted, not silently repaired. No figure is affected.

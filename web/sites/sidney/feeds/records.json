@@ -66,16 +66,33 @@
       ],
       "legislative_chain": [
         {
+          "ref": "Res. 84-22",
+          "adopted": "2022-10-10",
+          "subject": "ESTABLISHING the City of Sidney City-Wide Community Reinvestment Area under R.C. 3735.65-.70, designating a Housing Officer and creating a Housing Council",
+          "in_corpus": true,
+          "state_certification": {
+            "designator": "Director, Ohio Department of Development",
+            "cra_area_number": "149-72424-06"
+          },
+          "note": "⚠️ THIS, NOT RES. 69-25, IS THE DESIGNATING ACT — and the register said otherwise until #1998 read both instruments directly. §4 as adopted here tops out at FIFTEEN years / 100% for new commercial and industrial construction; there is no thirty-year tier and no reference to R.C. 122.17 anywhere in it."
+        },
+        {
           "ref": "Res. 69-25",
           "adopted": "2025-09-08",
-          "subject": "Designation of the City of Sidney City-Wide Community Reinvestment Area under R.C. 3735.65-.70",
-          "in_corpus": false,
-          "note": "The register carried the CRA legislation as \"Resolution 18-25 … October 2025\". That is wrong on both the number and the month, and it is why no such instrument could be found. The designating legislation is Resolution No. 69-25, adopted 2025-09-08, and the CRA it designates is CITY-WIDE, not a project-specific envelope.",
+          "subject": "EXPANDING the City-Wide CRA to be coterminous with the City, and amending Res. 84-22 §4 to add a thirty-year megaproject exemption tier",
+          "in_corpus": true,
           "state_certification": {
             "designator": "Director, Ohio Department of Development",
             "effective": "2025-09-19",
             "cra_area_number": "149-72424-06A"
-          }
+          },
+          "creates_the_thirty_year_tier": {
+            "tag": "verified",
+            "verbatim": "(e) Up to thirty (30) years, and up to one hundred percent (100%) if the commercial or industrial structure is situated on the site of a megaproject and is owned and occupied by a megaproject operator (as such terms are defined in Ohio Revised Code Section 122.17(A)(12)) …",
+            "why_it_matters": "The 30-year / 100% exemption in the CRA Agreement below rests on this clause, and the clause did not exist until this resolution added it — seven weeks before Res. 80-25 authorized the agreement. [verified] as a SEQUENCE from two instruments and the minutes of both meetings. [open] as a motive: 69-25 names no project, no company and no parcel, and its stated reason is the recent annexations.",
+            "monitoring_fee": "[verified] §5, as amended: 1% of the incentives, minimum $500, MAXIMUM $2,500 a year."
+          },
+          "note": "⚠️ CORRECTED at #1998. The register carried this as the DESIGNATING legislation, reasoning from the CRA Agreement's and Res. 82-25's recitals. Read directly, it amends and expands Res. 84-22. Both readings of the corpus before this one were wrong in the same direction — \"Resolution 18-25 … October 2025\" (the pre-#1380 register), then \"the designating legislation is Res. 69-25\" (#1380) — and each was corrected only by reading one document closer to the source. The `-06A` suffix on the area number was the standing clue."
         },
         {
           "ref": "Res. 80-25",
@@ -622,11 +639,12 @@
       },
       "open_items": [
         {
-          "item": "Resolution 69-25 — the CRA designating legislation itself",
-          "tag": "[open]",
-          "checked": "2026-08-01",
-          "negative": "The City's data-center FAQ publishes five resolutions and does not include this one; the City's Document Center index does not surface it; a web search on the number returns nothing. Its content is [verified] only through the recitals of two instruments that do cite it.",
-          "route": "⚠️ CORRECTED 2026-08-11 (#1999) — the portal is SEARCHABLE and this resolution is simply UNPULLED. https://sidneycityoh.documents-on-demand.com/ returns HTTP 403 to a DEFAULT (HTTP/2) request — a real Cloudflare challenge — which was read as a host-wide block. The trigger is the HTTP/2 fingerprint, not the client: the same request over HTTP/1.1 with a browser UA returns HTTP 200, and the host exposes a JSON tree (/meta/rootfolder, /meta/docfolder?containerId=) carrying City Council -> Legislation -> Resolutions. So 69-25's absence from this corpus is a retrieval job, not a blocked route, and the R.C. 149.43 request to the Sidney City Clerk drafted for it should not be sent until that portal has been searched."
+          "item": "Resolution 69-25 — the CRA legislation itself",
+          "tag": "[closed]",
+          "closed": "2026-08-13",
+          "resolution": "PULLED AND READ. data/documents/sidney/council/69-25 - Amending Resolution 84-22 - Expanding CRA Boundaries.pdf, extracted at data/extracted/sidney/council/2025-09-08-res-69-25-cra- expansion-and-megaproject-tier.resolution.yaml — together with Res. 84-22, which it amends and which is the act that actually established the CRA. Reading it CORRECTED this register: 69-25 expands, it does not designate.",
+          "how": "The three-step route was: this item's own 2026-08-11 correction (the 403 is an HTTP/2 fingerprint, not a host block) -> `curl --http1.1` -> /meta/docfolder?containerId= on the Resolutions container, which returns 51 year folders and every document in them. The whole pull took minutes. The R.C. 149.43 request drafted for this resolution was never sent and should not be.",
+          "lesson": "⚠️ This corpus recorded \"blocked\" for this host in five artifacts and two drafted public- records requests before anyone retried the request over HTTP/1.1. A 403 to a scripted client may be a protocol-fingerprint block. Retry before recording a route negative."
         },
         {
           "item": "The three recorded deeds — O.R. 2329 pp. 445, 449, 454 — grantors, instrument numbers, consideration, easements",
@@ -694,6 +712,185 @@
     "source_doc_published": false
   },
   {
+    "rel": "sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Resolution No. 84-22 — repealing four predecessor resolutions, implementing R.C. 3735.65-3735.70, establishing and describing the boundaries of the City-Wide Community Reinvestment Area, designating a Housing Officer and creating a Housing Council, passed 2022-10-10",
+    "confidence": "high",
+    "warnings": [
+      "Clean native text layer, but the older Pettibone journal form scans worse than the Form 30043 stock: page rules bleed into the text as runs of \"=\" and the section headings lose spacing. Quoted as extracted. Pages 4-6 are Exhibit A (the boundary map) and were not read."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Resolution No. 84-22 — repealing four predecessor resolutions, implementing R.C. 3735.65-3735.70, establishing and describing the boundaries of the City-Wide Community Reinvestment Area, designating a Housing Officer and creating a Housing Council, passed 2022-10-10",
+      "resolution_no": "84-22",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "tax_incentive",
+      "adopted": "2022-10-10",
+      "journal_pages": [
+        "296",
+        "297",
+        "298",
+        "299"
+      ],
+      "title_verbatim": "A RESOLUTION REPEALING RESOLUTIONS NO. 33-06, 44-07, 09-13 AND 73-18 AND IMPLEMENTING SECTIONS 3735.65 THROUGH 3735.70 OF THE OHIO REVISED CODE, ESTABLISHING AND DESCRIBING THE BOUNDARIES OF THE CITY-WIDE COMMUNITY REINVESTMENT AREA IN THE CITY OF SIDNEY AND DESIGNATING A HOUSING OFFICER TO ADMINISTER THE PROGRAM AND CREATING A HOUSING COUNCIL",
+      "outcome": "approved",
+      "statute": "R.C. 3735.65-3735.70",
+      "odod_designation": "149-72424-06",
+      "repeals": [
+        "33-06",
+        "44-07",
+        "09-13",
+        "73-18"
+      ],
+      "establishment": {
+        "verbatim": "SECTION 2. Pursuant to Ohio Rev. Code § 3735.66, the City-Wide CRA is hereby established in the area delineated by a boundary as indicated on the map attached hereto as Exhibit A.",
+        "housing_survey": "[verified] The R.C. 3735.66 survey of housing is recited as \"on file at the City Hall, 201 West Poplar Street\" and is NOT attached to the resolution. [open] — not in corpus."
+      },
+      "exemption_ceiling_as_adopted": {
+        "tag": "verified",
+        "commercial_industrial_new_construction": "(d) Up to fifteen (15) years, and up to one hundred percent (100%) for the construction of new commercial (including residential with more than two units) and industrial structures, the term and percentage of which shall be negotiated on a case-by-case basis in advance of construction occurring.",
+        "highest_tier_in_this_resolution": "15 years / 100%",
+        "no_megaproject_clause": "[verified] §4 as adopted runs (a) through (d) and ends there. There is no clause (e), no thirty-year tier, and no reference to R.C. 122.17 anywhere in this instrument. The thirty-year megaproject tier was added by Res. 69-25 on 2025-09-08 — seven weeks before Res. 80-25 authorized a 30-year / 100% CRA Agreement with Amazon Data Services.",
+        "dwelling_extension": "[verified] A DWELLING's exemption may be extended up to ten additional years for a certified historic structure — the only path past fifteen years in the resolution as adopted, and it does not reach commercial or industrial property."
+      },
+      "administration": {
+        "housing_officer": "[verified] designated by this resolution; the officeholder is not named in the text read.",
+        "housing_council": "[verified] Created by this resolution. It is a live body: the 2025-10-27 minutes record that \"the CRA Housing Council met on October 23, 2025, and unanimously resolved to recommend that City Council approve\" the Amazon CRA agreement, and the City's 2026 resolution index carries appointments to it (Res. 37-26, 38-26, 74-25). It is one of the seven bodies in data/reference/subdivisions/sidney/subdivisions.yaml (#1999)."
+      },
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": false,
+        "note": "[open] The minutes of 2022-10-10 were not pulled. The RECORD OF ORDINANCES page carries the enacting clause and the passage date only — the form of the instrument, not a gap in the read. The vote is retrievable: City Council Minutes for 2022 are on the same portal, under the Minutes container's 2022 year folder."
+      },
+      "what_this_instrument_does_not_establish": [
+        "THE BOUNDARY. Exhibit A is the map and it is an image; it is not read here. What the City-Wide CRA covered in 2022 is [open], and Res. 69-25 states it was expanded more than once between then and 2025.",
+        "ANY CONNECTION TO THE CAMPUS. This resolution predates every campus instrument by three years and names no project. It is program legislation."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/council/84-22 - Establishing CRA based on Community Boundaries.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Resolution No. 69-25 — authorizing the expansion of the City's Sidney City-Wide Community Reinvestment Area and amending Resolution 84-22, passed 2025-09-08",
+    "confidence": "high",
+    "warnings": [
+      "Clean native text layer, no OCR — but the scan is of a bound journal and the embedded font substitutes some letter pairs and drops others (\"fonnal\" for formal, \"SE CTI ON\" for SECTION). Quoted as extracted, not silently repaired. No figure is affected."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Resolution No. 69-25 — authorizing the expansion of the City's Sidney City-Wide Community Reinvestment Area and amending Resolution 84-22, passed 2025-09-08",
+      "resolution_no": "69-25",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "tax_incentive",
+      "adopted": "2025-09-08",
+      "journal_pages": [
+        "0296",
+        "0297",
+        "0298",
+        "0299",
+        "0300",
+        "0301",
+        "0302"
+      ],
+      "title_verbatim": "A RESOLUTION AUTHORIZING THE EXPANSION OF THE CITY'S SIDNEY CITY-WIDE COMMUNITY REINVESTMENT AREA AND AMENDING RESOLUTION 84-22",
+      "outcome": "approved",
+      "statute": "R.C. 3735.65-3735.70",
+      "amends": {
+        "resolution_no": "84-22",
+        "adopted": "2022-10-10",
+        "what_it_did": "Created and established the Sidney City-Wide Community Reinvestment Area, assigned designation #149-72424-06 by the Director of the Ohio Department of Development.",
+        "in_corpus": "data/extracted/sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml"
+      },
+      "expansion": {
+        "verbatim": "SECTION 2. Pursuant to Section 3735.66 of the CRA Act, the City-Wide CRA is hereby amended and expanded to include the Expanded Area.",
+        "effect": "[verified] The expansion is stated in §1 to leave the City-Wide CRA \"having boundaries which are currently coterminous with the City\". The Expanded Area is described and depicted on the instrument's Exhibit A (pp. 7-18), which is image-only and NOT read here.",
+        "what_the_minutes_add": "[verified] Community Development Director Barbara Dulworth told Council the expansion \"would extend the city Community Reinvestment Area (CRA) boundaries to incorporate the recent annexations, including the 243.092 acres on the north side of Millcreek Road, west of Vandemark Road and the 53.16 acres of land west of Vandemark Road, south of Fair Road.\" Source: data/documents/sidney/council/City Council Minutes September 08, 2025.pdf p. 2.",
+        "note": "[inference] \"The north side of Millcreek Road, west of Vandemark Road\" is the same locator the Res. 80-25 recitals use for the Amazon Data Services project site. The minutes do not join the two, and this resolution names no project; recorded as a locator match, not a finding."
+      },
+      "megaproject_tier": {
+        "tag": "verified",
+        "new_in_this_resolution": true,
+        "journal_page": "0300",
+        "verbatim": "(e) Up to thirty (30) years, and up to one hundred percent (100%) if the commercial or industrial structure is situated on the site of a megaproject and is owned and occupied by a megaproject operator (as such terms are defined in Ohio Revised Code Section 122.17(A)(12)), or is not situated on the site of a megaproject but is owned and occupied by a megaproject supplier that meets the requirements described in Ohio Revised Code Section 122.17(A)(13)(b)",
+        "ceiling_before_this_resolution": "[verified] Res. 84-22 §4 as adopted ran (a) through (d) and stopped at FIFTEEN years / 100% for new commercial and industrial construction. It contains no thirty-year tier and no reference to R.C. 122.17.",
+        "thresholds_as_stated_to_council": "[verified] \"large-scale development project meeting specific investment or payroll thresholds, such as at least $1 billion in capital investment or creating $75 million in annual payroll. She noted that the Ohio Department of Development (ODOD) was responsible for certifying megaprojects.\" — the minutes of this meeting, p. 2. These are STAFF'S characterisation of R.C. 122.17(A)(12); the statute itself is not quoted in the instrument.",
+        "downstream": "[verified] Res. 80-25 (2025-10-27) authorized a CRA Agreement whose exemption is 30 years at 100%. [verified] The minutes of THAT meeting recite this resolution as the authority: \"Per the Ohio Revised Code, and the recently adopted revised Sidney City-Wide CRA, property tax abatements for up to 30 years can be approved for megaprojects or megaproject operators.\"",
+        "what_is_still_open": "[open] Whether the Ohio Department of Development has in fact DESIGNATED this campus a megaproject. The 2025-10-27 minutes say only that the project \"meets the requirements to be designated\" — eligibility asserted by staff, in the present tense, not a designation stated as made. No ODOD certification is in the corpus."
+      },
+      "monitoring_fee": {
+        "tag": "verified",
+        "journal_page": "0301",
+        "verbatim": "SECTION 5. An annual monitoring fee to the City of Sidney of one percent (1%) of the amount of the incentives, or a minimum of Five Hundred Dollars ($500.00), up to a maximum of Twenty-five Hundred Dollars ($2,500.00) annually is required for commercial and industrial projects.",
+        "note": "[verified] The fee is 1% of the incentives but CAPPED AT $2,500 a year. Recorded because the cap is a fact about the instrument, not an argument: it is what the City charges to administer an exemption of any size, including a thirty-year one."
+      },
+      "other_sections": [
+        "[verified] §3 — all residential, commercial and industrial properties in the Expanded Area, consistent with applicable zoning, are eligible.",
+        "[verified] §6 — \"Except as amended hereby, Resolution 84-22 shall remain in full force and effect.\"",
+        "[verified] §7 — a copy of the Resolution goes to the Shelby County Auditor, sent by the Community Development Director.",
+        "[verified] §8 — the Community Development Director is authorized to petition the ODOD Director for approval of the expanded City-Wide CRA under R.C. 3735.66.",
+        "[verified] §9 — the R.C. 121.22 open-meetings finding."
+      ],
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": true,
+        "verbatim": "Councilmember Roddy made a motion to adopt Resolution No. 69-25 as presented; seconded by Councilmember VanMatre. Upon a roll call vote, the motion passed unanimously. Resolution No. 69-25 is hereby adopted.",
+        "moved_by": "Councilmember Scott Roddy",
+        "seconded_by": "Councilmember Jenny VanMatre",
+        "result": "passed unanimously",
+        "source": {
+          "file": "data/documents/sidney/council/City Council Minutes September 08, 2025.pdf",
+          "pages": "2-3"
+        },
+        "note": "[verified] A roll call WAS taken; the minutes record its outcome and not its individual votes. That is the form of these minutes for an uncontested item — contrast Res. 82-25 on 2025-10-27, where the same clerk journalled seven names because the vote was divided.",
+        "deliberation": "[verified] \"There were no questions or comments on this topic.\" Recorded verbatim because it is the whole of the public deliberation on the clause that created the thirty-year tier."
+      },
+      "what_this_instrument_does_not_establish": [
+        "IT NAMES NO PROJECT, NO COMPANY AND NO PARCEL. Every word about Amazon, the campus or the data center in this file comes from the MINUTES or from a later instrument, and is labelled as such. A reader must not cite this resolution for the campus.",
+        "THE EXPANDED AREA IS NOT READ. Exhibit A (pp. 7-18) is the boundary map and legal description, and it is image-only. The two annexation acreages above are the minutes' account of it, not a reading of the exhibit. [open]",
+        "IT GRANTS NOTHING. §4 sets ceilings to be \"negotiated on a case-by-case basis in advance of construction\"; the grant is the CRA Agreement, authorized separately by Res. 80-25."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/council/69-25 - Amending Resolution 84-22 - Expanding CRA Boundaries.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "sidney/council/2025-10-27-res-80-25-cra-agreement.resolution.yaml",
     "group": "local-legislation",
     "title": "City of Sidney Resolution No. 80-25 — authorizing the City Manager to enter into a Community Reinvestment Area Agreement with Amazon Data Services, Inc., passed 2025-10-27",
@@ -723,7 +920,15 @@
       },
       "vote": {
         "roll_call_recorded": false,
-        "note": "[open] The RECORD OF ORDINANCES page carries the enacting clause, the passage date and the Attest line ONLY — no motion, no second, no roll call, no vote tally. This is the form of the instrument, not a gap in the read: a Sidney resolution page does not journal its own vote. The roll call lives in the Council MINUTES for 2025-10-27, which are not in the corpus. That is lead `COUNCIL-MINUTES` (`data/site/sidney/leads.yaml`) and the R.C. 149.43 ask in #1998.",
+        "outcome_recorded": true,
+        "verbatim": "Councilmember Huelskamp made a motion to adopt Resolution No. 80-25 as presented; seconded by Vice Mayor Wagner. Upon a roll call vote, the motion passed unanimously. Resolution No. 80-25 is hereby adopted.",
+        "moved_by": "Councilmember Cory Huelskamp",
+        "seconded_by": "Vice Mayor Steve Wagner",
+        "result": "passed unanimously",
+        "source": {
+          "file": "data/documents/sidney/council/City Council Minutes October 27, 2025.pdf",
+          "content_verified": "ocr"
+        },
         "signatories": null
       },
       "what_this_instrument_does_not_establish": [
@@ -803,7 +1008,15 @@
       "beneficiary_named": "Amazon Data Services, Inc.",
       "vote": {
         "roll_call_recorded": false,
-        "note": "[open] Same form as its siblings: enacting clause, passage date and Attest line only. The roll call is in the Council minutes for 2025-10-27, which are not in the corpus — lead `COUNCIL-MINUTES`, and the R.C. 149.43 ask in #1998.",
+        "outcome_recorded": true,
+        "verbatim": "Councilmember VanMatre made a motion to adopt Resolution No. 81-25 as presented; seconded by Councilmember Roddy. Upon a roll call vote, the motion passed unanimously. Resolution No. 81-25 is hereby adopted.",
+        "moved_by": "Councilmember Jenny VanMatre",
+        "seconded_by": "Councilmember Scott Roddy",
+        "result": "passed unanimously",
+        "source": {
+          "file": "data/documents/sidney/council/City Council Minutes October 27, 2025.pdf",
+          "content_verified": "ocr"
+        },
         "signatories": null
       },
       "what_this_instrument_does_not_establish": [
@@ -876,8 +1089,55 @@
         "note": "[verified] TWO SEPARATE INSTRUMENTS, PASSED THE SAME DAY, TO THE SAME TWO BOARDS. 81-25 authorizes a DEVELOPMENT agreement; 82-25 authorizes an INCOME TAX SHARING agreement. Their titles are otherwise near-identical, which makes them easy to conflate — they are not alternates or a re-passage, and a citation to one is not a citation to the other."
       },
       "vote": {
-        "roll_call_recorded": false,
-        "note": "[open] Enacting clause, passage date and Attest line only. Roll call is in the 2025-10-27 Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.",
+        "roll_call_recorded": true,
+        "outcome_recorded": true,
+        "verbatim": "Councilmember VanMatre made a motion to adopt Resolution No. 82-25 as presented; seconded by Councilmember Roddy. A roll call vote was taken: Barhorst: yes; Huelskamp: yes; Milligan: yes; Roddy: yes; Thurber: no; VanMatre: yes; Wagner: no. Motion passed. Resolution No. 82-25 is hereby adopted.",
+        "moved_by": "Councilmember Jenny VanMatre",
+        "seconded_by": "Councilmember Scott Roddy",
+        "result": "passed 5-2",
+        "roll_call": [
+          {
+            "member": "Mike Barhorst",
+            "role": "Mayor",
+            "vote": "yes"
+          },
+          {
+            "member": "Cory Huelskamp",
+            "role": "Councilmember",
+            "vote": "yes"
+          },
+          {
+            "member": "Mardie Milligan",
+            "role": "Councilmember",
+            "vote": "yes"
+          },
+          {
+            "member": "Scott Roddy",
+            "role": "Councilmember",
+            "vote": "yes"
+          },
+          {
+            "member": "Darryl Thurber",
+            "role": "Councilmember",
+            "vote": "no"
+          },
+          {
+            "member": "Jenny VanMatre",
+            "role": "Councilmember",
+            "vote": "yes"
+          },
+          {
+            "member": "Steve Wagner",
+            "role": "Vice Mayor",
+            "vote": "no"
+          }
+        ],
+        "dissent_note": "⚠️ THE ONLY DIVIDED VOTE IN THE CHAIN. Five of the six resolutions behind this campus passed unanimously; this one — the income-tax-sharing agreement with Sidney City Schools and Upper Valley Career Center — drew NO votes from Councilmember Thurber and Vice Mayor Wagner. The minutes journal the seven names for this item and only this item, which is why the divided vote is legible at all: the same clerk records an uncontested item as \"passed unanimously\" with no names. The minutes record no stated reason for either NO vote. [open]",
+        "name_transcription_note": "The OCR of the attendance roll renders \"Darryl Thurber\" as \"Darryl! Thurber\" and the City Planner as both \"Hursyz\" and \"Hurysz\" on the same page. Names are given here in the spelling the roll-call line itself uses; the artifacts are recorded, not silently normalised.",
+        "source": {
+          "file": "data/documents/sidney/council/City Council Minutes October 27, 2025.pdf",
+          "content_verified": "ocr"
+        },
         "signatories": null
       },
       "what_this_instrument_does_not_establish": [
@@ -898,6 +1158,64 @@
       "verified": true
     },
     "source_doc_rel": "sidney/council/82-25 - Authorizing Income Tax Sharing Agreement - Sidney City Schools and Upper Valley - Amazon Data Services_202601141345054883.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/council/2026-02-23-res-14-26-consolidation-plat.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Sidney Resolution No. 14-26 — accepting the plat titled \"Consolidation & Right-Of-Way Dedication Plat of Survey\", a replat of three parcels into Lot No. 7647, and accepting the dedication of the easements and rights-of-way on it, passed 2026-02-23",
+    "confidence": "high",
+    "warnings": [
+      "Clean native text layer; the journal form's page rules bleed into the extraction as runs of \"=\" and \"_\", and \"determined\"/\"committees\" lose letters to the embedded font (\"detennined\", \"c01mnittees\"). Quoted as extracted. No figure or identifier is affected."
+    ],
+    "fields": {
+      "instrument": "City of Sidney Resolution No. 14-26 — accepting the plat titled \"Consolidation & Right-Of-Way Dedication Plat of Survey\", a replat of three parcels into Lot No. 7647, and accepting the dedication of the easements and rights-of-way on it, passed 2026-02-23",
+      "resolution_no": "14-26",
+      "body": "Council of the City of Sidney, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "plat_acceptance",
+      "adopted": "2026-02-23",
+      "journal_pages": [
+        "0059",
+        "0060"
+      ],
+      "title_verbatim": "A RESOLUTION ACCEPTING THE PLAT TITLED \"CONSOLIDATION & RIGHT-OF-WAY DEDICATION PLAT OF SURVEY\"",
+      "outcome": "approved",
+      "operative_text_verbatim": "SECTION 1. That the Plat titled \"Consolidation & Right-Of-Way Dedication Plat of Survey\", being a replat of Parcel Nos. 01-26-03-126-001; 01-26-03-201-001; and 01-26-03-226-001 to create two (1) newly-configured lot being Lot No. 7647, be and the same is hereby approved and accepted, and the dedication to public use of the easements and rights-of-way thereon be, and the same is hereby accepted and confirmed.",
+      "transcription_note": "\"to create two (1) newly-configured lot\" is a defect in the City's own text — the numeral and the word disagree, and the noun is singular. Quoted as extracted rather than repaired; the lot number is singular and unambiguous.",
+      "new_lot": "7647",
+      "constituent_parcels": [
+        "01-26-03-126-001",
+        "01-26-03-201-001",
+        "01-26-03-226-001"
+      ],
+      "parcel_id_spelling_note": "⚠️ TWO CITY SPELLINGS OF THE SAME IDS. The 2025-10-27 minutes list the CRA parcels as 01-2603-126.001, 01-2603-201.001, 01-2603-251.001, 01-2603-251.002 and 01-2603-226.001; this resolution writes three of them as 01-26-03-126-001, 01-26-03-201-001 and 01-26-03-226-001. Both are preserved as written. [inference] The two forms differ only in punctuation and denote the same parcels. ⚠️ THE PLAT COVERS THREE OF THE FIVE — the two `-251` parcels are not in it. Whether they were replatted separately, were already configured, or were excluded is [open].",
+      "vote": {
+        "roll_call_recorded": false,
+        "outcome_recorded": false,
+        "note": "[open] The minutes of 2026-02-23 were not pulled — this resolution sits outside the six votes #1998 named. They are retrievable on the same portal (Minutes → 2026 → \"City Council Minutes February 23, 2026\", document id 500389bc-431d-f111-a48c-000c29a59557)."
+      },
+      "what_this_instrument_does_not_establish": [
+        "IT IS NOT A CONVEYANCE. No title moves, no grantor or grantee is named, no consideration is stated. It does not touch the `assembly` gap and must never be cited as if it did.",
+        "THE PLAT ITSELF IS NOT IN THE CORPUS. This resolution ACCEPTS a plat; the surveyed document — its bearings, its dedicated right-of-way widths, its recording reference — is a separate instrument, recorded with the Shelby County Recorder, and is [open]. The register cites it as Plat V37 P50 from a secondary source.",
+        "IT NAMES NO COMPANY. \"Amazon\" appears in the City's FILENAME for this document, not in the resolution's text. The join to the campus is through the parcel numbers, which the 2025-10-27 minutes tie to Amazon Data Services."
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/council/2026-02-23-res-14-26-consolidation-plat.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "sidney/council/14-26 - Accepting a Plat - Consolidation and Right-of-Way Dedication Plat of Survey - Amazon.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": false
   },
@@ -935,7 +1253,16 @@
       },
       "vote": {
         "roll_call_recorded": false,
-        "note": "[open] Enacting clause, passage date and Attest line only. Roll call is in the 2026-04-27 Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.",
+        "outcome_recorded": true,
+        "verbatim": "Councilmember Huelskamp made a motion to adopt Resolution No. 26-26 as presented; seconded by Councilmember Orsborne. Upon a roll call vote, the motion passed unanimously. Resolution No. 26-26 is hereby adopted.",
+        "moved_by": "Councilmember Cory Huelskamp",
+        "seconded_by": "Councilmember Alysha Orsborne",
+        "result": "passed unanimously",
+        "public_comment": "[verified] \"A number of people present raised questions and concerns about the clauses contained in the contract for pretreatment quality standards, reporting and monitoring requirements, tap-in costs and meter connection monitoring capabilities, billing for the actual usage and the capacity reserve, processes for fines related to not complying with the contract or meeting pretreatment requirements and the city's existing infrastructure.\" The minutes name none of the speakers and record no count. [open]",
+        "source": {
+          "file": "data/documents/sidney/council/City Council Minutes April 27, 2026.pdf",
+          "content_verified": "text-layer"
+        },
         "signatories": null
       },
       "what_this_instrument_does_not_establish": [
@@ -1010,7 +1337,16 @@
       },
       "vote": {
         "roll_call_recorded": false,
-        "note": "[open] Enacting clause, passage date and Attest line only. Roll call is in the 2026-04-27 Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.",
+        "outcome_recorded": true,
+        "verbatim": "Councilmember Orsborne made a motion to adopt Resolution No. 27-26 as presented; seconded by Vice Mayor Wagner. Upon a roll call vote, the motion passed unanimously. Resolution No. 27-26 is hereby adopted.",
+        "moved_by": "Councilmember Alysha Orsborne",
+        "seconded_by": "Vice Mayor Steve Wagner",
+        "result": "passed unanimously",
+        "public_comment": "[verified] \"Concerns were raised by those from the public speaking about potential noise and vibration issues, power supply implications as well as potential environmental and health impacts along with the city's present financial condition.\" The minutes name none of the speakers and record no count. [open]",
+        "source": {
+          "file": "data/documents/sidney/council/City Council Minutes April 27, 2026.pdf",
+          "content_verified": "text-layer"
+        },
         "signatories": null
       },
       "what_this_instrument_does_not_establish": [

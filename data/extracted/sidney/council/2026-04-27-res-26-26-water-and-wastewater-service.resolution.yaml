@@ -59,11 +59,33 @@ resolution:
       5-14-2026 was the filename and 2026-05-15 the signature block).
 
   vote:
+    # ANSWERED at #1998. The lead `COUNCIL-MINUTES` said the roll call "lives in the Council MINUTES
+    # … which are not in the corpus". They are now — pulled from the City's Documents-On-Demand
+    # portal, the route this corpus had recorded as blocked (it is an HTTP/2 fingerprint block; the
+    # identical request succeeds over HTTP/1.1). The resolution page still journals no vote, which
+    # was always the FORM of the instrument and not a gap in the read; the minutes are where a
+    # Sidney vote lives, and that is now demonstrated rather than assumed.
     roll_call_recorded: false
-    note: >-
-      [open] Enacting clause, passage date and Attest line only. Roll call is in the 2026-04-27
-      Council minutes, not in the corpus — lead `COUNCIL-MINUTES`, ask in #1998.
-    signatories: null                         # [open] — ink signatures
+    outcome_recorded: true
+    verbatim: >-
+      Councilmember Huelskamp made a motion to adopt Resolution No. 26-26 as presented;
+      seconded by Councilmember Orsborne. Upon a roll call vote, the motion passed unanimously.
+      Resolution No. 26-26 is hereby adopted.
+    moved_by: Councilmember Cory Huelskamp
+    seconded_by: Councilmember Alysha Orsborne
+    result: passed unanimously
+    public_comment: >-
+      [verified] "A number of people present raised questions and concerns about the clauses
+      contained in the contract for pretreatment quality standards, reporting and monitoring
+      requirements, tap-in costs and meter connection monitoring capabilities, billing for the
+      actual usage and the capacity reserve, processes for fines related to not complying with the
+      contract or meeting pretreatment requirements and the city's existing infrastructure." The
+      minutes name none of the speakers and record no count. [open]
+    source:
+      file: data/documents/sidney/council/City Council Minutes April 27, 2026.pdf
+      content_verified: text-layer
+    signatories: null                         # [open] — the Mayor/Clerk signatures are ink on the
+                                              # scan; the text layer carries only the "Attest:" label.
 
   what_this_instrument_does_not_establish:
     - >-

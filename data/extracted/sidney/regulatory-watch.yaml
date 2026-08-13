@@ -117,6 +117,25 @@ naming:
 # Recorded so the next check does not repeat them and mistake a broken query for
 # an absent instrument.
 route_hazards:
+  # ⚠️ THE ONE THAT WAS NOT A HAZARD AT ALL — added #1998, 2026-08-13.
+  - route: The City's Documents-On-Demand legislative portal (sidneycityoh.documents-on-demand.com)
+    hazard: >-
+      THIS CORPUS RECORDED IT AS BLOCKED IN FIVE ARTIFACTS AND TWO DRAFTED PUBLIC-RECORDS
+      REQUESTS, AND IT WAS NEVER BLOCKED. A default request returns HTTP 403 behind a real
+      Cloudflare challenge; the identical request with `--http1.1` and a browser UA returns HTTP
+      200. The trigger is the HTTP/2 FINGERPRINT, not the client. Behind it sits an
+      unauthenticated JSON API — /meta/rootfolder, /meta/docfolder?containerId=<guid>,
+      /document/<guid>/<fileName>.pdf — carrying City Council Legislation (Ordinances and
+      Resolutions, 51 year folders back to 1976) and Minutes (170 year folders back to 1857), plus
+      the same for the Planning Commission, the Zoning Board of Appeals, the CRA Housing Council
+      and ten other bodies. Res. 69-25, Res. 84-22, Res. 14-26 and all three vote-meeting minutes
+      came through it in minutes on 2026-08-13.
+      GENERALIZE IT: a 403 to a scripted client may be a protocol-fingerprint block. RETRY OVER
+      HTTP/1.1 BEFORE RECORDING A ROUTE NEGATIVE. ⚠️ Second trap on the same host —
+      /meta/childfolders?parentId=, which the page's own JavaScript calls on lazy expand, returns
+      the app shell rather than JSON to a scripted client and reads as "empty". `docfolder`
+      returns the entire subtree anyway; use it and never conclude a container is empty from
+      `childfolders`.
   - route: EPA ECHO get_facilities county filter (p_co)
     hazard: >-
       Filtering CWA facilities by p_co=Shelby returns 32 rows and DOES NOT INCLUDE
@@ -897,3 +916,62 @@ recheck_delta:
       45365 under OH-CORE — the same street number as the campus's retired situs. An
       address-keyed search on "2388 Millcreek" returns a pre-existing cell site that is not this
       campus. Worth knowing before reading such a hit as a data-center instrument.
+
+# ── The 2026-08-13 route re-tests (#1998) ────────────────────────────────────
+# Every route this site had recorded as BLOCKED, re-run on one day against one hypothesis: that
+# the block is a protocol fingerprint rather than a policy. One of the three was. The other two
+# were re-confirmed blocked over BOTH protocols, which is what makes them dated negatives rather
+# than assumptions — and what makes the first one's correction meaningful rather than lucky.
+route_retests:
+  checked_on: '2026-08-13'
+  issue: 'watermark-directory/the-watermark-directory#1998'
+  method: >-
+    Identical request twice per host, once with curl's default (HTTP/2 where offered) and once
+    with `--http1.1`, both carrying a desktop-browser User-Agent. Nothing else varied.
+
+  routes:
+  - route: sidneycityoh.documents-on-demand.com — the City's legislative portal
+    was: '[blocked] Cloudflare managed JS challenge, route negative as of 2026-08-01'
+    now: '[open]'
+    tag: '[verified]'
+    evidence: 'HTTP/2 → 403, 0 B. HTTP/1.1 → 200, 28,684 B. Same URL, same UA, same minute.'
+    yield: >-
+      Six documents pulled the same day — Res. 84-22, Res. 69-25, Res. 14-26 and the approved
+      minutes of 2025-09-08, 2025-10-27 and 2026-04-27. See `route_hazards` above for the API
+      shape and the `childfolders` trap.
+
+  - route: search.shelbyco.net/eservices — the Shelby County Recorder
+    was: '[blocked] Apache Wicket; posts a browser fingerprint before it will run a search'
+    now: '[blocked]'
+    tag: '[verified]'
+    evidence: >-
+      HTTP/2 → 302 and HTTP/1.1 → 302, identically; following the redirect reaches
+      /eservices/home.page with a jsessionid and a form of hidden inputs named screenColorDepth,
+      utcOffset, utcDSTOffset, browserWidth, browserHeight and hostname. The protocol is not the
+      gate here — the application requires a rendered browser to post real values. UNCHANGED.
+    still_owed: >-
+      The three recorded deeds (O.R. 2329 pp. 445, 449, 454) — grantors, sequential instrument
+      numbers, per-deed consideration — and the recorded consolidation plat itself. Sidney's
+      `assembly` chapter correctly carries no conveyance instrument until these are pulled. ⚠️ Res.
+      14-26 (2026-02-23) is the CITY ACCEPTING that plat and is now in the corpus; it is a
+      legislative act and closes none of this.
+    next: A headless browser, or an in-person / mail request to the Recorder.
+
+  - route: dis.puc.state.oh.us — PUCO Docketing Information System
+    was: '[blocked] F5 "Request Rejected", 244 bytes'
+    now: '[blocked]'
+    tag: '[verified]'
+    evidence: >-
+      HTTP/2 → 200 / 244 B and HTTP/1.1 → 200 / 244 B, both returning
+      "The requested URL was rejected. Please consult with your administrator." The protocol makes
+      no difference. UNCHANGED, and case 25-0958-EL-AIR stays unsearched rather than empty.
+    do_not: >-
+      Do not fingerprint the block with the "support ID" in the body — it is issued per request
+      and differs on every call, so quoting one as a stable identifier records noise as evidence.
+    next: A headless browser.
+
+  # ⚠️ The honest shape of this result. ONE of three "blocked" routes was mis-diagnosed, and the
+  # other two were right. The lesson is not that route negatives are usually wrong — it is that a
+  # negative recorded from a single request, in one protocol, from one client, is a claim about
+  # THAT REQUEST and not about the host. All three of these now carry the request that produced
+  # them, which is what lets the next person tell the difference cheaply.

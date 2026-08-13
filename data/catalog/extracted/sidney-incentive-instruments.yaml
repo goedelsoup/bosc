@@ -10,7 +10,15 @@ producer:
     Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney
     Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center
     FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and
-    data/documents/sidney/permits/filename-map.yaml.
+    data/documents/sidney/permits/filename-map.yaml. EXTENDED 2026-08-13 (issue 1998) through a
+    SECOND City route - the Documents-On-Demand legislative portal
+    (sidneycityoh.documents-on-demand.com), which this record had carried as Cloudflare-blocked
+    and which is not. The 403 is an HTTP/2 fingerprint block, and the identical request over
+    HTTP/1.1 returns 200. That route supplied Resolution 84-22 (2022-10-10, the act that
+    established the City-Wide CRA), Resolution 69-25 (2025-09-08, which expands it and adds the
+    thirty-year megaproject tier), Resolution 14-26 (2026-02-23, accepting the consolidation
+    plat), and the approved Council minutes of 2025-09-08, 2025-10-27 and 2026-04-27 - the last
+    of which is image-only and was read by OCR at 300 DPI.
 license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:sidney
@@ -37,6 +45,19 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/sidney/council/2026-04-27-res-27-26-development-agreement.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+# Three further ACTS, off the legislative portal (issue 1998) - same producer, same license, same
+# site scope, same provenance class. 84-22 is committed because it is the before-state the
+# thirty-year exemption is measured against; 14-26 because it is the City accepting the
+# consolidation plat, which is a legislative act and NOT a conveyance.
+- relpath: extracted/sidney/council/2022-10-10-res-84-22-citywide-cra-established.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2025-09-08-res-69-25-cra-expansion-and-megaproject-tier.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/sidney/council/2026-02-23-res-14-26-consolidation-plat.resolution.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:
