@@ -1,0 +1,83 @@
+meta:
+  subject: >
+    Canonical filename map for sidney/ordinances/ — the City of Sidney LAND-USE ordinances behind
+    the AWS "Sidney Data Center Campus": the annexation that brought the 243.092 acres into the
+    City, the ordinance that zoned it, and the official zoning map whose coverage window explains
+    why the City's own GIS could not answer what the campus is zoned (#1998 tail).
+  note: >-
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their as-received
+    names — here the Documents-On-Demand portal's own `fileName` values, which carry no upload
+    suffix. `content_verified` records HOW the date below was established from the document's own
+    bytes; every date here is read from a machine-printed "Passed this …" line in the RECORD OF
+    ORDINANCES journal page, never from a filename.
+  retrieved: "2026-08-13"
+  source_base_url: "https://sidneycityoh.documents-on-demand.com/document/"
+  route: >-
+    The City's Documents-On-Demand portal over HTTP/1.1 (the identical request returns 403 over
+    HTTP/2 — see the second-route block in ../council/filename-map.yaml). Container: City Council >
+    Legislation > Ordinances, guid a69a9b5a-0bff-45c3-ba90-08d1ffd71296, 51 year folders back to
+    1976. Enumerate with /meta/docfolder?containerId=, which returns the whole subtree in one
+    request; never with /meta/childfolders, which returns the app shell to a scripted client.
+  custody: >-
+    These are the City's published copies. Each carries a machine-printed passage line and an
+    "Attest: I, Kari Egbert, Clerk of Council" block; the Mayor/Clerk signatures themselves are ink
+    on the scan and are NOT read. No certified copy is asserted.
+
+documents:
+  - filename: A-3226 - Zoning 243.092 IIM - Joslin-Drees Annexation.pdf
+    portal_document_id: "c4b4dd80-7dd8-4cb8-b9e1-0dcc8896757e"
+    canonical: sidney-ord-a-3226-zoning-243-092-iim-2025-07-28.pdf
+    type: council-ordinance
+    date: "2025-07-28"
+    content_verified: text-layer   # p.2: "Passed this 28th day of July, 2025."
+    pages: 3
+    sha256: "27ba8230637e88d3b3f5b2939fe9a66d0f2dc5c570fb4c9e0f0dcebce03d5f72"
+    bytes: 1098310
+    carries:
+      - "THE INSTRUMENT THAT CLOSES THE CORPUS'S ZONING [open] — §1: 'be, and the same hereby is, zoned IIM - Industry / Innovation / Manufacturing Zone.' §2 amends the Zoning Map to match."
+      - "The five predecessor parcels named with the persons associated with each — Ellen D. Joslin (Trustee and Successor Trustee), William W. Joslin and Ann B. Joslin, and Mary Ellen Drees on three tracts. ⚠️ The ordinance uses NO role word for any of them (not owner, not petitioner, not grantor) while using 'owned by' for the abutters in the same sentence."
+      - "Abutters with parcel numbers and acreages the corpus did not have: John A. Clark Jr., 6.48 ac, 02-26-03-101-001; Bridget Douglas, 1.49 ac, 02-26-03-102-001 (text layer renders the second as `02-2&03-102-001`)."
+      - "A second, independent campus survey — Farnsworth Group, David R. Barnhart P.S. #7646, closing at 243.092 acres. ⚠️ #7646 is a surveyor's registration number, NOT Lot 7646."
+      - "The north line called to 'the south right-of-way line of the New York Central Lines, LLC railroad' — where Res. 27-26 Exhibit A calls the same line CSX Transportation (D.V. 381 p. 290)."
+    notes: >-
+      Read from the native text layer. Journal-form artifacts are preserved where quoted (`24 3. 092`
+      for the acreage in §2, `.IXIl` for a parcel suffix in §1). The ordinance carries NO WHEREAS
+      clauses and does not mention the Planning Commission — which matters, because that Commission
+      had declined to recommend this zoning 0-4 six weeks earlier (see ../planning-commission/).
+
+  - filename: A-3225 - Annexing 243.092 Acres - Joslin-Drees.pdf
+    portal_document_id: "3cf49b5a-e57b-4742-bf49-908565335e3e"
+    canonical: sidney-ord-a-3225-annexation-243-092-2025-07-28.pdf
+    type: council-ordinance
+    date: "2025-07-28"
+    content_verified: text-layer   # "Passed this 28th day of July 2025 ."
+    pages: 3
+    sha256: "9729514f50e1d5735a2e4ce3fa625904cb098cae73dad9df3b91da468a769c3d"
+    bytes: 1125255
+    carries:
+      - "The annexation the zoning attaches to — 243.092 acres 'Situated in the north half of Section 3, Township 7 North, Range 6 East Clinton Township, Shelby County, Ohio, being the following 5 parcels of land'."
+      - "The same five-parcel identity list as A-3226, with the same absence of any role word."
+      - "⚠️ IT CITES NO R.C. 709 PROVISION AT ALL. The only Revised Code citation in the whole instrument is 121.22 (open meetings). Its stated authority is 'the Annexation Agreement entered between the City of Sidney and Board of Township Trustees of Clinton Township … on or about March 24, 2025' — an instrument NOT in this corpus. The expedited annexation type stays [open]."
+    notes: >-
+      Read from the native text layer. The campus lies in the NORTH HALF of Section 3; the separate
+      53-acre Shelby County Commissioners tract annexed the same year (A-3211/A-3227) is in the
+      SOUTHEAST QUARTER of the same section, and is not the campus.
+
+  - filename: A-3210 - New Zoning Map, Sidney, Ohio.pdf
+    portal_document_id: "e0e92b8b-b4f3-ef11-a43c-000c29a59557"
+    canonical: sidney-ord-a-3210-zoning-map-2025-02-24.pdf
+    type: council-ordinance
+    date: "2025-02-24"
+    content_verified: text-layer   # "Passed this 24th day of February 2025"
+    pages: 3
+    sha256: "c467f6cfdbe9aef122624127855427a96aa74384e3535717d65a45de2088e7a6"
+    bytes: 2139186
+    carries:
+      - "THE CONCRETE EXPLANATION OF THE GIS CURRENCY HOLE — its own recital: 'the proposed \"Zoning Map, Sidney Ohio\" incorporates all the rezoning, annexation, or detachment ordinances from July 25, 2022, to January 13, 2025.'"
+      - "That window closes FIVE MONTHS AND FIFTEEN DAYS before A-3226 zoned the campus (2025-07-28), so the official map in force through most of 2025-26 could not show it. The campus was never unzoned; the map was never current."
+      - "Page 3 is the map sheet itself (1 inch = 1,383 feet), with IIM in the legend."
+    notes: >-
+      Read from the native text layer for the recitals and the passage clause; the map sheet is a
+      raster and NO visual claim is made here about the campus polygon. The superseding map is
+      A-3270 (passed 2026-07-27, effective 2026-08-10), whose window does contain A-3226 — not
+      pulled in this pass.
