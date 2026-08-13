@@ -1061,15 +1061,29 @@ def _compose_power(ctx: _Ctx, facility: dict[str, Any] | None) -> _Composition:
     return _Composition(stats=tuple(stats), gaps=gaps, caveats=tuple(caveats))
 
 
-def _compose_fiscal(_ctx: _Ctx, facility: dict[str, Any] | None) -> _Composition:
+def _compose_fiscal(ctx: _Ctx, facility: dict[str, Any] | None) -> _Composition:
+    """The disclosed-investment caveat (`study.ts` `COMPOSERS.fiscal`).
+
+    #1993 made the chapter's DERIVE record-aware and left this composer asserting the same
+    absence one line further down: "the abatement agreement that would price the trade is not on
+    the record", printed at every site whose register #1993 publishes. Half a fix is how a
+    contradiction survives a correction — so the caveat is gated on the same groups (#2000).
+    """
     caveats: list[str] = []
     investment = facility.get("disclosed_investment_usd") if facility is not None else None
     if investment is not None:
-        caveats.append(
-            f"Disclosed investment: ${_js_to_fixed(investment / 1e9, 1)}B — the operator's own "
-            "announcement, not an instrument; the abatement agreement that would price the "
-            "trade is not on the record."
-        )
+        disclosed = f"Disclosed investment: ${_js_to_fixed(investment / 1e9, 1)}B"
+        if _record_group_rows(ctx, _FISCAL_GROUPS) > 0:
+            caveats.append(
+                f"{disclosed} — the operator's own figure, carried into the incentive "
+                "instruments as a recital. Those instruments ARE on the record; what is not is "
+                "the accounting that would price what the trade cost the taxing bodies."
+            )
+        else:
+            caveats.append(
+                f"{disclosed} — the operator's own announcement, not an instrument; the "
+                "abatement agreement that would price the trade is not on the record."
+            )
     return _Composition(caveats=tuple(caveats))
 
 
