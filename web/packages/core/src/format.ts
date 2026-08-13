@@ -9,9 +9,27 @@ export function round(n: number, decimals = 0): number {
 }
 
 /** A dilution / ratio multiple: `"∞×"` when non-finite, an integer at ≥10×, else one decimal. */
+export function statDecimals(value: number | null | undefined): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) return 1;
+  if (value === 0 || Math.round(Math.abs(value) * 10) / 10 !== 0) return 1;
+  return 1 - Math.floor(Math.log10(Math.abs(value)));
+}
+
+/**
+ * A ratio multiple: integer at ≥10, else significant decimals.
+ *
+ * Shares `statDecimals`'s vanish-guard, for the same reason and one the ratio case needs even
+ * more (#1265). A fixed single decimal renders every dilution below 0.05 as **"0.0×"** — and a
+ * dilution ratio is precisely where the significant digits all sit to the right of the point.
+ * Lima's tightest chronic dilution is 0.006987 and Findlay's is 0.009048; both published as
+ * "0.0×", which reads as *nothing* rather than as the two most effluent-dominated reaches on
+ * the network. `watermark.hydrology.basin._ratio_text` had already learned this on the artifact
+ * side ("two decimals silently flattens the whole violation band"); this is the display side.
+ */
 export function fmtMult(m: number): string {
   if (!Number.isFinite(m)) return "∞×";
-  return `${m >= 10 ? Math.round(m) : m.toFixed(1)}×`;
+  if (m >= 10) return `${Math.round(m)}×`;
+  return `${m.toFixed(statDecimals(m))}×`;
 }
 
 /** Megawatts, rounded to whole MW. */

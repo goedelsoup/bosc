@@ -166,4 +166,12 @@ Regenerate: `watermark --site findlay parcels --parcel 610000926490`
 | --- | --- | --- |
 | `reference/findlay/civic-and-flood-places.geojson` | application/geo+json | no |
 
+### `findlay-watch-items` — Findlay site watch-items (WPCC infrastructure geometry)
+
+Source: Derived from Ohio EPA "Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024" (permit 2PD00008, renewal suffix UD / application OH0025135), structured read at data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml; outfall coordinates (41.049722, -83.667778) from the modification-suffix VD public notice's discharge-location table · License: Public record (Ohio R.C. 149.43 / U.S. Government work) · Access: public · Site scope: site:findlay · Refresh: static
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/findlay/watch-items.geojson` | application/geo+json | no |
+
 <!-- catalog:end -->

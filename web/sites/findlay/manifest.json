@@ -2,9 +2,9 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-13T16:05:15+00:00",
+  "generated_at": "2026-08-13T17:23:34+00:00",
   "feed_count": 35,
-  "row_total": 805,
+  "row_total": 811,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -205,7 +205,7 @@
       "media_type": "application/json",
       "schema": "schemas/hydrology-scenarios.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 1
     },
     {
       "name": "air-scenarios",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 67
+      "count": 68
     },
     {
       "name": "geo/campus",
@@ -237,7 +237,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 94
+      "count": 98
     },
     {
       "name": "open-questions",

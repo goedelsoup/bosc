@@ -77,8 +77,11 @@ def test_no_collision_across_the_committed_corpus() -> None:
     rels = _lima_rels()
     # 3247 → 3250 (#1966): refreshing the lagging committed Lima bundle surfaced three `odd/`
     # documents it predated — the DeWine tax-exemption-pause release and two Ohio Tax Credit
-    # Authority minutes. Reviewed: all 3250 handles are distinct.
-    assert len(rels) == 3250, "a corpus change belongs in review, not a silent collision"
+    # Authority minutes.
+    # 3250 → 3251 (#1265): the same lag, again. Re-exporting Lima for the `fmtMult` fix surfaced
+    # `legal/ohio-revised-code/122.17-10-3-2023.pdf`, the job-creation-tax-credit statute, which
+    # the committed bundle predated. Reviewed: all 3251 handles are distinct.
+    assert len(rels) == 3251, "a corpus change belongs in review, not a silent collision"
     assert len({document_id(rel) for rel in rels}) == len(rels)
 
 

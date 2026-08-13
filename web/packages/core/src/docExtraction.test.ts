@@ -142,9 +142,9 @@ describe("the join, against the committed Lima bundle", () => {
 
   // 52 -> 68 at contract 2.1.0 (#1993). The classifier recognized 137 of 263 committed
   // extractions and missed 126; eight new genres publish 32 of them, and Lima holds most.
-  it("extracts 68 of 3,250 documents — 2.1% of the corpus", () => {
+  it("extracts 68 of 3,251 documents — 2.1% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
-    expect(entries.length).toBe(3250);
+    expect(entries.length).toBe(3251);
     expect(countExtracted(entries, index)).toBe(68);
   });
 
@@ -161,8 +161,8 @@ describe("the join, against the committed Lima bundle", () => {
     expect(counts.plans).toEqual([2, 4]);
     // The two productions that are 84% of the catalog — held, and essentially unread. `legal`
     // rose 8 -> 15 at #1993 (the CRA agreement, the NDA, the treatment agreement, the school-
-    // district notice letters, both statewide bills), which is 0.9% of 1,732.
-    expect(counts.legal).toEqual([15, 1732]);
+    // district notice letters, both statewide bills), which is 0.9% of 1,733.
+    expect(counts.legal).toEqual([15, 1733]);
     expect(counts.commissioners).toEqual([0, 995]);
   });
 

@@ -71,20 +71,33 @@
     "model": {
       "id": "water-supply",
       "facilityKey": "findlay-megawatt-hub-mwhub-01",
-      "status": "gap",
+      "status": "partial",
       "statusReasons": [
-        "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here."
+        "no campus water draw is on the record — neither a disclosed cooling method nor a metered or contracted quantity — so no buildout is modelled here; what stands is the receiving water's own existing burden"
       ],
-      "stats": [],
+      "stats": [
+        {
+          "label": "Receiving low flow (7Q10)",
+          "value": "0.2",
+          "unit": "cfs",
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "Blanchard River",
+          "source": "document",
+          "warn": null
+        }
+      ],
       "gaps": [
         {
-          "wouldScreen": "how much water this project consumes at buildout — monthly, against the receiving water's cited design low flows.",
-          "missingRecord": "a disclosed cooling method and a metered or contracted water quantity; neither is on the record here.",
-          "producer": "the water utility's contract, a wastewater permit application, or the operator's cooling-plant spec",
+          "wouldScreen": "a single consumptive-draw figure against the receiving water's low-flow floor.",
+          "missingRecord": "any record of how the facility rejects heat — a water contract, a wastewater permit, or a cooling-plant spec; until one surfaces, the water figures stay a bracketed range across candidate archetypes.",
+          "producer": "the water utility, the wastewater permit file, or the operator's own engineering disclosure",
           "leadIds": null
         }
       ],
-      "caveats": []
+      "caveats": [
+        "The draw is set against the receiving water's cited design low flow as a worst-case, basin-scale bound — a screening comparison, not a withdrawal claim."
+      ]
     }
   },
   {
@@ -94,15 +107,22 @@
     "model": {
       "id": "discharge",
       "facilityKey": "findlay-megawatt-hub-mwhub-01",
-      "status": "partial",
-      "statusReasons": [
-        "baseline context only — the project-side record has not been produced"
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Tightest chronic dilution",
+          "value": "0.0090×",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "Findlay WPCC → Blanchard River (Findlay WPCC outfall, RM 56.42)",
+          "source": null,
+          "warn": true
+        }
       ],
-      "stats": [],
       "gaps": [],
-      "caveats": [
-        "Only the receiving water's existing burden is on the record here — the project-side discharge screen renders the day a characterization is filed."
-      ]
+      "caveats": []
     }
   },
   {
@@ -323,7 +343,7 @@
       "facilityKey": "findlay-megawatt-hub-mwhub-01",
       "status": "partial",
       "statusReasons": [
-        "synthesizes the screened chapters — 2 on the record, 1 partial, 5 gap"
+        "synthesizes the screened chapters — 3 on the record, 1 partial, 4 gap"
       ],
       "stats": [],
       "gaps": [],

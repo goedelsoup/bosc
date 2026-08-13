@@ -52,7 +52,7 @@ import type {
   RecordItem,
   ScenarioResult,
 } from "./feeds";
-import { fmtMult, fmtRanged, round } from "./format";
+import { fmtMult, fmtRanged, round, statDecimals } from "./format";
 import { buildDemandPressure, buildGridBackdrop } from "./gridBackdrop";
 import { coolingMethodUndisclosed, facilityLoadAvailable, facilityState } from "./readiness";
 import { siteBase } from "./routes";
@@ -350,6 +350,28 @@ function contractedDemand(slug: string): boolean {
   );
 }
 
+/**
+ * Does ANY scenario actually model a campus draw? The peer of
+ * `watermark.site.impact_study._modelled_campus_draw` (#1265).
+ *
+ * A scenario set is not required to contain a buildout. Where the cooling method AND the water
+ * quantity are both undisclosed, the Python `buildout_scenario` refuses to invent a demand, so
+ * the site commits the baseline alone (`watermark scenario --baseline-only`).
+ *
+ * That distinction has to reach the prose, because a baseline-only set otherwise reads as a
+ * *finding*: the worst-case draw across it is 0.0, which is not a worst case — it is the absence
+ * of a modelled one — and the undisclosed-method caveat would describe a bracketed range across
+ * archetypes that no row in the set contains.
+ */
+function modelledCampusDraw(slug: string): boolean {
+  if (feedRows(slug, "hydrology-scenarios") === 0) return false;
+  return loadFeed<ScenarioResult[]>("hydrology-scenarios", slug).some((r) => {
+    const model = r.cooling_model ?? r.scenario?.cooling_model;
+    if (model != null && model !== "off") return true;
+    return (r.scenario?.cooling_demand?.value ?? 0) > 0;
+  });
+}
+
 const NA_REASON = "No disclosed project — this chapter is computed the day one is on the record.";
 
 /** The facility-less predicate for project-dependent chapters. */
@@ -512,9 +534,15 @@ export const STUDY_CHAPTERS: readonly StudyChapterDef[] = [
           ? [
               "cooling method undisclosed — but the water quantity is CONTRACTED, so the figures are a stated account rather than a bracketed range; what stays open is how the heat is rejected, not how much water it takes",
             ]
-          : [
-              "cooling method undisclosed — the water figures are a bracketed range across candidate archetypes, not an estimate",
-            ]
+          : !modelledCampusDraw(slug)
+            ? // Neither disclosed method nor disclosed quantity, so nothing was modelled at
+              // all — say that, rather than describing a bracket the set does not contain.
+              [
+                "no campus water draw is on the record — neither a disclosed cooling method nor a metered or contracted quantity — so no buildout is modelled here; what stands is the receiving water's own existing burden",
+              ]
+            : [
+                "cooling method undisclosed — the water figures are a bracketed range across candidate archetypes, not an estimate",
+              ]
         : [],
     notApplicable: needsProject,
   },
@@ -950,11 +978,9 @@ const LOAD_INSTRUMENT_GAP: StudyGapFinding = {
  * different claim from *a very small one* and the wrong one (#1995). A value that would vanish
  * keeps two significant figures instead. Nothing at the old scale moves.
  */
-export function statDecimals(value: number | null | undefined): number {
-  if (typeof value !== "number" || !Number.isFinite(value)) return 1;
-  if (value === 0 || Math.round(Math.abs(value) * 10) / 10 !== 0) return 1;
-  return 1 - Math.floor(Math.log10(Math.abs(value)));
-}
+// Moved to ./format alongside `fmtMult`, which now shares the same vanish-guard (#1265).
+// Re-exported here so existing importers (and study.test.ts) keep their import path.
+export { statDecimals };
 
 function pvStat(
   label: string,
@@ -1043,11 +1069,17 @@ const COMPOSERS: Record<string, (slug: string, facility: FacilityItem | null) =>
       null,
     );
     if (worst) {
-      const s = pvStat("Worst-case consumptive draw", worst.consumptive_loss, "inference", {
-        basis: "modeled",
-        sub: `scenario: ${worst.scenario.name}`,
-      });
-      if (s) stats.push(s);
+      // Only a set that MODELS a campus draw has a worst case. On a baseline-only set the
+      // figure is 0.0, and publishing "worst-case consumptive draw: 0.0" would state as a
+      // screened result what is really an unscreened question (#1265). The receiving water's
+      // low flow below is cited and stands on its own either way.
+      if (modelledCampusDraw(slug)) {
+        const s = pvStat("Worst-case consumptive draw", worst.consumptive_loss, "inference", {
+          basis: "modeled",
+          sub: `scenario: ${worst.scenario.name}`,
+        });
+        if (s) stats.push(s);
+      }
       const floor = pvStat("Receiving low flow (7Q10)", worst.receiving_7q10, "verified", {
         basis: "grounded",
         sub: worst.receiving_water_name ?? undefined,

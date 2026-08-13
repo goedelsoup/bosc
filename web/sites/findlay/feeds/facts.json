@@ -374,6 +374,94 @@
     "feed": "economics-demand-pressure"
   },
   {
+    "subject": "hydrology-scenario:baseline",
+    "subject_label": "baseline — Blanchard River",
+    "subject_kind": "hydrology-scenario",
+    "predicate": "consumptive_fraction",
+    "value": 0.0,
+    "unit": "fraction",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "assumption",
+      "page": null,
+      "citation": "baseline",
+      "confidence": "low",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "hydrology-scenarios"
+  },
+  {
+    "subject": "hydrology-scenario:baseline",
+    "subject_label": "baseline — Blanchard River",
+    "subject_kind": "hydrology-scenario",
+    "predicate": "consumptive_loss",
+    "value": 0.0,
+    "unit": "cfs",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "0 MGD x 0 consumptive (scenario baseline)",
+      "confidence": "medium",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "hydrology-scenarios"
+  },
+  {
+    "subject": "hydrology-scenario:baseline",
+    "subject_label": "baseline — Blanchard River",
+    "subject_kind": "hydrology-scenario",
+    "predicate": "cooling_demand",
+    "value": 0.0,
+    "unit": "MGD",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "assumption",
+      "page": null,
+      "citation": "baseline: no campus cooling load",
+      "confidence": "low",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "hydrology-scenarios"
+  },
+  {
+    "subject": "hydrology-scenario:baseline",
+    "subject_label": "baseline — Blanchard River",
+    "subject_kind": "hydrology-scenario",
+    "predicate": "receiving_7q10",
+    "value": 0.21,
+    "unit": "cfs",
+    "status": "verified",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "document",
+      "page": null,
+      "citation": "Ohio EPA NPDES fact sheet 2PD00008*UD (Findlay WPCC, PN 205259, 2024-08-09), Table 12 'Instream Conditions and Discharger Flow', printed p. 28 — basis 'USGS Gages 04188300 and 04189000' (the 30Q10 rows cite 04188300 alone). Discharge location Blanchard River RM 56.42, HUC 04100008-03-04, Ohio EPA river code 04-160 (printed p. 7). Source: data/documents/oepa/findlay/2PD00008.fs.pdf; structured read data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml.",
+      "confidence": "high",
+      "asof": null,
+      "verified": true
+    },
+    "feed": "hydrology-scenarios"
+  },
+  {
     "subject": "platform:bosc",
     "subject_label": "Watermark / BOSC platform",
     "subject_kind": "platform",

@@ -76,9 +76,9 @@ describe("documentId — shape", () => {
 });
 
 describe("documentId — the corpus it has to address", () => {
-  it("mints a distinct handle for all 3,250 committed Lima rels", () => {
+  it("mints a distinct handle for all 3,251 committed Lima rels", () => {
     const rels = limaRels();
-    expect(rels.length).toBe(3250); // a corpus change should surface here, not as a silent collision
+    expect(rels.length).toBe(3251); // a corpus change should surface here, not as a silent collision
     const ids = new Set(rels.map(documentId));
     expect(ids.size).toBe(rels.length);
   });

@@ -154,7 +154,19 @@ def _wwtp_nodes(
         geom = feat.get("geometry") or {}
         fid = str(props.get("id", ""))
         title = str(props.get("title", ""))
-        is_wwtp = props.get("status") == "bosc_fm1_receiver" or title.endswith("WWTP")
+        # A plant the ROUTING TABLE declares is a plant, whatever it is called. The title suffix
+        # is a name sniff, and a treatment plant's name is a local naming convention, not a role:
+        # Findlay's is a Water Pollution Control CENTER (#1265), so `endswith("WWTP")` dropped a
+        # 15 MGD NPDES-permitted discharger silently — no node, no assimilative check, and no
+        # warning, because the loop `continue`s before any of the diagnostics below can fire.
+        # `routing.wwtp_receiving` is a curated declaration carrying a receiving water AND a
+        # document-cited design flow, so it is strictly stronger evidence of role than the name.
+        # (Same class of defect as #1946, where an NPDES node's kind was name-sniffed and only
+        # permittees named like sewage plants ever classified as facilities.)
+        declared_wwtp = routing is not None and fid in routing.wwtp_receiving
+        is_wwtp = (
+            declared_wwtp or props.get("status") == "bosc_fm1_receiver" or title.endswith("WWTP")
+        )
         if not is_wwtp or geom.get("type") != "Point":
             continue
 
