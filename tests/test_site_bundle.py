@@ -543,6 +543,13 @@ def _assert_fixture_tracks_export(fixture_dir: Path, exported_manifest: dict[str
     its own evidence in either direction the moment a source lands or dries up; pinning it for
     every contract-tested bundle is the guard, and it must not depend on the contract version
     also having moved.
+
+    **Per-feed row counts (#2025).** Everything above is contract- or readiness-shaped, which is
+    why Lima's bundle could ship a ``documents`` feed 1,612 rows behind its own corpus and pass:
+    the feed was present, the contract current, the readiness right. A count is the cheapest
+    signal that the corpus moved under a bundle, and it is free here — the export has already
+    run. It is deliberately not the whole story: a corrected figure inside a row moves no count
+    at all, which is what ``watermark export --check`` compares bytes for.
     """
     sample = json.loads((fixture_dir / "manifest.json").read_text(encoding="utf-8"))
 
@@ -563,6 +570,18 @@ def _assert_fixture_tracks_export(fixture_dir: Path, exported_manifest: dict[str
         "bundle (see web/sites/README.md); an ingest that moves a domain must re-export its site"
     )
 
+    exported_counts = {f["name"]: f["count"] for f in exported_manifest["feeds"]}
+    moved = {
+        f["name"]: (f["count"], exported_counts[f["name"]])
+        for f in sample["feeds"]
+        if exported_counts[f["name"]] != f["count"]
+    }
+    assert not moved, (
+        f"committed {fixture_dir.name} feed row counts drifted from a fresh export "
+        f"(committed, fresh): {moved} — the corpus moved under the bundle; re-export it with "
+        f"`watermark --site {fixture_dir.name} export --committed`"
+    )
+
     # The trimmed manifest must stay internally consistent and its feed files present.
     assert sample["feed_count"] == len(sample["feeds"])
     assert sample["row_total"] == sum(f["count"] for f in sample["feeds"])
@@ -570,22 +589,65 @@ def _assert_fixture_tracks_export(fixture_dir: Path, exported_manifest: dict[str
         assert (fixture_dir / f["path"]).is_file(), f"{fixture_dir.name} missing file {f['path']}"
 
 
-def test_frontend_sample_bundle_tracks_the_export_contract(bundle: Path) -> None:
-    """The committed Lima CI fixture tracks `watermark export` (the reference build)."""
-    _assert_fixture_tracks_export(FRONTEND_SAMPLE, _manifest(bundle))
+# The committed bundles this suite guards against a FRESH export. Every one of these sites is
+# already exported somewhere in the suite for another reason, so the guard is free — a slug added
+# here that isn't costs a ~13 s export per run. The remaining 9 registered sites are covered by
+# `watermark export --check --all`, which is the fleet's job and too slow for a per-commit gate.
+_EXPORT_GUARDED_SITES = (
+    "bowling-green",
+    "coshocton",
+    "findlay",
+    "fort-wayne",
+    "lima",
+    "ottawa",
+    "piketon",
+    "sandusky",
+    "sidney",
+    "springfield",
+    "toledo",
+    "troy-piqua",
+    "urbana",
+    "van-wert",
+    "west-union",
+    "wilmington",
+    "wpafb",
+)
 
 
-def test_fort_wayne_sample_bundle_tracks_the_export_contract(fort_wayne_bundle: Path) -> None:
-    """The committed Fort Wayne fixture tracks **`watermark --site fort-wayne export` (#741) — the
-    first non-Lima committed site bundle, so this also guards that a sibling fixture stays a real,
-    per-site-scoped slice of its own export."""
-    _assert_fixture_tracks_export(COMMITTED_BUNDLES / "fort-wayne", _manifest(fort_wayne_bundle))
+@pytest.mark.parametrize("slug", _EXPORT_GUARDED_SITES)
+def test_committed_bundle_tracks_its_export(slug: str, site_bundle: Callable[[str], Path]) -> None:
+    """Each committed ``web/sites/<slug>/`` bundle must still track ``watermark --site <slug>
+    export`` — the contract (#179), the readiness block (#1770), and now its per-feed row counts
+    (#2025).
+
+    This used to cover four sites — Lima (the reference build), Fort Wayne (#741, the first
+    non-Lima committed bundle, which is also what proves a sibling stays a real per-site-scoped
+    slice of its own export), Urbana (#797) and WPAFB (#1660). It covers seventeen because a
+    committed bundle going stale is not a rare event: it surfaced three times inside epic #1265
+    alone, always mid-PR and always about something else. The set is every site the suite already
+    exports, so the widening is free; the other nine are the CLI's job.
+    """
+    _assert_fixture_tracks_export(COMMITTED_BUNDLES / slug, _manifest(site_bundle(slug)))
 
 
-def test_urbana_sample_bundle_tracks_the_export_contract(urbana_bundle: Path) -> None:
-    """The committed Urbana fixture tracks `watermark --site urbana export` (#797) — the network's
-    third live site, promoted 2026-07-01."""
-    _assert_fixture_tracks_export(COMMITTED_BUNDLES / "urbana", _manifest(urbana_bundle))
+def test_every_selectable_site_is_export_guarded() -> None:
+    """A site that publishes pages must be in ``_EXPORT_GUARDED_SITES``.
+
+    The list is hand-maintained (it tracks what the suite happens to export), so the property that
+    actually matters — a *published* site's bundle never silently lags — has to be asserted rather
+    than assumed. Promoting a site to ``selectable`` without adding it here would leave the one
+    bundle readers actually see as the unguarded one.
+    """
+    from watermark.sites import _get_identity
+
+    selectable = {slug for slug, entry in _get_identity().items() if entry.selectable}
+    assert selectable <= set(_EXPORT_GUARDED_SITES), (
+        "selectable sites missing from the drift guard: "
+        f"{sorted(selectable - set(_EXPORT_GUARDED_SITES))}"
+    )
+    assert set(_EXPORT_GUARDED_SITES) <= set(SITES), (
+        f"unregistered slugs in the drift guard: {sorted(set(_EXPORT_GUARDED_SITES) - set(SITES))}"
+    )
 
 
 def test_wpafb_committed_bundle_is_fresh(wpafb_bundle: Path) -> None:
@@ -598,10 +660,12 @@ def test_wpafb_committed_bundle_is_fresh(wpafb_bundle: Path) -> None:
     ``tier: backdrop`` / ``record: absent`` with a 0-length ``records`` feed while the exporter
     (and ``test_wpafb_exports_at_case_tier``) already produced ``tier: case`` / ``record: live``.
     The readiness pin that caught it now lives in ``_assert_fixture_tracks_export`` itself, for
-    every contract-tested bundle (#1770); what stays here is the site-specific half — the
-    ``records`` feed pinned to the two extracted-tree paths, which shouldn't generalize."""
+    every contract-tested bundle (#1770), and that assertion runs for WPAFB via
+    ``test_committed_bundle_tracks_its_export`` (#2025). What stays here is the site-specific
+    half — the ``records`` feed pinned to the two extracted-tree paths, which shouldn't
+    generalize."""
     fixture = COMMITTED_BUNDLES / "wpafb"
-    _assert_fixture_tracks_export(fixture, _manifest(wpafb_bundle))
+    del wpafb_bundle  # the fresh-export comparison is the parametrized guard's job now
 
     # The record domain is live because the site owns exactly its two in-scope agency records;
     # pin the committed feed to those extracted-tree source paths so a dropped/renamed record

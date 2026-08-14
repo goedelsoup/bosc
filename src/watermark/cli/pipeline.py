@@ -817,6 +817,26 @@ def export(
         "--no-embeddings",
         help="Skip the ask-embeddings feed (avoids the ~80 MB model download; hybrid retrieval degrades to BM25-only).",
     ),
+    committed: bool = typer.Option(
+        False,
+        "--committed",
+        help="Rewrite the committed bundle at web/sites/<slug>/ in its lean shape (#2025).",
+    ),
+    check: bool = typer.Option(
+        False,
+        "--check",
+        help="Report how the committed bundle differs from a fresh export; write nothing. Exits 1 on drift.",
+    ),
+    all_sites: bool = typer.Option(
+        False,
+        "--all",
+        help="Apply --check / --committed to every registered site instead of the active one.",
+    ),
+    with_passages: bool = typer.Option(
+        False,
+        "--with-passages",
+        help="With --committed: keep the passages/passage-embeddings feeds even if the site does not commit them yet.",
+    ),
 ) -> None:
     """Export the corpus as the typed JSON content bundle (regenerable).
 
@@ -828,8 +848,22 @@ def export(
     By default also generates ``ask-embeddings.json`` (all-MiniLM-L6-v2 vectors for hybrid
     BM25 + vector retrieval, #329). Use --no-embeddings to skip if you don't need it or
     want a faster export.
+
+    --committed targets the OTHER bundle: the committed, lean ``web/sites/<slug>/`` tree the
+    offline Astro build reads. --check re-exports and reports the drift instead of writing it.
+    Either takes --all to sweep the whole network.
     """
     from watermark.site import export_bundle
+
+    if check or committed or all_sites:
+        _committed_bundle_command(
+            check=check,
+            committed=committed,
+            all_sites=all_sites,
+            with_passages=with_passages,
+            out=out,
+        )
+        return
 
     _export_preflight()
     result = export_bundle(out_dir=Path(out) if out else None, skip_embeddings=no_embeddings)
@@ -856,6 +890,78 @@ def export(
             f"[green]graph exports[/] {result.exports[0].node_count} nodes / "
             f"{result.exports[0].edge_count} edges → {result.out_dir.name}/exports/ [dim]({fmts})[/]"
         )
+
+
+def _committed_bundle_command(
+    *,
+    check: bool,
+    committed: bool,
+    all_sites: bool,
+    with_passages: bool,
+    out: str | None,
+) -> None:
+    """The ``--check`` / ``--committed`` half of ``watermark export`` (#2025).
+
+    A committed bundle is a build artifact of the corpus that nothing recomputes, so it goes
+    stale silently — three times in one epic, each found while doing something else. ``--check``
+    is the primitive that names it: re-export to a temp dir, diff, exit non-zero.
+    """
+    from watermark.site.committed import check_committed_bundle, refresh_committed_bundle
+    from watermark.sites import SITES
+
+    settings = get_settings()
+    if check and committed:
+        console.print("[red]--check and --committed are mutually exclusive[/] — pick one.")
+        raise typer.Exit(1)
+    if not check and not committed:
+        console.print(
+            "[red]--all needs --check or --committed[/] — it selects the sweep, not the mode."
+        )
+        raise typer.Exit(1)
+    # --out names a one-off destination; the committed tree's location is fixed by the frontend's
+    # `bundleDir(slug)` resolution, so honouring both would silently write the wrong place.
+    if out:
+        console.print("[red]--out cannot be combined with --check/--committed[/].")
+        raise typer.Exit(1)
+    if with_passages and check:
+        console.print(
+            "[red]--with-passages is a write option[/] — --check reads the retained set off the "
+            "committed manifest."
+        )
+        raise typer.Exit(1)
+
+    slugs = sorted(SITES) if all_sites else [str(settings.site)]
+
+    if committed:
+        _export_preflight()
+        for slug in slugs:
+            report = refresh_committed_bundle(
+                slug, settings=settings, keep_retrieval=True if with_passages else None
+            )
+            retrieval = " [dim]+passages[/]" if report.retrieval_kept else ""
+            console.print(
+                f"[green]Refreshed[/] {report.slug:<22} {report.feed_count:>3} feeds, "
+                f"{report.row_total:>6} rows{retrieval}"
+            )
+        return
+
+    drifted: list[str] = []
+    for slug in slugs:
+        findings = check_committed_bundle(slug, settings=settings)
+        if not findings:
+            console.print(f"[green]current[/]  {slug}")
+            continue
+        drifted.append(slug)
+        console.print(f"[yellow]drifted[/]  {slug}")
+        for finding in findings:
+            console.print(f"  [dim]{finding.kind:<12}[/] {finding.subject} — {finding.detail}")
+    if drifted:
+        console.print(
+            f"\n[red]{len(drifted)} of {len(slugs)} committed bundle(s) drifted[/] — "
+            f"re-export them: `watermark --site <slug> export --committed`"
+        )
+        raise typer.Exit(1)
+    console.print(f"\n[green]{len(slugs)} committed bundle(s) current.[/]")
 
 
 def _export_preflight() -> None:
