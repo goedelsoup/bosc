@@ -24,6 +24,7 @@ from watermark.civic.indexer import OcrUnavailableError
 from watermark.config import Settings
 from watermark.site.feeds import PassageItem
 from watermark.site.passages import (
+    PassageExtraction,
     _published_pdf_entries,
     artifact_path,
     build_passages,
@@ -356,11 +357,21 @@ def test_committed_passages_round_trip(tmp_path: Path) -> None:
             text="effluent limit",
         )
     ]
-    write_committed_passages(items, settings)
+    write_committed_passages(
+        PassageExtraction(items=items, published_pdfs=["oepa/p.pdf"]), settings
+    )
     artifact = tmp_path / "site" / "passages.ndjson"
     assert artifact.is_file()
     assert load_committed_passages(settings) == items
     assert json.loads(artifact.read_text(encoding="utf-8"))["method"] == "pdf_text"
+    # The sidecar lands beside it, recording the set this run covered (#2025) — so the index can
+    # never again be a file with no account of what it describes.
+    meta = json.loads((tmp_path / "site" / "passages.meta.json").read_text(encoding="utf-8"))
+    assert meta == {
+        "published_pdfs": ["oepa/p.pdf"],
+        "documents_with_passages": 1,
+        "passage_count": 1,
+    }
 
 
 def test_pre_1_54_artifact_still_loads(tmp_path: Path) -> None:
@@ -438,3 +449,91 @@ def test_sibling_site_has_no_published_pdf_passages(site_bundle: Callable[[str],
     the global allowlist is Lima-anchored, so a sibling's passages set degrades cleanly."""
     ref = _feed_ref(site_bundle("fort-wayne"), "passages")
     assert ref["count"] == 0
+
+
+# --- index freshness (#2025) --------------------------------------------------------------------
+# The shared `data/site/passages.ndjson` has no per-site regeneration and no freshness check, which
+# makes it the worst case of the committed-artifact lag this epic is about: #2023 cleared eight
+# `oepa/` documents already inside a cleared boundary, and they sat unindexed until an unrelated
+# site was rebuilt. These drive the check against a synthetic sidecar — the predicate is a set
+# comparison, so it needs no PDFs and no extraction.
+
+
+def _seed_index(tmp_path: Path, built_from: list[str]) -> Settings:
+    """A data_dir whose passages sidecar claims it was built from `built_from`."""
+    site = tmp_path / "site"
+    site.mkdir(parents=True, exist_ok=True)
+    (site / "passages.meta.json").write_text(
+        json.dumps(
+            {"published_pdfs": built_from, "documents_with_passages": 0, "passage_count": 0}
+        ),
+        encoding="utf-8",
+    )
+    return Settings(data_dir=tmp_path)
+
+
+def test_an_index_with_no_sidecar_cannot_be_trusted(tmp_path: Path) -> None:
+    """An index that carries no record of what it covers is a finding, not a pass.
+
+    The alternative — assuming an undocumented index is current — is exactly the assumption that
+    let the shared artifact drift for eight days across three PRs.
+    """
+    from watermark.site.passages import check_index_freshness
+
+    (tmp_path / "site").mkdir(parents=True)
+    (findings,) = check_index_freshness(Settings(data_dir=tmp_path))
+    assert findings.kind == "no-meta"
+
+
+def test_a_document_cleared_since_the_build_is_reported(tmp_path: Path, monkeypatch: Any) -> None:
+    """The #2023 shape: a document enters the cleared set and is never offered to the extractor."""
+    from watermark.site import passages as passages_mod
+
+    settings = _seed_index(tmp_path, ["oepa/a.pdf"])
+    monkeypatch.setattr(
+        passages_mod, "published_pdf_rels", lambda _s: ["oepa/a.pdf", "oepa/newly-cleared.pdf"]
+    )
+    (finding,) = passages_mod.check_index_freshness(settings)
+    assert finding.kind == "newly-published"
+    assert finding.subject == "oepa/newly-cleared.pdf"
+
+
+def test_a_document_withdrawn_since_the_build_is_reported(tmp_path: Path, monkeypatch: Any) -> None:
+    """The other direction: the index retains page text for a document the publish policy no
+    longer clears. The per-site feed filters it out at export, so it is not a live leak — but a
+    committed artifact outliving its clearance is worth naming. Zero occurrences today; this is
+    the guard, not a report."""
+    from watermark.site import passages as passages_mod
+
+    settings = _seed_index(tmp_path, ["oepa/a.pdf", "oepa/withheld.pdf"])
+    monkeypatch.setattr(passages_mod, "published_pdf_rels", lambda _s: ["oepa/a.pdf"])
+    (finding,) = passages_mod.check_index_freshness(settings)
+    assert finding.kind == "no-longer-published"
+    assert finding.subject == "oepa/withheld.pdf"
+
+
+def test_an_unchanged_published_set_is_current(tmp_path: Path, monkeypatch: Any) -> None:
+    """Coverage is deliberately NOT the predicate. 63 of the 261 published PDFs carry no passage
+    and none is an unresolved LFS pointer — they are image-only scans with a zero-length text
+    layer, so "published but carrying no passage" would be 63 standing findings forever. What is
+    exact is whether the cleared SET has moved."""
+    from watermark.site import passages as passages_mod
+
+    settings = _seed_index(tmp_path, ["oepa/a.pdf", "oepa/b.pdf"])
+    monkeypatch.setattr(passages_mod, "published_pdf_rels", lambda _s: ["oepa/b.pdf", "oepa/a.pdf"])
+    assert passages_mod.check_index_freshness(settings) == []
+
+
+def test_the_committed_index_is_current() -> None:
+    """The real artifact must cover the real published corpus — the end-to-end guard.
+
+    Cheap enough for the suite: it resolves the publish policy and reads the document catalog,
+    opening no PDF. The rebuild it recommends is the expensive half, and only runs when this fails.
+    """
+    from watermark.site.passages import check_index_freshness
+
+    findings = check_index_freshness(Settings(data_dir=REPO_ROOT / "data"))
+    assert findings == [], (
+        "the committed passage index no longer covers the published corpus — "
+        f"run `git lfs pull && watermark passages`: {[str(f) for f in findings]}"
+    )

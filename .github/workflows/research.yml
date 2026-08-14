@@ -1,6 +1,6 @@
 name: research
 
-# Automated-research GitHub App runs (Epic #57). Drives `bosc research run` over the
+# Automated-research GitHub App runs (Epic #57). Drives `watermark research run` over the
 # corpus, then opens a PR + the proposed issues *as the App*. The run is read-only on
 # the corpus and inert until a maintainer reviews — the App is not a code owner and
 # not a repo admin, so it cannot approve or merge its own PR (see .github/CODEOWNERS
@@ -108,7 +108,7 @@ jobs:
         run: |
           set -euo pipefail
           OUT="data/research/run-${GITHUB_RUN_ID}"
-          uv run bosc research run --topic "$TOPIC" --out "$OUT"
+          uv run watermark research run --topic "$TOPIC" --out "$OUT"
           echo "out=$OUT" >> "$GITHUB_OUTPUT"
 
       - name: Chain-of-custody check (no source bytes touched)
@@ -130,7 +130,7 @@ jobs:
           set -euo pipefail
           gh issue list --state open --label agent-proposed --limit 200 \
             --json number,title,body > /tmp/existing-issues.json
-          uv run bosc research publish --run "$OUT" \
+          uv run watermark research publish --run "$OUT" \
             --existing /tmp/existing-issues.json --out "$OUT/publish-plan.json"
 
       - name: Open the proposed issues (as the App)

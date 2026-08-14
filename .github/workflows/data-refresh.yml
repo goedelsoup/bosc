@@ -1,4 +1,4 @@
-# Data refresh (manual) — run a `bosc` connector/data command in CI and open a PR
+# Data refresh (manual) — run a `watermark` connector/data command in CI and open a PR
 # with the regenerated committed reference data.
 #
 # Why this exists: the data connectors hit public APIs that throttle PER IP (e.g.
@@ -25,7 +25,7 @@ on:
   workflow_dispatch:
     inputs:
       command:
-        description: "bosc subcommand + flags to run (e.g. 'npdes --basin scioto')"
+        description: "watermark subcommand + flags to run (e.g. 'npdes --basin scioto')"
         required: true
         default: "npdes --basin scioto"
 
@@ -52,14 +52,14 @@ jobs:
       - name: Install dependencies
         run: uv sync --extra dev
 
-      - name: Run the bosc command
+      - name: Run the watermark command
         env:
           COMMAND: ${{ inputs.command }}
         run: |
           set -euo pipefail
-          echo "Running: bosc $COMMAND"
+          echo "Running: watermark $COMMAND"
           # shellcheck disable=SC2086  # intentional word-split: subcommand + flags
-          uv run bosc $COMMAND
+          uv run watermark $COMMAND
 
       - name: Chain-of-custody check (no source bytes touched)
         run: |
@@ -101,16 +101,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
-          git commit -m "data(refresh): bosc ${COMMAND}" \
-            -m "Regenerated committed reference data from a GitHub Actions runner (bosc ${COMMAND}). Writes confined to data/reference/; inert until reviewed."
+          git commit -m "data(refresh): watermark ${COMMAND}" \
+            -m "Regenerated committed reference data from a GitHub Actions runner (watermark ${COMMAND}). Writes confined to data/reference/; inert until reviewed."
           git push -u origin "$branch"
           {
-            echo "Automated connector refresh — \`bosc ${COMMAND}\` run from a GitHub Actions runner."
+            echo "Automated connector refresh — \`watermark ${COMMAND}\` run from a GitHub Actions runner."
             echo
             echo "The runner egresses from a fresh Azure IP, so a per-IP API throttle that blocks a local pull (e.g. EPA ECHO's 1,500/day) is sidestepped. Changes are confined to \`data/reference/\` — review the diff before merging."
             echo
             echo "> The required \`check\` status does not auto-run on a \`GITHUB_TOKEN\`-opened PR (GitHub anti-recursion). Reopen this PR or push a commit to trigger it, or merge as admin after review."
           } > /tmp/pr-body.md
           gh pr create --base main --head "$branch" \
-            --title "data(refresh): bosc ${COMMAND}" \
+            --title "data(refresh): watermark ${COMMAND}" \
             --body-file /tmp/pr-body.md
