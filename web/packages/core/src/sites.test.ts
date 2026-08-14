@@ -130,6 +130,30 @@ describe("sites registry — the Watermark network (#304)", () => {
     });
   });
 
+  it("promotes Van Wert to selectable on Sidney / Troy-Piqua parity — a documented `seeded` facility (#1267)", () => {
+    const vwt = SITES.find((s) => s.slug === "van-wert");
+    expect(vwt?.selectable).toBe(true);
+    expect(vwt?.status).toBe("live");
+    // The third promotion on the `case`-tier line, and the readiness block is byte-identical to
+    // both precedents. What Van Wert adds to the line is the clearest instance of the rule that
+    // `facility: seeded` is a GRADE, not a gap: the campus's own construction-stormwater NOI
+    // certifies — under penalty of law, 2026-07-21 — that its air permit-to-install is
+    // YET_TO_APPLY, and AEP Ohio told Council it had no MW figure for this campus. Both of
+    // #1630's grounding paths are therefore closed by instruments rather than by an unsuccessful
+    // search, so reaching for `live` here would mean re-grading a documented negative.
+    const vwtReadiness = loadManifest("van-wert").readiness;
+    expect(vwtReadiness).toEqual(loadManifest("sidney").readiness);
+    expect(vwtReadiness).toEqual(loadManifest("troy-piqua").readiness);
+    expect(vwtReadiness?.tier).toBe("case");
+    expect(vwtReadiness?.domains).toEqual({
+      backdrop: "live",
+      facility: "seeded",
+      places: "live",
+      record: "live",
+      inquiry: "live",
+    });
+  });
+
   it("routes every site under /network/<slug>; Lima uses its canonical watershed name", () => {
     for (const s of SITES) {
       if (s.slug === ACTIVE_SITE_SLUG) expect(s.href).toBe("/network/american-sugar-creek-allen-co");
@@ -137,18 +161,18 @@ describe("sites registry — the Watermark network (#304)", () => {
     }
   });
 
-  it("comingSoonSites() is every non-selectable site (not Lima, Urbana, Fort Wayne, Troy-Piqua, Sidney, or Findlay), each carrying a tracking issue", () => {
+  it("comingSoonSites() is every non-selectable site (not Lima, Urbana, Fort Wayne, Troy-Piqua, Sidney, Findlay, or Van Wert), each carrying a tracking issue", () => {
     const soon = comingSoonSites();
     expect(soon.some((s) => s.slug === ACTIVE_SITE_SLUG)).toBe(false);
     expect(soon.some((s) => s.slug === "fort-wayne")).toBe(false); // Fort Wayne is now selectable (#741)
     expect(soon.some((s) => s.slug === "troy-piqua")).toBe(false); // Troy-Piqua is now selectable (#1872)
     expect(soon.some((s) => s.slug === "sidney")).toBe(false); // Sidney is now selectable (#1992)
     expect(soon.some((s) => s.slug === "findlay")).toBe(false); // Findlay is now selectable (#1265)
+    expect(soon.some((s) => s.slug === "van-wert")).toBe(false); // Van Wert is now selectable (#1267)
     expect(soon.map((s) => s.slug)).toEqual([
       "defiance",
       "toledo",
       "bowling-green",
-      "van-wert",
       "bryan",
       "ottawa",
       "springfield",

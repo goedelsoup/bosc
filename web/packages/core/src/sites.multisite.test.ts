@@ -11,8 +11,9 @@ import {
 } from "./sites";
 import { walkFor } from "./walk";
 
-// Multi-site chrome parity (#746, closing #740's Done-when). As of #1872, the live registry
-// has four selectable sites: Lima, Urbana, Fort Wayne, and Troy-Piqua. These tests lock the
+// Multi-site chrome parity (#746, closing #740's Done-when). As of #1267, the live registry
+// has seven selectable sites: Lima, Urbana, Fort Wayne, Troy-Piqua, Sidney, Findlay and Van Wert.
+// These tests lock the
 // per-site routing logic by exercising the `*From(sites)` seam with both the real registry and a
 // fixture that promotes an additional non-selectable site (Defiance), so the "promotion flips the
 // tier" invariant stays tested even after each real promotion.
@@ -23,10 +24,10 @@ const WITH_DEFIANCE: NetworkSite[] = SITES.map((s) =>
 );
 
 describe("multi-site chrome parity (#746)", () => {
-  const real = selectablePathsFrom(SITES); // Lima + Urbana + Fort Wayne + Troy-Piqua + Sidney + Findlay
+  const real = selectablePathsFrom(SITES); // Lima + Urbana + Fort Wayne + Troy-Piqua + Sidney + Findlay + Van Wert
   const withDef = selectablePathsFrom(WITH_DEFIANCE); // ...+ Defiance
 
-  it("today's build has exactly six selectable sites (Lima + Urbana + Fort Wayne + Troy-Piqua + Sidney + Findlay)", () => {
+  it("today's build has exactly seven selectable sites (Lima + Urbana + Fort Wayne + Troy-Piqua + Sidney + Findlay + Van Wert)", () => {
     expect(real.map((p) => p.props.slug).sort()).toEqual([
       "findlay", // promoted #1265
       "fort-wayne",
@@ -34,6 +35,7 @@ describe("multi-site chrome parity (#746)", () => {
       "sidney", // promoted #1992
       "troy-piqua",
       "urbana",
+      "van-wert", // promoted #1267
     ]);
   });
 
@@ -46,6 +48,7 @@ describe("multi-site chrome parity (#746)", () => {
       "sidney",
       "troy-piqua",
       "urbana",
+      "van-wert",
     ]);
     const def = withDef.find((p) => p.props.slug === "defiance");
     expect(def?.params.site).toBe(siteBase("defiance").replace("/network/", ""));

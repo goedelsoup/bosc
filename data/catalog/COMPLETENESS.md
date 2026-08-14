@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-13T17:10:55.762592+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-14T13:42:00.354987+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **172** catalogued datasets — **171** reviewed.
-- **172** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **173** catalogued datasets — **172** reviewed.
+- **173** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -87,6 +87,7 @@ Snapshot reconciled: **2026-08-13T17:10:55.762592+00:00**. Regenerate with `wate
 | reference | troy-piqua-gis | 1 | 1 | 0 | 0 |
 | reference | usaspending | 1 | 1 | 0 | 0 |
 | reference | usgs | 1 | 1 | 0 | 0 |
+| reference | van-wert | 1 | 1 | 0 | 0 |
 | reference | wilmington | 1 | 1 | 0 | 0 |
 | reference | wqs | 2 | 2 | 0 | 0 |
 
@@ -115,7 +116,7 @@ Snapshot reconciled: **2026-08-13T17:10:55.762592+00:00**. Regenerate with `wate
 | toledo | 58 | 46 | 12 |
 | troy-piqua | 59 | 50 | 9 |
 | urbana | 56 | 46 | 10 |
-| van-wert | 63 | 54 | 9 |
+| van-wert | 64 | 55 | 9 |
 | west-union | 56 | 45 | 11 |
 | wilmington | 59 | 50 | 9 |
 | wpafb | 56 | 48 | 8 |

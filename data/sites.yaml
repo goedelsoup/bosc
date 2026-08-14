@@ -163,8 +163,13 @@ sites:
     county: "Van Wert County, OH"
     codename: null
     mono: "VWT"
-    status: "queued"
-    selectable: false
+    # Promoted on Sidney / Troy-Piqua parity (#1267): identical readiness block — `case` tier,
+    # backdrop/places/record/inquiry live, facility `seeded`. That `seeded` is a documented
+    # resting state, not a gap being waived: the campus's own construction-stormwater NOI
+    # certifies the air PTI as YET_TO_APPLY under penalty of law, and AEP Ohio stated no MW for
+    # this campus, so neither of #1630's two grounding paths can be reached (_profiles.py).
+    status: "live"
+    selectable: true
     issue: "1267"
     map_lat: 40.8696
     map_lon: -84.5829

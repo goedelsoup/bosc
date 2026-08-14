@@ -42,6 +42,36 @@ collections:      # whole data/documents/<slug> trees, e.g.  - aedg
   # aggregate with no voter-level data.
   # review: { by: goedelsoup, date: 2026-08-13, result: publish, basis: public-county-township-records }
   - findlay
+  # The whole Van Wert collection — 15 files (#1267): the City of Van Wert's council record for
+  # the QTS Mega Site (the three May-2026 emergency ordinances as passed plus their posted drafts,
+  # the 26-06-034 private-well draft, and six meeting records — 4.27, the 5.4 public hearing, 5.11,
+  # 5.27, 6.8 and 7.13), the County Commissioners' published 2026 agenda index, and the captured
+  # operator project FAQ. These are the primary instruments the site's assembly and governance
+  # record rests on; every one is already published by the City, the County or the operator itself.
+  #
+  # Pre-publication review (#281) run over all 15 before clearing. The ordinances are clean —
+  # unsigned instruments, no personal data at all (all six were posted four days before the vote
+  # with an unfilled "Passed this ___ day of ___", which is the #1401 finding). The county agenda
+  # index and the operator FAQ are captured public web pages. Any tokens embedded in those captures
+  # are evidence, not a leak to redact, per the root CLAUDE.md.
+  #
+  # ⚠️ WHAT THE REVIEW DID FIND, and the basis for clearing it anyway. The six MEETING RECORDS
+  # embed roughly 88 pages of written public comment from private citizens, each letter carrying
+  # the writer's name and a REPRODUCED HANDWRITTEN SIGNATURE. (Both the 107-page 5.4 hearing record
+  # and 5.11.26.pdf were sampled page-by-page to confirm the shape.) No residential addresses, no
+  # phone numbers and no email addresses appear on the sampled letters — the hearing minutes note
+  # that speakers stated an address aloud, but that is in the audio/video, which is not in the
+  # corpus. This is the same posture as aedg/PRR-01-bundle.ocr.pdf above: cleared whole as
+  # DISCLOSED PUBLIC RECORD by operator decision, explicitly NOT as the outcome of a passed PII
+  # sweep. Written comment submitted to a legislative body in a zoning hearing is quintessentially
+  # public record, the City published these exact PDFs itself, and the evidentiary weight is high —
+  # the letter campaign IS a finding (21 of 88 pages repeat an earlier body verbatim; 67 distinct
+  # bodies, one submitted five times; and "$200M/20yr", "200-250 jobs" and "$80,000" appear ONLY
+  # here and in no instrument). That is the opposite of the Findlay withhold below, which turned on
+  # a file that nothing in the record rested on. If a specific letter ever needs carving out, use a
+  # withhold rule rather than un-clearing the boundary.
+  # review: { by: goedelsoup, date: 2026-08-14, result: publish, basis: disclosed-public-record }
+  - van-wert
 globs:            # fnmatch globs over the data/documents rel, e.g.  - 'permits/*/*.pdf'
   # Findlay's grid instruments — the AEP large-load request, the Rocky Ford 138 kV station
   # LON + public notice, the Ebersole-Fostoria construction notice, and the AEP Ohio tariff
@@ -50,6 +80,14 @@ globs:            # fnmatch globs over the data/documents rel, e.g.  - 'permits/
   # the collection would publish seven other sites' grid documents that no review has covered.
   # review: { by: goedelsoup, date: 2026-08-13, result: publish, basis: public-utility-filings }
   - 'grid/findlay/*'
+  # Van Wert's grid instrument — AEP Ohio's public notice for the Van Wert–Haviland 138 kV route
+  # adjustment (OPSB 26-0729-EL-BLN, the second case on the line first approved as
+  # 25-0697-EL-BLN). A utility public notice, public by its own nature. A GLOB rather than the
+  # `grid` collection for the same reason as Findlay's above: `data/documents/grid/` is shared
+  # across eight sites, so clearing the collection would publish seven other sites' grid documents
+  # that no review has covered.
+  # review: { by: goedelsoup, date: 2026-08-14, result: publish, basis: public-utility-filings }
+  - 'grid/van-wert/*'
 documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/foo.pdf
   # The AEDG PRR-01 bundle — the full 328-page Port Authority public-records production.
   # Only pp. 317-327 (the six Tetra Tech OPC estimates) are the curated exhibit slice; the

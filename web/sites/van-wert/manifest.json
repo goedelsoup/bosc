@@ -2,9 +2,9 @@
   "site": "van-wert",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-14T01:03:27+00:00",
-  "feed_count": 34,
-  "row_total": 717,
+  "generated_at": "2026-08-14T14:33:24+00:00",
+  "feed_count": 36,
+  "row_total": 833,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -112,6 +112,14 @@
       "count": 0
     },
     {
+      "name": "leads",
+      "path": "feeds/leads.json",
+      "media_type": "application/json",
+      "schema": "schemas/leads.schema.json",
+      "kind": "collection",
+      "count": 20
+    },
+    {
       "name": "rsei",
       "path": "feeds/rsei.json",
       "media_type": "application/json",
@@ -197,7 +205,7 @@
       "media_type": "application/json",
       "schema": "schemas/hydrology-scenarios.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "air-scenarios",
@@ -221,7 +229,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 63
+      "count": 64
     },
     {
       "name": "geo/campus",
@@ -237,7 +245,15 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 91
+      "count": 99
+    },
+    {
+      "name": "open-questions",
+      "path": "feeds/open-questions.json",
+      "media_type": "application/json",
+      "schema": "schemas/open-questions.schema.json",
+      "kind": "collection",
+      "count": 17
     },
     {
       "name": "impact-study",
@@ -253,7 +269,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/passages.schema.json",
       "kind": "collection",
-      "count": 243
+      "count": 271
     },
     {
       "name": "catalog-index",
@@ -269,7 +285,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 90
+      "count": 110
     },
     {
       "name": "corpus-nodes",
@@ -277,7 +293,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 90
+      "count": 110
     },
     {
       "name": "ask-embeddings",

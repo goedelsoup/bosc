@@ -1,0 +1,58 @@
+# Discharge routing for the Van Wert, OH watershed point (#1267).
+#
+# One plant, one outfall, one receiving reach — and the most effluent-dominated reach in the
+# network by a wide margin. Two things this file supplies, both load-bearing:
+#
+# 1. The STRUCTURED `design_flow_mgd` that `watermark.hydrology.balance` reads as the numerator of
+#    the assimilative screen (WS-22, issue 1622). Without it the balance falls back to a regex over
+#    the watch-items summary prose, logging `hydro.design_flow.regex_fallback` — and a load-bearing
+#    number must not be sourced by regex over prose.
+#
+# 2. The `receiving_water` NAME, which is how `assimilative.check_assimilative` looks the cited
+#    design low flow up.
+#
+# WHY THE BARE RIVER NAME HERE, when Findlay (#1458/#1265) and Sidney (#1995) both had to use a
+# parenthesized reach key. That convention exists because at those sites the BARE name belongs to
+# something else — a derived at-gage screening proxy (Blanchard 8.67 cfs, Great Miami 407.67 cfs)
+# whose gage sits below the outfall and whose denominator therefore contains the plant's own
+# discharge. Crediting the outfall with it overstates dilution by 41x at Findlay and 17x at Sidney.
+#
+# Town Creek has no such proxy. There is exactly ONE committed `town creek` entry in
+# `low-flow-7q10.yaml` and it is already the AT-OUTFALL document value — 0.16 cfs, read from this
+# permit's own fact sheet Table 12 (`source: document`), the same instrument this route cites. So
+# the bare name resolves to the right number by construction, and minting a reach-scoped duplicate
+# would create two committed spellings of one figure with no fact between them.
+#
+# ⚠️ THE CONDITION UNDER WHICH THAT STOPS BEING TRUE: if a basin re-derivation ever writes a
+# `town creek` entry into `low-flow-7q10.derived.yaml`, it would shadow this one and this route
+# would silently start screening against a derived proxy. If that happens, re-scope this key to
+# `Town Creek (Van Wert WWTP outfall, RM 13.87)` and bind it with `permits: [OH0027910, 2PD00006]`
+# — the #1458 mechanism — rather than editing the derived file. Verify after any basin refresh:
+# `build_low_flow_lookup()[_norm('town creek')]` must still read 0.16 cfs [doc].
+#
+# There is a SECOND Van Wert NPDES discharge on this same creek and it is deliberately NOT routed
+# here: OH0135569, the City's water treatment plant, ~2.5 mi downstream on the Lower Town Creek
+# segment. It carries NO design flow and NO mass or concentration effluent limit (flow is
+# monitor-only; pH is the only numeric limit), so it contributes no municipal-sewage load and
+# cannot drive a dilution screen. Adding it would put a second discharger in the denominator's
+# numerator with nothing to weigh. See the OH0135569 disambiguation in
+# data/extracted/van-wert/ONBOARDING.md.
+#
+# No `bosc_routing` block: the BOSC forcemains are a Lima-loop object and a sibling site never
+# inherits them (#829). The QTS campus commits no forcemain discharge feature, so the balance
+# carries no campus forcing node — which is correct, not a gap: its construction-stormwater
+# coverage documents no process discharge at all, and where the campus's cleaning/blowdown water
+# goes is the open question in data/site/van-wert/leads.yaml (`FILL-VOLUME`).
+#
+# WHICH design flow. The committed value is the permitted AVERAGE design flow, 4.0 MGD
+# (6.1889 cfs). Van Wert is a CSO community, so the same reasoning Findlay's table records applies
+# with more force: pairing a peak wet-weather discharge with a 7Q10 would screen a condition that
+# by construction does not co-occur.
+
+wwtp_receiving:
+  van-wert-wwtp:
+    receiving_water: "Town Creek"
+    design_flow_mgd: 4.0  # permitted average design flow
+    status: confirmed
+    confidence: high
+    citation: 'Ohio EPA "Fact Sheet for NPDES Permit, Van Wert WWTP" for NPDES 2PD00006 / application OH0027910, Van Wert Wastewater Treatment Plant, 7998 State Route 127 North, Van Wert, Van Wert County — outfall 001 to Town Creek at RM 13.87 (40.8882410 / -84.58437518), subsequent stream network Middle Creek → Little Auglaize River → Auglaize River → Maumee River → Lake Erie (HUC-8 04100007). Table 7 gives the average design flow as 4.0 MGD (6.1889 cfs); Table 12 gives the reach 7Q10 as 0.16 cfs annual, computed by USGS drainage-area ratio from gage 04191500 (Auglaize River near Defiance, 1915-2003), with summer and winter 7Q10 both 0.0 cfs (the creek is intermittent), 1Q10 0.1, summer/winter 30Q10 0.29, 90Q10 0.66 and harmonic mean 1.62. The resulting dilution ratio is 0.03:1 — ~39x effluent dominance, the basin end-member — and the fact sheet computes the acute dilution ratio as 1.02:1. Permit modified *VD → *WD effective 2026-07-01 (CSO LTCP schedule). Source data/documents/oepa/van-wert/2PD00006.fs.pdf; structured read data/extracted/oepa/van-wert/2PD00006.fs.npdes.yaml. [verified]'

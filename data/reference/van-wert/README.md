@@ -34,13 +34,25 @@ Per-site onboarding tree for the Van Wert watershed point (basin: maumee), scaff
   of a single multi-parcel deed, so that amount is recorded verbatim per parcel and deliberately
   **not summed**; the campus's total consideration stays `[open]`.
 
-  **The acreage reconciles to QTS's own figure and not to the annexation's.** 900.59 ac deeded is
-  **0.16%** off the **902-acre** campus footprint QTS quotes — the first independent instrument to
-  confirm it — but **61.4 ac (6.4%) short** of the **~962 ac annexed 2026-05-11**. Road
-  right-of-way and non-QTS parcels inside the annexation description are both live explanations and
-  neither is established: the ordinances' legal descriptions are not in the corpus (#1401). The
-  boundary committed here is the recorded **ownership** holding, not the annexation boundary and
-  not a surveyed earth-disturbance footprint.
+  **The acreage reconciles to QTS's own figure — and, since #1401, to the annexation's too.**
+  900.59 ac deeded is **0.16%** off the **902-acre** campus footprint QTS quotes, the first
+  independent instrument to confirm it.
+
+  > ⚠️ **Corrected against #1401**, which landed after this file was written. The annexed and zoned
+  > area is **901.698 ± ac**, read off Ordinance 26-05-028's Exhibit A, whose four component
+  > acreages sum exactly to the figure printed in both ordinance titles. The **~962 ac** this
+  > section reconciled against was a press number with no support anywhere in the record. The
+  > holding is therefore **1.108 ac (0.12%)** under the zoned area, not "61.4 ac (6.4%) short" —
+  > and the two explanations that shortfall used to require (road right-of-way inside the annexed
+  > area, non-QTS parcels inside the annexation description) are no longer load-bearing at that
+  > magnitude. The residual 1.1 ac stays `[open]` and is still not attributed to right-of-way. The
+  > ordinances' legal descriptions **are** now in the corpus
+  > (`data/extracted/van-wert/mega-site-instruments.yaml`).
+
+  Three independent acreages now agree to within ~1.1 ac: **901.698** zoned (ordinance Exhibit A),
+  **901.502** planar (this geometry, UTM 16N), **900.59** deeded (auditor CAMA). The boundary
+  committed here is the recorded **ownership** holding, not the annexation boundary and not a
+  surveyed earth-disturbance footprint.
 
   **The campus straddles two school districts**, which the register did not have: **772.46 ac
   Lincolnview** (the four Ridge/Hoaglin parcels) and **128.13 ac Van Wert City**
