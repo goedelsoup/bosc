@@ -33,6 +33,16 @@ def repo_fixtures_dir(*parts: str) -> Path:
     return _REPO_ROOT.joinpath("tests", "fixtures", *parts)
 
 
+def repo_committed_bundles_dir() -> Path:
+    """``web/sites/`` — the committed per-site content bundles the offline Astro build reads.
+
+    Anchored at ``_REPO_ROOT`` for the same reason as :func:`repo_fixtures_dir`: this is a path
+    into the *repo tree*, not into ``data_dir``, so relocating ``WATERMARK_DATA_DIR`` (a tmp
+    corpus in tests, a scratch tree) must not drag the committed bundles along with it.
+    """
+    return _REPO_ROOT / "web" / "sites"
+
+
 class Settings(BaseSettings):
     """Application settings, populated from the environment and ``.env``."""
 

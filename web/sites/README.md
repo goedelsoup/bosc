@@ -27,23 +27,20 @@ git-ignored), that takes precedence.
 
 ## Regenerating
 
-These are checked-in build artifacts — regenerate, don't hand-edit. To refresh one site:
+These are checked-in build artifacts — regenerate, don't hand-edit:
 
 ```
-watermark --site <slug> export --no-embeddings --out web/sites/<slug>
-rm -rf web/sites/<slug>/schemas   # the contract schemas live once at data/site/bundle/schemas/
-# Drop the heavy retrieval-index feeds — the lean committed bundle omits them (see below):
-python - "$slug" <<'PY'
-import json, sys, pathlib
-d = pathlib.Path("web/sites") / sys.argv[1]
-for f in ("passages", "passage-embeddings"):
-    (d / "feeds" / f"{f}.ndjson").unlink(missing_ok=True)
-m = json.loads((d / "manifest.json").read_text())
-m["feeds"] = [x for x in m["feeds"] if x["name"] not in ("passages", "passage-embeddings")]
-m["feed_count"], m["row_total"] = len(m["feeds"]), sum(x["count"] for x in m["feeds"])
-(d / "manifest.json").write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
-PY
+watermark --site <slug> export --committed    # one site
+watermark export --committed --all            # the whole network (~13 min)
 ```
+
+`--committed` applies the lean trim below and writes into `web/sites/<slug>/`. The export lands
+in a temp dir first and the committed tree is replaced only once it has succeeded, so a failed
+run leaves the old bundle intact rather than half-overwriting it, and a feed the exporter no
+longer produces is retired rather than left behind.
+
+This used to be a hand-run shell + Python snippet, which is how the drop step deleted committed
+retrieval evidence twice (#1969, #1993) — see the passages note below.
 
 Notes on what's committed here vs. a raw export:
 
@@ -53,35 +50,40 @@ Notes on what's committed here vs. a raw export:
 - **`ask-embeddings.json` is present but empty** — exported with `--no-embeddings` to keep the
   tree offline and lean (no ~80 MB model download). Hybrid retrieval degrades to BM25-only over
   these committed bundles; the live per-site exports carry the real vectors.
-- **No `passages` / `passage-embeddings` feeds — except van-wert.** The page-level retrieval
-  indexes (#1589) are large (Lima's `passages.ndjson` is ~3.7 MB, LFS-resolved-PDF dependent), so
-  a raw export always emits both and the regen step above drops the files **and** their manifest
+- **No `passages` / `passage-embeddings` feeds, unless a site commits them.** The page-level
+  retrieval indexes (#1589) are large (Lima's `passages.ndjson` is ~3.7 MB, LFS-resolved-PDF
+  dependent), so a raw export always emits both and the trim drops the files **and** their manifest
   entries; the frontend degrades to declaring-absent (`hasFeed` → `[]`), and if the manifest
   declared them without the files the static build would `ENOENT`.
 
-  **`van-wert` and `sidney` are deliberate exceptions** (#1963 / #1966) and ship their 243-row and
-  219-row `passages.ndjson` committed. **Do not run the drop step on either** — a blanket regen loop
-  that applies the snippet to every slug silently deletes committed retrieval evidence, which is how
-  it bit #1969 and, with sidney, #1993. Their `passage-embeddings.ndjson` are committed too but
-  empty (the `--no-embeddings` artifact), so the manifest declares a 0-count feed against a 0-byte
-  file, which is valid and must stay declared.
+  **Which sites keep them is derived, not listed.** `--committed` retains the retrieval feeds iff
+  the site's own committed manifest already declares them, so the tree describes itself and there
+  is no list to go stale. That matters: this README used to name the exception set in prose,
+  noted that it "went stale within one issue of being written", and a blanket regen loop applying
+  the old drop step to every slug silently deleted committed retrieval evidence — #1969, then
+  #1993 again. To opt a site in for the first time, pass `--with-passages` once.
 
-  **The list above is not the authority — `git ls-files` is.** It went stale within one issue of
-  being written. Derive the exception set instead:
-
-  ```
-  git ls-files 'sites/*/feeds/passages.ndjson' | cut -d/ -f2
-  ```
+  Their `passage-embeddings.ndjson` are committed too but empty (the `--no-embeddings` artifact),
+  so the manifest declares a 0-count feed against a 0-byte file, which is valid and must stay
+  declared. To see the current set: `git ls-files 'sites/*/feeds/passages.ndjson' | cut -d/ -f2`.
 
 ## Drift guard
 
-`tests/test_site_bundle.py` guards these in two layers. Refresh the affected site(s) on drift.
+A committed bundle is a build artifact of the corpus that nothing recomputes, so it goes stale
+silently — three times inside epic #1265 alone, each found mid-PR while doing something else
+(#2025). Three layers, at different costs:
 
-- **Against a fresh export** — the committed lima / fort-wayne / urbana / wpafb bundles must
-  still track their `watermark … export` (matching `contract_version` + `site`, every committed
-  feed still produced by the exporter, an equal `readiness` block, internally consistent counts).
-  Only these four are re-exported by the suite; a full-fleet export would be too slow to run per
-  commit.
+- **`watermark export --check [--all]`** — re-exports to a temp dir and compares the committed
+  tree **byte for byte** (plus the manifest's own claims, ignoring `generated_at`). This is the
+  only layer that sees a corrected figure *inside* a row: when it first ran, 23 of 26 bundles were
+  publishing a stale size and sha256 for a shared dataset with every row count still equal. Too
+  slow for a per-commit gate (~13 min for the fleet); run it before a release or on a schedule.
+- **Against a fresh export, in the suite** (`tests/test_site_bundle.py`) — for the sites the
+  suite already exports: matching `contract_version` + `site`, every committed feed still produced
+  by the exporter, an equal `readiness` block, **equal per-feed row counts**, and internally
+  consistent totals. Free (the export has already run) and it catches the severe shape — the
+  corpus moving under a bundle. It deliberately stops short of bytes, which would make every
+  corpus PR re-export the whole guarded set.
 - **Against itself, for every committed bundle** — `readiness` is a *standing* property
   recomputed at every export, so a snapshot can over- or under-read its own evidence. Since
   `watermark.site.readiness.compute_readiness` is a pure function of `(profile, feed counts)` and

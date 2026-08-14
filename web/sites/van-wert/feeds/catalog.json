@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "80d2bda187156b977fe4feffbcd8efd99aad241937e8944c92b83f608282fc9f",
-      "size_bytes": 373954,
+      "sha256": "3684dbf9b5df427370bbc9b30aa1715eb2569847b9071a454ae7ea943eaa878b",
+      "size_bytes": 384899,
       "lfs_materialized": true,
       "file_count": 14,
       "stale": false,
@@ -635,14 +635,29 @@
         "relpath": "extracted/van-wert/mega-site-instruments.md",
         "media_type": "text/markdown",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/council/2026-05-11-ord-26-05-028-annexation.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/council/2026-05-11-ord-26-05-029-data-center-code-amendment.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/van-wert/council/2026-05-11-ord-26-05-030-conditional-zoning.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "cebe5cc3620ef2fcf1c522bbb2a2fc4fdac06784d69917b3c3865d7bf9f7021b",
-      "size_bytes": 74520,
+      "sha256": "f5b221d31f5ef5c297f6c7e342c57bb988b4ffda5f87486985e698e497011b2a",
+      "size_bytes": 92464,
       "lfs_materialized": true,
-      "file_count": 2,
+      "file_count": 5,
       "stale": false,
       "asof": null
     },
@@ -2091,10 +2106,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "a4ed6161b79ec57a674cc16d1d6a404f3062446feca917018f6a6d9314de623d",
-      "size_bytes": 193517,
+      "sha256": "4d20e0f4c85ee287a8b7a68b75794cfdf1d208d62618962cb42a9892920aeffc",
+      "size_bytes": 197469,
       "lfs_materialized": true,
-      "file_count": 23,
+      "file_count": 24,
       "stale": false,
       "asof": null
     },
