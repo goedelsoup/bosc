@@ -488,8 +488,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "3684dbf9b5df427370bbc9b30aa1715eb2569847b9071a454ae7ea943eaa878b",
-      "size_bytes": 384899,
+      "sha256": "9baf83438af68fabe77646dfdcdb55f73d6e7688b65d65a7b56d7e65a0463acc",
+      "size_bytes": 385240,
       "lfs_materialized": true,
       "file_count": 14,
       "stale": false,
@@ -884,6 +884,56 @@
     }
   },
   {
+    "id": "bowling-green-watch-items",
+    "title": "Bowling Green site watch-items (WWTP infrastructure geometry)",
+    "scope": "reference",
+    "collection": "bowling-green",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit\" 2PD00009*TD (City of Bowling Green Water Pollution Control, application OH0024139) and the permit itself, as transcribed in data/extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml and 2PD00009.npdes.yaml (#1439); facility coordinates (41.385022, -83.611078) from the EPA ECHO Portage-basin inventory data/reference/echo/portage-wwtp.potw.yaml (#1433)",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
+    "access_tier": "public",
+    "site_scope": "site:bowling-green",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "bowling-green",
+      "gis",
+      "geojson",
+      "wwtp",
+      "infrastructure"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/bowling-green/watch-items.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "eab6ba62dc76ecc7f7178ac684af73cf53a530651aec08d3f488b5d4cfa067e9",
+      "size_bytes": 6574,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit\" 2PD00009*TD (City of Bowling Green Water Pollution Control, application OH0024139) and the permit itself, as transcribed in data/extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml and 2PD00009.npdes.yaml (#1439); facility coordinates (41.385022, -83.611078) from the EPA ECHO Portage-basin inventory data/reference/echo/portage-wwtp.potw.yaml (#1433)",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "compute",
     "title": "AI Accelerator & Rack-Density Compute Reference",
     "scope": "reference",
@@ -986,6 +1036,66 @@
       "confidence": "medium",
       "note": null,
       "verified": false
+    }
+  },
+  {
+    "id": "echo-portage-wwtp",
+    "title": "Portage-basin NPDES discharger inventory (EPA ECHO)",
+    "scope": "reference",
+    "collection": "echo",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "npdes --basin portage",
+    "connector_ref": "watermark.hydrology.connectors.echo",
+    "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+    "external_url": "https://echo.epa.gov/tools/web-services",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "throttled",
+    "site_scope": "basin:portage",
+    "cadence": "quarterly",
+    "ttl_days": 180,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "cwa",
+      "portage",
+      "lake-erie",
+      "wastewater"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/echo/portage-wwtp.all-npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/portage-wwtp.huc-counts.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/portage-wwtp.potw.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "8f1f5fcd61001b542b95a78e913b506fe8d98b4dacc69660ff6f8438d7ae990d",
+      "size_bytes": 172680,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark npdes --basin portage",
+      "verified": true
     }
   },
   {

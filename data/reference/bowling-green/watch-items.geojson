@@ -1,0 +1,35 @@
+{
+  "type": "FeatureCollection",
+  "bosc:provenance": {
+    "subject": "Bowling Green, OH watershed point — the committed WWTP graph the Tier-0 water balance reads (#1433)",
+    "source": "Ohio EPA NPDES permit 2PD00009*TD (application OH0024139) and its fact sheet, as transcribed in data/extracted/oepa/bowling-green/2PD00009.npdes.yaml and 2PD00009.fs.npdes.yaml (#1439); facility coordinates from the EPA ECHO Portage-basin inventory (data/reference/echo/portage-wwtp.potw.yaml, #1433)",
+    "crs": "EPSG:4326 (WGS84)",
+    "count": 1,
+    "caveats": [
+      "WHY THIS FILE EXISTS, and what it fixes. `balance._default_watch_items` falls back to Lima's frozen periplus graph (data/reference/periplus/watch-items.geojson) when a site commits none of its own. Without this file a Bowling Green water balance would resolve FOUR ALLEN COUNTY PLANTS — Lima WWTP (18.5 MGD), Shawnee II, American Bath, American II — plus a `bosc-campus` node carrying a '2.5 MGD industrial discharge to Lima', all at Allen County coordinates ~90 km away, and report them as Bowling Green's. The fallback is deliberate and documented (`has_site_watch_items` exists so the agent tool can refuse rather than serve Lima's plants for a site with none, #829), but the scenario writer does not consult that guard, so persisting a scenario without this file would have published Lima's water balance as Bowling Green's. Same defect this file pre-empted at Van Wert (#1267).",
+      "THE COORDINATES ARE THE PLANT, NOT THE OUTFALL, and the corpus cannot do better. Unlike Van Wert's fact sheet, 2PD00009's does not print outfall coordinates anywhere in its 35 pages; it locates the discharge by RIVER MILE (Poe Ditch RM 2.5, Ohio EPA river code 16-108). The point below is EPA ECHO's facility location for OH0024139 — 901 N. Dunbridge Rd — which is the treatment works, with the outfall a short distance from it. Use this node for the balance, never as a surveyed outfall location.",
+      "ONE PLANT, DELIBERATELY. The permit's own CSO outfall 2PD00009002 (Mercer Road Diversion Chamber, also to Poe Ditch) is on this same reach and is recorded in the permit extraction, but it is not a node here: it is an intermittent wet-weather discharge with no design flow, permitted to no more than four untreated overflow events per typical year under the City's Long Term Control Plan, and it cannot drive a design-low-flow dilution screen. Adding it would put a discharger in the balance with no quantity to balance.",
+      "NO CAMPUS NODE, AND THE CAMPUS IS NOT EVEN ON THIS WATER. `balance._campus_node` is gated on a committed `bosc-fm2` forcemain feature and the Meta campus commits none — correct rather than missing, since the operator states closed-loop dry cooling with 'no operational water' and no facility-own NPDES instrument reaches the site (#1685). More fundamentally, the campus sits in HUC-12 041000100703 (Cedar Creek-Frontal Lake Erie) while this plant discharges in 041000100301 (N Br Portage/Poe Ditch): campus runoff does not reach this receiving water at all. The campus's water arrives instead as PURCHASED NWWSD supply, and the unresolved 50k-vs-600k GPD conflict in that contract is a leads item, not a node here.",
+      "THE INTAKE IS NOT MODELLED, AND IT IS IN A DIFFERENT BASIN. Bowling Green DRINKS THE MAUMEE — a Waterville intake into a 170 MG reservoir, PWS OH8700311, HUC 04100009 — while this plant discharges to the Portage (HUC 04100010). `SiteProfile.abstraction_gage` is NWIS 04193500 on the intake side. The balance therefore represents the discharge side only; the two sides of this site's water are in two different basins, which is the site's structural signature and not a gap in this file.",
+      "[verified] Design flow, receiving water, river mile, use designations and the regulatory low-flow set are from permit 2PD00009*TD and its fact sheet. [reference] The facility coordinates are ECHO's."
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "bowling-green-wpc",
+        "title": "Bowling Green Water Pollution Control",
+        "type": "infrastructure",
+        "priority": "high",
+        "status": "active",
+        "summary": "City of Bowling Green Water Pollution Control (NPDES 2PD00009*TD / application OH0024139), 901 N. Dunbridge Rd, Wood County; constructed 1982, most recently upgraded 2021, serving the City of Bowling Green and the Villages of Portage and Rudolph (~32,000 people) through a collection system that is 60% separate and 40% combined sewers. Outfall 2PD00009001 to Poe Ditch at RM 2.5 (Ohio EPA river code 16-108, HUC 04100010-03-01), which enters the North Branch Portage River at RM 8.56 (river code 16-007) → Portage River → Lake Erie. Average design flow 10 MGD [Ohio EPA Fact Sheet 2PD00009, Table 12 — 15.47 cfs]. WLA design low flow: Poe Ditch 7Q10 0.364 cfs annual AT THE OUTFALL, drainage-area-adjusted from USGS gage 04195500 (Portage River at Woodville) over 1951-97. The resulting dilution ratio is 0.024:1 — about 42x effluent dominance, the second most effluent-dominated municipal discharge in the network and by far the largest plant among them. Poe Ditch is a Limited Resource Water, but Ohio EPA applies the NORTH BRANCH PORTAGE's Warmwater Habitat criteria to this discharge 'to be protective of this higher quality stream'.",
+        "note": "Peak hydraulic capacity is 30 MGD and is deliberately NOT stated in the summary above: `balance._design_mgd` falls back to a regex over this prose when no structured value is present, and a second `N MGD` token reads as a flow EXPANSION and raises a spurious warning (the Sidney precedent, #1995). The structured, document-cited 10 comes from data/reference/hydrology/bowling-green/routing.yaml, which wins outright — this prose is the fallback, kept unambiguous so the fallback would also be correct. Not modelled here, and recorded in data/extracted/bowling-green/water-watch.yaml: the plant carries an active compliance record on this outfall — 11 phosphorus exceedances running into 2026-02 at 1.2 mg/L monthly average against a 0.7 limit, and two MBAS exceedances in DIFFERENT UNITS (2025-05 loading, 28 vs 19.4 kg/day; 2025-10 concentration, 1.24 vs 0.51 mg/L) which must never be plotted on one axis. The MBAS limits are one month old at first exceedance, not neglected: Part I.A carries interim (monitor-only) and final tables, and the final set bit ~2025-05-01."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-83.611078, 41.385022]
+      }
+    }
+  ]
+}

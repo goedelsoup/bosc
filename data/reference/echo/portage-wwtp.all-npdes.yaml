@@ -1,0 +1,5979 @@
+meta:
+  subject: Portage-basin NPDES wastewater dischargers
+  scope: all active CWA-permitted dischargers
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Portage River — 1 HUC-8 subbasin (04100010 Cedar-Portage), subregion
+    0410 (Western Lake Erie, direct to the lake rather than through the Maumee)
+  huc8s:
+    '04100010': Cedar-Portage
+  dedup_key: FRS RegistryID
+  count: 296
+  caveats:
+  - ECHO's CWA facility service has no CWNS column; the POTW flag rests on CWPFacilityTypeIndicator.
+  - Facilities link to HUCs via WATERS (FacDerivedHuc); a permit that didn't geocode
+    can be missed.
+  - design_flow_mgd is null where ECHO returned no value; it is never estimated.
+  - 'SCOPE IS WIDER THAN THE NAME. HUC-8 04100010 ''Cedar-Portage'' is a WBD cataloging
+    unit covering the Portage River AND the frontal Lake Erie drainage beside it (Cedar
+    Creek and the other direct-to-lake tributaries), not one watershed. A discharger
+    on frontal drainage is a SIBLING of the Portage rather than a headwater of it:
+    it is neither upstream nor downstream of a Portage discharger and must never borrow
+    the Portage''s 7Q10. The split is live at the network''s own watershed point —
+    Bowling Green''s campus sits in HUC-12 041000100703 (Cedar Creek-Frontal Lake
+    Erie) while the city''s Water Pollution Control plant discharges in 041000100301
+    (N Br Portage/Poe Ditch), so campus runoff does not reach the plant''s receiving
+    water at all.'
+  - THE NORTH BRANCH AND THE MAINSTEM ARE DIFFERENT DENOMINATORS. A gage on the Portage
+    mainstem integrates a drainage area far larger than the North Branch or Poe Ditch
+    above it, so serving a mainstem 7Q10 to a North Branch outfall overstates dilution
+    by orders of magnitude. Registered aliases are therefore mainstem surface forms
+    only; a North Branch or Poe Ditch receiving water reports no_7q10 — unscreenable,
+    never unaffected — and is settled instead by the permit's own drainage-area-adjusted
+    low flow where the fact sheet publishes one.
+  - Ohio EPA assigns Poe Ditch a Limited Resource Water use designation but applies
+    the NORTH BRANCH PORTAGE's criteria to discharges reaching it, 'to be protective
+    of this higher quality stream'. A screen keyed on the immediate receptor's own
+    designation will therefore read the wrong criteria for this basin; read the permit,
+    not the ditch.
+  - The basin drains north to Lake Erie through a heavily tile-drained lakebed plain
+    (the Great Black Swamp), so summer low flows are small and a large share of the
+    receiving water below a POTW outfall is that POTW's own effluent. Treat an assimilative
+    ratio here as a statement about an effluent-dominated stream, not a diluted one.
+facilities:
+- frs_registry_id: '110072231038'
+  name: 008-TOL - DAYTON FREIGHT FACILITY
+  npdes_id: OHGC03937
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.5616
+  longitude: -83.53789
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231561'
+  name: 1055 S NORTH CURTICE ROAD - JOSHUA REINDEL
+  npdes_id: OHGC05436
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100704'
+  county: null
+  latitude: 41.633056
+  longitude: -83.369722
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227110'
+  name: 10566 NEIDERHOUSE ROAD - WICHMAN
+  npdes_id: OHGC09565
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090902
+  county: null
+  latitude: 41.529281
+  longitude: -83.598495
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072223804'
+  name: 2175 E GILL ROAD STORAGE DEVELOPMENT
+  npdes_id: OHGC17352
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.511773
+  longitude: -82.894791
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222382'
+  name: 3425 PLUMEY
+  npdes_id: OHGC18545
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.59344
+  longitude: -83.463433
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224536'
+  name: 84 LUMBER
+  npdes_id: OHGC10173
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.60842
+  longitude: -83.523
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072226995'
+  name: ACCORDION-DOWLING 138KV INTERCONNECT
+  npdes_id: OHGC15929
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.4725
+  longitude: -83.632778
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230833'
+  name: AMBROSE SPEC BUILDING
+  npdes_id: OHGC16281
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.57221
+  longitude: -83.53767
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230372'
+  name: AMERICAN RAIL CENTER
+  npdes_id: OHGC08614
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.56697
+  longitude: -83.52273
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110004610822'
+  name: AMERICAN WARMING AND VENTILATING A DIV OF MESTEK
+  npdes_id: OH0078468
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100302'
+  county: WOOD
+  latitude: 41.32234
+  longitude: -83.43821
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222072'
+  name: AMPLEX INTERNET PHASE III
+  npdes_id: OHGC16782
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: null
+  latitude: 41.48102
+  longitude: -83.45387
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230091'
+  name: ANSTEAD CONSTRUCTION NORTHERN MANUFACTURING
+  npdes_id: OHGC15717
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: null
+  latitude: 41.512581
+  longitude: -83.090279
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221464'
+  name: APOLLO LAYDOWN YARD
+  npdes_id: OHGC18721
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.47235
+  longitude: -83.6289
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224283'
+  name: APOLLO NORTH PIPELINE
+  npdes_id: OHGC19094
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.469132
+  longitude: -83.628913
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072223394'
+  name: APOLLO POWER GENERATION FACILITY
+  npdes_id: OHGC17963
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.45806
+  longitude: -83.6267
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110002319982'
+  name: ARCHER DANIELS MIDLAND CO
+  npdes_id: OH0111449
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: EAST BRANCH PORTAGE RIVER, UNMD TRIB E. BRACH PORTAG
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100202'
+  county: SENECA
+  latitude: 41.1494
+  longitude: -83.43295
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110028008778'
+  name: AREA AGGREGATES - THE OLEN CORP
+  npdes_id: OH0135488
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100402'
+  county: SANDUSKY
+  latitude: 41.442755
+  longitude: -83.344382
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110012523607'
+  name: AREA AGGREGATES/OLEN CORP WOODVILLE PLANT
+  npdes_id: OH0002500
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: NUFHER DITCH/SUGAR CREEEK, SAMPLING PORT BEFORE 002, UNMD TRIB
+    PORTAGE RIVER
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100402'
+  county: SANDUSKY
+  latitude: 41.44038
+  longitude: -83.35731
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110004606980'
+  name: ASPHALT MATERIALS INC- OREGON PLANT
+  npdes_id: OH0122319
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: LUCAS
+  latitude: 41.67008
+  longitude: -83.42947
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227358'
+  name: BAY MEADOWS SUBDIVISION PLAT 2
+  npdes_id: OHGC10704
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.66237
+  longitude: -83.40814
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110041945991'
+  name: BAYSHORE INN
+  npdes_id: OH0130273
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: OTTAWA
+  latitude: 41.511943
+  longitude: -82.895756
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231896'
+  name: BEACH GLASS LOUNGE
+  npdes_id: OHGC09478
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.531217
+  longitude: -82.820461
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072226325'
+  name: BEARD PROPERTY
+  npdes_id: OHGC16545
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100602'
+  county: null
+  latitude: 41.524444
+  longitude: -83.353889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222969'
+  name: BENTWOOD SUBDIVISION
+  npdes_id: OHGC07152
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.3677
+  longitude: -83.63123
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072226548'
+  name: BGSU TEIC BUILIDNG
+  npdes_id: OHGC10783
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.380858
+  longitude: -83.640282
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224288'
+  name: BGSU TURF FIELD RESTORATION
+  npdes_id: OHGC15794
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.38091
+  longitude: -83.6453
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006285723'
+  name: BIRDS NEST RESORT
+  npdes_id: OH0135861
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAKE ERIE
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.63942
+  longitude: -82.82711
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110039780476'
+  name: BLOOMDALE WWTP
+  npdes_id: OH0095176
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: PORTAGE RIVER, URIE DITCH
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100203'
+  county: WOOD
+  latitude: 41.1671
+  longitude: -83.5544
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110024460894'
+  name: BLUE MOON APTS
+  npdes_id: OH0138126
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TRIBUTARY TO TOUSSAINT CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: OTTAWA
+  latitude: 41.51514
+  longitude: -83.33568
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221952'
+  name: BORDER BASIN SOLAR PROJECT
+  npdes_id: OHGC15258
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: null
+  latitude: 41.108889
+  longitude: -83.571389
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110002321005'
+  name: BOWLING GREEN
+  npdes_id: OH0024139
+  npdes_ids_secondary:
+  - OHGC17556
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 10.0
+  design_flow_missing: false
+  receiving_water: POE DITCH
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: WOOD
+  latitude: 41.385022
+  longitude: -83.611078
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110004630748'
+  name: BOWLING GREEN HIGH SCHOOL
+  npdes_id: OHGC09961
+  npdes_ids_secondary:
+  - OHGC11511
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: WOOD
+  latitude: 41.38601
+  longitude: -83.65773
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220371'
+  name: BOWLING GREEN SENIOR LIVING SITE
+  npdes_id: OHGC16818
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.359722
+  longitude: -83.655833
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072232402'
+  name: BOWLING GREEN TRILOGY
+  npdes_id: OHGC06276
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.368757
+  longitude: -83.609628
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110000384361'
+  name: BP-HUSKY REFINING, LLC
+  npdes_id: OH0002461
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: LUCAS
+  latitude: 41.679167
+  longitude: -83.449722
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: 1
+  queried_huc8: '04100010'
+- frs_registry_id: '110009822399'
+  name: BRADNER WWTP
+  npdes_id: OH0047554
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.13
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100302'
+  county: WOOD
+  latitude: 41.32651
+  longitude: -83.44177
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230194'
+  name: BROOKFIELD PLACE NORTH
+  npdes_id: OHGC18943
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090902
+  county: null
+  latitude: 41.55492
+  longitude: -83.59172
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231299'
+  name: BRUSH WELLMAN-GENOA 69KV REBUILD
+  npdes_id: OHGC17246
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100701'
+  county: null
+  latitude: 41.537568
+  longitude: -83.368525
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222881'
+  name: BUCK AND GLENWOOD ROUNDABOUT
+  npdes_id: OHGC17538
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.586916
+  longitude: -83.557785
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006661031'
+  name: CAMP PATMOS
+  npdes_id: OH0119431
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.61473
+  longitude: -82.68563
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230860'
+  name: CAMP PERRY
+  npdes_id: OHGC05079
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.52962
+  longitude: -83.01812
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006285796'
+  name: CAMP SOBROSKE
+  npdes_id: OH0132926
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.004
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100602'
+  county: OTTAWA
+  latitude: 41.579542
+  longitude: -83.08687
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110022520262'
+  name: CARDINAL AGGREGATES, INC
+  npdes_id: OH0135798
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: WOOD
+  latitude: 41.52721
+  longitude: -83.54806
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006285368'
+  name: CARROLL TWP TREATMENT SERVICES INC
+  npdes_id: OH0095575
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAKE ERIE
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100701'
+  county: OTTAWA
+  latitude: 41.60338
+  longitude: -83.10126
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006232754'
+  name: CARROLL W & SD
+  npdes_id: OH0125440
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100701'
+  county: OTTAWA
+  latitude: 41.60391
+  longitude: -83.12933
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072223865'
+  name: 'CASEYS #4501 - FOSTORIA OH'
+  npdes_id: OHGC10564
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100202'
+  county: null
+  latitude: 41.16323
+  longitude: -83.42108
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072232019'
+  name: 'CASEYS #4571 WOODVILLE'
+  npdes_id: OHGC15727
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100402'
+  county: null
+  latitude: 41.4551
+  longitude: -83.37452
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229551'
+  name: CATAWBA COVE AT MIDWAY MARINA
+  npdes_id: OHGC17165
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.552485
+  longitude: -82.83872
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006285876'
+  name: CATAWBA SHORES MHP
+  npdes_id: OH0146641
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: OTTAWA
+  latitude: 41.576418
+  longitude: -82.832243
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227032'
+  name: CENTER & MAIN 2024 AMRP
+  npdes_id: OHGC06982
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100202'
+  county: null
+  latitude: 41.157222
+  longitude: -83.415278
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221047'
+  name: CHARTER STEEL
+  npdes_id: OHGC08615
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111402'
+  county: null
+  latitude: 41.27555
+  longitude: -83.41917
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110027989390'
+  name: CHET'S PLACE
+  npdes_id: OH0138517
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: OTTAWA
+  latitude: 41.50733
+  longitude: -83.07099
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229382'
+  name: CHICK-FIL-A, INC. - FSU 06023 OREGON
+  npdes_id: OHGC17158
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.636811
+  longitude: -83.47986
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230073'
+  name: CHURCH STREET STORM SEWER INTERCEPTOR
+  npdes_id: OHGC09000
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100101'
+  county: null
+  latitude: 41.10624
+  longitude: -83.79533
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110000893445'
+  name: CITGO- OREGON (TOLEDO) TERMINAL
+  npdes_id: OH0058793
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: DRIFTMEYER DITCH, DRIFTMEYER DITCH TO LAKE ERIE
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: LUCAS
+  latitude: 41.6901
+  longitude: -83.45243
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006258815'
+  name: CITY OF BOWLING GREEN
+  npdes_id: OHGQ00435
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: WOOD
+  latitude: 41.37694
+  longitude: -83.65206
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222184'
+  name: CITY OF FOSTORIA
+  npdes_id: OHGQ00430
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111004'
+  county: null
+  latitude: 41.15608
+  longitude: -83.41406
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072223707'
+  name: CITY OF NORTHWOOD
+  npdes_id: OHGQ00053
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.60873
+  longitude: -83.48137
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220341'
+  name: CITY OF OREGON
+  npdes_id: OHGQ00410
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.65249
+  longitude: -83.42121
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006699741'
+  name: CITY OF OREGON WATER PLANT
+  npdes_id: OH0041815
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100704'
+  county: LUCAS
+  latitude: 41.668889
+  longitude: -83.372222
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230910'
+  name: CMP EXPANSION CAMP PERRY
+  npdes_id: OHGC18786
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.54471
+  longitude: -83.02186
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110058286322'
+  name: COUZIES PLACE LLC
+  npdes_id: OH0143855
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: ANDERSON DITCH
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100704'
+  county: LUCAS COUNTY
+  latitude: 41.63829
+  longitude: -83.36191
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110001618474'
+  name: CSX IRON ORE DOCK
+  npdes_id: OHGC18176
+  npdes_ids_secondary:
+  - OH0053163
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: LUCAS
+  latitude: 41.672545
+  longitude: -83.472179
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110011017292'
+  name: CYGNET WWTP
+  npdes_id: OH0029327
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.18
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: WOOD
+  latitude: 41.23635
+  longitude: -83.6403
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009489017'
+  name: DAVIS-BESSE NUCLEAR POWER STATION
+  npdes_id: OH0003786
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100701'
+  county: OTTAWA
+  latitude: 41.5967
+  longitude: -83.0861
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220605'
+  name: DAYSPRING CHURCH
+  npdes_id: OHGC15748
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: null
+  latitude: 41.405278
+  longitude: -83.649722
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072228517'
+  name: DOW GRAHAM ROAD
+  npdes_id: OHGC03615
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100204'
+  county: null
+  latitude: 41.29013
+  longitude: -83.46079
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230568'
+  name: DRY CREEK
+  npdes_id: OHGC18385
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.58785
+  longitude: -83.4997
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072225690'
+  name: DSJ STORAGE CONDOS/ROOTED SOULS
+  npdes_id: OHGC03012
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.531235
+  longitude: -82.82107
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229029'
+  name: EAGLE'S LANDING MOBILE HOME PARK
+  npdes_id: OHGC04106
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: null
+  latitude: 41.18229
+  longitude: -83.662695
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110020690723'
+  name: EAST POINT VILLAS HOMEOWNER'S ASSOCIATION
+  npdes_id: OH0135895
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.004
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.69275
+  longitude: -82.790028
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224399'
+  name: EDEN PARK PLAT 5
+  npdes_id: OHGC06606
+  npdes_ids_secondary:
+  - OHGC06605
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100705'
+  county: null
+  latitude: 41.64757
+  longitude: -83.42881
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221051'
+  name: EISENHOWER FOSTORIA AMRP
+  npdes_id: OHGC02371
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100202'
+  county: null
+  latitude: 41.17132
+  longitude: -83.4277
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006259850'
+  name: ELMWOOD HIGH SCHOOL
+  npdes_id: OH0130621
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100201'
+  county: WOOD
+  latitude: 41.25333
+  longitude: -83.551
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072166842'
+  name: ENVIOSAFE SERVICES OF OHIO INC.
+  npdes_id: OH0053864
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: LUCAS
+  latitude: 41.66676
+  longitude: -83.46877
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072223590'
+  name: ERIE COAST CONSTRUCTION NEW STORAGE FACILITY
+  npdes_id: OHGC17012
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: null
+  latitude: 41.51946
+  longitude: -82.99165
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110071971198'
+  name: ERIE-OTTAWA INTERNATIONAL AIRPORT
+  npdes_id: OHGC10742
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111405'
+  county: OTTAWA
+  latitude: 41.50834
+  longitude: -82.86925
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006285652'
+  name: ERNESTO'S RESTAURANT
+  npdes_id: OH0126951
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.003
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: OTTAWA
+  latitude: 41.506222
+  longitude: -83.321022
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006232987'
+  name: EVERGREEN POPLAR LLC
+  npdes_id: OH0126497
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: WOLF CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111004'
+  county: SENECA
+  latitude: 41.14183
+  longitude: -83.40799
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 5
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072154982'
+  name: EVERGREEN RECYCING AND DISPOSAL FACILITY, INC.
+  npdes_id: OH0095338
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: WOOD
+  latitude: 41.60619
+  longitude: -83.5123
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072232240'
+  name: FACILITY 3
+  npdes_id: OHGC08153
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.689515
+  longitude: -83.432308
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227176'
+  name: FAIRWAY COTTAGES AT CATAWBA ISLAND CLUB
+  npdes_id: OHGC08634
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.559434
+  longitude: -82.841304
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006235939'
+  name: FENWICK MARINA
+  npdes_id: OH0125784
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TURTLE CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100701'
+  county: OTTAWA
+  latitude: 41.58646
+  longitude: -83.0963
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229178'
+  name: FIRST SOLAR
+  npdes_id: OHGC15134
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: null
+  latitude: 41.480556
+  longitude: -83.453889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110070595407'
+  name: FIRST SOLAR PGT-02 ITO EXPANSION
+  npdes_id: OHGC05262
+  npdes_ids_secondary:
+  - OHGC07260
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: WOOD
+  latitude: 41.56195
+  longitude: -83.52799
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072225631'
+  name: FIRST SOLAR PGT-04
+  npdes_id: OHGC02607
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.558052
+  longitude: -83.537973
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110004734440'
+  name: FIRST SOLAR YELLOWSTONE
+  npdes_id: OHGC06262
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: WOOD
+  latitude: 41.55849
+  longitude: -83.55159
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110067091168'
+  name: FISKE BROTHERS REFINING COMPANY
+  npdes_id: OHGC18134
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: LUCAS
+  latitude: 41.621997
+  longitude: -83.509137
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110040345695'
+  name: FIVE POINT MHP WWTP
+  npdes_id: OH0141615
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0066
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: WOOD
+  latitude: 41.510676
+  longitude: -83.596551
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221362'
+  name: FOSTORIA WATER SUPPLY RESERVOIRS 1-6
+  npdes_id: OHG8P0090
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100202'
+  county: null
+  latitude: 41.134684
+  longitude: -83.452566
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110039782358'
+  name: FOSTORIA WWTP
+  npdes_id: OH0052744
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 8.25
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111402'
+  county: SENECA
+  latitude: 41.17456
+  longitude: -83.424
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: 1
+  queried_huc8: '04100010'
+- frs_registry_id: '110006285689'
+  name: FOXS DEN CAMPGROUND
+  npdes_id: OH0135844
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAKE ERIE
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.64207
+  longitude: -82.82154
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221528'
+  name: FT. MEIGS AUTO ELECTRIC
+  npdes_id: OHGC08903
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.602515
+  longitude: -83.52404
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110012567061'
+  name: 'FUEL MART #641'
+  npdes_id: OH0116041
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: CRANE CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: WOOD
+  latitude: 41.52215
+  longitude: -83.46446
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006259663'
+  name: FUEL MART NO 767
+  npdes_id: OH0132632
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.004
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100401'
+  county: WOOD
+  latitude: 41.34127
+  longitude: -83.41783
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009489133'
+  name: GARY SCHUMAKER- (MILLBURY BULK PLANT)
+  npdes_id: OH0122637
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: WOOD
+  latitude: 41.55866
+  longitude: -83.457
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227490'
+  name: GEARED EQUITY
+  npdes_id: OHGC06631
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.548611
+  longitude: -83.574167
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110007160017'
+  name: GERKEN MATERIALS, INC., WEST MILLGROVE QUARRY
+  npdes_id: OH0125547
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100202'
+  county: WOOD
+  latitude: 41.239852
+  longitude: -83.487562
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009822807'
+  name: GIBSONBURG WWTP
+  npdes_id: OH0029122
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100401'
+  county: SANDUSKY
+  latitude: 41.391802
+  longitude: -83.321652
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227420'
+  name: GRAHAM VILLAGE PLAT 2
+  npdes_id: OHGC11097
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100705'
+  county: null
+  latitude: 41.657222
+  longitude: -83.395556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110056958662'
+  name: GRAYMONT DOLIME OH INC
+  npdes_id: OH0002887
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TRIB TO TOUSSAINT CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: OTTAWA
+  latitude: 41.50945
+  longitude: -83.35028
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006213631'
+  name: GREEN VALLEY MOBILE HOME PARK
+  npdes_id: OH0135429
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.009
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100402'
+  county: OTTAWA
+  latitude: 41.49053
+  longitude: -83.27952
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221267'
+  name: GSH PROPERTIES
+  npdes_id: OHGC16542
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100602'
+  county: null
+  latitude: 41.518889
+  longitude: -83.382778
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222274'
+  name: HAMPTON INN PORT CLINTON
+  npdes_id: OHGC08752
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.525278
+  longitude: -82.858056
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006202411'
+  name: HANCOCK COUNTY SANITARY LANDFILL
+  npdes_id: OH0116602
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TRIB OF ROCKY FORD CREEK, UNAMED TRIB TO ROCKY FORD CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: HANCOCK
+  latitude: 41.113025
+  longitude: -83.678782
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110064316681'
+  name: HANSON AGGREGATES-NORTH BALTIMORE QUARRY
+  npdes_id: OH0003492
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TRIBUTARY TO PORTAGE RIVE, UNNAMED TRIB TO MIDDLE BRANCH PORTAGE
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100104'
+  county: WOOD
+  latitude: 41.18687
+  longitude: -83.68483
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072223589'
+  name: HARBOR BAY ESTATES PLAT 8
+  npdes_id: OHGC05839
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111405'
+  county: null
+  latitude: 41.53973
+  longitude: -82.73539
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072225554'
+  name: HARBORS EDGE CONDOMINIUM PHASES 6 AND 7
+  npdes_id: OHGC08160
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.569
+  longitude: -82.841
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221349'
+  name: HARMEYER PROPERTY
+  npdes_id: OHGC10965
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100602'
+  county: null
+  latitude: 41.519444
+  longitude: -83.372222
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006202475'
+  name: HEARTHSIDE FOOD SOLUTIONS LLC
+  npdes_id: OHP000033
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100101'
+  county: HANCOCK
+  latitude: 41.11066
+  longitude: -83.79879
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229136'
+  name: HENRY CREEK WETLANDS MITIGATION BANK
+  npdes_id: OHGC18910
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: null
+  latitude: 41.518279
+  longitude: -83.504957
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072113790'
+  name: HIGH STAKES FARMS
+  npdes_id: OH0151766
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.006
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100201'
+  county: null
+  latitude: 41.19015
+  longitude: -83.56377
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110008595760'
+  name: HIRZEL CANNING CO
+  npdes_id: OH0135666
+  npdes_ids_secondary:
+  - OHGC06163
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: WOLF CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100705'
+  county: WOOD
+  latitude: 41.60965
+  longitude: -83.47401
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221947'
+  name: HIRZEL PROPERTY
+  npdes_id: OHGC10842
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100602'
+  county: null
+  latitude: 41.51819
+  longitude: -83.43388
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110039021064'
+  name: INLAND MARINA AND MHP DBA MAGEE EAST MARINA
+  npdes_id: OH0141674
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TURTLE CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100701'
+  county: OTTAWA
+  latitude: 41.60383
+  longitude: -83.13665
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220014'
+  name: ISLAND PINES RESIDENTIAL SUBDIVISION
+  npdes_id: OHGC16576
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.55233
+  longitude: -82.84782
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006233600'
+  name: ISLAND PRODUCTIONS LLC DBA ST. HAZARDS RESORT
+  npdes_id: OH0125245
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.67843
+  longitude: -82.81214
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231410'
+  name: JABEZ HOLDINGS NEW BUILDING
+  npdes_id: OHGC08703
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.561944
+  longitude: -83.573889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072232021'
+  name: JASON & SAMANTHA CARROLL RESIDENCE
+  npdes_id: OHGC18496
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100704'
+  county: null
+  latitude: 41.639677
+  longitude: -83.370605
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006371746'
+  name: JF WALLEYE MICRO BREWERY
+  npdes_id: OH0125539
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.67241
+  longitude: -82.81221
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072225029'
+  name: JOHLIN BORROW SITE PROPERTY
+  npdes_id: OHGC10104
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.66635
+  longitude: -83.45591
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006661068'
+  name: JOHNNY'S RESORT & REC CAMP
+  npdes_id: OH0126926
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: PORTAGE RIVER
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: OTTAWA
+  latitude: 41.50771
+  longitude: -83.00296
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110008585940'
+  name: KELLEYS ISLAND BREWERY
+  npdes_id: OH0125458
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.59617
+  longitude: -82.72562
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110064274869'
+  name: KELLEYS ISLAND HOUSE RESTAURANT
+  npdes_id: OH0119300
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.59559
+  longitude: -82.71048
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006327974'
+  name: KELLEYS ISLAND QUARRY CONDOMINIUM ASSN
+  npdes_id: OH0119351
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAKE ERIE
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.59416
+  longitude: -82.7121
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110064334144'
+  name: KELLEYS ISLAND SEAWAY MARINA
+  npdes_id: OH0119377
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.59198
+  longitude: -82.70462
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072228227'
+  name: KELLEYS ISLAND STATE PARK
+  npdes_id: OHGC11337
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: null
+  latitude: 41.61436
+  longitude: -82.70654
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110063916286'
+  name: KELLEYS ISLAND STATE PARK CAMPGROUND
+  npdes_id: OH0119261
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.02
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.61436
+  longitude: -82.70654
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110045507885'
+  name: KELLEYS ISLAND VENTURE WOODS
+  npdes_id: OH0143618
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.596111
+  longitude: -82.725833
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110022521341'
+  name: KELLEYS ISLAND WINE COMPANY
+  npdes_id: OH0136018
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.004
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.59584
+  longitude: -82.69695
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110012300269'
+  name: KELLEYS ISLAND WTP
+  npdes_id: OH0130451
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.59492
+  longitude: -82.71073
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110000571319'
+  name: KEYSTONE FOODS LLC EQUITY GROUP OH DIV
+  npdes_id: OHP000250
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: WOOD
+  latitude: 41.18555
+  longitude: -83.64774
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227220'
+  name: KMI WOODVILLE PLANT SITE EXPANSION
+  npdes_id: OHGC18849
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100401'
+  county: null
+  latitude: 41.442704
+  longitude: -83.344252
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110008609835'
+  name: LAKE ERIE BUSINESS PARK LLC
+  npdes_id: OH0002909
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: RUSHA CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: OTTAWA
+  latitude: 41.55392
+  longitude: -83.02956
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110063704647'
+  name: LAKE ERIE LODGE
+  npdes_id: OH0143898
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: LUCAS COUNTY
+  latitude: 41.66081
+  longitude: -83.29465
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006213542'
+  name: LAKE ERIE UTILITIES, INC.
+  npdes_id: OH0095273
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.062
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.68286
+  longitude: -82.81806
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231788'
+  name: LAKO TOOL
+  npdes_id: OHGC09449
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.55955
+  longitude: -83.53992
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072225141'
+  name: LANDINGS ON ERIE
+  npdes_id: OHGC06285
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.51569
+  longitude: -82.90579
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230652'
+  name: LEMOYNE ROAD EAST FACILITY
+  npdes_id: OHGC09471
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100602'
+  county: null
+  latitude: 41.497222
+  longitude: -83.471944
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072225643'
+  name: LEMOYNE WOODVILLE FOSTORIA
+  npdes_id: OHGC06348
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100402'
+  county: null
+  latitude: 41.44965
+  longitude: -83.38452
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072228728'
+  name: LIGHTHOUSE BLUFFS LLC
+  npdes_id: OHGC07884
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.5295
+  longitude: -82.77859
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229331'
+  name: LIME CITY ROAD TEMPORARY STORAGE YARD
+  npdes_id: OHGC03555
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.560833
+  longitude: -83.566389
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224603'
+  name: LIME CITY ROAD WATER MAIN IMPROVEMENTS
+  npdes_id: OHGC11161
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.551111
+  longitude: -83.5675
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229467'
+  name: LOVES - NORTH BALTIMORE PARKING EXPANSION
+  npdes_id: OHGC19165
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: null
+  latitude: 41.17272
+  longitude: -83.65294
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231203'
+  name: LUC-2-21.72 - NAVARRE AVE ROADWAY IMPROVEMENT
+  npdes_id: OHGC16506
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.63679
+  longitude: -83.48082
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229691'
+  name: LUC-COY ROAD RESURFACING AND WIDENING
+  npdes_id: OHGC11140
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.65351
+  longitude: -83.4678
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110071711322'
+  name: LUCKEY WWTP
+  npdes_id: OH0058971
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: WOOD
+  latitude: 41.46531
+  longitude: -83.48067
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110011944423'
+  name: LUTHER HOME OF MERCY
+  npdes_id: OH0126888
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0325
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: OTTAWA
+  latitude: 41.60924
+  longitude: -83.34807
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221237'
+  name: MACK NEW HOME CONSTRUCTION
+  npdes_id: OHGC16060
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100704'
+  county: null
+  latitude: 41.6627
+  longitude: -83.37071
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221843'
+  name: MALLARD CLUB WILDLIFE AREA
+  npdes_id: OHGC09297
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100704'
+  county: null
+  latitude: 41.61938
+  longitude: -83.36736
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072226560'
+  name: MARSH'S CROSSING PUD
+  npdes_id: OHGC07016
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.54068
+  longitude: -82.85
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110033595152'
+  name: MARTIN MARIETTA MAGNESIA SPECIALTIES LLC
+  npdes_id: OH0002658
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: SANDUSKY
+  latitude: 41.462808
+  longitude: -83.367458
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110000383184'
+  name: MATERION BRUSH INC
+  npdes_id: OH0002518
+  npdes_ids_secondary:
+  - OHGC15026
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: HYDE RUN & PORTAGE RIVER
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111301'
+  county: OTTAWA
+  latitude: 41.48839
+  longitude: -83.21624
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006700098'
+  name: MCCOMB VILLAGE WWTP
+  npdes_id: OH0026263
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.388
+  design_flow_missing: false
+  receiving_water: ALGIRE CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100101'
+  county: HANCOCK
+  latitude: 41.11256
+  longitude: -83.79399
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009822503'
+  name: MCCOMB WTP, WASTEWATER LAGOON
+  npdes_id: OH0042081
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: RADER CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100101'
+  county: HANCOCK
+  latitude: 41.10303
+  longitude: -83.78406
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006299905'
+  name: MEINKE MARINA AND CAMPGROUND W
+  npdes_id: OH0130290
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAKE ERIE
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: OTTAWA
+  latitude: 41.66094
+  longitude: -83.2839
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221664'
+  name: MENNEL WAREHOUSE 3
+  npdes_id: OHGC15921
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100202'
+  county: null
+  latitude: 41.151516
+  longitude: -83.425765
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006224674'
+  name: MID-WOOD INC
+  npdes_id: OH0125334
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: WOOD
+  latitude: 41.35659
+  longitude: -83.64667
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110019896870'
+  name: MILLER BOAT LINES, INC.
+  npdes_id: OH0126977
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.631246
+  longitude: -82.836755
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224098'
+  name: MOLINE AMRP 2024
+  npdes_id: OHGC06695
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.558333
+  longitude: -83.51
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222500'
+  name: MSP DOLLAR GENERAL - NORTHWOOD, OH
+  npdes_id: OHGC09345
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.599977
+  longitude: -83.461404
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221496'
+  name: NAVARRE AVE TO STARR AVE - PHASE 2 OF OREGON TRAIL
+  npdes_id: OHGC16501
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100705'
+  county: null
+  latitude: 41.63717
+  longitude: -83.46005
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110012138677'
+  name: NORTH BALTIMORE WASTEWATER TREATMENT PLANT
+  npdes_id: OH0020117
+  npdes_ids_secondary:
+  - OH0041637
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.8
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: WOOD
+  latitude: 41.182733
+  longitude: -83.665936
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222243'
+  name: NORTH FINDLAY WIND CAMPUS
+  npdes_id: OHGC10040
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: null
+  latitude: 41.10211
+  longitude: -83.639808
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110051256500'
+  name: NORTHWESTERN WATER AND SEWER DISTRICT
+  npdes_id: OHGC11188
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090901
+  county: WOOD
+  latitude: 41.45826
+  longitude: -83.63958
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230602'
+  name: NORTHWOOD LOCAL SCHOOLS FOOTBALL STADIUM
+  npdes_id: OHGC05044
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100705'
+  county: null
+  latitude: 41.60306
+  longitude: -83.47403
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220540'
+  name: NUTRITIONAL PRODUCT MANUFACTURING FACILITY
+  npdes_id: OHGC08916
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: null
+  latitude: 41.409167
+  longitude: -83.648056
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229605'
+  name: NWO BEVERAGE
+  npdes_id: OHGC18395
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.609131
+  longitude: -83.523442
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110040035976'
+  name: NWWSD - VILLAGE OF HOYTVILLE WWTP
+  npdes_id: OH0095257
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.036
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100102'
+  county: WOOD
+  latitude: 41.19
+  longitude: -83.78131
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006285144'
+  name: OAK HARBOR WWTP
+  npdes_id: OH0026841
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.93
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: OTTAWA
+  latitude: 41.5076
+  longitude: -83.1369
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: 1
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220340'
+  name: ODFL TOLEDO
+  npdes_id: OHGC05390
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.599422
+  longitude: -83.528039
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110008587939'
+  name: ODNR- SOUTH BASS ISLAND STATE PARK
+  npdes_id: OH0125636
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.02
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.65095
+  longitude: -82.82125
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110000893864'
+  name: ODOT
+  npdes_id: OHGZ00014
+  npdes_ids_secondary:
+  - OHGZ00043
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000060202'
+  county: WOOD
+  latitude: 41.38555
+  longitude: -83.64496
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110012523215'
+  name: ODOT
+  npdes_id: OHGZ00013
+  npdes_ids_secondary:
+  - OHGZ00010
+  - OHGZ00012
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: WOOD
+  latitude: 41.38555
+  longitude: -83.64496
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220846'
+  name: OHIO LOGISTICS-MARELLI
+  npdes_id: OHGC09996
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.382778
+  longitude: -83.598333
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231106'
+  name: OPPIDAN BOWLING GREEN DATA CENTER
+  npdes_id: OHGC15293
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.382222
+  longitude: -83.596667
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220575'
+  name: OREGON PLACE APARTMENTS
+  npdes_id: OHGC11720
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.630556
+  longitude: -83.477222
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227120'
+  name: OREGON ROAD FLEX SPACE
+  npdes_id: OHGC18440
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.565316
+  longitude: -83.537806
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229302'
+  name: OREGON SPEC BUILDING
+  npdes_id: OHGC01957
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.65926
+  longitude: -83.44734
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221717'
+  name: OREGON TOWN CENTER AND HARBOR DRIVE EXT - PHASE 1
+  npdes_id: OHGC08246
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.65249
+  longitude: -83.42121
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220418'
+  name: OREGON TRAIL PH 5 - OTC (PIC 121105)
+  npdes_id: OHGC18105
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100705'
+  county: null
+  latitude: 41.637164
+  longitude: -83.460346
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110000549014'
+  name: OREGON WASTEWATER TREATMENT PLANT
+  npdes_id: OH0052914
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 8.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: LUCAS
+  latitude: 41.681319
+  longitude: -83.440743
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221820'
+  name: OTIC 432403 - BRIDGE DECK REPAIR & REMOV
+  npdes_id: OHGC10301
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: null
+  latitude: 41.448611
+  longitude: -83.261111
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227839'
+  name: OTT-163-24.16 (PID 115148)
+  npdes_id: OHGC08604
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: null
+  latitude: 41.519167
+  longitude: -82.951667
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227580'
+  name: OTTAWA COUNTY & OTHERS
+  npdes_id: OHGQ00421
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111405'
+  county: null
+  latitude: 41.50979
+  longitude: -82.94109
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009821032'
+  name: OTTAWA COUNTY REGIONAL WATER TREATMENT PLANT
+  npdes_id: OH0122157
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: OTTAWA
+  latitude: 41.511389
+  longitude: -82.958333
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222323'
+  name: OTTER CREEK STREAM FLOODPLAIN 2024
+  npdes_id: OHGC11280
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.65668
+  longitude: -83.47907
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006259315'
+  name: OTTERBEIN PORTAGE VALLEY
+  npdes_id: OH0058980
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: FLOYD RUN, FLOYD RUN DITCH
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: WOOD
+  latitude: 41.44673
+  longitude: -83.4538
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231986'
+  name: PACKER CREEK
+  npdes_id: OHGC15322
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100602'
+  county: null
+  latitude: 41.52949
+  longitude: -83.33929
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006105552'
+  name: PANDORA RENTALS LLC
+  npdes_id: OH0052418
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100401'
+  county: SANDUSKY
+  latitude: 41.38217
+  longitude: -83.33907
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006213837'
+  name: PARADISE ACRES CAMPGROUND
+  npdes_id: OH0132683
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0315
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100603'
+  county: OTTAWA
+  latitude: 41.57678
+  longitude: -83.07723
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009613784'
+  name: PEMBERVILLE WWTP
+  npdes_id: OH0026972
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100402'
+  county: WOOD
+  latitude: 41.40985
+  longitude: -83.46129
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231675'
+  name: PERRY'S VICTORY AND INTERNATIONAL PEACE MEMORIAL
+  npdes_id: OHGC00110
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: null
+  latitude: 41.65288
+  longitude: -82.81357
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231988'
+  name: PERRYSBURG ACCESS ROAD
+  npdes_id: OHGC19107
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090902
+  county: null
+  latitude: 41.54144
+  longitude: -83.58698
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072226782'
+  name: PERRYSBURG DG
+  npdes_id: OHGC16055
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: null
+  latitude: 41.505278
+  longitude: -83.464444
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110011015392'
+  name: PERRYSBURG ESTATES MHP
+  npdes_id: OH0102687
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LIME CITY ROAD DITCH
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: WOOD
+  latitude: 41.49532
+  longitude: -83.56803
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072232419'
+  name: PERRYSBURG PLACE APARTMENTS
+  npdes_id: OHGC04902
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.55234
+  longitude: -83.59171
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006259146'
+  name: PERRYSBURG TOWNSHIP ADMINISTRATION
+  npdes_id: OHGC16100
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: WOOD
+  latitude: 41.53849
+  longitude: -83.56761
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224390'
+  name: PHOENIX TECHNOLOGY
+  npdes_id: OHGC01525
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: null
+  latitude: 41.39228
+  longitude: -83.65533
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072225978'
+  name: PID 111193 WOO-25-8.41 S MAIN STREET IMP
+  npdes_id: OHGC15064
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.36
+  longitude: -83.65
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110004671800'
+  name: PILOT TRAVEL CENTER LLC NO 012
+  npdes_id: OH0116611
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: WOOD
+  latitude: 41.52216
+  longitude: -83.46129
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229917'
+  name: PORK CHOP'S CAMPGROUND & CABIN, LLC
+  npdes_id: OHGC15941
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.52551
+  longitude: -82.829849
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110037514589'
+  name: PORKY'S PIZZA TROF
+  npdes_id: OH0141712
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100603'
+  county: OTTAWA
+  latitude: 41.58573
+  longitude: -83.09581
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220745'
+  name: PORT CLINTON
+  npdes_id: OHGC11156
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.50913
+  longitude: -82.93921
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229567'
+  name: PORT CLINTON BOAT STORAGE
+  npdes_id: OHGC04505
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111405'
+  county: null
+  latitude: 41.508518
+  longitude: -82.88903
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009425103'
+  name: PORT CLINTON LANDFILL, INC.
+  npdes_id: OH0102326
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: OTTAWA
+  latitude: 41.524265
+  longitude: -83.020356
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110002345631'
+  name: PORT CLINTON WASTEWATER TREATMENT PLANT
+  npdes_id: OH0052876
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: OTTAWA
+  latitude: 41.513074
+  longitude: -82.944762
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009699460'
+  name: PORTAGE POINT CONDOS & OAK HARBOR GOLF CLUB
+  npdes_id: OH0125661
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: OTTAWA
+  latitude: 41.49569
+  longitude: -83.12654
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110046566024'
+  name: PORTAGE VIEW CAMPGROUND
+  npdes_id: OH0132420
+  npdes_ids_secondary:
+  - OHGC08726
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: OTTAWA
+  latitude: 41.51194
+  longitude: -83.03954
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006213436'
+  name: PORTAGE/CATAWBA ISLAND WASTEWATER TREATMENT PLANT
+  npdes_id: OH0095435
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.68
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: OTTAWA
+  latitude: 41.54083
+  longitude: -82.85983
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222305'
+  name: PORTSIDE MARINA
+  npdes_id: OHG8P0007
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: null
+  latitude: 41.59416
+  longitude: -82.71212
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110004719779'
+  name: PRECISION AGGREGATES II LLC
+  npdes_id: OH0125385
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: WOOD
+  latitude: 41.3114
+  longitude: -83.64178
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110062669713'
+  name: PREDATOR TRUCKING COMPANY
+  npdes_id: OH0126896
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.002
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100402'
+  county: SANDUSKY
+  latitude: 41.46068
+  longitude: -83.33822
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220193'
+  name: PROJECT ACCORDION
+  npdes_id: OHGC15219
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.45819
+  longitude: -83.63505
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227288'
+  name: PROJECT YELLOW JACKET
+  npdes_id: OHGC10568
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.543056
+  longitude: -83.5725
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229935'
+  name: PROPOSED STORAGE UNIT BUILDING
+  npdes_id: OHGC08939
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100705'
+  county: null
+  latitude: 41.63923
+  longitude: -83.40949
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110022520119'
+  name: PUT-IN-BAY SYNERGY LLC DBA PUT-IN-BAY CONDOS
+  npdes_id: OH0138053
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.63985
+  longitude: -82.82501
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009823138'
+  name: PUT-IN-BAY WWTP
+  npdes_id: OH0022322
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.653816
+  longitude: -82.817451
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220800'
+  name: PUTNAM COUNTY FAIRGROUNDS EVENT CENTER
+  npdes_id: OHGC07034
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000080602
+  county: null
+  latitude: 41.512108
+  longitude: -82.922103
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231664'
+  name: 'QUIKTRIP #7101'
+  npdes_id: OHGC11424
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.37443
+  longitude: -83.61025
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227848'
+  name: 'QUIKTRIP #7104'
+  npdes_id: OHGC11443
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.587222
+  longitude: -83.556944
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224091'
+  name: RADER ROAD - NEW LIBERTY 138 KV LINE REBUILD
+  npdes_id: OHGC18636
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: null
+  latitude: 41.09545
+  longitude: -83.751115
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227398'
+  name: RADER STATION
+  npdes_id: OHGC18043
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100101'
+  county: null
+  latitude: 41.11379
+  longitude: -83.79818
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110064503265'
+  name: RATTLESNAKE ISLAND CLUB
+  npdes_id: OH0143871
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.015
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA COUNTY
+  latitude: 41.67922
+  longitude: -82.84991
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072227776'
+  name: RC WATERS ELEMENTARY SCHOOL
+  npdes_id: OHGC01363
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: null
+  latitude: 41.50988
+  longitude: -83.14103
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230875'
+  name: RED HORSE ANG
+  npdes_id: OHGC07587
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: null
+  latitude: 41.52962
+  longitude: -83.01812
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072223446'
+  name: REDWOOD - LIME CITY ROAD
+  npdes_id: OHGC11288
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090902
+  county: null
+  latitude: 41.567778
+  longitude: -83.568889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072228948'
+  name: REDWOOD LIME CITY RD PH1
+  npdes_id: OHGC18206
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090902
+  county: null
+  latitude: 41.56495
+  longitude: -83.56908
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110028299721'
+  name: RISINGSUN WWTP
+  npdes_id: OH0138649
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.095
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100401'
+  county: WOOD
+  latitude: 41.275
+  longitude: -83.4242
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222674'
+  name: RIVER ROCK PROP GROUP OREGON TOWN CENTER
+  npdes_id: OHGC15122
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: null
+  latitude: 41.63678
+  longitude: -83.48142
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072232236'
+  name: ROCKY FORD SUBSTATION PROJECT
+  npdes_id: OHGC15082
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: null
+  latitude: 41.108971
+  longitude: -83.569079
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224280'
+  name: ROCKY FORD WETLAND RESTORATION
+  npdes_id: OHGC17652
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: null
+  latitude: 41.265405
+  longitude: -83.64321
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072232064'
+  name: ROSSFORD EXEMPTED VILLAGE SCHOOL DISTRICT NEW MIDDLE SCHOOL
+  npdes_id: OHGC17321
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090902
+  county: null
+  latitude: 41.566965
+  longitude: -83.56739
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006429944'
+  name: ROUEN CHRYSLER DODGE JEEEP SERVICE ADDN
+  npdes_id: OHGC06184
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: SANDUSKY
+  latitude: 41.47227
+  longitude: -83.41633
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110008609960'
+  name: SAUNDERS RESORT SOUTH
+  npdes_id: OH0126462
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LAKE ERIE
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.642491
+  longitude: -82.835723
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230424'
+  name: SCHLIEVERT FLOODPLAIN RESTORATION
+  npdes_id: OHGC17032
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: null
+  latitude: 41.520801
+  longitude: -83.296087
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110001622691'
+  name: SHELLY MATERIALS INC - WHITE ROCK QUARRY
+  npdes_id: OH0002861
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UT TO NORTH TURTLE CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100701'
+  county: OTTAWA
+  latitude: 41.57008
+  longitude: -83.36842
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110071710803'
+  name: SLEEP OVER VENTURE RESORT
+  npdes_id: OH0138771
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.595627
+  longitude: -82.725483
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220928'
+  name: 'SP #647'
+  npdes_id: OHGC18699
+  npdes_ids_secondary:
+  - OHGC18698
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090902
+  county: null
+  latitude: 41.584144
+  longitude: -83.55994
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230945'
+  name: SR 582 & DUNBRIDGE RD WATER MAIN & SEWER IMP
+  npdes_id: OHGC11178
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090901
+  county: null
+  latitude: 41.458056
+  longitude: -83.639167
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224996'
+  name: STANDARD WELLNESS COMPANY LLC
+  npdes_id: OHGC19193
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100501'
+  county: null
+  latitude: 41.381433
+  longitude: -83.305247
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230100'
+  name: STATE ROUTE 163 WATERLINE REPLACEMENT
+  npdes_id: OHGC16223
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: null
+  latitude: 41.51084
+  longitude: -83.15356
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221781'
+  name: STAYAPT SUITES ROSSFORD, OH
+  npdes_id: OHGC01546
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090902
+  county: null
+  latitude: 41.56497
+  longitude: -83.57881
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110008595305'
+  name: STONECO INC LIME CITY PLANT
+  npdes_id: OH0003573
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: B&R MILLS DITCH TO DRY CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: WOOD
+  latitude: 41.53478
+  longitude: -83.56622
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110011018040'
+  name: STONECO INC-PORTAGE QUARRY
+  npdes_id: OH0003549
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: RAILROAD DITCH TO NORTH BRANCH PORTAGE RIVER
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: WOOD
+  latitude: 41.312151
+  longitude: -83.650351
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006259119'
+  name: STONY RIDGE KOA CAMPGROUND
+  npdes_id: OH0146536
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0075
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: WOOD
+  latitude: 41.51137
+  longitude: -83.49274
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072228928'
+  name: THE ASHFORD AT THE ENCLAVE
+  npdes_id: OHGC17207
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.60509
+  longitude: -83.45548
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222512'
+  name: THE BRIDGES AT NORTHWOOD
+  npdes_id: OHGC01407
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.605
+  longitude: -83.463889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006195991'
+  name: THE CADDY SHACK
+  npdes_id: OH0119334
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.59455
+  longitude: -82.71087
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220247'
+  name: THE ENCLAVE - CONTRACT A
+  npdes_id: OHGC04575
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.60104
+  longitude: -83.46042
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110010126862'
+  name: THE ISLAND CLUB OWNERS ASSOC INC
+  npdes_id: OH0116432
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.63961
+  longitude: -82.83547
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110037514730'
+  name: THE MIDDLE BASS CLUB
+  npdes_id: OH0138410
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.684295
+  longitude: -82.826473
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006213329'
+  name: THE RESORT AT ERIE LANDING
+  npdes_id: OH0102229
+  npdes_ids_secondary:
+  - OHGC09861
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100502'
+  county: OTTAWA
+  latitude: 41.49376
+  longitude: -83.01987
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006661022'
+  name: THE VILLAGE PUMP
+  npdes_id: OH0119369
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.014
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.587652
+  longitude: -82.702991
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221698'
+  name: THE VILLAS AT BONITA FARMS
+  npdes_id: OHGC00829
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.574722
+  longitude: -83.535
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110000384325'
+  name: TOLEDO LUCAS COUNTY PORT AUTHORITY
+  npdes_id: OH0146617
+  npdes_ids_secondary:
+  - OH0002925
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: LUCAS
+  latitude: 41.692514
+  longitude: -83.437376
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110010534261'
+  name: TOLEDO REFINING COMPANY LLC
+  npdes_id: OH0002763
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: LUCAS
+  latitude: 41.6295
+  longitude: -83.4965
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110070033323'
+  name: TOLEDO RESTORATION/WAGONER RENTALS
+  npdes_id: OH0143391
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: HENRY CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: WOOD COUNTY
+  latitude: 41.51683
+  longitude: -83.52742
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009821318'
+  name: TOLEDO TRAVELCENTER
+  npdes_id: OH0111368
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: CRANE CREEK
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: WOOD
+  latitude: 41.52215
+  longitude: -83.46166
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110064190806'
+  name: TOLEDO WTP
+  npdes_id: OH0030759
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100706'
+  county: LUCAS
+  latitude: 41.666024
+  longitude: -83.476996
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072223973'
+  name: TOUSSAINT CREEK
+  npdes_id: OHGC18002
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100603'
+  county: null
+  latitude: 41.55293
+  longitude: -83.2125
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110008590346'
+  name: TOUSSAINT RIVER MARINA
+  npdes_id: OH0130087
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.006
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100603'
+  county: PUTNAM
+  latitude: 41.58368
+  longitude: -83.08627
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231964'
+  name: TRACY ROAD RECONSTRUCTION
+  npdes_id: OHGC15890
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.56195
+  longitude: -83.52799
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110012160197'
+  name: TROY ENERGY LLC
+  npdes_id: OH0132373
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: WOOD
+  latitude: 41.47416
+  longitude: -83.45388
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229454'
+  name: TRUE NORTH ENERGY LLC
+  npdes_id: OHGC17570
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: 041000090902
+  county: null
+  latitude: 41.58688
+  longitude: -83.55775
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006284519'
+  name: TURTLE CREEK MARINA AND CAMPGROUND
+  npdes_id: OH0122220
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TURTLE CREEK, LAKE ERIE
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100701'
+  county: OTTAWA
+  latitude: 41.60904
+  longitude: -83.12579
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006224772'
+  name: TWIN MAPLES MHP
+  npdes_id: OH0138801
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100401'
+  county: WOOD
+  latitude: 41.3425
+  longitude: -83.423611
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224642'
+  name: UHAUL
+  npdes_id: OHGC09034
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.563889
+  longitude: -83.581667
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110007384534'
+  name: UNITED STATES GYPSUM COMPANY
+  npdes_id: OH0031046
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.50673
+  longitude: -82.87069
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072222689'
+  name: UPS
+  npdes_id: OHGC09221
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100101'
+  county: null
+  latitude: 41.18302
+  longitude: -83.719178
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072228286'
+  name: VAN BUREN SCHOOLS - PARKING EXPANSION
+  npdes_id: OHGC05951
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: null
+  latitude: 41.13534
+  longitude: -83.6495
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072226003'
+  name: VAN BUREN STATE PARK
+  npdes_id: OHGC10097
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100103'
+  county: null
+  latitude: 41.13826
+  longitude: -83.64483
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006224781'
+  name: VILLAGE GREEN MHP
+  npdes_id: OH0095117
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: WOOD
+  latitude: 41.49251
+  longitude: -83.54105
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006285625'
+  name: VILLAGE OF ELMORE
+  npdes_id: OH0021261
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.275
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100402'
+  county: OTTAWA
+  latitude: 41.478884
+  longitude: -83.287214
+  compliance_status: null
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110011017719'
+  name: VILLAGE OF GENOA WWTP
+  npdes_id: OH0021016
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.6
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: OTTAWA
+  latitude: 41.504847
+  longitude: -83.335516
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110008585931'
+  name: VILLAGE OF PUT-IN-BAY WATER TREATMEN PLANT
+  npdes_id: OH0126721
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: OTTAWA
+  latitude: 41.64609
+  longitude: -82.81381
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110020794461'
+  name: VILLAGE OF WOODVILLE
+  npdes_id: OH0020591
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100402'
+  county: SANDUSKY
+  latitude: 41.45103
+  longitude: -83.34798
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 0
+  formal_enf_count: 3
+  queried_huc8: '04100010'
+- frs_registry_id: '110072225682'
+  name: WALGREENS TMF EXPANSION 2024
+  npdes_id: OHGC10566
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.56706
+  longitude: -83.53771
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072228061'
+  name: WALNUT HILLS AMRP
+  npdes_id: OHGC01128
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.596389
+  longitude: -83.491667
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072231907'
+  name: WATERVIEW AT BAY POINT
+  npdes_id: OHGC07633
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111405'
+  county: null
+  latitude: 41.518815
+  longitude: -82.722128
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110011016523'
+  name: WAYNE WWTP
+  npdes_id: OH0058190
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.092
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100204'
+  county: WOOD
+  latitude: 41.2899
+  longitude: -83.4859
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110045507894'
+  name: WEST BAY INN
+  npdes_id: OH0143642
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: null
+  county: ERIE
+  latitude: 41.60996
+  longitude: -82.72354
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110009820783'
+  name: WILDFLOWER PLACE SUBDIVISION HOA
+  npdes_id: OH0126578
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.057
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100702'
+  county: OTTAWA
+  latitude: 41.60752
+  longitude: -83.35759
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110055246988'
+  name: WILLOW BEACH MHP INC
+  npdes_id: OH0143791
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100503'
+  county: OTTAWA
+  latitude: 41.5404
+  longitude: -83.00157
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110034169129'
+  name: WIN WASTE INNOVATIONS OF SENECA COUNTY, LLC
+  npdes_id: OH0111465
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000111004'
+  county: SENECA
+  latitude: 41.108215
+  longitude: -83.413383
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072230916'
+  name: WM DRY CREEK STREAM RESTORATION
+  npdes_id: OHGC17105
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.60619
+  longitude: -83.5123
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072224824'
+  name: WOO-20-4.63 ROUNDABOUT
+  npdes_id: OHGC16206
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: null
+  latitude: 41.537778
+  longitude: -83.573056
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110011910557'
+  name: WOOD COUNTY & OTHERS
+  npdes_id: OHGQ00423
+  npdes_ids_secondary:
+  - OHQ400004
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100601'
+  county: WOOD
+  latitude: 41.37598
+  longitude: -83.64811
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072221506'
+  name: WOOD COUNTY BOARD OF DD
+  npdes_id: OHGC11538
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.354683
+  longitude: -83.614876
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072220258'
+  name: WOOD COUNTY HOSPITAL PHARMACEUTICAL DIST
+  npdes_id: OHGC02244
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.36457
+  longitude: -83.60432
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110020743016'
+  name: WOOD COUNTY REGIONAL AIRPORT
+  npdes_id: OHGC11572
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: WOOD
+  latitude: 41.38538
+  longitude: -83.6333
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072229061'
+  name: WOOD LANE SCHOOL
+  npdes_id: OHGC18941
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100301'
+  county: null
+  latitude: 41.354683
+  longitude: -83.614876
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110046252540'
+  name: WYLIE & SONS SAND & STONE
+  npdes_id: OH0146692
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100703'
+  county: WOOD
+  latitude: 41.547183
+  longitude: -83.557543
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110038519966'
+  name: XYLOPHONE LLC
+  npdes_id: OH0135739
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100401'
+  county: SANDUSKY
+  latitude: 41.342045
+  longitude: -83.417055
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110072232868'
+  name: ZELLER PROPERTY
+  npdes_id: OHGC10275
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100602'
+  county: null
+  latitude: 41.520833
+  longitude: -83.375833
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'
+- frs_registry_id: '110006373913'
+  name: ZINSER HOMESTEAD
+  npdes_id: OH0126781
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: KREMKE DITCH
+  huc8: '04100010'
+  huc8_name: Cedar-Portage
+  huc12: '041000100603'
+  county: OTTAWA
+  latitude: 41.5331
+  longitude: -83.21518
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100010'

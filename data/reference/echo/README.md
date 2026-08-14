@@ -14,13 +14,15 @@ NPDES ID, and value here was returned by the ECHO API — nothing is fabricated 
 inferred. The one exception is a **curated receiving water**, which is never invented
 either: it is a document-cited correction declared in the
 [curated overlay](#curated-receiving-water-the-refresh-path) and always marked as such on
-the row. Four basins are committed today, each with its own
+the row. Five basins are committed today, each with its own
 `<basin>-wwtp.*` fileset: the **Maumee** (`watermark npdes`, the default), the **Great
 Miami** (`watermark npdes --basin great-miami`, the Miami-basin sites — Urbana, Springfield,
 WPAFB, Troy-Piqua, Hamilton-Middletown), the **Little Miami** (`watermark npdes --basin
 little-miami`, the Scenic-River sites Xenia and Wilmington / Todd Fork, a single HUC-8
-`05090202`), and **Ohio Brush Creek** (`watermark npdes --basin ohio-brush-creek`, the
-direct-to-Ohio-River branch at West Union / Adams County — a single HUC-8 `05090201`; #1120).
+`05090202`), **Ohio Brush Creek** (`watermark npdes --basin ohio-brush-creek`, the
+direct-to-Ohio-River branch at West Union / Adams County — a single HUC-8 `05090201`; #1120),
+and the **Portage** (`watermark npdes --basin portage`, the direct-to-Lake-Erie branch at
+Bowling Green / Middleton Township — a single HUC-8 `04100010`; #1433).
 One further basin is **registered in the connector but not yet committed**:
 the **Scioto** (`--basin scioto`, the Columbus / New Albany data-center cluster) — deferred
 on an ECHO 300/hr throttle (HTTP 429). Run `watermark npdes --basin scioto` to write its
@@ -263,6 +265,97 @@ Files: `ohio-brush-creek-wwtp.all-npdes.yaml`, `ohio-brush-creek-wwtp.potw.yaml`
 `ohio-brush-creek-wwtp.huc-counts.yaml`. There is no curated receiving-water overlay for this
 basin yet.
 
+## Portage River basin (`portage-wwtp.*`, #1433)
+
+The network's first **direct-to-Lake-Erie** branch that does not run through the Maumee —
+Bowling Green / Middleton Township (#1433), whose Water Pollution Control plant discharges to
+Poe Ditch and thence to the North Branch Portage River. One HUC-8, the same `p_huc` method
+and field shape as the others:
+
+| HUC-8 | subbasin |
+|-------|----------|
+| 04100010 | Cedar-Portage |
+
+**Read the scope before reading the file.** Like Ohio Brush Creek above, this slug is a part
+naming a whole: 04100010 "Cedar-Portage" is a WBD cataloging unit covering the Portage River
+*and* the frontal Lake Erie drainage beside it, and the pull says so without any outside
+dataset. Its rows include the Lake Erie islands — Put-in-Bay, Kelleys Island State Park,
+ODNR's South Bass Island campground — plus Catawba Island and Oregon on Maumee Bay, none of
+which are Portage River drainage at all. Each is a **sibling** of the Portage, not one of its
+headwaters: neither upstream nor downstream of a Portage discharger, and never entitled to
+borrow its low flow.
+
+The split is live at the network's own watershed point. Bowling Green's data-center campus
+sits in HUC-12 `041000100703` (Cedar Creek-Frontal Lake Erie) while the city's WPC plant
+discharges in `041000100301` (N Br Portage/Poe Ditch), so campus construction runoff does not
+reach the plant's receiving water — a fact established from the permits in #1439 and
+reproduced by this unit's own composition.
+
+**Last pull (2026-08-14):** 310 active-permit rows in the one HUC-8 → **296 facilities**
+after FRS dedup, **26 POTW** (34.858 MGD of design flow, present for 23 of 26). Ohio-only,
+spread across seven counties — for the POTWs, Ottawa 10, Wood 9, Seneca 2, Sandusky 2, Erie
+1, Hancock 1, Lucas 1. **Bowling Green (OH0024139, 10.0 MGD) is the largest POTW in the
+basin**, ahead of Fostoria's 8.25 and Oregon's 8.0.
+
+> **ECHO's county spelling is not normalized in this pull.** Both `LUCAS` and `LUCAS COUNTY`
+> come back, likewise Ottawa and Wood, and 154 of the 296 rows carry no county at all. A
+> county tally taken off this file under-counts rather than resolving to zero, and must fold
+> the two spellings together before it means anything.
+
+### What screens, and what does not
+
+`receiving_water` is null for **261 of the 296** rows in that pull, and for 21 of the 26
+POTWs. The assimilative screen (`watermark --site bowling-green basin-screen`) reports:
+
+| outcome | POTWs | why |
+|---|---|---|
+| screened | 1 | Bowling Green, on its own permit-bound at-outfall 7Q10 — **0.024:1, `violation`** |
+| no receiving water | 21 | ECHO carries no `CWPStateWaterBodyName` |
+| no 7Q10 | 4 | a named receiver the screen cannot use — see below |
+
+The one screened row is Bowling Green itself, and it does **not** screen against a basin proxy:
+`poe ditch (bowling green wpc outfall, rm 2.5)` in `low-flow-7q10.yaml` is `permits:`-bound to
+`OH0024139` / `2PD00009`, so `screen_facility` takes the permit match ahead of any name match.
+The binding is safe here in the way the Defiance entry's note requires — the fact sheet's 10 MGD
+average design flow and the 10.0 MGD ECHO carries for this permit agree exactly, so a
+permit-cited numerator is paired with a denominator that permit corroborates. The **bare** name
+`poe ditch` deliberately resolves to nothing, so a future second discharger on the ditch cannot
+inherit a low flow computed at this outfall alone.
+
+The four remaining named receivers are Algire Creek (McComb), Wolf Creek (Evergreen Poplar),
+Turtle Creek (Fenwick Marina) and `PORTAGE RIVER, URIE DITCH` (Bloomdale). Three are ungaged
+tributaries with no NWIS daily-discharge record meeting the 20-climatic-year floor. The fourth
+**names two different waters**, and ECHO's field is a permit-level aggregate over every outfall,
+so nothing in it says which one carries the design flow — the screen refuses that row rather
+than crediting it with the larger.
+
+**No Portage mainstem gage is registered in `mainstem-gages.yaml`, and that is deliberate.**
+Registering one would screen exactly zero rows today — the only mainstem-naming row is
+Bloomdale's compound, which is refused on its own terms — while creating a live hazard: a
+mainstem gage integrates a drainage area far larger than the North Branch or Poe Ditch above
+it, so any later alias reaching Bowling Green's outfall would overstate its dilution by
+orders of magnitude. That is the same defect class as the 17x overstatements found at Sidney
+(#1992) and in #1995's routing table, and the cheapest place to not commit it is here.
+
+**Bowling Green's own outfall is screened anyway, by the better number.** Ohio EPA's fact
+sheet for `2PD00009` publishes a drainage-area-adjusted **7Q10 of 0.364 cfs** at the outfall
+(Table 12, from USGS 04195500 over 1951-97) — the regulator's own denominator for this reach,
+carried in `reference/hydrology/bowling-green/routing.yaml` with `source: document`. A cited
+permit-scoped low flow beats a basin-wide screening proxy wherever one exists, which is why
+this basin's zero screened rows are a statement about the other twenty-five plants and not
+about the site.
+
+One more property of the basin worth stating plainly: it drains a heavily tile-drained
+lakebed plain (the Great Black Swamp), so summer low flows are small and a large share of the
+receiving water below a POTW outfall is that plant's own effluent. Bowling Green's 15.47 cfs
+design discharge against a 0.364 cfs 7Q10 is roughly **42x the river it enters**. Read an
+assimilative ratio here as a statement about an effluent-dominated stream, not a diluted one.
+
+Files: `portage-wwtp.all-npdes.yaml`, `portage-wwtp.potw.yaml`,
+`portage-wwtp.huc-counts.yaml`. There is no curated receiving-water overlay for this basin
+yet — closing the 21 null receivers means reading 21 permits' fact sheets, and each
+correction needs its own citation.
+
 ## Known gaps & caveats (read before using)
 
 1. **No CWNS ID.** The ECHO CWA facility service has *no* CWNS column, so the
@@ -387,5 +480,17 @@ Regenerate: `watermark npdes --basin ohio-brush-creek`
 | `reference/echo/ohio-brush-creek-wwtp.all-npdes.yaml` | application/x-yaml | no |
 | `reference/echo/ohio-brush-creek-wwtp.huc-counts.yaml` | application/x-yaml | no |
 | `reference/echo/ohio-brush-creek-wwtp.potw.yaml` | application/x-yaml | no |
+
+### `echo-portage-wwtp` — Portage-basin NPDES discharger inventory (EPA ECHO)
+
+Source: EPA ECHO — cwa_rest_services (CWA v2017-10-13) · License: U.S. Government work (public domain) · Access: throttled · Site scope: basin:portage · Refresh: quarterly (ttl 180d)
+
+Regenerate: `watermark npdes --basin portage`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/echo/portage-wwtp.all-npdes.yaml` | application/x-yaml | no |
+| `reference/echo/portage-wwtp.huc-counts.yaml` | application/x-yaml | no |
+| `reference/echo/portage-wwtp.potw.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

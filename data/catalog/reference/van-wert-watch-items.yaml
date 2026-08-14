@@ -41,9 +41,12 @@ notes: >-
   scenario writer simply does not consult has_site_watch_items the way the agent tool does.
 
   With it the assimilative screen resolves the site's signature finding: Town Creek 7Q10 0.16 cfs
-  against a 6.19 cfs design discharge — 0.03:1 chronic dilution, flag `violation`, with the acute
-  1Q10 at 0.10 cfs giving 0.02:1. Roughly 39x effluent dominance, the most effluent-dominated
+  against a 6.19 cfs design discharge — 0.026:1 chronic dilution, flag `violation`, with the acute
+  1Q10 at 0.10 cfs giving 0.016:1. Roughly 39x effluent dominance, the most effluent-dominated
   municipal discharge in the network, on a creek whose summer AND winter 7Q10 are both 0.0 cfs.
+  (Those two ratios read "0.03:1" and "0.02:1" until #1433: `assimilative._q` widened to two
+  significant figures only below 0.01, so across [0.01, 0.1) it published one significant figure.
+  The underlying `dilution_ratio` fields never changed.)
 
   The summary states exactly ONE "N MGD" token on purpose — the 8.0 MGD peak hydraulic is omitted
   because balance._design_mgd's prose fallback reads a second token as a flow EXPANSION (the Sidney

@@ -1,0 +1,15 @@
+meta:
+  subject: Portage-basin NPDES inventory — per-HUC counts
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Portage River — 1 HUC-8 subbasin (04100010 Cedar-Portage), subregion
+    0410 (Western Lake Erie, direct to the lake rather than through the Maumee)
+huc_counts:
+- huc8: '04100010'
+  name: Cedar-Portage
+  reported_count: 310
+  rows_pulled: 310
+  potw_rows_pulled: 26
+totals:
+  raw: 310
+  deduped: 296
+  potw: 26

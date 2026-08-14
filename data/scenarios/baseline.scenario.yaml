@@ -244,7 +244,7 @@ assimilative:
     high: null
   acute_dilution_ratio: 0.0
   acute_flag: violation
-  detail: Ottawa River 7Q10 0.20 cfs vs discharge 4.64 cfs -> 0.04:1 chronic dilution
+  detail: Ottawa River 7Q10 0.20 cfs vs discharge 4.64 cfs -> 0.043:1 chronic dilution
     (violation); acute 1Q10 0.00 cfs -> 0.00:1 (violation); effluent-credited 0.20+28.62
     cfs -> 6.21:1 (tight)
 - receiving_water: Pike Run
@@ -287,8 +287,8 @@ assimilative:
     high: null
   acute_dilution_ratio: 0.0068940463104
   acute_flag: violation
-  detail: Pike Run 7Q10 0.03 cfs vs discharge 2.32 cfs -> 0.01:1 chronic dilution
-    (violation); acute 1Q10 0.02 cfs -> 0.0069:1 (violation)
+  detail: Pike Run 7Q10 0.030 cfs vs discharge 2.32 cfs -> 0.013:1 chronic dilution
+    (violation); acute 1Q10 0.016 cfs -> 0.0069:1 (violation)
 - receiving_water: Dug Run
   discharger: American II WWTP
   design_low_flow:

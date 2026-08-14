@@ -40,13 +40,12 @@ log = get_logger(__name__)
 def _q(value: float) -> str:
     """Format a cfs figure (or a dilution ratio) without rounding it out of existence.
 
-    Two decimals everywhere they hold the number — every value in this screen used to be one
-    — widening to two significant figures only below 0.01, where two decimals retain at most
-    one significant digit and usually none. Wilmington's Lytle Creek is why (#886): its cited
-    7Q10 is 0.0068 cfs and its chronic dilution 0.0015:1, which ``:.2f`` renders as "0.01 cfs"
-    (a 47% overstatement) and "0.00:1" — a ratio of literally zero, which reads as a missing
-    measurement rather than the network's most effluent-dominated reach. An exact 0.0 keeps
-    "0.00": the Ottawa's cited 1Q10 really is zero, and that is a finding, not a rounding.
+    **Two significant figures below 1**, two decimals at or above it. Wilmington's Lytle Creek
+    is why the guard exists at all (#886): its cited 7Q10 is 0.0068 cfs and its chronic dilution
+    0.0015:1, which ``:.2f`` renders as "0.01 cfs" (a 47% overstatement) and "0.00:1" — a ratio
+    of literally zero, which reads as a missing measurement rather than the network's most
+    effluent-dominated reach. An exact 0.0 keeps "0.00": the Ottawa's cited 1Q10 really is zero,
+    and that is a finding, not a rounding.
 
     The widened branch computes the decimal places instead of using ``:.2g``, because ``g``
     STRIPS TRAILING ZEROS and so delivers one significant figure precisely when the second one
@@ -54,8 +53,20 @@ def _q(value: float) -> str:
     printed "0.007" — the two most effluent-dominated reaches on the network, each rendered a
     digit shorter than the guard above intends, and each disagreeing with the study's own
     ``fmtMult`` rendering of the same ratio.
+
+    ⚠️ THE THRESHOLD WAS 0.01 AND THAT WAS A BAND TOO LOW (#1433). Two decimals retain two
+    significant figures only at or above 0.1; across [0.01, 0.1) they retain exactly ONE, which
+    is the same failure the guard was written to prevent, one band up and therefore invisible to
+    the cases that motivated it. Bowling Green is where it published a wrong answer rather than
+    an imprecise one: its chronic dilution is 0.0235:1 and its acute 0.0184:1 — a 28% difference
+    between two separately-computed statistics — and both rendered "0.02:1", so the prose
+    asserted the chronic and acute screens agree when the artifact's own ``dilution_ratio`` and
+    ``acute_dilution_ratio`` fields say they do not. Lima's four ratios (0.01/0.02/0.03/0.04)
+    sat in the same band. Same defect and same fix as ``_stat_decimals`` in the study derivation,
+    which #1267 corrected to two significant figures below 1 in both derivations after it
+    published a 0.16 cfs 7Q10 as "0.2".
     """
-    if value and abs(value) < 0.01:
+    if value and abs(value) < 1:
         return f"{value:.{1 - math.floor(math.log10(abs(value)))}f}"
     return f"{value:.2f}"
 

@@ -2,9 +2,9 @@
   "site": "bowling-green",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-14T16:13:40+00:00",
-  "feed_count": 35,
-  "row_total": 606,
+  "generated_at": "2026-08-14T17:47:56+00:00",
+  "feed_count": 37,
+  "row_total": 1149,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -213,7 +213,7 @@
       "media_type": "application/json",
       "schema": "schemas/hydrology-scenarios.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "air-scenarios",
@@ -237,7 +237,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 58
+      "count": 60
     },
     {
       "name": "geo/campus",
@@ -253,7 +253,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 148
+      "count": 154
     },
     {
       "name": "open-questions",
@@ -270,6 +270,14 @@
       "schema": "schemas/impact-study.schema.json",
       "kind": "collection",
       "count": 15
+    },
+    {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 533
     },
     {
       "name": "catalog-index",
@@ -300,6 +308,14 @@
       "path": "feeds/ask-embeddings.json",
       "media_type": "application/json",
       "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
       "kind": "collection",
       "count": 0
     }

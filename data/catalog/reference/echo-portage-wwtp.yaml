@@ -1,0 +1,49 @@
+id: echo-portage-wwtp
+title: Portage-basin NPDES discharger inventory (EPA ECHO)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: npdes --basin portage
+  connector_ref: watermark.hydrology.connectors.echo
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  external_url: https://echo.epa.gov/tools/web-services
+license: U.S. Government work (public domain)
+access_tier: throttled
+site_scope: basin:portage
+storage:
+- relpath: reference/echo/portage-wwtp.all-npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/echo/portage-wwtp.huc-counts.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/echo/portage-wwtp.potw.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+  ttl_days: 180
+provenance: connector
+schema_ref: watermark.hydrology.connectors.echo.Facility
+tags:
+- npdes
+- cwa
+- portage
+- lake-erie
+- wastewater
+notes: >-
+  Inventory of active CWA-permitted dischargers across HUC-8 04100010, the network's first
+  direct-to-Lake-Erie branch that does not run through the Maumee (Bowling Green / Middleton
+  Township, #1433), deduplicated by FRS Registry ID; every value is ECHO-returned and nulls are
+  genuine. SCOPE IS WIDER THAN THE NAME: 04100010 "Cedar-Portage" is a WBD cataloging unit
+  covering the Portage River AND the frontal Lake Erie drainage beside it, so the pull includes
+  the Lake Erie islands, Catawba Island and Maumee Bay plants that are siblings of the Portage
+  rather than its headwaters — none may borrow its low flow. Most rows carry no receiving_water
+  at all, so most of the inventory is unscreenable until a cited overlay closes that gap, and no
+  Portage mainstem gage is registered in mainstem-gages.yaml on purpose: it would screen zero
+  rows today while creating a denominator that could later reach the North Branch and Poe Ditch
+  outfalls above it. Bowling Green's own outfall is screened from the permit's cited 7Q10 in
+  reference/hydrology/bowling-green/routing.yaml instead. Headline counts for a given pull are
+  dated in data/reference/echo/README.md rather than restated here; no HUC-12 count or area is
+  asserted anywhere (no WBD extract for 04100010 is committed).

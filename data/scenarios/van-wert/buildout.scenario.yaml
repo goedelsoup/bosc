@@ -186,7 +186,7 @@ balance:
         by USGS drainage-area ratio from gage 04191500 (Auglaize River near Defiance,
         1915-2003), with summer and winter 7Q10 both 0.0 cfs (the creek is intermittent),
         1Q10 0.1, summer/winter 30Q10 0.29, 90Q10 0.66 and harmonic mean 1.62. The
-        resulting dilution ratio is 0.03:1 — ~39x effluent dominance, the basin end-member
+        resulting dilution ratio is 0.026:1 — ~39x effluent dominance, the basin end-member
         — and the fact sheet computes the acute dilution ratio as 1.02:1. Permit modified
         *VD → *WD effective 2026-07-01 (CSO LTCP schedule). Source data/documents/oepa/van-wert/2PD00006.fs.pdf;
         structured read data/extracted/oepa/van-wert/2PD00006.fs.npdes.yaml. [verified]
@@ -227,7 +227,7 @@ assimilative:
       USGS drainage-area ratio from gage 04191500 (Auglaize River near Defiance, 1915-2003),
       with summer and winter 7Q10 both 0.0 cfs (the creek is intermittent), 1Q10 0.1,
       summer/winter 30Q10 0.29, 90Q10 0.66 and harmonic mean 1.62. The resulting dilution
-      ratio is 0.03:1 — ~39x effluent dominance, the basin end-member — and the fact
+      ratio is 0.026:1 — ~39x effluent dominance, the basin end-member — and the fact
       sheet computes the acute dilution ratio as 1.02:1. Permit modified *VD → *WD
       effective 2026-07-01 (CSO LTCP schedule). Source data/documents/oepa/van-wert/2PD00006.fs.pdf;
       structured read data/extracted/oepa/van-wert/2PD00006.fs.npdes.yaml. [verified]
@@ -253,5 +253,5 @@ assimilative:
     high: null
   acute_dilution_ratio: 0.01615792104
   acute_flag: violation
-  detail: Town Creek 7Q10 0.16 cfs vs discharge 6.19 cfs -> 0.03:1 chronic dilution
-    (violation); acute 1Q10 0.10 cfs -> 0.02:1 (violation)
+  detail: Town Creek 7Q10 0.16 cfs vs discharge 6.19 cfs -> 0.026:1 chronic dilution
+    (violation); acute 1Q10 0.10 cfs -> 0.016:1 (violation)

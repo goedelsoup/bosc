@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "edd51733915d67622866221cd480958db7cfe955aba27faecfc16c81e6393bbf",
+  "catalog_version": "d4bb47a852877b23e9d1cf1f4730717f53db5e6118848bef095cc323bf7eb159",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -764,6 +764,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:bowling-green-watch-items",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "bowling-green-watch-items",
+      "title": "Bowling Green site watch-items (WWTP infrastructure geometry)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:bowling-green-water-watch",
       "kind": "dataset",
       "site": "lima",
@@ -961,6 +969,14 @@
       "site": "lima",
       "local_id": "echo-ohio-brush-creek-wwtp",
       "title": "Ohio Brush Creek-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:echo-portage-wwtp",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "echo-portage-wwtp",
+      "title": "Portage-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {

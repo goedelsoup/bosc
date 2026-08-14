@@ -135,6 +135,17 @@ OHIO_BRUSH_CREEK_HUC8S: dict[str, str] = {
     "05090201": "Ohio Brush-Whiteoak",
 }
 
+# The Portage River basin (subregion 0410, Western Lake Erie): the single HUC-8 cataloging
+# unit 04100010 "Cedar-Portage", excluded from MAUMEE_HUC8S above for exactly this reason.
+# It is the RECEIVING basin for the Bowling Green watershed point, whose Water Pollution
+# Control plant discharges to Poe Ditch RM 2.5 -> North Branch Portage River RM 8.56 ->
+# Portage River -> Lake Erie. Adjacent 04100009 (Lower Maumee) is deliberately excluded even
+# though Bowling Green DRINKS from it: the Waterville intake is the site's abstraction gage,
+# a different side of that site's water balance from the basin its effluent enters.
+PORTAGE_HUC8S: dict[str, str] = {
+    "04100010": "Cedar-Portage",
+}
+
 
 @dataclass(frozen=True)
 class Basin:
@@ -254,8 +265,44 @@ OHIO_BRUSH_CREEK = Basin(
         "alone — it is not a valid Ohio River 7Q10 for a basin that meets the river elsewhere.",
     ),
 )
+PORTAGE = Basin(
+    slug="portage",
+    huc8s=PORTAGE_HUC8S,
+    watershed=(
+        "Portage River — 1 HUC-8 subbasin (04100010 Cedar-Portage), subregion 0410 "
+        "(Western Lake Erie, direct to the lake rather than through the Maumee)"
+    ),
+    subject="Portage-basin NPDES wastewater dischargers",
+    file_stem="portage-wwtp",
+    caveats=(
+        "SCOPE IS WIDER THAN THE NAME. HUC-8 04100010 'Cedar-Portage' is a WBD cataloging unit "
+        "covering the Portage River AND the frontal Lake Erie drainage beside it (Cedar Creek and "
+        "the other direct-to-lake tributaries), not one watershed. A discharger on frontal "
+        "drainage is a SIBLING of the Portage rather than a headwater of it: it is neither "
+        "upstream nor downstream of a Portage discharger and must never borrow the Portage's "
+        "7Q10. The split is live at the network's own watershed point — Bowling Green's campus "
+        "sits in HUC-12 041000100703 (Cedar Creek-Frontal Lake Erie) while the city's Water "
+        "Pollution Control plant discharges in 041000100301 (N Br Portage/Poe Ditch), so campus "
+        "runoff does not reach the plant's receiving water at all.",
+        "THE NORTH BRANCH AND THE MAINSTEM ARE DIFFERENT DENOMINATORS. A gage on the Portage "
+        "mainstem integrates a drainage area far larger than the North Branch or Poe Ditch above "
+        "it, so serving a mainstem 7Q10 to a North Branch outfall overstates dilution by orders "
+        "of magnitude. Registered aliases are therefore mainstem surface forms only; a North "
+        "Branch or Poe Ditch receiving water reports no_7q10 — unscreenable, never unaffected — "
+        "and is settled instead by the permit's own drainage-area-adjusted low flow where the "
+        "fact sheet publishes one.",
+        "Ohio EPA assigns Poe Ditch a Limited Resource Water use designation but applies the "
+        "NORTH BRANCH PORTAGE's criteria to discharges reaching it, 'to be protective of this "
+        "higher quality stream'. A screen keyed on the immediate receptor's own designation will "
+        "therefore read the wrong criteria for this basin; read the permit, not the ditch.",
+        "The basin drains north to Lake Erie through a heavily tile-drained lakebed plain (the "
+        "Great Black Swamp), so summer low flows are small and a large share of the receiving "
+        "water below a POTW outfall is that POTW's own effluent. Treat an assimilative ratio "
+        "here as a statement about an effluent-dominated stream, not a diluted one.",
+    ),
+)
 BASINS: dict[str, Basin] = {
-    b.slug: b for b in (MAUMEE, GREAT_MIAMI, LITTLE_MIAMI, SCIOTO, OHIO_BRUSH_CREEK)
+    b.slug: b for b in (MAUMEE, GREAT_MIAMI, LITTLE_MIAMI, SCIOTO, OHIO_BRUSH_CREEK, PORTAGE)
 }
 
 # Merged HUC-8 -> name map for the per-HUC fetch display label, DERIVED from the registry so

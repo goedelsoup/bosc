@@ -147,8 +147,8 @@ sites:
     county: "Wood County, OH"
     codename: null
     mono: "BGN"
-    status: "queued"
-    selectable: false
+    status: "live"
+    selectable: true
     issue: "1433"
     map_lat: 41.4020
     map_lon: -83.6400
