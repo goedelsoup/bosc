@@ -890,6 +890,24 @@ def test_findlay_exports_at_reference_tier(site_bundle: Callable[[str], Path]) -
     assert "legal/one-energy-v-allen-twp/2026-Ohio-405.pdf" in docs
     assert "findlay/governance/Zoning-Book-Effective-05-11-26.pdf" in docs
 
+    # The chronology is built with FINDLAY's corridor vocabulary, not the exporting process's
+    # (#2025). ``build_timeline`` read its subjects from ``get_settings()`` — ``lru_cache``d on
+    # the process-global site — while ``export.py`` threads only ``scope``, so a programmatic
+    # per-site export read the right meeting indices and then filtered them through Lima's
+    # vocabulary. Findlay declares ``one_power``; Lima declares ``bosc``/``bistrozzi``/``google``.
+    # The overlap is ``datacenter``, so the three One Power meetings vanished and the datacenter
+    # ones stayed — a 14-event chronology exporting as 11, with the committed bundle (built
+    # through the CLI, which sets ``WATERMARK_SITE`` first) holding the correct one and no test
+    # positioned to see the two disagree. Asserting the ONE POWER events specifically is the
+    # point: a count alone would be satisfied by the wrong three.
+    timeline = _rows(out, _feeds_by_name(out)["timeline"])
+    meetings = [e for e in timeline if e["category"] == "subdivision_meeting"]
+    assert {e["title"] for e in meetings if "one_power" in e["title"]} == {
+        "Allen Township — minutes (corridor: one_power)",
+        "Commissioners Regular Meeting — minutes (corridor: one_power)",
+    }, f"findlay lost its One Power corridor meetings: {sorted(e['title'] for e in meetings)}"
+    assert len(meetings) == 8, f"expected 8 corridor meetings, got {len(meetings)}"
+
 
 def test_urbana_record_domain_publishes_its_worked_corpus(urbana_bundle: Path) -> None:
     """Urbana's ``record`` is live off the two extractions its corpus actually holds (#1724).

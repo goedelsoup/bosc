@@ -262,8 +262,10 @@ async def timeline(_args: dict[str, Any]) -> dict[str, Any]:
     # build_timeline() delegates to load_corpus(), which is per-site scoped (#762/#780).
     # A non-Lima site gets its own corpus events (or "No dated events" if none yet) —
     # not Lima's Allen-County record. No _reference_only guard needed here (#424).
-    # We pre-load the corpus from the active settings so the per-site scope is honoured
-    # even when get_settings() is monkeypatched in tests.
+    # We pre-load the corpus from the active settings and pass them on, so the per-site scope
+    # AND the per-site corridor vocabulary are honoured even when get_settings() is
+    # monkeypatched in tests — passing corpus+scope alone left the vocabulary reading the
+    # process-global site (#2025).
     from watermark.pipeline import timeline as timeline_stage
     from watermark.pipeline.corpus import load_corpus
     from watermark.sites import active_profile, effective_corpus_scope
@@ -271,7 +273,7 @@ async def timeline(_args: dict[str, Any]) -> dict[str, Any]:
     settings = get_settings()
     corpus = load_corpus(settings)
     scope = effective_corpus_scope(active_profile(settings))
-    events = timeline_stage.build_timeline(corpus=corpus, scope=scope)
+    events = timeline_stage.build_timeline(corpus=corpus, scope=scope, settings=settings)
     if not events:
         return _text("No dated events found under data/extracted.")
     lines = []

@@ -663,9 +663,12 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
     # Cross-document layer — load the corpus once, reuse for records/timeline/graph. The active
     # site's corpus scope (#762) bounds the extracted-tree feeds: `load_corpus` reads it itself;
     # the `records` feed reads the same tree separately, so it's passed the scope explicitly.
+    # `build_timeline` needs `settings` on top of `scope` (#2025): scope decides which meeting
+    # indices it opens, but the corridor VOCABULARY it filters them by comes off the profile,
+    # and an export is routinely handed a site other than the process-global one.
     corpus_scope = effective_corpus_scope(active_profile(settings))
     corpus = load_corpus(settings)
-    events = build_timeline(corpus, scope=corpus_scope)
+    events = build_timeline(corpus, scope=corpus_scope, settings=settings)
     egraph = build_entity_graph(
         corpus,
         enrich_parcels=True,
