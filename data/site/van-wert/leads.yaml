@@ -22,7 +22,7 @@ leads:
   kind: question
   status: unanswered
   tag: open
-  title: The initial closed-loop fill has four different volumes and no instrument behind any of them
+  title: Three different fill volumes, two incompatible framings, and no instrument behind any of them
   detail: >
     The City's Safety-Service Director announced ~660,000 gal as a ONE-TIME fill (2026-04-21); a
     County Commissioner described 700,000 gal that "will last 6 to 8 years"; the since-deleted
@@ -85,7 +85,7 @@ leads:
   kind: question
   status: unanswered
   tag: open
-  title: The runway was laid in 2014, and none of the three agreements that laid it is in the corpus
+  title: The runway was laid across 2014-2016, and none of the three agreements that laid it is in the corpus
   detail: >
     Ordinance 26-05-028 recites three Pre-Annexation Agreements between the City, township trustees
     and the Board of County Commissioners — Ridge 2014-11-14, Hoaglin 2014-12-22, Pleasant
@@ -126,7 +126,7 @@ leads:
     the ordinances zoned. Parcel 17-034718.0200 (157.84 ac) is unnamed in it, while the committed
     auditor CAMA has it deeded to QTS VAN WERT LLC with the rest. The likeliest explanation is a
     post-petition split, which the county survey references would show; it is NOT established, and
-    the alternative — that a seventh of the campus was zoned without being named in its own hearing
+    the alternative — that 17.5% of the campus was zoned without being named in its own hearing
     notice — is the reason this stays open rather than being filed as a clerical note.
   source: data/extracted/van-wert/mega-site-instruments.yaml · data/reference/van-wert/parcel-assemblage.geojson
   issue: 1401

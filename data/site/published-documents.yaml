@@ -57,11 +57,19 @@ collections:      # whole data/documents/<slug> trees, e.g.  - aedg
   #
   # ⚠️ WHAT THE REVIEW DID FIND, and the basis for clearing it anyway. The six MEETING RECORDS
   # embed roughly 88 pages of written public comment from private citizens, each letter carrying
-  # the writer's name and a REPRODUCED HANDWRITTEN SIGNATURE. (Both the 107-page 5.4 hearing record
-  # and 5.11.26.pdf were sampled page-by-page to confirm the shape.) No residential addresses, no
-  # phone numbers and no email addresses appear on the sampled letters — the hearing minutes note
-  # that speakers stated an address aloud, but that is in the audio/video, which is not in the
-  # corpus. This is the same posture as aedg/PRR-01-bundle.ocr.pdf above: cleared whole as
+  # the writer's name and a REPRODUCED HANDWRITTEN SIGNATURE. No phone numbers or email addresses
+  # appear on them. The hearing minutes note that speakers stated an address aloud, but that is in
+  # the audio/video, which is not in the corpus.
+  #
+  # ⚠️ THIS REVIEW WAS DONE BY RENDERING SAMPLE PAGES, AND THE SAMPLE MISSED ONE. These PDFs carry
+  # no text layer, so a PII regex returns a false clean and pages must be looked at — but sampling
+  # is not sweeping. An earlier draft of this note asserted "no residential addresses"; page 7 of
+  # 5.11.26.pdf is a submitter roster carrying fifteen, and it is now WITHHELD below. Read that
+  # entry before relying on this one. Anything cleared here on a sampled read carries the same
+  # residual risk, and the honest statement is "no addresses were seen in the pages sampled",
+  # not "there are none".
+  #
+  # For the signatures, this is the same posture as aedg/PRR-01-bundle.ocr.pdf above: cleared whole as
   # DISCLOSED PUBLIC RECORD by operator decision, explicitly NOT as the outcome of a passed PII
   # sweep. Written comment submitted to a legislative body in a zoning hearing is quintessentially
   # public record, the City published these exact PDFs itself, and the evidentiary weight is high —
@@ -168,3 +176,33 @@ withhold:
     # and the committed record are unaffected.
     # review: { by: goedelsoup, date: 2026-08-13, result: withhold, basis: aggregated-personal-contact-details }
     - "findlay/reference/2026 Directory of Officials_202604131412522342.pdf"
+    # Van Wert City Council minutes of 2026-05-11. Cleared boundary (the `van-wert` collection),
+    # carved back out on a CORRECTION to the record that clearance was approved on.
+    #
+    # The collection review above states that the meeting records carry names and signatures but
+    # "no residential addresses, no phone numbers and no email addresses". That was established by
+    # RENDERING SAMPLE PAGES — these PDFs have no text layer, so a PII regex returns a false clean —
+    # and the sample missed page 7 of this file. Page 7 is a submitter roster with the literal
+    # header "Name Address City State Zip" and FIFTEEN named private individuals' full residential
+    # street addresses (1192 Nanette Ln, 121 E 2nd St, 1017 Maxine Ln, …), all Van Wert / Delphos.
+    # It surfaced when the rebuilt passage index materialized it as searchable text.
+    #
+    # Nothing else in the corpus is close: a sweep for pages carrying 3+ street addresses beside an
+    # Ohio ZIP returns 32 passages, and every other one is a facility address, an agency letterhead
+    # or a recorded instrument in a disclosed PRR production. This page is the only ROSTER OF
+    # PRIVATE RESIDENTS' HOME ADDRESSES in the published set, which is the Findlay
+    # `aggregated-personal-contact-details` basis exactly — 25 people's contact details in one
+    # place, aggregated by the document rather than incidental to it.
+    #
+    # ⚠️ This carve-out is NOT free, and the trade is deliberately visible. 2026-05-11 is the
+    # sitting at which all three Mega Site ordinances passed — a primary instrument the assembly
+    # and governance record cites. Withholding it costs the public download of that meeting record.
+    # Withhold is exposure control, not removal: the bytes stay in the corpus, the extraction
+    # (mega-site-instruments.yaml) is untouched, the record entry still renders, and the research
+    # agent still reads it. Only the public download and the passage index lose it.
+    #
+    # Reversing this is a one-line delete plus `watermark passages` — but it re-publishes those 25
+    # addresses, so it should be a decision taken on the corrected facts above rather than on the
+    # collection review, which was written before page 7 was seen.
+    # review: { by: goedelsoup, date: 2026-08-14, result: withhold, basis: aggregated-personal-contact-details }
+    - van-wert/council/5.11.26.pdf

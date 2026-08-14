@@ -111,14 +111,20 @@ def _fmt_ranged(
 def _fmt_mult(m: float) -> str:
     """``format.ts`` ``fmtMult`` — a ratio multiple: integer at ≥10, else significant decimals.
 
-    Shares :func:`_stat_decimals`'s vanish-guard, for the same reason and one the ratio case
-    needs even more (#1265). A fixed single decimal renders every dilution below 0.05 as
-    **"0.0x"** - and a dilution ratio is precisely where the significant digits all sit to the
-    right of the point. Lima's tightest chronic dilution is 0.006987 and Findlay's is 0.009048;
-    both published as "0.0x", which reads as *nothing* rather than as the two most
-    effluent-dominated reaches on the network. `watermark.hydrology.basin._ratio_text` had
-    already learned this on the artifact side ("two decimals silently flattens the whole
-    violation band"); this is the same rule on the display side.
+    Shares :func:`_stat_decimals`'s sub-1 rule, for the same reason and one the ratio case needs
+    even more (#1265). A fixed single decimal renders every dilution below 0.05 as **"0.0x"** -
+    and a dilution ratio is precisely where the significant digits all sit to the right of the
+    point. Lima's tightest chronic dilution is 0.006987 and Findlay's is 0.009048; both published
+    as "0.0x", which reads as *nothing* rather than as the two most effluent-dominated reaches on
+    the network. `watermark.hydrology.basin._ratio_text` had already learned this on the artifact
+    side ("two decimals silently flattens the whole violation band"); this is the same rule on
+    the display side.
+
+    That shared helper widened from a vanish-guard to the whole sub-1 range in #1267, so a ratio
+    in ``[0.05, 1)`` now keeps two significant figures too (``0.37x`` where it used to read
+    ``0.4x``). The ratio case wanted that already by the argument above; it simply had no symptom
+    loud enough to force it, because the dilutions that embarrassed the old rule were the ones
+    that vanished outright.
     """
     if not math.isfinite(m):
         return f"∞{_MULT_SIGN}"
@@ -789,18 +795,31 @@ def _availability(d: _ChapterDef, ctx: _Ctx) -> tuple[StudyChapterStatus, list[s
 
 
 def _stat_decimals(value: object) -> int:
-    """`study.ts` `statDecimals` — one decimal, unless that would render a real figure as 0.
+    """`study.ts` `statDecimals` — one decimal at or above 1, two significant figures below it.
 
-    Every headline stat rounds to one decimal, which suits the magnitudes this study was built
-    on. Sidney's contracted cooling draw is 0.0146 cfs (3.44M gal/yr, `[verified]` in an executed
-    service agreement) and renders as **"0 cfs"** — a reader takes that as *no draw*, which is a
-    different claim from *a very small one* and the wrong one (#1995). A value that would vanish
-    keeps two significant figures instead. Nothing at the old scale moves, so no committed
-    bundle's stats change.
+    Every headline stat used to round to one decimal, which suited the magnitudes this study was
+    first built on. Two separate findings say it does not suit the ones it works in now, and both
+    are about the same thing: a design low flow is a sub-1 number, and one decimal cannot carry it.
+
+    The first was a value that VANISHED. Sidney's contracted cooling draw is 0.0146 cfs (3.44M
+    gal/yr, `[verified]` in an executed service agreement) and rendered as **"0 cfs"** — a reader
+    takes that as *no draw*, a different claim from *a very small one* and the wrong one (#1995).
+
+    The second is a value that merely SHIFTED, which is subtler and was live in three committed
+    bundles. Van Wert's Town Creek 7Q10 is **0.16 cfs** and published as **"0.2"** — off by 25%,
+    on the denominator its whole effluent-dominance finding rests on (0.16 cfs against a 6.19 cfs
+    design discharge is the 0.03:1 dilution the screen flags as a violation). It did not vanish,
+    so the first fix's guard never fired. Findlay's 0.21 and Lima's low flow had the same shift.
+
+    So the rule is stated once, for the whole sub-1 range, rather than patched per symptom: below
+    1 a stat keeps **two significant figures**. That subsumes the vanish guard exactly — it is the
+    same ``1 - floor(log10)`` expression, just no longer gated on the value rounding to zero — and
+    leaves everything at or above 1 untouched. Four committed stats move, three of them the
+    receiving low flow itself.
     """
     if not isinstance(value, int | float) or isinstance(value, bool):
         return 1
-    if value == 0 or round(abs(float(value)), 1) != 0:
+    if value == 0 or abs(float(value)) >= 1:
         return 1
     return 1 - math.floor(math.log10(abs(float(value))))
 

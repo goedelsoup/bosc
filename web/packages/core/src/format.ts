@@ -8,23 +8,45 @@ export function round(n: number, decimals = 0): number {
   return Math.round(n * f) / f;
 }
 
-/** A dilution / ratio multiple: `"∞×"` when non-finite, an integer at ≥10×, else one decimal. */
+/**
+ * Headline-stat decimals: one at or above 1, two significant figures below it.
+ *
+ * The peer of `_stat_decimals` in `watermark/site/impact_study.py`, and it must stay identical to
+ * it — `study.parity.test.ts` pins the two derivations equal, so a one-sided edit turns the gate
+ * red. Two findings drove the rule, both about the same thing: a design low flow is a sub-1
+ * number and one decimal cannot carry it.
+ *
+ * A value that VANISHED (#1995): Sidney's contracted cooling draw, 0.0146 cfs and `[verified]` in
+ * an executed service agreement, rendered as "0 cfs" — which reads as *no draw*.
+ *
+ * A value that merely SHIFTED (#1267), live in three committed bundles: Van Wert's Town Creek
+ * 7Q10 is 0.16 cfs and published as "0.2", off by 25% on the denominator its whole
+ * effluent-dominance finding rests on. It never vanished, so the first guard never fired.
+ *
+ * Hence one rule for the whole sub-1 range instead of a patch per symptom. It subsumes the
+ * vanish guard exactly — same `1 - floor(log10)`, no longer gated on rounding to zero.
+ */
 export function statDecimals(value: number | null | undefined): number {
   if (typeof value !== "number" || !Number.isFinite(value)) return 1;
-  if (value === 0 || Math.round(Math.abs(value) * 10) / 10 !== 0) return 1;
+  if (value === 0 || Math.abs(value) >= 1) return 1;
   return 1 - Math.floor(Math.log10(Math.abs(value)));
 }
 
 /**
  * A ratio multiple: integer at ≥10, else significant decimals.
  *
- * Shares `statDecimals`'s vanish-guard, for the same reason and one the ratio case needs even
+ * Shares `statDecimals`'s sub-1 rule, for the same reason and one the ratio case needs even
  * more (#1265). A fixed single decimal renders every dilution below 0.05 as **"0.0×"** — and a
  * dilution ratio is precisely where the significant digits all sit to the right of the point.
  * Lima's tightest chronic dilution is 0.006987 and Findlay's is 0.009048; both published as
  * "0.0×", which reads as *nothing* rather than as the two most effluent-dominated reaches on
  * the network. `watermark.hydrology.basin._ratio_text` had already learned this on the artifact
  * side ("two decimals silently flattens the whole violation band"); this is the display side.
+ *
+ * That shared helper widened from a vanish-guard to the whole sub-1 range in #1267, so a ratio in
+ * `[0.05, 1)` now keeps two significant figures too (`0.37×` where it used to read `0.4×`). The
+ * ratio case wanted that already by the argument above; it simply had no symptom loud enough to
+ * force it, because the dilutions that embarrassed the old rule were the ones that vanished.
  */
 export function fmtMult(m: number): string {
   if (!Number.isFinite(m)) return "∞×";
