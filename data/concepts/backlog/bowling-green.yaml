@@ -4,27 +4,121 @@
 #   candidates  — mechanically discovered acronyms needing triage (promote or stoplist).
 # `count` is total occurrences; `sources` maps each file to its hit count.
 scope: bowling-green
-sources_scanned: 1
+sources_scanned: 2
 glossary_defined: 77
 term_count: 0
-candidate_count: 9
-candidates_found: 9
+candidate_count: 24
+candidates_found: 24
 terms: []
 candidates:
+- term: CAMA
+  kind: term
+  provenance: discovery
+  count: 14
+  example: …gle polygon** over a 1,821 m × 2,489 m extent. `[verified]` — the county auditor's Vision
+    CAMA, committed as `data/reference/bowling-green/parcel-assemblage.geojson`. This **replaces t…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 11
+    data/extracted/bowling-green/middleton-township/project-accordion-township-record.md: 3
 - term: BG
   kind: term
   provenance: discovery
-  count: 10
+  count: 13
   example: '…Codename:** **"Project Accordion"** — the NDA-era name (2023→2025). `[reference]` Source:
     BG Independent, Wood County Economic Development Corp (WCEDC) coverage. **Do not merge the L…'
   sources:
-    data/extracted/bowling-green/data-centers.md: 10
-- term: BGN
+    data/extracted/bowling-green/data-centers.md: 13
+- term: SR
+  kind: term
+  provenance: discovery
+  count: 12
+  example: …Meta operator attribution is what carries `[verified]`. - **Site:** Middleton Township, **SR-582
+    between SR-25 and I-75**, adjacent the FirstEnergy **Mercer Rd substation**; **~280-a…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 4
+    data/extracted/bowling-green/middleton-township/project-accordion-township-record.md: 8
+- term: NWWSD
+  kind: term
+  provenance: discovery
+  count: 7
+  example: …ed by an instrument (NPDES / the negotiated water agreement). This is in tension with the
+    NWWSD wholesaling BG water to Meta (contract ceiling raised to 1.5 MGD, Aug 2024; conflicting ~…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 6
+    data/extracted/bowling-green/middleton-township/project-accordion-township-record.md: 1
+- term: 'NO'
+  kind: term
+  provenance: discovery
+  count: 6
+  example: …31.82 ac the trustees rezoned to M-1 on 2026-07-07** — on a roll call of **1-2** (Moulton
+    NO, Petrea YES, Vetter NO) against a motion to approve the Zoning Commission's recommendatio…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 4
+    data/extracted/bowling-green/middleton-township/project-accordion-township-record.md: 2
+- term: EL
+  kind: term
+  provenance: discovery
+  count: 5
+  example: …tity on all deeds and rezoning applications, and the **customer of record on OPSB 25-0973-EL-BLN**.
+    `[verified]` (docket) · the corporate parentage tying Liames to Meta pre-reveal wa…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 5
+- term: APOLLO
+  kind: term
+  provenance: discovery
+  count: 4
+  example: …dual NPDES permits) finds **every** campus-linked record — PROJECT ACCORDION `OHGC15219`,
+    APOLLO POWER GENERATION FACILITY `OHGC17963`, APOLLO LAYDOWN YARD `OHGC18721`, APOLLO NORTH PIPE…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 4
+- term: BLN
+  kind: term
+  provenance: discovery
+  count: 4
+  example: …y on all deeds and rezoning applications, and the **customer of record on OPSB 25-0973-EL-BLN**.
+    `[verified]` (docket) · the corporate parentage tying Liames to Meta pre-reveal was `[…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 4
+- term: DCT
+  kind: term
+  provenance: discovery
+  count: 4
+  example: …ps for township detail, so the parcel-level read stays `[open]`. - **There is no Schedule
+    DCT at Toledo Edison.** A full-text scan of all 168 pages returns no "DCT" and no "data cente…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 4
+- term: GREEN
+  kind: term
+  provenance: discovery
+  count: 4
+  example: '…nel**" under R.C. 121.22(G)(8). `[verified]` This is what the `SiteFacility` on `_BOWLING_GREEN`
+    is pinned from (site-plan-grounded, #1327 Urbana precedent): the disclosed type / 715,00…'
+  sources:
+    data/extracted/bowling-green/data-centers.md: 4
+- term: SDT1
+  kind: term
+  provenance: discovery
+  count: 4
+  example: …c toward M-1 around the campus, and three withdrew.** NWWSD ~20 ac (approved 2024-06-18);
+    SDT1 Properties LLC ~68 ac (**withdrawn at the hearing**, 2024-11-20); Victoria Busch ~91 ac (…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 2
+    data/extracted/bowling-green/middleton-township/project-accordion-township-record.md: 2
+- term: 'YES'
+  kind: term
+  provenance: discovery
+  count: 4
+  example: …e trustees rezoned to M-1 on 2026-07-07** — on a roll call of **1-2** (Moulton NO, Petrea
+    YES, Vetter NO) against a motion to approve the Zoning Commission's recommendation to *deny*;…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 3
+    data/extracted/bowling-green/middleton-township/project-accordion-township-record.md: 1
+- term: AMP
   kind: term
   provenance: discovery
   count: 3
-  example: …y on all deeds and rezoning applications, and the **customer of record on OPSB 25-0973-EL-BGN**.
-    `[verified]` (docket) · the corporate parentage tying Liames to Meta pre-reveal was `[…
+  example: …**Bowling Green Solar Facility, 20 MW nameplate, COD January 2017** (EIA plant 60622, `DG
+    AMP Solar Bowling Green`). `[verified]` The **20-not-125 MW** correction applies to **this fa…
   sources:
     data/extracted/bowling-green/data-centers.md: 3
 - term: DCD
@@ -35,14 +129,38 @@ candidates:
     DCD "$750M campus" framing). - **Jobs:** **~100 permanent** (avg ~mid-$80k) / **>1,000 peak c…
   sources:
     data/extracted/bowling-green/data-centers.md: 3
-- term: EL
+- term: LIAMES
   kind: term
   provenance: discovery
   count: 3
-  example: …tity on all deeds and rezoning applications, and the **customer of record on OPSB 25-0973-EL-BGN**.
-    `[verified]` (docket) · the corporate parentage tying Liames to Meta pre-reveal wa…
+  example: …of record (#1436, the places domain):** **twelve contiguous Wood County parcels deeded to
+    LIAMES, LLC — 775.020 ac deeded / 774.878 ac planar**, whose union is a **single polygon** over…
   sources:
     data/extracted/bowling-green/data-centers.md: 3
+- term: NOT
+  kind: term
+  provenance: discovery
+  count: 3
+  example: '…claim as `[reference]`. ## 2 — Oppidan colo (Woodbridge Business Park, city proper) — DO
+    NOT conflate with Meta - **Developer:** **Oppidan Investment Company**. Site: **2501 Woodstre…'
+  sources:
+    data/extracted/bowling-green/data-centers.md: 3
+- term: ATSI
+  kind: term
+  provenance: discovery
+  count: 2
+  example: …the $6,921,460 that survives is a floor on a fraction of the assembly. The **FirstEnergy/ATSI
+    transmission tract** (72.43 ac, 22105 Mercer Rd) and the **Northwestern Water & Sewer Dis…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 2
+- term: AVA
+  kind: term
+  provenance: discovery
+  count: 2
+  example: …utes are blocked and their negatives mean nothing.** The **Wood County Recorder** (Fidlar
+    AVA) is an Angular single-page application with no server-rendered search and no discoverable…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 2
 - term: BESS
   kind: term
   provenance: discovery
@@ -51,35 +169,45 @@ candidates:
     BESS**, see §3). The **350-vs-180 MW oversizing** (~2x) is a **Phase-2 signal**, consistent wi…
   sources:
     data/extracted/bowling-green/data-centers.md: 2
-- term: BGMU
+- term: DIS
   kind: term
   provenance: discovery
   count: 2
-  example: …*61,554 sq ft / ~12 ac**. `[reference]` - **Power:** **6 MW avg / 8 MW peak**, on **city (BGMU-implied)
-    power**. `[reference]` — the muni serving assumption is `[open]` (BGMU-implied,…
+  example: …wrong suffix names a proceeding that did not happen. `[verified]` (staff report caption +
+    DIS filing stamp). The "14 resident opposition comments" figure is `[reference]` press report…
   sources:
     data/extracted/bowling-green/data-centers.md: 2
-- term: GREEN
+- term: DNR
   kind: term
   provenance: discovery
   count: 2
-  example: '…e township site). `[verified]` (letter PDF). This is what the `SiteFacility` on `_BOWLING_GREEN`
-    is pinned from (site-plan-grounded, #1327 Urbana precedent): the disclosed type / 715,00…'
+  example: …. **And there is no instrument to be had:** the campus *buys* finished water, so the Ohio
+    DNR withdrawal registry — which records withdrawals *from waters of the state* — carries **no…
   sources:
     data/extracted/bowling-green/data-centers.md: 2
-- term: NWWSD
+- term: FIPS
   kind: term
   provenance: discovery
   count: 2
-  example: …ed by an instrument (NPDES / the negotiated water agreement). This is in tension with the
-    NWWSD wholesaling BG water to Meta (contract ceiling raised to 1.5 MGD, Aug 2024; conflicting ~…
+  example: …nd Meta's absence is a *route*, not a coverage gap. A full ECHO CWA sweep of Wood County (FIPS
+    39173, 2026-08-01; 241 records, 50 effective individual NPDES permits) finds **every** ca…
   sources:
     data/extracted/bowling-green/data-centers.md: 2
-- term: SR
+- term: JE
   kind: term
   provenance: discovery
   count: 2
-  example: …Meta operator attribution is what carries `[verified]`. - **Site:** Middleton Township, **SR-582
-    between SR-25 and I-75**, adjacent the FirstEnergy **Mercer Rd substation**; **~280-a…
+  example: …dry-cooler claim, for "no ground water will be used," for the 2-million-gallon tank, for JE
+    Dunn as general contractor, for 847 MW of Ohio renewables, and — against the profile — fo…
   sources:
-    data/extracted/bowling-green/data-centers.md: 2
+    data/extracted/bowling-green/data-centers.md: 1
+    data/extracted/bowling-green/middleton-township/project-accordion-township-record.md: 1
+- term: ODNR
+  kind: term
+  provenance: discovery
+  count: 2
+  example: …the staff report and its 34 conditions are captured and transcribed. The application, the
+    ODNR review letter, the data-request responses, the comments and the Board's approval entry co…
+  sources:
+    data/extracted/bowling-green/data-centers.md: 1
+    data/extracted/bowling-green/middleton-township/project-accordion-township-record.md: 1

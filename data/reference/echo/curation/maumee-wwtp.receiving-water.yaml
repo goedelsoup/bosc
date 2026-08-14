@@ -36,7 +36,7 @@ corrections:
       reference/echo/curation/maumee-wwtp.receiving-water.yaml (#1698).
 
   # Without this the Van Wert WWTP sits in no_receiving_water and is never screened, which
-  # is what hid the basin's most extreme effluent dominance (0.03:1) until #376.
+  # is what hid the basin's most extreme effluent dominance (0.026:1) until #376.
   - npdes_id: OH0027910
     frs_registry_id: '110006645176'
     facility: VAN WERT WWTP

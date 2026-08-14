@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-14T15:45:15.351461+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-14T17:33:18.557202+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **173** catalogued datasets — **172** reviewed.
-- **173** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **175** catalogued datasets — **174** reviewed.
+- **175** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -55,9 +55,10 @@ Snapshot reconciled: **2026-08-14T15:45:15.351461+00:00**. Regenerate with `wate
 | reference | air | 2 | 2 | 0 | 0 |
 | reference | allen-boe | 4 | 4 | 0 | 0 |
 | reference | allen-gis | 1 | 1 | 0 | 0 |
+| reference | bowling-green | 1 | 1 | 0 | 0 |
 | reference | compute | 1 | 1 | 0 | 0 |
 | reference | datacenter-industry | 1 | 1 | 0 | 0 |
-| reference | echo | 5 | 5 | 0 | 0 |
+| reference | echo | 6 | 6 | 0 | 0 |
 | reference | economics | 2 | 2 | 0 | 0 |
 | reference | eia | 4 | 4 | 0 | 0 |
 | reference | federal | 1 | 1 | 0 | 0 |
@@ -95,7 +96,7 @@ Snapshot reconciled: **2026-08-14T15:45:15.351461+00:00**. Regenerate with `wate
 
 | site | relevant | present | missing |
 | --- | --- | --- | --- |
-| bowling-green | 58 | 49 | 9 |
+| bowling-green | 60 | 51 | 9 |
 | bryan | 56 | 44 | 12 |
 | columbus | 53 | 42 | 11 |
 | coshocton | 53 | 36 | 17 |

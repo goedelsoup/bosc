@@ -1,0 +1,64 @@
+# Discharge routing for the Bowling Green, OH watershed point (#1433).
+#
+# One plant, one design outfall, one receiving reach — and the largest POTW in the Portage basin
+# discharging to one of its smallest waters. Two things this file supplies, both load-bearing:
+#
+# 1. The STRUCTURED `design_flow_mgd` that `watermark.hydrology.balance` reads as the numerator of
+#    the assimilative screen (WS-22, issue 1622). Without it the balance falls back to a regex over
+#    the watch-items summary prose, logging `hydro.design_flow.regex_fallback` — and a load-bearing
+#    number must not be sourced by regex over prose.
+#
+# 2. The `receiving_water` NAME, which is how `assimilative.check_assimilative` looks the cited
+#    design low flow up.
+#
+# WHY THE PARENTHESIZED REACH KEY HERE, when Van Wert (#1267) could use the bare river name. That
+# convention exists because `lowflow._normalize` strips an "at …" suffix, so a natural-reading
+# "Poe Ditch at River Mile 2.5" would collapse to bare "poe ditch" — and at Findlay (#1458) and
+# Sidney (#1995) the bare name belonged to a derived at-gage screening proxy whose denominator
+# contains the plant's own discharge, overstating dilution 41x and 17x respectively.
+#
+# Bowling Green has no such proxy TODAY: `build_low_flow_lookup()` returns no key containing
+# "portage", "poe" or "ditch", because the Portage basin registers NO mainstem gage in
+# mainstem-gages.yaml. That omission is deliberate and is documented in data/reference/echo/
+# README.md — a Portage mainstem gage would screen exactly zero rows while creating a denominator
+# integrating a drainage area far larger than the North Branch or Poe Ditch above it, which is
+# precisely the overstatement Findlay and Sidney had to undo.
+#
+# So the reach key here is NOT defending against a proxy that exists. It defends against two things
+# that plausibly will: a future Portage mainstem derivation, and a SECOND Poe Ditch discharger
+# inheriting a low flow Ohio EPA computed at this outfall alone. Van Wert chose the bare name and
+# documented the trigger condition under which it would have to be re-scoped; Bowling Green pays
+# that cost up front instead, because a `permits:` binding is available here and a `permits:` entry
+# must by rule be keyed by reach rather than by river.
+#
+# ⚠️ THE DENOMINATOR IS REGULATORY, NOT MEASURED. 0.364 cfs is drainage-area-adjusted from USGS
+# 04195500 (Portage River at Woodville) over 1951-97 — a record that closed before the network's own
+# derived window (1980-2024) opens, and it is not a measurement of Poe Ditch. It is the number this
+# permit's limits were actually computed against, which is what an assimilative screen is asking
+# about. Do NOT reconcile it against a derived value by preferring one.
+#
+# WHICH design flow. The committed value is the permitted AVERAGE design flow, 10 MGD (15.47 cfs),
+# and `mgd_to_cfs(10.0)` reproduces the fact sheet's own printed 15.47 exactly. Bowling Green is a
+# combined-sewer community (40% combined) with a 30 MGD peak hydraulic capacity, so the same
+# reasoning Findlay's and Van Wert's tables record applies here: pairing a peak wet-weather
+# discharge with a 7Q10 would screen a condition that by construction does not co-occur.
+#
+# The permit's CSO outfall 2PD00009002 (Mercer Road Diversion Chamber) is on this same reach and is
+# deliberately NOT routed: it has no design flow, and its Long Term Control Plan level of control is
+# an event count (no more than four untreated overflows per typical year), not a quantity a dilution
+# screen can take as a numerator.
+#
+# No `bosc_routing` block: the BOSC forcemains are a Lima-loop object and a sibling site never
+# inherits them (#829). The Meta campus commits no forcemain discharge feature — correct rather than
+# missing, since it is not even on this water (campus HUC-12 041000100703 Cedar Creek-Frontal Lake
+# Erie vs this outfall's 041000100301 N Br Portage/Poe Ditch) and its supply is PURCHASED NWWSD
+# water. The unresolved 50k-vs-600k GPD figure in that wholesale arrangement is a leads item
+# (data/site/bowling-green/leads.yaml), not a node in this balance.
+
+wwtp_receiving:
+  bowling-green-wpc:
+    receiving_water: "Poe Ditch (Bowling Green WPC outfall, RM 2.5)"
+    design_flow_mgd: 10.0  # permitted average design flow
+    status: confirmed
+    confidence: high
+    citation: 'Ohio EPA "Fact Sheet for NPDES Permit" 2PD00009*TD for the City of Bowling Green Water Pollution Control, 901 N. Dunbridge Rd, Wood County (application OH0024139) — outfall 2PD00009001 to Poe Ditch at River Mile 2.5 (Ohio EPA river code 16-108, HUC 04100010-03-01), which a short distance downstream enters the North Branch Portage River at River Mile 8.56 (river code 16-007) → Portage River → Lake Erie. Facility description (pp. 6-7) gives the average design flow as 10 MGD with a 30 MGD peak hydraulic capacity, a 4.0 MG equalization basin and 0.5 MGD of infiltration/inflow, serving ~32,000 people across Bowling Green and the Villages of Portage and Rudolph. Table 12 "Instream Conditions and Discharger Flow" (p. 30 of 35) gives the discharger flow as 15.47 cfs (10 MGD, basis NPDES Application Form 2A) against an annual 7Q10 of 0.364 cfs, 1Q10 0.285, summer 30Q10 0.626, winter 30Q10 1.48, 90Q10 0.865 and harmonic mean 3.233 — all drainage-area-adjusted from USGS gage 04195500 (Portage River at Woodville) over 1951-97, with average and maximum mixing assumptions of 25% and 100%. The resulting dilution ratio is 0.024:1 — about 42x effluent dominance. Poe Ditch is designated a Limited Resource Water, but the criteria applied to this discharge are the NORTH BRANCH PORTAGE RIVER''s (Warmwater Habitat, Primary Contact Recreation): "Water quality criteria associated with these uses are applied to Bowling Green WPC to be protective of this higher quality stream." Poe Ditch itself is not monitored under this permit. Source data/documents/oepa/bowling-green/2PD00009.fs.pdf; structured read data/extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml. [verified]'

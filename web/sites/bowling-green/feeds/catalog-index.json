@@ -1,6 +1,6 @@
 {
   "site": "bowling-green",
-  "catalog_version": "a4e3c10fb15a024ad874d1fa7e3139fc04e61c20d5d352b4d01d0e3651a23133",
+  "catalog_version": "3a1b6169697faa6bbd371d994f0fd5459b94ff07ab6099ce4c7a73235ccfc593",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -652,6 +652,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:bowling-green:bowling-green-watch-items",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "bowling-green-watch-items",
+      "title": "Bowling Green site watch-items (WWTP infrastructure geometry)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:bowling-green:bowling-green-water-watch",
       "kind": "dataset",
       "site": "bowling-green",
@@ -689,6 +697,14 @@
       "site": "bowling-green",
       "local_id": "datacenter-industry",
       "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bowling-green:echo-portage-wwtp",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "echo-portage-wwtp",
+      "title": "Portage-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {

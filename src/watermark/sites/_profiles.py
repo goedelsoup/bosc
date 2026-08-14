@@ -4483,10 +4483,18 @@ _BOWLING_GREEN = SiteProfile(
                 "spaces, >$800M, ~100 permanent jobs (avg ~mid-$80k) / >1,000 peak construction; "
                 "corroborated by Middleton Township ('Meta introduced as company behind township data "
                 "center'). Site: Middleton Twp, SR-582 between SR-25 and I-75, adjacent the FirstEnergy "
-                "Mercer Rd substation; ~280-ac initial site inside a ~750-ac Liames, LLC assembly "
-                "([reference] acreage; deeds from 2023-09-05). Liames is the customer of record on OPSB "
-                "25-0973-EL-BLN. Phase 2 signaled in Meta's 2026-01-07 trustees letter. See "
-                "data/extracted/bowling-green/data-centers.md."
+                "Mercer Rd substation; ~280-ac initial site (a site-plan figure, not derivable from the "
+                "parcels [open]) inside the Liames, LLC assembly, which #1436 MEASURED at 775.020 ac "
+                "deeded / 774.878 ac planar over twelve Wood County parcels whose union is one "
+                "contiguous polygon [verified] — superseding the announcement's '~750-ac' press figure; "
+                "deeds from 2023-09-05. Liames is the customer of record on OPSB 25-0973-EL-BLN. A "
+                "SECOND data-center building is on the township's own record — the zoning inspector "
+                "reported the applicant's schedule on 2025-01-15, 'The second data center is scheduled "
+                "for completion April/May 2027' [verified]. (Meta's 2026-01-07 trustees letter is NOT a "
+                "Phase-2 announcement — the word does not appear in it; #1438.) Meta states ~100 "
+                "operational jobs, against the 50 jobs / $4,000,000 payroll the county's CRA resolution "
+                "23-01249 was actually moved on. See data/extracted/bowling-green/data-centers.md and "
+                "data/extracted/bowling-green/middleton-township/project-accordion-township-record.md."
             ),
             # No disclosed cooling/industrial blowdown → None (the cooling back-solve uses the power-
             # derived consumptive as the high bound, no Lima FM-2 leak). The company claims "no

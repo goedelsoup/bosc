@@ -243,3 +243,42 @@ streams:
       design_flow_cfs: 9.2834
       designated_use: "MODIFIED Warmwater Habitat; Outstanding State Water; Agricultural + Industrial Water Supply; Primary Contact Recreation (OAC 3745-1-11 and -05)"
       note: "The network's LOOSEST cited reach, and the counterweight to the Blanchard pair above. 94.1 cfs against the permit's own 9.2834 cfs (6.0 MGD) design flow is 10.14:1 — where Findlay's same-basin plant sits at 1.0:1. Two cautions. (1) The basis gages are the three arms ABOVE Defiance — 04183500 Maumee at Antwerp, 04185000 Tiffin at Stryker, 04191500 Auglaize near Defiance — summed, NOT the single mainstem gage 04192500 that sits just below the city and whose LP3 7Q10 is 139.24 cfs (low-flow-7q10.derived.yaml, #391). Above-the-confluence-arms vs below-the-confluence-gage is the whole 94.1-vs-139.24 gap; it is a methodological difference, not a disagreement about the river. (2) This is a THREE-WAY shared WLA segment: Ohio EPA divides the allocation between this plant, GM Casting Operations (2IN00004) and GM's remediation discharge (2IN00202001), total permitted discharger flow 11.225 cfs, and applies a 25% average mixing assumption. Do not read 94.1 cfs as this plant's own headroom."
+
+  # ── Poe Ditch at the Bowling Green WPC outfall (#1433) ────────────────────────────────────────
+  # Keyed by REACH and `permits:`-bound, like the two Blanchard entries above. There is no derived
+  # screening proxy on this name to collide with — the Portage basin registers NO mainstem gage in
+  # mainstem-gages.yaml, on purpose (see data/reference/echo/README.md), because a mainstem
+  # denominator would integrate a drainage area far larger than the North Branch or Poe Ditch above
+  # it. So unlike Findlay and Sidney the reach key is not defending against an existing proxy; it
+  # is defending against a FUTURE one, and against a second Poe Ditch discharger inheriting a value
+  # Ohio EPA computed at this outfall alone.
+  #
+  # The `permits:` binding is SAFE HERE, and the Defiance note above is the test it had to pass:
+  # the fact sheet's average design flow (10 MGD) and the design flow ECHO carries for OH0024139
+  # (10.0 MGD) AGREE EXACTLY, so `screen_facility` pairs a permit-cited numerator with a denominator
+  # the same permit corroborates. `mgd_to_cfs(10.0)` reproduces the fact sheet's own printed 15.47
+  # cfs, a free second corroboration.
+  #
+  # ⚠️ READ THE WARNING ON THE VALUE. This is a REGULATORY denominator, not a measurement of Poe
+  # Ditch. It is drainage-area-adjusted from USGS 04195500 (Portage River at Woodville) over
+  # 1951-97 — a record that closed before the network's own derived window (1980-2024) opens. It is
+  # the number this permit's limits were actually computed against. Do NOT reconcile it against a
+  # derived value by preferring one; they are different arithmetic over different records. Same
+  # posture as Ottawa (data/extracted/oepa/ottawa/2PD00028.fs.npdes.yaml).
+  poe ditch (bowling green wpc outfall, rm 2.5):
+    seven_q10_cfs: 0.364
+    source: document
+    permits: ["OH0024139", "2PD00009"]
+    citation: "Ohio EPA NPDES fact sheet 2PD00009*TD (Bowling Green Water Pollution Control, 901 N. Dunbridge Rd, Wood County; application OH0024139), page 30 of 35, 'Table 12. Instream Conditions and Discharger Flow' — basis 'USGS Gage #04195500' (Portage River at Woodville) 1951-97, adjusted for drainage area, footnoted '*Flow data from Low-Flow Characteristics of Stream in Ohio through Water Year 1997 and adjusted for drainage area'. Discharge location Poe Ditch RM 2.5, HUC 04100010-03-01, Ohio EPA river code 16-108. A short distance downstream Poe Ditch enters the North Branch Portage River at RM 8.56 (river code 16-007), and it is the NORTH BRANCH's criteria that are applied to this discharge — quoted: 'Water quality criteria associated with these uses are applied to Bowling Green WPC to be protective of this higher quality stream.' Source: data/documents/oepa/bowling-green/2PD00009.fs.pdf; structured read data/extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml. [verified]"
+    confidence: high
+    context:
+      one_q10_cfs: 0.285
+      thirty_q10_summer_cfs: 0.626
+      thirty_q10_winter_cfs: 1.48
+      ninety_q10_cfs: 0.865
+      harmonic_mean_cfs: 3.233
+      mixing_pct_avg: 25
+      mixing_pct_max: 100
+      design_flow_cfs: 15.47
+      designated_use: "Poe Ditch (the immediate receptor): LIMITED RESOURCE WATER; Agricultural + Industrial Water Supply; Secondary Contact Recreation. North Branch Portage River (RM 8.56, the reach whose criteria are applied): Warmwater Habitat; Agricultural + Industrial Water Supply; Primary Contact Recreation."
+      note: "The largest POTW in the Portage basin discharging to one of its smallest waters: 15.47 cfs of design flow against a 0.364 cfs 7Q10 is 0.024:1, about 42x effluent dominance — the second most effluent-dominated municipal discharge in the network after Van Wert's Town Creek (0.026:1), and on a far larger plant. Under design-flow low-flow conditions Poe Ditch below this outfall IS effluent, not diluted effluent. Two things not to misread. (1) The regulated stream here is not the ditch: Ohio EPA applies the NORTH BRANCH PORTAGE's Warmwater Habitat criteria to protect the higher-quality water downstream, so a screen keyed on Poe Ditch's own Limited Resource Water designation reads the wrong criteria for this permit. (2) Poe Ditch itself is NOT MONITORED under this permit at all, so there is no instream record against which to check what this ratio implies."

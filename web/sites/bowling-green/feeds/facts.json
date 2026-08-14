@@ -682,6 +682,138 @@
     "feed": "energy-burden"
   },
   {
+    "subject": "hydrology-scenario:baseline",
+    "subject_label": "baseline — North Branch Portage River",
+    "subject_kind": "hydrology-scenario",
+    "predicate": "consumptive_fraction",
+    "value": 0.0,
+    "unit": "fraction",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "assumption",
+      "page": null,
+      "citation": "baseline",
+      "confidence": "low",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "hydrology-scenarios"
+  },
+  {
+    "subject": "hydrology-scenario:baseline",
+    "subject_label": "baseline — North Branch Portage River",
+    "subject_kind": "hydrology-scenario",
+    "predicate": "consumptive_loss",
+    "value": 0.0,
+    "unit": "cfs",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "0 MGD x 0 consumptive (scenario baseline)",
+      "confidence": "medium",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "hydrology-scenarios"
+  },
+  {
+    "subject": "hydrology-scenario:baseline",
+    "subject_label": "baseline — North Branch Portage River",
+    "subject_kind": "hydrology-scenario",
+    "predicate": "cooling_demand",
+    "value": 0.0,
+    "unit": "MGD",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "assumption",
+      "page": null,
+      "citation": "baseline: no campus cooling load",
+      "confidence": "low",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "hydrology-scenarios"
+  },
+  {
+    "subject": "hydrology-scenario:buildout",
+    "subject_label": "buildout — North Branch Portage River",
+    "subject_kind": "hydrology-scenario",
+    "predicate": "consumptive_fraction",
+    "value": 0.0,
+    "unit": "fraction",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only)",
+      "confidence": "medium",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "hydrology-scenarios"
+  },
+  {
+    "subject": "hydrology-scenario:buildout",
+    "subject_label": "buildout — North Branch Portage River",
+    "subject_kind": "hydrology-scenario",
+    "predicate": "consumptive_loss",
+    "value": 0.0,
+    "unit": "cfs",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "0 MGD x 0 consumptive (scenario buildout)",
+      "confidence": "medium",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "hydrology-scenarios"
+  },
+  {
+    "subject": "hydrology-scenario:buildout",
+    "subject_label": "buildout — North Branch Portage River",
+    "subject_kind": "hydrology-scenario",
+    "predicate": "cooling_demand",
+    "value": 0.0,
+    "unit": "MGD",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only)",
+      "confidence": "medium",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "hydrology-scenarios"
+  },
+  {
     "subject": "platform:bosc",
     "subject_label": "Watermark / BOSC platform",
     "subject_kind": "platform",

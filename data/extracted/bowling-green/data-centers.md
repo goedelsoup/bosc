@@ -55,8 +55,12 @@ Meta (Middleton Twp) and Oppidan (city proper) — are **distinct projects**; do
   0.0 m** — the profile's "adjacent the Mercer Rd substation" is now a measurement too.
 - **Zoning:** the campus core reads **99.8–100% `M-1: Light Industrial`** in Middleton Township's
   own parcel-joined layer. `[verified]` The eight small parcels still read `A-1` / `R-4` there:
-  they are part of the **thirteen parcels / 31.82 ac the trustees rezoned to M-1 by 2–1 on
-  2026-07-07**, and **no published Wood County layer carries that change** — see §4.
+  they are part of the **thirteen parcels / 31.82 ac the trustees rezoned to M-1 on 2026-07-07**
+  — on a roll call of **1-2** (Moulton NO, Petrea YES, Vetter NO) against a motion to approve the
+  Zoning Commission's recommendation to *deny*; the press's "2-1 in favour, Petrea dissenting" is
+  inverted in tally, majority and dissenter alike (#1438, `[verified]` from the minutes:
+  `middleton-township/2026-07-07-liames-rezoning.resolution.yaml`). **No published Wood County
+  layer carries that change** — see §4.
 - **Building program:** **715,000 sq ft** initial phase + **~1,700 parking spaces**. `[verified]`
   Source: Meta. **At least two data-center buildings are on the township's own record** (#1438):
   the zoning inspector reported the Barge Design Solutions site-plan review to the trustees on

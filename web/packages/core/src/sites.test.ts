@@ -154,6 +154,33 @@ describe("sites registry — the Watermark network (#304)", () => {
     });
   });
 
+  it("promotes Bowling Green to selectable on Sidney / Troy-Piqua / Van Wert parity (#1433)", () => {
+    const bgn = SITES.find((s) => s.slug === "bowling-green");
+    expect(bgn?.selectable).toBe(true);
+    expect(bgn?.status).toBe("live");
+    // The fourth promotion on the `case`-tier line, and the readiness block is byte-identical to
+    // all three precedents. Two things are particular to this one. It is the network's first
+    // PORTAGE-basin site — it discharges to Poe Ditch → North Branch Portage → Lake Erie while
+    // DRINKING the Maumee at Waterville, so the two sides of its water balance sit in different
+    // basins and the basin screen needed a Portage POTW inventory that did not exist (#1433).
+    // And `facility: seeded` is again a GRADE rather than a gap: the campus's ~180 MW is the
+    // operator's own disclosed peak, carried `[reference]`, and #1630 keys `live` on an
+    // instrument-grounded load — there is no air permit for the data center itself, because the
+    // gas plant beside it (OPSB 25-0973-EL-BLN) is a separate OPSB-permitted facility.
+    const bgnReadiness = loadManifest("bowling-green").readiness;
+    expect(bgnReadiness).toEqual(loadManifest("van-wert").readiness);
+    expect(bgnReadiness).toEqual(loadManifest("sidney").readiness);
+    expect(bgnReadiness).toEqual(loadManifest("troy-piqua").readiness);
+    expect(bgnReadiness?.tier).toBe("case");
+    expect(bgnReadiness?.domains).toEqual({
+      backdrop: "live",
+      facility: "seeded",
+      places: "live",
+      record: "live",
+      inquiry: "live",
+    });
+  });
+
   it("routes every site under /network/<slug>; Lima uses its canonical watershed name", () => {
     for (const s of SITES) {
       if (s.slug === ACTIVE_SITE_SLUG) expect(s.href).toBe("/network/american-sugar-creek-allen-co");
@@ -161,7 +188,7 @@ describe("sites registry — the Watermark network (#304)", () => {
     }
   });
 
-  it("comingSoonSites() is every non-selectable site (not Lima, Urbana, Fort Wayne, Troy-Piqua, Sidney, Findlay, or Van Wert), each carrying a tracking issue", () => {
+  it("comingSoonSites() is every non-selectable site (not Lima, Urbana, Fort Wayne, Troy-Piqua, Sidney, Findlay, Van Wert, or Bowling Green), each carrying a tracking issue", () => {
     const soon = comingSoonSites();
     expect(soon.some((s) => s.slug === ACTIVE_SITE_SLUG)).toBe(false);
     expect(soon.some((s) => s.slug === "fort-wayne")).toBe(false); // Fort Wayne is now selectable (#741)
@@ -169,10 +196,10 @@ describe("sites registry — the Watermark network (#304)", () => {
     expect(soon.some((s) => s.slug === "sidney")).toBe(false); // Sidney is now selectable (#1992)
     expect(soon.some((s) => s.slug === "findlay")).toBe(false); // Findlay is now selectable (#1265)
     expect(soon.some((s) => s.slug === "van-wert")).toBe(false); // Van Wert is now selectable (#1267)
+    expect(soon.some((s) => s.slug === "bowling-green")).toBe(false); // Bowling Green is now selectable (#1433)
     expect(soon.map((s) => s.slug)).toEqual([
       "defiance",
       "toledo",
-      "bowling-green",
       "bryan",
       "ottawa",
       "springfield",

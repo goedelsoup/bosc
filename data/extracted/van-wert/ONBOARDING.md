@@ -73,7 +73,7 @@ the basin's small-stream end-member: a 4.0 MGD plant (Van Wert WWTP, OH0027910, 
 6.1889 cfs) on a tiny tributary (Town Creek). Town Creek 7Q10 = **0.16 cfs** (annual;
 source=document, NPDES fact sheet 2PD00006, Table 12 via USGS drainage-area ratio —
 see `data/reference/hydrology/low-flow-7q10.yaml`). Basin-screen result: **dilution ratio
-0.03:1 → violation** — 39× effluent dominance. Summer and winter 7Q10 = 0 cfs (intermittent);
+0.026:1 → violation** — 39× effluent dominance. Summer and winter 7Q10 = 0 cfs (intermittent);
 acute dilution ratio 1.02:1 per the fact sheet. Design flow confirmed 4.0 MGD (fact sheet
 Table 7). `[inference]` caveat on effluent dominance is upgraded to `[verified]`.
 ECHO's `receiving_water` field was null for OH0027910; corrected to "Town Creek" per
@@ -127,7 +127,7 @@ discharges treatment residuals back to **Lower Town Creek**.
 
 | permit | facility | type | receiving water | design flow | effluent limits | in basin-screen denominator? |
 |---|---|---|---|---|---|---|
-| OH0027910 | Van Wert WWTP | POTW (individual) | Town Creek (RM 13.87, outfall 2PD00006001) | 4.0 MGD | full mass/conc suite | **yes** — screened, 0.03:1 dilution → violation |
+| OH0027910 | Van Wert WWTP | POTW (individual) | Town Creek (RM 13.87, outfall 2PD00006001) | 4.0 MGD | full mass/conc suite | **yes** — screened, 0.026:1 dilution → violation |
 | OH0135569 | City of Van Wert Water Treatment Plant | NON-POTW water-supply plant (Non-Major individual) | **Lower Town Creek** (WBD12 041000070804, outfall 001 at 40.8476/-84.5748, ~2.5 mi S of WWTP) | none (flow monitor-only) | **pH 6.5–11 SU only**; flow reported, no numeric limit | **no** — WTP residuals, no design flow, no mass limit |
 
 **Determination:** OH0135569 does **not** require inclusion in the effluent-dominance basin-screen
@@ -286,7 +286,7 @@ Verification: Ohio EPA air permit application (submitted per QTS FAQ; no permit 
   from fact sheet 2PD00006 Table 12 — not a derived basin proxy, which is exactly the defect that
   had overstated Sidney's dilution 17-fold. There is no proxy on this key to collide with.
 - [x] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation. **(#1403 — the profile was updated: `[inference]` flat `"D"` → `[verified]` dual `"C/D"`,** 44 of 45 grid points over the committed campus assemblage. The correction is to the *rating*, not the geology: the old inference read the ground right — Great Black Swamp lake-plain clays, and it named Hoytville — but NRCS rates Hoytville C/D, C where the field tile is installed and maintained, D undrained. A flat D pre-committed the undrained letter for both scenarios, inflating the pre-development CN of ground that is tile-drained CAUV row crop today and so understating the pre-to-post delta. Recorded verbatim per WS-20/#1620.)
-- [x] basin-screen coverage is sane for this site's receiving waters. OH0027910 screened against Town Creek 7Q10 (0.16 cfs annual, source=document); dilution ratio 0.03:1 — 39× effluent dominance, `[verified]`. See self-research summary above.
+- [x] basin-screen coverage is sane for this site's receiving waters. OH0027910 screened against Town Creek 7Q10 (0.16 cfs annual, source=document); dilution ratio 0.026:1 — 39× effluent dominance, `[verified]`. See self-research summary above.
 - [x] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md). Parcels wired via `VAN_WERT_PARCEL_SCHEMA` (#421 — the county's AGOL `parcel_joinedVWOH`, replacing the dead bhamaps host); zoning stays `[open]` (no REST anywhere; map-only/PDF).
 - [x] Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/) — see self-research summary above; 5 proposals filed as sub-issues of #363 (#375–379).
 - [x] PROMOTION IS A SEPARATE MANUAL EDIT: flip `status: live` + `selectable: true` for `van-wert` in **`data/sites.yaml`**, then run `watermark sites sync`; parity-gated. (The path this line carried, `web/src/lib/sites.ts`, is retired — `data/sites.yaml` is the canonical identity registry and the TypeScript registry is generated from it. The same stale path survives in 19 other sites' ONBOARDING.md and is a network-wide follow-up, not fixed here.) `onboard` never auto-promotes. Promoted on **Sidney / Troy-Piqua parity**: van-wert's readiness block — `case` tier, backdrop/places/record/inquiry `live`, facility `seeded` — is identical to both, and `facility: live` is unreachable here by design (see `_profiles.py`; the NOI certifies the air PTI as `YET_TO_APPLY` and AEP stated no MW for this campus), so it is not a gap being waived.

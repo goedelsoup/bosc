@@ -24,11 +24,12 @@ const WITH_DEFIANCE: NetworkSite[] = SITES.map((s) =>
 );
 
 describe("multi-site chrome parity (#746)", () => {
-  const real = selectablePathsFrom(SITES); // Lima + Urbana + Fort Wayne + Troy-Piqua + Sidney + Findlay + Van Wert
+  const real = selectablePathsFrom(SITES); // Lima + Urbana + Fort Wayne + Troy-Piqua + Sidney + Findlay + Van Wert + Bowling Green
   const withDef = selectablePathsFrom(WITH_DEFIANCE); // ...+ Defiance
 
-  it("today's build has exactly seven selectable sites (Lima + Urbana + Fort Wayne + Troy-Piqua + Sidney + Findlay + Van Wert)", () => {
+  it("today's build has exactly eight selectable sites (Lima + Urbana + Fort Wayne + Troy-Piqua + Sidney + Findlay + Van Wert + Bowling Green)", () => {
     expect(real.map((p) => p.props.slug).sort()).toEqual([
+      "bowling-green", // promoted #1433
       "findlay", // promoted #1265
       "fort-wayne",
       "lima",
@@ -41,6 +42,7 @@ describe("multi-site chrome parity (#746)", () => {
 
   it("one more selectable site (Defiance) adds its own route, keyed by its own siteBase", () => {
     expect(withDef.map((p) => p.props.slug).sort()).toEqual([
+      "bowling-green",
       "defiance",
       "findlay",
       "fort-wayne",

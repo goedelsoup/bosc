@@ -80,6 +80,57 @@ collections:      # whole data/documents/<slug> trees, e.g.  - aedg
   # withhold rule rather than un-clearing the boundary.
   # review: { by: goedelsoup, date: 2026-08-14, result: publish, basis: disclosed-public-record }
   - van-wert
+  # The whole Bowling Green collection — 15 files (#1433): eleven Middleton Township trustee
+  # minutes (the 2022-2026 rezoning chain plus the meeting Meta's letter was read into), the
+  # captured Meta community-impact letter, two Wood County Planning Commission agendas, the Wood
+  # County Commissioners' record of 2023-09-28, and the City's 2025 Drinking Water Consumer
+  # Confidence Report. These are the primary instruments this site's assembly, governance and
+  # fiscal record rests on; every one is already published by the township, the county, the City
+  # or the operator itself.
+  #
+  # Pre-publication review (#281) run over ALL 15 — a sweep, not a sample, and stated that way
+  # deliberately after the Van Wert miss above. Every page is accounted for: 14 files carry full
+  # text layers and were regex-swept for SSNs, dates of birth, account numbers, phones, emails and
+  # street addresses; the one file with no text layer (see below) and the two image-only pages in
+  # the June 2026 Planning Commission agenda were RENDERED AND READ, because a regex over a scan
+  # is a false clean.
+  #
+  # What the sweep found clean, with the reasons: the eleven township minutes carry UNSIGNED
+  # signature blocks (ruled lines with typed names beneath — the same posture as Van Wert's
+  # ordinances), and although each recites that "the sign-in sheet for employees and visitors is
+  # attached with the approved minutes", NO sign-in sheet is attached to any of the published PDFs
+  # — verified by per-page text density, which finds no image page in any of them. The drinking
+  # water report's contacts are institutional (mfields@bgohio.gov, the Water Supply
+  # Superintendent's office line, the EPA Safe Drinking Water Hotline, City Hall). 07192023.pdf's
+  # "20921 Dunbridge Road" is a NUISANCE PROPERTY set for structure removal under R.C. 505.86(B) —
+  # the subject of official action, not a private contact detail. The agendas' image pages are an
+  # adjournment stub and the County Engineer's aerial parcel map of the thirteen rezone-request
+  # parcels. The Meta letter is signed "The Meta Global Infrastructure Team", no individual.
+  #
+  # ⚠️ WHAT THE REVIEW DID FIND, and the basis for clearing it anyway.
+  # commissioners/10032023.pdf has NO TEXT LAYER (a Canon copier scan, 7 pages), so it was read
+  # page by page. Page 3 carries the three County Commissioners' and the Clerk of the Board's
+  # REPRODUCED HANDWRITTEN SIGNATURES — public officials executing an instrument, which is the
+  # ordinary form of an adopted resolution. Page 7 is an ATTENDANCE ROSTER, handwritten, headed
+  # "NAME | DEPARTMENT/ADDRESS". Seven of its eight signers gave an organizational affiliation
+  # (NWWSD, Econ. Dev., B&G) or a firm address. The eighth, ROSS FOUGHT, gave a RESIDENTIAL
+  # ADDRESS — 21599 N. Dixie Hwy — and he is the Wood County resident recorded on pages 1-2 as the
+  # member of the public who spoke AGAINST the tax abatement.
+  #
+  # Cleared whole as DISCLOSED PUBLIC RECORD by operator decision, explicitly NOT as the outcome of
+  # a passed PII sweep — the same posture as aedg/PRR-01-bundle.ocr.pdf and the Van Wert meeting
+  # records above. The reasoning is that this file is the ONLY source in the corpus for Wood County
+  # Resolution 23-01249, the 75% / 15-year Community Reinvestment Area agreement moved on 50
+  # full-time jobs and a $4,000,000 annual payroll with Eastwood, Otsego and Penta Career Center as
+  # the school parties — the spine of this site's fiscal and governance record, and the instrument
+  # that shows the abatement was granted on HALF the headcount now in circulation. A roster signed
+  # at a public meeting of a public body is quintessentially public record, and the County
+  # published this exact PDF itself. Withholding the file would remove the primary instrument to
+  # protect a datum the County already published; the withhold mechanism operates on files, not
+  # pages, so there is no narrower carve available. If that trade ever needs revisiting, add a
+  # withhold rule rather than un-clearing the boundary.
+  # review: { by: goedelsoup, date: 2026-08-14, result: publish, basis: disclosed-public-record }
+  - bowling-green
 globs:            # fnmatch globs over the data/documents rel, e.g.  - 'permits/*/*.pdf'
   # Findlay's grid instruments — the AEP large-load request, the Rocky Ford 138 kV station
   # LON + public notice, the Ebersole-Fostoria construction notice, and the AEP Ohio tariff
@@ -96,6 +147,31 @@ globs:            # fnmatch globs over the data/documents rel, e.g.  - 'permits/
   # that no review has covered.
   # review: { by: goedelsoup, date: 2026-08-14, result: publish, basis: public-utility-filings }
   - 'grid/van-wert/*'
+  # Bowling Green's grid instruments (#1433/#1437/#1440) — the OPSB Staff Report of Investigation
+  # in the Apollo Power Generation Facility case 25-0973-EL-BLN, FirstEnergy's filed Toledo Edison
+  # P.U.C.O. No. 8 electric service tariff (168 pp), and the EEI "Large Load Projects and Tariffs"
+  # compilation. Utility, siting-board and industry filings, all public. A GLOB rather than the
+  # `grid` collection for the same reason as Findlay's and Van Wert's above: data/documents/grid/
+  # is shared across eight sites, so clearing the collection would publish seven other sites' grid
+  # documents that no review has covered.
+  #
+  # All three swept page by page (#281): full text layers throughout, no image-only page, and no
+  # SSNs, dates of birth, account numbers, phone numbers or email addresses anywhere in the 210
+  # pages.
+  #
+  # ⚠️ ONE RESIDENTIAL ADDRESS, cleared knowingly. The Staff Report's page 21 is the "OPSB Staff
+  # Report Distribution List". Nine of its ten entries are state agency or legislative offices
+  # (PUCO, Development, Health, Agriculture, Ohio EPA, ODNR, and the House and Senate at the
+  # Statehouse). The tenth is GREGORY SLONE, OPSB Public Member, at 6123 Sugar Maple Dr.,
+  # Westerville — a home address, and it appears because the Public Member is the one seat on that
+  # board with no agency office to be served at. He is a serving public official, the address is on
+  # the service list of a document the Ohio Power Siting Board filed and published on its own
+  # docketing system, and the report is the primary instrument for this site's power story: the 350
+  # MW net cap under Condition 14, Condition 15's bar on PJM interconnection, and the three
+  # major-source margins. Cleared as a public agency record on that basis, with the finding
+  # recorded here rather than left to be discovered.
+  # review: { by: goedelsoup, date: 2026-08-14, result: publish, basis: public-utility-filings }
+  - 'grid/bowling-green/*'
 documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/foo.pdf
   # The AEDG PRR-01 bundle — the full 328-page Port Authority public-records production.
   # Only pp. 317-327 (the six Tetra Tech OPC estimates) are the curated exhibit slice; the
