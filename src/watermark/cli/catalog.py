@@ -12,6 +12,27 @@ from watermark.cli._base import (
 )
 
 
+@catalog_app.command("lfs-paths")
+def catalog_lfs_paths() -> None:
+    """Print every Git-LFS-tracked path the catalog OBSERVES, one per line (#2025).
+
+    A catalog observation records a dataset's ``sha256`` / ``size_bytes`` / ``lfs_materialized``,
+    and those land in each site's ``catalog`` feed — so a bundle regenerated on a checkout without
+    the real bytes writes a pointer's hash into 26 committed bundles. Pulling ALL of LFS to avoid
+    that is 2.8 GB a run of metered bandwidth; these paths are ~59 MB.
+
+    Emitted rather than listed in the workflow because a hardcoded include list is exactly what
+    goes stale — the same failure this issue is about. Feed it to ``git lfs pull --include``.
+    """
+    from watermark.catalog import load_entries
+
+    paths = sorted(
+        {f"data/{item.relpath}" for e in load_entries() for item in e.storage if item.lfs}
+    )
+    for path in paths:
+        print(path)
+
+
 @catalog_app.command("list")
 def catalog_list(
     scope: str = typer.Option("", "--scope", help="Filter to one scope (e.g. reference)."),

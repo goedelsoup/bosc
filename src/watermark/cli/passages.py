@@ -15,18 +15,48 @@ quietly.
 
 from __future__ import annotations
 
+import typer
+
 from watermark.cli._base import app, console, get_settings
 
 
 @app.command("passages")
-def passages_cmd() -> None:
+def passages_cmd(
+    check: bool = typer.Option(
+        False,
+        "--check",
+        help="Report whether the committed index still covers the published corpus; extract nothing.",
+    ),
+) -> None:
     """Extract published-PDF page passages → ``data/site/passages.ndjson`` (run ``git lfs pull`` first)."""
-    from watermark.site.passages import extract_published_passages, write_committed_passages
+    from watermark.site.passages import (
+        check_index_freshness,
+        extract_published_passages,
+        write_committed_passages,
+    )
 
     settings = get_settings()
-    passages = extract_published_passages(settings)
-    path = write_committed_passages(passages, settings)
-    console.print(f"wrote {len(passages)} passages → {path.relative_to(settings.data_dir.parent)}")
+
+    if check:
+        # Opens no PDF and needs no LFS — it compares the published SET, not coverage (#2025).
+        findings = check_index_freshness(settings)
+        if not findings:
+            console.print("[green]Passage index current[/] — covers the published corpus.")
+            return
+        for finding in findings:
+            console.print(f"  [dim]{finding.kind:<20}[/] {finding.subject} — {finding.detail}")
+        console.print(
+            f"\n[red]{len(findings)} finding(s)[/] — rebuild with `git lfs pull && watermark passages`"
+        )
+        raise typer.Exit(1)
+
+    extraction = extract_published_passages(settings)
+    passages = extraction.items
+    path = write_committed_passages(extraction, settings)
+    console.print(
+        f"wrote {len(passages)} passages over {len(extraction.published_pdfs)} published PDF(s) "
+        f"→ {path.relative_to(settings.data_dir.parent)}"
+    )
     ocr = [p for p in passages if p.method == "ocr"]
     damaged = [p for p in passages if p.method == "pdf_text_damaged"]
     if ocr:

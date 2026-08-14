@@ -1,0 +1,153 @@
+# Committed-bundle freshness (weekly) — re-export every site's `web/sites/<slug>/` bundle
+# and open a PR when the corpus has moved under it (#2025).
+#
+# Why this exists: a committed bundle is a build artifact of the corpus that nothing recomputes.
+# It goes stale silently, and it is found while doing something else — three times inside epic
+# #1265 alone, and when the drift check first ran, 23 of 26 bundles were publishing a stale
+# size and sha256 for a shared dataset with every row count still equal. The in-suite guard
+# (per-feed row counts, `tests/test_site_bundle.py`) catches the severe shape per commit; this
+# sweeps the rest, on a cadence, as a reviewable diff rather than a discovery.
+#
+# Safety:
+#   - Writes are asserted to land under web/sites/** ONLY; the run aborts otherwise.
+#   - The regen refuses to proceed if any catalog-observed LFS path is still a pointer, because
+#     a bundle exported without the real bytes would write a pointer's hash into 26 manifests.
+#   - The PR is inert — nothing auto-merges and `main` requires review.
+#
+# NOTE: a PR opened with GITHUB_TOKEN does not auto-trigger the `check` workflow (a GitHub
+# anti-recursion rule). Reopen the PR (or push a commit) to run it.
+
+name: Bundle freshness (weekly)
+
+on:
+  schedule:
+    - cron: "17 7 * * 1" # Mondays 07:17 UTC
+  workflow_dispatch:
+    inputs:
+      check_only:
+        description: "Report drift without opening a PR"
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: bundle-freshness
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        # Deliberately NOT `lfs: true`: the full LFS tree is ~2.8 GB of metered bandwidth per
+        # run. Only the catalog-OBSERVED paths (~59 MB) affect a bundle, and they are pulled
+        # below from a list the catalog emits — a hardcoded include list is precisely the thing
+        # that goes stale here.
+
+      - name: Set up uv + Python
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Pull the LFS objects a bundle observes
+        run: |
+          set -euo pipefail
+          uv run watermark catalog lfs-paths > /tmp/lfs-paths.txt
+          count=$(wc -l < /tmp/lfs-paths.txt)
+          echo "catalog observes $count Git-LFS path(s)"
+          # Comma is LFS's separator, so a path may contain spaces (one does:
+          # "15-Core Service Requirements.pdf") — the whole list stays quoted. If that ever
+          # parses wrong, the next step catches it rather than this one succeeding quietly.
+          if [ "$count" -gt 0 ]; then
+            git lfs pull --include="$(paste -sd, /tmp/lfs-paths.txt)"
+          fi
+
+      - name: Verify no observed LFS path is still a pointer
+        # The include list is derived, but derivation can still miss (a renamed path, a partial
+        # fetch). This checks the OUTCOME rather than trusting the input: an unmaterialized
+        # object here would be silently hashed as a ~130-byte pointer stub into every bundle's
+        # `catalog` feed, so the run stops instead.
+        run: |
+          set -euo pipefail
+          unresolved=0
+          while IFS= read -r p; do
+            [ -f "$p" ] || continue
+            if head -c 43 "$p" | grep -q "^version https://git-lfs.github.com/spec/v1"; then
+              echo "::error::unmaterialized LFS pointer: $p"
+              unresolved=$((unresolved + 1))
+            fi
+          done < /tmp/lfs-paths.txt
+          if [ "$unresolved" -gt 0 ]; then
+            echo "::error::$unresolved catalog-observed path(s) are still pointers — refusing to export"
+            exit 1
+          fi
+          echo "all catalog-observed LFS paths materialized"
+
+      - name: Report passage-index drift
+        # Cheap and LFS-independent: it compares the published SET, opening no PDF. Reported
+        # rather than fixed here — rebuilding the index needs the real PDF bytes (the full 2.8 GB
+        # of LFS) and the tesseract binary, and a rebuild without tesseract would turn repaired
+        # pages back into damaged ones (#1966). So this names the work; a human does it.
+        run: uv run watermark passages --check || true
+
+      - name: Report drift
+        run: uv run watermark export --check --all || true
+
+      - name: Re-export every committed bundle
+        if: ${{ !inputs.check_only }}
+        run: uv run watermark export --committed --all
+
+      - name: Detect changes & confine them to web/sites/
+        if: ${{ !inputs.check_only }}
+        id: diff
+        run: |
+          set -euo pipefail
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Every committed bundle is current — nothing to open."
+            exit 0
+          fi
+          outside=$(git diff --cached --name-only | grep -vE '^web/sites/' || true)
+          if [ -n "$outside" ]; then
+            echo "::error::Refusing — changes outside web/sites/:"
+            echo "$outside"
+            exit 1
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          git diff --cached --stat
+
+      - name: Open a PR with the refreshed bundles
+        if: ${{ !inputs.check_only && steps.diff.outputs.changed == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          branch="bundle-freshness/${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git commit -m "data(bundles): weekly committed-bundle refresh" \
+            -m "Regenerated web/sites/** with \`watermark export --committed --all\` (#2025). Inert until reviewed."
+          git push -u origin "$branch"
+          {
+            echo "Weekly re-export of every committed site bundle (\`watermark export --committed --all\`, #2025)."
+            echo
+            echo "A committed bundle is a build artifact of the corpus that nothing recomputes, so it lags silently. This turns that lag into a reviewable diff instead of something found mid-PR."
+            echo
+            echo "**Review the diff for row-count changes.** A count that MOVED means the corpus gained or lost evidence since the last export — a DROP needs explaining before it is accepted. A diff confined to \`generated_at\` and \`catalog\` \`observed\` blocks is routine: those are re-observations of datasets that changed, not evidence moving."
+            echo
+            echo "> The required \`check\` status does not auto-run on a \`GITHUB_TOKEN\`-opened PR (GitHub anti-recursion). Reopen this PR or push a commit to trigger it."
+          } > /tmp/pr-body.md
+          gh pr create --base main --head "$branch" \
+            --title "data(bundles): weekly committed-bundle refresh" \
+            --body-file /tmp/pr-body.md

@@ -48,8 +48,10 @@ split as ``ask-embeddings``: text here, vectors there).
 
 from __future__ import annotations
 
+import json
 import re
 from collections.abc import Callable, Mapping, Sequence
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
@@ -68,6 +70,10 @@ _MAX_PASSAGE_CHARS = 4_000
 # The committed, LFS-independent passage artifact (relative to settings.data_dir). Global (documents
 # are corpus-global): each per-site export filters it to that site's published docs.
 _ARTIFACT_RELPATH = ("site", "passages.ndjson")
+
+# The index's provenance sidecar (#2025): the published-PDF set the artifact beside it was built
+# from, so a later publish-policy change is detectable without re-reading a single PDF.
+_META_RELPATH = ("site", "passages.meta.json")
 
 # The reference extractions read scans at 300 DPI (watermark.documents.pdf.DEFAULT_DPI); match it so
 # a fallback OCR read is the same quality as the extract pipeline's.
@@ -289,15 +295,12 @@ def load_committed_passages(settings: Settings) -> list[PassageItem]:
     ]
 
 
-def extract_published_passages(settings: Settings) -> list[PassageItem]:
-    """Extract page passages for **every** published PDF across the whole corpus (the regen source).
+def _published_documents_feed(settings: Settings) -> list[dict[str, Any]]:
+    """The assembled whole-tree ``documents`` feed rows, with the publish policy applied.
 
-    Reads the raw LFS PDFs, so it must run with ``git lfs pull`` (via ``watermark passages``), never
-    at export time. The publish policy (cleared scope minus the ``withhold`` denylist, exhibits
-    auto-included) is resolved exactly as the export does, so a passage ships only where the
-    ``documents`` feed marks the doc ``published`` — but over the **whole tree** (``scope=None``) so
-    the one global artifact covers every site's published docs; each per-site ``_passages_feed``
-    filters it back down to its own set.
+    Shared by the extractor and the freshness check so they can never disagree about what is
+    published — the same reason :func:`_published_pdf_entries` reads the feed rather than
+    re-deriving the allowlist.
     """
     from watermark.site import documents as documents_mod
     from watermark.site import exhibits as exhibits_mod
@@ -311,14 +314,139 @@ def extract_published_passages(settings: Settings) -> list[PassageItem]:
     documents_feed = documents_mod.export_documents(
         settings.documents_dir, allowlist=allowlist, scope=None
     )
-    feed_rows = [c.model_dump(mode="json", by_alias=True) for c in documents_feed]
-    return build_passages(feed_rows, settings.documents_dir)
+    return [c.model_dump(mode="json", by_alias=True) for c in documents_feed]
 
 
-def write_committed_passages(passages: Sequence[PassageItem], settings: Settings) -> Path:
-    """Write the passages artifact as NDJSON (one :class:`PassageItem` per line). Returns the path."""
+def published_pdf_rels(settings: Settings) -> list[str]:
+    """Every published PDF rel the index is expected to cover, sorted (#2025).
+
+    Cheap — it resolves the publish policy and reads the document catalog, opening no PDF. That
+    is what makes the freshness check affordable: the expensive half (extraction) only has to run
+    once the check says the set has moved.
+    """
+    return sorted(rel for rel, _ in _published_pdf_entries(_published_documents_feed(settings)))
+
+
+def meta_path(settings: Settings) -> Path:
+    """Path to the index's provenance sidecar (``data/site/passages.meta.json``)."""
+    return settings.data_dir.joinpath(*_META_RELPATH)
+
+
+def load_index_meta(settings: Settings) -> dict[str, Any] | None:
+    """The committed sidecar, or ``None`` when the index predates it."""
+    path = meta_path(settings)
+    if not path.exists():
+        return None
+    parsed: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+    return parsed
+
+
+@dataclass(frozen=True)
+class PassageIndexFinding:
+    """One way the committed passage index no longer describes the published corpus."""
+
+    kind: str  # no-meta | newly-published | no-longer-published
+    subject: str
+    detail: str
+
+    def __str__(self) -> str:
+        return f"[{self.kind}] {self.subject} — {self.detail}"
+
+
+def check_index_freshness(settings: Settings) -> list[PassageIndexFinding]:
+    """Report whether ``data/site/passages.ndjson`` still covers the published corpus (#2025).
+
+    The shared index has no per-site regeneration and no freshness check, so it is the worst case
+    of the committed-artifact lag: #2023 cleared eight ``oepa/`` documents that were already inside
+    a cleared boundary, and they sat unindexed until somebody rebuilt for an unrelated site.
+
+    The predicate is the **published set**, not coverage. "Published but carrying no passage" is
+    useless as a signal — 63 of the 261 published PDFs carry none, and not one of them is an
+    unresolved LFS pointer: they are image-only scans whose text layer is zero-length, so a
+    coverage check would be 63 standing findings forever. What is exact is whether the set the
+    index was built from still matches the set the publish policy clears today: a document added to
+    that set has provably never been offered to the extractor, and one removed from it is being
+    retained past its clearance.
+
+    Opens no PDF, so it is cheap enough to run in CI; the extraction it recommends is not.
+    """
+    meta = load_index_meta(settings)
+    if meta is None:
+        return [
+            PassageIndexFinding(
+                "no-meta",
+                "data/site/passages.meta.json",
+                "the index carries no record of what it was built from — run `watermark passages`",
+            )
+        ]
+    built_from = set(meta.get("published_pdfs") or ())
+    current = set(published_pdf_rels(settings))
+    findings = [
+        PassageIndexFinding(
+            "newly-published", rel, "cleared for publication since the index was built"
+        )
+        for rel in sorted(current - built_from)
+    ]
+    findings += [
+        PassageIndexFinding(
+            "no-longer-published", rel, "indexed but no longer cleared — passages retained past it"
+        )
+        for rel in sorted(built_from - current)
+    ]
+    return findings
+
+
+@dataclass(frozen=True)
+class PassageExtraction:
+    """A regen's two outputs: the passages, and the published set they were extracted over.
+
+    They travel together because the sidecar's whole value is that it describes *this* run — a
+    set re-derived at write time could differ from the one the extractor actually saw.
+    """
+
+    items: list[PassageItem]
+    published_pdfs: list[str]
+
+
+def extract_published_passages(settings: Settings) -> PassageExtraction:
+    """Extract page passages for **every** published PDF across the whole corpus (the regen source).
+
+    Reads the raw LFS PDFs, so it must run with ``git lfs pull`` (via ``watermark passages``), never
+    at export time. The publish policy (cleared scope minus the ``withhold`` denylist, exhibits
+    auto-included) is resolved exactly as the export does, so a passage ships only where the
+    ``documents`` feed marks the doc ``published`` — but over the **whole tree** (``scope=None``) so
+    the one global artifact covers every site's published docs; each per-site ``_passages_feed``
+    filters it back down to its own set.
+    """
+    feed = _published_documents_feed(settings)
+    return PassageExtraction(
+        items=build_passages(feed, settings.documents_dir),
+        published_pdfs=sorted(rel for rel, _ in _published_pdf_entries(feed)),
+    )
+
+
+def write_committed_passages(extraction: PassageExtraction, settings: Settings) -> Path:
+    """Write the passages artifact as NDJSON, plus the sidecar recording what it covers.
+
+    The sidecar (``passages.meta.json``) is what makes staleness detectable at all: without it,
+    "published but unindexed" cannot be told apart from "published and legitimately text-free",
+    and the index can silently fall behind a publish-policy change — which is how #2023's eight
+    newly-cleared documents went unindexed. See :func:`check_index_freshness`.
+
+    The covered set travels in :class:`PassageExtraction` rather than being re-derived here, so
+    the sidecar can only ever record the set the extraction actually ran over.
+    """
     path = artifact_path(settings)
     path.parent.mkdir(parents=True, exist_ok=True)
-    payload = "".join(p.model_dump_json(by_alias=True) + "\n" for p in passages)
+    payload = "".join(p.model_dump_json(by_alias=True) + "\n" for p in extraction.items)
     path.write_text(payload, encoding="utf-8")
+
+    meta = {
+        "published_pdfs": list(extraction.published_pdfs),
+        "documents_with_passages": len({p.document_id for p in extraction.items}),
+        "passage_count": len(extraction.items),
+    }
+    meta_path(settings).write_text(
+        json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
     return path
