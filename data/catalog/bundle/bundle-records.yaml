@@ -361,3 +361,18 @@ notes: >-
   over feeds this export already assembled.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
+  This dataset now has a SECOND, committed form (issue 2025): `web/sites/<slug>/`, the lean
+  bundle the offline Astro build reads with no Python step. It is the same export minus
+  `schemas/` (the contract lives once at `data/site/bundle/schemas/`) and minus the
+  `passages`/`passage-embeddings` retrieval indexes unless a site's own committed manifest
+  already declares them. Being committed is what makes it go stale: nothing recomputes it, so
+  an ingest, a re-pull or a corrected figure moves what an export would produce while the
+  committed tree sits unchanged. When the drift check first ran, 23 of the 26 bundles were
+  publishing a stale size and sha256 for a shared dataset with every row count still equal —
+  the drift was INSIDE a row, which is why the check compares bytes and not counts. Write it
+  with `watermark export --committed [--all]` (never by hand: the hand-run trim it replaces
+  deleted committed retrieval evidence twice, #1969 and #1993) and verify it with
+  `watermark export --check [--all]`, which re-exports to a temp dir and diffs. The suite
+  guards the severe shape per commit — per-feed row-count equality against a fresh export, for
+  the sites it already exports — and `.github/workflows/bundle-freshness.yml` sweeps the rest
+  weekly as a reviewable PR.
