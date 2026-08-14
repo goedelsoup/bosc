@@ -433,6 +433,7 @@ def build_timeline(
     *,
     include_curated: bool = True,
     scope: CorpusScope | None = None,
+    settings: Settings | None = None,
 ) -> list[TimelineEvent]:
     """Assemble a single sorted chronology across the whole corpus.
 
@@ -445,6 +446,17 @@ def build_timeline(
     active site's profile (``None`` for Lima → the whole tree, byte-identical), so a
     sibling site (Fort Wayne) never inherits Lima's Allen-County civic spine. Tests pass
     ``include_curated=False`` to stay hermetic against a synthetic corpus.
+
+    ``settings`` names **which site** the curated half is being assembled for, and a caller
+    exporting a site other than the process default must pass it (#2025). It used to be read
+    from ``get_settings()`` here, which is ``lru_cache``d on the process-global active site —
+    so ``export_bundle(Settings(site="findlay"))`` read the right *files* (``scope`` is
+    threaded) and then filtered them through **Lima's** corridor vocabulary. Findlay declares
+    ``one_power``/``mara_holdings`` where Lima declares ``bosc``/``bistrozzi``/``google``, so
+    its three One Power meetings dropped out of a 14-event chronology and nothing said so. The
+    CLI never saw it — ``watermark --site <slug>`` writes ``WATERMARK_SITE`` before the first
+    ``get_settings()`` — but every programmatic per-site export did, the test suite's shared
+    bundle fixtures included.
     """
     corpus = corpus if corpus is not None else load_corpus()
     events = (
@@ -455,7 +467,7 @@ def build_timeline(
         + _opc_events(corpus)
     )
     if include_curated:
-        settings = get_settings()
+        settings = settings or get_settings()
         profile = active_profile(settings)
         site_scope = scope if scope is not None else effective_corpus_scope(profile)
         events += (

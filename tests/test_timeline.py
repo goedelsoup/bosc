@@ -8,7 +8,7 @@ from watermark.config import Settings
 from watermark.models import Deed, DeedExtraction, NpdesExtraction, NpdesPermit
 from watermark.pipeline.corpus import Corpus
 from watermark.pipeline.timeline import _date_key, _zoning_events, build_timeline
-from watermark.sites import CorpusScope
+from watermark.sites import CorpusScope, effective_corpus_scope, get_profile
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -129,3 +129,42 @@ def test_zoning_events_gated_out_of_scope() -> None:
     """A sibling site whose scope excludes ``lacrpc/`` gets no Lima zoning event (#762)."""
     settings = Settings(data_dir=REPO_ROOT / "data")
     assert _zoning_events(settings, scope=CorpusScope(include=("oepa/",))) == []
+
+
+def test_curated_corridor_vocabulary_follows_the_injected_settings() -> None:
+    """The curated half must read the corridor subjects of the site it is *told* to build (#2025).
+
+    ``build_timeline`` used to take the vocabulary from ``get_settings()``, which is
+    ``lru_cache``d on the process-global active site. ``export.py`` threads ``scope`` but
+    exports with an injected ``Settings``, so a peer export read the right *files* and then
+    filtered them through the default site's vocabulary — Findlay's three One Power meetings
+    fell out of a 14-event chronology, silently, in every programmatic export (the whole test
+    suite's shared bundle fixtures included). The CLI was unaffected, so the committed bundle
+    and the suite's export of it disagreed with no test in a position to notice.
+
+    Both calls below read the SAME files — ``scope`` is pinned to Findlay's — so the only
+    variable is which profile supplies ``corridor_subjects``.
+    """
+    corpus = Corpus()
+    scope = effective_corpus_scope(get_profile("findlay"))
+
+    def corridors(site: str) -> set[str]:
+        events = build_timeline(
+            corpus, scope=scope, settings=Settings(data_dir=REPO_ROOT / "data", site=site)
+        )
+        return {
+            subject
+            for e in events
+            if e.category == "subdivision_meeting"
+            for subject in e.title.rsplit("(corridor: ", 1)[-1].rstrip(")").split(", ")
+        }
+
+    # Findlay declares one_power; Lima does not. Read with Findlay's own vocabulary, its One
+    # Power meetings are on the chronology.
+    assert "one_power" in corridors("findlay")
+    # Read with Lima's vocabulary over the very same files, they are not — which is exactly
+    # what a peer export produced before the settings were threaded.
+    assert "one_power" not in corridors("lima")
+    # `datacenter` is in both vocabularies, so it survives either way: proof the difference is
+    # the vocabulary and not the scope silently emptying.
+    assert "datacenter" in corridors("findlay") & corridors("lima")
