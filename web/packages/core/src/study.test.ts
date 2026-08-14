@@ -319,13 +319,26 @@ describe("the impact-study feed seam — a shipped feed is preferred wholesale",
   });
 });
 
-describe("statDecimals — a real figure never renders as zero (#1995)", () => {
+describe("statDecimals — one decimal at or above 1, two significant figures below (#1995/#1267)", () => {
   // Must stay identical to `_stat_decimals` in watermark/site/impact_study.py; the parity
   // suite pins the two derivations equal over every committed bundle.
-  it("keeps one decimal at the scale the study was built on", () => {
+  it("keeps one decimal at or above 1", () => {
     expect(statDecimals(24.0)).toBe(1);
-    expect(statDecimals(0.2)).toBe(1);
-    expect(statDecimals(0.05)).toBe(1); // rounds to 0.1 — still visible
+    expect(statDecimals(1.0)).toBe(1);
+    expect(statDecimals(6.19)).toBe(1); // Van Wert's design discharge
+  });
+
+  it("keeps two significant figures below 1, where a design low flow lives (#1267)", () => {
+    // The rule used to be "one decimal unless the value rounds to zero", which caught Sidney's
+    // 0.0146 but not a value that merely SHIFTED. Van Wert's Town Creek 7Q10 is 0.16 cfs and
+    // published as "0.2" — off by 25% on the denominator its whole effluent-dominance finding
+    // rests on. Findlay's 0.21 had the same shift.
+    expect(statDecimals(0.16)).toBe(2); // Van Wert — the case that forced the widening
+    expect(statDecimals(0.21)).toBe(2); // Findlay
+    expect(statDecimals(0.2)).toBe(2);
+    // Two SIGNIFICANT FIGURES, not two decimals: the count tracks the leading zeros, so a value
+    // an order of magnitude smaller gets an order of magnitude more places ("0.050").
+    expect(statDecimals(0.05)).toBe(3);
   });
 
   it("does not disturb a real zero, or a non-number", () => {

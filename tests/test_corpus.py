@@ -365,13 +365,19 @@ def _leading_comment(text: str) -> str:
     things like "transcribed from the rendered image" — a phrase about the render, not a denial
     of one. A file's leading block is where it declares what it IS; that is the only place this
     gate reads.
+
+    A leading ``---`` document marker is stepped over rather than treated as the end of the
+    header. No committed extraction opens with one today, so this changes nothing now — it is
+    here because the failure mode would be silent: a hand-read declaration written *below* a
+    marker would stop being scanned, and a gate whose whole job is to not miss things must not
+    have a way to quietly stop looking.
     """
     out: list[str] = []
     for line in text.splitlines():
         stripped = line.strip()
         if stripped.startswith("#"):
             out.append(stripped)
-        elif not stripped:
+        elif not stripped or stripped == "---":
             continue
         else:
             break
@@ -392,9 +398,21 @@ def test_no_committed_hand_read_carries_a_render_receipt() -> None:
     untrustworthy, which the repo's whole extract discipline turns on — from one transcribed off a
     clean text layer. A false receipt inverts that signal inside litigation evidence, so the
     corpus is swept rather than trusted.
+
+    The render-receipt check is TOP-LEVEL ONLY, deliberately. It mirrors
+    :meth:`TranscribedExtraction._carries_no_render_receipt`, which inspects the model's own
+    ``__pydantic_extra__`` and nothing nested — this gate backstops that rule, so it must test the
+    same thing. Recursing would also produce false positives on a different sense of the word:
+    ``legal/web-vendor-audit/allen-county-web-vendor-corporate-records.yaml`` nests eight
+    ``doc_id`` keys that are **Ohio Secretary of State filing numbers** (``'201414700542'``), not
+    render receipts.
     """
     offenders: list[str] = []
-    for path in sorted((REPO_ROOT / "data" / "extracted").rglob("*.yaml")):
+    for path in sorted(
+        p
+        for pattern in ("*.yaml", "*.yml")
+        for p in (REPO_ROOT / "data" / "extracted").rglob(pattern)
+    ):
         text = path.read_text(encoding="utf-8", errors="replace")
         if not _HAND_READ_DECLARED.search(_leading_comment(text)):
             continue

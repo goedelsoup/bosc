@@ -80,8 +80,14 @@ describe("fmtMult — a dilution ratio never renders as zero (#1265)", () => {
     expect(fmtMult(0.04308778944)).toBe("0.043×");
   });
 
-  it("is unchanged at the scale it already handled", () => {
-    expect(fmtMult(0.42010594704)).toBe("0.4×");
+  it("keeps two significant figures across the whole sub-1 range (#1267)", () => {
+    // `statDecimals` widened from a vanish-guard to the whole sub-1 range, and `fmtMult` shares
+    // it. A ratio in [0.05, 1) therefore gains a digit — which the ratio case wanted already by
+    // the argument above, it just had no symptom loud enough to force it.
+    expect(fmtMult(0.42010594704)).toBe("0.42×");
+  });
+
+  it("is unchanged at or above 1", () => {
     expect(fmtMult(2.2159434569142853)).toBe("2.2×"); // Sidney
     expect(fmtMult(12.4)).toBe("12×"); // integer at >= 10
     expect(fmtMult(Number.POSITIVE_INFINITY)).toBe("∞×");

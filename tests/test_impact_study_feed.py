@@ -264,7 +264,9 @@ def test_js_number_formatting() -> None:
     assert _fmt_mult(0.04308778944) == "0.043\u00d7"
     assert _fmt_mult(0.006987209098378379) == "0.0070\u00d7"
     assert _fmt_mult(0.0090484357824) == "0.0090\u00d7"
-    assert _fmt_mult(0.42010594704) == "0.4\u00d7"  # >= 0.05 is unchanged: one decimal
+    # The sub-1 rule widened in #1267, and `_fmt_mult` shares it: a ratio in [0.05, 1) now keeps
+    # two significant figures too. The ratio case wanted that already by the argument above.
+    assert _fmt_mult(0.42010594704) == "0.42\u00d7"
     assert _fmt_mult(2.2159434569142853) == "2.2\u00d7"
     assert _fmt_mult(12.4) == "12\u00d7"
     assert _fmt_ranged(4.9, None, None, 1) == "4.9"
@@ -328,16 +330,34 @@ def test_lima_fiscal_gap_carries_the_curated_joins(lima_bundle: Path) -> None:
 
 
 def test_a_real_figure_never_renders_as_zero() -> None:
-    """One decimal, unless that would erase the figure (#1995) — the peer of `statDecimals`.
+    """One decimal at or above 1, two significant figures below — the peer of `statDecimals`.
 
-    Sidney's contracted cooling draw is 0.0146 cfs (3.44M gal/yr, stated in an executed service
-    agreement). At one decimal its headline stat read "0 cfs", which a reader takes as *no draw*
-    rather than *a very small one*. Everything at the scale this study was built on is untouched,
-    which is why no committed bundle's stats moved when this landed.
+    Two findings shaped this, and both are about a design low flow being a sub-1 number that one
+    decimal cannot carry.
+
+    A value that VANISHED (#1995): Sidney's contracted cooling draw is 0.0146 cfs (3.44M gal/yr,
+    stated in an executed service agreement) and its headline stat read "0 cfs", which a reader
+    takes as *no draw* rather than *a very small one*.
+
+    A value that merely SHIFTED (#1267), live in three committed bundles: Van Wert's Town Creek
+    7Q10 is 0.16 cfs and published as "0.2" — off by 25% on the denominator its whole
+    effluent-dominance finding rests on. It never rounded to zero, so the first guard never fired.
+
+    Hence one rule for the whole sub-1 range rather than a patch per symptom. Four committed
+    stats moved when this landed, three of them the receiving low flow itself.
     """
     assert _stat_decimals(24.0) == 1
-    assert _stat_decimals(0.2) == 1
-    assert _stat_decimals(0.05) == 1  # rounds to 0.1, still visible
+    assert _stat_decimals(1.0) == 1
+    assert _stat_decimals(6.19) == 1  # Van Wert's design discharge
+    # Below 1, two significant figures (#1267). The old rule only caught a value that ROUNDED TO
+    # ZERO, so Van Wert's 0.16 cfs Town Creek 7Q10 published as "0.2" — off by 25% on the
+    # denominator its whole effluent-dominance finding rests on. Findlay's 0.21 shifted the same way.
+    assert _stat_decimals(0.16) == 2  # Van Wert — the case that forced the widening
+    assert _stat_decimals(0.21) == 2  # Findlay
+    assert _stat_decimals(0.2) == 2
+    # Two SIGNIFICANT FIGURES, not two decimals: the count tracks the leading zeros, so a value an
+    # order of magnitude smaller gets an order of magnitude more places ("0.050").
+    assert _stat_decimals(0.05) == 3
     assert _stat_decimals(0.0) == 1  # a real zero stays a zero
     assert _stat_decimals(None) == 1
     assert _stat_decimals(0.0146) == 3

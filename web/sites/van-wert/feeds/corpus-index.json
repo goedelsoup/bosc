@@ -19,7 +19,7 @@
     "links_out": 1,
     "links_in": 2,
     "lines": 13,
-    "updated": "2026-08-03"
+    "updated": "2026-08-14"
   },
   {
     "id": "artifact/npdes-2pd00006",
@@ -41,7 +41,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 13,
-    "updated": "2026-08-03"
+    "updated": "2026-08-14"
   },
   {
     "id": "artifact/site-van-wert",
@@ -63,7 +63,7 @@
     "links_out": 1,
     "links_in": 2,
     "lines": 16,
-    "updated": "2026-08-03"
+    "updated": "2026-08-14"
   },
   {
     "id": "artifact/van-wert-wwtp",
@@ -987,7 +987,7 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 18,
-    "updated": "2026-08-03"
+    "updated": "2026-08-14"
   },
   {
     "id": "question/lead-cso-event-3099",
@@ -1037,7 +1037,7 @@
     "id": "question/lead-fill-volume",
     "node_class": "question",
     "kind": "lead",
-    "label": "The initial closed-loop fill has four different volumes and no instrument behind any of them",
+    "label": "Three different fill volumes, two incompatible framings, and no instrument behind any of them",
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
@@ -1081,7 +1081,7 @@
     "id": "question/lead-pre-annexation-agreements",
     "node_class": "question",
     "kind": "lead",
-    "label": "The runway was laid in 2014, and none of the three agreements that laid it is in the corpus",
+    "label": "The runway was laid across 2014-2016, and none of the three agreements that laid it is in the corpus",
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
@@ -1152,7 +1152,7 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 21,
-    "updated": "2026-08-03"
+    "updated": "2026-08-14"
   },
   {
     "id": "relation/city-of-van-wert--operates--npdes-2pd00006",
@@ -1174,7 +1174,7 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": "2026-08-03"
+    "updated": "2026-08-14"
   },
   {
     "id": "relation/npdes-2pd00006--discharges-to--town-creek",
@@ -1196,7 +1196,7 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": "2026-08-03"
+    "updated": "2026-08-14"
   },
   {
     "id": "relation/van-wert-wwtp--operates--npdes-2pd00006",

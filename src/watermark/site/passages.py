@@ -113,6 +113,41 @@ def _strip_control_bytes(text: str) -> str:
     return _CONTROL_RE.sub("", text)
 
 
+# The C1 range a PDF emits when its text layer carries CP1252 bytes that reach the output
+# un-mapped. Every one of these is a *printable* character in CP1252 — the smart quotes and
+# dashes a word processor produces — so unlike the C0 damage above they must be REPAIRED, never
+# dropped. Five C1 codes are unassigned in CP1252 (0x81, 0x8d, 0x8f, 0x90, 0x9d); they map to
+# nothing and are removed.
+_CP1252_C1 = {
+    code: repaired
+    for code in range(0x80, 0xA0)
+    for repaired in [bytes([code]).decode("cp1252", errors="ignore")]
+}
+
+
+def _repair_cp1252_punctuation(text: str) -> str:
+    """Map stray C1 bytes onto the CP1252 characters they actually encode.
+
+    Distinct from the C0 damage :func:`has_broken_text_layer` detects, and distinct in the
+    consequence. A broken ``ToUnicode`` CMap (#1966) makes the whole page untrustworthy, so that
+    path re-reads by OCR. This is narrower: the text layer is *correct*, and pypdf simply passed
+    a CP1252 byte through as the same-numbered codepoint — ``U+0092`` where the document says
+    ``U+2019``. Van Wert's council PDFs do it (``today\\x92s``, ``project\\x92s``, en/em dashes at
+    ``\\x96``/``\\x97``).
+
+    Repaired rather than stripped **because these are evidence**. Dropping ``\\x92`` turns
+    "today's" into "todays" — a silent edit to quoted public-record text, which the corpus's
+    chain-of-custody rule forbids; and dropping ``\\x97`` welds two clauses together. The bytes
+    are unambiguous (CP1252 assigns all but five of them), so the mapping recovers what the
+    document prints rather than guessing at it.
+
+    Deliberately NOT folded into :func:`has_broken_text_layer`: a page needing this repair does
+    not need OCR, and routing it to a 300-DPI re-read would replace a correct text layer with a
+    worse one.
+    """
+    return text.translate(_CP1252_C1)
+
+
 def ocr_page_text(pdf_path: Path, page_idx: int, *, dpi: int = _OCR_DPI) -> str:
     """OCR a single page of ``pdf_path`` (0-based) — the real :data:`OcrPage`.
 
@@ -244,8 +279,9 @@ def build_passages(
                         log.warning("passages.unrepaired", document=rel, page=page_idx + 1)
                 # Emit invariant: no C0 control byte ever ships, whichever read produced the text.
                 # It also keeps an OCR read (tesseract ends every page with \x0c) from looking like
-                # the damage it was called in to clear.
-                text = _strip_control_bytes(text).strip()
+                # the damage it was called in to clear. The CP1252 repair runs alongside it and in
+                # the other direction — those bytes are real punctuation and are restored, not cut.
+                text = _repair_cp1252_punctuation(_strip_control_bytes(text)).strip()
                 if not text:
                     continue
                 page_1 = page_idx + 1
