@@ -1,0 +1,34 @@
+{
+  "type": "FeatureCollection",
+  "bosc:provenance": {
+    "subject": "Van Wert, OH watershed point — the committed WWTP graph the Tier-0 water balance reads (#1267)",
+    "source": "Ohio EPA NPDES permit 2PD00006 (application OH0027910) and its fact sheet, plus the NLDI/NHDPlus v2 reach geometry recorded in data/extracted/van-wert/water-watch.yaml (#1406)",
+    "crs": "EPSG:4326 (WGS84)",
+    "count": 1,
+    "caveats": [
+      "WHY THIS FILE EXISTS, and what it fixes. `balance._default_watch_items` falls back to Lima's frozen periplus graph (data/reference/periplus/watch-items.geojson) when a site commits none of its own. Before this file, a Van Wert water balance therefore resolved FOUR ALLEN COUNTY PLANTS — Lima WWTP (18.5 MGD), Shawnee II, American Bath, American II — plus a `bosc-campus` node carrying a '2.5 MGD industrial discharge to Lima', all at Allen County coordinates ~50 km away, and reported them as Van Wert's. The fallback is deliberate and documented (`has_site_watch_items` exists so the agent tool can refuse rather than serve Lima's plants for a site with none, #829), but the scenario writer does not consult that guard, so persisting a scenario without this file would have published Lima's water balance as Van Wert's.",
+      "ONE PLANT, DELIBERATELY. The City's five CSO outfalls (lat 40.8683-40.8800) and its water-treatment-plant residuals discharge (OH0135569, ~2.5 mi downstream on Lower Town Creek) are on this same reach and are recorded in data/extracted/van-wert/water-watch.yaml, but neither is a node here. The CSOs are intermittent wet-weather discharges with no design flow, and OH0135569 carries no design flow and no mass or concentration limit at all — flow is monitor-only, pH is its only numeric limit. Neither can drive a design-low-flow dilution screen, and adding them would put dischargers in the balance with no quantity to balance.",
+      "NO CAMPUS NODE. `balance._campus_node` is gated on a committed `bosc-fm2` forcemain feature, and the QTS campus commits none. That is correct rather than missing: its construction-stormwater coverage (2GC08872*AG) documents no process discharge, no cooling system and no operating water use, and where the campus's cleaning/blowdown water goes is an open lead (data/site/van-wert/leads.yaml, `FILL-VOLUME`). A campus forcing node here would be invented.",
+      "THE INTAKE IS NOT MODELLED. `SiteProfile.abstraction_gage` is set to NWIS 04191000 as an `[inference]`, and the balance reports 'no abstraction node configured' — so the intake reach is omitted from the balance rather than estimated. This matters more at Van Wert than elsewhere: the City DRINKS this same flowline (COMID 15653063), its intake 4.61 km upstream of this outfall, which is the site's signature finding. The balance does not yet represent it; the geometry does, in water-watch.yaml.",
+      "[verified] Outfall coordinates, river mile, design flow, receiving water and stream network are from the permit and its fact sheet; the single-flowline geometry is from NLDI/NHDPlus v2 as recorded in water-watch.yaml (#1406)."
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "van-wert-wwtp",
+        "title": "Van Wert WWTP",
+        "type": "infrastructure",
+        "priority": "high",
+        "status": "active",
+        "summary": "City of Van Wert Wastewater Treatment Plant (NPDES 2PD00006, modified *VD → *WD effective 2026-07-01 / application OH0027910), 7998 State Route 127 North, Van Wert, Van Wert County; outfall 001 to Town Creek at RM 13.87 (→ Middle Creek → Little Auglaize River → Auglaize River → Maumee River → Lake Erie; HUC-8 04100007). Average design flow 4.0 MGD [Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (2PD00006), Table 7 — 6.1889 cfs]. A CSO community (five combined-sewer overflow outfalls). WLA design low flow: Town Creek 7Q10 0.16 cfs annual AT THE OUTFALL, by USGS drainage-area ratio from gage 04191500 (Auglaize River near Defiance, 1915-2003) — with SUMMER AND WINTER 7Q10 BOTH 0.0 cfs, because the creek is intermittent. The resulting dilution ratio is 0.03:1, roughly 39x effluent dominance and the most effluent-dominated municipal discharge in the network; the fact sheet computes the acute dilution ratio as 1.02:1. The same creek is the City's own raw drinking-water source, its intake 4.61 km upstream of this outfall on one 17.05 km flowline (COMID 15653063).",
+        "note": "Peak hydraulic capacity is 8.0 MGD and is deliberately NOT stated in the summary above: `balance._design_mgd` falls back to a regex over this prose when no structured value is present, and a second `N MGD` token reads as a flow EXPANSION and raises a spurious warning (the Sidney precedent, #1995). The structured, document-cited 4.0 comes from data/reference/hydrology/van-wert/routing.yaml, which wins outright — this prose is the fallback, kept unambiguous so the fallback would also be correct. Separately, and not modelled here: outfall 001's reported daily maximum crossed the 5 MGD primary-clarifier bypass threshold in 22 of 42 months and this 8.0 MGD peak in five (#1860). Flow is report-only at this outfall, so that is not a violation — and nothing in the *WD modification is addressed to it."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-84.58437518, 40.8882410]
+      }
+    }
+  ]
+}

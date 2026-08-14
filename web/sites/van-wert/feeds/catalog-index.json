@@ -1,6 +1,6 @@
 {
   "site": "van-wert",
-  "catalog_version": "d097bf5e1c3d21c7240fa1306d023f5ecc4389130217845a9050801ae531a99b",
+  "catalog_version": "f967b4c320feecc7be06dea92b6ea948cabd55336addbca6e1beb8fe20b27b89",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -1084,6 +1084,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:van-wert:van-wert-watch-items",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "van-wert-watch-items",
+      "title": "Van Wert site watch-items (WWTP infrastructure geometry)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:van-wert:van-wert-water-watch",
       "kind": "dataset",
       "site": "van-wert",
@@ -1170,6 +1178,166 @@
       "local_id": "npdes:2PD00006",
       "title": "Van Wert WWTP",
       "feed": "entities"
+    },
+    {
+      "handle": "lead:van-wert:AEP-LOAD-FIGURE",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "AEP-LOAD-FIGURE",
+      "title": "No document in the corpus states this campus's MW, including the transmission case named for it",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:AIR-PTI-YET-TO-APPLY",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "AIR-PTI-YET-TO-APPLY",
+      "title": "The air permit-to-install is a dated instrument-grade negative, and it is what would move the facility domain",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:ANNEXATION-RESIDUAL-1-1-AC",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "ANNEXATION-RESIDUAL-1-1-AC",
+      "title": "1.1 acres between the zoned area and the deeded holding, unattributed",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:CERTIFIED-ORDINANCES",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "CERTIFIED-ORDINANCES",
+      "title": "No signed or certified copy of any of the six ordinances is public",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:CO-PERMITTEE-NOI",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "CO-PERMITTEE-NOI",
+      "title": "No co-permittee NOI has been filed, so the general contractor is unnamed",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:CSO-EVENT-3099",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "CSO-EVENT-3099",
+      "title": "The *WD modification's first CSO construction milestone came due 2026-08-01 and is untested",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:CSO-EVENT-REPORT-VOLUME",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "CSO-EVENT-REPORT-VOLUME",
+      "title": "The instrument holding the CSO overflow total is the same one that is not being filed",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:DEED-CHAIN-LLC-GRAPH",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "DEED-CHAIN-LLC-GRAPH",
+      "title": "The Marsh Foundation → Thor → QTS deed chain is not closable from the parcel layer",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:DEVELOPMENT-AGREEMENT",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "DEVELOPMENT-AGREEMENT",
+      "title": "An incentive package exists as a negotiation and as no instrument",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:FILL-VOLUME",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "FILL-VOLUME",
+      "title": "The initial closed-loop fill has four different volumes and no instrument behind any of them",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:HAVILAND-LINE-ATTRIBUTION",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "HAVILAND-LINE-ATTRIBUTION",
+      "title": "The City disclaims the Haviland 138 kV line as data-center-related, and the record half-agrees",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:LETTER-CAMPAIGN-FIGURES",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "LETTER-CAMPAIGN-FIGURES",
+      "title": "Three benefit figures circulate publicly and appear in no instrument",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:PARCEL-GAP-4-OF-5",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "PARCEL-GAP-4-OF-5",
+      "title": "The hearing notice names four parcels; the assemblage has five",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:PRE-ANNEXATION-AGREEMENTS",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "PRE-ANNEXATION-AGREEMENTS",
+      "title": "The runway was laid in 2014, and none of the three agreements that laid it is in the corpus",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:PRIVATE-WELL-ORDINANCE",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "PRIVATE-WELL-ORDINANCE",
+      "title": "Ordinance 26-06-034 does not do what Council moved to do",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:QTS-CITY-ENGINEERING-ANALYSIS",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "QTS-CITY-ENGINEERING-ANALYSIS",
+      "title": "The operator's FAQ names the one document that would settle campus water capacity",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:REFERENDUM-FORECLOSED",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "REFERENDUM-FORECLOSED",
+      "title": "The local ballot route against the zoning is closed, and it was an initiative rather than a referendum",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:SHARED-TOWN-CREEK-REACH",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "SHARED-TOWN-CREEK-REACH",
+      "title": "Van Wert drinks and discharges the same Town Creek flowline",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:STATE-EXEMPTION-STATUS",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "STATE-EXEMPTION-STATUS",
+      "title": "The state data-center sales-tax exemption is paused, and this project has never requested one",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:van-wert:USACE-NWP-VERIFICATION",
+      "kind": "lead",
+      "site": "van-wert",
+      "local_id": "USACE-NWP-VERIFICATION",
+      "title": "A nationwide-permit verification is never public-noticed, so silence here can never become absence",
+      "feed": "leads"
     },
     {
       "handle": "record:van-wert:grid/van-wert/van-wert-haviland-138kv.project.yaml",

@@ -1,11 +1,38 @@
 # HAND-READ, not a vision extraction. The page carries a clean native text layer (pypdf, 2,043
 # characters); every field below is transcribed from it verbatim and nothing was OCR'd.
-doc_id: edoc-4209398-1aeef269
+#
+# This file carries NO doc_id / dpi / pages_read, and that absence is deliberate (#2001).
+# Those three fields describe a page RASTERIZED at a DPI and sent to the vision model. No such
+# render happened here — the comment above says so, and it is the accurate half. The file
+# previously asserted `doc_id: edoc-4209398-1aeef269`, `pages_read: [0]` and `dpi: 150` anyway,
+# because `NpdesExtraction` required them and a transcriber with no render had to either supply a
+# value or watch the file be silently dropped from the corpus load. #1994 removed that pressure by
+# giving transcriptions their own envelope (`TranscribedExtraction`), which declares none of the
+# three and refuses them outright; this file is one of the two artifacts that predate it.
+#
+# Re-verified before the receipt was removed, three ways that agree: pypdf reports exactly 2,043
+# characters of text on the single page (the count this comment already claimed); the committed
+# filename-map records `evidence: native_text` for the same file; and its recorded sha256 matches
+# the bytes on disk. Provenance is now asserted in the form a transcription can honestly make —
+# `meta.sources`, naming the committed source and its digest.
 source_path: data/documents/oepa/van-wert/stormwater/edoc-4209398.pdf
 kind: npdes
-pages_read:
-- 0
-dpi: 150
+meta:
+  subject: >-
+    Ohio EPA approval letter granting QTS Data Center coverage under Construction Site
+    Stormwater General Permit OHC000006 — facility permit number 2GC08872*AG
+  site: van-wert
+  captured_for: issue 1402 (epic 1267, readiness(van-wert) — the campus's first state permit)
+  extracted_at: '2026-08-03'
+  method: >-
+    pypdf text-layer read of the committed source PDF (its only page, 2,043 characters); every
+    value below transcribed verbatim from that layer. No page was rasterized and nothing was
+    OCR'd, so this extraction carries no render receipt — see the header comment and #2001.
+  sources:
+    approval_letter:
+      path: data/documents/oepa/van-wert/stormwater/edoc-4209398.pdf
+      sha256: 9ed716dcbbe4f3d3bbf4432afe6411ad8e496610445cf8b2870b9fd17464c0a8
+      url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4209398
 source_text_excerpt: '50 W. Town Street Suite 700 Columbus, Ohio 43215 U.S.A. 614 | 644 3020 epa.ohio.gov
   The State of Ohio is an Equal Opportunity Employer and Provider of ADA Services July 30, 2026 QTS Realty
   Trust Inc. Tamir Mengesha 2470 Satellite Blvd NW Duluth GA 30096 Re: Approval Under Ohio EPA National

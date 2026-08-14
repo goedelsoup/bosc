@@ -15,8 +15,13 @@ site: >-
   survey out of the Marsh Foundation's Mega Site tract. #1403 (places) / #1402 (facility),
   sub-issues of #1267.
 operator: >-
-  QTS Data Centers (QTS Realty Trust, LLC; Overland Park, KS; Blackstone-owned) — publicly named
-  as the end user 2026-05-29. QTS VAN WERT LLC is the sole owner of record on all five parcels
+  QTS Data Centers (Blackstone-owned) — publicly named as the end user 2026-05-29.
+  ⚠️ CORRECTED AGAINST #1402: this field read "QTS Realty Trust, LLC; Overland Park, KS", which
+  was press. The permit applicant of record is QTS Realty Trust **Inc.**, 2470 Satellite Blvd NW,
+  Duluth GA 30096, certified under penalty of law 2026-07-21 on the 2GC08872 NOI. THREE QTS NAMES
+  ARE LIVE AND NONE IS A SYNONYM FOR ANOTHER: QTS Data Centers (the brand), QTS Realty Trust Inc.
+  (the permit applicant), QTS VAN WERT LLC (the deed grantee named below).
+  QTS VAN WERT LLC is the sole owner of record on all five parcels
   ([verified], auditor CAMA). Thor Equities Group / its Form8tion data-center division was the
   land developer, and the intermediate holder VAN WERT EAST OWNER LLC — on the roll as recently as
   the 2026-07-10 probe recorded in #1403 — no longer appears anywhere in the county, consistent
@@ -27,15 +32,28 @@ boundary_basis: >-
   a recorded $39,117,825, the 221.15-ac anchor on 2026-06-18 for $110,575,000, all warranty
   deeds), committed as data/reference/van-wert/parcel-assemblage.geojson from the Van Wert County
   auditor CAMA via the county's AGOL parcel_joinedVWOH layer (the van_wert_gis connector, #421).
-  NOT a surveyed earth-disturbance boundary; the Ohio EPA construction stormwater
-  (NPDES OHC000005 / Rule-5) footprint and the campus site plan are not in the corpus. NOT the
-  annexation boundary either: the City annexed ~962 ac on 2026-05-11 and this holding is 900.59 ac
-  deeded, 61.4 ac (6.4%) short of it — road right-of-way inside the annexed area and non-QTS
-  parcels inside the annexation description are both live explanations and NEITHER is established
-  here, because the ordinances' legal descriptions are not in the corpus (#1401). Against the
-  campus figure QTS itself quotes — 902 acres — the holding reconciles to 0.16%. The five parcels
-  are CONTIGUOUS: their union is a single polygon, not a scattered assemblage. Full reconciliation
-  in the geojson `bosc:provenance` + data/reference/van-wert/README.md.
+  NOT a surveyed earth-disturbance boundary. NOT the annexation boundary either — but the gap
+  between the two is now 1.1 ac, not the 61.4 ac this file carried when it was written.
+  ⚠️ CORRECTED AGAINST #1401, which landed after this extraction. The zoned/annexed figure is
+  **901.698 ± ac**, read off Ordinance 26-05-028's Exhibit A (whose four component acreages sum
+  exactly to the figure printed in both ordinance titles). The "~962 ac" this passage used to cite
+  was a press number with no support anywhere in the record. So the holding's 900.59 ac deeded is
+  **1.108 ac (0.12%) short of the zoned area**, not "61.4 ac (6.4%) short" — and the two live
+  explanations that shortfall used to need (road right-of-way inside the annexed area, non-QTS
+  parcels inside the annexation description) are no longer load-bearing at that magnitude. The
+  residual 1.1 ac stays `[open]` and unattributed; do not attribute it to right-of-way either.
+  The ordinances' legal descriptions ARE now in the corpus
+  (data/extracted/van-wert/mega-site-instruments.yaml, #1401) — the clause that said they were not
+  is retired with the figure it justified.
+  Three independent acreages now agree to within ~1.1 ac: 901.698 zoned (ordinance Exhibit A),
+  901.502 planar (this file's parcel_acres), 900.59 deeded (auditor CAMA). Against the campus
+  figure QTS itself quotes — 902 acres — the holding reconciles to 0.16%.
+  Still not in the corpus: a surveyed earth-disturbance boundary. The campus site plan IS now
+  committed (edoc-4209396.pdf, the 2GC08872 NOI's Facility/Map Attachment, #1402) and draws
+  ~792 ac of limits of disturbance inside the property line — but it is an unregistered, unscaled
+  drawing and cannot settle a boundary. The five parcels are CONTIGUOUS: their union is a single
+  polygon, not a scattered assemblage. Full reconciliation in the geojson `bosc:provenance` +
+  data/reference/van-wert/README.md.
 
 parcel_acres:
   value: 901.502
@@ -135,10 +153,10 @@ notes:
   - 'Holding = 5 parcels / 1 owner (QTS Van Wert LLC) / 900.59 ac CAMA deeded (901.502 ac planar), CONTIGUOUS: 17-034718.0000 (362.23 ac, 8002 Mendon Rd, use 199, CAUV), 17-034718.0100 (221.15 ac, Stripe Rd, use 110), 17-034718.0200 (157.84 ac, 8002 Mendon Rd, use 199), 12-034459.0000 (128.13 ac, U.S. Route 127, use 110), 33-047500.0000 (31.24 ac, Stripe Rd, use 110, CAUV). All [verified] from the Van Wert County auditor CAMA (parcel_joinedVWOH layer 0, read 2026-07-31).'
   - 'THE ROLL REFRESHED UNDER THE ISSUE. #1403 was written against a 2026-07-10 probe in which the anchor 17-034718.0100 stood in the name of VAN WERT EAST OWNER LLC (a Thor SPE), 221.15 ac, sold 2025-08-22 for $10,394,000, and the issue anticipated "the assemblage to firm up as the roll refreshes". It has: the AGOL item was last modified 2026-07-31T03:52Z and now carries the June 2026 conveyances to QTS Van Wert LLC directly. So the deed grantee the register had as `[open]` ("not surfaced in the news record") is now `[verified]` from the auditor — while the GRANTOR, the recorder instrument numbers, and therefore the Marsh Foundation -> Thor -> QTS chain itself remain `[open]`: this layer carries no grantor field and no deed book/page (#1401).'
   - 'THE PRICE STEP IS ON THE RECORD AND UNEXPLAINED BY IT. The anchor parcel sold for $10,394,000 (~$47,000/ac) in August 2025 and was conveyed on 2026-06-18 for $110,575,000 — EXACTLY $500,000 x its 221.15 CAMA acres, and a 10.6x step on the same 221.15 acres in ten months. The 2025 figure is `[reference]` to the pre-refresh roll cited in #1403 and is no longer on the live layer. The other four parcels all carry one date (2026-06-16) and one consideration ($39,117,825) across 679.44 ac, which is the signature of a single multi-parcel deed; that amount is recorded verbatim per parcel and deliberately NOT summed across them, so the campus`s total consideration stays `[open]` pending the recorder`s instruments.'
-  - 'ACREAGE — this is the first independent confirmation of the 902-acre campus figure. 900.59 ac deeded against QTS`s quoted 902 ac is 0.16%. Note what it is NOT: it is 61.4 ac short of the ~962 ac annexed on 2026-05-11, and that gap is `[open]` rather than attributed to right-of-way.'
-  - 'TAX DISTRICT: the auditor has all five parcels in Van Wert CORPORATION districts (12, 17, 33), while the county`s published TaxDistrict POLYGON layer still shows them in townships (11-Pleasant, 19-Ridge, 15-Hoaglin) — a currency gap in the polygons, not a contradiction; the roll is the current record. District 33 is absent from that layer`s district table entirely and has EXACTLY ONE parcel countywide, this assemblage`s 31.24-ac Hoaglin tract, so it is a district created after the layer`s vintage. Reading that as the effect of the 2026-05-11 annexation is `[inference]` — the ordinances are not in the corpus (#1401). This is the same shape of finding as Sidney`s zoning-layer hole, with the roll and the polygons swapped.'
+  - 'ACREAGE — this is the first independent confirmation of the 902-acre campus figure. 900.59 ac deeded against QTS`s quoted 902 ac is 0.16%. ⚠️ CORRECTED AGAINST #1401 (which landed after this extraction): the annexed/zoned area is 901.698 ± ac per Ordinance 26-05-028 Exhibit A, NOT the ~962 ac this finding was written against. The shortfall is therefore 1.108 ac (0.12%), not 61.4 ac (6.4%) — the deeded holding, the planar geometry (901.502) and the zoned area (901.698) now agree to within ~1.1 ac. That residual stays `[open]` and is still not attributed to right-of-way; what changed is its magnitude, which no longer needs an explanation the record cannot supply.'
+  - 'TAX DISTRICT: the auditor has all five parcels in Van Wert CORPORATION districts (12, 17, 33), while the county`s published TaxDistrict POLYGON layer still shows them in townships (11-Pleasant, 19-Ridge, 15-Hoaglin) — a currency gap in the polygons, not a contradiction; the roll is the current record. District 33 is absent from that layer`s district table entirely and has EXACTLY ONE parcel countywide, this assemblage`s 31.24-ac Hoaglin tract, so it is a district created after the layer`s vintage. Reading that as the effect of the 2026-05-11 annexation is `[inference]` — and it stays `[inference]` now that the ordinances ARE committed (#1401), because none of the three recites a tax district: the roll`s district assignment and the ordinances` legal descriptions are separate records and neither cites the other. This is the same shape of finding as Sidney`s zoning-layer hole, with the roll and the polygons swapped.'
   - 'SCHOOL DISTRICTS — the campus straddles TWO, which the register did not have. 772.46 ac (the four Ridge/Hoaglin parcels) are LINCOLNVIEW and 128.13 ac (12-034459.0000) is VAN WERT CITY. The register carries `[reference]` "property taxes flow to Lincolnview Local School District (though the site is inside Van Wert city limits)"; that is incomplete, and a CRA school-compensation agreement for a project of this payroll size would have to reach BOTH boards, plus Vantage Career Center. Two independent lines agree for the Lincolnview four (the auditor district name carries the "(LV)" suffix; the county SchoolDistrict layer returns Lincolnview at each interior point); for 33-047500.0000 only the spatial join is available.'
-  - 'ZONING is `[verified]` from the public record but NOT from GIS: the City annexed and zoned the site I-2 General Industrial with conditional data-center use by emergency ordinance on 2026-05-11 (VW Independent, 6-0). Van Wert publishes NO zoning REST endpoint anywhere (`SiteProfile.gis_zoning is None`, `zoning_url="TODO"` — map-only/PDF), so unlike Sidney there is no layer to test the parcel against; the ordinance text itself is the instrument (#1401).'
+  - 'ZONING is `[verified]` from the public record but NOT from GIS: the City annexed and zoned the site I-2 General Industrial with conditional data-center use by emergency ordinance on 2026-05-11. ⚠️ This clause cited "(VW Independent, 6-0)"; the ordinances are now committed (#1401) and the minutes record NO numeric tally for any of the three — each reads "all concurred", with Roberts abstaining as a Marsh Foundation employee. "6-0" is a press reconstruction and is retired here; the citation is now the instrument, not the newspaper. Van Wert publishes NO zoning REST endpoint anywhere (`SiteProfile.gis_zoning is None`, `zoning_url="TODO"` — map-only/PDF), so unlike Sidney there is no layer to test the parcel against; the ordinance text itself is the instrument (#1401).'
   - 'FEMA Zone A (SFHA) covers 15.62 ac of the 901.5-ac campus (1.7%) per the county`s own FloodPlain layer. `[verified]` as the county`s published mapping; the site`s authoritative floodzone connector is the national NFHL layer.'
   - 'ADJACENT LEAD, excluded from the holding (not QTS-owned, no instrument ties it to the campus): the Marsh Foundation still holds 19-041272.0000 (200.83 ac, Stripe Rd, ~69 m from this boundary across Stripe Road), 12-031248.0200 (93.62 ac) and 12-031252.0000 (49.35 ac). Reading those as the remainder of the register`s ~1,500-ac Mega Site is `[inference]`. No parcel that actually ADJOINS the campus is Marsh- or QTS-owned — the 26 abutters are farm and residential holdings. There is no Sidney-style same-day utility conveyance next door: no AEP Ohio / Ohio Power parcel appears in the assemblage`s neighbourhood, so the campus substation site is `[open]`.'
   - 'This record commits the boundary + measured acreage + the SSURGO-validated HSG so the onboard ssurgo-hsg step no longer skips (it had been skipped for want of committed parcel geometry), and it sets the pre_cover/post_cover/developed_pervious_cover scenario knobs the profile had carried as TODO "pending an identified site".'

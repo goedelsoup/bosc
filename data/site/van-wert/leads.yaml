@@ -1,0 +1,383 @@
+# Van Wert (Van Wert County, OH) — the open-leads board for the QTS "Van Wert Mega Site".
+#
+# The per-site peer of Lima's board (#796), seeded for #1409. Every lead names a real committed
+# source, and a lead is unverified inference until a source corroborates it — so the tag is only
+# ever `open` (a documented gap) or `inference` (a labelled reading), never `verified`.
+#
+# These threads are the residue of four completed ingests, not a wish list: #1401 (the City's own
+# ordinances and minutes), #1402 (the campus's first state permit), #1406 (the NPDES *WD
+# modification and the shared Town Creek reach) and #1407 (the incentive/water instruments, searched
+# to a dated negative). Where a route was tried and blocked, the lead says so with the date — a
+# blocked route is UNSEARCHED, not empty, and the two must never be recorded as the same thing.
+#
+# The site's spine is that Van Wert is the basin's effluent-dominance end-member: a 4.0 MGD plant on
+# a creek whose 7Q10 is 0.16 cfs annual and 0 in both summer and winter. Several leads below are the
+# open half of that story.
+
+leads:
+
+# ── The water contradiction (the #1409 headline) ────────────────────────────────────────────────
+
+- id: FILL-VOLUME
+  kind: question
+  status: unanswered
+  tag: open
+  title: The initial closed-loop fill has four different volumes and no instrument behind any of them
+  detail: >
+    The City's Safety-Service Director announced ~660,000 gal as a ONE-TIME fill (2026-04-21); a
+    County Commissioner described 700,000 gal that "will last 6 to 8 years"; the since-deleted
+    project microsite carried 5,500 gal. The same ~660,000 gal is framed BOTH as a one-time fill and
+    as an annual draw depending on who is speaking, and that ambiguity is the whole lead — at
+    660,000 gal/yr the draw is 0.0018 MGD, below the 0.01 MGD floor and consistent with a dry loop;
+    as a one-time fill it says nothing about ongoing use at all.
+    ⚠️ EVERY ONE OF THESE FIGURES IS THE CITY'S OR A CITIZEN'S, NOT QTS'S. The operator's own live
+    FAQ declines to state a volume ("can vary widely … hard to predict"), so no number here is an
+    operator disclosure and none of them can corroborate the closed-loop claim. Per the B2
+    reconciliation (#1682) the disclosed figure lands on `disclosed_makeup`, which by rule never
+    feeds the classifier and never upgrades the source: a self-report of the very claim under test
+    is not an instrument. The outcome stays a `gap` with the [reference] cooling pin KEPT.
+  source: data/extracted/van-wert/incentive-water-instruments.yaml · data/extracted/van-wert/mega-site-instruments.yaml · data/reference/oepa/cooling-reconciliation.yaml
+  issue: 1409
+  note: >-
+    Six days after his own press release the same director told Council the City "would be
+    incapable" of supplying fill water. Both statements are in the committed minutes.
+
+- id: QTS-CITY-ENGINEERING-ANALYSIS
+  kind: question
+  status: unanswered
+  tag: open
+  title: The operator's FAQ names the one document that would settle campus water capacity
+  detail: >
+    QTS's public FAQ (captured 2026-08-05) rests its water answer on "the analysis completed by QTS
+    and City engineering". That document is not in the corpus and has never been public-noticed. It
+    is the single highest-value records request on this site: it is the only named artifact that
+    would replace the whole fill-volume dispute above with a figure, and it sits with a public
+    office (City engineering), which makes it reachable under R.C. 149.43 in a way the operator's
+    own internals are not.
+  source: data/documents/van-wert/operator/2026-08-05-qts-van-wert-project-faq.q-com.html · data/extracted/van-wert/incentive-water-instruments.md
+  issue: 1409
+  note: >-
+    The same FAQ says the loop "uses only water" while the City's sealed record says water AND
+    glycol, and its Van Wert economy answer carries Richmond County (Augusta GA) boilerplate.
+
+- id: SHARED-TOWN-CREEK-REACH
+  kind: signal
+  status: review
+  tag: inference
+  title: Van Wert drinks and discharges the same Town Creek flowline
+  detail: >
+    Snapped to NHDPlus v2 via NLDI, the City's water plant (OHG8P0006 / OH0135569), its five CSO
+    outfalls and WWTP outfall 001 (RM 13.87) all fall on ONE 17.05 km flowline, COMID 15653063,
+    running south-to-north. The intake is UPSTREAM of the outfall, so nobody drinks the effluent —
+    that is the [verified] part, and this lead does not dispute it. What is `[inference]` is the
+    consequence: a campus that routes cleaning and blowdown water to the WWTP adds load to a plant
+    already under a dated CSO construction schedule, on a creek with no summer or winter 7Q10 at
+    all, upstream of the same city's own raw-water reservoirs. That is a different and more
+    tractable question than the "will it discharge to Town Creek" the public debate was having.
+  source: data/extracted/van-wert/water-watch.yaml · data/extracted/oepa/van-wert/2PD00006.fs.npdes.yaml
+  issue: 1409
+  note: >-
+    Reservoirs hold 1.01 BG against a creek yielding 180 MG-1.26 BG/yr since 1951.
+
+# ── The instruments still to pull (#1401 residue) ───────────────────────────────────────────────
+
+- id: PRE-ANNEXATION-AGREEMENTS
+  kind: question
+  status: unanswered
+  tag: open
+  title: The runway was laid in 2014, and none of the three agreements that laid it is in the corpus
+  detail: >
+    Ordinance 26-05-028 recites three Pre-Annexation Agreements between the City, township trustees
+    and the Board of County Commissioners — Ridge 2014-11-14, Hoaglin 2014-12-22, Pleasant
+    2016-06-14. None is committed. They are priority 1 because they date the assembly a full decade
+    before the 2026 announcement and are the only instruments that would show what the City
+    committed to, and to whom, before any operator was named.
+    Note what they also retire: the recurring "industrial since 2007" claim in press and public
+    comment is supported by NOTHING in the committed set.
+  source: data/extracted/van-wert/mega-site-instruments.yaml · data/documents/van-wert/council/26-05-028.pdf
+  issue: 1401
+
+- id: CERTIFIED-ORDINANCES
+  kind: redaction
+  status: withheld
+  tag: open
+  title: No signed or certified copy of any of the six ordinances is public
+  detail: >
+    All six ordinance PDFs the City published were uploaded FOUR DAYS BEFORE the vote and carry an
+    unfilled "Passed this ___ day of ___". No signed or certified copy has been published. That is
+    what makes the Type 1 / Type 2 contradiction unsettleable from the public record: the committee
+    motion (4/27), the posted ordinance (5/07) and the agenda all say Expedited Type 2, the passage
+    title says Type 1, and the minutes claim consistency "with the heading of Ordinance 26-05-028
+    itself" — a heading that reads Type 2 (verified visually at 300 and 450 DPI).
+    A certified copy from the Clerk is the only thing that resolves it.
+  source: data/extracted/van-wert/mega-site-instruments.yaml · data/documents/van-wert/council/26-05-028.pdf
+  issue: 1401
+  note: >-
+    ⚠️ vanwert.org/ordinances/ is a ROLLING WINDOW of pending items only — the May 2026 ordinances
+    were already gone by 2026-08-03. The open WP REST media index enumerates the whole archive.
+
+- id: PARCEL-GAP-4-OF-5
+  kind: question
+  status: unanswered
+  tag: open
+  title: The hearing notice names four parcels; the assemblage has five
+  detail: >
+    The published hearing notice names four parcels totalling 742.75 ac — 82.4% of the 901.698 ac
+    the ordinances zoned. Parcel 17-034718.0200 (157.84 ac) is unnamed in it, while the committed
+    auditor CAMA has it deeded to QTS VAN WERT LLC with the rest. The likeliest explanation is a
+    post-petition split, which the county survey references would show; it is NOT established, and
+    the alternative — that a seventh of the campus was zoned without being named in its own hearing
+    notice — is the reason this stays open rather than being filed as a clerical note.
+  source: data/extracted/van-wert/mega-site-instruments.yaml · data/reference/van-wert/parcel-assemblage.geojson
+  issue: 1401
+
+- id: ANNEXATION-RESIDUAL-1-1-AC
+  kind: question
+  status: low
+  tag: open
+  title: 1.1 acres between the zoned area and the deeded holding, unattributed
+  detail: >
+    Three independent acreages now agree to within ~1.1 ac — 901.698 zoned (Ordinance 26-05-028
+    Exhibit A), 901.502 planar (the committed geometry in UTM 16N), 900.59 deeded (auditor CAMA).
+    The residual is recorded and deliberately NOT attributed to right-of-way or to survey method.
+    Logged at `low` because it is now a rounding-scale question rather than a finding: it was
+    carried as a 61.4-ac gap until #1401 read the annexed area off the instrument and retired the
+    press's "~962 ac", and the honest thing is to keep the residual visible at its real size rather
+    than close it.
+  source: data/extracted/van-wert/bosc-site-footprint.yaml · data/extracted/van-wert/mega-site-instruments.yaml
+  issue: 1403
+
+- id: DEED-CHAIN-LLC-GRAPH
+  kind: question
+  status: unanswered
+  tag: open
+  title: The Marsh Foundation → Thor → QTS deed chain is not closable from the parcel layer
+  detail: >
+    The county's AGOL CAMA layer carries no owner mailing address, no legal description, no grantor
+    and no deed book/page, so the conveyance chain cannot be closed from committed geometry — it is
+    a Recorder pull. The anchor parcel's own price step is on the record and unexplained by it:
+    221.15 ac sold 2025-08-22 for $10,394,000 (~$47,000/ac) and again in June 2026 for $110,575,000
+    — exactly $500,000 × its CAMA acreage, a 10.6× step in ten months.
+    ⚠️ The four same-day parcels carry ONE date and ONE consideration across all four, the signature
+    of a single multi-parcel deed, so that amount is recorded verbatim per parcel and must NOT be
+    summed; the campus's total consideration stays open.
+  source: data/reference/van-wert/parcel-assemblage.geojson · data/extracted/van-wert/bosc-site-footprint.yaml
+  issue: 1404
+  note: >-
+    Route: Van Wert County Recorder at countyfusion14.govos.com, grantor "Marsh Foundation" —
+    a session login, not scriptable without one.
+
+# ── The standing pre-construction watch (#1408) ─────────────────────────────────────────────────
+
+- id: AIR-PTI-YET-TO-APPLY
+  kind: question
+  status: unanswered
+  tag: open
+  title: The air permit-to-install is a dated instrument-grade negative, and it is what would move the facility domain
+  detail: >
+    The campus's construction-stormwater NOI certifies, under penalty of law on 2026-07-21, that its
+    Ohio EPA air permit-to-install status is YET_TO_APPLY. That converts "no PTI found" from an
+    unsuccessful search into a dated negative on the applicant's own word — and it is the single
+    instrument that would legitimately lift `facility` from `seeded` to `live`, since #1630 grades
+    the domain on documentary depth and Van Wert's load is an announced [reference] ceiling while its
+    cooling is an operator FAQ claim.
+    Re-swept 2026-08-05: still dry (35 QTS documents in the eDoc portal, none newer than
+    2026-07-30). QTS's whole Ohio air fleet is Licking County.
+    ⚠️ Do NOT reach for `live` by re-grading the load or the cooling. The network's rule is to let
+    the domain lock and ask for the source.
+  source: data/extracted/oepa/van-wert/2GC08872.noi.npdes.yaml · data/extracted/van-wert/regulatory-watch.yaml
+  issue: 1408
+  note: >-
+    The eDoc sweep sorts date-DESC, so page 1's oldest date bounds the whole result set — that is
+    what makes the zero a controlled zero rather than an empty query.
+
+- id: CSO-EVENT-3099
+  kind: question
+  status: unanswered
+  tag: open
+  title: The *WD modification's first CSO construction milestone came due 2026-08-01 and is untested
+  detail: >
+    NPDES 2PD00006*WD put TWO milestones on 2026-08-01 — event 90199 (annual report) and event 3099
+    (begin CSO construction). The 2026-07-28 filing completed only 90199. Event 3099 is open and
+    unverified. It matters beyond compliance bookkeeping: three permit-schedule events (CSO Event
+    Report, O&M Report, Combined Sewer Report) have been "unachieved and not reported" continuously
+    since early 2024 with ZERO formal actions and $0 penalties, so the driver of this permit's
+    12-of-13 non-compliant quarters is reporting, not effluent.
+  source: data/extracted/van-wert/water-watch.yaml · data/extracted/van-wert/regulatory-watch.yaml
+  issue: 1408
+  note: next check 2026-08-17
+
+- id: CSO-EVENT-REPORT-VOLUME
+  kind: question
+  status: unanswered
+  tag: open
+  title: The instrument holding the CSO overflow total is the same one that is not being filed
+  detail: >
+    A monthly CSO volume TOTAL is not derivable from the DMR: it carries a monthly average and a
+    daily maximum and no total, and monthly_avg × occurrences fails against the record (Wall St.,
+    May 2026 — 1 occurrence, 0.142 Mgal average, 0.277 Mgal daily maximum). Only a FLOOR — the sum
+    of monthly daily maxima — is defensible. The instrument that holds the actual total is the CSO
+    Event Report, which is one of the three schedule obligations unfiled since 2024. The gap and the
+    reporting violation are the same object, which is what makes this worth stating rather than
+    treating as a data limitation.
+  source: data/extracted/van-wert/water-watch.yaml
+  issue: 1408
+  note: >-
+    ⚠️ ECHO's standardized value for parameter 74063 is wrong by 1e12 (it divides where it should
+    multiply) — read LimitUnitDesc, never StdUnitDesc. Confirmed on two permits in two counties.
+
+- id: CO-PERMITTEE-NOI
+  kind: question
+  status: unanswered
+  tag: open
+  title: No co-permittee NOI has been filed, so the general contractor is unnamed
+  detail: >
+    Ohio EPA's approval letter expressly notes that each additional operator engaged at the site
+    must file its own Co-Permittee NOI. None is in the corpus as of 2026-08-05, so the general
+    contractor is open. This is a live watch rather than a settled absence: Sidney's campus produced
+    exactly such a co-permittee filing, so the form does get used in this state and its absence here
+    is a fact about this project's stage.
+  source: data/extracted/oepa/van-wert/2GC08872.approval.npdes.yaml
+  issue: 1408
+
+- id: USACE-NWP-VERIFICATION
+  kind: question
+  status: withheld
+  tag: open
+  title: A nationwide-permit verification is never public-noticed, so silence here can never become absence
+  detail: >
+    The NOI answers NO to an individual 401 Water Quality Certification and NO to an Isolated
+    Wetlands Permit while answering YET_TO_APPLY on the USACE nationwide permit. Those are the
+    applicant's assertions on a form, not agency determinations, and no 401 or isolated-wetland
+    instrument for this campus is in the corpus.
+    ⚠️ Recorded as `withheld` rather than `unanswered` on purpose: an NWP verification is NOT
+    public-noticed, so no amount of watching the state portal will ever turn this silence into a
+    documented absence. Only a USACE Buffalo District (LRB) FOIA answers it. Do not log a dated
+    negative against a route that structurally cannot produce one.
+  source: data/extracted/oepa/van-wert/2GC08872.noi.npdes.yaml
+  issue: 1408
+
+# ── Power (#1408 / #1407) ───────────────────────────────────────────────────────────────────────
+
+- id: AEP-LOAD-FIGURE
+  kind: question
+  status: unanswered
+  tag: open
+  title: No document in the corpus states this campus's MW, including the transmission case named for it
+  detail: >
+    The 500 MW carried on the profile is a [reference] bracket from the developer, never an operator
+    disclosure — QTS's own FAQ declines to state capacity, and AEP Ohio told Council it had
+    ">30,000 MW" of early interest against 5,342 MW under signed agreements while stating NO MW for
+    this campus. OPSB case 25-0697-EL-BLN (approved 2025-11-21, unbuilt) names the Van Wert Mega
+    Site in its Statement of Need and counts 30 requests for transmission service in the past year —
+    but "QTS" and "data center" appear on NONE of its 612 pages.
+    Top pull: AEP Ohio's 2025 Long-Term Forecast Report, pp. 49 and 76-77 (the filing's own Appendix
+    B) is the most likely public document to carry a Van Wert load figure.
+  source: data/extracted/grid/van-wert/van-wert-haviland-138kv.project.yaml · data/extracted/van-wert/mega-site-instruments.yaml
+  issue: 1408
+  note: >-
+    ⚠️ PJM's interconnection queue is GENERATION-only — large load never appears in it, so do not
+    watch the queue. Load reaches PJM through the transmission owner.
+
+- id: HAVILAND-LINE-ATTRIBUTION
+  kind: signal
+  status: review
+  tag: inference
+  title: The City disclaims the Haviland 138 kV line as data-center-related, and the record half-agrees
+  detail: >
+    The Safety-Service Director told Council on 2026-05-27 that AEP had planned the Haviland line
+    "for about 3 years" and that "this project was not related to the Data Center". That cuts
+    against attributing OPSB 25-0697-EL-BLN or its $45,877,232 cost to this campus — while the
+    filing's own Statement of Need does name the Mega Site. Both are on the record and this lead
+    does not resolve them; it records that the attribution is contested by a named official.
+    Two details that keep the reading honest: the project is an existing 69 kV line rebuilt as a
+    double circuit DESIGNED at 138 kV but INITIALLY OPERATED AT 69 kV — not a 138 kV line on day
+    one — and the approved minutes read "135-kilovolt", which matches neither figure.
+  source: data/extracted/grid/van-wert/van-wert-haviland-138kv.project.yaml · data/extracted/van-wert/incentive-water-instruments.yaml
+  issue: 1408
+  note: >-
+    Cost is recovered via the FERC formula rate allocated to the AEP Zone, not to this campus.
+
+# ── Incentives and governance (#1407 / #1401) ───────────────────────────────────────────────────
+
+- id: DEVELOPMENT-AGREEMENT
+  kind: question
+  status: unanswered
+  tag: open
+  title: An incentive package exists as a negotiation and as no instrument
+  detail: >
+    Five named routes were searched to a dated negative on 2026-08-05: the City's own legislation and
+    minutes through Ord. 26-07-040, the County Commissioners' published 2026 agenda index (63
+    meeting dates), the Lincolnview Local BOE via BoardDocs, the Ohio Tax Credit Authority's 2026
+    minutes, and the committed ODD statewide tax-incentive export. No enterprise zone, CRA, PILOT,
+    TIF, JEDD or development agreement exists for this project in any of them.
+    What DATES the negative is the City's own record: the 2026-07-13 Economic Development committee
+    report says VWAED's director "is concluding incentives and development agreements for the data
+    center and hopes to have those done by the next council meeting". One does not conclude what is
+    already signed — so as of that date the package was live and unexecuted.
+  source: data/extracted/van-wert/incentive-water-instruments.yaml · data/documents/van-wert/council/7.13.26.pdf
+  issue: 1407
+  note: >-
+    Re-check the 2026-07-27 and 2026-08-10 minutes; neither was published as of 2026-08-05.
+
+- id: STATE-EXEMPTION-STATUS
+  kind: question
+  status: unanswered
+  tag: open
+  title: The state data-center sales-tax exemption is paused, and this project has never requested one
+  detail: >
+    The Governor directed the Tax Credit Authority chair on 2026-05-27 to pause data-center
+    exemptions — two days before the joint City/QTS announcement. The first meeting wholly under the
+    pause (2026-06-29) took seven new projects and zero data-center exemptions. No Van Wert or QTS
+    item appears in any 2026 TCA meeting read.
+    ⚠️ Do NOT read "Van Wert Forward II" on the 2026-06-29 TCA agenda as a Mega Site award — it is a
+    2022 historic-preservation/TMUD downtown project. And do not read the Cologix award of
+    2026-06-01 as the pause failing: the pause covers NEW requests, and that one predates it.
+  source: data/extracted/van-wert/incentive-water-instruments.yaml
+  issue: 1407
+  note: >-
+    The committed ODD export lags — its newest Datacenter Tax Exemption is 2022-08-29 and it does
+    not carry the 2026-06-01 Cologix award its own TCA minutes record.
+
+- id: REFERENDUM-FORECLOSED
+  kind: signal
+  status: review
+  tag: open
+  title: The local ballot route against the zoning is closed, and it was an initiative rather than a referendum
+  detail: >
+    A petition filed 2026-07-18 against Ordinance 26-05-029 was certified INSUFFICIENT on 2026-07-27
+    — 255 valid signatures against 323 required. There is no cure period. The route is foreclosed.
+    ⚠️ It was an INITIATIVE, not a referendum, and the distinction is not pedantry: a referendum
+    suspends the ordinance pending the vote, an initiative does not, so the zoning was never stayed
+    at any point. Recording it as a failed referendum would misstate what was legally at stake.
+  source: data/extracted/van-wert/regulatory-watch.yaml
+  issue: 1408
+
+- id: PRIVATE-WELL-ORDINANCE
+  kind: question
+  status: review
+  tag: open
+  title: Ordinance 26-06-034 does not do what Council moved to do
+  detail: >
+    Council moved to PROHIBIT new private wells. The drafted Exhibit A makes new wells a CONDITIONAL
+    USE in every zoning class — no prohibition, no grandfather clause, and no geothermal exception in
+    its own text. The gap between the motion and the instrument is the lead; which one governs
+    depends on a signed and certified copy, which for this ordinance is also not public.
+  source: data/extracted/van-wert/incentive-water-instruments.yaml · data/documents/van-wert/council/26-06-034-DRAFT.pdf
+  issue: 1407
+
+- id: LETTER-CAMPAIGN-FIGURES
+  kind: claim
+  status: low
+  tag: inference
+  title: Three benefit figures circulate publicly and appear in no instrument
+  detail: >
+    "$200M over 20 years", "200-250 jobs" and "$80,000" (an average wage) appear ONLY in the written
+    public-comment campaign and in press repeating it — never in an ordinance, agreement or filing.
+    They are recorded here as unattributed claims so that a later instrument can be tested against
+    them, not because the corpus gives them any standing.
+    A second reading of the same file supports the caution: 21 of the 88 written-comment pages
+    repeat an earlier body verbatim (67 distinct bodies; one submitted five times), so the volume of
+    comment is not the volume of independent comment.
+  source: data/extracted/van-wert/mega-site-instruments.yaml
+  issue: 1401

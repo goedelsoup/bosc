@@ -1,13 +1,47 @@
 # HAND-READ, not a vision extraction. Both pages of this NOI carry a clean native text layer
 # (pypdf, 3,573 + 117 characters); every field below is transcribed from it verbatim and nothing
-# was OCR'd. Page numbers in `pages_read` are 0-based PDF page indices.
-doc_id: edoc-4209395-14974e09
+# was OCR'd.
+#
+# This file carries NO doc_id / dpi / pages_read, and that absence is deliberate (#2001).
+# Those three fields describe a page RASTERIZED at a DPI and sent to the vision model. No such
+# render happened here — the comment above says so, and it is the accurate half. The file
+# previously asserted `doc_id: edoc-4209395-14974e09`, `pages_read: [0, 1]` and `dpi: 150` anyway,
+# because `NpdesExtraction` required them and a transcriber with no render had to either supply a
+# value or watch the file be silently dropped from the corpus load. #1994 removed that pressure by
+# giving transcriptions their own envelope (`TranscribedExtraction`), which declares none of the
+# three and refuses them outright; this file is one of the two artifacts that predate it.
+#
+# Re-verified before the receipt was removed, three ways that agree: pypdf reports exactly 3,573
+# and 117 characters on pages 0 and 1 (the counts this comment already claimed); the committed
+# filename-map records `evidence: native_text` for the same file; and its recorded sha256 matches
+# the bytes on disk. Provenance is now asserted in the form a transcription can honestly make —
+# `meta.sources`, naming the committed sources and their digests.
 source_path: data/documents/oepa/van-wert/stormwater/edoc-4209395.pdf
 kind: npdes
-pages_read:
-- 0
-- 1
-dpi: 150
+meta:
+  subject: >-
+    QTS Data Center Notice of Intent for coverage under Construction Site Stormwater General
+    Permit OHC000006 — facility permit number 2GC08872*AG, Application ID 288738011
+  site: van-wert
+  captured_for: issue 1402 (epic 1267, readiness(van-wert) — the campus's first state permit)
+  extracted_at: '2026-08-03'
+  method: >-
+    pypdf text-layer read of the committed NOI (both pages, 3,573 + 117 characters); every value
+    below transcribed verbatim from that layer. No page was rasterized and nothing was OCR'd, so
+    this extraction carries no render receipt — see the header comment and #2001. The site map
+    named below is the NOI's own Facility/Map Attachment: it is a DRAWING, read as such for the
+    single statement in `note` about where the limits of disturbance fall relative to the property
+    line and the watercourse. It is unregistered and unscaled, so no figure here is measured off
+    it — the acreage is the applicant's own printed label.
+  sources:
+    notice_of_intent:
+      path: data/documents/oepa/van-wert/stormwater/edoc-4209395.pdf
+      sha256: 5909f1fbd57ec8459ee79cc94c0e2a0ec227715c8a5f939480a34e3b709ecded
+      url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4209395
+    site_map_attachment:
+      path: data/documents/oepa/van-wert/stormwater/edoc-4209396.pdf
+      sha256: 3dc7d17f61610a620a89870bfaf27b7acb4ae5d7ce5b808fdeec721886f78a57
+      url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4209396
 source_text_excerpt: Division of Surface Water - Notice of Intent (NOI) For Coverage Under Ohio Environmental
   Protection Agency General NPDES Permit (Read accompanying instructions carefully before completing this
   form.) Submission of this NOI constitutes notice that the party identified in Section I of this form

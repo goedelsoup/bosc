@@ -73,20 +73,34 @@
     "model": {
       "id": "water-supply",
       "facilityKey": "van-wert-mega-site",
-      "status": "gap",
-      "statusReasons": [
-        "a metered, contracted or permit-grounded water quantity — the cooling method is disclosed here, but no quantity is."
-      ],
-      "stats": [],
-      "gaps": [
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
         {
-          "wouldScreen": "how much water this project consumes at buildout — monthly, against the receiving water's cited design low flows.",
-          "missingRecord": "a metered, contracted or permit-grounded water quantity — the cooling method is disclosed here, but no quantity is.",
-          "producer": "the water utility's contract, a wastewater permit application, or the operator's cooling-plant spec",
-          "leadIds": null
+          "label": "Worst-case consumptive draw",
+          "value": "0",
+          "unit": "cfs",
+          "evidence": "inference",
+          "basis": "modeled",
+          "sub": "scenario: baseline",
+          "source": "derived",
+          "warn": null
+        },
+        {
+          "label": "Receiving low flow (7Q10)",
+          "value": "0.2",
+          "unit": "cfs",
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "Town Creek",
+          "source": "document",
+          "warn": null
         }
       ],
-      "caveats": []
+      "gaps": [],
+      "caveats": [
+        "The draw is set against the receiving water's cited design low flow as a worst-case, basin-scale bound — a screening comparison, not a withdrawal claim."
+      ]
     }
   },
   {
@@ -96,15 +110,22 @@
     "model": {
       "id": "discharge",
       "facilityKey": "van-wert-mega-site",
-      "status": "partial",
-      "statusReasons": [
-        "baseline context only — the project-side record has not been produced"
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Tightest chronic dilution",
+          "value": "0.026×",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "Van Wert WWTP → Town Creek",
+          "source": null,
+          "warn": true
+        }
       ],
-      "stats": [],
       "gaps": [],
-      "caveats": [
-        "Only the receiving water's existing burden is on the record here — the project-side discharge screen renders the day a characterization is filed."
-      ]
+      "caveats": []
     }
   },
   {
@@ -333,7 +354,7 @@
       "facilityKey": "van-wert-mega-site",
       "status": "partial",
       "statusReasons": [
-        "synthesizes the screened chapters — 1 on the record, 2 partial, 5 gap"
+        "synthesizes the screened chapters — 3 on the record, 1 partial, 4 gap"
       ],
       "stats": [],
       "gaps": [],

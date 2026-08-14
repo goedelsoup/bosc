@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "0550d8cc1d42f6534d4707fe70c599a698d6828cf045f69e8d0d2d16ab135289",
+  "catalog_version": "edd51733915d67622866221cd480958db7cfe955aba27faecfc16c81e6393bbf",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -1929,6 +1929,14 @@
       "site": "lima",
       "local_id": "van-wert-regulatory-watch",
       "title": "Van Wert — Standing Pre-Construction Watch (air PTI, OPSB, 401/404, ballot threads, ECHO, PJM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:van-wert-watch-items",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "van-wert-watch-items",
+      "title": "Van Wert site watch-items (WWTP infrastructure geometry)",
       "feed": "catalog"
     },
     {

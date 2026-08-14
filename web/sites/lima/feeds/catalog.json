@@ -1508,8 +1508,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "44acb85a246c7736059ad4f6abceb4b33ae9e649674e7f90723c211dd61cdfb4",
-      "size_bytes": 166211,
+      "sha256": "f348c40fc67e12952185308c265de0b23ad0551700014e9804d0d70ad0c07a1c",
+      "size_bytes": 168661,
       "lfs_materialized": true,
       "file_count": 13,
       "stale": false,
@@ -5357,8 +5357,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "60ec7e28123244f37d9de4eb4a03a2c80d72a0fe5fa9349bb46ad557c656eefd",
-      "size_bytes": 9518,
+      "sha256": "b268c2fdc4196397d62dc52f0695e9564bac04e710a394374910e0efdc9ab968",
+      "size_bytes": 14185,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -8109,10 +8109,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4d20e0f4c85ee287a8b7a68b75794cfdf1d208d62618962cb42a9892920aeffc",
-      "size_bytes": 197469,
+      "sha256": "9e5489ec47b9a93ed628a7d8b2ad3003e79593d1b9bb36e2492696380215a696",
+      "size_bytes": 202374,
       "lfs_materialized": true,
-      "file_count": 24,
+      "file_count": 25,
       "stale": false,
       "asof": null
     },
@@ -9753,8 +9753,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "2821a004103b7ee1c8856afa07def1597678c8344121ccd1c0879dec0da88228",
-      "size_bytes": 513672,
+      "sha256": "db6a18e7ae09195f35ac39ea5ce8d486882c7dd8d40648dc5f8d0c76117ed2d1",
+      "size_bytes": 514275,
       "lfs_materialized": true,
       "file_count": 10,
       "stale": false,
@@ -10531,6 +10531,56 @@
     },
     "citation": {
       "source": "U.S. Geological Survey published reports — WRI 01-4140 (Straub, 2001) and SIR 2024-5075 (VonIns and Koltun, 2024, ver. 1.1), downloaded verbatim from pubs.usgs.gov",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "van-wert-watch-items",
+    "title": "Van Wert site watch-items (WWTP infrastructure geometry)",
+    "scope": "reference",
+    "collection": "van-wert",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, modified *VD → *WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
+    "access_tier": "public",
+    "site_scope": "site:van-wert",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "van-wert",
+      "gis",
+      "geojson",
+      "wwtp",
+      "infrastructure"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/van-wert/watch-items.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "6ab9f58311b98bab94f98ccbad79536f6160eb7f2118d6aeea51482cd8e720b9",
+      "size_bytes": 5412,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, modified *VD → *WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
       "source_kind": "reference",
       "page": null,
       "pages": null,

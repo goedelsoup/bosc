@@ -52,7 +52,7 @@
     },
     "source_doc_rel": "van-wert/council/26-05-028-draft-ordinance.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "van-wert/council/2026-05-11-ord-26-05-029-data-center-code-amendment.resolution.yaml",
@@ -126,7 +126,7 @@
     },
     "source_doc_rel": "van-wert/council/26-05-029-draft-ordinance.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "van-wert/council/2026-05-11-ord-26-05-030-conditional-zoning.resolution.yaml",
@@ -187,7 +187,7 @@
     },
     "source_doc_rel": "van-wert/council/26-05-030-draft-ordinance.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/van-wert/2GC08872.approval.npdes.yaml",
@@ -219,7 +219,7 @@
     "citation": {
       "source": "oepa/van-wert/2GC08872.approval.npdes.yaml",
       "source_kind": "document",
-      "page": 1,
+      "page": null,
       "pages": null,
       "confidence": "high",
       "note": null,
@@ -261,11 +261,8 @@
     "citation": {
       "source": "oepa/van-wert/2GC08872.noi.npdes.yaml",
       "source_kind": "document",
-      "page": 1,
-      "pages": [
-        1,
-        2
-      ],
+      "page": null,
+      "pages": null,
       "confidence": "high",
       "note": null,
       "verified": true

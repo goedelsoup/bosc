@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pytest
@@ -347,6 +348,68 @@ def test_transcription_envelope_refuses_a_render_receipt() -> None:
                 "meta": {"sources": ["data/documents/a.pdf"]},
             }
         )
+
+
+_HAND_READ_DECLARED = re.compile(
+    r"hand[- ]read|nothing was OCR'?d|not a vision extraction|no page was rasterized",
+    re.IGNORECASE,
+)
+_RENDER_RECEIPT_KEYS = ("doc_id", "dpi", "pages_read", "image_pages_read")
+
+
+def _leading_comment(text: str) -> str:
+    """The contiguous ``#`` header at the top of a YAML file, blank lines tolerated.
+
+    Scanned deliberately narrowly. An earlier draft of this gate read *any* comment line in the
+    first 40 and flagged seven committed render extractions, whose deeper inline comments say
+    things like "transcribed from the rendered image" — a phrase about the render, not a denial
+    of one. A file's leading block is where it declares what it IS; that is the only place this
+    gate reads.
+    """
+    out: list[str] = []
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("#"):
+            out.append(stripped)
+        elif not stripped:
+            continue
+        else:
+            break
+    return "\n".join(out)
+
+
+def test_no_committed_hand_read_carries_a_render_receipt() -> None:
+    """A file that says it was hand-read may not also claim a render (#2001).
+
+    :class:`~watermark.models.TranscribedExtraction` refuses the combination at the type level,
+    but only for files that REACH it: a full, well-formed render envelope routes to ``npdes`` and
+    validates happily, so the type system cannot retroactively detect an artifact that already
+    carries one. Both van-wert ``2GC08872`` extractions did — each opened "HAND-READ, not a vision
+    extraction … nothing was OCR'd" and then asserted ``dpi: 150``, because the type they were
+    written against required a receipt and the alternative was being silently dropped (#1994).
+
+    ``dpi`` is how a reader tells a figure read off a rasterized image — where the OCR digits are
+    untrustworthy, which the repo's whole extract discipline turns on — from one transcribed off a
+    clean text layer. A false receipt inverts that signal inside litigation evidence, so the
+    corpus is swept rather than trusted.
+    """
+    offenders: list[str] = []
+    for path in sorted((REPO_ROOT / "data" / "extracted").rglob("*.yaml")):
+        text = path.read_text(encoding="utf-8", errors="replace")
+        if not _HAND_READ_DECLARED.search(_leading_comment(text)):
+            continue
+        data = yaml.safe_load(text)
+        if not isinstance(data, dict):
+            continue
+        if claimed := [k for k in _RENDER_RECEIPT_KEYS if k in data]:
+            rel = path.relative_to(REPO_ROOT)
+            offenders.append(f"{rel} claims {', '.join(claimed)}")
+
+    assert not offenders, (
+        "these files declare a hand read in their own leading comment and then assert a vision "
+        "render. Remove the receipt (a transcription carries none) — never invent a dpi to "
+        "satisfy a schema:\n  " + "\n  ".join(offenders)
+    )
 
 
 def test_source_path_does_not_shadow_its_own_digest() -> None:

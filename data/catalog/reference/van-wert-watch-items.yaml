@@ -1,0 +1,58 @@
+id: van-wert-watch-items
+title: Van Wert site watch-items (WWTP infrastructure geometry)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: Derived from Ohio EPA "Fact Sheet for NPDES Permit, Van Wert WWTP" (permit 2PD00006,
+    modified *VD → *WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates
+    (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063,
+    via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)
+license: Public record (Ohio R.C. 149.43 / U.S. Government work)
+access_tier: public
+site_scope: site:van-wert
+storage:
+- relpath: reference/van-wert/watch-items.geojson
+  media_type: application/geo+json
+  lfs: false
+refresh:
+  cadence: static
+provenance: reference
+tags:
+- van-wert
+- gis
+- geojson
+- wwtp
+- infrastructure
+notes: >-
+  Per-site watch-items GeoJSON for Van Wert; consumed by balance._default_watch_items() as the
+  site-specific override (takes precedence over the Lima periplus import) and un-gates
+  hydrology_balance via balance.has_site_watch_items (#829/#1995). One feature — the Van Wert WWTP
+  (id=van-wert-wwtp, matching the profile's plant_receiving key; 4.0 MGD average design flow,
+  outfall 001 → Town Creek at RM 13.87, NPDES 2PD00006 / OH0027910).
+
+  WHAT IT FIXED, and why it was committed before the site's scenarios were. Without it the Van Wert
+  balance fell back to Lima's frozen periplus graph and resolved FOUR ALLEN COUNTY PLANTS — Lima
+  WWTP (18.5 MGD), Shawnee II, American Bath, American II — plus a bosc-campus node carrying a
+  "2.5 MGD industrial discharge to Lima", ~50 km away, and reported them as Van Wert's. The balance
+  block is persisted into data/scenarios/<slug>/*.scenario.yaml AND published in the
+  hydrology-scenarios bundle feed, so writing this site's scenarios first would have published
+  Lima's water balance as Van Wert's. The fallback itself is deliberate and documented; the
+  scenario writer simply does not consult has_site_watch_items the way the agent tool does.
+
+  With it the assimilative screen resolves the site's signature finding: Town Creek 7Q10 0.16 cfs
+  against a 6.19 cfs design discharge — 0.03:1 chronic dilution, flag `violation`, with the acute
+  1Q10 at 0.10 cfs giving 0.02:1. Roughly 39x effluent dominance, the most effluent-dominated
+  municipal discharge in the network, on a creek whose summer AND winter 7Q10 are both 0.0 cfs.
+
+  The summary states exactly ONE "N MGD" token on purpose — the 8.0 MGD peak hydraulic is omitted
+  because balance._design_mgd's prose fallback reads a second token as a flow EXPANSION (the Sidney
+  precedent). The structured design flow it actually uses is in the companion
+  reference/hydrology/van-wert/routing.yaml.
+
+  ONE plant deliberately: the five CSO outfalls and the water-treatment-plant residuals discharge
+  (OH0135569, ~2.5 mi downstream on Lower Town Creek) are on this same reach and recorded in
+  water-watch.yaml, but neither carries a design flow or a mass/concentration limit, so neither can
+  drive a design-low-flow screen. No campus node: balance._campus_node is gated on a committed
+  bosc-fm2 forcemain feature and the QTS campus commits none — its construction-stormwater coverage
+  documents no process discharge at all.

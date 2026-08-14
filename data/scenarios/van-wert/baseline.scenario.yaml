@@ -1,0 +1,167 @@
+scenario:
+  name: baseline
+  description: Current municipal loop, no data-center cooling draw.
+  cooling_model: 'off'
+  cooling_demand:
+    value: 0.0
+    unit: MGD
+    source: assumption
+    citation: 'baseline: no campus cooling load'
+    confidence: low
+    asof: null
+    low: null
+    high: null
+  consumptive_fraction:
+    value: 0.0
+    unit: fraction
+    source: assumption
+    citation: baseline
+    confidence: low
+    asof: null
+    low: null
+    high: null
+  basis: null
+cooling_model: 'off'
+consumptive_loss:
+  value: 0.0
+  unit: cfs
+  source: derived
+  citation: 0 MGD x 0 consumptive (scenario baseline)
+  confidence: medium
+  asof: null
+  low: null
+  high: null
+receiving_7q10:
+  value: 0.16
+  unit: cfs
+  source: document
+  citation: Ohio EPA NPDES fact sheet 2PD00006 (Van Wert WWTP), Table 12 — USGS 04191500
+    (Auglaize River Near Defiance, 1915-2003) drainage area ratio applied to Town
+    Creek
+  confidence: high
+  asof: null
+  low: null
+  high: null
+receiving_summer_30q10:
+  value: 0.29
+  unit: cfs
+  source: document
+  citation: summer 30Q10 0.29 cfs — Ohio EPA NPDES fact sheet 2PD00006 (Van Wert WWTP),
+    Table 12 — USGS 04191500 (Auglaize River Near Defiance, 1915-2003) drainage area
+    ratio applied to Town Creek (summer and winter 7Q10 = 0 cfs (intermittent at design
+    low flow); Van Wert WWTP design flow 4.0 MGD (6.1889 cfs) overwhelms the 7Q10
+    by 39x — most extreme effluent-dominance case in the Maumee network)
+  confidence: high
+  asof: null
+  low: null
+  high: null
+receiving_1q10:
+  value: 0.1
+  unit: cfs
+  source: document
+  citation: driest-day 1Q10 0.1 cfs — Ohio EPA NPDES fact sheet 2PD00006 (Van Wert
+    WWTP), Table 12 — USGS 04191500 (Auglaize River Near Defiance, 1915-2003) drainage
+    area ratio applied to Town Creek (summer and winter 7Q10 = 0 cfs (intermittent
+    at design low flow); Van Wert WWTP design flow 4.0 MGD (6.1889 cfs) overwhelms
+    the 7Q10 by 39x — most extreme effluent-dominance case in the Maumee network)
+  confidence: high
+  asof: null
+  low: null
+  high: null
+receiving_live: null
+receiving_water_name: Town Creek
+campus_routed_discharge: null
+balance:
+  nodes:
+  - node:
+      id: van-wert-wwtp
+      name: Van Wert WWTP
+      role: wwtp
+      receiving_water: Town Creek
+      lat: 40.888241
+      lon: -84.58437518
+    inflow: null
+    consumptive_use: null
+    return_flow:
+      value: 6.18891500660533
+      unit: cfs
+      source: document
+      citation: van-wert-wwtp (4.0 MGD design) — Ohio EPA "Fact Sheet for NPDES Permit,
+        Van Wert WWTP" for NPDES 2PD00006 / application OH0027910, Van Wert Wastewater
+        Treatment Plant, 7998 State Route 127 North, Van Wert, Van Wert County — outfall
+        001 to Town Creek at RM 13.87 (40.8882410 / -84.58437518), subsequent stream
+        network Middle Creek → Little Auglaize River → Auglaize River → Maumee River
+        → Lake Erie (HUC-8 04100007). Table 7 gives the average design flow as 4.0
+        MGD (6.1889 cfs); Table 12 gives the reach 7Q10 as 0.16 cfs annual, computed
+        by USGS drainage-area ratio from gage 04191500 (Auglaize River near Defiance,
+        1915-2003), with summer and winter 7Q10 both 0.0 cfs (the creek is intermittent),
+        1Q10 0.1, summer/winter 30Q10 0.29, 90Q10 0.66 and harmonic mean 1.62. The
+        resulting dilution ratio is 0.03:1 — ~39x effluent dominance, the basin end-member
+        — and the fact sheet computes the acute dilution ratio as 1.02:1. Permit modified
+        *VD → *WD effective 2026-07-01 (CSO LTCP schedule). Source data/documents/oepa/van-wert/2PD00006.fs.pdf;
+        structured read data/extracted/oepa/van-wert/2PD00006.fs.npdes.yaml. [verified]
+      confidence: high
+      asof: null
+      low: null
+      high: null
+    stormwater: null
+  tier: tier0
+  warnings:
+  - no abstraction node configured for site 'van-wert'; the water balance omits the
+    intake reach.
+assimilative:
+- receiving_water: Town Creek
+  discharger: Van Wert WWTP
+  design_low_flow:
+    value: 0.16
+    unit: cfs
+    source: document
+    citation: Ohio EPA NPDES fact sheet 2PD00006 (Van Wert WWTP), Table 12 — USGS
+      04191500 (Auglaize River Near Defiance, 1915-2003) drainage area ratio applied
+      to Town Creek
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  discharge:
+    value: 6.18891500660533
+    unit: cfs
+    source: document
+    citation: van-wert-wwtp (4.0 MGD design) — Ohio EPA "Fact Sheet for NPDES Permit,
+      Van Wert WWTP" for NPDES 2PD00006 / application OH0027910, Van Wert Wastewater
+      Treatment Plant, 7998 State Route 127 North, Van Wert, Van Wert County — outfall
+      001 to Town Creek at RM 13.87 (40.8882410 / -84.58437518), subsequent stream
+      network Middle Creek → Little Auglaize River → Auglaize River → Maumee River
+      → Lake Erie (HUC-8 04100007). Table 7 gives the average design flow as 4.0 MGD
+      (6.1889 cfs); Table 12 gives the reach 7Q10 as 0.16 cfs annual, computed by
+      USGS drainage-area ratio from gage 04191500 (Auglaize River near Defiance, 1915-2003),
+      with summer and winter 7Q10 both 0.0 cfs (the creek is intermittent), 1Q10 0.1,
+      summer/winter 30Q10 0.29, 90Q10 0.66 and harmonic mean 1.62. The resulting dilution
+      ratio is 0.03:1 — ~39x effluent dominance, the basin end-member — and the fact
+      sheet computes the acute dilution ratio as 1.02:1. Permit modified *VD → *WD
+      effective 2026-07-01 (CSO LTCP schedule). Source data/documents/oepa/van-wert/2PD00006.fs.pdf;
+      structured read data/extracted/oepa/van-wert/2PD00006.fs.npdes.yaml. [verified]
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  upstream_returns: null
+  dilution_ratio: 0.025852673664
+  flag: violation
+  effluent_credited_ratio: null
+  effluent_credited_flag: null
+  acute_low_flow:
+    value: 0.1
+    unit: cfs
+    source: document
+    citation: 1Q10 (acute design flow) 0.1 cfs — Ohio EPA NPDES fact sheet 2PD00006
+      (Van Wert WWTP), Table 12 — USGS 04191500 (Auglaize River Near Defiance, 1915-2003)
+      drainage area ratio applied to Town Creek
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  acute_dilution_ratio: 0.01615792104
+  acute_flag: violation
+  detail: Town Creek 7Q10 0.16 cfs vs discharge 6.19 cfs -> 0.03:1 chronic dilution
+    (violation); acute 1Q10 0.10 cfs -> 0.02:1 (violation)

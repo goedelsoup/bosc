@@ -1,6 +1,6 @@
 # Onboarding — Van Wert (van-wert)
 
-Living record for the Van Wert watershed point (basin: maumee), scaffolded by `watermark onboard van-wert`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Van Wert watershed point (basin: maumee), scaffolded by `watermark onboard van-wert`. Check items as you complete them; the site is not promoted (`data/sites.yaml` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
@@ -154,6 +154,25 @@ until primary instruments land in `data/documents/van-wert/` and `data/extracted
 Sources: DCD, VW Independent, 21Alive/WPTA, Hometown Stations, Mercer County Outlook,
 vanwertcountyohio.gov commissioner agendas, q.com/data-centers/van-wert.
 
+> ⚠️ **THE INSTRUMENTS HAVE SINCE LANDED, AND THEY RETIRE FOUR FIGURES BELOW.** This section is a
+> dated 2026-07-02 press snapshot, preserved as written because it is the record of what was
+> believed before the primary documents were pulled. It is **not** the current register — that is
+> [`data/extracted/van-wert/data-centers.md`](data-centers.md). Where a press figure below has been
+> superseded, the correction is stamped inline. In summary:
+>
+> | this section says | the instrument says | source |
+> |---|---|---|
+> | "~962 acres" annexed | **901.698 ± ac** — Exhibit A's four components sum exactly to it; 962 has no support in the record | Ord. 26-05-028 (#1401) |
+> | ordinances "passed 6-0" | **no numeric tally is recorded** — "all concurred"; Roberts abstained as a Marsh Foundation employee | Council minutes (#1401) |
+> | holding is "61.4 ac short" of the annexation | **1.108 ac (0.12%)** short, once the annexed area is read off the instrument rather than the press | #1401 + #1403 |
+> | "QTS Realty Trust, LLC / Overland Park KS" | **QTS Realty Trust Inc., Duluth GA** — certified under penalty of law 2026-07-21 | 2GC08872 NOI (#1402) |
+>
+> Also landed since: the campus's first state permit (construction-stormwater coverage
+> `2GC08872*AG`, approved 2026-07-30) with the applicant's own schedule (start **2026-08-03**,
+> completion **2030-08-03**, against the press "Q4 2026 / ~2032" below) and its certification that
+> the air permit-to-install is `YET_TO_APPLY`; the NPDES `*WD` modification (#1406); and the
+> incentive/water-instrument negative (#1407). Item 1 of the ingest list below is **done**.
+
 ### QTS / Thor Equities are the same project — confirmed (#378/#840 resolved)
 
 **Thor Equities** (via its Form8tion data center division, founded March 2023) is the
@@ -166,7 +185,8 @@ Timeline:
 
 - Jan 2025: AEP in discussions with unnamed developer (DCD); VWAEDC director cites 500 MW, ~1.5M gal/day water
 - Aug 2025: Thor Equities acquires 221 acres from Marsh Foundation at ~$51K/ac (deed: Van Wert County Recorder)
-- May 11, 2026: Van Wert City Council 6-0 approves annexation/rezoning (see below)
+- May 11, 2026: Van Wert City Council approves annexation/rezoning (see below) — press reported
+  "6-0"; the minutes record no numeric tally, only "all concurred" (#1401)
 - May 27, 2026: VW Independent reports "data center tax exemptions paused" (moratorium signed May 29)
 - May 29, 2026: Joint city/QTS announcement; Governor DeWine suspends Ohio sales tax exemption (R.C. §122.175) same day
 - Jun 3, 2026: QTS testifies at Ohio House Select Committee on Data Centers
@@ -180,10 +200,20 @@ Industrial Park) as a separate AEP-adjacent transaction. Do not conflate with th
 
 This is **not** a zero-document situation. Documents to ingest in priority order:
 
-1. **Van Wert City Council ordinances — May 11, 2026** (highest priority): Three ordinances passed 6-0
-   with emergency clauses (three readings waived): (1) annexation of ~962 acres purchased by Thor from
-   Marsh Foundation; (2) I-2 General Industrial zoning permitting data centers; (3) conditional zoning
-   petition. Councilman Greg Roberts (Marsh Foundation employee) recused. Obtain from Van Wert City Clerk.
+1. ~~**Van Wert City Council ordinances — May 11, 2026** (highest priority)~~ — **INGESTED (#1401,
+   PR #1880)**: nine City of Van Wert documents at `data/documents/van-wert/council/`, extracted to
+   `data/extracted/van-wert/mega-site-instruments.{yaml,md}`. Three ordinances with emergency
+   clauses (three readings waived): (1) `26-05-028` annexation of **901.698 ± ac** — not the
+   "~962 acres" this line estimated — purchased by Thor from Marsh Foundation; (2) `26-05-029`,
+   which created "Data Center" in Van Wert Code §150.03 **for the first time** and made it an I-2
+   use in the same sitting that zoned the ground for it; (3) `26-05-030` the conditional zoning
+   petition, whose entire "conditional" is Exhibit C — a landscape mound, with no noise, height,
+   water-supply or discharge limit. They did **not** pass "6-0": the minutes record no numeric
+   tally, only "all concurred", and Councilman Greg Roberts abstained as a Marsh Foundation
+   employee. Note what remains open even after ingest — **no signed or certified copy is public**;
+   all six ordinance PDFs were uploaded four days before the vote carrying an unfilled
+   `Passed this ___ day of ___`, which is why the Type 1 / Type 2 contradiction in the record is
+   unsettleable.
 2. **Van Wert County Commissioner agendas — June 12, 2025** (already public online):
    Agenda lists "Chuck Koch, Attorney Re: Annexation – Megasite – Project Thor – Data Center."
    Full meeting minutes not posted online — require in-person or public-records request to
@@ -208,8 +238,11 @@ This is **not** a zero-document situation. Documents to ingest in priority order
   press release or the Recorder: `data/extracted/van-wert/bosc-site-footprint.yaml` +
   `data/reference/van-wert/parcel-assemblage.geojson`, the five parcels deeded to **QTS Van Wert
   LLC** in June 2026 — **900.59 ac deeded / 901.502 ac planar**, which meets the quoted **902-acre**
-  campus figure to 0.16% and is 61.4 ac short of the ~962 ac annexed. The Recorder deed is still
-  needed, but for the **grantor / instrument numbers**, not the boundary (#1401).
+  campus figure to 0.16%. Against the annexation it is **1.108 ac (0.12%)** short, not the "61.4 ac"
+  this line originally recorded: that gap was measured against the press's ~962 ac, and #1401 read
+  the zoned area off Ordinance 26-05-028's Exhibit A as **901.698 ± ac**. Three independent
+  acreages now agree to within ~1.1 ac. The Recorder deed is still needed, but for the **grantor /
+  instrument numbers**, not the boundary (#1404).
 
 ### Water-use tension (relevant to hydrology thesis)
 
@@ -224,9 +257,36 @@ Verification: Ohio EPA air permit application (submitted per QTS FAQ; no permit 
 
 ## Review gate (blocking)
 
-- [ ] Every written reference value is reviewed against a cited source (no fabricated values).
+- [x] Every written reference value is reviewed against a cited source (no fabricated values).
+  **Worked 2026-08-14, not ticked** — the sweep found two real defects, in the same shape the
+  Sidney (#1992) and Findlay (#1265) gates found theirs.
+  1. **A fabricated provenance claim in litigation evidence (#2001).** Both committed
+     `2GC08872` extractions opened "HAND-READ … nothing was OCR'd" and then asserted `dpi: 150`
+     — a rasterization that never happened, supplied only because `NpdesExtraction` required a
+     render receipt and the alternative was being silently dropped (#1994). Verified three ways
+     that agree (pypdf character counts match each file's own stated counts exactly — 2,043 and
+     3,573 + 117; the filename-map records `evidence: native_text`; the recorded sha256s match the
+     bytes), then the receipt was removed and replaced with `meta.sources`. A corpus-wide test
+     (`test_no_committed_hand_read_carries_a_render_receipt`) now refuses the combination
+     anywhere in `data/extracted/**`.
+  2. **A retired figure that had propagated to six surfaces.** #1401 read the annexed area off
+     Ordinance 26-05-028's Exhibit A as **901.698 ± ac** and retired the press's "~962 ac" — but
+     the correction reached only `data-centers.md` and the site profile. The stale figure, and the
+     **61.4-ac `[open]` gap derived from it**, survived in the footprint extraction, this file, the
+     committed `parcel-assemblage.geojson` provenance, `data/reference/van-wert/README.md`, the
+     `data-centers-van-wert` catalog notes and the network-wide `parcel-assemblage` catalog entry.
+     Corrected in all six; the true shortfall is **1.108 ac (0.12%)**, and three independent
+     acreages (901.698 zoned / 901.502 planar / 900.59 deeded) now agree to within ~1.1 ac. The
+     same sweep retired "6-0" (no tally is recorded) and "QTS Realty Trust, LLC / Overland Park KS"
+     (the applicant of record is QTS Realty Trust **Inc.**, Duluth GA) where each survived.
+     **The lesson generalizes:** a `corrections_to_the_register` block records that a figure was
+     corrected somewhere, not everywhere. Grep the whole tree for the superseded value.
+  What the sweep also confirmed is **sound**, and is worth recording so it is not re-litigated: the
+  basin screen's denominator. Town Creek's 7Q10 is 0.16 cfs `source: document`, read at the outfall
+  from fact sheet 2PD00006 Table 12 — not a derived basin proxy, which is exactly the defect that
+  had overstated Sidney's dilution 17-fold. There is no proxy on this key to collide with.
 - [x] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation. **(#1403 — the profile was updated: `[inference]` flat `"D"` → `[verified]` dual `"C/D"`,** 44 of 45 grid points over the committed campus assemblage. The correction is to the *rating*, not the geology: the old inference read the ground right — Great Black Swamp lake-plain clays, and it named Hoytville — but NRCS rates Hoytville C/D, C where the field tile is installed and maintained, D undrained. A flat D pre-committed the undrained letter for both scenarios, inflating the pre-development CN of ground that is tile-drained CAUV row crop today and so understating the pre-to-post delta. Recorded verbatim per WS-20/#1620.)
 - [x] basin-screen coverage is sane for this site's receiving waters. OH0027910 screened against Town Creek 7Q10 (0.16 cfs annual, source=document); dilution ratio 0.03:1 — 39× effluent dominance, `[verified]`. See self-research summary above.
 - [x] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md). Parcels wired via `VAN_WERT_PARCEL_SCHEMA` (#421 — the county's AGOL `parcel_joinedVWOH`, replacing the dead bhamaps host); zoning stays `[open]` (no REST anywhere; map-only/PDF).
 - [x] Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/) — see self-research summary above; 5 proposals filed as sub-issues of #363 (#375–379).
-- [ ] PROMOTION IS A SEPARATE MANUAL EDIT: flip status->live + selectable->true for 'van-wert' in web/src/lib/sites.ts, parity-gated. onboard never auto-promotes; only one live build (/bosc) exists today.
+- [x] PROMOTION IS A SEPARATE MANUAL EDIT: flip `status: live` + `selectable: true` for `van-wert` in **`data/sites.yaml`**, then run `watermark sites sync`; parity-gated. (The path this line carried, `web/src/lib/sites.ts`, is retired — `data/sites.yaml` is the canonical identity registry and the TypeScript registry is generated from it. The same stale path survives in 19 other sites' ONBOARDING.md and is a network-wide follow-up, not fixed here.) `onboard` never auto-promotes. Promoted on **Sidney / Troy-Piqua parity**: van-wert's readiness block — `case` tier, backdrop/places/record/inquiry `live`, facility `seeded` — is identical to both, and `facility: live` is unreachable here by design (see `_profiles.py`; the NOI certifies the air PTI as `YET_TO_APPLY` and AEP stated no MW for this campus), so it is not a gap being waived.
