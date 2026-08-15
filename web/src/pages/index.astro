@@ -18,11 +18,31 @@
  * reference/emerging status, every one is still one click from here, and the scorecard is
  * still linked from the band head. A question asked second is not a question retracted.
  *
+ * ## Why the map sits above the lens band anyway (#2036, epic #2033)
+ *
+ * The locator map is the first section under the hero, which puts it above the band #1916 just
+ * finished promoting. That needs saying plainly rather than reading as a silent revert:
+ *
+ * **#1916 decided which ARGUMENT leads. A locator map is not an argument.**
+ *
+ * It asserts nothing, scores nothing, and reaches no verdict — it answers "is my place in here,
+ * and which of these do I want", which is a *navigation* question, and navigation precedes
+ * reading. Somebody who arrived because a data center is going up in their county was, until
+ * this landed, told "38 sites across 11 basins" by a hero and then shown a bar chart, five lens
+ * cards, three questions and eight table rows, with nothing anywhere on the page saying WHERE.
+ * They had to open `/network` and scan 38 rows to find out whether their county was in it.
+ *
+ * The lens band remains the first thing on this page that makes a claim, and keeps its position
+ * as the front door to the argument. The map band is deliberately compact — it locates, it does
+ * not dominate, and it is not allowed to grow into a third pitch above the lenses.
+ *
  * Real data only — sites from `bosc.sites` (mirrored in lib/sites), the hypothesis config
  * from lib/directory + the bundle feeds, the lens counts measured across every registered
  * site's own manifest. Figures are counts or a dash, never invented.
  */
 import Base from "../layouts/Base.astro";
+import NetworkMap from "../components/NetworkMap.astro";
+import { networkMapModel } from "../lib/networkMap";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import {
   featuredSites,
@@ -156,6 +176,10 @@ const doors = [
 // (#1864); it used to be `SITES.slice(0, 8)`, the first eight in registry order, ranked by nothing.
 // The heading says so, so the reader knows what the eight are. Each row goes to the site it names
 // (#1862) — the registry href, the same destination the switcher and the scorecard use.
+// The locator map (#2036). Built from the registry, so a newly-registered site places itself
+// and a site without a coordinate is named off-map rather than dropped or guessed.
+const mapModel = networkMapModel();
+
 const featured = featuredSites(siteRollup, 8).map((s, i) => ({
   idx: String(i + 1).padStart(2, "0"),
   code: s.codename ?? s.mono,
@@ -246,6 +270,17 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- where the network is (#2036). Above the lens band because locating precedes reading —
+         see the note at the top of this file on why that is not a walk-back of #1916. -->
+    <section class="dirh-sec">
+      <div class="dirh-sec-head">
+        <h2 class="dirh-sec-title">Where the network is</h2>
+        <span class="dirh-sec-sub">— {totalSites} watershed points across {basins} basins. Is yours here?</span>
+        <a class="dirh-sec-link" href={withBase("/network")}>The full index →</a>
+      </div>
+      <NetworkMap model={mapModel} compact label="The Watermark network, mapped" />
     </section>
 
     <!-- the five lenses — the front door (#1916) -->
