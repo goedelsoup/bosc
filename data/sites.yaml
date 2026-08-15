@@ -30,7 +30,20 @@
 #   status       live | building | queued | tracking
 #   selectable   true only for a site whose full build is deployed
 #   issue        GitHub issue number (string, no #; null for lima)
-#   map_lat/lon/zoom  default DeckGL viewport (null for tracking-only sites with no profile yet)
+#   map_lat/lon/zoom  the site's coordinate + default DeckGL viewport.
+#                Two consumers, and they want different things (#2037). The per-site DeckGL map
+#                reads all three via `mapView(slug)`; the NETWORK locator map on / and /network
+#                reads lat/lon only via `sitePoint(slug)`, because it supplies its own single
+#                zoom for the whole frame. So a missing `map_zoom` must never cost a site its
+#                place on the network map.
+#                Populated for EVERY registered site, including tracking-only ones with no Python
+#                profile — those were null until #2037, when the network map gave the coordinate a
+#                second consumer that has nothing to do with having a profile. Backfilled from the
+#                **US Census gazetteer place centroid**, noted once here rather than per row: a
+#                city centroid is not a contested figure.
+#                ⚠️ This is the CENTROID OF THE PLACE — the watershed point. It is not a facility,
+#                a parcel, or a plant, and for a `tracking` site there is by definition no located
+#                facility at all. No surface may present it as one.
 
 sites:
 
@@ -495,9 +508,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1284"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 40.0581
+    map_lon: -82.4013
+    map_zoom: 12
 
   - slug: zanesville
     place: "Zanesville"
@@ -511,9 +524,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1285"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 39.9403
+    map_lon: -82.0132
+    map_zoom: 12
 
   # Sandusky basin
 
@@ -529,9 +542,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1286"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 41.3503
+    map_lon: -83.1219
+    map_zoom: 12
 
   - slug: tiffin
     place: "Tiffin"
@@ -545,9 +558,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1287"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 41.1145
+    map_lon: -83.1779
+    map_zoom: 12
 
   - slug: bucyrus
     place: "Bucyrus"
@@ -561,9 +574,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1288"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 40.8081
+    map_lon: -82.9755
+    map_zoom: 12
 
   # Cuyahoga basin (the burning-river industrial legacy)
 
@@ -579,9 +592,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1289"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 41.4993
+    map_lon: -81.6944
+    map_zoom: 12
 
   - slug: akron
     place: "Akron"
@@ -595,9 +608,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1290"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 41.0814
+    map_lon: -81.519
+    map_zoom: 12
 
   # Mahoning basin (Voltage Valley EV/battery load)
 
@@ -613,9 +626,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1291"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 41.167
+    map_lon: -80.8548
+    map_zoom: 12
 
   - slug: youngstown
     place: "Youngstown"
@@ -629,9 +642,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1292"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 41.0998
+    map_lon: -80.6495
+    map_zoom: 12
 
   # Hocking basin (the unglaciated Appalachian contrast)
 
@@ -647,9 +660,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1293"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 39.7137
+    map_lon: -82.5993
+    map_zoom: 12
 
   - slug: athens
     place: "Athens"
@@ -663,9 +676,9 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1294"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 39.3292
+    map_lon: -82.1013
+    map_zoom: 12
 
   - slug: logan
     place: "Logan"
@@ -679,6 +692,6 @@ sites:
     status: "tracking"
     selectable: false
     issue: "1295"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
+    map_lat: 39.5395
+    map_lon: -82.4074
+    map_zoom: 12
