@@ -81,6 +81,10 @@ const {
 } = Astro.props;
 
 const facets = filters ? networkMapFacets(model) : [];
+// Headline figures the host page hangs under the canvas (#2044). A slot rather than a prop: the
+// numbers are the page's editorial choice, not the map's, and the homepage's four are not the set
+// another surface would pick.
+const hasStats = Astro.slots.has("stats");
 const chipId = (facet: string, value: string): string => `${idPrefix}-${facet}-${value}`;
 
 /**
@@ -124,7 +128,16 @@ const PHASE_LABEL: Record<string, string> = {
   tracking: "tracked",
 };
 
-const M = compact ? 4 : 4.5; // marker half-width
+/*
+ * Marker half-width, in viewBox units.
+ *
+ * Compact markers are BIGGER than full-size ones, which looks backwards and isn't. The SVG scales
+ * to its container, so what a reader sees depends on the ratio of a glyph to the viewBox — not on
+ * absolute units. The compact instance is built at a narrower viewBox (see `networkMapModel(420)`
+ * on the homepage) precisely so its type and markers occupy more of it; keeping the same units
+ * there rendered ~6px badges in a 480px hero column, which is not a label.
+ */
+const M = compact ? 5 : 4.5;
 const RING = M + 3;
 
 /** The accessible name: the place, its basin, its phase, and whether it opens. Never "facility". */
@@ -220,14 +233,25 @@ const openCount = markers.filter((m) => m.open).length;
             {/* Hit target: 26 markers at 9px are a hard click and a harder tap. Transparent, and
                 after the visible shapes so it takes the pointer. */}
             <rect class="nmap-hit" x={m.x - 13} y={m.y - 13} width="26" height="26" />
-            <text class="nmap-badge" x={m.x} y={m.y - RING - 3} text-anchor="middle">
-              {m.badge}
-            </text>
+            {/* `none` means no clear space was found; the codename is withheld rather than drawn
+                through a neighbour. The site keeps its tooltip and accessible name either way. */}
+            {m.badgePlacement !== "none" && (
+              <text
+                class="nmap-badge"
+                x={m.x}
+                y={m.badgePlacement === "below" ? m.y + 18 : m.y - 11}
+                text-anchor="middle"
+              >
+                {m.badge}
+              </text>
+            )}
           </a>
         ))
       }
     </svg>
   </div>
+
+  {hasStats && <div class="nmap-stats"><slot name="stats" /></div>}
 
   <figcaption class="nmap-cap">
     <p class="nmap-cap-line">
@@ -297,13 +321,30 @@ const openCount = markers.filter((m) => m.open).length;
     margin: 0;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(11rem, 15rem);
-    grid-template-areas: "filters filters" "canvas off" "key off" "cap cap";
+    grid-template-areas: "filters filters" "canvas off" "stats off" "key off" "cap cap";
     gap: 0.9rem 1.4rem;
     align-items: start;
   }
   .nmap-canvas {
     grid-area: canvas;
     min-width: 0;
+  }
+  .nmap-stats {
+    grid-area: stats;
+    min-width: 0;
+  }
+  /*
+   * Compact is single-column at every viewport, not just narrow ones.
+   *
+   * The stacking below is a `max-width` VIEWPORT query, and compact's host is a ~30rem hero
+   * column on a wide screen — the query never fires there, so the two-column rule would hold and
+   * squeeze the map into about half that. A container query would be the modern fix; this is one
+   * declaration and needs no support caveat, and compact's only meaning is "you are in a narrow
+   * column" anyway.
+   */
+  .nmap.is-compact {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "filters" "canvas" "stats" "key" "off" "cap";
   }
   .nmap-canvas svg {
     display: block;
@@ -312,9 +353,6 @@ const openCount = markers.filter((m) => m.open).length;
     /* Square corners, hairlines, no elevation — the map is paper, not a widget. */
     border: 1px solid var(--bosc-rule);
     background: var(--bosc-bg);
-  }
-  .is-compact .nmap-canvas svg {
-    max-height: 26rem;
   }
 
   /* --- filter chips (#2038) — the /network idiom, scaled to a map --------------------------- */
@@ -487,6 +525,15 @@ const openCount = markers.filter((m) => m.open).length;
   .nmap-marker.is-open .nmap-badge {
     opacity: 1;
   }
+  /* Same reasoning as the marker size above: a narrower viewBox needs proportionally larger type
+     to survive being scaled down into a hero column. */
+  .is-compact .nmap-badge {
+    font-size: 10px;
+  }
+  .is-compact .nmap-state-label {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+  }
   .nmap-marker:hover .nmap-badge,
   .nmap-marker:focus-visible .nmap-badge {
     opacity: 1;
@@ -531,6 +578,12 @@ const openCount = markers.filter((m) => m.open).length;
     grid-area: off;
     border-left: 1px solid var(--bosc-rule);
     padding-left: 0.9rem;
+  }
+  .is-compact .nmap-off {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--bosc-rule);
+    padding-top: 0.7rem;
   }
   .nmap-off-head {
     font-family: var(--bosc-mono);
@@ -620,16 +673,13 @@ const openCount = markers.filter((m) => m.open).length;
   @media (max-width: 860px) {
     .nmap {
       grid-template-columns: minmax(0, 1fr);
-      grid-template-areas: "filters" "canvas" "key" "off" "cap";
+      grid-template-areas: "filters" "canvas" "stats" "key" "off" "cap";
     }
     .nmap-off {
       border-left: 0;
       padding-left: 0;
       border-top: 1px solid var(--bosc-rule);
       padding-top: 0.8rem;
-    }
-    .is-compact .nmap-canvas svg {
-      max-height: none;
     }
   }
 </style>

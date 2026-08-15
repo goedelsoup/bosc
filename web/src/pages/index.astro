@@ -18,23 +18,28 @@
  * reference/emerging status, every one is still one click from here, and the scorecard is
  * still linked from the band head. A question asked second is not a question retracted.
  *
- * ## Why the map sits above the lens band anyway (#2036, epic #2033)
+ * ## The map IS the ledger (#2044, epic #2033)
  *
- * The locator map is the first section under the hero, which puts it above the band #1916 just
- * finished promoting. That needs saying plainly rather than reading as a silent revert:
+ * The hero's right column used to be "Network at a glance": a six-cell stat grid over two stacked
+ * distribution bars. #2036 then added the locator map as its own band underneath. That gave the
+ * front door **two** summaries of one network — one numeric, one geographic — stacked.
  *
- * **#1916 decided which ARGUMENT leads. A locator map is not an argument.**
+ * They are now one. The map occupies the ledger's slot and four headline numbers sit under it:
+ * **sites, basins, documents, open to read**. `Open to read` is the registry's `selectable` count,
+ * which is exactly the set the map's forest rings mark — the number and the glyph reinforce each
+ * other rather than introducing a fourth vocabulary, and it is the only one of the four that
+ * answers "what can I do next".
  *
- * It asserts nothing, scores nothing, and reaches no verdict — it answers "is my place in here,
- * and which of these do I want", which is a *navigation* question, and navigation precedes
- * reading. Somebody who arrived because a data center is going up in their county was, until
- * this landed, told "38 sites across 11 basins" by a hero and then shown a bar chart, five lens
- * cards, three questions and eight table rows, with nothing anywhere on the page saying WHERE.
- * They had to open `/network` and scan 38 rows to find out whether their county was in it.
+ * The build-phase and readiness-tier bars come off entirely. Nothing is lost from the build: both
+ * are already filter facets AND per-row pill columns on `/network`, one click away, and the map's
+ * own key encodes build phase. The home stops asserting two distributions above the fold to a
+ * reader who has not yet been handed the vocabulary to read them — `/network`'s three-clock
+ * footnote is where that vocabulary lives.
  *
- * The lens band remains the first thing on this page that makes a claim, and keeps its position
- * as the front door to the argument. The map band is deliberately compact — it locates, it does
- * not dominate, and it is not allowed to grow into a third pitch above the lenses.
+ * ⚠️ Note for anyone reading #2036's history: it had to justify putting a band ABOVE the lens
+ * band, on the grounds that a locator is navigation rather than argument. That band no longer
+ * exists. With the map folded into the hero, **the lens band is once again the first section
+ * below the hero** — #1916's arrangement, restored rather than argued with.
  *
  * Real data only — sites from `bosc.sites` (mirrored in lib/sites), the hypothesis config
  * from lib/directory + the bundle feeds, the lens counts measured across every registered
@@ -44,13 +49,7 @@ import Base from "../layouts/Base.astro";
 import NetworkMap from "../components/NetworkMap.astro";
 import { networkMapModel } from "../lib/networkMap";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import {
-  featuredSites,
-  HYPOTHESIS_ORDER,
-  hypothesisConfig,
-  TIER_DEPTH_ORDER,
-  TIER_PILL,
-} from "@watermark/core/directory";
+import { featuredSites, HYPOTHESIS_ORDER, hypothesisConfig } from "@watermark/core/directory";
 import type { HypothesisItem } from "@watermark/core/feeds";
 import { LENS_ORDER, LENSES } from "@watermark/core/lenses";
 import { lensNetworkCounts, type LensResolvers } from "@watermark/core/lensView";
@@ -68,23 +67,18 @@ import {
 
 const totalSites = SITES.length;
 const basins = groupSites("basin").length;
-const states = groupSites("state").length;
-const liveCount = SITES.filter((s) => s.status === "live").length;
+// The sites a reader can actually enter today — `selectable`, which is what the map rings.
+const openCount = SITES.filter((s) => s.selectable).length;
 
-// Build-phase distribution — real counts from the registry, in clock order.
-const PHASE_ORDER: SiteStatus[] = ["live", "building", "queued", "tracking"];
+// Build-phase ink for the featured table's phase dot. The two distribution BARS this used to also
+// drive came off with the ledger (#2044) — `/network` carries phase as a filter facet and a pill
+// column, and the map's key encodes it — but a row still names its phase, so the ramp stays.
 const PHASE_COLOR: Record<SiteStatus, string> = {
   live: "var(--bosc-forest)",
   building: "var(--bosc-ink)",
   queued: "var(--bosc-muted)",
   tracking: "var(--bosc-faint)",
 };
-const phaseCounts = PHASE_ORDER.map((k) => ({
-  key: k,
-  label: SITE_STATUS_META[k].label,
-  count: SITES.filter((s) => s.status === k).length,
-  color: PHASE_COLOR[k],
-}));
 
 // What the network has actually ASSEMBLED, summed over every site's exported bundle (#1861) —
 // the registry figures above only count sites we've registered. Both move on their own: the
@@ -92,24 +86,22 @@ const phaseCounts = PHASE_ORDER.map((k) => ({
 const net = networkRollup();
 const num = (n: number): string => n.toLocaleString("en-US");
 
-// Readiness-tier distribution, in depth order — the peer bar to build phase. Colors come from
-// the directory's TIER_PILL dots so the home ledger and the scorecard read as one encoding.
-// Unbuilt sites are held out of the bar entirely rather than shown as `stub`, which would
-// assert a computed tier no export has produced.
-const tierCounts = TIER_DEPTH_ORDER.map((k) => ({
-  key: k,
-  label: TIER_PILL[k].label,
-  count: net.byTier[k],
-  color: TIER_PILL[k].dot,
-})).filter((t) => t.count > 0);
-
+/**
+ * The four headline figures under the map (#2044) — what the ledger's six cells and two bars
+ * reduce to.
+ *
+ * Two register the network's SHAPE (sites, basins) and two what it has ASSEMBLED (documents) or
+ * OPENED (open to read). `Open to read` is `selectable`, the same set the map rings in forest, so
+ * the figure and the glyph say one thing. Dropped: `states` (02, and 02 for a while yet), `live
+ * reference` (which `open` subsumes), and `records`, whose axis `documents` now carries alone.
+ *
+ * Every one is a count off the registry or the export rollup. Never an estimate, never a target.
+ */
 const stats = [
   { n: String(totalSites), l: "Sites" },
   { n: String(basins).padStart(2, "0"), l: "Basins" },
-  { n: String(liveCount).padStart(2, "0"), l: "Live reference" },
-  { n: String(states).padStart(2, "0"), l: "States" },
   { n: num(net.documents), l: "Documents" },
-  { n: num(net.records), l: "Records" },
+  { n: String(openCount).padStart(2, "0"), l: "Open to read" },
 ];
 
 // The three open questions, in brief — config + status only (the scorecard does the scoring).
@@ -178,7 +170,10 @@ const doors = [
 // (#1862) — the registry href, the same destination the switcher and the scorecard use.
 // The locator map (#2036). Built from the registry, so a newly-registered site places itself
 // and a site without a coordinate is named off-map rather than dropped or guessed.
-const mapModel = networkMapModel();
+// A narrower viewBox than `/network`'s, on purpose. The SVG scales to its container, so legibility
+// depends on the ratio of glyph to frame — building the hero's instance at 420 rather than 640 is
+// what makes its type readable once it is scaled into a ~30rem column.
+const mapModel = networkMapModel(420);
 
 const featured = featuredSites(siteRollup, 8).map((s, i) => ({
   idx: String(i + 1).padStart(2, "0"),
@@ -215,72 +210,25 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
         </div>
       </div>
 
-      <!-- ledger -->
-      <div class="dirh-ledger">
-        <div class="dirh-ledger-head">Network at a glance</div>
-        <div class="dirh-stats">
-          {
-            stats.map((s) => (
-              <div class="dirh-stat">
-                <div class="dirh-stat-n">{s.n}</div>
-                <div class="dirh-stat-l">{s.l}</div>
-              </div>
-            ))
-          }
+      <!-- the map IS the ledger (#2044): the locator, with the four headline figures under it -->
+      <div class="dirh-locator">
+        <div class="dirh-locator-head">
+          <span>Where the network is</span>
+          <a href={withBase("/network")}>All {totalSites} →</a>
         </div>
-        <div class="dirh-phase">
-          <div class="dirh-phase-head">Build phase</div>
-          <div class="dirh-phase-bar">
+        <NetworkMap model={mapModel} compact label="The Watermark network, mapped">
+          <div class="dirh-stats" slot="stats">
             {
-              phaseCounts.map((p) => (
-                <span style={`flex:${p.count};background:${p.color}`} title={`${p.count} ${p.label}`} />
+              stats.map((st) => (
+                <div class="dirh-stat">
+                  <div class="dirh-stat-n">{st.n}</div>
+                  <div class="dirh-stat-l">{st.l}</div>
+                </div>
               ))
             }
           </div>
-          <div class="dirh-phase-legend">
-            {
-              phaseCounts.map((p) => (
-                <span class="dirh-leg">
-                  <span class="dirh-leg-dot" style={`background:${p.color}`} />
-                  {p.count} {p.label.toLowerCase()}
-                </span>
-              ))
-            }
-          </div>
-        </div>
-        <div class="dirh-phase">
-          <div class="dirh-phase-head">Readiness tier</div>
-          <div class="dirh-phase-bar">
-            {
-              tierCounts.map((t) => (
-                <span style={`flex:${t.count};background:${t.color}`} title={`${t.count} ${t.label}`} />
-              ))
-            }
-          </div>
-          <div class="dirh-phase-legend">
-            {
-              tierCounts.map((t) => (
-                <span class="dirh-leg">
-                  <span class="dirh-leg-dot" style={`background:${t.color}`} />
-                  {t.count} {t.label.toLowerCase()}
-                </span>
-              ))
-            }
-            {net.unbuilt > 0 && <span class="dirh-leg dirh-leg--out">{net.unbuilt} not yet exported</span>}
-          </div>
-        </div>
+        </NetworkMap>
       </div>
-    </section>
-
-    <!-- where the network is (#2036). Above the lens band because locating precedes reading —
-         see the note at the top of this file on why that is not a walk-back of #1916. -->
-    <section class="dirh-sec">
-      <div class="dirh-sec-head">
-        <h2 class="dirh-sec-title">Where the network is</h2>
-        <span class="dirh-sec-sub">— {totalSites} watershed points across {basins} basins. Is yours here?</span>
-        <a class="dirh-sec-link" href={withBase("/network")}>The full index →</a>
-      </div>
-      <NetworkMap model={mapModel} compact label="The Watermark network, mapped" />
     </section>
 
     <!-- the five lenses — the front door (#1916) -->
@@ -411,8 +359,8 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
     border-bottom: 1px solid var(--bosc-rule);
   }
   .dirh-hero-l {
-    flex: 1 1 32rem;
-    max-width: 38rem;
+    flex: 1 1 28rem;
+    max-width: 34rem;
   }
   .dirh-h1 {
     font-size: clamp(2.4rem, 5vw, 3.25rem);
@@ -453,95 +401,68 @@ const featured = featuredSites(siteRollup, 8).map((s, i) => ({
     color: var(--bosc-ink);
   }
 
-  /* ledger */
-  .dirh-ledger {
-    flex: 1 1 20rem;
-    max-width: 22.5rem;
+  /* the locator — the map in the ledger's slot (#2044) */
+  .dirh-locator {
+    flex: 1 1 26rem;
+    max-width: 30rem;
     border: 1px solid var(--bosc-ink);
     align-self: flex-start;
+    padding: 0 0.9rem 0.9rem;
   }
-  .dirh-ledger-head,
-  .dirh-phase-head {
+  .dirh-locator-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem;
     font-family: var(--bosc-mono);
     font-size: 0.62rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--bosc-muted);
-  }
-  .dirh-ledger-head {
-    padding: 0.7rem 0.9rem;
+    padding: 0.7rem 0;
+    margin-bottom: 0.8rem;
     border-bottom: 1px solid var(--bosc-ink);
   }
+  .dirh-locator-head a {
+    color: var(--bosc-ink);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .dirh-locator-head a:hover {
+    color: var(--bosc-forest);
+  }
+
+  /* the four headline figures, under the map */
   .dirh-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--bosc-ink);
   }
   .dirh-stat {
     border-left: 1px solid var(--bosc-rule);
     border-top: 1px solid var(--bosc-rule);
-    padding: 0.9rem 1rem;
+    padding: 0.75rem 0.85rem;
   }
   .dirh-stat:nth-child(odd) {
     border-left: 0;
   }
+  .dirh-stat:nth-child(-n + 2) {
+    border-top: 0;
+  }
   .dirh-stat-n {
     font-family: var(--bosc-mono);
-    font-size: 1.85rem;
+    font-size: 1.7rem;
     font-weight: 600;
     letter-spacing: -0.03em;
     line-height: 1;
   }
   .dirh-stat-l {
     font-family: var(--bosc-mono);
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--bosc-faint);
     margin-top: 0.4rem;
-  }
-  .dirh-phase {
-    padding: 0.9rem;
-    border-top: 1px solid var(--bosc-ink);
-  }
-  /* Build phase and readiness tier are peer bars in one band — the ink rule opens the band,
-     a hairline separates the two inside it. */
-  .dirh-phase + .dirh-phase {
-    border-top-color: var(--bosc-rule);
-  }
-  .dirh-phase-head {
-    margin-bottom: 0.55rem;
-  }
-  .dirh-phase-bar {
-    display: flex;
-    height: 10px;
-    border: 1px solid var(--bosc-ink);
-  }
-  .dirh-phase-bar > span + span {
-    border-left: 1px solid var(--bosc-bg);
-  }
-  .dirh-phase-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.9rem;
-    margin-top: 0.7rem;
-  }
-  .dirh-leg {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: var(--bosc-mono);
-    font-size: 0.7rem;
-    color: var(--bosc-muted);
-  }
-  /* Sites held OUT of the tier bar (no committed bundle) — dotless, so the legend never implies
-     they carry a computed tier. */
-  .dirh-leg--out {
-    color: var(--bosc-faint);
-  }
-  .dirh-leg-dot {
-    width: 8px;
-    height: 8px;
-    flex: none;
   }
 
   /* sections */

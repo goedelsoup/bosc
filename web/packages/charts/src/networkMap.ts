@@ -98,6 +98,24 @@ export interface NetworkMapMarker extends MappableSite {
   point: { lat: number; lon: number };
   x: number;
   y: number;
+  /**
+   * Where this marker's always-on badge goes — or that it cannot be drawn at all (#2044).
+   *
+   * Only `open` markers carry a badge at rest; the others reveal one on hover, transiently, and
+   * are never placed. Where the network clusters, a default-above badge collides: Sidney's square
+   * sits in Troy-Piqua's label, and at the compact instance's scale that renders as a codename
+   * with a box through it.
+   *
+   * A single "flip it below" pass does NOT converge — it moved Bowling Green's badge straight into
+   * Findlay's. So placement is greedy over a stable order: try above, then below, and if neither
+   * is clear of every marker square and every already-placed label, emit `"none"`.
+   *
+   * `"none"` is the honest terminal state, not a failure. The site keeps its marker, its link, its
+   * tooltip and its accessible name — only the painted codename is withheld, because two codenames
+   * drawn through each other name neither site. Resolved here rather than nudged in CSS because it
+   * depends on where sites actually are, which changes whenever one is registered.
+   */
+  badgePlacement: "above" | "below" | "none";
 }
 
 /** A projected polyline, carried as both points and a ready `d` attribute. */
@@ -164,6 +182,69 @@ export const STANDARD_PARALLEL = 40.2;
 
 /** Padding inside the viewBox, in SVG units, so edge markers have room for their labels. */
 const PAD = 16;
+
+/*
+ * Label-placement geometry, in viewBox units, derived from the glyph rather than guessed.
+ *
+ * All of it is sized to the COMPACT instance, which is the larger of the two renderings: it hangs
+ * a 10px badge at `y − RING − 3` with `RING` = 8, over a marker of half-width 5. Reserving a
+ * little more room than the full-size instance needs costs at most a label placed below where it
+ * would also have fit above; reserving less would let a codename be drawn through a square.
+ */
+const MARKER_HALF = 5.5;
+const BADGE_TEXT_H = 10;
+const BADGE_CHAR_W = 6.2;
+/** Baseline offset from the marker centre, above and below. */
+const BADGE_UP = 11;
+const BADGE_DOWN = 18;
+
+interface Box {
+  x0: number;
+  x1: number;
+  y0: number;
+  y1: number;
+}
+
+const hits = (a: Box, b: Box): boolean => a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0;
+
+const badgeBox = (m: { x: number; badge: string }, baselineY: number): Box => {
+  const halfW = Math.max(12, (m.badge.length * BADGE_CHAR_W) / 2);
+  return { x0: m.x - halfW, x1: m.x + halfW, y0: baselineY - BADGE_TEXT_H, y1: baselineY + 2 };
+};
+
+/**
+ * Greedy label placement over the markers that carry an always-on badge.
+ *
+ * Every marker square is an obstacle from the start — including the ones whose own badges only
+ * appear on hover — and each label that lands becomes one too, so no two placed labels can
+ * overlap. Order is by `y` then `x`: stable, independent of registry order, and it resolves a
+ * vertical cluster top-down the way a reader scans it.
+ */
+function placeBadges(markers: NetworkMapMarker[]): void {
+  const occupied: Box[] = markers.map((m) => ({
+    x0: m.x - MARKER_HALF,
+    x1: m.x + MARKER_HALF,
+    y0: m.y - MARKER_HALF,
+    y1: m.y + MARKER_HALF,
+  }));
+
+  for (const m of [...markers].sort((a, b) => a.y - b.y || a.x - b.x)) {
+    // Only `open` markers are labelled at rest; the rest reveal a badge on hover, transiently,
+    // and a transient label is allowed to overlap whatever it lands on.
+    if (!m.open) continue;
+    const above = badgeBox(m, m.y - BADGE_UP);
+    const below = badgeBox(m, m.y + BADGE_DOWN);
+    if (!occupied.some((b) => hits(above, b))) {
+      m.badgePlacement = "above";
+      occupied.push(above);
+    } else if (!occupied.some((b) => hits(below, b))) {
+      m.badgePlacement = "below";
+      occupied.push(below);
+    } else {
+      m.badgePlacement = "none";
+    }
+  }
+}
 
 const K = Math.cos((STANDARD_PARALLEL * Math.PI) / 180);
 
@@ -321,8 +402,10 @@ export function buildNetworkMap(
       continue;
     }
     const { x, y } = project(s.point.lat, s.point.lon);
-    markers.push({ ...s, point: s.point, x, y });
+    markers.push({ ...s, point: s.point, x, y, badgePlacement: "above" });
   }
+
+  placeBadges(markers);
 
   const divide = toPath(DIVIDE, project, false);
 
