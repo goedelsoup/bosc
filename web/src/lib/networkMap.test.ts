@@ -9,9 +9,9 @@
 import { describe, expect, it } from "vitest";
 import type { MapPhase } from "@watermark/charts/networkMap";
 import { divideLatAt } from "@watermark/charts/networkMap";
-import { basinForSlug } from "@watermark/core/placement";
+import { basinForSlug, BASINS, DIVIDES } from "@watermark/core/placement";
 import { SITES, sitePoint, type SiteStatus } from "@watermark/core/sites";
-import { networkMapModel, networkMapRows } from "./networkMap";
+import { networkMapFacets, networkMapModel, networkMapRows } from "./networkMap";
 
 const model = networkMapModel();
 
@@ -140,5 +140,66 @@ describe("registration — every marker lands in the state it is filed under", (
     }
     const ftw = model.markers.find((k) => k.slug === "fort-wayne");
     expect(insideOutline(ftw!.x, ftw!.y), "fort-wayne drawn inside Ohio").toBe(false);
+  });
+});
+
+/**
+ * The filter axes behind the map's chips (#2038).
+ *
+ * The load-bearing property is that a chip's count is a promise about what will still be lit
+ * after you click it. Anything that breaks that — counting the whole registry rather than the
+ * placed markers, or offering an option nothing matches — turns the chips into a way to blank
+ * the map and call it a filter.
+ */
+describe("map filter facets (#2038)", () => {
+  const facets = networkMapFacets(model);
+
+  it("offers exactly the three axes the markers carry data attributes for", () => {
+    expect(facets.map((f) => f.key)).toEqual(["basin", "divide", "phase"]);
+    expect(facets.map((f) => f.attr)).toEqual(["data-basin", "data-divide", "data-phase"]);
+  });
+
+  it("counts placed markers, not the registry — a chip promises what stays lit", () => {
+    for (const f of facets) {
+      const total = f.options.reduce((n, o) => n + o.count, 0);
+      expect(total, `${f.key} counts must partition the placed markers`).toBe(model.markers.length);
+    }
+    // And that is genuinely different from the registry whenever anything is unplaced.
+    if (model.unplaced.length > 0) {
+      expect(model.markers.length).toBeLessThan(SITES.length);
+    }
+  });
+
+  it("never offers an option that would blank the map", () => {
+    for (const f of facets) {
+      expect(f.options.length).toBeGreaterThan(0);
+      for (const o of f.options) {
+        expect(o.count, `${f.key}/${o.value} offered at zero`).toBeGreaterThan(0);
+        expect(o.label).toBeTruthy();
+      }
+    }
+  });
+
+  it("keeps each vocabulary's own order rather than alphabetising a third one", () => {
+    const basins = facets[0].options.map((o) => o.value);
+    const inBasinsOrder = BASINS.map((b) => b.slug).filter((s) => basins.includes(s));
+    expect(basins).toEqual(inBasinsOrder);
+    expect(facets[1].options.map((o) => o.value)).toEqual(
+      DIVIDES.map((d) => d.key).filter((k) => facets[1].options.some((o) => o.value === k)),
+    );
+    const phases = facets[2].options.map((o) => o.value);
+    expect(phases).toEqual(["live", "building", "queued", "tracking"].filter((p) => phases.includes(p)));
+  });
+
+  it("matches every option against at least one marker's own attribute value", () => {
+    for (const o of facets[0].options) {
+      expect(model.markers.some((m) => m.basinMajor === o.value)).toBe(true);
+    }
+    for (const o of facets[1].options) {
+      expect(model.markers.some((m) => m.divide === o.value)).toBe(true);
+    }
+    for (const o of facets[2].options) {
+      expect(model.markers.some((m) => m.status === o.value)).toBe(true);
+    }
   });
 });

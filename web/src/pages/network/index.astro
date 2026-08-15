@@ -23,6 +23,8 @@
  * build, and in the link check. `redirects.test.ts` guards it.
  */
 import Base from "~/layouts/Base.astro";
+import NetworkMap from "~/components/NetworkMap.astro";
+import { networkMapModel } from "~/lib/networkMap";
 import { withBase } from "@watermark/core/site";
 import {
   buildNetworkIndex,
@@ -35,6 +37,9 @@ import { FACILITY_STATUS_META, facilityStatusOrNull, siteRollup } from "@waterma
 import { PHASE_PILL, TIER_PILL } from "@watermark/core/directory";
 
 const rows = buildNetworkIndex(siteRollup, facilityStatusOrNull);
+// The same component the homepage mounts (#2038) — one map of one network, not two that drift.
+// Full-size and with its filter chips, unlike the home's compact locator band.
+const mapModel = networkMapModel(820);
 const facets = networkFacets(rows);
 const counts = networkCounts(rows);
 const num = (n: number): string => n.toLocaleString("en-US");
@@ -127,6 +132,18 @@ const description =
           ))
         }
       </div>
+    </section>
+
+    <!-- the network, mapped (#2038). The index page listed all 38 and showed none of them; the
+         map and the table below are two views of one row set and belong on one page. -->
+    <section class="nx-map" aria-label="The network, mapped">
+      <div class="nx-sechead">
+        <span class="nx-kicker">Mapped</span>
+        <span class="nx-sechead-sub">
+          — where the {counts.total} are. Filter the map by basin, drainage, or build phase.
+        </span>
+      </div>
+      <NetworkMap model={mapModel} filters idPrefix="nxmap" label="Every Watermark site, mapped" />
     </section>
 
     <!-- the index proper -->
@@ -438,6 +455,11 @@ const description =
     height: 6px;
     flex: 0 0 6px;
     display: inline-block;
+  }
+
+  .nx-map {
+    padding: 1.9rem 0;
+    border-bottom: 1px solid var(--bosc-rule);
   }
 
   /* controls */

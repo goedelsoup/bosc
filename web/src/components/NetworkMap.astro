@@ -49,6 +49,7 @@
  */
 import type { NetworkMapModel } from "@watermark/charts/networkMap";
 import { withBase } from "@watermark/core/site";
+import { networkMapFacets } from "~/lib/networkMap";
 
 interface Props {
   model: NetworkMapModel;
@@ -56,9 +57,53 @@ interface Props {
   compact?: boolean;
   /** Heading text the SVG is labelled by. */
   label?: string;
+  /**
+   * Render the basin / drainage / phase filter chips (#2038).
+   *
+   * Off by default, and off on the homepage on purpose. `index.astro`'s frontmatter commits the
+   * map band there to being compact — it locates, it does not dominate, and it is explicitly not
+   * allowed to grow into a third pitch above the lens band. Three axes and eleven basin chips
+   * would be exactly that. The home map is still a selector in the sense that matters (click a
+   * marker, enter the site) and links to `/network`, which is where narrowing a list of sites
+   * already belongs and where the table beside it filters the same way.
+   */
+  filters?: boolean;
+  /** DOM id prefix — distinct per instance, so two maps on one page can't share radio groups. */
+  idPrefix?: string;
 }
 
-const { model, compact = false, label = "The Watermark network, mapped" } = Astro.props;
+const {
+  model,
+  compact = false,
+  label = "The Watermark network, mapped",
+  filters = false,
+  idPrefix = "nmap",
+} = Astro.props;
+
+const facets = filters ? networkMapFacets(model) : [];
+const chipId = (facet: string, value: string): string => `${idPrefix}-${facet}-${value}`;
+
+/**
+ * The dimming rules, generated from the data at build time.
+ *
+ * The same mechanism `/network`'s table already uses and documents at length: one visually-hidden
+ * radio per option, and every generated rule only ever DIMS. That is what lets three axes AND
+ * together without combinatorics — each contributes at most one rule, nothing ever restores a
+ * marker, so a marker stays lit only if it matched on every axis. Single-select per axis (radio,
+ * not checkbox) is what buys that; "OR within an axis" would need a rule per subset.
+ *
+ * Dim, not hide — the deliberate difference from the table. A filtered-out row is simply gone and
+ * reads correctly; a marker that vanished would make the network look smaller than it is, which is
+ * the same false claim the off-map list exists to prevent. The shape stays, the subset lights up.
+ */
+const filterCss = facets
+  .flatMap((f) =>
+    f.options.map(
+      (o) =>
+        `#${idPrefix}:has(#${chipId(f.key, o.value)}:checked) .nmap-marker:not([${f.attr}="${o.value}"]){opacity:.16}`,
+    ),
+  )
+  .join("\n");
 
 const { markers, unplaced } = model;
 const uid = "nmap";
@@ -89,7 +134,38 @@ const nameOf = (m: (typeof markers)[number]): string =>
 const openCount = markers.filter((m) => m.open).length;
 ---
 
-<figure class:list={["nmap", { "is-compact": compact }]}>
+<figure id={idPrefix} class:list={["nmap", { "is-compact": compact }]}>
+  {
+    facets.length > 0 && (
+      <Fragment>
+        <style is:inline set:html={filterCss} />
+        <form class="nmap-filters">
+          {facets.map((f) => (
+            <fieldset class="nmap-facet">
+              <legend class="nmap-facet-legend">{f.label}</legend>
+              <div class="nmap-facet-opts">
+                <input type="radio" name={`${idPrefix}-${f.key}`} id={chipId(f.key, "all")} class="nmap-radio" checked />
+                <label class="nmap-chip nmap-chip--all" for={chipId(f.key, "all")}>
+                  All <span class="nmap-chip-n">{model.markers.length}</span>
+                </label>
+                {f.options.map((o) => (
+                  <Fragment>
+                    <input type="radio" name={`${idPrefix}-${f.key}`} id={chipId(f.key, o.value)} class="nmap-radio" />
+                    <label class="nmap-chip" for={chipId(f.key, o.value)}>
+                      {o.label} <span class="nmap-chip-n">{o.count}</span>
+                    </label>
+                  </Fragment>
+                ))}
+              </div>
+            </fieldset>
+          ))}
+          {/* Native form reset — restores every default-checked radio at once, no script. */}
+          <button type="reset" class="nmap-reset">Clear</button>
+        </form>
+      </Fragment>
+    )
+  }
+
   <div class="nmap-canvas">
     <svg
       viewBox={model.viewBox}
@@ -123,6 +199,9 @@ const openCount = markers.filter((m) => m.open).length;
             href={withBase(m.href)}
             class:list={["nmap-marker", { "is-open": m.open }]}
             aria-label={nameOf(m)}
+            data-basin={m.basinMajor}
+            data-divide={m.divide}
+            data-phase={m.status}
           >
             <title>{nameOf(m)}</title>
             {/* The one forest signal: a site a reader can actually enter today. A ring, not a
@@ -218,7 +297,7 @@ const openCount = markers.filter((m) => m.open).length;
     margin: 0;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(11rem, 15rem);
-    grid-template-areas: "canvas off" "key off" "cap cap";
+    grid-template-areas: "filters filters" "canvas off" "key off" "cap cap";
     gap: 0.9rem 1.4rem;
     align-items: start;
   }
@@ -236,6 +315,114 @@ const openCount = markers.filter((m) => m.open).length;
   }
   .is-compact .nmap-canvas svg {
     max-height: 26rem;
+  }
+
+  /* --- filter chips (#2038) — the /network idiom, scaled to a map --------------------------- */
+  .nmap-filters {
+    grid-area: filters;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.7rem 1.4rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--bosc-rule);
+  }
+  .nmap-facet {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  .nmap-facet-legend {
+    font-family: var(--bosc-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--bosc-ink);
+    font-weight: 600;
+    padding: 0;
+    margin-bottom: 0.35rem;
+  }
+  .nmap-facet-opts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+  /* The radios are the whole mechanism — visually hidden, never removed from the a11y tree. */
+  .nmap-radio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+  .nmap-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    font-family: var(--bosc-mono);
+    font-size: 0.64rem;
+    padding: 2px 6px;
+    border: 1px solid var(--bosc-rule);
+    color: var(--bosc-muted);
+    cursor: pointer;
+    user-select: none;
+  }
+  .nmap-chip:hover {
+    border-color: var(--bosc-ink);
+    color: var(--bosc-ink);
+  }
+  .nmap-chip-n {
+    color: var(--bosc-faint);
+  }
+  .nmap-radio:checked + .nmap-chip {
+    border-color: var(--bosc-forest);
+    background: var(--bosc-forest);
+    color: var(--bosc-bg);
+  }
+  .nmap-radio:checked + .nmap-chip .nmap-chip-n {
+    color: var(--bosc-bg);
+    opacity: 0.75;
+  }
+  /* "All" is the resting state, not a filter — the forest signal is reserved for a selection that
+     actually narrows the map, so three green chips don't shout on a map nobody has filtered. */
+  .nmap-radio:checked + .nmap-chip--all {
+    border-color: var(--bosc-ink);
+    background: transparent;
+    color: var(--bosc-ink);
+    font-weight: 600;
+  }
+  .nmap-radio:checked + .nmap-chip--all .nmap-chip-n {
+    color: var(--bosc-faint);
+    opacity: 1;
+  }
+  .nmap-radio:focus-visible + .nmap-chip {
+    outline: 2px solid var(--bosc-forest);
+    outline-offset: 2px;
+  }
+  .nmap-reset {
+    font-family: var(--bosc-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border: 1px solid var(--bosc-ink);
+    background: transparent;
+    color: var(--bosc-ink);
+    cursor: pointer;
+  }
+  .nmap-reset:hover {
+    background: var(--bosc-ink);
+    color: var(--bosc-bg);
+  }
+  /* Dimmed markers stay in the DOM, keep their link, and animate down rather than blinking out.
+     A dimmed site is still reachable by keyboard and still counted by the caption. */
+  .nmap-marker {
+    transition: opacity 0.12s ease;
   }
 
   /* --- geography ------------------------------------------------------------------------- */
@@ -433,7 +620,7 @@ const openCount = markers.filter((m) => m.open).length;
   @media (max-width: 860px) {
     .nmap {
       grid-template-columns: minmax(0, 1fr);
-      grid-template-areas: "canvas" "key" "off" "cap";
+      grid-template-areas: "filters" "canvas" "key" "off" "cap";
     }
     .nmap-off {
       border-left: 0;
