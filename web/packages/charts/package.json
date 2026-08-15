@@ -5,7 +5,8 @@
   "type": "module",
   "description": "The hand-rolled, zero-framework SVG chart library (Epic #1549, Phase 3 #1553): pure geometry/scale builders (buildVBars, buildLine, buildDonut, buildWaterfall, …) consumed by the site's server-rendered chart components. Indigo encodes data; the evidence palette only encodes evidence. DOM-free and React-free — depends only on @watermark/core. The `.astro` chart components stay in the site (web/src/components/charts) because they render the shared EvidenceTag evidence-badge primitive, which is a site-wide component with 25 consumers (incl. React islands via its EvidenceKind type) — moving it would create a viz↔charts sibling cycle.",
   "exports": {
-    "./charts": "./src/charts.ts"
+    "./charts": "./src/charts.ts",
+    "./networkMap": "./src/networkMap.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json"
