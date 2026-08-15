@@ -146,3 +146,91 @@ describe("network locator map geometry (#2034)", () => {
     });
   });
 });
+
+describe("badge placement (#2044)", () => {
+  const open = (slug: string, lat: number, lon: number): MappableSite => ({
+    ...site(slug, { lat, lon }),
+    open: true,
+  });
+
+  // Real coordinates from the registry, at the width the collisions actually appeared: the
+  // homepage's 420-unit compact instance.
+  const SIDNEY = open("sidney", 40.284, -84.156);
+  const TROY = open("troy", 40.0921, -84.2024);
+  const BOWLING_GREEN = open("bgn", 41.402, -83.64);
+  const FINDLAY = open("fin", 41.0428, -83.6422);
+  const TOLEDO = { ...site("tol", { lat: 41.6529, lon: -83.5378 }), open: false };
+  const at = (m: ReturnType<typeof buildNetworkMap>, slug: string) => m.markers.find((k) => k.slug === slug);
+
+  it("keeps a lone badge above its marker", () => {
+    const m = buildNetworkMap([open("alone", 40.0, -83.0)], { width: 420 });
+    expect(m.markers[0].badgePlacement).toBe("above");
+  });
+
+  it("moves the shadowed label below — the Sidney / Troy-Piqua case", () => {
+    const m = buildNetworkMap([SIDNEY, TROY], { width: 420 });
+    expect(at(m, "sidney")!.y).toBeLessThan(at(m, "troy")!.y);
+    expect(at(m, "sidney")!.badgePlacement).toBe("above");
+    expect(at(m, "troy")!.badgePlacement).toBe("below");
+  });
+
+  /**
+   * The regression that killed the one-pass version. Toledo's square shadows Bowling Green, so
+   * Bowling Green flips down — straight onto Findlay's label, which a single flip pass never
+   * reconsiders. Greedy placement sees the placed label as an obstacle and resolves it.
+   */
+  it("never drops a flipped label onto another label", () => {
+    const m = buildNetworkMap([TOLEDO, BOWLING_GREEN, FINDLAY, SIDNEY, TROY], { width: 420 });
+    const placed = m.markers.filter((k) => k.open && k.badgePlacement !== "none");
+    const boxes = placed.map((k) => {
+      const baseline = k.badgePlacement === "below" ? k.y + 18 : k.y - 11;
+      const halfW = Math.max(12, (k.badge.length * 6.2) / 2);
+      return { slug: k.slug, x0: k.x - halfW, x1: k.x + halfW, y0: baseline - 10, y1: baseline + 2 };
+    });
+    const overlaps: string[] = [];
+    for (let i = 0; i < boxes.length; i++) {
+      for (let j = i + 1; j < boxes.length; j++) {
+        const a = boxes[i];
+        const b = boxes[j];
+        if (a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0) {
+          overlaps.push(`${a.slug}×${b.slug}`);
+        }
+      }
+    }
+    expect(overlaps).toEqual([]);
+  });
+
+  it("clears every marker square, not just the labelled ones", () => {
+    const m = buildNetworkMap([TOLEDO, BOWLING_GREEN, FINDLAY, SIDNEY, TROY], { width: 420 });
+    for (const k of m.markers.filter((x) => x.open && x.badgePlacement !== "none")) {
+      const baseline = k.badgePlacement === "below" ? k.y + 18 : k.y - 11;
+      const halfW = Math.max(12, (k.badge.length * 6.2) / 2);
+      for (const o of m.markers) {
+        if (o === k) continue;
+        const clear =
+          k.x - halfW >= o.x + 5.5 ||
+          k.x + halfW <= o.x - 5.5 ||
+          baseline - 10 >= o.y + 5.5 ||
+          baseline + 2 <= o.y - 5.5;
+        expect(clear, `${k.slug}'s label runs through ${o.slug}'s marker`).toBe(true);
+      }
+    }
+  });
+
+  it("labels nothing that is not open — the rest reveal on hover", () => {
+    const m = buildNetworkMap([TOLEDO, BOWLING_GREEN], { width: 420 });
+    // A non-open marker keeps the default and never participates in placement.
+    expect(at(m, "tol")!.badgePlacement).toBe("above");
+  });
+
+  it("withholds a label rather than drawing it through a neighbour", () => {
+    // Five open sites stacked on one meridian, closer together than a label is tall: some of them
+    // cannot be labelled at all, and `none` is the honest answer.
+    const stack = [40.5, 40.44, 40.38, 40.32, 40.26].map((lat, i) => open(`s${i}`, lat, -83.0));
+    const m = buildNetworkMap(stack, { width: 420 });
+    expect(m.markers.some((k) => k.badgePlacement === "none")).toBe(true);
+    // And every site is still on the map with its link intact.
+    expect(m.markers).toHaveLength(5);
+    expect(m.markers.every((k) => k.href)).toBe(true);
+  });
+});
