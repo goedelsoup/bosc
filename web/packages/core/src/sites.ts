@@ -639,6 +639,26 @@ export function mapView(slug: string): { lat: number; lon: number; zoom: number 
   return { lat: entry.map_lat, lon: entry.map_lon, zoom: entry.map_zoom as number };
 }
 
+/**
+ * A site's coordinate alone, for a map that supplies its own scale (#2034) — the network locator
+ * on `/` and `/network`, which draws all 38 sites in one frame and has exactly one zoom.
+ *
+ * The narrower peer of {@link mapView}, not a relaxed copy of it. `mapView` answers "what DeckGL
+ * viewport should this site's own map open at" and rightly returns `null` unless all three of
+ * lat/lon/zoom are set. This answers "where is this site", which a missing `map_zoom` has no
+ * bearing on — routing the network map through `mapView` would drop a site from the map over a
+ * per-site zoom it never reads.
+ *
+ * ⚠️ The coordinate is `map_lat`/`map_lon` from `data/sites.yaml`: a viewport centre, i.e. the
+ * **town**. It is not a facility, a parcel, or a plant, and for most registered sites the record
+ * locates no facility at all. A surface that plots it must label it as the place.
+ */
+export function sitePoint(slug: string): { lat: number; lon: number } | null {
+  const entry = sitesRegistry.sites.find((e) => e.slug === slug);
+  if (!entry || entry.map_lat == null || entry.map_lon == null) return null;
+  return { lat: entry.map_lat, lon: entry.map_lon };
+}
+
 export type GroupBy = "state" | "basin";
 
 export interface SiteGroup {
