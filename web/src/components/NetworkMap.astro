@@ -1,0 +1,448 @@
+---
+/**
+ * The network locator map (#2035, epic #2033) — every registered watershed point on one frame,
+ * each marker a link into that site.
+ *
+ * A thin SVG template over `@watermark/charts`'s `buildNetworkMap` (#2034), in the idiom of
+ * `components/charts/*.astro`: the geometry is unit-tested there, this file is markup.
+ *
+ * ## Zero JS, deliberately
+ *
+ * No island, no hydration, no basemap tiles. `@watermark/viz` quarantines deck.gl/MapLibre
+ * precisely so "the otherwise zero-framework site never loads it", and this component's first
+ * mount is `/` — a network-global page whose chrome floor #1884 fought down to 79 KB. A locator
+ * does not need pan/zoom, and buying it with several hundred KB of JS on the front door is the
+ * wrong trade.
+ *
+ * Every marker is an SVG `<a>`. That is crawlability, keyboard navigation, real focus rings, and
+ * correct middle-click behaviour for free, without a line of script.
+ *
+ * ## The encoding, and why it is not PHASE_PILL
+ *
+ * Fill is build phase on a **neutral ink ramp**; forest is spent once, on the ring that marks a
+ * site you can actually open.
+ *
+ * The obvious move was `PHASE_PILL` from `@watermark/core/directory`, for consistency with the
+ * home ledger's phase bar and the `/network` table. It doesn't work here for two reasons. Its
+ * `live` and `building` swatches are the **same hex** (`#1f6f4a`) — fine for a pill that also
+ * carries a text label, useless for a marker that is nothing but its colour. And that hex is
+ * forest, which on a map that also wants to say "this one is open to read" would spend the one
+ * signal twice, on two different meanings, in one glyph.
+ *
+ * So phase runs ink → muted → faint → hollow (the same depth order `PHASE_ORDER` uses), and the
+ * forest ring means exactly what `/network`'s `.nx-row.is-open` left rail means. No site is both
+ * `tracking` and open, so the hollow marker and the ring never collide. The exact phase is in
+ * every marker's accessible name and tooltip, so nothing is lost by the two-step fill.
+ *
+ * ## The marker is a place, not a plant
+ *
+ * `map_lat`/`map_lon` is a **default DeckGL viewport centre** — the town. A dot carrying a site
+ * codename over a county reads as "the data center is here", which for most of these sites is a
+ * siting claim the record does not make. The caption says what the coordinate is; the accessible
+ * name names the place, not a facility. This is load-bearing, not decoration.
+ *
+ * ## The off-map list is not optional
+ *
+ * `buildNetworkMap` returns the sites it could not place, named. This renders them. A map that
+ * silently showed 26 of 38 under the heading "the network" would claim a completeness it does not
+ * have — the same discipline as `/network`'s "a dash is unmeasured, 0 is a measured none".
+ */
+import type { NetworkMapModel } from "@watermark/charts/networkMap";
+import { withBase } from "@watermark/core/site";
+
+interface Props {
+  model: NetworkMapModel;
+  /** Tighter type and a terser caption, for the homepage band. */
+  compact?: boolean;
+  /** Heading text the SVG is labelled by. */
+  label?: string;
+}
+
+const { model, compact = false, label = "The Watermark network, mapped" } = Astro.props;
+
+const { markers, unplaced } = model;
+const uid = "nmap";
+
+// Build phase → marker fill. A neutral ramp in PHASE_ORDER's depth order; see the note above on
+// why this is not PHASE_PILL. `tracking` is hollow rather than a fourth grey: a registered
+// candidate with nothing built is better shown as an outline than as a fainter solid.
+const PHASE_FILL: Record<string, string> = {
+  live: "var(--bosc-ink)",
+  building: "var(--bosc-muted)",
+  queued: "var(--bosc-faint)",
+  tracking: "var(--bosc-bg)",
+};
+const PHASE_LABEL: Record<string, string> = {
+  live: "live",
+  building: "building",
+  queued: "queued",
+  tracking: "tracked",
+};
+
+const M = compact ? 4 : 4.5; // marker half-width
+const RING = M + 3;
+
+/** The accessible name: the place, its basin, its phase, and whether it opens. Never "facility". */
+const nameOf = (m: (typeof markers)[number]): string =>
+  `${m.place} — ${m.basin}, ${PHASE_LABEL[m.status] ?? m.status}${m.open ? ", open to read" : ""}`;
+
+const openCount = markers.filter((m) => m.open).length;
+---
+
+<figure class:list={["nmap", { "is-compact": compact }]}>
+  <div class="nmap-canvas">
+    <svg
+      viewBox={model.viewBox}
+      role="img"
+      aria-labelledby={`${uid}-title`}
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <title id={`${uid}-title`}>
+        {label} — {markers.length} of {markers.length + unplaced.length} sites placed, {openCount} open
+        to read.
+      </title>
+
+      {/* Geography. Decorative: every site it frames is reachable as a link below, and the
+          off-map list carries the rest, so a screen reader loses nothing by skipping it. */}
+      <g aria-hidden="true">
+        <path class="nmap-state" d={model.outline.d}></path>
+        <path class="nmap-edge" d={model.frame.d}></path>
+        {
+          model.stateLabels.map((s) => (
+            <text class="nmap-state-label" x={s.x} y={s.y}>
+              {s.label}
+            </text>
+          ))
+        }
+        <path class="nmap-divide" d={model.divide.d}></path>
+      </g>
+
+      {
+        markers.map((m) => (
+          <a
+            href={withBase(m.href)}
+            class:list={["nmap-marker", { "is-open": m.open }]}
+            aria-label={nameOf(m)}
+          >
+            <title>{nameOf(m)}</title>
+            {/* The one forest signal: a site a reader can actually enter today. A ring, not a
+                fill — a shape a reader can still tell apart when colour is unavailable. */}
+            {m.open && (
+              <rect class="nmap-ring" x={m.x - RING} y={m.y - RING} width={RING * 2} height={RING * 2} />
+            )}
+            <rect
+              class="nmap-dot"
+              x={m.x - M}
+              y={m.y - M}
+              width={M * 2}
+              height={M * 2}
+              style={`fill:${PHASE_FILL[m.status] ?? "var(--bosc-faint)"}`}
+            />
+            {/* Hit target: 26 markers at 9px are a hard click and a harder tap. Transparent, and
+                after the visible shapes so it takes the pointer. */}
+            <rect class="nmap-hit" x={m.x - 13} y={m.y - 13} width="26" height="26" />
+            <text class="nmap-badge" x={m.x} y={m.y - RING - 3} text-anchor="middle">
+              {m.badge}
+            </text>
+          </a>
+        ))
+      }
+    </svg>
+  </div>
+
+  <figcaption class="nmap-cap">
+    <p class="nmap-cap-line">
+      <b>{markers.length} of {markers.length + unplaced.length} sites placed</b>, {openCount} open to
+      read. Marker positions are each site's real coordinates; the state outline and the continental
+      divide are simplified, not to scale.
+    </p>
+    {/* The constraint that keeps the map from over-claiming. Not a footnote — the whole difference
+        between a locator and a siting claim. */}
+    <p class="nmap-cap-line nmap-cap-line--warn">
+      A marker is the <b>watershed point</b> — the place the record is filed against. It is not a
+      facility, a parcel, or a plant, and most of these sites have no located facility on the record
+      at all.
+    </p>
+  </figcaption>
+
+  {
+    unplaced.length > 0 && (
+      <aside class="nmap-off" aria-label="Sites not on the map">
+        <div class="nmap-off-head">
+          Not on the map <span class="nmap-off-n">{unplaced.length}</span>
+        </div>
+        <p class="nmap-off-note">
+          Registered, with no coordinate on file. Left off rather than guessed onto it.
+        </p>
+        <ul class="nmap-off-list">
+          {unplaced.map((u) => (
+            <li>
+              <a href={withBase(u.href)}>{u.place}</a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )
+  }
+
+  <div class="nmap-key" aria-hidden="true">
+    {
+      (["live", "building", "queued", "tracking"] as const).map((k) => (
+        <span class="nmap-key-item">
+          <span class="nmap-key-sw" style={`background:${PHASE_FILL[k]}`} data-hollow={k === "tracking"} />
+          {PHASE_LABEL[k]}
+        </span>
+      ))
+    }
+    <span class="nmap-key-item">
+      <span class="nmap-key-sw nmap-key-sw--ring" />
+      open to read
+    </span>
+    {/* The drainage divide, explained here rather than labelled on the map. Two on-map labels
+        were tried and cut: every anchor that cleared both the line and the markers was overrun
+        the moment #2037 backfilled twelve more sites, and one ended up struck through Akron's
+        badge. A label needing a re-tune whenever a site is registered is a maintenance trap on a
+        component whose whole point is that new sites place themselves — and a sentence says it
+        better than two floating words anyway. */}
+    <span class="nmap-key-item nmap-key-item--wide">
+      <svg class="nmap-key-line" viewBox="0 0 22 4" aria-hidden="true">
+        <line x1="0" y1="2" x2="22" y2="2" />
+      </svg>
+      continental divide — north of it drains to Lake Erie, south to the Ohio River
+    </span>
+  </div>
+</figure>
+
+<style>
+  .nmap {
+    margin: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(11rem, 15rem);
+    grid-template-areas: "canvas off" "key off" "cap cap";
+    gap: 0.9rem 1.4rem;
+    align-items: start;
+  }
+  .nmap-canvas {
+    grid-area: canvas;
+    min-width: 0;
+  }
+  .nmap-canvas svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* Square corners, hairlines, no elevation — the map is paper, not a widget. */
+    border: 1px solid var(--bosc-rule);
+    background: var(--bosc-bg);
+  }
+  .is-compact .nmap-canvas svg {
+    max-height: 26rem;
+  }
+
+  /* --- geography ------------------------------------------------------------------------- */
+  .nmap-state {
+    fill: var(--bone-band);
+    stroke: var(--bosc-ink);
+    stroke-width: 1.2;
+  }
+  .nmap-edge {
+    fill: none;
+    stroke: var(--bosc-rule);
+    stroke-width: 1.2;
+  }
+  /* Dashed, and neither forest nor an evidence colour: the divide is geography, not a finding. */
+  .nmap-divide {
+    fill: none;
+    stroke: var(--bosc-muted);
+    stroke-width: 1.2;
+    stroke-dasharray: 5 4;
+  }
+  /* Ground, not content — set well back so it orients without competing with a marker. */
+  .nmap-state-label {
+    font-family: var(--bosc-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    fill: var(--bosc-faint);
+    opacity: 0.55;
+  }
+
+  /* --- markers -------------------------------------------------------------------------- */
+  .nmap-marker {
+    cursor: pointer;
+  }
+  .nmap-dot {
+    stroke: var(--bosc-ink);
+    stroke-width: 1;
+  }
+  .nmap-hit {
+    fill: transparent;
+  }
+  /* The one forest signal. */
+  .nmap-ring {
+    fill: none;
+    stroke: var(--bosc-forest);
+    stroke-width: 1.5;
+  }
+  .nmap-badge {
+    font-family: var(--bosc-mono);
+    font-size: 8.5px;
+    font-weight: 600;
+    fill: var(--bosc-ink);
+    /* Labelling 26 markers at once is unreadable, so the badge is revealed on hover/focus —
+       except for the handful a reader can actually open, which stay named. Pointer-events off so
+       a neighbouring label never steals a marker's own click. */
+    opacity: 0;
+    pointer-events: none;
+    paint-order: stroke;
+    stroke: var(--bosc-bg);
+    stroke-width: 2.5px;
+    stroke-linejoin: round;
+  }
+  .nmap-marker.is-open .nmap-badge {
+    opacity: 1;
+  }
+  .nmap-marker:hover .nmap-badge,
+  .nmap-marker:focus-visible .nmap-badge {
+    opacity: 1;
+  }
+  .nmap-marker:hover .nmap-dot,
+  .nmap-marker:focus-visible .nmap-dot {
+    stroke-width: 2;
+  }
+  /* The focus ring has to land on the SHAPE — the anchor's own box is the whole marker group and
+     a default outline would draw a rectangle around empty space. */
+  .nmap-marker:focus-visible {
+    outline: none;
+  }
+  .nmap-marker:focus-visible .nmap-dot {
+    stroke: var(--bosc-forest);
+    stroke-width: 3;
+  }
+
+  /* --- caption --------------------------------------------------------------------------- */
+  .nmap-cap {
+    grid-area: cap;
+    margin: 0;
+    display: grid;
+    gap: 0.35rem;
+    max-width: 52rem;
+  }
+  .nmap-cap-line {
+    margin: 0;
+    font-size: 0.76rem;
+    line-height: 1.55;
+    color: var(--bosc-faint);
+  }
+  .nmap-cap-line b {
+    color: var(--bosc-muted);
+  }
+  .nmap-cap-line--warn b {
+    color: var(--bosc-ink);
+  }
+
+  /* --- the off-map list ------------------------------------------------------------------ */
+  .nmap-off {
+    grid-area: off;
+    border-left: 1px solid var(--bosc-rule);
+    padding-left: 0.9rem;
+  }
+  .nmap-off-head {
+    font-family: var(--bosc-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--bosc-ink);
+    font-weight: 600;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+  .nmap-off-n {
+    color: var(--bosc-faint);
+  }
+  .nmap-off-note {
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: var(--bosc-faint);
+    margin: 0.3rem 0 0.5rem;
+  }
+  .nmap-off-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.7rem;
+  }
+  .nmap-off-list a {
+    font-size: 0.78rem;
+    color: var(--bosc-muted);
+    text-decoration: none;
+  }
+  .nmap-off-list a:hover,
+  .nmap-off-list a:focus-visible {
+    color: var(--bosc-ink);
+    text-decoration: underline;
+  }
+
+  /* --- key ------------------------------------------------------------------------------- */
+  .nmap-key {
+    grid-area: key;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.9rem;
+  }
+  .nmap-key-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    color: var(--bosc-faint);
+  }
+  .nmap-key-sw {
+    width: 9px;
+    height: 9px;
+    flex: 0 0 9px;
+    border: 1px solid var(--bosc-ink);
+  }
+  .nmap-key-sw[data-hollow="true"] {
+    background: var(--bosc-bg);
+  }
+  .nmap-key-line {
+    width: 22px;
+    height: 4px;
+    flex: 0 0 22px;
+  }
+  .nmap-key-line line {
+    stroke: var(--bosc-muted);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 4;
+  }
+  /* The divide's line is prose, not a swatch — let it take the row it needs. */
+  .nmap-key-item--wide {
+    flex-basis: 100%;
+  }
+  .nmap-key-sw--ring {
+    background: transparent;
+    border: 1.5px solid var(--bosc-forest);
+    width: 11px;
+    height: 11px;
+    flex-basis: 11px;
+  }
+
+  @media (max-width: 860px) {
+    .nmap {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "canvas" "key" "off" "cap";
+    }
+    .nmap-off {
+      border-left: 0;
+      padding-left: 0;
+      border-top: 1px solid var(--bosc-rule);
+      padding-top: 0.8rem;
+    }
+    .is-compact .nmap-canvas svg {
+      max-height: none;
+    }
+  }
+</style>

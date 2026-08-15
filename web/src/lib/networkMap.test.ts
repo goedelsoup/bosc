@@ -15,6 +15,18 @@ import { networkMapModel, networkMapRows } from "./networkMap";
 
 const model = networkMapModel();
 
+/** Ray casting in the map's own projected coordinates — the space the reader actually sees. */
+function insideOutline(x: number, y: number): boolean {
+  const pts = model.outline.points;
+  let inside = false;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    const a = pts[i];
+    const b = pts[j];
+    if (a.y > y !== b.y > y && x < ((b.x - a.x) * (y - a.y)) / (b.y - a.y) + a.x) inside = !inside;
+  }
+  return inside;
+}
+
 describe("network locator map, against the registry (#2034)", () => {
   it("places or names every registered site — nothing is dropped", () => {
     expect(model.markers.length + model.unplaced.length).toBe(SITES.length);
@@ -89,5 +101,44 @@ describe("network locator map, against the registry (#2034)", () => {
     expect([...used].sort()).toEqual(
       [...used].filter((p) => ["live", "building", "queued", "tracking"].includes(p)).sort(),
     );
+  });
+});
+
+/**
+ * The registration guarantee, stated as an assertion rather than a claim in a doc comment.
+ *
+ * The whole reason `networkMap.ts` projects its border instead of shipping a drawn SVG path is
+ * that a hand-drawn outline and a projected dot can disagree — and the failure mode is a site
+ * rendering visually outside its own state. This checks the thing that would actually be wrong,
+ * in the map's own projected coordinates: every Ohio site inside the drawn Ohio, and the one
+ * Indiana site outside it.
+ *
+ * It is also the guard on the simplification budget. The border is ~40 vertices for a boundary
+ * with thousands, and it is free to be coarse — right up until coarseness moves a marker across
+ * it. Cut a corner near Portsmouth, Cincinnati, or the lake shore and this fails by name.
+ */
+describe("registration — every marker lands in the state it is filed under", () => {
+  it("puts each site inside or outside the drawn Ohio according to its registry state", () => {
+    const misplaced: string[] = [];
+    for (const m of model.markers) {
+      const site = SITES.find((s) => s.slug === m.slug);
+      const inside = insideOutline(m.x, m.y);
+      if ((site?.state === "OH") !== inside) {
+        misplaced.push(`${m.slug} (filed ${site?.state}, drawn ${inside ? "inside" : "outside"} OH)`);
+      }
+    }
+    expect(misplaced).toEqual([]);
+  });
+
+  it("covers the sites nearest the border, where a coarse outline would fail first", () => {
+    // River and lake towns sit ON the boundary in real geography, so they are the cases a
+    // simplified outline is most likely to push across. Named so the coverage is deliberate.
+    for (const slug of ["portsmouth", "west-union", "toledo", "sandusky", "cincinnati"]) {
+      const m = model.markers.find((k) => k.slug === slug);
+      if (!m) continue; // not every one is registered; those that are must be inside
+      expect(insideOutline(m.x, m.y), `${slug} drawn outside Ohio`).toBe(true);
+    }
+    const ftw = model.markers.find((k) => k.slug === "fort-wayne");
+    expect(insideOutline(ftw!.x, ftw!.y), "fort-wayne drawn inside Ohio").toBe(false);
   });
 });
