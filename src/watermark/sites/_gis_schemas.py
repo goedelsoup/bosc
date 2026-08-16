@@ -1613,8 +1613,13 @@ ADAMS_PARCEL_SCHEMA = GisParcelSchema(
             "recorded instrument, and is a separate, uncommitted pull.",
             "Two acreage columns disagree by design and BOTH matter: `Acreage` is the auditor's "
             "DEEDED acreage as a string with a survey suffix ('1016.2174 ac S'), and `Cal_Ac` is "
-            "the GIS PLANAR calculation ('1009.50056252729'). The typed `acres` field carries the "
-            "planar figure; the deeded string is preserved only in the cached response.",
+            "the GIS PLANAR calculation ('1009.50056252729'). NEITHER REACHES A COMMITTED FEATURE: "
+            "the geojson writer emits a fixed property set (parcel_id, owner, situs_address, "
+            "owner_mailing_address, transfer_date) and acreage is not in it, so do not look for an "
+            "`acres` property here. The planar figure is what the typed `Parcel.acres` carries on "
+            "the `parcels --parcel` lookup path and in the cached response; the deeded string "
+            "survives only in the cached response. Both are quoted, with their source, in this "
+            "site's reference README and in the catalog entry's notes.",
             "`CAMA_LINK` is present in the schema but blank on every row sampled — it is not a "
             "usable join key.",
             "Right-county guard: ADAMS County OHIO. At least nine other states have an Adams "

@@ -65,6 +65,13 @@ def parcels(
 
     if parcel:
         ids = [p.strip() for p in parcel.split(",") if p.strip()]
+        if not ids:
+            # A value that is all separators/whitespace ("," / " ") is truthy but parses to
+            # nothing. Rejected HERE, before either branch: the geojson path would otherwise
+            # build `<id_field> IN ()` — malformed SQL — and the lookup path would fall through
+            # its empty loop and exit 0 having silently done nothing.
+            console.print(f"[yellow]No parcel ids in[/] {parcel!r} — nothing to look up.")
+            raise typer.Exit(1)
         if geojson:
             # The by-NUMBER geojson path. It exists because a county layer may carry no owner
             # column at all (Adams County OH serves tax-map geometry with no CAMA join), and

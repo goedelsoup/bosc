@@ -39,6 +39,11 @@ among them:
 **One tract, not an assemblage.** There is no multi-seller land roll-up to trace here, unlike
 Sidney, Wilmington, Bowling Green or Van Wert. The ~1,016 acres was already a single parcel.
 
+⚠️ **Neither acreage is a property of the committed features.** The geojson writer emits a fixed
+property set — `parcel_id`, `owner`, `situs_address`, `owner_mailing_address`, `transfer_date` —
+so there is no `acres` key to read. The figures above come from the county columns `Acreage` and
+`Cal_Ac` and are quoted here (and in the catalog entry's notes) rather than carried in the file.
+
 ## ⚠️ Read this before quoting a null
 
 Adams County serves a **tax-map** layer: geometry, parcel number, two acreage columns, township,

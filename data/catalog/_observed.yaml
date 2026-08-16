@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-16T21:28:39.500376+00:00'
+reconciled_at: '2026-08-16T23:18:40.074632+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -1322,8 +1322,8 @@ entries:
     site_scope: site:ottawa
   parcel-assemblage:
     exists: true
-    sha256: 7fe7931bcd890c1cc7c50538652d842d69806d1e2ed075506b92e38cf316e9c8
-    size_bytes: 530750
+    sha256: 782aae8b21921fce4403ab5df9971adbc53b14e64c4e0c9658f7161bdfd4dce2
+    size_bytes: 531148
     lfs_materialized: true
     file_count: 11
     missing: []
