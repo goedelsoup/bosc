@@ -284,13 +284,24 @@
     "model": {
       "id": "governance",
       "facilityKey": "buck-canyon",
-      "status": "partial",
-      "statusReasons": [
-        "the record carries no legislative instrument and no minutes — the decision path has not been produced for this site"
+      "status": "data",
+      "statusReasons": [],
+      "stats": [
+        {
+          "label": "Legislative instruments",
+          "value": "3",
+          "unit": null,
+          "evidence": "verified",
+          "basis": "grounded",
+          "sub": "resolutions, ordinances, zoning applications as docketed, and filed court instruments on this site's record",
+          "source": null,
+          "warn": null
+        }
       ],
-      "stats": [],
       "gaps": [],
-      "caveats": []
+      "caveats": [
+        "An instrument on the record says what was moved, not what was decided — some are pending or proposed, and the deliberation that produced any of them lives in minutes and audio that are separate records."
+      ]
     }
   },
   {

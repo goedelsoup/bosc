@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-14T17:33:18.557202+00:00'
+reconciled_at: '2026-08-16T10:12:26.853575+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -10,6 +10,16 @@ entries:
     asof: null
     stale: false
     site_scope: slug-scoped
+  acrwd:
+    exists: true
+    sha256: 60f21df4bac19def9375c748c4bc689749d8b46ada4264e7057d4009b647b691
+    size_bytes: 37205
+    lfs_materialized: true
+    file_count: 5
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:west-union
   aedg:
     exists: true
     sha256: 717c0dc59cbe87a140f18a790597c2b1623ae9dba8cbc675936b0623ea6958dc

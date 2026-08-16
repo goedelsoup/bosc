@@ -1,0 +1,79 @@
+[
+  {
+    "id": "ACRWD-SERVICE-AGREEMENT",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "No agreement exists in the record between the water district and the campus it is building for",
+    "detail": "The Adams County Regional Water District designed, bid and permitted a water main to serve the Buck Canyon site, and its own minutes commit it to 100,000 gallons per day of potable and \"supplemental cooling water\" on an interim basis. The corpus holds the District's engineering (the Ginger Ridge plan set), its confidentiality obligation (the executed 2024-01-10 NDA) and thirty months of board minutes — and NOT the contract. There is no service agreement, no cost-participation or reimbursement agreement, no capacity reservation and no tap agreement anywhere in the record, and the District's own 2024 and 2025 capital budgets carry no Ginger Ridge line item. That is consistent with a customer-funded project outside the appropriation, but the agreement is what would establish who pays, what capacity is reserved, and on what terms a public utility committed it. R.C. 149.43 request to ACRWD is the route.",
+    "source": "data/extracted/west-union/acrwd/ginger-ridge-service-commitment.md · data/documents/west-union/acrwd/minutes/ (2025-05-13, 2025-10-09, 2025-12-11)",
+    "issue": null,
+    "note": "OWED RECORD — the single largest gap in this site's assembly record."
+  },
+  {
+    "id": "ACRWD-COURT-ENTRY-930355",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "The court entry that created the water district is cited in its by-laws but not held",
+    "detail": "The District's 1994 by-laws recite that its Board of Trustees \"shall be composed as per the Entry of the Court for the District, as filed with the Clerk of the Court of Common Pleas of Adams County, Ohio, on January 10, 1994 under Case No. 930355\". That entry is the District's creating instrument under R.C. Ch. 6119 and it fixes how the nine trustees are composed — the question the 1997-98 self-appointment resolutions raise and cannot answer. ⚠️ ROUTE IS NOT SCRIPTABLE. The Adams County Clerk of Courts record search (adamscountycourts.com/recordSearch.php) is gated by Google reCAPTCHA, which is an access control and was not circumvented; a 1993-filed case is also likely to predate the online index. Pull in person or by mail from the Clerk of Courts, 110 West Main Street, West Union, OH 45693, (937) 544-2344.",
+    "source": "data/documents/west-union/acrwd/governance/1994 Bylaws.pdf (Bylaw 2) · data/extracted/west-union/acrwd/1993-05-13-chapter-6119-conversion.resolution.yaml",
+    "issue": null,
+    "note": "OWED RECORD — cited by a committed instrument, absent from the corpus."
+  },
+  {
+    "id": "ACRWD-OEPA-PLAN-APPROVAL",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Ohio EPA's plan approval for the Ginger Ridge water main was days away and is not held",
+    "detail": "At the meeting of 2026-07-09 the District's engineer reported that Ohio EPA \"review was complete and they should be getting the approval letter sent by the following week\" — i.e. on or about 2026-07-13. The approval letter and its conditions are not in the corpus, and its issuance is unconfirmed. The approved capacity it states is the one document that would put a number on what this main is permitted to deliver, against the 100,000 gpd the minutes commit. ⚠️ NO PUBLIC SEARCH SURFACED. Ohio EPA's DDAGW engineering/plan-approval pages 404 and the ePlan submission platform is authenticated. Route is a records request to DDAGW (DDAGW.Engineering@epa.ohio.gov) or to the District. The system key for any such request is now established — see ACRWD-PWSID below.",
+    "source": "data/extracted/west-union/acrwd/2026-07-09-board-resolutions.resolution.yaml (disclosure GINGER-RIDGE-OEPA-REVIEW-COMPLETE)",
+    "issue": null,
+    "note": "OWED RECORD — time-sensitive; the letter should exist as of 2026-07."
+  },
+  {
+    "id": "ACRWD-PWSID",
+    "kind": "claim",
+    "status": "review",
+    "tag": "open",
+    "title": "The District's public water system ID is OH0100012, and the system is groundwater-sourced",
+    "detail": "Established 2026-08-16 from Ohio EPA's own 2026 Adams County monitoring schedule — \"OH0100012 ADAMS COUNTY REGIONAL WD PWS, System Type Community, Source Ground Water\", sampling facility 152614, entry point EP001, distribution DS1/DS000, and a Ground Water Rule \"Substantial System\" designation. This is [verified] and it is the key any Ohio EPA drinking-water records request needs. ⚠️ Do NOT confuse it with OH0100112, which is Manchester Village's WTP — a different Adams County system, and Manchester is the mailing town of the Buck Canyon site. The groundwater source corroborates the minutes' repeated \"new wells\" language for the larger supply project, and makes aquifer capacity, not river withdrawal, the question for this site.",
+    "source": "Ohio EPA 2026 PWS Monitoring Schedules, Adams County (dam.assets.ohio.gov · epa.ohio.gov/Portals/28/documents/schedules/Adams.pdf), pp. 3-4",
+    "issue": null,
+    "note": "Not yet committed as a reference dataset — recorded here with its citation rather than hand-authoring a data/reference artifact no watermark subcommand regenerates."
+  },
+  {
+    "id": "ACRWD-MINUTES-GAP",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Roughly half the board minutes covering the project period were not produced",
+    "detail": "The District meets monthly (2nd Thursday, per its Code of By-Laws Article I). The corpus holds 15 of the roughly 31 meetings between 2024-01 and 2026-07. Absent are all of February-September and November-December 2024, and January-March, June and August-September 2025. The two 2024 minutes that WERE produced are precisely the two carrying the project's origin (the NDA authorization and the first \"Project Galaxy\" naming), which is consistent with a responsive production rather than a full series pull — but the request that produced this set is not in the corpus either, so the scope cannot be checked against what was asked for.",
+    "source": "data/documents/west-union/acrwd/minutes/filename-map.yaml (meta.gap)",
+    "issue": null,
+    "note": "OWED RECORD — request the full minute book 2023-2026, plus the original request and response."
+  },
+  {
+    "id": "ACRWD-TRUSTEE-APPOINTMENTS-1999-2026",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "How the sitting board was appointed is undocumented between 1999 and 2026",
+    "detail": "The committed governance file stops in 1998. It shows a board that fills its own vacancies through a nominating committee, with the trustees being re-appointed abstaining on their own re-appointments (Res. 97-119, 98-90). Four members of the board that authorized the Buck Canyon NDA had held their seats since at least 1997-98 — Tony Staggs, Gerald Gray, Chris Baxla and Daniel Fristoe — and no appointment record for the intervening twenty-five years is in the corpus. Whether the Common Pleas court retained any role in composition after the 1994 entry is also unresolved and turns on ACRWD-COURT-ENTRY-930355.",
+    "source": "data/extracted/west-union/acrwd/1997-1998-trustee-self-appointment.resolution.yaml",
+    "issue": null,
+    "note": "OWED RECORD — R.C. 149.43 request for all trustee appointment resolutions 1999-2026."
+  },
+  {
+    "id": "USACE-LRH-2025-00457-ATTACHMENTS",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Every attachment to the federal §404 file is named in the emails and none was produced",
+    "detail": "The 14 USACE threads are covering messages only. Named and absent are the AJD/PJD letter and its JD Review Area enclosure, the Jurisdictional WOTUS delineation report, the PCN application, BOTH NWP 39 verification letters (2026-02-17 and the 2026-02-18 revision), the Buck Canyon Cemetery Avoidance Plan, the Goodwin Phase I/II archaeology reports, the signed USFWS SLOPES form, the Ohio SHPO review letters (2025ADA66354_1112049 and 2025ADA6635_1112658and1112718), and the USFWS and ODNR tree-clearing concurrence letters. The verification letters matter most — they carry the special conditions the project is actually bound by, including the Condition 7 that was revised within 22 hours of the applicant objecting to it. ⚠️ The production route for the emails themselves is also unestablished — no cover letter, request number or FOIA determination accompanied them, so they must not be cited as \"FOIA-released\" until the request record is in hand.",
+    "source": "data/documents/usace/west-union/filename-map.yaml (meta.gap, meta.route)",
+    "issue": null,
+    "note": "OWED RECORD — FOIA to USACE Huntington District, Regulatory Division."
+  }
+]

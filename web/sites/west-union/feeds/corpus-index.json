@@ -6,7 +6,7 @@
     "label": "West Union · Adams Co",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 10,
     "lines": 13,
     "updated": null
   },
@@ -866,6 +866,83 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 10,
+    "updated": null
+  },
+  {
+    "id": "question/lead-acrwd-court-entry-930355",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The court entry that created the water district is cited in its by-laws but not held",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
+  },
+  {
+    "id": "question/lead-acrwd-minutes-gap",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Roughly half the board minutes covering the project period were not produced",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
+    "updated": null
+  },
+  {
+    "id": "question/lead-acrwd-oepa-plan-approval",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Ohio EPA's plan approval for the Ginger Ridge water main was days away and is not held",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
+    "updated": null
+  },
+  {
+    "id": "question/lead-acrwd-pwsid",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The District's public water system ID is OH0100012, and the system is groundwater-sourced",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
+    "updated": null
+  },
+  {
+    "id": "question/lead-acrwd-service-agreement",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "No agreement exists in the record between the water district and the campus it is building for",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
+    "updated": null
+  },
+  {
+    "id": "question/lead-acrwd-trustee-appointments-1999-2026",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "How the sitting board was appointed is undocumented between 1999 and 2026",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 20,
+    "updated": null
+  },
+  {
+    "id": "question/lead-usace-lrh-2025-00457-attachments",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "Every attachment to the federal §404 file is named in the emails and none was produced",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 21,
     "updated": null
   }
 ]

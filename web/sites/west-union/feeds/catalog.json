@@ -83,6 +83,76 @@
     }
   },
   {
+    "id": "acrwd",
+    "title": "West Union / Adams County OH — ACRWD Governance & Ginger Ridge Service Record",
+    "scope": "extracted",
+    "collection": "west-union",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Adams County Regional Water District records production received 2026-08-15 (34 PDFs — governance, board minutes 2024-01 to 2026-07, budgets/financials, the executed nondisclosure agreement and the Ginger Ridge Road water-main plan set), shelved at data/documents/west-union/acrwd/; hashes and content-verified dates in the per-genre filename-map.yaml. Ohio EPA 2026 PWS monitoring schedule (Adams County) for the PWS ID.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:west-union",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "acrwd",
+      "water-district",
+      "adams-county",
+      "west-union",
+      "buck-canyon",
+      "ginger-ridge",
+      "project-galaxy",
+      "nondisclosure-agreement",
+      "chapter-6119",
+      "governance",
+      "board-minutes",
+      "cooling-water",
+      "public-records"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/west-union/acrwd/1993-05-13-chapter-6119-conversion.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/west-union/acrwd/1997-1998-trustee-self-appointment.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/west-union/acrwd/2024-01-10-nondisclosure-agreement.parties.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/west-union/acrwd/2026-07-09-board-resolutions.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/west-union/acrwd/ginger-ridge-service-commitment.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "citation": {
+      "source": "Adams County Regional Water District records production received 2026-08-15 (34 PDFs — governance, board minutes 2024-01 to 2026-07, budgets/financials, the executed nondisclosure agreement and the Ginger Ridge Road water-main plan set), shelved at data/documents/west-union/acrwd/; hashes and content-verified dates in the per-genre filename-map.yaml. Ohio EPA 2026 PWS monitoring schedule (Adams County) for the PWS ID.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "data-centers",
     "title": "Per-Site Data-Center Activity Register",
     "scope": "extracted",

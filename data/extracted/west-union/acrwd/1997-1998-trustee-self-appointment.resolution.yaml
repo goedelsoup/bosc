@@ -1,0 +1,148 @@
+# Adams County Regional Water District — the self-appointment power, first exercises (1997-1998).
+# Epic #1983 (west-union readiness), ingested with PR #2047.
+#
+# WHAT THE 1993 CONVERSION VOTE ACTUALLY BOUGHT, shown rather than argued: four resolutions in
+# which the board of a public water utility fills its own seats, and in three of them the trustees
+# being appointed sit in the room. Tags per CLAUDE.md.
+
+as_of: '2026-08-16'
+site: west-union
+strengthens: [record]
+epic: 'watermark-directory/the-watermark-directory#1983'
+
+source:
+  instrument: board-resolutions
+  file: data/documents/west-union/acrwd/governance/1993-1998 Elections-Appointments.pdf
+  sha256: 400aca51301b5325e1301674fca3f625619fae755f8b3cbb719783891aff6ad1
+  content_verified: rendered-image
+  content_verified_note: >-
+    ⚠️ No text layer. All 13 pages rendered at 200 DPI and read as images.
+pages_read: [6, 7, 8, 9, 10, 11, 12]
+
+resolution:
+  instrument: >-
+    Adams County Regional Water District — Resolutions 97-19, 97-20, 97-119, 98-49 and 98-90:
+    trustee appointment, re-appointment, and the definition of the term-expiration date
+  body: Board of Trustees, Adams County Regional Water District
+  body_kind: regional_water_district_board
+  subject_matter: board_composition
+  meeting_date: '1997-02-13'
+  meeting_date_note: 'Earliest of the set; the run spans 1997-02-13 → 1998-12-10 (see `acts` below).'
+  outcome: approved
+
+  mechanism:
+    tag: '[verified]'
+    statement_verbatim: >-
+      "In accordance with the By-Laws of the Board of Trustees of the Adams County Regional Water
+      District, the President of said Board did appoint a nominating committee to nominate a
+      successor to fill the unexpired term of Mr. Tadlock, and ... The Nominating Committee has
+      recommended the appointment of Chris Baxla for the said term"
+    note: >-
+      The by-laws' vacancy mechanism (three-trustee nominating committee → two-thirds of the
+      trustees) operating in fact. No court, no county appointing authority and no electorate
+      appears anywhere in the chain.
+
+  acts:
+    - number: '97-19'
+      date: '1997-02-13'
+      subject: >-
+        Appointment of Chris Baxla to the unexpired term of Jimmy Tadlock, ending 1997-12-31
+      moved_by: Sam Cooper
+      tally_verbatim: 'Yes 7  No 0'
+      disclosure:
+        id: TADLOCK-TOWNSHIP-CONFLICT
+        tag: '[verified]'
+        statement_verbatim: >-
+          "Jimmy Tadlock has submitted his resignation from the Board of Trustees of the Adams
+          County Regional Water District due to A CONFLICT WITH HIS POSITION AS TOWNSHIP TRUSTEE"
+        note: >-
+          The one seat in this record vacated over an office-holding conflict, and it is the
+          township-trustee seat. Recorded without inference about the nature of the conflict —
+          the resolution does not state it.
+
+    - number: '97-20'
+      date: '1997-02-13'
+      subject: >-
+        Defining the trustee term-expiration date as December 31, to align with the District's
+        fiscal year
+      moved_by: Wendell Barnes
+      seconded_by: Chris Baxla
+      tally_verbatim: 'Yes 7  No 0'
+
+    - number: '97-119'
+      date: '1997-12-11'
+      subject: >-
+        Re-appointment of Chris Baxla, Gary McDowell and Sam Cooper for three-year terms ending
+        2000-12-31
+      moved_by: Seaman
+      seconded_by: Gray
+      tally_verbatim: 'Yes 5   No 1 (Cooper)   Abstain 2 (Baxla, McDowell)'
+      conflict_handling:
+        tag: '[verified]'
+        note: >-
+          ⚠️ ALL THREE BENEFICIARIES VOTED ON THEIR OWN RE-APPOINTMENT — two by abstaining, and
+          Cooper by voting NO on his own. The vote carried 5-1 on a nine-member board. Recorded as
+          the record shows it; the abstentions are the board handling the conflict, not concealing
+          it, and this corpus draws no adverse inference from a recusal.
+
+    - number: '98-49'
+      date: '1998-07-09'
+      subject: >-
+        Appointment of Daniel Fristoe to the unexpired term of Steve Ryan, ending 1999-12-31
+      moved_by: Gray
+      seconded_by: Cooper
+      tally_verbatim: 'Yes 7  No 0'
+      note: >-
+        Ryan resigned "due to personal reasons". Fristoe was still a trustee at the 2024-01-11
+        meeting — a 26-year tenure beginning with an appointment, never an election.
+
+    - number: '98-90'
+      date: '1998-12-10'
+      subject: >-
+        Re-appointment of Russell Gaffin, Gerald Gray and Richard Seaman Jr. for three-year terms
+        ending 2001-12-31
+      moved_by: McDowell
+      seconded_by: Barnes
+      tally_verbatim: 'Yes 5   No 0   Abstain 3 (Gray, Gaffin, Seaman)'
+      conflict_handling:
+        tag: '[verified]'
+        note: >-
+          The same pattern one year on: every beneficiary abstains, five trustees appoint three.
+
+  board_roster_1997_02_13:
+    tag: '[verified]'
+    note: 'Transcribed from the roster table dated 1997-02-13 filed with Res. 97-19/97-20.'
+    members:
+      - {name: Stephen Ryan, title: President, term_expires: '1999-12-31'}
+      - {name: Gary McDowell, title: Vice President, term_expires: '1997-12-31'}
+      - {name: Russell Gaffin, title: Secretary/Treasurer, term_expires: '1998-12-31'}
+      - {name: Wendell Barnes, title: Trustee, term_expires: '1999-12-31'}
+      - {name: Howard A. (Tony) Staggs, title: Trustee, term_expires: '1999-12-31'}
+      - {name: Gerald Gray, title: Trustee, term_expires: '1998-12-31'}
+      - {name: Sam Cooper, title: Trustee, term_expires: '1997-12-31'}
+      - {name: Chris Baxla, title: Trustee, term_expires: '1997-12-31'}
+      - {name: Richard Seaman, Jr., title: Trustee, term_expires: '1998-12-31'}
+    committees: [Equipment, Building & Grounds, Policy Committee, Personnel Committee]
+    continuity_note: >-
+      ⚠️ THREE OF THESE NINE WERE STILL SEATED IN THE 2024-2026 MINUTES — Howard A. "Tony" Staggs
+      (by then President), Gerald Gray and Chris Baxla. With Daniel Fristoe (appointed 1998,
+      trustee at the 2024-01-11 meeting), FOUR members of the board that authorized the Buck Canyon
+      NDA had held their seats for a quarter century or more, none of them ever elected to it.
+      [verified] by name against the committed 2024-2026 minutes. ⚠️ Tenure is a fact here, not a
+      finding — long service on a rural utility board is unremarkable, and this corpus asserts no
+      impropriety from it.
+
+open_questions:
+  - id: SELF-APPOINTMENT-COURT-ROLE
+    tag: '[open]'
+    question: >-
+      The 1994 by-laws say the board is "composed as per the Entry of the Court" (Case No. 930355)
+      while these resolutions show the board seating itself under the by-laws' nominating-committee
+      clause. What role, if any, does the Common Pleas court retain in composition? Unanswerable
+      without the court entry — pull it from the Adams County Clerk of Courts.
+  - id: APPOINTMENT-RECORD-1999-2023
+    tag: '[open]'
+    question: >-
+      This file stops in 1998. The appointment resolutions for the twenty-five years between are
+      not in the corpus, and they are what would show how the 2024 board was composed. R.C. 149.43
+      request to ACRWD for all trustee appointment/re-appointment resolutions 1999-2026.

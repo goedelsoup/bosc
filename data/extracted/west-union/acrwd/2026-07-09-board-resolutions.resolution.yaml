@@ -1,0 +1,161 @@
+# Adams County Regional Water District — Board of Trustees, regular meeting 2026-07-09:
+# Resolutions 26-41 through 26-47, as executed.
+# Epic #1983 (west-union readiness), ingested with PR #2047.
+#
+# The most recent meeting in the corpus, and the only one supplied as the signed original. It is
+# also where the Ginger Ridge water main reaches the end of Ohio EPA review. Tags per CLAUDE.md.
+
+as_of: '2026-08-16'
+site: west-union
+strengthens: [record]
+epic: 'watermark-directory/the-watermark-directory#1983'
+
+source:
+  instrument: board-minutes-with-executed-resolutions
+  file: data/documents/west-union/acrwd/minutes/Minutes-July 26.pdf
+  sha256: 4abf086b0061c2f105d677a9a03e20a22752a0c320c4c37a5559f871c4cf8892
+  content_verified: ocr
+  content_verified_note: >-
+    Scanned original (ScanSnap iX1600) with an OCR layer. The narrative and resolution pages OCR
+    cleanly; ⚠️ the June 2026 check register on page 3 does NOT ("Chris Baxla" → "Chrls Baxla",
+    "-24.65" → "-24,65"), so no figure from that page is carried here.
+pages_read: [0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
+resolution:
+  instrument: >-
+    Adams County Regional Water District — Resolutions 26-41 through 26-47, adopted 2026-07-09
+  body: Board of Trustees, Adams County Regional Water District
+  body_kind: regional_water_district_board
+  subject_matter: district_operations
+  meeting_date: '2026-07-09'
+  meeting_kind: regular
+  outcome: approved
+  presiding: Tony Staggs, President
+  present:
+    trustees: [Tony Staggs, Brent Crawford, Lynn Weeks, Luke Rhonemus, David Tatman, Gerald Gray, Chris Baxla, Timothy Grooms]
+    absent: [Aaron Tolle]
+    staff: [Judy Rogers, Melissa Semple, Johnny Hayslip, Nathan Crothers, Chris Hanson, Lee Conkel]
+    counsel: David Grimes
+    visitors_named: [Roxie McNeilan, Kevin McNeilan, Kathryn McNeilan, Randy Thomas, Danielle Kinhalt, Theresa Roush]
+    visitors_note: '"and a few others that did not sign the attendance register"'
+
+  acts:
+    - number: '26-41'
+      subject: >-
+        Authorizing a 12" stub with valve and cap off the new road bore serving the Winchester
+        Industrial Park water storage tank, from ~$8,700 of inventory materials, "for future
+        expansion"
+      moved_by: Rhonemus
+      seconded_by: Crawford
+      tally_verbatim: 'Yes 7  No 0'
+    - number: '26-42'
+      subject: 'Purchase of a laptop computer for the District accountant/business manager, not to exceed $2,000.00'
+      moved_by: Baxla
+      seconded_by: Grooms
+      tally_verbatim: 'Yes 7  No 0'
+    - number: '26-43'
+      subject: 'Adopting a $5,000 capital-asset capitalization threshold for the District financial statements'
+      moved_by: Crawford
+      seconded_by: Weeks
+      tally_verbatim: 'Yes 7  No 0'
+    - number: '26-44'
+      subject: 'Approving the fiscal-year 2027 budget as presented by the Budget Committee'
+      moved_by: Crawford
+      seconded_by: Baxla
+      tally_verbatim: 'Yes 7  No 0'
+    - number: '26-45'
+      subject: >-
+        Authorizing a general engineering services contract with CHA Consulting, Inc. for
+        "reimbursable engineering services not currently under contract"
+      moved_by: Baxla
+      seconded_by: Rhonemus
+      tally_verbatim: 'Yes 7  No 0'
+      note: >-
+        CHA is the Ginger Ridge engineer of record. This resolution is a general open-ended
+        services authorization, not a Ginger Ridge authorization; do not cite it as one.
+    - number: '26-46'
+      subject: >-
+        Awarding Winchester Industrial Park Contract 1 (booster tank materials) to EFI Solution for
+        $845,778.00 and Contract 2 (water line and booster construction) to B.P. Pipeline, LLC for
+        $2,519,816.00, bids opened 2026-06-18
+      moved_by: Weeks
+      seconded_by: Tatman
+      tally_verbatim: 'Yes 7  No 0'
+      note: >-
+        ⚠️ WINCHESTER INDUSTRIAL PARK IS A DIFFERENT PROJECT FROM GINGER RIDGE. Different engineer
+        (Verdantas / Keith Doll, vs CHA / Lee Conkel), different funding (ARC / EDA), different
+        contracts. These dollar figures are NOT campus figures.
+    - number: '26-47'
+      subject: 'Purchase of a hydraulic saw from Bain Enterprise, not to exceed $6,670.95'
+      moved_by: Rhonemus
+      seconded_by: Grooms
+      tally_verbatim: 'Yes 7  No 0'
+
+  disclosures:
+    - id: GINGER-RIDGE-OEPA-REVIEW-COMPLETE
+      tag: '[verified]'
+      statement_verbatim: >-
+        "Ginger Ridge Water Line - He received a response from the Ohio EPA that the review was
+        complete and they should be getting the approval letter sent by the following week."
+      speaker: Lee Conkel, CHA Consulting (engineer's report, item 4)
+      note: >-
+        Dates Ohio EPA's completion of plan review to on-or-about 2026-07-09 and puts the approval
+        letter in the week of 2026-07-13. ⚠️ THE APPROVAL LETTER ITSELF IS NOT IN THIS CORPUS and
+        its issuance is [open] — this is the engineer reporting an expectation, not the instrument.
+
+    - id: FY2027-CERTIFICATE
+      tag: '[verified]'
+      statement_verbatim: >-
+        "Estimated Proprietary Funds: Unencumbered Cash on Hand $9,200,000; Revenues Received
+        $5,700,000; Total $14,900,000. Estimated Expenditures: Operating Expenses $5,100,000;
+        Debt Service $300,000; Capital Improvements $1,500,000; Total $6,900,000. Total Estimated
+        Cash on Hand: 12/31/2027 $8,000,000."
+      note: >-
+        The Official Certificate of Estimated Resources and Expenditures for FY2027, signed
+        2026-07-09. Scale context for any claim about what this District can finance.
+
+    - id: EXECUTIVE-SESSIONS-2026-07-09
+      tag: '[verified]'
+      statement_verbatim: >-
+        Two executive sessions: "according to ORC 121.22 G (3) for possible litigation concerning a
+        former employee issue", and "according to ORC 121.22 G (8) for confidential matters."
+      note: >-
+        Both roll calls recorded 7-0. ⚠️ The minutes record only the statutory purpose, never
+        content. R.C. 121.22(G)(8) is the trade-secret/confidential-information exception — the
+        same statutory family as the NDA's subject matter — but NOTHING in the minutes connects
+        this session to the Buck Canyon project, and the corpus does not connect them. It is
+        recorded because the (G)(8) invocation is itself a fact about how this board meets.
+
+    - id: TERMINATION-PROTEST
+      tag: '[verified]'
+      statement_verbatim: >-
+        "Roxie McNeilan addressed the Board protesting the termination of her husband, Kevin
+        McNeilan. Attorney Grimes informed her that Ohio is an 'at will' state for employment.
+        President Staggs stated the vote was seven to zero to terminate."
+      note: >-
+        Recorded as the meeting's own opening business. A personnel matter unconnected to the
+        campus, carried because it is on the same page as the record above it and omitting it
+        would misrepresent the meeting. No inference is drawn.
+
+    - id: GM-TITLE-CONFIRMED
+      tag: '[verified]'
+      statement_verbatim: >-
+        "The Board stated that the 'Interim' could be removed from Johnny Hayslip's title to now
+        become General Manager. His salary will be discussed at a later date."
+      note: >-
+        ⚠️ The District has a new General Manager. Rickey W. Adamson, who signed the 2024-01-10 NDA,
+        no longer holds the office; the corpus does not record when or why he left it.
+
+open_questions:
+  - id: OEPA-PLAN-APPROVAL-LETTER
+    tag: '[open]'
+    question: >-
+      Ohio EPA's detail-plan approval for the Ginger Ridge Road water main — expected week of
+      2026-07-13 per this meeting. Pull from Ohio EPA DDAGW (approval number, conditions, approved
+      capacity) or by R.C. 149.43 request to ACRWD.
+  - id: ADAMSON-DEPARTURE
+    tag: '[open]'
+    question: >-
+      When and why did Rickey W. Adamson cease to be General Manager? He signed the NDA and led the
+      District through the whole Project Galaxy period; the corpus's minutes gap (Feb-Sep 2025,
+      most of 2024) hides the transition.
