@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from watermark.facility.screening import ceiling_screen, floor_area_screen, investment_screen
 from watermark.sites._gis_schemas import (
+    ADAMS_PARCEL_SCHEMA,
     ALLEN_IN_PARCEL_SCHEMA,
     CHAMPAIGN_PARCEL_SCHEMA,
     CLINTON_PARCEL_SCHEMA,
@@ -4000,12 +4001,18 @@ _WEST_UNION = SiteProfile(
     # GIS — schema-driven (#237): flood = the shared national NFHL; parcels/zoning pending the raw
     # ArcGIS REST endpoint behind the Adams County OH GIS hub (acgis-adamso.hub.arcgis.com, an ArcGIS
     # Online hosted item — no on-prem MapServer directory surfaced yet).
-    parcels_url="TODO",  # [open] pending the Adams County OH parcel FeatureServer/MapServer REST endpoint
-    zoning_url="TODO",  # [open] pending an Adams County OH / Village of West Union zoning REST endpoint
+    # [verified] Adams County OH tax-map parcel layer, found 2026-08-16 (#2049) via the org behind
+    # the county's own GIS hub. ⚠️ Geometry only — NO owner/CAMA join exists in it; see
+    # ADAMS_PARCEL_SCHEMA's caveats before reading a null owner as "unowned".
+    parcels_url=(
+        "https://services6.arcgis.com/eFMIGXUWac5mgGdc/arcgis/rest/services/"
+        "Parcel_Layer/FeatureServer/4"
+    ),
+    zoning_url="TODO",  # [open] and likely to STAY open — the county is essentially unzoned (#1983)
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
-    gis_parcel=None,  # [open] pending Adams County OH parcel-layer discovery
+    gis_parcel=ADAMS_PARCEL_SCHEMA,
     gis_zoning=None,  # [open] pending Village of West Union / Adams County zoning-layer discovery
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "west-union-gis"}),
     hydro_utm_epsg=32617,  # [verified] UTM 17N (West Union ~83.54 degW; zone 17 spans 84-78 degW)

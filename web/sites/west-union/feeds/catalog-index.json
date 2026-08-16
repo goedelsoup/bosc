@@ -1,6 +1,6 @@
 {
   "site": "west-union",
-  "catalog_version": "2437f8cccc2418536db51376ebe8c1a98f352a77e361e75a8872847c22179047",
+  "catalog_version": "a7077756b683831d958330e27b22f9c0ed968beba9015b733992c6e2e61f2233",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -1074,6 +1074,14 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "lead:west-union:ACRWD-CAMPUS-PARCEL-OWNERSHIP",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "ACRWD-CAMPUS-PARCEL-OWNERSHIP",
+      "title": "The campus parcel is identified, and who owns it is not",
+      "feed": "leads"
     },
     {
       "handle": "lead:west-union:ACRWD-COURT-ENTRY-930355",

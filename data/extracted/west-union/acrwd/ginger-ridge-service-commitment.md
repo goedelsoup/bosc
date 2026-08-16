@@ -88,6 +88,44 @@ G-003) — the same legal entity the U.S. Army Corps addressed its jurisdictiona
 (`data/documents/usace/west-union/Email Chain 1.pdf` · p.0 and p.3). The drawing joins the pipe to
 the federal file; the minutes never do.
 
+⚠️ **That parcel is not the campus.** An earlier reading of this file called `1830000070002` "the
+campus's first parcel number"; the county parcel layer puts it at **2.125 deeded acres** — a small
+Buck Canyon Properties holding on the water-main route, about 1 km north of the campus boundary.
+Corrected here rather than silently, because the mistake would overstate what the drawing
+establishes: it names the entity, not the site.
+
+## The campus parcel, and why the federal acreages are the county's
+
+The campus is **Adams County parcel `1830000079000`**, Sprigg Township. It was identified by
+point-in-polygon against the coordinate the Corps itself published — 38.646748 / -83.659828
+(`data/documents/usace/west-union/Email Chain 11.pdf` · p.0) — which falls inside exactly one
+parcel. Geometry committed at
+[`data/reference/west-union/parcel-assemblage.geojson`](../../../reference/west-union/parcel-assemblage.geojson).
+
+The county carries two acreage columns for it, and **both of the Corps' figures are among them**:
+
+| County column | Value | The Corps' matching figure |
+|---|---|---|
+| `Acreage` (auditor DEEDED) | **1016.2174 ac** | "encompasses approximately **1,016 acres**" |
+| `Cal_Ac` (GIS PLANAR) | **1009.50 ac** | "limits of disturbance … approximately **1,009 acres**" |
+
+`[verified]` for the deeded ↔ 1,016 correspondence: the numbers agree to four decimal places
+against a figure the Corps rounded. The LOD ↔ planar correspondence is `[inference]` — it is
+consistent with the applicant's consultant having measured the LOD off the same parcel geometry,
+but no document says so, and 1,009 could be an independently drawn boundary that happens to land
+within half an acre.
+
+**What this settles:** the campus is a SINGLE existing parcel, not an assembled one. There is no
+land-assembly story here of the kind Sidney, Wilmington or Bowling Green have — no multi-seller
+roll-up to trace, because the ~1,016 acres was already one tract (the former DP&L landfill north
+of the retired J.M. Stuart Station). Whoever conveyed it conveyed it once.
+
+⚠️ **The county layer carries NO owner.** It is a tax-map service with no CAMA join, so the
+committed features' `owner`, `situs_address` and `transfer_date` are **null because the county
+serves none of them** — not because the parcel is unowned or never sold. Ownership and the
+conveyance that put Buck Canyon (or anyone) on this tract are `[open]`, and are a separate pull
+from the Adams County Auditor or the Recorder.
+
 ## Carter Hollow, twice
 
 The 2025-05-13 minutes put the campus transmission main's terminus at Carter Hollow

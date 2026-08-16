@@ -2,15 +2,15 @@
   "site": "west-union",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-16T10:10:39+00:00",
-  "feed_count": 31,
-  "row_total": 435,
+  "generated_at": "2026-08-16T21:28:34+00:00",
+  "feed_count": 32,
+  "row_total": 441,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
-      "places": "absent",
+      "places": "live",
       "record": "live",
       "inquiry": "live"
     }
@@ -117,7 +117,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 7
+      "count": 8
     },
     {
       "name": "rsei",
@@ -216,6 +216,14 @@
       "count": 57
     },
     {
+      "name": "geo/campus",
+      "path": "feeds/geo/campus.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 2
+    },
+    {
       "name": "facts",
       "path": "feeds/facts.json",
       "media_type": "application/json",
@@ -229,7 +237,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 7
+      "count": 8
     },
     {
       "name": "impact-study",
@@ -253,7 +261,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 86
+      "count": 87
     },
     {
       "name": "corpus-nodes",
@@ -261,7 +269,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 86
+      "count": 87
     },
     {
       "name": "ask-embeddings",

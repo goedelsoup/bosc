@@ -141,7 +141,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "7114e28f2fce70fa1a10ddfa2310e57b256f9ad98791c97efa6cd6c08312f8fe",
+      "size_bytes": 41484,
+      "lfs_materialized": true,
+      "file_count": 5,
+      "stale": false,
+      "asof": null
+    },
     "citation": {
       "source": "Adams County Regional Water District records production received 2026-08-15 (34 PDFs — governance, board minutes 2024-01 to 2026-07, budgets/financials, the executed nondisclosure agreement and the Ginger Ridge Road water-main plan set), shelved at data/documents/west-union/acrwd/; hashes and content-verified dates in the per-genre filename-map.yaml. Ohio EPA 2026 PWS monitoring schedule (Adams County) for the PWS ID.",
       "source_kind": "reference",
@@ -2595,7 +2603,7 @@
     "collection": "reference",
     "status": "reviewed",
     "producer_kind": "connector",
-    "command": "parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson",
+    "command": "parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson (or, for a layer with no owner column at all, parcels --parcel <id,id,...> --geojson ...)",
     "connector_ref": "watermark.hydrology.connectors.allen_gis",
     "source": "Per-site county parcel GIS via the gis_parcel field-map, pulled as f=geojson reprojected to WGS84 (Fort Wayne = Allen County, IN iMap, parcel layer 10)",
     "external_url": "https://gis1.acimap.us/imapweb/rest/services/QueryLayers/QueryLayers/MapServer/10",
@@ -2633,7 +2641,7 @@
       "page": null,
       "pages": null,
       "confidence": "medium",
-      "note": "watermark parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson",
+      "note": "watermark parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson (or, for a layer with no owner column at all, parcels --parcel <id,id,...> --geojson ...)",
       "verified": true
     }
   },

@@ -17,7 +17,11 @@ from watermark.cli._base import (
 
 @app.command(name="parcels")
 def parcels(
-    parcel: str | None = typer.Option(None, "--parcel", help="Look up one parcel by number."),
+    parcel: str | None = typer.Option(
+        None,
+        "--parcel",
+        help="Look up parcels by number (comma-separate for several).",
+    ),
     owner: str | None = typer.Option(None, "--owner", help="Find parcels by owner-name substring."),
     cited: bool = typer.Option(
         False, "--cited", help="Pull every parcel id cited in the corpus (deeds) -> reference YAML."
@@ -30,7 +34,8 @@ def parcels(
     geojson: str | None = typer.Option(
         None,
         "--geojson",
-        help="With --owner, write the matching parcels (with WGS84 geometry) to this GeoJSON path.",
+        help="With --owner or --parcel, write the matching parcels (with WGS84 geometry) "
+        "to this GeoJSON path.",
     ),
     offline: bool = typer.Option(
         False, "--offline", help="Use cached GIS responses only; never touch the network."
@@ -59,12 +64,34 @@ def parcels(
     ref_dir = settings.reference_dir / schema.reference_dir
 
     if parcel:
-        p = allen_gis.fetch_parcel(parcel, settings=settings)
-        if p is None:
-            norm = allen_gis.normalize_parcel_id(parcel, rule=schema.id_normalize)
-            console.print(f"[yellow]No parcel[/] {parcel} ({norm}).")
-            raise typer.Exit(1)
-        console.print(p.model_dump())
+        ids = [p.strip() for p in parcel.split(",") if p.strip()]
+        if geojson:
+            # The by-NUMBER geojson path. It exists because a county layer may carry no owner
+            # column at all (Adams County OH serves tax-map geometry with no CAMA join), and
+            # `--owner --geojson` refuses cleanly on such a layer — leaving no way to commit an
+            # assemblage the corpus has already identified by parcel id.
+            norms = [allen_gis.normalize_parcel_id(i, rule=schema.id_normalize) for i in ids]
+            quoted = ",".join("'" + n.replace("'", "''") + "'" for n in norms)
+            fc = allen_gis.query_parcels_geojson(
+                f"{schema.id_field} IN ({quoted})", settings=settings
+            )
+            got = {f.get("properties", {}).get("parcel_id") for f in fc.get("features", [])}
+            missing = [n for n in norms if n not in got]
+            if missing:
+                # Refuse a partial write: a silently short assemblage is the failure mode that
+                # would publish an under-stated campus footprint.
+                console.print(f"[red]No parcel[/] for {', '.join(missing)} — nothing written.")
+                raise typer.Exit(1)
+            path = allen_gis.write_parcels_geojson(fc, Path(geojson), settings=settings)
+            console.print(f"[green]Wrote[/] {len(got)} parcels (with geometry) -> {path}")
+            return
+        for one in ids:
+            p = allen_gis.fetch_parcel(one, settings=settings)
+            if p is None:
+                norm = allen_gis.normalize_parcel_id(one, rule=schema.id_normalize)
+                console.print(f"[yellow]No parcel[/] {one} ({norm}).")
+                raise typer.Exit(1)
+            console.print(p.model_dump())
         return
 
     if owner:
