@@ -2,9 +2,9 @@
   "site": "west-union",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-14T17:41:28+00:00",
+  "generated_at": "2026-08-15T23:46:42+00:00",
   "feed_count": 29,
-  "row_total": 400,
+  "row_total": 402,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -101,7 +101,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 3
     },
     {
       "name": "exhibits",
