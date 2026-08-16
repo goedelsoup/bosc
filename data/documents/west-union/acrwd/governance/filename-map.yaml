@@ -1,0 +1,159 @@
+meta:
+  subject: >
+    Canonical filename map for west-union/acrwd/governance/ — the constitutive record of the
+    body that supplies water to the Buck Canyon campus, from the 1968 incorporation of its
+    private predecessor (Adams County Water Co., Inc.) through the 1994 court order creating
+    the Adams County Regional Water District and the by-laws in force today. This is the
+    answer to "what kind of entity is on the other side of the NDA": an ORC Ch. 6119 regional
+    water district whose trustees are COURT-APPOINTED, not elected — a governance shape with
+    no ballot-box check, unlike the councils at Sidney or Bowling Green.
+  note: >-
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their
+    as-received names EVEN WHERE THE NAME IS WRONG, and two of them are. `1969 Bylaws.pdf`
+    and `1969 Rules  Regs.pdf` are not by-laws or rules — both are MINUTES of the predecessor
+    company. The as-received name is preserved; the `canonical` field carries what the
+    document actually is, established from its own first page, and `filename_misdescribes`
+    flags the discrepancy rather than fixing it in place.
+  retrieved: "2026-08-15"
+  source: >-
+    Adams County Regional Water District, 9203 SR 136 / P.O. Box 427, West Union, OH 45693.
+    Office copies scanned 2026-07-27 → 2026-07-31 on the District's ScanSnap iX1600. No
+    text layer on the historical items (see `content_verified: rendered-image` below).
+  method: >-
+    ⚠️ The historical scans carry NO text layer — `pypdf.extract_text()` returns "" for all of
+    them. Dates and identifications below come from RENDERING every page at 150 DPI and
+    reading the images, never from a text regex (which would have returned a false clean) and
+    never from the filename. See the network's standing note on sampling vs sweeping.
+
+documents:
+  - filename: Articles of Incorporation of Adams County Water Co. Inc.pdf
+    canonical: adams-county-water-co-articles-of-incorporation-1968-03-08.pdf
+    type: articles-of-incorporation
+    date: "1968-03-08"
+    content_verified: rendered-image   # p0: "On the 8th day of March 1968 … Adams County Water Company, Inc."
+    pages: 4
+    sha256: "8e925802ef83c466e4021c5b19498c3a1b5d398c5d3d995c6810809c6e2d4c4c"
+    bytes: 1075704
+    carries:
+      - "PROCEEDINGS OF THE INCORPORATORS, 1968-03-08 — subscribers Charles Mathias, Mike McCarty and Wendell Laurie, forming 'Adams County Water Co., Inc.' as a CORPORATION NOT FOR PROFIT under the General Corporation Act of Ohio"
+      - "SECOND: principal office at CHERRY FORK, Adams County — not West Union; the District's present SR 136 address is a later move"
+      - "THIRD (purpose): 'to own … pipelines and mains, for the transportation, delivery, and sale of water; … to buy and sell water and water rights from and to individuals, firms, corporations, counties, or municipalities'"
+
+  - filename: 1969 Bylaws.pdf
+    canonical: adams-county-water-co-minutes-1969-11-13-and-following.pdf
+    type: board-minutes
+    date: "1969-11-13"
+    filename_misdescribes: >-
+      Named "1969 Bylaws" but contains NO by-laws. It is a run of minutes of The Adams County
+      Water Co., Inc. beginning with the regular meeting of 1969-11-13 at the Court House,
+      West Union. Recorded, not renamed.
+    content_verified: rendered-image   # p0: "The Adams County Water Co., Inc. / Minutes / November 13, 1969"
+    pages: 24
+    sha256: "781e7ca74831443bd90034d3dc927e9f2fa01b27a6d3d35220596822dd6829d6"
+    bytes: 1132655
+    carries:
+      - "⚠️ THE FOUNDING PRECEDENT, and it rhymes: the 1969-11-13 meeting resolves to serve COPELAND REFRIGERATION CORPORATION — of SIDNEY, OHIO — with '1- A 10 inch Water line connecting the plant fire loop to the Adams County Water System', un-metered fire-protection water, and fire flow per the Factory Insurance Association. Roll call unanimous."
+      - "The system's first large industrial commitment was to an out-of-county manufacturer, made before the system was built — the same shape as the Ginger Ridge commitment 56 years later. Held as context, NOT as an argument: no instrument connects the two."
+      - "Roll: Edward Fite, Rollie Jayne, E. Wendell Laurie, Charles Mathais, Marion McCarty, Wesley Satterfield, Roy A. Shaffer, Ora Walker, Sherman Young, Elmer Spencer"
+      - "Others present include Stanley J. Irwin and Col. Joe Richmond of Adams County Development Co., and Donald Sommers, FHA Adams County Supervisor"
+
+  - filename: 1969 Rules  Regs.pdf
+    canonical: adams-county-water-co-minutes-1969-10-28-special-meeting.pdf
+    type: board-minutes
+    date: "1969-10-28"
+    filename_misdescribes: >-
+      Named "1969 Rules  Regs" (with the District's doubled space) but contains no rules or
+      regulations. It is minutes of a SPECIAL meeting held 1969-10-28 at the West Union High
+      School Gymnasium. Recorded, not renamed.
+    content_verified: rendered-image   # p0: "The Adams County Water Co., Inc. / Minutes / October 28, 1969"
+    pages: 12
+    sha256: "aec888458a38203466cf880c53db382985344981ffe310a701a4bb74161bd18f"
+    bytes: 710112
+    carries:
+      - "Sherman Young appointed to fill the unexpired term of the deceased member Omer C. Lippert; Helen Frank Roush employed as acting Secretary"
+      - "FHA Form 442-12 financial statement and FHA Form 400-1 Equal Opportunity Agreement executed — the federal-loan scaffolding of the original system"
+      - "John Pritchard, Economist, Sieco, Inc., Columbus, Indiana, attending"
+
+  - filename: 1993-1998 Elections-Appointments.pdf
+    canonical: adams-county-water-co-annual-meeting-elections-1993-05-13-through-1998.pdf
+    type: annual-meeting-minutes-and-election-records
+    date: "1993-05-13"
+    date_note: >-
+      Date is the FIRST document in the run (annual meeting 1993-05-13); the file is a
+      compilation spanning 1993–1998 per its as-received name, and the later documents were
+      not individually dated in this pass.
+    content_verified: rendered-image   # p0: "MINUTES / ANNUAL MEETING / May 13, 1993"
+    pages: 13
+    sha256: "400aca51301b5325e1301674fca3f625619fae755f8b3cbb719783891aff6ad1"
+    bytes: 857344
+    carries:
+      - "The predecessor company's MEMBER-ELECTED trustees — the governance that the 1994 court order replaced with court appointment. Annual meeting 1993-05-13, President James Lloyd presiding, election of three trustees to three-year terms by member petition and ballot."
+      - "Letterhead: 'Adams County Water Co., Inc., P.O. Box 105 Cherry Fork, Ohio 45618 · 1-513-544-2396 · 9203 SR 136 West Union, Ohio 45693' — dates the SR 136 address to at least 1993 and preserves the pre-split 513 area code"
+    pii: >-
+      ⚠️ CONTAINS PRIVATE RESIDENTIAL ADDRESSES. Page 0 alone carries a candidate slate listing
+      six individuals with full home addresses (e.g. "Wendell Barnes / 7114 State Route 125 /
+      West Union, OH 45693"). The remaining 12 pages were rendered but not swept
+      address-by-address, so the count is a FLOOR, not a total. This file is INGESTED but NOT
+      CLEARED FOR PUBLICATION — it must not be added to data/site/published-documents.yaml
+      without a named review decision. Candidacy for a member-company board is a public act;
+      a 1993 home address of a private individual is not obviously still publishable in 2026.
+      That is the user's call, not an ingest-time default.
+
+  - filename: 1994 Bylaws.pdf
+    canonical: acrwd-board-of-trustees-bylaws-1994-exhibit-a.pdf
+    type: bylaws
+    date: "1994-01-10"
+    date_note: >-
+      The document is undated on its face. "1994-01-10" is the date of the Court Entry it
+      recites and is bounded by it, not printed as an execution date — the by-laws must
+      post-date the entry they cite. Carried as the document's effective anchor, not as a
+      signing date.
+    content_verified: rendered-image   # p0: "BY-LAWS OF THE BOARD OF TRUSTEES OF THE ADAMS COUNTY REGIONAL WATER DISTRICT"
+    pages: 4
+    sha256: "37d80732ecfd3b12a32fd445e53bf6350ab87187b85bfdf180c866c6d9117c55"
+    bytes: 3668937
+    carries:
+      - "⚠️ THE DISTRICT'S CREATING INSTRUMENT, by reference: 'as per the Entry of the Court for the District, as filed with the Clerk of the Court of Common Pleas of Adams County, Ohio, on JANUARY 10, 1994 under CASE NO. 930355'. The entry itself is NOT in this corpus — it is the next record to pull, from the Adams County Clerk of Courts."
+      - "BYLAW 2: nine trustees on three-year offsetting terms, PLUS one representative of the wholesale customers = ten. Vacancies filled by a three-trustee nominating committee and a two-thirds vote of the Trustees — i.e. the board seats itself."
+      - "BYLAW 3 (TERRITORY): 'any unincorporated areas of Adams and Brown Counties and any incorporated areas of Adams County as ordered by the Courts of Common Pleas' — the jurisdictional reach that puts Sprigg Township inside the District"
+      - "Stamped EXHIBIT A / EXHIBIT 4 — this copy was filed as an exhibit to something the corpus does not hold"
+
+  - filename: Code of By Laws - Adams County Water Company Inc.pdf
+    canonical: adams-county-water-co-code-of-bylaws-undated.pdf
+    type: bylaws
+    date: null
+    date_note: >-
+      ⚠️ NO DATE ON THE DOCUMENT. The adoption line ("On motion of ____ … duly seconded, it was
+      unanimously resolved that the Code of By-Laws as herein set forth be adopted") is BLANK
+      on the executed copy, and the form carries no printed date. Left null rather than
+      inferred from the 1968 incorporation it plainly accompanies — the corporate-supply-form
+      by-laws could have been adopted at any organizational meeting.
+    content_verified: rendered-image   # p0: "CODE OF BY-LAWS / ARTICLE I / Meetings of Trustees and Quorum"
+    pages: 2
+    sha256: "c832eb3aaa549013e93479dbd75b6ea140b70251436ae9c78f12ebfcf96611ce"
+    bytes: 496100
+    carries:
+      - "ARTICLE I: regular meetings on the '2ND THursday' of each month (typed into the form blank) — the meeting cadence still in force in the 2026 minutes"
+      - "ARTICLE III (Salaries): officer salaries left as 'To be established at a later date'"
+      - "ARTICLE IV: amendment or repeal by two-thirds of all Trustees"
+
+  - filename: Current Bylaws.pdf
+    canonical: acrwd-amended-bylaws-board-of-trustees-current.pdf
+    type: bylaws
+    date: null
+    date_note: >-
+      ⚠️ NO ADOPTION DATE ESTABLISHED. Titled "AMENDED BY-LAWS"; the text layer carries no
+      adoption or amendment date, and BYLAW 1/2 recite the same court-entry construction as
+      the 1994 set without restating the entry date. "Current" is the DISTRICT'S
+      characterization in the filename, not a verified status. Treat as the operative by-laws
+      only insofar as the 2024–2026 minutes' practice matches them.
+    content_verified: text-layer   # body: "AMENDED BY-LAWS OF THE BOARD OF TRUSTEES OF THE ADAMS COUNTY REGIONAL WATER DISTRICT"
+    pages: 6
+    sha256: "3a9f3f99980bb809de2e7240a2c79740893ab77b59a8dbd29964e3026ea7dfb9"
+    bytes: 2361407
+    carries:
+      - "The by-laws the 2024–2026 board is operating under; supersedes the 1994 Exhibit A set to an extent this corpus cannot date"
+    notes: >-
+      Scanned 2026-07-27 but WITH a text layer (ScanSnap Home 3.7.0 applied OCR), unlike the
+      older scans. The OCR drops inter-word spaces aggressively ("the regionalwater
+      districtshallbe"); quote from the image, not from the extracted text.

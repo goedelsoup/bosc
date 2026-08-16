@@ -1,0 +1,223 @@
+meta:
+  subject: >
+    Canonical filename map for usace/west-union/ — the U.S. Army Corps of Engineers Huntington
+    District regulatory correspondence file for **LRH-2025-00457-OHR (-Elk Run)**, the Clean
+    Water Act §404 record of the Buck Canyon Site Project in Sprigg Township, Adams County,
+    Ohio. Fourteen Outlook "Memo Style" print-to-PDF chains covering 2025-05-20 (the request
+    for a jurisdictional determination) through 2026-02-18 (the revised NWP 39 verification
+    letter) — the AJD/PJD, the ESA/SLOPES coordination with USFWS, the full §106 consultation
+    with the Ohio SHPO over three cemeteries, and the permit issuance.
+  note: >-
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), files keep their as-received
+    names. "Email Chain 1..14.pdf" is a production numbering applied by the producing party,
+    not by the Corps; it is NOT chronological (Chain 1 is the earliest, Chain 4 falls between
+    Chains 3 and 5, but Chains 6 and 7 are near-duplicates of the same thread). The
+    `thread_span` field below carries the real date range of each file, read from the message
+    headers inside it. `date` is the file's LATEST message — the date the chain was current —
+    since these are cumulative threads, not single letters.
+  retrieved: "2026-08-15"
+  source: >-
+    U.S. Army Corps of Engineers, Huntington District, Regulatory Division, 502 8th Street,
+    Huntington, WV 25701-2070. Project manager Lee J. Arco (Archaeologist); branch chief
+    Teresa D. Spagna (Chief, North Branch). All fourteen carry PDF /Author "Arco, Lee J CIV
+    USARMY CELRH (USA)" and /Producer "Microsoft: Print To PDF", printed 2026-03-19 between
+    07:00 and 07:11 EDT — i.e. the whole set was printed in a single eleven-minute sitting,
+    the signature of a records production rather than a rolling file.
+  route: >-
+    ⚠️ The production route is not recorded in the corpus. The uniform 2026-03-19 print stamp
+    is consistent with a FOIA response from the Huntington District, but no cover letter,
+    request number or determination letter accompanied the files. Recorded as unestablished;
+    do not cite these as "FOIA-released" until the request record is pulled.
+  gap: >-
+    THE ATTACHMENTS ARE NOT HERE — only the covering messages. Named but absent: the AJD/PJD
+    letter and Enclosure 1 (JD Review Area), the Jurisdictional WOTUS Delineation Report, the
+    PCN application, the NWP 39 verification letter and its revision, the Buck Canyon Cemetery
+    Avoidance Plan, the Goodwin Phase I/II archaeology reports, the signed SLOPES form, the
+    SHPO review letters (2025ADA66354_1112049, 2025ADA6635_1112658and1112718), and the USFWS
+    and ODNR tree-clearing letters. Each is a next record to pull. The messages quote enough
+    of the operative findings to stand on their own for the facts recorded below.
+
+documents:
+  - filename: Email Chain 1.pdf
+    canonical: usace-lrh-2025-00457-ohr-ajd-pjd-issuance-2025-06-02.pdf
+    type: agency-email-thread
+    date: "2025-06-02"
+    thread_span: "2025-05-20 → 2025-06-02"
+    content_verified: text-layer
+    pages: 4
+    sha256: "7edfb5aed4e17a0f77f6a2b74f47762d8fe1073552e4a0012286bd21fac2c4d5"
+    bytes: 863073
+    carries:
+      - "⚠️ A THIRD CORPORATE NAME FOR THIS SITE: 'BUCK CANYON PROPERTIES, LLC'. The corpus already held 68 Yards, LLC (NWP 39 verification) and Buck Canyon LLC (Ohio EPA construction NOI). This is the name on the FEDERAL jurisdictional determination."
+      - "AND THE PERSON WHO JOINS THEM: 'Mr. Derek Harmon / Buck Canyon Properties, LLC / derek@bigblueoutdoor.com' — Ramboll's instruction for whom to address the JD letter to. Derek Harmon is also the named agent on the Ohio EPA NOI. The Harmon ↔ Buck Canyon Properties link is now [verified] on a federal record; the affiliation of either to 68 Yards, LLC remains [open]."
+      - "File number LRH-2025-00457-OHR assigned 2025-05-21; AJD/PJD letter transmitted 2025-06-02"
+      - "The applicant's agent is RAMBOLL (Jamie VanDusen, Project Manager, 'MWH Biodiversity & Ecosystems US', 8845 Governor's Hill Drive Suite 205, Cincinnati OH 45249), with Michelle Peters and Devon Rowe"
+      - "The delineation report was transmitted by link with the password 'Ramboll123' — retained as received; per CLAUDE.md a credential embedded in captured evidence is evidence, not a leak to redact"
+
+  - filename: Email Chain 2.pdf
+    canonical: usace-lrh-2025-00457-ohr-section-106-scheduling-2025-12-05.pdf
+    type: agency-email-thread
+    date: "2025-12-05"
+    content_verified: text-layer
+    pages: 4
+    sha256: "e4e72cc2e18ed314c3afc408f596382d81347ed3af84ffee87b5a5f907f974c3"
+    bytes: 875036
+    carries:
+      - "Ramboll asking the Corps for time 'to talk about the Section 106 co[nsultation]' — the opening of the historic-properties track that runs through Chain 12"
+
+  - filename: Email Chain 3.pdf
+    canonical: usace-lrh-2025-00457-ohr-goodwin-archaeology-2025-12-15.pdf
+    type: agency-email-thread
+    date: "2025-12-15"
+    content_verified: text-layer
+    pages: 5
+    sha256: "281f541812ca63e476f7257a7dd30aa4277047f279ce059dda369635c1ae604c"
+    bytes: 881096
+    carries:
+      - "'Goodwin & Associates provided additi[onal]…' — R. Christopher Goodwin & Associates, Inc. is the project archaeologist (Michael B. Hornum, mhornum@rcgoodwin.com)"
+
+  - filename: Email Chain 4.pdf
+    canonical: usace-lrh-2025-00457-ohr-usfws-slopes-signed-2025-12-18.pdf
+    type: agency-email-thread
+    date: "2025-12-18"
+    content_verified: text-layer
+    pages: 1
+    sha256: "3e4eab79485e86599ad25ab8008c45ab4718afb5839dd6b87dbef420d9737863"
+    bytes: 808521
+    carries:
+      - "U.S. Fish and Wildlife Service (Ohio Field Office, ohio@fws.gov) returns the SIGNED SLOPES form — 'Slopes Coordination: Buck Canyon Site Commercial Development Project (LRH-2025-00457-OHR / Project Code: 2025-011167)'"
+      - "⚠️ The Corps' and USFWS's own characterization of the end use is 'COMMERCIAL DEVELOPMENT' / 'the proposed industrial project'. No federal document in this file says data center."
+
+  - filename: Email Chain 5.pdf
+    canonical: usace-lrh-2025-00457-ohr-survey-coverage-2025-12-19.pdf
+    type: agency-email-thread
+    date: "2025-12-19"
+    content_verified: text-layer
+    pages: 7
+    sha256: "223cb01f9f2639d0f22e287a0073a3a3751665548676987eb61322ea4a80bb7d"
+    bytes: 893301
+    carries:
+      - "'They have (the entire project area has been surveyed) but I will have Goodwin p[rovide]…' — confirmation of full-area archaeological survey coverage"
+
+  - filename: Email Chain 6.pdf
+    canonical: usace-lrh-2025-00457-ohr-shpo-recommendation-2026-01-12.pdf
+    type: agency-email-thread
+    date: "2026-01-12"
+    content_verified: text-layer
+    pages: 5
+    sha256: "ca125ad00b102852dba2ad59235600e85188aa0e4043961696b170d081bff29a"
+    bytes: 857752
+    carries:
+      - "Catherine Gullett (Ohio History Connection / State Historic Preservation Office) giving the office's recommendation"
+    notes: >-
+      ⚠️ NEAR-DUPLICATE OF Email Chain 7.pdf — same top message, same date, 857,752 vs 857,749
+      bytes, different sha256. NOT a byte-identical duplicate, so under the corpus's
+      chain-of-custody rule BOTH ARE RETAINED. The three-byte delta is unexplained and was not
+      diffed page-by-page.
+
+  - filename: Email Chain 7.pdf
+    canonical: usace-lrh-2025-00457-ohr-shpo-recommendation-2026-01-12-variant.pdf
+    type: agency-email-thread
+    date: "2026-01-12"
+    content_verified: text-layer
+    pages: 5
+    sha256: "8106d157c8c0f94d5695cfdaa60d8c1010dd8cc4f0144cc94271a3a6dfbd560f"
+    bytes: 857749
+    carries:
+      - "See Email Chain 6.pdf — same thread, three bytes smaller, distinct hash"
+
+  - filename: Email Chain 8.pdf
+    canonical: usace-lrh-2025-00457-ohr-shpo-review-letter-transmittal-2026-01-14.pdf
+    type: agency-email-thread
+    date: "2026-01-14"
+    content_verified: text-layer
+    pages: 1
+    sha256: "caf55d3ef216a51720d6f0252195525c3e0bf6e298b73dd6804ef1006a377c2f"
+    bytes: 522375
+    carries:
+      - "Corps transmitting SHPO review letter 2025ADA66354_1112049 to Ramboll and Goodwin"
+
+  - filename: Email Chain 9.pdf
+    canonical: usace-lrh-2025-00457-ohr-cemetery-plan-tasking-2026-01-14.pdf
+    type: agency-email-thread
+    date: "2026-01-14"
+    content_verified: text-layer
+    pages: 2
+    sha256: "23f03c2fcb3fe9d9edbd37798fb3a1b1e58709ba0e39e85cf183bd70696cb29d"
+    bytes: 849735
+    carries:
+      - "Ramboll agreeing to work with the project team on the cemetery avoidance response"
+
+  - filename: Email Chain 10.pdf
+    canonical: usace-lrh-2025-00457-ohr-cemetery-avoidance-plan-submitted-2026-01-29.pdf
+    type: agency-email-thread
+    date: "2026-01-29"
+    content_verified: text-layer
+    pages: 6
+    sha256: "5ee6a6a2610505202ae268dda6cc5d134ea22e7502e6366809e3c5da327f1bb7"
+    bytes: 1014910
+    carries:
+      - "Ramboll submits 'Buck Canyon Cemetery Avoida[nce Plan]' to the Corps, Ohio SHPO and Goodwin"
+
+  - filename: Email Chain 11.pdf
+    canonical: usace-lrh-2025-00457-ohr-no-effect-determination-2026-02-03.pdf
+    type: agency-email-thread
+    date: "2026-02-03"
+    content_verified: text-layer
+    pages: 5
+    sha256: "0d8315376cfac88a7687e0c58de178fbf30ed8ec20b9e044aa9b41d56b8cf5fd"
+    bytes: 594237
+    carries:
+      - "⚠️ THE PROJECT DESCRIPTION OF RECORD, and the coordinate: 'The proposed Buck Canyon Site Project encompasses approximately 1,016 ACRES located NORTH AND EAST OF GINGER RIDGE ROAD and WEST OF U.S. ROUTE 52 in Manchester, Sprigg Township, Adams County, Ohio at approximately 38.646748 LATITUDE, -83.659828 LONGITUDE'"
+      - "⚠️ THE FILL, itemised: 1,893 linear feet (0.364 acre) of FOUR streams — Stream 9 (258 lf / 0.017 ac), Stream 24 (847 lf / 0.098 ac), ELK RUN (303 lf / 0.12 ac), CARTER HOLLOW (485 lf / 0.129 ac) — plus 0.06 acre of TWO wetlands (Wetland E 0.01 ac, Wetland G 0.05 ac), for grading and filling"
+      - "⚠️ CARTER HOLLOW IS THE JOIN. The ACRWD minutes of 2025-05-13 put the campus water transmission main's terminus at 'Carter Hollow'; this federal record fills 485 linear feet of it. Same hollow, two agencies, two purposes."
+      - "Watershed: 'Crooked Creek-Ohio [River]'; receiving water Elk Run, a tributary of the Ohio River, which is a traditional navigable water"
+      - "THREE CEMETERIES in or adjacent to the project area: the Boone Family Cemetery at 1669 [Ginger Ridge Rd] (OGS ID 85, also recorded as Little #1 Cemetery, OGS ID 13191); the ROGERS PARR CEMETERY; and the previously unrecorded DAVIDSON CEMETERY (OHI ADA0063512), documented within the expanded boundaries"
+      - "Archaeology: Phase I/II by R. Christopher Goodwin & Associates, August 2025. Limits of disturbance ≈1,009 acres, of which ≈770 acres previously surveyed (Purtill, Norr and Owen 2008) and ≈251 acres newly shovel-tested. Three new OAI sites (33AD0477–33AD0479); four previously documented sites expanded (33AD0393, 33AD0395, 33AD0401, 33AD0402). Site 33AD0399 was largely destroyed but the Rogers Parr Cemetery within it was largely intact."
+      - "AVOIDANCE, as permit conditions: high-visibility temporary construction fencing around the Boone and Davidson cemeteries; PERMANENT fencing along a 100-FOOT BUFFER perimeter around the Rogers Parr Cemetery; temporary signage at all three; pedestrian access maintained post-construction"
+
+  - filename: Email Chain 12.pdf
+    canonical: usace-lrh-2025-00457-ohr-shpo-concurrence-2026-02-14.pdf
+    type: agency-email-thread
+    date: "2026-02-14"
+    content_verified: text-layer
+    pages: 5
+    sha256: "b14c383ae00a3d8f48b3db758bed8d9da40a670594d694f94f76cb42f7914a62"
+    bytes: 858629
+    carries:
+      - "⚠️ SECTION 106 CLOSES: Catherine Gullett transmits 'our office's concurrence with the \"no effect on historic properties\" determination', letter 2025ADA6635_1112658and1112718_ReviewLetter_NE.pdf, on a SATURDAY (2026-02-14). SHPO consultation number 2025-ADA-66354."
+      - "Restates the full project description, fill itemisation and cemetery findings of Chain 11"
+
+  - filename: Email Chain 13.pdf
+    canonical: usace-lrh-2025-00457-ohr-post-concurrence-scheduling-2026-02-03.pdf
+    type: agency-email-thread
+    date: "2026-02-03"
+    content_verified: text-layer
+    pages: 10
+    sha256: "b9b01481e888ac2ef8ce78d42a78091bf1a462f6fd9b9317718fe0ae08be4455"
+    bytes: 908900
+    carries:
+      - "Ramboll to the Corps: 'Wow, that is great to hear, thank you for the efficient review. Would 2pm today [work]' — the applicant's reaction to the no-effect determination"
+      - "The longest chain in the set (10 pages); carries the accumulated NWP 39 verification thread"
+
+  - filename: Email Chain 14.pdf
+    canonical: usace-lrh-2025-00457-ohr-nwp-39-verification-issued-2026-02-18.pdf
+    type: agency-email-thread
+    date: "2026-02-18"
+    thread_span: "2025-12-01 → 2026-02-18"
+    content_verified: text-layer
+    pages: 4
+    sha256: "d3af155c3950e23a3d250c1a446c25b875b10f06d79f3fb4c1d5d345b934239b"
+    bytes: 876948
+    carries:
+      - "⚠️ THE PERMIT ISSUES, AND IT ISSUES TWICE: the NWP 39 verification letter is transmitted 2026-02-17 11:07, and a REVISED verification letter is transmitted 2026-02-18 09:37. The corpus previously held only the 2026-02-18 date; this file shows it is the revision, not the original."
+      - "⚠️ WHAT CHANGED, on the record: Ramboll wrote back on 2026-02-17 13:59 objecting that 'Special Condition 7 calls for seasonal tree clearing', when 'based on the negative survey results from the summer MIST NET SURVEY conducted in 2025, the USFWS and ODNR both concurred that tree clearing can occur at ANYTIME for a period of 5 YEARS'. The revised letter followed the next morning. The bat-season restriction was raised by the applicant and relaxed within 22 hours."
+      - "The NWP 39 verification request itself was filed 2025-12-01 and assigned the sub-file LRH-2025-00457-OHR-Elk Run; the PCN was uploaded by DOD Safe Link after the Corps could not reach Ramboll's SharePoint"
+      - "Sign-off: 'Thank you, Lee. It was wonderful working with you!'"
+    notes: >-
+      ⚠️ THE OPERATOR IS NEVER NAMED. Across all fourteen chains — 68 pages of correspondence
+      among the Corps, USFWS, the Ohio SHPO, Ramboll and Goodwin — no message names Amazon,
+      AWS, or any end user. The counterparties are Buck Canyon Properties, LLC and its
+      consultants throughout. This CORROBORATES rather than weakens the site's standing
+      finding that "the 1.3 GW is AWS" is [inference] and not [verified]: the entire federal
+      §404 record was built without the operator's name appearing once.

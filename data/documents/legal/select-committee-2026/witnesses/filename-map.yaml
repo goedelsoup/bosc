@@ -1,0 +1,68 @@
+meta:
+  subject: >
+    Custody manifest for the three witness submissions added to this folder on 2026-08-15,
+    which arrived inside an Adams County records production rather than from the committee's
+    own posting. They are the technical and environmental opposition testimony to **H.B. 646**
+    before the Ohio House Technology and Innovation committee / Select Committee on Data
+    Centers, May–June 2026.
+  scope: >-
+    ⚠️ THIS MANIFEST COVERS ONLY THE THREE DOCUMENTS LISTED BELOW. The sixteen files already
+    in this folder were shelved under canonical names without a custody manifest and are not
+    retro-documented here; their hashes and content-verified dates remain unrecorded. Adding
+    them is follow-up work, not something this manifest silently implies.
+  note: >-
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), these three keep their
+    as-received names — including the misspelling "Committe" in the Petty filename, and the
+    org-then-person and person-then-org orderings that disagree with each other and with the
+    folder's existing `lastname-org-date.pdf` convention. Recorded, not normalized.
+  retrieved: "2026-08-15"
+  source: >-
+    Received within a directory of Adams County records (the ACRWD production). The route by
+    which these three reached that directory is NOT established — they may have come from the
+    committee's witness portal, from the witnesses, or from a third party. Recorded as
+    unestablished; the committee's own posting is the citable source and should be matched
+    against these hashes before any of the three is cited as "as-submitted".
+
+documents:
+  - filename: Stephen Petty Data Center Committe Testimony.pdf
+    canonical: petty-stephen-data-center-committee-testimony-2026-06-01.pdf
+    type: witness-testimony
+    date: "2026-06-01"
+    content_verified: text-layer   # body: "TESTIMONY OF STEPHEN E. PETTY, P.E., C.I.H., C.S.P. / JUNE 1, 2026"
+    pages: 30
+    sha256: "a163a9e5175b9d94e46c61ab5ce1ca3f3c383c2343eeacdd49a933432d145b79"
+    bytes: 2154539
+    carries:
+      - "Testimony of Stephen E. Petty, P.E., C.I.H., C.S.P., dated 2026-06-01, supporting the proposed data-center bill; thanks the committee 'and Stephanie Stock'"
+      - "Sections: qualifications; data centers overview; WATER AND WASTEWATER SOURCES AND DISCHARGES; chemical/biological [exposure]"
+      - "The longest witness submission in this folder (30 pages) and the only one from a credentialed industrial-hygiene / professional-engineering witness"
+    notes: >-
+      The as-received filename misspells "Committee" as "Committe". Kept.
+
+  - filename: FreshWater Accountability Project Ohio Leatra J Harper.pdf
+    canonical: harper-leatra-freshwater-accountability-project-hb646-2026-05-31.pdf
+    type: witness-testimony
+    date: "2026-05-31"
+    content_verified: text-layer   # body: "May 31, 2026 / SUBJ: Testimony on H.B. 646"
+    pages: 5
+    sha256: "977f552f10d52b65dca8d4171510a3f0996b4cdceb758da11b8ef2e7aeef36cb"
+    bytes: 339207
+    carries:
+      - "⚠️ NAMES THE BILL: 'SUBJ: Testimony on H.B. 646', addressed to 'Chair Claggett, Vice Chair Workman, Ranking Member Mohamed, and members of the House Technology and Innovation committee' — the clearest bill-number and committee anchor in this folder"
+      - "Leatra J. Harper, FreshWater Accountability Project Ohio; frames data centers as continuous with fracking and frack-waste facility siting in Ohio"
+
+  - filename: Ohio Valley Environmental Advocates-Randi Pokladnik.pdf
+    canonical: pokladnik-randi-ohio-valley-environmental-advocates-2026-05-30.pdf
+    type: witness-testimony
+    date: "2026-05-30"
+    content_verified: text-layer   # body: "Comments Concerning Data Centers in Ohio / Ohio Valley Environmental Advocates / May 30th, 2026"
+    pages: 5
+    sha256: "1474b024311156d3a0a5f812286d3d774e76286cffcda345e3c2959868c06e48"
+    bytes: 508995
+    carries:
+      - "Randi Pokladnik for Ohio Valley Environmental Advocates, to the 'Ohio Select Committee on Data Centers', 2026-05-30"
+      - "⚠️ DIRECTLY RELEVANT TO THIS PRODUCTION'S OWN SITE: 'Southeast Ohio and especially the counties bordering along the Ohio River will be disproportionately affected' — Adams County is an Ohio River county, and this testimony arrived bundled with the Adams County water-district record"
+    notes: >-
+      Produced by "Microsoft: Print To PDF" from Word; the text layer renders "ti" ligatures as
+      "Ɵ" ("communiƟes", "exponenƟal") — a ToUnicode CMap defect. Quote from the rendered page,
+      not from the extracted text.

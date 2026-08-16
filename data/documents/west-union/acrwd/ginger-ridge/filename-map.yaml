@@ -1,0 +1,89 @@
+meta:
+  subject: >
+    Canonical filename map for west-union/acrwd/ginger-ridge/ — the two instruments that
+    bracket the Buck Canyon water service: the CONFIDENTIALITY AGREEMENT the District signed
+    before it knew who the customer was (2024-01-10), and the ENGINEERING PLAN SET for the
+    main that serves the campus (2026). Between them lie the 15 board minutes in
+    ../minutes/, which carry the project as "Project Galaxy" and then as "Ginger Ridge".
+  note: >-
+    Per chain-of-custody rules (CLAUDE.md → Data discipline) both files keep their as-received
+    names. "NDA.pdf" is a two-character filename for a document that is neither blank nor
+    generic — it is EXECUTED by the District. The name is preserved; what it actually is
+    lives in `canonical` and `carries`.
+  retrieved: "2026-08-15"
+  source: >-
+    Adams County Regional Water District, 9203 SR 136 / P.O. Box 427, West Union, OH 45693.
+  gap: >-
+    The Ohio EPA plan-approval letter for this water main is NOT here. The 2026-07-09 minutes
+    report Ohio EPA's review complete with the approval letter expected "the following week";
+    that letter, and the detail-plan approval number it carries, are the next records to pull.
+    Neither is the executed easement set, nor the service agreement that must govern a
+    100,000 gpd commitment — the corpus holds the District's engineering and its confidentiality
+    obligation, and NOT the contract between the District and the customer.
+
+documents:
+  - filename: NDA.pdf
+    canonical: acrwd-executed-nondisclosure-agreement-unnamed-company-2024-01-10.pdf
+    type: executed-nondisclosure-agreement
+    date: "2024-01-10"
+    content_verified: text-layer   # agency box: "Adams County Regional Water District … 1/10/2024 … Rickey W. Adamson"
+    pages: 2
+    sha256: "8712fce975640215fc2bbec22089d5a556104d970139483d034aae38a4cc65da"
+    bytes: 120109
+    carries:
+      - "⚠️ THE INSTRUMENT IS EXECUTED ON ONE SIDE ONLY, AND IT IS THE PUBLIC SIDE. The AGENCY box is complete — Governmental Entity Name 'Adams County Regional Water District', Title 'General Manager', Printed Name 'Rickey W. Adamson', Date Signed '1/10/2024', address 9203 SR 136 / P.O. Box 427, West Union OH 45693. THE COMPANY IS NOWHERE NAMED ON THE DOCUMENT."
+      - "The form makes the anonymity deliberate, not accidental: 'A company … has approached you in connection with a project that may be located in _______' (blank), and 'The Company … expects to provide new contact information ONCE IT HAS REVEALED ITS IDENTITY TO THE AGENCY.' Company notice address: 'Attn: [____________________]'."
+      - "§1 sweeps the relationship itself into the secret: Confidential Information includes 'the nature, content, and existence of the parties' commercial relationship or discussions about a possible relationship or transaction'"
+      - "§5 (PUBLIC RECORDS): the District may disclose under public-records law only if it gives the Company PRIOR WRITTEN NOTICE 'sufficient to allow Company to seek a protective order or other remedy', discloses only what is required, and 'uses commercially reasonable efforts to obtain confidential treatment' — a private veto-window bolted onto R.C. 149.43. Note it fixes NO number of days, unlike the 5-business-day clause in Sidney's CRA §32."
+      - "§10 (DURATION): effective from first receipt, 3-year initial term, AUTOMATICALLY RENEWING unless either party gives 90 days' notice; obligations survive 5 years past termination; §§6, 9, 10, 11 survive INDEFINITELY; and the confidentiality obligation continues 'for as long as the information continues to constitute a trade secret'"
+      - "§11: governed by the law of 'the state in which the property where the project is to be built is located' — the agreement is drafted to be signed before the site is known"
+    notes: >-
+      ⚠️ DO NOT DESCRIBE THIS AS A TEMPLATE OR A BLANK FORM. It is a signed obligation of a
+      public body. The blanks are the finding: the District bound itself to a counterparty
+      whose identity the document withholds, ten months before "Project Galaxy" first appears
+      in its own minutes and roughly two years before any instrument in the federal or state
+      record named Buck Canyon.
+      ⚠️ The Board authorized the signature at its regular meeting of 2024-01-11 (see
+      ../minutes/, "Minutes -January 2024.pdf") — ONE DAY AFTER the date on this signature.
+      Both dates are read from primary sources; the corpus records the discrepancy and does
+      not resolve it.
+      The GM's work email and the District's office phone appear in the agency box. These are
+      the published business contacts of a public official at a public agency address, not
+      private PII.
+
+  - filename: Ginger Ridge Water Line Plan.pdf
+    canonical: acrwd-ginger-ridge-road-water-main-plan-and-profile-2026.pdf
+    type: engineering-plan-set
+    date: null
+    date_note: >-
+      ⚠️ NO DATE ESTABLISHED FROM THE DOCUMENT. The title-sheet signature blocks (LEO B. CONKEL
+      JR., P.E. NO. 57781, and RICK ADAMSON, ACRWD GENERAL MANAGER) each carry a DATE line, but
+      the rendered text layer does not resolve a value on either, and the PDF's own
+      /CreationDate (2026-08-01, PDFium) is a re-export stamp, not an issue date. Bounded by
+      the minutes: plans were submitted to Ohio EPA on or before 2026-04-09 and were still
+      under review on 2026-06-11. Left null rather than inferred; establishing it needs a
+      higher-resolution read of the two signature blocks.
+    content_verified: text-layer   # sheet G-001: "PROPOSED WATER LINE / ADAMS COUNTY REGIONAL WATER DISTRICT / GINGER RIDGE ROAD WATER MAIN"
+    pages: 24
+    sha256: "df0d7470d754df49c0e1db8355237ca970ecab99434710c6ff17a2b8a4ebdfe7"
+    bytes: 15589835
+    carries:
+      - "⚠️ THE PLAN SET LABELS THE SERVED PARCEL 'BUCK CANYON'. This is the only document in the ACRWD production that carries the project's regulatory name — the minutes never do. It is the join between the District's pipe and the USACE/Ohio EPA file in ../../../usace/west-union/."
+      - "Engineer of record: LEO B. CONKEL JR., P.E. No. 57781 (the 'Lee Conkel' of the minutes), for CHA CONSULTING, INC., 471 East Broad Street, Suite 2010, Columbus, OH"
+      - "Owner: Adams County Regional Water District, 203 [sic — OCR of 9203] OH-134, West Union, OH 45693"
+      - "Plan-and-profile sheets C001–C017+ with stationing to at least STA 103+00; a PROPOSED VALVE VAULT is called out on the location map — consistent with the December 2025 minutes' 'the tank has been deleted by the client and a meter vault will be used'"
+      - "Route parcels labelled with auditor parcel numbers, including HIGHLANDS NATURE SANCTUARY INC (1840000003002) and CHESTNUT ROAD FARM LLC (1840000003000) — the main runs past a private nature preserve"
+    pii: >-
+      ⚠️ CONTAINS NAMED PRIVATE LANDOWNERS along the route, in the ordinary way an engineering
+      plan set does: parcel labels such as "COOPER RODNEY D 1700000026000", "EVANS WILLIAM L
+      B/OR MISTY 1700000027002", "KAROLYI WILLIAM J & SMITH JOHN W & KAROLYI CAROLY J
+      TRUSTEES", "CORNELL JOYCE E TRUSTEE", and a construction note naming "JOHN CONDON
+      (OWNER) TO APPROVE PATH THROUGH THE YARD". These are auditor ownership labels (public
+      record) rather than a residential roster, but they are names of private individuals
+      attached to locations. INGESTED, NOT CLEARED FOR PUBLICATION — no
+      data/site/published-documents.yaml entry without a named review decision.
+    notes: >-
+      Vector CAD text extracts in scrambled reading order (each label lands as isolated tokens);
+      the extracted text is a FINDING AID ONLY. Any figure, station, diameter or elevation must
+      be read from the rendered sheet, never from the text layer — the same rule the corpus
+      applies to OCR digits.

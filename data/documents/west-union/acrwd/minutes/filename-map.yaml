@@ -1,0 +1,223 @@
+meta:
+  subject: >
+    Canonical filename map for west-union/acrwd/minutes/ — the Adams County Regional Water
+    District Board of Trustees meeting record, January 2024 through July 2026. This is the
+    utility-side record of the Buck Canyon campus: the District carried the project first as
+    an unnamed NDA counterparty (2024-01), then under the codename **"Project Galaxy"**
+    (2024-10 → 2025-10), then under the name of the pipe that serves it — the **Ginger Ridge
+    Water Line** (2025-10 → present). No minute in this set names Amazon, AWS, Buck Canyon
+    Properties LLC, or 68 Yards LLC. The customer is "the company", "the client", or "the
+    Project Galaxy company" throughout.
+  note: >-
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their
+    as-received names — including the District's inconsistent conventions: two-space gaps
+    (`Minutes  - April 26.pdf`), a missing space (`Minutes -January 2024.pdf`), a missing
+    hyphen (`Minutes-July 26.pdf`), two-digit years for 2026 and four-digit for 2024/2025.
+    `date` below is the **meeting date stated in the document body**, never the filename:
+    the filenames name the month the meeting covered, and for July 2026 the filename's "26"
+    and the body's "July 9, 2026" agree, but the convention is not self-evidently reliable
+    and was checked per file. `content_verified` records HOW that date was established.
+  retrieved: "2026-08-15"
+  source: >-
+    Adams County Regional Water District, 9203 SR 136 / P.O. Box 427, West Union, OH 45693.
+    Received as a directory of PDFs; the District's own office copies (native Word exports
+    signed by the Secretary/Clerk, except the July 2026 set which is a ScanSnap scan of the
+    executed original because it carries the signed resolutions).
+  gap: >-
+    NOT a complete series. The District meets monthly (2nd Thursday, per the Code of By-Laws
+    Article I); this set holds 15 of the ~31 meetings between 2024-01 and 2026-07. Absent:
+    all of Feb/Mar/May/Jun/Jul/Aug/Sep/Nov/Dec 2024, Jan/Feb/Mar/Jun/Aug/Sep 2025. The two
+    2024 minutes present are the two that carry the project's origin (the NDA authorization
+    and the first "Project Galaxy" naming) — which is consistent with a responsive
+    production rather than a full series pull, but the request scope is not in the corpus.
+
+documents:
+  - filename: Minutes -January 2024.pdf
+    canonical: acrwd-board-minutes-2024-01-11.pdf
+    type: board-minutes
+    date: "2024-01-11"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / January 11, 2024"
+    pages: 6
+    sha256: "7726c5bed3a6ce53a2046b62cd1c6b42234477d8601adc5654484ef5223ad9ac"
+    bytes: 142878
+    carries:
+      - "THE ORIGIN OF THE CONFIDENTIALITY WRAPPER: 'Sam Cooper moved to approve permission for Rick Adamson to sign a non-disclosure agreement for a company interested in purchasing and developing the former Stuart Generating Plant land. Brent Crawford seconded the motion with all in favor.' The company is not named."
+      - "⚠️ The NDA in ginger-ridge/NDA.pdf is dated 1/10/2024 — the General Manager signed it the DAY BEFORE the Board authorized him to. Two primary sources, one day apart; recorded, not reconciled."
+      - "Trustees present: Tony Staggs, Brent Crawford, Lynn Weeks, Luke Rhonemus, Gerald Gray, Chris Baxla, Sam Cooper, Aaron Tolle; Daniel Fristoe absent"
+
+  - filename: Minutes -  October 2024.pdf
+    canonical: acrwd-board-minutes-2024-10-10.pdf
+    type: board-minutes
+    date: "2024-10-10"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / October 10, 2024"
+    pages: 6
+    sha256: "f4be1ed4c317f4191744e602e89304beacec2bc67cc3d39a3a1713f1017711a9"
+    bytes: 62923
+    carries:
+      - "FIRST APPEARANCE OF THE CODENAME: engineer Lee Conkel 'has been working on behalf of ACRWD on Project Galaxy without a contract' — i.e. the engineering predates its own authorization"
+      - "A resolution adopting 'the engineering contract for Project Galaxy'"
+      - "Seven potential taps on Ginger Lane (a DIFFERENT road from Ginger Ridge Road — do not conflate)"
+
+  - filename: Minutes - April 2025.pdf
+    canonical: acrwd-board-minutes-2025-04-10.pdf
+    type: board-minutes
+    date: "2025-04-10"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / April 10, 2025"
+    pages: 5
+    sha256: "91e9dae941eafe98caf0424372cdb267cc01fa07be497e0da37c4cb57c713f96"
+    bytes: 57842
+    carries:
+      - "THE SUPPLY ARCHITECTURE, first stated: 'new wells, a water treatment expansion and transmission main from the plant to the former J. M. Stuart Station will be the way the project proceeds' — the District's own engineer placing Project Galaxy at the retired DP&L station site"
+      - "THE INTERIM SERVICE: 'The company is also looking to run potable water AND SUPPLEMENTAL COOLING WATER from Ginger Ridge Road to the site on a temporary basis until the large supply project can be completed.'"
+      - "⚠️ 'supplemental cooling water' is the District's phrase, in its own minutes — the first cooling-purpose water statement anywhere in this site's corpus"
+
+  - filename: Minutes - May 2025.pdf
+    canonical: acrwd-board-minutes-2025-05-13.pdf
+    type: board-minutes
+    date: "2025-05-13"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / May 13, 2025"
+    pages: 5
+    sha256: "4070986463a25be4979bc173c3556a6b83472a5c35a0538c874931df81e5921d"
+    bytes: 64759
+    carries:
+      - "THE ONLY QUANTIFIED DEMAND IN THE SET: the temporary Ginger Ridge service 'will require an upgrade to the Ginger Ridge line and a tank in order to provide 100,000 GALLONS PER DAY'"
+      - "The transmission main's terminus moves from 'the former J. M. Stuart Station' (April) to 'CARTER HOLLOW' — the same hollow the USACE NWP 39 file fills 485 linear feet of (see usace/west-union/)"
+      - "LAND: 'The Project Galaxy company wishes to obtain an easement instead of purchasing the Moyer property.' The District's option on that property was released as unnecessary."
+
+  - filename: Minutes - July 2025.pdf
+    canonical: acrwd-board-minutes-2025-07-17.pdf
+    type: board-minutes
+    date: "2025-07-17"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / July 17, 2025"
+    pages: 6
+    sha256: "2cacf2c3403b50b7ce0581c2ce4621feab459c7addbe3080274099bddf1d6797"
+    bytes: 70275
+    carries:
+      - "A PAUSE, held as a document: 'Project Galaxy – This project continues to move along but no clear direction on this service is established except for a potable water component from Ginger Ridge.' The cooling component named in April/May is, on this date, no longer stated."
+
+  - filename: Minutes - October 2025.pdf
+    canonical: acrwd-board-minutes-2025-10-09.pdf
+    type: board-minutes
+    date: "2025-10-09"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / October 9, 2025"
+    pages: 5
+    sha256: "54aab06b5a28945c029fe38b0cfc4b565ed19b88bce27b05c0abf04805e88c69"
+    bytes: 62295
+    carries:
+      - "THE RENAME, on the record: 'Ginger Ridge Water Line and Tank – CHA Consulting, Inc. was awarded the engineering for this project (FORMERLY PROJECT GALAXY).' After this date the codename does not recur in the minutes."
+      - "'The company funding this project wants to FAST TRACK the design' — the customer, still unnamed, setting the District's schedule"
+
+  - filename: Minutes - November 2025.pdf
+    canonical: acrwd-board-minutes-2025-11-12.pdf
+    type: board-minutes
+    date: "2025-11-12"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / November 12, 2025"
+    pages: 6
+    sha256: "20a077d86c95c55bf01a833302fc9ba0f6005cd2d085e6427a18be74a69256e6"
+    bytes: 66113
+    carries:
+      - "'the company team has reviewed and commented' on the preliminary layout — the customer reviewing a public utility's design"
+      - "A DISAGREEMENT, recorded: 'A ground storage tank is currently being planned but District management prefers an elevated tank to provide more benefit to the District's system.'"
+      - "Easements being obtained on Boyd Road and Ginger Ridge"
+
+  - filename: Minutes - December 2025.pdf
+    canonical: acrwd-board-minutes-2025-12-11.pdf
+    type: board-minutes
+    date: "2025-12-11"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / December 11, 2025"
+    pages: 7
+    sha256: "61c2f441643d0283722b6103a951cc78c8155585bfc802f2f1e4f8be811ae9e7"
+    bytes: 68775
+    carries:
+      - "THE TANK IS DELETED: 'The tank has been deleted by the client and a meter vault will be used to serve the [project].' The District's preference (Nov) did not survive; a metered service replaced the storage the District wanted."
+      - "⚠️ This is why the as-built project is named 'Ginger Ridge Water Line' and not 'Water Line and Tank' from January 2026 onward — the name change tracks a scope deletion, not a clerical tidy."
+
+  - filename: Minutes  - January 26.pdf
+    canonical: acrwd-board-minutes-2026-01-08.pdf
+    type: board-minutes
+    date: "2026-01-08"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / January 8, 2026"
+    pages: 6
+    sha256: "82c7ba5c97d149ebec1b1972c4492e4a6f20569b308b51b7a62361fa48ee5701"
+    bytes: 60664
+    carries:
+      - "'Management is still working on obtaining easements' for the Ginger Ridge Water Line upgrade — the easement campaign runs Nov 2025 → May 2026"
+
+  - filename: Minutes  - February 26.pdf
+    canonical: acrwd-board-minutes-2026-02-12.pdf
+    type: board-minutes
+    date: "2026-02-12"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / February 12, 2026"
+    pages: 4
+    sha256: "d351e9918285f5d52917a4836c152fce8d8ee8848bd2771b70fdf4f1924e0563"
+    bytes: 56375
+    carries:
+      - "'He met with the client and went over the line work' — the client meeting falls in the same week USACE was issuing the NWP 39 verification (2026-02-17/18)"
+
+  - filename: Minutes - March 26.pdf
+    canonical: acrwd-board-minutes-2026-03-12.pdf
+    type: board-minutes
+    date: "2026-03-12"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / March 12, 2026"
+    pages: 5
+    sha256: "1f3172508817256fcfe03e92528d6c382be0a785303aec66ea50673f941f2e57"
+    bytes: 63545
+    carries:
+      - "Engineer drove the line with District personnel"
+      - "Trustees Brent Crawford, Luke Rhonemus and Tim Grooms absent (Rhonemus joined part of the meeting)"
+
+  - filename: Minutes  - April 26.pdf
+    canonical: acrwd-board-minutes-2026-04-09.pdf
+    type: board-minutes
+    date: "2026-04-09"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / April 9, 2026"
+    pages: 6
+    sha256: "868acd0cbd8f00130663c5e02f8ff7dcaaec9eea26ceb724e8ee54f03a43e41f"
+    bytes: 67521
+    carries:
+      - "THE STATE FILING: 'Ginger Ridge Water Line – Plans have been submitted to the Ohio EPA for review.' This dates the plan set in ginger-ridge/ to on-or-before this meeting."
+
+  - filename: Minutes  - May 26.pdf
+    canonical: acrwd-board-minutes-2026-05-14.pdf
+    type: board-minutes
+    date: "2026-05-14"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / May 14, 2026"
+    pages: 6
+    sha256: "6b63366426183a3ea66616e01cf41e19eeda3c6b37afc63ed3afd6548b67aa70"
+    bytes: 67602
+    carries:
+      - "'The plans are still at the Ohio EPA being reviewed'"
+      - "'in the process of obtaining the FINAL easement needed' — the easement campaign closing"
+
+  - filename: Minutes - June 26.pdf
+    canonical: acrwd-board-minutes-2026-06-11.pdf
+    type: board-minutes
+    date: "2026-06-11"
+    content_verified: text-layer   # body: "MINUTES / Regular Meeting / June 11, 2026"
+    pages: 4
+    sha256: "203d5d8fde2936dce4626b6f950715666f8ac9d766a403b8623d4bc8f55b4c00"
+    bytes: 56605
+    carries:
+      - "'He had received the first response from Ohio EPA'"
+
+  - filename: Minutes-July 26.pdf
+    canonical: acrwd-board-minutes-2026-07-09.pdf
+    type: board-minutes-with-executed-resolutions
+    date: "2026-07-09"
+    content_verified: ocr   # scanned original (ScanSnap iX1600); body: "MINUTES / Regular Meeting / July 9, 2026"
+    pages: 16
+    sha256: "4abf086b0061c2f105d677a9a03e20a22752a0c320c4c37a5559f871c4cf8892"
+    bytes: 862160
+    carries:
+      - "'Ginger Ridge Water Line – He received a response from the Ohio EPA that the review was complete and they should be getting the APPROVAL LETTER sent by the following week.' The Ohio EPA plan approval is the next instrument to pull; it is not in this corpus."
+      - "Resolutions 26-41 through 26-47, executed, with recorded 7-0 votes (26-41 12-inch stub; 26-42 laptop; 26-43 $5,000 capitalization threshold; 26-44 FY2027 budget; 26-45 CHA general engineering services contract; 26-46 Winchester Industrial Park award; 26-47 hydraulic saw)"
+      - "Official Certificate of Estimated Resources and Expenditures FY2027 — $14,900,000 total funds against $6,900,000 total expenses"
+      - "Winchester Industrial Park award: Contract 1 to EFI Solution $845,778.00 (materials), Contract 2 to B.P. Pipeline, LLC $2,519,816.00 (water line and booster) — a SEPARATE project from Ginger Ridge, do not merge them"
+      - "Two executive sessions: ORC 121.22(G)(3) possible litigation re a former employee, and ORC 121.22(G)(8) 'confidential matters'"
+      - "Johnny Hayslip's title changed from Interim General Manager to General Manager"
+    notes: >-
+      The only scanned item in this genre — the District supplied the executed original because it
+      carries the signed resolutions. The OCR is poor in the tabular check register (page 3 renders
+      "Chris Baxla" as "Chrls Baxla", "-24.65" as "-24,65"); per CLAUDE.md, figures come from the
+      image, and the check-register digits on that page are NOT reliable as extracted. The
+      narrative pages and the resolution pages OCR cleanly.

@@ -1,0 +1,159 @@
+meta:
+  subject: >
+    Canonical filename map for west-union/acrwd/finance/ — the Adams County Regional Water
+    District's own financial position, FY2024 through FY2026, in three series: audited-basis
+    financial statements, annual budget/appropriations, and the monthly "ACRWD Report" cash
+    rollups. This is the denominator for any claim about what the Buck Canyon service costs
+    or earns the District: a system with roughly $5–6M of annual receipts is being asked to
+    build for a customer whose own capital program is measured in billions.
+  note: >-
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their
+    as-received names, including the District's three mutually inconsistent budget
+    conventions in the same folder — "Budget for 2024.pdf", "Budget 2025.pdf", "2026
+    Budget.pdf" — and the "- Capital" suffix that marks the capital schedule as a separate
+    document from the operating budget of the same year. `date` is the FISCAL PERIOD the
+    document governs, established from its own heading, not from the filename and not from
+    the PDF /CreationDate (which for most of these is a 2026-08-06 re-export made for this
+    production, months or years after the period).
+  retrieved: "2026-08-15"
+  source: >-
+    Adams County Regional Water District, 9203 SR 136 / P.O. Box 427, West Union, OH 45693.
+  gap: >-
+    ⚠️ These are the DISTRICT'S OWN statements, not the Auditor of State's. The 2024 and 2025
+    financial statements carry the internal title "(In Process)" and were exported from the
+    District's accounting package, and the 2026-07-09 minutes record that "the audit was
+    currently underway". The AOS audit reports for these years are NOT in this corpus and are
+    the authoritative version. Treat every figure here as the District's unaudited
+    presentation. No capital budget for 2026 was produced (only the operating budget).
+
+documents:
+  - filename: 2024 Financial Statements.pdf
+    canonical: acrwd-financial-statements-fy2024.pdf
+    type: financial-statements
+    date: "2024-12-31"
+    content_verified: text-layer   # /Title: "Adams County Regional Water District Comp 2024 [12/31/2024] (In Process)"
+    pages: 4
+    sha256: "6e10ead77191a8101230e93ffd3b8b7f523272e32869b40f7b7a2fe38d6f7f2f"
+    bytes: 203568
+    carries:
+      - "Statement of net position at 12/31/2024: cash and equivalents $6,412,873; certificates of deposit $3,030,801; customer accounts receivable net $816,398; inventories $1,188,599; total current assets $11,542,046"
+      - "Restricted cash and CDs $31,102 (the USDA debt reserve that recurs in every budget)"
+    notes: >-
+      Internally marked "(In Process)" — the District's pre-audit presentation.
+
+  - filename: 2025 Financial Statements.pdf
+    canonical: acrwd-financial-statements-fy2025.pdf
+    type: financial-statements
+    date: "2025-12-31"
+    content_verified: text-layer   # /Title: "Adams County Regional Water District Comp 2025 [12/31/2025] (In Process)"
+    pages: 4
+    sha256: "b49e6b1541008cb4c8f4f53ba74c34eeec98c07a6b420c2320d9ba50fdf58aeb"
+    bytes: 202903
+    carries:
+      - "Statement of net position at 12/31/2025: cash and equivalents $6,785,660; certificates of deposit $3,172,926; customer accounts receivable net $837,658; inventories $1,118,771; total current assets $11,985,829"
+      - "Net OPEB asset rises $56,345 → $157,228 year over year"
+    notes: >-
+      Internally marked "(In Process)" — the District's pre-audit presentation.
+
+  - filename: Budget for 2024.pdf
+    canonical: acrwd-annual-budget-appropriations-fy2024.pdf
+    type: annual-budget
+    date: "2024-12-31"
+    content_verified: text-layer   # body: "ANNUAL BUDGET/APPROPRIATIONS FOR THE YEAR ENDED 12/31/2024"
+    pages: 1
+    sha256: "fe99e6706f5ab634054d5a6c1d3ededf1955dbd5e0a9261b21036ad00e487485"
+    bytes: 104980
+    carries:
+      - "Net operating capital at year end 2023 $7,910,000; USDA debt reserve $31,121; transfer to 2024 receipts"
+    notes: >-
+      The only budget in the set produced from Word rather than Excel (author "Judy Chaney").
+
+  - filename: Budget 2024 - Capital.pdf
+    canonical: acrwd-capital-budget-fy2024.pdf
+    type: capital-budget
+    date: "2024-12-31"
+    content_verified: text-layer   # body: "Capitalized Expenditures 2024 Budget"
+    pages: 1
+    sha256: "b1fb172ca93c850e76b52f712af84bcd9f5d9320065bab947854b0d12d67140b"
+    bytes: 128946
+    carries:
+      - "Capital program by committee — Building $70,000, Equipment (miscellaneous plant/distribution, trailer, zero-turn mower, tank M…) etc."
+      - "⚠️ NO GINGER RIDGE / PROJECT GALAXY LINE ITEM. The project is absent from the District's own 2024 capital budget in the same year its GM signed the NDA — consistent with a customer-funded project outside the appropriation, and worth confirming against the service agreement the corpus does not hold."
+
+  - filename: Budget 2025.pdf
+    canonical: acrwd-annual-budget-appropriations-fy2025.pdf
+    type: annual-budget
+    date: "2025-12-31"
+    content_verified: text-layer   # body: "NET OPERATING CAPITAL AT YEAR END 2024 … PROJECTED RECEIPTS FOR 2025"
+    pages: 1
+    sha256: "dcac8a0e6893e053170c75d07c6ac36eaca7c5e68bd55eb28dc5bcaa4c42efc7"
+    bytes: 107074
+    carries:
+      - "Net operating capital at year end 2024 $9,451,121; less USDA debt reserve $31,121, encumbered 2024 expenses $1,668,822, transfer to 2025 receipts $450,000 → $7,301,178"
+      - "Projected 2025 receipts: rural customer sales $4,300,000; sales to public authorities $930,000; interest $225,000; other $150,000; tap fees $126,000; transfer from savings $450,000"
+
+  - filename: Budget 2025 - Capital.pdf
+    canonical: acrwd-capital-budget-fy2025.pdf
+    type: capital-budget
+    date: "2025-12-31"
+    content_verified: text-layer   # body: "Capitalized Expenditures 2025 Budget"
+    pages: 1
+    sha256: "57a30663fe295f434b82806c0bc2a54afeb3dd319eadeff1fc664e08e51c7b36"
+    bytes: 127805
+    carries:
+      - "Building Committee $81,000 (plant cameras, plant floor phase 2, well field road, Mineral Springs booster building, generator); Equipment Committee $85,000"
+      - "⚠️ Again NO Ginger Ridge line item, in the year the 100,000 gpd interim service was designed"
+
+  - filename: 2026 Budget.pdf
+    canonical: acrwd-annual-budget-appropriations-fy2026.pdf
+    type: annual-budget
+    date: "2026-12-31"
+    content_verified: rendered-image   # no text layer; p0: "ANNUAL BUDGET/APPROPRIATIONS FOR THE YEAR ENDED 12/31/2026"
+    pages: 2
+    sha256: "0eca59ffda6ed2ee3347100430137a8870aed5883083ce7107e3badea528a284"
+    bytes: 77214
+    carries:
+      - "Net operating capital at year end 2025 $9,338,864 → adjusted $8,461,783; projected 2026 receipts $6,351,000; projected total net operating capital FY2026 $14,812,783"
+      - "Projected disbursements $4,725,254 operating + $1,557,350 capital = $6,282,604; projected unrestricted cash at 12/31/26 $8,530,179"
+      - "⚠️ THE SCOPE FOOTNOTE THAT MATTERS: '(Budget does not include construction projects financed with grant and/or loans)' — the District's headline budget is not the place to look for the Ginger Ridge or Winchester capital programs, and its absence there proves nothing about them"
+      - "Salaries $1,457,200; debt service $808,080; LEGAL AND ENGINEERING $4,000 — the appropriated legal/engineering line is three orders of magnitude below the reimbursable engineering actually flowing through the check register"
+    notes: >-
+      The only budget with no text layer (ScanSnap Home 3.3.1, scanned 2025-12-30). Every
+      figure above was read from the RENDERED page, not from OCR.
+
+  - filename: ACRWD Report 2024.pdf
+    canonical: acrwd-monthly-financial-report-2024.pdf
+    type: monthly-cash-report
+    date: "2024-12-31"
+    content_verified: text-layer   # /Title: "ACRWD Report 2024.xlsx"; body carries all twelve months + Monthly Average
+    pages: 4
+    sha256: "1bdf6ad78b41c34f16e22fe55ed34452502e5ef72dece313e82d8dd7ba1f2da7"
+    bytes: 76143
+    carries:
+      - "Month-by-month checking, CD and USDA-reserve balances for all twelve months of 2024; checking monthly average $4,718,327"
+
+  - filename: ACRWD Report 2025.pdf
+    canonical: acrwd-monthly-financial-report-2025.pdf
+    type: monthly-cash-report
+    date: "2025-12-31"
+    content_verified: text-layer   # /Title: "ACRWD Report 2025.xlsx"; twelve months present
+    pages: 4
+    sha256: "9bc8f26b99e36742a8a718bc98239a8a4efa4bffd5f476acc1d7b7fd6ba48f0a"
+    bytes: 75725
+    carries:
+      - "Twelve months of 2025; checking climbs $4,795,676 (Jan) → $6,518,922 (Nov), monthly average $5,703,402"
+
+  - filename: ACRWD Report 2026.pdf
+    canonical: acrwd-monthly-financial-report-2026-partial-through-august.pdf
+    type: monthly-cash-report
+    date: "2026-08-31"
+    date_note: >-
+      PARTIAL YEAR. The sheet has twelve month columns but only January–August carry values;
+      the date recorded is the last month with data, not a year end.
+    content_verified: text-layer   # /Title: "ACRWD Report 2026.xlsx"; values stop after the eighth column
+    pages: 4
+    sha256: "f903fadf0de4985505ee9a7bcac2b0996a45e20bf58d0110cb8bdd50eb678036"
+    bytes: 73492
+    carries:
+      - "January–August 2026; checking $5,930,993 (Jan) → $6,456,634 (Aug), peaking $7,049,159 in June"
+      - "⚠️ Only eight of twelve columns are populated — do not read the blank columns as zeros, and do not compute a 2026 annual average from this sheet"

@@ -133,6 +133,7 @@ _COLLECTION_LABELS: dict[str, str] = {
     "prr-mandamus": "PRR & mandamus (legal history)",
     "recorder": "County Recorder (deeds)",
     "commissioners": "County Commissioners",
+    "usace": "U.S. Army Corps of Engineers",
 }
 
 
