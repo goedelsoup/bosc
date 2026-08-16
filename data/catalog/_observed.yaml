@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-16T14:18:10.080637+00:00'
+reconciled_at: '2026-08-16T21:28:39.500376+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -12,8 +12,8 @@ entries:
     site_scope: slug-scoped
   acrwd:
     exists: true
-    sha256: 7114e28f2fce70fa1a10ddfa2310e57b256f9ad98791c97efa6cd6c08312f8fe
-    size_bytes: 41484
+    sha256: 553efe37ca055cc62a2f8fa5f1561b8bbc54061a559de707a74ef0bcf1cc8cfb
+    size_bytes: 43993
     lfs_materialized: true
     file_count: 5
     missing: []
@@ -1322,10 +1322,10 @@ entries:
     site_scope: site:ottawa
   parcel-assemblage:
     exists: true
-    sha256: 76ce930b7a5c4481d035aa3ee15d8e43afb5073cba8557148f683e71c91352f5
-    size_bytes: 514518
+    sha256: 7fe7931bcd890c1cc7c50538652d842d69806d1e2ed075506b92e38cf316e9c8
+    size_bytes: 530750
     lfs_materialized: true
-    file_count: 10
+    file_count: 11
     missing: []
     asof: null
     stale: false

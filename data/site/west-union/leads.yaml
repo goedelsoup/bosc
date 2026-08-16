@@ -124,6 +124,31 @@ leads:
   source: data/extracted/west-union/acrwd/1997-1998-trustee-self-appointment.resolution.yaml
   note: OWED RECORD — R.C. 149.43 request for all trustee appointment resolutions 1999-2026.
 
+- id: ACRWD-CAMPUS-PARCEL-OWNERSHIP
+  kind: question
+  status: unanswered
+  tag: open
+  title: The campus parcel is identified, and who owns it is not
+  detail: >-
+    The campus is Adams County parcel 1830000079000, Sprigg Township, deeded 1016.2174 ac —
+    established 2026-08-16 by point-in-polygon against the coordinate the USACE itself published
+    (38.646748 / -83.659828), and matching the "approximately 1,016 acres" in the federal project
+    description. Geometry is committed at data/reference/west-union/parcel-assemblage.geojson.
+    ⚠️ WHAT IS STILL MISSING IS THE OWNER. Adams County's parcel service is a TAX-MAP layer with
+    no CAMA join — no owner, no situs address, no conveyance date, no valuation anywhere in it —
+    so the committed features carry nulls for all of them, and those nulls mean "the county does
+    not serve this", NOT "unowned" or "never sold". Nothing in the corpus yet says who holds the
+    1,016 acres, when it was conveyed, or for how much; the plan set puts BUCK CANYON PROPERTIES,
+    LLC on a DIFFERENT and much smaller parcel (1830000070002, 2.125 ac) on the water-main route.
+    Route: the Adams County Auditor (adamscountyauditor.org, searchable by parcel number) for the
+    CAMA record, and the Adams County Recorder for the deed itself.
+  source: >-
+    data/reference/west-union/parcel-assemblage.geojson (bosc:provenance caveats) ·
+    data/extracted/west-union/acrwd/ginger-ridge-service-commitment.md
+  note: >-
+    OWED RECORD — the conveyance would date the land acquisition, which is currently the earliest
+    UNDATED step in this project's timeline (the NDA of 2024-01-10 is the earliest dated one).
+
 - id: USACE-LRH-2025-00457-ATTACHMENTS
   kind: question
   status: unanswered

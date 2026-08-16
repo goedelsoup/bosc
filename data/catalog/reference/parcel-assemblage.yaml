@@ -5,6 +5,7 @@ status: reviewed
 producer:
   kind: connector
   command: parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson
+    (or, for a layer with no owner column at all, parcels --parcel <id,id,...> --geojson ...)
   connector_ref: watermark.hydrology.connectors.allen_gis
   source: Per-site county parcel GIS via the gis_parcel field-map, pulled as f=geojson reprojected
     to WGS84 (Fort Wayne = Allen County, IN iMap, parcel layer 10)
@@ -169,6 +170,33 @@ notes: >-
   the gap; 12385 TR 215, the hub's own SEC address, appears in no parcel in the 2023 slice. The
   site's civic/flood places (WPCC, upground reservoirs, the Eagle Creek Dry Storage Basin) are
   deliberately a SEPARATE committed file — see the findlay-civic-flood-places entry.
+  West Union (#2049): ONE parcel, and that is the finding — Adams County 1830000079000, Sprigg
+  Township, 1016.2174 ac deeded / 1009.50 ac planar, the Buck Canyon campus on the former DP&L
+  landfill north of the retired J.M. Stuart Station. It was identified by POINT-IN-POLYGON against
+  the coordinate the U.S. Army Corps published in its own §106 correspondence (38.646748 /
+  -83.659828), which falls inside exactly one parcel — and the county's two acreage columns turn
+  out to be BOTH of the Corps' figures: the deeded 1016.2174 is the "approximately 1,016 acres" of
+  the project description [verified], and the planar 1009.50 sits within half an acre of the
+  "approximately 1,009 acres" limits of disturbance [inference, not stated anywhere]. Because it is
+  a single existing tract there is NO land-assembly story here of the Sidney / Wilmington /
+  Bowling Green kind — no multi-seller roll-up to trace. THE FIRST ENTRY IN THIS SET WITH NO OWNER
+  DATA WHATSOEVER: Adams County serves a TAX-MAP layer (Parcel_Layer FeatureServer layer 4
+  'MasterParcel', the new adams_gis field-map) with no CAMA join at all — no owner, no owner
+  mailing name, no situs, no conveyance date, no valuation, no land use; its CAMA_LINK column is
+  blank on every row sampled. That is a step past Findlay's OGRIP substitute, which is
+  owner-redacted but still carries a tax-bill mailing name. So `parcels --owner` cannot pull it in
+  any form (the connector refuses cleanly on an empty owner_field), and this file is the reason the
+  by-NUMBER `--parcel <ids> --geojson` path exists. Its features read owner / situs_address /
+  owner_mailing_address / transfer_date = null, and those nulls mean THE COUNTY SERVES NONE OF
+  THEM, never "unowned" or "never sold" — ownership and the conveyance are [open] and are an
+  Auditor/Recorder pull. The file also carries a SECOND, much smaller parcel with a different role:
+  1830000070002 (2.125 ac deeded), which sheet G-003 of the ACRWD Ginger Ridge plan set lists as
+  route parcel #30 standing in BUCK CANYON PROPERTIES, LLC — the same entity the Corps addressed
+  its jurisdictional determination to. It sits ~1 km north of the campus boundary on the water-main
+  route and must NOT be read as the campus (an earlier note in this corpus did, and is corrected).
+  Right-county guard for a re-pull: at least nine other states have an Adams County and several
+  publish similar layers; this org (eFMIGXUWac5mgGdc) is confirmed Ohio's by its EPSG:3735 (Ohio
+  South) spatial reference and by the Virginia Military Survey layer it publishes alongside.
   Distinct from the Periplus frozen import
   (reference/periplus/bosc-parcels.geojson, catalogued under the periplus entry), which covers the
   Lima corridor parcels only.

@@ -795,11 +795,14 @@ def test_west_union_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> 
     decide, and the ACRWD production (34 PDFs) is the site's first document corpus.
 
     ``record`` clears ``RECORD_LIVE_THRESHOLD`` on four extractions plus the consent order that
-    previously seeded it alone. ``facility`` stays ``seeded`` for the SAME reason as before — the
-    load is deliberately ``[open]``, because AES Ohio's PJM TEAC Need ``Dayton-2026-001`` names no
-    customer and ``it_load_mw`` must stay ``None`` rather than publish an unattributable campus
-    draw. ``places`` stays ``absent``: the plan set gives the campus its first parcel number
-    (``1830000070002``, Buck Canyon Properties, LLC) but no committed geometry.
+    previously seeded it alone. ``places`` went live at #2049 on committed campus geometry — Adams
+    County parcel ``1830000079000``, found by point-in-polygon against the coordinate the Corps
+    published, and carrying the deeded acreage (1016.2174) the federal record rounds to "1,016".
+
+    ``facility`` stays ``seeded``, and that is the whole reason this site is Case and not
+    Reference: the load is deliberately ``[open]``, because AES Ohio's PJM TEAC Need
+    ``Dayton-2026-001`` names no customer, so ``it_load_mw`` stays ``None`` rather than publish an
+    unattributable campus draw. Geometry does not change that.
     """
     bundle = site_bundle("west-union")
     manifest = _manifest(bundle)
@@ -810,7 +813,7 @@ def test_west_union_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> 
     assert domains["backdrop"] == "live"
     assert domains["record"] == "live", f"record should be live off the ACRWD ingest, got {domains}"
     assert domains["facility"] == "seeded", "the load is [open]; facility must not lift"
-    assert domains["places"] == "absent", "no committed campus geometry — places must not scaffold"
+    assert domains["places"] == "live", "committed campus geometry (#2049) — parcel 1830000079000"
 
     # Pin the records feed to its extracted-tree paths, so a dropped or renamed extraction fails
     # here rather than silently dropping the domain back to `seeded` in production.

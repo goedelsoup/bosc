@@ -28,7 +28,7 @@
     "cooling_model": "hybrid_adiabatic",
     "cooling_model_source": "reference",
     "cooling_model_citation": "[reference] hybrid/adiabatic — dry cooling with seasonal evaporative assist, disclosed by Amazon in its Adams County brochure (amazon.adamscountyoh.gov, June 2026): 'we will rely on outside natural air cooling for about 97% of the year and only use water-based cooling during the hottest periods, which is less than 3% of annual operations', reducing electricity demand 25-35% at summer peak. Cooling water comes from the OHIO RIVER — ~19.7 million gallons per year (~54,000 GPD average) — with domestic water capped at 40,000 GPD from the Adams County Regional Water District. ⚠️ This is an operator disclosure, not a permit: no Ohio River intake authorization (USACE §10 / ODNR registration / ORSANCO) has been located, and the receiving POTW for the campus's sanitary discharge is [open]. ⚠️ The withdrawal is on the OHIO RIVER MAINSTEM and the site's jurisdictional streams are Elk Run and Carter Hollow — NOT Ohio Brush Creek, which this profile's basin and gage 03237500 screen. A dilution screen on that gage answers the wrong question for this facility (see the register).",
-    "parcels_relpath": null,
+    "parcels_relpath": "reference/west-union/parcel-assemblage.geojson",
     "footprint_relpath": null
   }
 ]

@@ -1539,3 +1539,86 @@ MIDDLETON_ZONING_SCHEMA = GisZoningSchema(
         ),
     ),
 )
+
+
+# Adams County, Ohio — the county Engineer/GIS tax-map parcel layer (#2049).
+#
+# ⚠️ THIS LAYER CARRIES NO CAMA JOIN. It is a tax-MAP layer: geometry, parcel number, two
+# acreage columns, township, and a path to the surveyor's plat PDF. There is no owner, no situs
+# address, no conveyance date, no valuation and no land-use code anywhere in the FeatureServer
+# (its single layer is `4: MasterParcel`; the `CAMA_LINK` column exists but is blank on every row
+# sampled, including the campus parcel). Every such field below is therefore `""` — the schema's
+# documented "absent" marker, which `Parcel.from_attrs` decodes to None rather than inventing a
+# value. Owner search is unavailable here and `parcels_geojson_by_owner` refuses cleanly.
+#
+# Right-county guard: there are Adams Counties in PA, CO, IL, IN, MS, NE, ND, WA and WI, and a
+# hub/AGOL search for "Adams County parcels" returns several of them. This layer is verified as
+# Adams County OHIO three ways: its org is the one behind the county's own GIS hub
+# (acgis-adamso.hub.arcgis.com, org eFMIGXUWac5mgGdc), its spatial reference is EPSG:3735
+# (NAD83 / Ohio South, ftUS), and the same org publishes a "VMS Boundary Lines" layer — the
+# Virginia Military Survey, which is the survey system of exactly this part of Ohio.
+ADAMS_PARCEL_SCHEMA = GisParcelSchema(
+    connector="adams_gis",
+    reference_dir="west-union-gis",
+    page_size=2000,  # the layer's maxRecordCount
+    out_fields=(
+        "PARCEL_NUM",
+        "Cal_Ac",
+        "Acreage",
+        "Township",
+        "Plat",
+        "SUB_PLAT",
+        "GISPLAT",
+        "Notes",
+    ),
+    id_field="PARCEL_NUM",  # 13-digit undashed auditor parcel number, e.g. "1830000079000"
+    owner_field="",  # ⚠️ no owner column in the layer — see the header note
+    owner_2_field="",
+    deeded_owner_field="",
+    situs_fields=(),  # no address columns
+    owner_addr_fields=(),
+    land_use_field="",
+    # `Cal_Ac` is the GIS PLANAR acreage and is the only numeric acreage column. The county's
+    # DEEDED acreage lives in `Acreage`, which is a STRING carrying a unit and a survey suffix
+    # ("1016.2174 ac S") that `_f()` cannot parse — it is pulled in `out_fields` so it reaches the
+    # cache, but it is deliberately not mapped here rather than silently truncated.
+    acres_field="Cal_Ac",
+    market_land_field="",
+    market_improvement_field="",
+    market_total_field="",
+    cauv_field="",
+    tax_district_field="Township",  # the civil township, the nearest thing the layer has
+    school_field="",
+    neighborhood_field="",
+    sale_date_field="",
+    sale_amount_field="",
+    valid_sale_field="",
+    id_normalize="verbatim",  # the 13-digit form is stored verbatim (no dashes anywhere)
+    date_decode="none",  # no date column to decode
+    land_use_decode="int",  # unused (land_use_field is empty)
+    deed_id_regex=r"\b\d{13}\b",  # the undashed 13-digit auditor parcel form
+    meta=GisMeta(
+        subject="Adams County, Ohio parcels (county tax-map geometry; NO CAMA/owner join)",
+        source="Adams County, Ohio GIS org (eFMIGXUWac5mgGdc, the org behind the county's "
+        "acgis-adamso.hub.arcgis.com hub) — Parcel_Layer FeatureServer layer 4 'MasterParcel'",
+        source_url=(
+            "https://services6.arcgis.com/eFMIGXUWac5mgGdc/arcgis/rest/services/"
+            "Parcel_Layer/FeatureServer/4"
+        ),
+        caveats=(
+            "NO OWNER, SITUS, SALE OR VALUATION DATA EXISTS IN THIS LAYER. A committed feature's "
+            "owner / situs_address / owner_mailing_address / transfer_date are null because the "
+            "county serves none of them here, NOT because the parcel is unowned or unsold. "
+            "Ownership must come from the Adams County Auditor (adamscountyauditor.org) or a "
+            "recorded instrument, and is a separate, uncommitted pull.",
+            "Two acreage columns disagree by design and BOTH matter: `Acreage` is the auditor's "
+            "DEEDED acreage as a string with a survey suffix ('1016.2174 ac S'), and `Cal_Ac` is "
+            "the GIS PLANAR calculation ('1009.50056252729'). The typed `acres` field carries the "
+            "planar figure; the deeded string is preserved only in the cached response.",
+            "`CAMA_LINK` is present in the schema but blank on every row sampled — it is not a "
+            "usable join key.",
+            "Right-county guard: ADAMS County OHIO. At least nine other states have an Adams "
+            "County, and several publish similarly-named parcel layers.",
+        ),
+    ),
+)

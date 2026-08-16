@@ -6,7 +6,7 @@
     "label": "West Union · Adams Co",
     "scope": "site",
     "links_out": 3,
-    "links_in": 10,
+    "links_in": 11,
     "lines": 13,
     "updated": null
   },
@@ -869,6 +869,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-acrwd-campus-parcel-ownership",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The campus parcel is identified, and who owns it is not",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 22,
+    "updated": null
+  },
+  {
     "id": "question/lead-acrwd-court-entry-930355",
     "node_class": "question",
     "kind": "lead",
@@ -932,7 +943,7 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 20,
-    "updated": null
+    "updated": "2026-08-16"
   },
   {
     "id": "question/lead-usace-lrh-2025-00457-attachments",
