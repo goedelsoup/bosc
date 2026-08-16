@@ -142,9 +142,14 @@ describe("the join, against the committed Lima bundle", () => {
 
   // 52 -> 68 at contract 2.1.0 (#1993). The classifier recognized 137 of 263 committed
   // extractions and missed 126; eight new genres publish 32 of them, and Lima holds most.
-  it("extracts 68 of 3,251 documents — 2.1% of the corpus", () => {
+  // 3,251 -> 3,254 (#2048): three H.B. 646 witness submissions added to
+  // `legal/select-committee-2026/witnesses/`. They arrived inside an ADAMS COUNTY records
+  // production but land in the LIMA bundle, and correctly so — `legal/` is network-global,
+  // while the other 48 files of that production stay peer-scoped under `west-union/` and
+  // `usace/west-union/` and are subtracted from the reference build's corpus scope.
+  it("extracts 68 of 3,254 documents — 2.1% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
-    expect(entries.length).toBe(3251);
+    expect(entries.length).toBe(3254);
     expect(countExtracted(entries, index)).toBe(68);
   });
 
@@ -161,8 +166,9 @@ describe("the join, against the committed Lima bundle", () => {
     expect(counts.plans).toEqual([2, 4]);
     // The two productions that are 84% of the catalog — held, and essentially unread. `legal`
     // rose 8 -> 15 at #1993 (the CRA agreement, the NDA, the treatment agreement, the school-
-    // district notice letters, both statewide bills), which is 0.9% of 1,733.
-    expect(counts.legal).toEqual([15, 1733]);
+    // district notice letters, both statewide bills). Denominator 1,733 -> 1,736 at #2048: the
+    // three H.B. 646 witness submissions, which are held and unread like the rest of `legal`.
+    expect(counts.legal).toEqual([15, 1736]);
     expect(counts.commissioners).toEqual([0, 995]);
   });
 

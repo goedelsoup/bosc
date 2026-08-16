@@ -76,9 +76,14 @@ describe("documentId — shape", () => {
 });
 
 describe("documentId — the corpus it has to address", () => {
-  it("mints a distinct handle for all 3,251 committed Lima rels", () => {
+  // 3,251 -> 3,254 (#2048): three H.B. 646 witness submissions added to
+  // `legal/select-committee-2026/witnesses/`. They arrived inside an ADAMS COUNTY records
+  // production but land in the LIMA bundle, and correctly so — `legal/` is network-global,
+  // while the other 48 files of that production stay peer-scoped under `west-union/` and
+  // `usace/west-union/` and are subtracted from the reference build's corpus scope.
+  it("mints a distinct handle for all 3,254 committed Lima rels", () => {
     const rels = limaRels();
-    expect(rels.length).toBe(3251); // a corpus change should surface here, not as a silent collision
+    expect(rels.length).toBe(3254); // a corpus change should surface here, not as a silent collision
     const ids = new Set(rels.map(documentId));
     expect(ids.size).toBe(rels.length);
   });

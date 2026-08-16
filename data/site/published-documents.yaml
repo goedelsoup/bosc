@@ -230,8 +230,21 @@ globs:            # fnmatch globs over the data/documents rel, e.g.  - 'permits/
   # signature block on every message. Cleared as public agency correspondence on that basis, with
   # the mobile number noted here rather than left to be discovered.
   #
-  # One file transmits a password for a consultant's delineation-report download link. Per the root
-  # CLAUDE.md that is evidence embedded in captured material, not a leak to redact.
+  # ⚠️ ONE FILE CARRIES A DOCUMENT PASSWORD, cleared knowingly. `Email Chain 1.pdf` p.4 is the
+  # consultant's transmittal of the WOTUS delineation report to the Corps, and it types a download
+  # password into the message body. Cleared for three reasons, recorded here rather than left to be
+  # discovered: (1) it is not our credential — it belongs to a third-party consultant, protects a
+  # file this corpus does not host, and was sent in May 2025, so we can neither rotate it nor
+  # meaningfully assess its life; (2) the source bytes are immutable public-records evidence and
+  # altering them is barred by the chain-of-custody rule in the root CLAUDE.md; (3) this file is the
+  # single most load-bearing message in the set — it is where Buck Canyon Properties, LLC and Derek
+  # Harmon are joined on the federal record — so withholding it to suppress a stale password would
+  # cost the site's clearest entity link.
+  # The password is deliberately NOT reproduced in this file or in the collection's filename-map:
+  # leaving it in the source is custody, quoting it into derived metadata is amplification.
+  # ⚠️ It DOES remain in `data/site/passages.ndjson`, which indexes the published page's own text.
+  # That is inherent to publishing the PDF — if the exposure is ever judged to outweigh the
+  # evidence, the fix is a `withhold:` rule on this one rel plus `watermark passages`, NOT an edit.
   # review: { by: goedelsoup, date: 2026-08-16, result: publish, basis: public-agency-correspondence }
   - 'usace/west-union/*'
 documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/foo.pdf

@@ -87,9 +87,14 @@ describe("isRoutableDoc — measured against the committed Lima corpus", () => {
   // Pinned counts. These are the whole argument that this is a precise filter and not a
   // heuristic: if a corpus change moves them, that belongs in review, not in a silent
   // route-count drift.
-  it("excludes exactly 54 of 3,251 entries (1.7%)", () => {
+  // 3,251 -> 3,254 (#2048): three H.B. 646 witness submissions added to
+  // `legal/select-committee-2026/witnesses/`. They arrived inside an ADAMS COUNTY records
+  // production but land in the LIMA bundle, and correctly so — `legal/` is network-global,
+  // while the other 48 files of that production stay peer-scoped under `west-union/` and
+  // `usace/west-union/` and are subtracted from the reference build's corpus scope.
+  it("excludes exactly 54 of 3,254 entries (1.7%)", () => {
     const entries = limaEntries();
-    expect(entries.length).toBe(3251);
+    expect(entries.length).toBe(3254);
     expect(entries.filter((e) => !isRoutableDoc(e))).toHaveLength(54);
   });
 
