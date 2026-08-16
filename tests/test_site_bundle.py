@@ -757,24 +757,12 @@ def test_every_committed_bundle_readiness_matches_its_own_feed_counts() -> None:
 # that lights up without an entry here still fails, and an entry whose evidence is later removed
 # fails too. Each one owes a cited instrument.
 _BACKDROP_ABOVE_FLOOR: dict[str, dict[str, str]] = {
-    # The 1993 Adams County consent order on the Village WWTP's NPDES 0PC00019*CD (#1278) — one
-    # in-scope `enforcement` record, so the domain SEEDS. `live` needs RECORD_LIVE_THRESHOLD (2).
-    #
-    # `facility` seeds on the Buck Canyon / AWS campus disclosed by the #1983 sweep. Its
-    # instruments: Adams County's OWN government domain names the operator
-    # (amazon.adamscountyoh.gov — $10B, 500 jobs, June 2026), the USACE Nationwide Permit 39
-    # verification of 2026-02-18 gives the twelve-building scope in Sprigg Township, and Ohio EPA
-    # construction-stormwater coverage `0GC04922*AG` (issued 2026-06-08) puts 535.0 ac of
-    # disturbance on the state record. It SEEDS rather than lifts because the load is deliberately
-    # `[open]`: the only MW figure — AES Ohio's PJM TEAC Need `Dayton-2026-001`, 100 MW (11/2028)
-    # ramping to 1,300 MW (03/2032) — is filed for an UNNAMED customer, so no instrument joins the
-    # operator to the load and `it_load_mw` stays None rather than publishing an unattributable
-    # campus draw. See data/extracted/west-union/data-centers.md.
-    "west-union": {"record": "seeded", "facility": "seeded"},
+    # (west-union left this table at #2047 — the ACRWD ingest lifted its `record` domain to
+    # `live` and the site to Case tier. See test_west_union_exports_at_case_tier below.)
 }
 
 
-@pytest.mark.parametrize("slug", ["toledo", "west-union"])
+@pytest.mark.parametrize("slug", ["toledo"])
 def test_backdrop_staged_site_exports_at_backdrop_tier(
     slug: str, site_bundle: Callable[[str], Path]
 ) -> None:
@@ -796,6 +784,44 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         )
     # Seeding is not lifting: no above-floor domain may read `live` at Backdrop tier.
     assert "live" not in set(risen.values())
+
+
+def test_west_union_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None:
+    """West Union left Backdrop at #2047, and what lifted it is a WATER DISTRICT'S MINUTE BOOK.
+
+    Adams County is essentially unzoned — no rezoning, no conditional-use hearing, no council
+    vote — so the legislative record that carries Sidney or Bowling Green does not exist here.
+    The Adams County Regional Water District is the only local public body with something to
+    decide, and the ACRWD production (34 PDFs) is the site's first document corpus.
+
+    ``record`` clears ``RECORD_LIVE_THRESHOLD`` on four extractions plus the consent order that
+    previously seeded it alone. ``facility`` stays ``seeded`` for the SAME reason as before — the
+    load is deliberately ``[open]``, because AES Ohio's PJM TEAC Need ``Dayton-2026-001`` names no
+    customer and ``it_load_mw`` must stay ``None`` rather than publish an unattributable campus
+    draw. ``places`` stays ``absent``: the plan set gives the campus its first parcel number
+    (``1830000070002``, Buck Canyon Properties, LLC) but no committed geometry.
+    """
+    bundle = site_bundle("west-union")
+    manifest = _manifest(bundle)
+    assert manifest["contract_version"] == _CV
+    readiness = manifest["readiness"]
+    assert readiness["tier"] == "case", f"west-union should now be a Case site, got {readiness}"
+    domains = readiness["domains"]
+    assert domains["backdrop"] == "live"
+    assert domains["record"] == "live", f"record should be live off the ACRWD ingest, got {domains}"
+    assert domains["facility"] == "seeded", "the load is [open]; facility must not lift"
+    assert domains["places"] == "absent", "no committed campus geometry — places must not scaffold"
+
+    # Pin the records feed to its extracted-tree paths, so a dropped or renamed extraction fails
+    # here rather than silently dropping the domain back to `seeded` in production.
+    rels = {r["rel"] for r in _rows(bundle, _feeds_by_name(bundle)["records"])}
+    assert rels == {
+        "regulatory/west-union/west-union-consent-order-1993.order.yaml",
+        "west-union/acrwd/1993-05-13-chapter-6119-conversion.resolution.yaml",
+        "west-union/acrwd/1997-1998-trustee-self-appointment.resolution.yaml",
+        "west-union/acrwd/2024-01-10-nondisclosure-agreement.parties.yaml",
+        "west-union/acrwd/2026-07-09-board-resolutions.resolution.yaml",
+    }, f"committed west-union records feed drifted, got {sorted(rels)}"
 
 
 def test_findlay_exports_at_reference_tier(site_bundle: Callable[[str], Path]) -> None:

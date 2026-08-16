@@ -74,7 +74,7 @@ def test_no_committed_extraction_changes_group() -> None:
         ("bill", "state-legislation", 2),
         ("retention_policy", "agency-policy", 1),
         ("development_agreement", "incentive-package", 2),
-        ("parties", "agreements", 6),
+        ("parties", "agreements", 7),
     ],
 )
 def test_each_new_key_claims_exactly_its_genre(key: str, group: str, expected: int) -> None:

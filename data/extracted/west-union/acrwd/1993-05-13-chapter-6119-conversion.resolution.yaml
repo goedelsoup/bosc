@@ -1,0 +1,121 @@
+# Adams County Water Company, Inc. — annual meeting of 1993-05-13: the members' vote to amend the
+# Articles of Incorporation and convert to an R.C. Ch. 6119 regional water district.
+# Epic #1983 (west-union readiness), ingested with PR #2047.
+#
+# THE MOMENT THE ELECTED BOARD ENDED. Every governance fact about the body that is now building a
+# water main to the Buck Canyon campus descends from this vote: 579 customers voted to replace a
+# board they elected with one a court appoints and which fills its own vacancies. Tags per CLAUDE.md.
+
+as_of: '2026-08-16'
+site: west-union
+strengthens: [record]
+epic: 'watermark-directory/the-watermark-directory#1983'
+
+source:
+  instrument: annual-meeting-minutes
+  file: data/documents/west-union/acrwd/governance/1993-1998 Elections-Appointments.pdf
+  sha256: 400aca51301b5325e1301674fca3f625619fae755f8b3cbb719783891aff6ad1
+  content_verified: rendered-image
+  content_verified_note: >-
+    ⚠️ The file carries NO text layer. All 13 pages were rendered at 200 DPI and read as images;
+    a text regex over this source returns an empty string, not a negative result.
+pages_read: [0, 1]
+
+resolution:
+  instrument: >-
+    Adams County Water Company, Inc. — member vote to amend the Articles of Incorporation,
+    converting the corporation to a Chapter 6119 regional water district and renaming it the
+    Adams County Regional Water District, Inc.
+  body: Members (customers) of Adams County Water Company, Inc., in annual meeting
+  body_kind: member_corporation
+  subject_matter: governance_conversion
+  meeting_date: '1993-05-13'
+  meeting_kind: annual
+  outcome: approved
+  presiding: James Lloyd, President
+
+  vote:
+    motion_verbatim: >-
+      "the amendment of the Articles of Incorporation to convert the corporation to a Chapter 6119
+      Regional Water Authority, to change the name of the corporation to Adams County Regional
+      Water District, Inc."
+    roll_call_recorded: false
+    tally_verbatim: '579 yes and 141 no'
+    yes: 579
+    no: 141
+    reported_by: Richard Seaman, Jr.
+    ballot_method: ballots/proxies, counted by inspectors appointed by the President
+
+  disclosures:
+    - id: CONVERSION-VOTE-1993
+      tag: '[verified]'
+      statement_verbatim: >-
+        "Richard Seaman, Jr., announced that the customers had approved, by a vote of 579 yes and
+        141 no, in favor of the amendment of the Articles of Incorporation to convert the
+        corporation to a Chapter 6119 Regional Water Authority, to change the name of the
+        corporation to Adams County Regional Water District, Inc."
+      note: >-
+        80.4% in favor on 720 votes cast. What was traded is visible only by reading this document
+        against the by-laws that followed: under the predecessor company the trustees were ELECTED
+        by the members at this very meeting, by petition and ballot, with vote totals published.
+        Under the 1994 by-laws the board "shall be composed as per the Entry of the Court", and
+        vacancies are filled by a three-trustee nominating committee and a two-thirds vote OF THE
+        TRUSTEES. ⚠️ Nothing in this corpus records what the members were told the conversion
+        would mean for their franchise; the minutes report the result, not the campaign.
+
+    - id: ELECTED-BOARD-SAME-MEETING
+      tag: '[verified]'
+      statement_verbatim: >-
+        "Richard Seaman, Jr., gave the results of the election as follows: Wendell Barnes - 390;
+        Patrick Bihl - 334; Maggie E. Cooper - 332; Russell Gaffin - 324; James Lloyd - 409;
+        Vernon 'Beau' Moore - 280. President Lloyd declared Wendell Barnes, Patrick Bihl, and
+        James Lloyd duly elected. Attorney David Wilson swore in the Trustees and administered
+        the oath of office."
+      note: >-
+        The last contested election in this corpus, held minutes before the vote that abolished
+        the mechanism. Six candidates for three seats, published totals.
+
+    - id: LINE-EXTENSION-PROGRAM-1993
+      tag: '[verified]'
+      statement_verbatim: >-
+        "the company is planning, in conjunction with the Farmers Home Administration and the
+        Appalachian Regional Commission, to construct line extensions in the following areas:
+        Portsmouth Road, 12,866 feet; State Route 73, 21,000 feet; Frog Hollow, Hackelshin, and
+        Black Hollow roads, 28,000 feet; and State Route 41 to Woodland Altars, 19,000 feet. The
+        project will be funded with FmHA, ARC, and local funds. The total estimated cost of the
+        project is $535,000."
+      note: >-
+        Context for scale: the whole 1993 capital program was $535,000 across 80,866 feet of main.
+
+  financials:
+    as_of: '1993-03-31'
+    operating_account_verbatim: >-
+      "OPERATING ACCOUNT, consisting of cash on hand, certificates of deposit, money market
+      deposit, Farmers Home Administration reserve, and Farmers Home Administration supervised
+      construction account amounted to $1,001,643.76."
+    note: >-
+      ⚠️ The rendered page prints "$1,001.643.76" — a typewriter period where a comma belongs.
+      Read as $1,001,643.76 from the digit grouping. Recorded because the corpus rule is that
+      figures come from the image and the image is imperfect here.
+
+  signatories:
+    - {name: James Lloyd, title: President}
+    - {name: Richard Seaman, Jr., title: Secretary}
+  signature_note: >-
+    ⚠️ The President's signature line reads "James Lloyd, President" but the signature above it is
+    Wendell Barnes's. Recorded as read; not reconciled.
+
+open_questions:
+  - id: CONVERSION-COURT-ENTRY
+    tag: '[open]'
+    question: >-
+      The Common Pleas entry that gave the conversion legal effect is NOT in this corpus. The 1994
+      by-laws recite it: Adams County Court of Common Pleas, CASE NO. 930355, entry filed
+      1994-01-10. Pull the docket and the entry from the Adams County Clerk of Courts — it is the
+      District's creating instrument and it fixes how the nine trustees are composed.
+  - id: CONVERSION-CAMPAIGN-RECORD
+    tag: '[open]'
+    question: >-
+      What were members told before the 579-141 vote? Any notice of meeting, proxy statement or
+      mailing describing the amendment would show whether the loss of the elected board was
+      disclosed. Not in the corpus.

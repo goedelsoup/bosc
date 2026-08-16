@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "d4bb47a852877b23e9d1cf1f4730717f53db5e6118848bef095cc323bf7eb159",
+  "catalog_version": "427e6ab9324c5852b20ba07a51f8082ad0832bdb4efe82e1b586ee8e57454c09",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -649,6 +649,14 @@
       "site": "lima",
       "local_id": "abatement-parameters",
       "title": "Allen County, OH Abatement Parameters + What-If Scenario Knobs",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:acrwd",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "acrwd",
+      "title": "West Union / Adams County OH — ACRWD Governance & Ginger Ridge Service Record",
       "feed": "catalog"
     },
     {

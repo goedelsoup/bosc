@@ -88,16 +88,29 @@ documents:
     bytes: 857344
     carries:
       - "The predecessor company's MEMBER-ELECTED trustees — the governance that the 1994 court order replaced with court appointment. Annual meeting 1993-05-13, President James Lloyd presiding, election of three trustees to three-year terms by member petition and ballot."
+      - "⚠️ THE CONVERSION VOTE, and it is the most consequential document in this site's corpus: at the 1993-05-13 annual meeting Richard Seaman, Jr. 'announced that the customers had approved, by a vote of 579 YES and 141 NO, in favor of the amendment of the Articles of Incorporation to convert the corporation to a Chapter 6119 Regional Water Authority, to change the name of the corporation to Adams County Regional Water District, Inc.' The members voted, by better than four to one, to replace their own elected board with a court-appointed one."
+      - "⚠️ THE SELF-APPOINTMENT POWER, first exercised: Res. 97-119 (1997-12-11) re-appoints Baxla, McDowell and Cooper — Yes 5, No 1 (Cooper, on his own re-appointment), ABSTAIN 2 (Baxla, McDowell, on theirs). Res. 98-90 (1998-12-10) re-appoints Gaffin, Gray and Seaman — Yes 5, No 0, ABSTAIN 3 (all three beneficiaries). The board seating itself, with the beneficiaries recusing, on the record."
+      - "Res. 97-19 (1997-02-13): Jimmy Tadlock resigned 'due to a conflict with his position as township trustee' — Chris Baxla appointed to the unexpired term"
+      - "A board roster table as of 1997-02-13 with all nine trustees, offices and term expirations, plus the four standing committees (Equipment, Building & Grounds, Policy, Personnel)"
+      - "1993 line-extension program announced at the annual meeting, FmHA/ARC/local funded, $535,000 estimated: Portsmouth Road 12,866 ft; SR 73 21,000 ft; Frog Hollow/Hackelshin/Black Hollow 28,000 ft; SR 41 to Woodland Altars 19,000 ft"
       - "Letterhead: 'Adams County Water Co., Inc., P.O. Box 105 Cherry Fork, Ohio 45618 · 1-513-544-2396 · 9203 SR 136 West Union, Ohio 45693' — dates the SR 136 address to at least 1993 and preserves the pre-split 513 area code"
     pii: >-
-      ⚠️ CONTAINS PRIVATE RESIDENTIAL ADDRESSES. Page 0 alone carries a candidate slate listing
-      six individuals with full home addresses (e.g. "Wendell Barnes / 7114 State Route 125 /
-      West Union, OH 45693"). The remaining 12 pages were rendered but not swept
-      address-by-address, so the count is a FLOOR, not a total. This file is INGESTED but NOT
-      CLEARED FOR PUBLICATION — it must not be added to data/site/published-documents.yaml
-      without a named review decision. Candidacy for a member-company board is a public act;
-      a 1993 home address of a private individual is not obviously still publishable in 2026.
-      That is the user's call, not an ingest-time default.
+      ⚠️ CONTAINS PRIVATE RESIDENTIAL ADDRESSES — swept page by page, 13 of 13 (2026-08-16).
+      TWENTY-ONE distinct private individuals appear with full residential street addresses:
+      the candidate slates read into the annual meetings of 1993-05-13 (6), 1994-04-14 (6) and
+      1996-04-11 (11, of which 3 repeat), plus two appointment resolutions that recite a home
+      address in the operative clause — Res. 97-19 (Chris Baxla, 2855 Nichols Ridge Road,
+      Seaman) and Res. 98-49 (Daniel Fristoe, 4307 Steam Furnace Rd., Peebles). The later
+      re-appointment resolutions (97-119, 98-90) name town only.
+      ⚠️ FOUR of the twenty-one sat on this board within the last three years: Howard A.
+      "Tony" Staggs (sitting President), Chris Baxla, Gerald Gray, and Daniel Fristoe (a
+      trustee as recently as the 2024-01-11 minutes). The addresses are 1993-98 vintage and
+      are NOT asserted to be current.
+      CLEARED FOR PUBLICATION 2026-08-16 as disclosed public record by operator decision —
+      NOT as the outcome of a passed PII sweep. See the `west-union` collection entry in
+      data/site/published-documents.yaml for the full basis; the short form is that this file
+      carries the members' 579-141 vote to abolish their own elected board, and candidacy for
+      a public water utility's board is a public act.
 
   - filename: 1994 Bylaws.pdf
     canonical: acrwd-board-of-trustees-bylaws-1994-exhibit-a.pdf

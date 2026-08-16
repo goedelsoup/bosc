@@ -1,6 +1,6 @@
 {
   "site": "west-union",
-  "catalog_version": "5b67fe49cbb23c656fbbbb040d52307cbcdbf7b42524f3d1a168166bb0dee731",
+  "catalog_version": "2437f8cccc2418536db51376ebe8c1a98f352a77e361e75a8872847c22179047",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -612,6 +612,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:west-union:acrwd",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "acrwd",
+      "title": "West Union / Adams County OH — ACRWD Governance & Ginger Ridge Service Record",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:west-union:air-emission-factors",
       "kind": "dataset",
       "site": "west-union",
@@ -1068,11 +1076,99 @@
       "feed": "entities"
     },
     {
+      "handle": "lead:west-union:ACRWD-COURT-ENTRY-930355",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "ACRWD-COURT-ENTRY-930355",
+      "title": "The court entry that created the water district is cited in its by-laws but not held",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:west-union:ACRWD-MINUTES-GAP",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "ACRWD-MINUTES-GAP",
+      "title": "Roughly half the board minutes covering the project period were not produced",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:west-union:ACRWD-OEPA-PLAN-APPROVAL",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "ACRWD-OEPA-PLAN-APPROVAL",
+      "title": "Ohio EPA's plan approval for the Ginger Ridge water main was days away and is not held",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:west-union:ACRWD-PWSID",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "ACRWD-PWSID",
+      "title": "The District's public water system ID is OH0100012, and the system is groundwater-sourced",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:west-union:ACRWD-SERVICE-AGREEMENT",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "ACRWD-SERVICE-AGREEMENT",
+      "title": "No agreement exists in the record between the water district and the campus it is building for",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:west-union:ACRWD-TRUSTEE-APPOINTMENTS-1999-2026",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "ACRWD-TRUSTEE-APPOINTMENTS-1999-2026",
+      "title": "How the sitting board was appointed is undocumented between 1999 and 2026",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:west-union:USACE-LRH-2025-00457-ATTACHMENTS",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "USACE-LRH-2025-00457-ATTACHMENTS",
+      "title": "Every attachment to the federal §404 file is named in the emails and none was produced",
+      "feed": "leads"
+    },
+    {
       "handle": "record:west-union:regulatory/west-union/west-union-consent-order-1993.order.yaml",
       "kind": "record",
       "site": "west-union",
       "local_id": "regulatory/west-union/west-union-consent-order-1993.order.yaml",
       "title": "Consent Order (Adams County C.P. 89-CIV-228)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:west-union:west-union/acrwd/1993-05-13-chapter-6119-conversion.resolution.yaml",
+      "kind": "record",
+      "site": "west-union",
+      "local_id": "west-union/acrwd/1993-05-13-chapter-6119-conversion.resolution.yaml",
+      "title": "Adams County Water Company, Inc. — member vote to amend the Articles of Incorporation, converting the corporation to a Chapter 6119 regional water district and renaming it the Adams County Regional Water District, Inc.",
+      "feed": "records"
+    },
+    {
+      "handle": "record:west-union:west-union/acrwd/1997-1998-trustee-self-appointment.resolution.yaml",
+      "kind": "record",
+      "site": "west-union",
+      "local_id": "west-union/acrwd/1997-1998-trustee-self-appointment.resolution.yaml",
+      "title": "Adams County Regional Water District — Resolutions 97-19, 97-20, 97-119, 98-49 and 98-90: trustee appointment, re-appointment, and the definition of the term-expiration date",
+      "feed": "records"
+    },
+    {
+      "handle": "record:west-union:west-union/acrwd/2024-01-10-nondisclosure-agreement.parties.yaml",
+      "kind": "record",
+      "site": "west-union",
+      "local_id": "west-union/acrwd/2024-01-10-nondisclosure-agreement.parties.yaml",
+      "title": "Nondisclosure Agreement — Adams County Regional Water District and an unnamed \"Company\", executed 2024-01-10",
+      "feed": "records"
+    },
+    {
+      "handle": "record:west-union:west-union/acrwd/2026-07-09-board-resolutions.resolution.yaml",
+      "kind": "record",
+      "site": "west-union",
+      "local_id": "west-union/acrwd/2026-07-09-board-resolutions.resolution.yaml",
+      "title": "Adams County Regional Water District — Resolutions 26-41 through 26-47, adopted 2026-07-09",
       "feed": "records"
     }
   ]

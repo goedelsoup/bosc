@@ -1,0 +1,86 @@
+id: acrwd
+title: West Union / Adams County OH — ACRWD Governance & Ginger Ridge Service Record
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: Adams County Regional Water District records production received 2026-08-15 (34 PDFs
+    — governance, board minutes 2024-01 to 2026-07, budgets/financials, the executed
+    nondisclosure agreement and the Ginger Ridge Road water-main plan set), shelved at
+    data/documents/west-union/acrwd/; hashes and content-verified dates in the per-genre
+    filename-map.yaml. Ohio EPA 2026 PWS monitoring schedule (Adams County) for the PWS ID.
+license: public record / public domain
+access_tier: public
+site_scope: site:west-union
+storage:
+- relpath: extracted/west-union/acrwd/1993-05-13-chapter-6119-conversion.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/west-union/acrwd/1997-1998-trustee-self-appointment.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/west-union/acrwd/2024-01-10-nondisclosure-agreement.parties.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/west-union/acrwd/2026-07-09-board-resolutions.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/west-union/acrwd/ginger-ridge-service-commitment.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- acrwd
+- water-district
+- adams-county
+- west-union
+- buck-canyon
+- ginger-ridge
+- project-galaxy
+- nondisclosure-agreement
+- chapter-6119
+- governance
+- board-minutes
+- cooling-water
+- public-records
+notes: 'The utility-side record of the Buck Canyon campus (#1983, ingested PR #2047). Adams
+  County is essentially unzoned, so there is no rezoning, hearing or council vote — the water
+  district is the only local public body with something to decide, and its board minutes are
+  the only continuous local record of the project. FOUR extractions plus a narrative. (1) The
+  executed NONDISCLOSURE AGREEMENT of 2024-01-10: the agency box is complete (GM Rickey W.
+  Adamson) and THE COMPANY IS NAMED NOWHERE — the recital''s location blank is unfilled, the
+  notice block is "Attn: [____]", and the drafter expects to supply contact information "once
+  it has revealed its identity to the Agency". §1 sweeps the EXISTENCE of the relationship into
+  the secret, §5 requires prior written notice to the Company before any R.C. 149.43 disclosure
+  (no day-count, unlike Sidney''s CRA §32), §10 auto-renews with indefinite survival on
+  §§6/9/10/11. The Board authorized the signature 2024-01-11 — ONE DAY AFTER the date on it;
+  both dates are primary and the discrepancy is recorded, not resolved. (2) The 1993-05-13
+  MEMBER VOTE, 579 yes / 141 no, to amend the Articles and convert to an R.C. Ch. 6119 district
+  — the moment an elected board became a court-appointed one; the last contested trustee
+  election in the corpus was held minutes earlier at the same meeting. (3) The 1997-98
+  SELF-APPOINTMENT resolutions (97-19, 97-20, 97-119, 98-49, 98-90) showing the vacancy
+  mechanism in fact, with every beneficiary abstaining on their own re-appointment; four members
+  of the board that authorized the NDA had held their seats since 1997-98 (Staggs, Gray, Baxla,
+  Fristoe), none ever elected to them. (4) Resolutions 26-41 to 26-47 of 2026-07-09, where Ohio
+  EPA''s review of the Ginger Ridge main is reported complete. THE SERVICE ARC, from the minutes:
+  codename "Project Galaxy" (2024-10) -> new wells + treatment expansion + transmission main to
+  the former J.M. Stuart Station / Carter Hollow, with an interim Ginger Ridge line for potable
+  AND "SUPPLEMENTAL COOLING WATER" at 100,000 GPD (2025-04/05) -> renamed "Ginger Ridge Water
+  Line" (2025-10) -> the client DELETES the tank the District wanted (2025-12) -> Ohio EPA review
+  complete (2026-07). ⚠️ The 100,000 gpd is an INTERIM engineer''s figure, never a disclosed
+  campus demand. ⚠️ "Project Galaxy" also names projects in Shelby and Fayette counties — a
+  codename, never a key. JOINS ESTABLISHED: the plan set''s sheet G-003 parcel table lists route
+  parcel #30 as BUCK CANYON PROPERTIES, LLC at auditor parcel 1830000070002 — the same entity the
+  USACE addressed its jurisdictional determination to — and the transmission main''s Carter Hollow
+  terminus is the hollow the Corps permits 485 lf of fill in. The District''s PWS ID is OH0100012
+  (Community, GROUND WATER source), [verified] from Ohio EPA''s own 2026 Adams monitoring
+  schedule — not to be confused with OH0100112, Manchester Village. Drove readiness.record
+  seeded -> live and the site tier backdrop -> case. OPEN (see data/site/west-union/leads.yaml,
+  7 leads): no service agreement between the District and the customer exists in the record;
+  Common Pleas Case No. 930355 (the District''s creating entry) is cited in the by-laws and not
+  held, and the Clerk''s online search is reCAPTCHA-gated so the route is in-person; the Ohio EPA
+  plan approval expected week of 2026-07-13 is unheld and DDAGW has no public plan-approval
+  search; ~16 of ~31 monthly minutes were not produced; trustee appointments 1999-2026 are
+  undocumented; and every attachment to the USACE §404 file is named in the emails but absent.'

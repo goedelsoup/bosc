@@ -68,20 +68,24 @@ documents:
     sha256: "df0d7470d754df49c0e1db8355237ca970ecab99434710c6ff17a2b8a4ebdfe7"
     bytes: 15589835
     carries:
-      - "⚠️ THE PLAN SET LABELS THE SERVED PARCEL 'BUCK CANYON'. This is the only document in the ACRWD production that carries the project's regulatory name — the minutes never do. It is the join between the District's pipe and the USACE/Ohio EPA file in ../../../usace/west-union/."
+      - "⚠️ THE PARCEL-LEVEL JOIN, on sheet G-003: route parcel #30 is 'BUCK CANYON PROPERTIES LLC', Adams County auditor parcel 1830000070002. That is the SAME legal entity the USACE addressed its jurisdictional determination to (../../../usace/west-union/, Email Chain 1), and it gives the campus its first parcel number in this corpus. The minutes never name it; the drawing does."
+      - "Sheet G-003's master table is an EASEMENT-ACQUISITION tracker: 32 parcels with columns for 'Verbal Approval Received from Owner', 'Easement Letter Issued to Owner for Signature' and 'Signed Easement Approval Received' — all three date columns BLANK on this issue of the drawing, matching the minutes' easement campaign running Nov 2025 → May 2026"
+      - "Special conditions recorded per parcel, including 'TREE IN FRONT OF HOUSE TO BE REMOVED (STA 62+00)', 'EX 3\" WL STAYS IN SERVICE FROM SHELTON TO HOSKINS / PLACE 2\" FLUSH HYDRANT AT END', and ten numbered DIRECTIONAL BORE locations by station"
       - "Engineer of record: LEO B. CONKEL JR., P.E. No. 57781 (the 'Lee Conkel' of the minutes), for CHA CONSULTING, INC., 471 East Broad Street, Suite 2010, Columbus, OH"
       - "Owner: Adams County Regional Water District, 203 [sic — OCR of 9203] OH-134, West Union, OH 45693"
       - "Plan-and-profile sheets C001–C017+ with stationing to at least STA 103+00; a PROPOSED VALVE VAULT is called out on the location map — consistent with the December 2025 minutes' 'the tank has been deleted by the client and a meter vault will be used'"
       - "Route parcels labelled with auditor parcel numbers, including HIGHLANDS NATURE SANCTUARY INC (1840000003002) and CHESTNUT ROAD FARM LLC (1840000003000) — the main runs past a private nature preserve"
     pii: >-
-      ⚠️ CONTAINS NAMED PRIVATE LANDOWNERS along the route, in the ordinary way an engineering
-      plan set does: parcel labels such as "COOPER RODNEY D 1700000026000", "EVANS WILLIAM L
-      B/OR MISTY 1700000027002", "KAROLYI WILLIAM J & SMITH JOHN W & KAROLYI CAROLY J
-      TRUSTEES", "CORNELL JOYCE E TRUSTEE", and a construction note naming "JOHN CONDON
-      (OWNER) TO APPROVE PATH THROUGH THE YARD". These are auditor ownership labels (public
-      record) rather than a residential roster, but they are names of private individuals
-      attached to locations. INGESTED, NOT CLEARED FOR PUBLICATION — no
-      data/site/published-documents.yaml entry without a named review decision.
+      CONTAINS NAMED PRIVATE LANDOWNERS along the route, in the ordinary way an engineering plan
+      set does — but NAMES AND PARCEL NUMBERS ONLY, no street or mailing addresses. Sheet G-003
+      carries the master table: 32 numbered route parcels, each as owner name + 13-digit auditor
+      parcel ID (e.g. "IWANSKI EDWARD J / 1700000027005", "EVANS WILLIAM L &/OR MISTY L /
+      1700000027002", "CHESTNUT ROAD FARM LLC / 1840000003000"). One construction note names a
+      landowner: "JOHN CONDON (OWNER) TO APPROVE PATH THROUGH THE YARD."
+      CLEARED FOR PUBLICATION 2026-08-16: published county auditor CAMA data on a public
+      engineering drawing. Coverage: 3 of 24 sheets rendered and read in full PLUS the G-003
+      master table, which is itself the exhaustive parcel index — so the owner inventory is
+      complete, but this is NOT a claim that every one of the 24 sheets was examined.
     notes: >-
       Vector CAD text extracts in scrambled reading order (each label lands as isolated tokens);
       the extracted text is a FINDING AID ONLY. Any figure, station, diameter or elevation must

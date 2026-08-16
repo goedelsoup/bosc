@@ -1,0 +1,147 @@
+# Adams County Regional Water District — executed nondisclosure agreement, 2024-01-10.
+# Epic #1983 (west-union readiness), ingested with PR #2047.
+#
+# THE INSTRUMENT THAT COMES FIRST. Ten months before the District's own minutes name a project
+# at all, and roughly two years before any federal or state instrument named Buck Canyon, the
+# General Manager of a public water utility signed a confidentiality agreement whose counterparty
+# the document does not name — and which makes its own existence confidential. Tags per CLAUDE.md.
+
+kind: nondisclosure_agreement
+subject: >-
+  Nondisclosure Agreement — Adams County Regional Water District and an unnamed "Company",
+  executed 2024-01-10
+
+as_of: '2026-08-16'
+site: west-union
+strengthens: [record]
+epic: 'watermark-directory/the-watermark-directory#1983'
+
+provenance:
+  source_path: data/documents/west-union/acrwd/ginger-ridge/NDA.pdf
+  sha256: 8712fce975640215fc2bbec22089d5a556104d970139483d034aae38a4cc65da
+  pages: 'pp. 1-2 (0-based 0-1) — the complete instrument'
+  content_verified: text-layer
+  evidence: >-
+    Native text layer (PrimoPDF export of the executed copy, /Title "NONDISCLOSURE AGREEMENT").
+    The form is captioned "Nondisclosure Agreement (1/14)" on p.1 and "(10/13)" on p.2 — two
+    revision stamps of the drafter's own template on one instrument, recorded as read.
+
+parties:
+  agency: >-
+    ADAMS COUNTY REGIONAL WATER DISTRICT ("Agency") — a regional water district organized under
+    R.C. Ch. 6119, 9203 SR 136 / P.O. Box 427, West Union, OH 45693. Signed by Rickey W. Adamson,
+    General Manager, 1/10/2024. [verified] — the AGENCY box of the executed page is complete.
+  company: >-
+    ⚠️ NOT NAMED ANYWHERE IN THE INSTRUMENT. [verified] as an ABSENCE, read off the document:
+    the recital reads "A company (together with its Affiliates or agents of any of the foregoing,
+    collectively the 'Company') has approached you in connection with a project that may be
+    located in _______" — the location blank is unfilled — and the notice block reads
+    "Notices to Company will be delivered: Attn: [____________________]."
+  company_identification_mechanism: >-
+    §Preamble and the closing notice paragraph together make the anonymity a designed feature,
+    not an oversight: "When the Company has revealed its identity to the Agency, all references
+    to the 'Company' in this nondisclosure agreement will be deemed to be (a) references to the
+    Company's actual legal entity ... and (b) CONFIDENTIAL INFORMATION", and "The Company may
+    change the foregoing notice information at any time and expects to provide new contact
+    information ONCE IT HAS REVEALED ITS IDENTITY TO THE AGENCY."
+
+authorization:
+  board_action:
+    body: Board of Trustees, Adams County Regional Water District
+    date: '2024-01-11'
+    moved_by: Sam Cooper
+    seconded_by: Brent Crawford
+    outcome: approved
+    tally_verbatim: 'with all in favor'
+    motion_verbatim: >-
+      "to approve permission for Rick Adamson to sign a non-disclosure agreement for a company
+      interested in purchasing and developing the former Stuart Generating Plant land"
+    source_path: data/documents/west-union/acrwd/minutes/Minutes -January 2024.pdf
+    sha256: 7726c5bed3a6ce53a2046b62cd1c6b42234477d8601adc5654484ef5223ad9ac
+  sequence_note: >-
+    ⚠️ THE SIGNATURE PRECEDES THE AUTHORIZATION BY ONE DAY. The executed page is dated 1/10/2024;
+    the Board voted 2024-01-11. [verified] from two independent primary sources (the instrument's
+    own agency box and the District's own minutes). This corpus records the discrepancy and does
+    NOT resolve it — a one-day gap is equally consistent with a clerical date, a ratification
+    practice, or a signature ahead of authority, and nothing in the corpus distinguishes them.
+    ⚠️ Do not characterize it as unauthorized signing.
+
+terms:
+  - id: NDA-SCOPE-RELATIONSHIP
+    section: '§1'
+    tag: '[verified]'
+    statement_verbatim: >-
+      "'Confidential Information' means all nonpublic information ... relating to Company or
+      disclosed by Company or its Affiliates to Agency ... including THE NATURE, CONTENT, AND
+      EXISTENCE OF THE PARTIES' COMMERCIAL RELATIONSHIP or discussions about a possible
+      relationship or transaction, or any discussions or negotiations between the parties."
+    note: >-
+      The existence of the relationship is itself the secret. This is the clause that makes the
+      District's own minutes read "the company" for two years.
+
+  - id: NDA-PUBLIC-RECORDS-VETO-WINDOW
+    section: '§5'
+    tag: '[verified]'
+    statement_verbatim: >-
+      "Agency may disclose Confidential Information as required to comply with (a) orders of
+      governmental entities with jurisdiction over it and (b) applicable freedom of information
+      or public records laws, IF Agency (i) gives Company PRIOR WRITTEN NOTICE sufficient to
+      allow Company to seek a protective order or other remedy ..., (ii) discloses only such
+      information as is required by the governmental entity, and (iii) uses commercially
+      reasonable efforts to obtain confidential treatment for any Confidential Information so
+      disclosed."
+    note: >-
+      A private notice-and-object window bolted onto R.C. 149.43. ⚠️ It fixes NO number of days,
+      unlike the five business days in Sidney's CRA §32 (data/extracted/sidney/). Whether such a
+      clause is enforceable against Ohio's public-records act is a legal question this corpus does
+      not answer; what is [verified] is that a public body agreed to it.
+
+  - id: NDA-DURATION
+    section: '§10'
+    tag: '[verified]'
+    statement_verbatim: >-
+      "This Agreement is effective as of the date Confidential Information is first received and
+      will continue for 3 years, after which it AUTOMATICALLY RENEWS unless either party
+      terminates ... by providing at least 90 days prior written notice ..., provided, that
+      Agency's obligations with respect to Confidential Information will survive for 5 years
+      following termination ..., and Sections 6, 9, 10, and 11 will survive INDEFINITELY and the
+      confidentiality obligations ... will continue to apply ... for as long as the information
+      continues to constitute a trade secret."
+
+  - id: NDA-GOVERNING-LAW-BEFORE-SITE
+    section: '§11'
+    tag: '[verified]'
+    statement_verbatim: >-
+      "This Agreement will be governed by internal laws of THE STATE IN WHICH THE PROPERTY WHERE
+      THE PROJECT IS TO BE BUILT IS LOCATED, without reference to its choice of law rules."
+    note: >-
+      Drafted to be signed before the site is known — the same posture as the unfilled location
+      blank in the recital. [inference] that this is a multi-state siting template; nothing in the
+      instrument says so.
+
+  - id: NDA-NO-COUNTERPARTY-SIGNATURE
+    tag: '[verified]'
+    statement_verbatim: >-
+      The executed copy carries a completed AGENCY box only. No Company signature, printed name,
+      title, date or notice address appears anywhere on either page.
+
+open_questions:
+  - id: NDA-WHO
+    tag: '[open]'
+    question: >-
+      Who is the "Company"? The corpus cannot answer from this instrument. The 2024-01-11 minutes
+      describe it only as "a company interested in purchasing and developing the former Stuart
+      Generating Plant land". By 2024-10-10 the District's minutes call the project "Project
+      Galaxy"; by 2025-10-09 they retire that name. Buck Canyon Properties, LLC appears on the
+      District's own plan set (route parcel #30, auditor parcel 1830000070002) and on the USACE
+      jurisdictional determination — but NO instrument in this corpus joins that LLC to this NDA.
+  - id: NDA-COUNTERSIGNED-COPY
+    tag: '[open]'
+    question: >-
+      Does a countersigned copy exist? R.C. 149.43 request to ACRWD for the fully executed
+      agreement, any amendment, and any §5 notice the District has given or received.
+  - id: NDA-SECTION-5-INVOCATIONS
+    tag: '[open]'
+    question: >-
+      Has §5 ever been invoked — i.e. has the District notified the Company of a pending
+      public-records request? That correspondence would name the counterparty.

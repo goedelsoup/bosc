@@ -81,7 +81,13 @@ def test_no_collision_across_the_committed_corpus() -> None:
     # 3250 → 3251 (#1265): the same lag, again. Re-exporting Lima for the `fmtMult` fix surfaced
     # `legal/ohio-revised-code/122.17-10-3-2023.pdf`, the job-creation-tax-credit statute, which
     # the committed bundle predated. Reviewed: all 3251 handles are distinct.
-    assert len(rels) == 3251, "a corpus change belongs in review, not a silent collision"
+    # 3251 → 3254 (#2047): three H.B. 646 witness submissions added to
+    # `legal/select-committee-2026/witnesses/` (Petty, Harper, Pokladnik). They arrived inside an
+    # ADAMS COUNTY production but reach the LIMA bundle, and correctly so — `legal/` is network-
+    # global, not peer-scoped, so the reference build reads it. The other 48 files of that same
+    # production do NOT appear here, because `west-union/` and `usace/west-union/` are west-union's
+    # eponymous prefixes and are subtracted from Lima's scope (#1505). Reviewed: all 3254 distinct.
+    assert len(rels) == 3254, "a corpus change belongs in review, not a silent collision"
     assert len({document_id(rel) for rel in rels}) == len(rels)
 
 

@@ -2,16 +2,16 @@
   "site": "west-union",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-15T23:46:42+00:00",
-  "feed_count": 29,
-  "row_total": 402,
+  "generated_at": "2026-08-16T10:10:39+00:00",
+  "feed_count": 31,
+  "row_total": 435,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
       "places": "absent",
-      "record": "seeded",
+      "record": "live",
       "inquiry": "live"
     }
   },
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 5
     },
     {
       "name": "timeline",
@@ -110,6 +110,14 @@
       "schema": "schemas/exhibits.schema.json",
       "kind": "collection",
       "count": 0
+    },
+    {
+      "name": "leads",
+      "path": "feeds/leads.json",
+      "media_type": "application/json",
+      "schema": "schemas/leads.schema.json",
+      "kind": "collection",
+      "count": 7
     },
     {
       "name": "rsei",
@@ -205,7 +213,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 56
+      "count": 57
     },
     {
       "name": "facts",
@@ -214,6 +222,14 @@
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
       "count": 79
+    },
+    {
+      "name": "open-questions",
+      "path": "feeds/open-questions.json",
+      "media_type": "application/json",
+      "schema": "schemas/open-questions.schema.json",
+      "kind": "collection",
+      "count": 7
     },
     {
       "name": "impact-study",
@@ -237,7 +253,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 79
+      "count": 86
     },
     {
       "name": "corpus-nodes",
@@ -245,7 +261,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 79
+      "count": 86
     },
     {
       "name": "ask-embeddings",

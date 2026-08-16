@@ -131,6 +131,51 @@ collections:      # whole data/documents/<slug> trees, e.g.  - aedg
   # withhold rule rather than un-clearing the boundary.
   # review: { by: goedelsoup, date: 2026-08-14, result: publish, basis: disclosed-public-record }
   - bowling-green
+  # The whole West Union collection — 34 files (#2047): the Adams County Regional Water District's
+  # own record behind the Buck Canyon campus. Governance (the 1968 articles of its predecessor
+  # company, both eras' by-laws, the 1969 minutes, the 1993-98 election/appointment run), fifteen
+  # board minutes 2024-01 → 2026-07, ten budget/financial documents, and the two Ginger Ridge
+  # instruments (the executed NDA and the water-main plan set). Ohio public records of a public
+  # body created by court order under R.C. Ch. 6119, published on the same basis as the Findlay
+  # county/township collection above.
+  #
+  # Pre-publication review (#281) run before clearing. Method matters here: seven of these files
+  # are scans with NO text layer, so a PII regex returns a false clean on them and every page was
+  # RENDERED and read instead. The 1993-98 file was swept page by page, all 13 of 13.
+  #
+  # ⚠️ WHAT THE SWEEP FOUND, and the basis for clearing it anyway. `1993-1998
+  # Elections-Appointments.pdf` carries TWENTY-ONE private individuals' full residential street
+  # addresses — candidate slates read into the annual meetings of 1993, 1994 and 1996, plus two
+  # appointment resolutions that recite an appointee's home address in the operative clause
+  # (Res. 97-19, Chris Baxla; Res. 98-49, Daniel Fristoe). FOUR of the twenty-one sat on this
+  # board within the last three years: Howard A. "Tony" Staggs (the sitting President), Chris
+  # Baxla, Gerald Gray, and Daniel Fristoe (a trustee as recently as the 2024-01-11 minutes).
+  # These are 1993-98 addresses and are not asserted to be current, but three of the four are
+  # sitting officials and the file is the only place in this corpus they appear.
+  #
+  # Cleared WHOLE as DISCLOSED PUBLIC RECORD by operator decision — explicitly NOT as the outcome
+  # of a passed PII sweep, the same posture as aedg/PRR-01-bundle.ocr.pdf and the van-wert meeting
+  # records above. The evidentiary weight is the reason: this file holds the single most important
+  # governance document in the site's record — the members' 579-141 vote of 1993-05-13 to amend the
+  # Articles and convert to a Ch. 6119 regional water district, i.e. the moment an elected board
+  # became a court-appointed, self-perpetuating one — together with the first exercises of that
+  # self-appointment power (Res. 97-119 and 98-90, in which the trustees being re-appointed
+  # abstained on their own re-appointments). Candidacy for the board of a public water utility is a
+  # public act. The alternative considered and rejected was a withhold rule with the governance
+  # facts extracted; the operator elected to publish the instrument itself.
+  #
+  # The Ginger Ridge plan set was cleared on a different and narrower basis: its sheet G-003 master
+  # table enumerates all 32 route parcels as owner NAME + auditor parcel ID, with NO street or
+  # mailing addresses — published county auditor CAMA data on a public engineering drawing. One
+  # construction note names a landowner ("JOHN CONDON (OWNER) TO APPROVE PATH THROUGH THE YARD").
+  # Coverage note: 3 of 24 sheets were rendered and read in full plus the G-003 master table, which
+  # is itself the exhaustive parcel index — so the owner inventory is complete, but this is not a
+  # claim that every one of the 24 sheets was examined.
+  #
+  # The remaining 32 files are clean: board minutes, budgets, financial statements and by-laws,
+  # whose only personal data is the names and official work contacts of District officers.
+  # review: { by: goedelsoup, date: 2026-08-16, result: publish, basis: disclosed-public-record }
+  - west-union
 globs:            # fnmatch globs over the data/documents rel, e.g.  - 'permits/*/*.pdf'
   # Findlay's grid instruments — the AEP large-load request, the Rocky Ford 138 kV station
   # LON + public notice, the Ebersole-Fostoria construction notice, and the AEP Ohio tariff
@@ -172,6 +217,23 @@ globs:            # fnmatch globs over the data/documents rel, e.g.  - 'permits/
   # recorded here rather than left to be discovered.
   # review: { by: goedelsoup, date: 2026-08-14, result: publish, basis: public-utility-filings }
   - 'grid/bowling-green/*'
+  # West Union's federal §404 file (#2047) — the 14 USACE Huntington District email threads in
+  # LRH-2025-00457-OHR (-Elk Run), the Buck Canyon Site jurisdictional determination through the
+  # NWP 39 verification. Federal agency correspondence, produced as a records production. A GLOB
+  # rather than the `usace` collection for the same reason as the `grid/` globs above: this
+  # collection is nested BY SITE and will hold other sites' Corps files, which no review covers.
+  #
+  # All 14 swept — full text layers throughout, 68 pages. No SSNs, dates of birth, account numbers
+  # or residential addresses. The personal data present is the official capacity contact detail of
+  # named public servants and consultants: agency and firm email addresses, office phone numbers,
+  # and the Corps project manager's GOVERNMENT-ISSUED MOBILE number, which he appends to his own
+  # signature block on every message. Cleared as public agency correspondence on that basis, with
+  # the mobile number noted here rather than left to be discovered.
+  #
+  # One file transmits a password for a consultant's delineation-report download link. Per the root
+  # CLAUDE.md that is evidence embedded in captured material, not a leak to redact.
+  # review: { by: goedelsoup, date: 2026-08-16, result: publish, basis: public-agency-correspondence }
+  - 'usace/west-union/*'
 documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/foo.pdf
   # The AEDG PRR-01 bundle — the full 328-page Port Authority public-records production.
   # Only pp. 317-327 (the six Tetra Tech OPC estimates) are the curated exhibit slice; the
@@ -225,6 +287,21 @@ documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/
   # audit, none of which this review covers.
   # review: { by: goedelsoup, date: 2026-08-13, result: publish, basis: published-court-decision }
   - legal/one-energy-v-allen-twp/2026-Ohio-405.pdf
+
+  # Three H.B. 646 witness submissions to the Ohio House Technology and Innovation committee /
+  # Select Committee on Data Centers, May-June 2026 (#2047): Stephen E. Petty, P.E., C.I.H.,
+  # C.S.P.; Leatra J. Harper for FreshWater Accountability Project Ohio; and Randi Pokladnik for
+  # Ohio Valley Environmental Advocates. Testimony submitted to a legislative committee is
+  # quintessentially public record, and the folder's existing witness submissions are published on
+  # the same footing. Swept: full text layers, 40 pages, no personal data beyond each witness's own
+  # name and organizational affiliation, which is the point of the document.
+  #
+  # EXACT rels, not the `legal` collection — that tree is thousands of files spanning the PRR
+  # mandamus production and the web-vendor audit, which this review does not cover.
+  # review: { by: goedelsoup, date: 2026-08-16, result: publish, basis: legislative-witness-testimony }
+  - "legal/select-committee-2026/witnesses/Stephen Petty Data Center Committe Testimony.pdf"
+  - "legal/select-committee-2026/witnesses/FreshWater Accountability Project Ohio Leatra J Harper.pdf"
+  - "legal/select-committee-2026/witnesses/Ohio Valley Environmental Advocates-Randi Pokladnik.pdf"
 
 # DECLARATIVE OPT-OUT — carve specific rels back out of the cleared scope above. A withhold
 # rule WINS over everything, including the auto-included exhibits, so this is the authoritative
