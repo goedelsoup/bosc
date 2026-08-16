@@ -95,9 +95,14 @@ describe("summarizeCollections — against the committed Lima corpus", () => {
   const summaries = summarizeCollections(limaFeed());
   const bySlug = new Map(summaries.map((s) => [s.slug, s]));
 
+  // 3,251 -> 3,254 (#2048): three H.B. 646 witness submissions added to
+  // `legal/select-committee-2026/witnesses/`. They arrived inside an ADAMS COUNTY records
+  // production but land in the LIMA bundle, and correctly so — `legal/` is network-global,
+  // while the other 48 files of that production stay peer-scoped under `west-union/` and
+  // `usace/west-union/` and are subtracted from the reference build's corpus scope.
   it("summarizes all 21 collections", () => {
     expect(summaries).toHaveLength(21);
-    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3251);
+    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3254);
   });
 
   it("finds the one production that is half the catalog", () => {

@@ -38,6 +38,30 @@ resolution:
     counsel: David Grimes
     visitors_named: [Roxie McNeilan, Kevin McNeilan, Kathryn McNeilan, Randy Thomas, Danielle Kinhalt, Theresa Roush]
     visitors_note: '"and a few others that did not sign the attendance register"'
+    attendance_vs_tally:
+      tag: '[verified]'
+      observation: >-
+        ⚠️ EIGHT trustees are recorded present (Tolle absent), and every one of the seven
+        resolutions below records the verbatim tally "Yes 7  No 0". The tallies are transcribed
+        exactly as printed and are NOT reconciled or adjusted here.
+      what_the_document_itself_says: >-
+        The minutes state the presiding-officer rule in their own words, on p.0 — "President
+        Staggs stated the vote was seven to zero to terminate. AS THE PERSON LEADING THE MEETING
+        ONLY VOTES IN CASE OF A TIE, the vote was unanimous with those eligible to vote." — and
+        p.4 then prints a full roll call on the executive-session motions naming exactly seven
+        voters: Brent Crawford, Lynn Weeks, Luke Rhonemus, David Tatman, Gerald Gray, Chris
+        Baxla, Timothy Grooms. President Staggs does not appear in that roll.
+      note: >-
+        Recorded because 8 present against a 7-vote tally is the kind of arithmetic a reader will
+        check. No inference is required to explain it and none is made: the seven voters are
+        NAMED on the page, and the rule that accounts for the eighth is QUOTED on the page. This
+        entry adds no explanation the document does not supply, and asserts nothing about how any
+        individual trustee voted on any resolution below — the roll call at p.4 covers the
+        executive-session motions, not Resolutions 26-41 through 26-47, whose tallies are
+        recorded only in aggregate.
+      cites:
+        - 'data/documents/west-union/acrwd/minutes/Minutes-July 26.pdf p.0 (0-based) — the tie-break rule'
+        - 'data/documents/west-union/acrwd/minutes/Minutes-July 26.pdf p.4 (0-based) — the seven-name roll call'
 
   acts:
     - number: '26-41'

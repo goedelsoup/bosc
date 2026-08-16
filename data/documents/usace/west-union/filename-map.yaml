@@ -52,7 +52,7 @@ documents:
       - "AND THE PERSON WHO JOINS THEM: 'Mr. Derek Harmon / Buck Canyon Properties, LLC / derek@bigblueoutdoor.com' — Ramboll's instruction for whom to address the JD letter to. Derek Harmon is also the named agent on the Ohio EPA NOI. The Harmon ↔ Buck Canyon Properties link is now [verified] on a federal record; the affiliation of either to 68 Yards, LLC remains [open]."
       - "File number LRH-2025-00457-OHR assigned 2025-05-21; AJD/PJD letter transmitted 2025-06-02"
       - "The applicant's agent is RAMBOLL (Jamie VanDusen, Project Manager, 'MWH Biodiversity & Ecosystems US', 8845 Governor's Hill Drive Suite 205, Cincinnati OH 45249), with Michelle Peters and Devon Rowe"
-      - "The delineation report was transmitted by link with the password 'Ramboll123' — retained as received; per CLAUDE.md a credential embedded in captured evidence is evidence, not a leak to redact"
+      - "The delineation report was transmitted as a download link with a document password typed into the message body (p.4). The password itself is NOT reproduced in this manifest — the evidentiary point is that a consultant sent a federal regulator a password-protected report, not the string. Per CLAUDE.md the credential stays untouched in the source bytes; quoting it into derived metadata is a separate editorial act, and this manifest declines it."
 
   - filename: Email Chain 2.pdf
     canonical: usace-lrh-2025-00457-ohr-section-106-scheduling-2025-12-05.pdf
