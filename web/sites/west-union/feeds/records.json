@@ -610,5 +610,130 @@
     "source_doc_rel": "west-union/acrwd/minutes/Minutes-July 26.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": true
+  },
+  {
+    "rel": "oepa/west-union/252171W.iwp.yaml",
+    "group": "permits-epa",
+    "title": "Ohio Level Two Isolated Wetland Permit",
+    "confidence": "high",
+    "warnings": [
+      "Pages 3-8 of 9 were not transcribed in this pass — the mitigation terms, the notification schedule (Part IV) and any appeal rights are in them. What is recorded above is Parts I-II and the opening authorities.",
+      "This is the GRANT. The technical-review round that preceded it (Ramboll's 37-page response of 2026-02-12, edoc-4003954) and the compensatory mitigation plan (edoc-3940079) are shelved and unread."
+    ],
+    "fields": {
+      "instrument": "Ohio Level Two Isolated Wetland Permit",
+      "permit_id": "252171W",
+      "package_id": "DSW401252171W",
+      "authority": "Ohio Revised Code Chapter 6111, §§ 6111.02 - 6111.028",
+      "issued": "2026-06-08",
+      "term": "5 years from date of issuance",
+      "issuing_office": "Ohio EPA, Division of Surface Water, 401/Wetlands/Mitigation Section, Columbus",
+      "permittee": {
+        "name": "68 Yards, LLC",
+        "contact": "Carrie Tillman",
+        "address": "16 N. Green Street, Chicago, IL 60607",
+        "email": "68YardsLLC@protonmail.com",
+        "note": "⚠️ THE FIRST DOCUMENT TO GIVE 68 YARDS, LLC A PRINCIPAL AND AN ADDRESS. The corpus carried the name only from the USACE NWP 39 verification, with its affiliation to Buck Canyon Properties, LLC / Derek Harmon `[open]`. That affiliation is STILL `[open]` — this permit does not connect the two entities either; it just shows they hold different instruments on the same project. A ProtonMail address on a permittee of a project of this scale is recorded as a fact, and no inference is drawn from it."
+      },
+      "project_description": {
+        "verbatim": "Construct a light industrial park.",
+        "tag": "[verified]",
+        "note": "⚠️ THE STATE'S OWN DESCRIPTION OF THE PROJECT, and it is NOT \"data center\". Adams County's government domain (amazon.adamscountyoh.gov) calls this an Amazon Web Services campus; Ohio EPA's granted permit calls it a light industrial park. Both are primary. The corpus records the discrepancy and does NOT resolve it — a generic land-use description on an environmental permit is ordinary practice and is not evidence of concealment, and it is equally not corroboration of the end use."
+      },
+      "watershed": {
+        "verbatim": "\"The project is partially located in two watersheds: The project is located in the Cabin Creek - Ohio River Watershed (HUC 05090201-06). Crooked Creek has a designated aquatic life use of warmwater habitat (WWH), agricultural water supply (AWS), industrial water supply (IWS), and primary contact recreation (PCR) water.\"",
+        "tag": "[verified]",
+        "note": "⚠️ CORROBORATES THE ROUTE-BLIND FINDING. The state places this project in the Cabin Creek-Ohio River watershed, not on Ohio Brush Creek — while `SiteProfile.nwis_sites` screens Ohio Brush Creek gage 03237500. A dilution screen on that gage answers a question about a different watershed. Recorded verbatim including the permit's own \"partially located in two watersheds\", which it does not enumerate."
+      },
+      "antidegradation": {
+        "verbatim": "\"I have determined that a lowering of water quality in the Ohio Brush-Whiteoak watershed (HUC 05090201) as authorized by this permit is necessary.\"",
+        "tag": "[verified]",
+        "note": "The R.C. 6111 antidegradation determination — the state finding that the permitted water-quality loss is necessary. Note it names the HUC-8 (Ohio Brush-Whiteoak, 05090201) while the setting paragraph names the HUC-12 (05090201-06); they are nested, not conflicting."
+      },
+      "impacts": {
+        "units": "acres",
+        "total_on_site": 1.07,
+        "permanent_impacted": 0.74,
+        "tag": "[verified]",
+        "wetlands": [
+          {
+            "id": "B",
+            "type": "non-forested",
+            "category": 2,
+            "on_site": 0.13,
+            "permanent_impact": 0.0
+          },
+          {
+            "id": "D",
+            "type": "non-forested",
+            "category": 2,
+            "on_site": 0.18,
+            "permanent_impact": 0.0
+          },
+          {
+            "id": "F",
+            "type": "non-forested",
+            "category": 1,
+            "on_site": 0.04,
+            "permanent_impact": 0.04
+          },
+          {
+            "id": "H",
+            "type": "non-forested",
+            "category": 1,
+            "on_site": 0.61,
+            "permanent_impact": 0.61
+          },
+          {
+            "id": "I",
+            "type": "non-forested",
+            "category": 1,
+            "on_site": 0.09,
+            "permanent_impact": 0.09
+          },
+          {
+            "id": "J",
+            "type": "non-forested",
+            "category": 1,
+            "on_site": 0.01,
+            "permanent_impact": 0.0
+          },
+          {
+            "id": "K",
+            "type": "non-forested",
+            "category": 1,
+            "on_site": 0.01,
+            "permanent_impact": 0.0
+          }
+        ],
+        "note": "⚠️ THESE ARE **ISOLATED** WETLANDS AND ARE A SEPARATE ACCOUNT FROM THE FEDERAL FILL. The USACE NWP 39 verification authorizes 0.06 ac of two JURISDICTIONAL wetlands (E and G) plus 1,893 linear feet of four streams. This permit authorizes 0.74 ac of seven ISOLATED wetlands (B, D, F, H, I, J, K) that are outside federal jurisdiction post-Sackett. The wetland ids do not overlap, which is consistent with one delineation split between two authorities. ⚠️ NEVER SUM THE TWO into a single \"wetland impact\" figure without saying which authority each half sits under."
+      },
+      "conditions": [
+        "Permit valid 5 years from issuance",
+        "Written notice to Ohio EPA on start and completion of site development and mitigation construction",
+        "A copy of the permit kept on site for the duration of project and mitigation construction",
+        "Inadvertent spills reported immediately to the Ohio EPA Spill Hotline (1-800-282-9378) and the §401 Manager",
+        "Unpermitted impacts to surface waters or their buffers reported within 24 hours",
+        "Pesticide application only under NPDES general permit OHG870003; may require an ODA applicator licence",
+        "Ohio EPA inspection access at reasonable times"
+      ]
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/west-union/252171W.iwp.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/west-union/edoc-4146849.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
   }
 ]

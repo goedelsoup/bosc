@@ -1,6 +1,6 @@
 {
   "site": "west-union",
-  "catalog_version": "a7077756b683831d958330e27b22f9c0ed968beba9015b733992c6e2e61f2233",
+  "catalog_version": "e19dbf8aa73806a02ee3c54f06b788feec676f0bf9e3ed8e99d40b88b311a677",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -940,6 +940,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:west-union:oepa-west-union",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "oepa-west-union",
+      "title": "Ohio EPA Permit Extractions (West Union / Adams County — Buck Canyon)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:west-union:onboard-bundle",
       "kind": "dataset",
       "site": "west-union",
@@ -1132,12 +1140,44 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:west-union:BUCK-CANYON-ENTITY-FAMILIES",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "BUCK-CANYON-ENTITY-FAMILIES",
+      "title": "Four instruments, two entity families, and nothing joins them",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:west-union:OEPA-BUCK-CANYON-UNREAD",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "OEPA-BUCK-CANYON-UNREAD",
+      "title": "Five substantial Ohio EPA documents are shelved and unread",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:west-union:OEPA-EDOC-3940059-TRUNCATED",
+      "kind": "lead",
+      "site": "west-union",
+      "local_id": "OEPA-EDOC-3940059-TRUNCATED",
+      "title": "Ohio EPA serves one document of this file truncated at exactly 2 MiB",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:west-union:USACE-LRH-2025-00457-ATTACHMENTS",
       "kind": "lead",
       "site": "west-union",
       "local_id": "USACE-LRH-2025-00457-ATTACHMENTS",
       "title": "Every attachment to the federal §404 file is named in the emails and none was produced",
       "feed": "leads"
+    },
+    {
+      "handle": "record:west-union:oepa/west-union/252171W.iwp.yaml",
+      "kind": "record",
+      "site": "west-union",
+      "local_id": "oepa/west-union/252171W.iwp.yaml",
+      "title": "Ohio Level Two Isolated Wetland Permit",
+      "feed": "records"
     },
     {
       "handle": "record:west-union:regulatory/west-union/west-union-consent-order-1993.order.yaml",

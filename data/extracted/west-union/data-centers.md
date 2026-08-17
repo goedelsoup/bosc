@@ -207,10 +207,23 @@ both the operator and the load.** Three separate names appear across three separ
 
 Each of these is a **dated negative** searched on the route named, not an assumption:
 
-- **No air permit-to-install (PTI)** for the campus or its backup generators. `[open]` — AWS
-  states generators will be **Tier 4** and run "less than 10 hours per generator per year," but
-  discloses **no generator count and no per-engine rating**, so no N+1 IT load can be derived
-  the way Lima's and Fort Wayne's are. Searched: Ohio EPA air permit surface + web, 2026-08-05.
+- **No air permit-to-install (PTI)** for the campus or its backup generators.
+  **`[verified negative]` as of 2026-08-17**, upgraded from `[open]` and now controlled: on the
+  Ohio EPA eDocument portal, entity `BUCK CANYON` / `AMAZON` / `68 YARDS` / `HARMON`, each ×
+  county `ADAMS` × program `AIR PERMIT`, returns **0**; the unfiltered `ADAMS` × `AIR PERMIT`
+  list returns **220** documents, date-descending, whose newest is 2026-06-05 (a routine W C
+  Milling report) and which contains no data-center-shaped entity; the nonsense-entity control
+  returns 0 and the positive control (`BUCK CANYON` × `ADAMS`, any program) returns 32.
+  AWS states generators will be **Tier 4** and run "less than 10 hours per generator per year,"
+  but discloses **no generator count and no per-engine rating**, so no N+1 IT load can be derived
+  the way Lima's and Fort Wayne's are.
+  ⚠️ **This is a DATED negative, and two things must not be read into it.** First, **OAC
+  3745-31-33 permits site preparation before a PTI issues**, so grading and clearing at Buck
+  Canyon are not evidence that a permit exists, or that one is being evaded. Second, **a PTI would
+  not necessarily ground the load even when it lands**: Sidney's air PTI application `P0141118`
+  (filed 2026-08-03, `data/extracted/sidney/`) **states no load at all** and does not even declare
+  major vs minor source — it was the DRAFT permit, not the application, that was expected to name
+  the fleet. Do not treat "the air permit will settle the megawatts" as given.
 - **No industrial storm water general permit coverage** in Adams County for this site — the Ohio
   EPA DSW Industrial NOI list (report date 2026-08-05) carries **zero** Adams County rows.
   `[verified]` This is expected pre-operation.
@@ -329,12 +342,26 @@ The sweep was run **manually against primary sources on 2026-08-05**, following 
 7. Trade and local press — WCPO I-Team, The People's Defender, Ohio Capital Journal, Statehouse
    News Bureau (`[reference]` throughout).
 
-### ⚠️ The eDocument portal route is METHOD-BLOCKED — this is not a negative
+### ⚠️ SUPERSEDED 2026-08-17 — the eDocument portal route WORKS, and it delivered
 
 The obvious next pull is the `0GC04922*AG` NOI and its **site map** from Ohio EPA's eDocument
 public portal (`edocpub.epa.ohio.gov/publicportal/`) — the route that produced Van Wert's
 `2GC08872*AG` chain (#1402), and the one that would give this site its **first campus geometry**.
 It was attempted on 2026-08-05 and **the portal's search could not be driven programmatically**.
+
+> **THIS SECTION IS SUPERSEDED AND IS KEPT ONLY AS THE RECORD OF A WRONG NEGATIVE.**
+> Re-run **2026-08-17** with the same controls, the route worked and returned **32 Buck Canyon
+> documents**, now shelved at [`data/documents/oepa/west-union/`](../../documents/oepa/west-union/).
+> The positive control (`Entity Name = QTS`) returned 35 documents including the known Van Wert
+> `2GC08872` chain; the negative control returned 0. What the 2026-08-05 attempt got wrong is not
+> recorded — most likely the form fields. The working recipe: Entity Name is
+> `ctl00$search$KeywordPanel1$txtValue_-1_1_106_1`, and **County and Program are PLAIN SELECTS**
+> (`ddlValue_-1_1_104_1` / `ddlValue_-1_1_109_1`), not the postback-only pickers the earlier note
+> assumed. The pull delivered exactly what this section said it would: the `0GC04922*AG` NOI, its
+> approval letter, **the site map (disturbed area 535.00 ac)**, the 196-page SWP3, the 554-page
+> jurisdictional delineation report — and a Level Two Isolated Wetland Permit nobody knew existed.
+> ⚠️ The lesson is the one this section already states in its own title, pointed the other way: a
+> method block is a claim about a METHOD ON A DATE, and it expires. Re-test before relying on one.
 
 The attempt was controlled, and the controls are the finding:
 
@@ -402,14 +429,11 @@ are now *applicable and unanswered* rather than *not applicable*. **The tier is 
 
 1. **PJM TEAC deck, 2026-02-03, Dayton Supplemental** — ingest the `Dayton-2026-001` slide as
    the load instrument of record. Highest value: it is primary, dated, and already in hand.
-2. **Ohio EPA construction NOI `0GC04922*AG`** — the NOI itself, its site map and the approval
-   letter. The site map would be the **first campus geometry** for this site and would activate
-   `places`. ⚠️ **The Ohio EPA eDocument portal route is `[open]` but METHOD-BLOCKED** — the
-   search could not be driven programmatically on 2026-08-05 and its controls came back
-   byte-identical (see "The eDocument portal route is METHOD-BLOCKED" above). Treat the route as
-   blocked, **not** as an open scriptable one, until a query actually returns the NOI or the site
-   map; until then nothing may be concluded about what the portal holds. The fallback routes are
-   named in that section.
+2. ~~**Ohio EPA construction NOI `0GC04922*AG`**~~ — ✅ **DONE 2026-08-17.** The NOI, its
+   approval letter and **the site map** are shelved at
+   [`data/documents/oepa/west-union/`](../../documents/oepa/west-union/), together with the whole
+   Level Two Isolated Wetland Permit file — 32 documents. The site map prints **DISTURBED AREA =
+   535.00 AC**. The portal is NOT method-blocked; see the superseded section above.
 3. **USACE NWP 39 verification, 2026-02-18** — the Huntington District file, for the 68 Yards
    LLC applicant identity, the jurisdictional determination and the 11 special conditions.
 4. **Adams County auditor / recorder** — the Buck Canyon parcels: IDs, acreage, the 2024 deed
@@ -429,7 +453,10 @@ are now *applicable and unanswered* rather than *not applicable*. **The tier is 
 
 Any one of these reopens this register:
 
-- An **air permit-to-install** application or draft for the campus (grounds the load).
+- An **air permit-to-install** application or, better, a **draft/proposed permit** for the
+  campus. ⚠️ The DRAFT is the document that names the generator fleet; an application alone
+  may state no load (the Sidney precedent above), so it reopens the register without
+  necessarily grounding the megawatts.
 - A **PJM `Dayton-2026-001` Solution-stage** presentation (scopes and costs the transmission).
 - An **OPSB certificate case** for the AES Ohio transmission solution, or for the Hecate Energy
   generation option at Stuart/Killen.

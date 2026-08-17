@@ -192,8 +192,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9baf83438af68fabe77646dfdcdb55f73d6e7688b65d65a7b56d7e65a0463acc",
-      "size_bytes": 385240,
+      "sha256": "f28932f597880d776c18cdbaed64c38856477f4f21aed5e705fcf19a856fd736",
+      "size_bytes": 387598,
       "lfs_materialized": true,
       "file_count": 14,
       "stale": false,
@@ -250,8 +250,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "903d68db78d7410e010b6f4506a61ff3ec413e6c1a31568a8cb3f7636af61576",
-      "size_bytes": 31832,
+      "sha256": "2287a50ca46e7344f4c1b96cf4569a1a37d188ba7975abfd1c74a452a3b171d8",
+      "size_bytes": 34190,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -485,6 +485,59 @@
       "pages": null,
       "confidence": "medium",
       "note": "watermark subdivisions download",
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-west-union",
+    "title": "Ohio EPA Permit Extractions (West Union / Adams County — Buck Canyon)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal) — the Buck Canyon file pulled 2026-08-17 by Entity Name search, 32 documents shelved at data/documents/oepa/west-union/ with hashes in that collection's filename-map.yaml",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:west-union",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "isolated-wetland-permit",
+      "buck-canyon",
+      "68-yards",
+      "west-union",
+      "adams-county",
+      "orc-6111",
+      "antidegradation"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/west-union/252171W.iwp.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "728c740a0597fd5faa8be4a5a0aa44b836d06ddee89d6839e40855b33c379db3",
+      "size_bytes": 7744,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal) — the Buck Canyon file pulled 2026-08-17 by Entity Name search, 32 documents shelved at data/documents/oepa/west-union/ with hashes in that collection's filename-map.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
       "verified": true
     }
   },
