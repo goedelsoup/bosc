@@ -17,12 +17,19 @@
 # a withhold rule then carves individual files back out. See published-documents.README.md.
 # Three rule kinds (all optional; combine freely):
 collections:      # whole data/documents/<slug> trees, e.g.  - aedg
-  # The whole Ohio EPA collection — 40 PDFs (permits, draft permits, fact sheets, public
-  # notices) across the Lima top level plus five sites (troy-piqua, sidney, van-wert,
-  # wilmington, urbana). These are Ohio EPA public agency records with no private PII — the
-  # same basis on which the Bistrozzi PTI (permits/bistrozzi-permits/4132514.pdf) is
-  # published. A whole-collection rule is intended: OEPA pulls for future sites are agency
-  # records and auto-publish by the same standing basis (#1370).
+  # The whole Ohio EPA collection. ⚠️ THE SCOPE SENTENCE BELOW IS THE 2026-07-10 BASELINE AND IS
+  # KEPT AS WRITTEN, because it is what the standing clearance was granted against — but it is no
+  # longer the collection's size. As of 2026-08-17 the tree holds **114 PDFs across the Lima top
+  # level (17) plus TEN site subdirectories** (bowling-green, defiance, findlay, ottawa, sidney,
+  # troy-piqua, van-wert, west-union, wilmington, urbana). It grew by the standing auto-publish
+  # rule below, which is the point: this count will keep drifting, so re-count rather than trust
+  # any number written here.
+  #   [2026-07-10 baseline] The whole Ohio EPA collection — 40 PDFs (permits, draft permits,
+  #   fact sheets, public notices) across the Lima top level plus five sites (troy-piqua, sidney,
+  #   van-wert, wilmington, urbana). These are Ohio EPA public agency records with no private PII —
+  #   the same basis on which the Bistrozzi PTI (permits/bistrozzi-permits/4132514.pdf) is
+  #   published. A whole-collection rule is intended: OEPA pulls for future sites are agency
+  #   records and auto-publish by the same standing basis (#1370).
   #
   # ⚠️ AMENDED 2026-08-17 (#2050) — THE "NO PRIVATE PII" CLAIM ABOVE IS NO LONGER TRUE OF THIS
   # COLLECTION, and the standing auto-publish rule is what made that matter. The West Union pull
