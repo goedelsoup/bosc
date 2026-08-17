@@ -203,9 +203,9 @@ both the operator and the load.** Three separate names appear across three separ
 - **7Q10 for the Ohio River at/near Manchester: `[open]`** — not in
   `data/reference/hydrology/low-flow-7q10*.yaml`, cited or derived.
 
-### Regulatory record — what does NOT exist, as of 2026-08-05
+### Regulatory record — what does NOT exist, each as of its own stated date
 
-Each of these is a **dated negative** searched on the route named, not an assumption:
+Each of these is a **dated negative** searched on the route named, not an assumption. ⚠️ The dates differ and the entry's date governs, not this heading's: the air-permit negative was re-run and upgraded on **2026-08-17**; the rest were searched **2026-08-05** and have not been re-tested since.
 
 - **No air permit-to-install (PTI)** for the campus or its backup generators.
   **`[verified negative]` as of 2026-08-17**, upgraded from `[open]` and now controlled: on the
@@ -421,9 +421,20 @@ Downstream, `readiness.inquiry` also rose **`seeded` → `live`**: with a facili
 study's `project` and `balance` chapters became substantive (9 of 15, against a threshold of 8,
 with the record-keyed `assembly` chapter substantive). The chapters that flipped `na` → `gap`
 (air, groundwater, stormwater, water-supply, heat, fiscal) are the honest move — those questions
-are now *applicable and unanswered* rather than *not applicable*. **The tier is unchanged at
-`backdrop`**, since it derives from the four record-bearing domains and `places` is still
-`absent` (no committed geometry — see the blocked site-map pull above).
+are now *applicable and unanswered* rather than *not applicable*. At the time of this sweep **the
+tier was `backdrop`**, since it derives from the four record-bearing domains and `places` was
+`absent`.
+
+> **UPDATED 2026-08-17 — the readiness state above is the #1983 SWEEP'S, and three parts of it
+> have since moved.** This section is kept as the sweep's own account rather than rewritten.
+> `record` went `seeded` → **`live`** (#2048) on the ACRWD extractions; `places` went `absent` →
+> **`live`** (#2049) on committed campus geometry — Adams County parcel `1830000079000`, whose
+> deeded 1016.2174 ac is the Corps' "approximately 1,016 acres"; and the **tier is therefore
+> `case`, not `backdrop`**. `facility` is unchanged at **`seeded`**, and that is now the only
+> thing between this site and Reference tier — the load is still `[open]`, and the 2026-08-17
+> air-permit search confirmed no PTI exists to ground it.
+> ⚠️ The clause "see the blocked site-map pull above" is also superseded: the pull was made on
+> 2026-08-17 and **the site map is in the corpus**, printing DISTURBED AREA = 535.00 AC.
 
 ## Instruments to pull (priority order)
 

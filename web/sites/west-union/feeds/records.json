@@ -617,7 +617,8 @@
     "title": "Ohio Level Two Isolated Wetland Permit",
     "confidence": "high",
     "warnings": [
-      "Pages 3-8 of 9 were not transcribed in this pass — the mitigation terms, the notification schedule (Part IV) and any appeal rights are in them. What is recorded above is Parts I-II and the opening authorities.",
+      "PARTIAL READ, stated unambiguously because the page numbering matters: `pages_read` is 0-BASED and holds [0, 1, 2], i.e. the FIRST THREE PAGES of nine. Everything recorded above — the authorities, the permittee block, the project description, the watershed and antidegradation findings, the impacts table and conditions A-I — is transcribed from those three pages. NOT transcribed: 0-based pages 3-8, which are pages 4-9 of 9 as the document numbers itself, and which carry the mitigation terms, the Part IV notification SCHEDULE and any appeal rights.",
+      "Note on condition C: it is quoted from a page that WAS transcribed (0-based p.2) and reads \"in accordance with Part IV (NOTIFICATIONS TO OHIO EPA) of this permit\". The obligation to notify is therefore [verified]; the SCHEDULE it points at is on an untranscribed page. Do not cite this extraction for notification timing.",
       "This is the GRANT. The technical-review round that preceded it (Ramboll's 37-page response of 2026-02-12, edoc-4003954) and the compensatory mitigation plan (edoc-3940079) are shelved and unread."
     ],
     "fields": {
