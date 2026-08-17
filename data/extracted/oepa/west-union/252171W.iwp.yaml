@@ -1,0 +1,137 @@
+# Reviewed transcription of Ohio EPA's GRANT of a Level Two Isolated Wetland Permit for the
+# Buck Canyon site, Sprigg Township, Adams County — Ohio EPA ID 252171W / DSW401252171W,
+# issued 2026-06-08 under R.C. Chapter 6111.
+#
+# THE FIRST STATE ENVIRONMENTAL AUTHORIZATION IN THIS SITE'S RECORD, and it does two things the
+# corpus could not do before: it gives 68 Yards, LLC a principal and a street address, and it
+# states the project's purpose in the state's own words — "construct a light industrial park".
+# Tags per CLAUDE.md.
+doc_id: 252171W-iwp-4146849
+source_path: data/documents/oepa/west-union/edoc-4146849.pdf
+kind: epa
+pages_read: [0, 1, 2]
+image_pages_read: []
+dpi: 0   # text-layer read; nothing was rendered, and a DPI is not invented for one
+source_text_excerpt: >-
+  "June 8, 2026 ... Re: Buck Canyon / Carrie Tillman / Permit - Intermediate / 68 Yards, LLC /
+  Approval / 16 N. Green Street / 401 Wetlands / Chicago, IL 60607 / Adams /
+  68YardsLLC@protonmail.com / DSW401252171W ... Subject: Buck Canyon, Adams / Sprigg Township,
+  Grant of a Level Two Isolated Wetland Permit, Ohio EPA ID No. 252171W ... Pursuant to Ohio
+  Revised Code Chapter 6111, I hereby conclude that the above-referenced project will comply with
+  the applicable provisions of Ohio Revised Code Sections 6111.02 through 6111.028."
+
+action:
+  confidence: high
+  instrument: Ohio Level Two Isolated Wetland Permit
+  permit_id: 252171W
+  package_id: DSW401252171W
+  authority: Ohio Revised Code Chapter 6111, §§ 6111.02 - 6111.028
+  issued: '2026-06-08'
+  term: 5 years from date of issuance
+  issuing_office: Ohio EPA, Division of Surface Water, 401/Wetlands/Mitigation Section, Columbus
+
+  permittee:
+    name: 68 Yards, LLC
+    contact: Carrie Tillman
+    address: 16 N. Green Street, Chicago, IL 60607
+    email: 68YardsLLC@protonmail.com
+    note: >-
+      ⚠️ THE FIRST DOCUMENT TO GIVE 68 YARDS, LLC A PRINCIPAL AND AN ADDRESS. The corpus carried
+      the name only from the USACE NWP 39 verification, with its affiliation to Buck Canyon
+      Properties, LLC / Derek Harmon `[open]`. That affiliation is STILL `[open]` — this permit
+      does not connect the two entities either; it just shows they hold different instruments on
+      the same project. A ProtonMail address on a permittee of a project of this scale is recorded
+      as a fact, and no inference is drawn from it.
+
+  project_description:
+    verbatim: Construct a light industrial park.
+    tag: '[verified]'
+    note: >-
+      ⚠️ THE STATE'S OWN DESCRIPTION OF THE PROJECT, and it is NOT "data center". Adams County's
+      government domain (amazon.adamscountyoh.gov) calls this an Amazon Web Services campus;
+      Ohio EPA's granted permit calls it a light industrial park. Both are primary. The corpus
+      records the discrepancy and does NOT resolve it — a generic land-use description on an
+      environmental permit is ordinary practice and is not evidence of concealment, and it is
+      equally not corroboration of the end use.
+
+  watershed:
+    verbatim: >-
+      "The project is partially located in two watersheds: The project is located in the Cabin
+      Creek - Ohio River Watershed (HUC 05090201-06). Crooked Creek has a designated aquatic life
+      use of warmwater habitat (WWH), agricultural water supply (AWS), industrial water supply
+      (IWS), and primary contact recreation (PCR) water."
+    tag: '[verified]'
+    note: >-
+      ⚠️ CORROBORATES THE ROUTE-BLIND FINDING. The state places this project in the Cabin
+      Creek-Ohio River watershed, not on Ohio Brush Creek — while `SiteProfile.nwis_sites` screens
+      Ohio Brush Creek gage 03237500. A dilution screen on that gage answers a question about a
+      different watershed. Recorded verbatim including the permit's own "partially located in two
+      watersheds", which it does not enumerate.
+
+  antidegradation:
+    verbatim: >-
+      "I have determined that a lowering of water quality in the Ohio Brush-Whiteoak watershed
+      (HUC 05090201) as authorized by this permit is necessary."
+    tag: '[verified]'
+    note: >-
+      The R.C. 6111 antidegradation determination — the state finding that the permitted
+      water-quality loss is necessary. Note it names the HUC-8 (Ohio Brush-Whiteoak, 05090201)
+      while the setting paragraph names the HUC-12 (05090201-06); they are nested, not conflicting.
+
+  impacts:
+    units: acres
+    total_on_site: 1.07
+    permanent_impacted: 0.74
+    tag: '[verified]'
+    wetlands:
+      - {id: B, type: non-forested, category: 2, on_site: 0.13, permanent_impact: 0.00}
+      - {id: D, type: non-forested, category: 2, on_site: 0.18, permanent_impact: 0.00}
+      - {id: F, type: non-forested, category: 1, on_site: 0.04, permanent_impact: 0.04}
+      - {id: H, type: non-forested, category: 1, on_site: 0.61, permanent_impact: 0.61}
+      - {id: I, type: non-forested, category: 1, on_site: 0.09, permanent_impact: 0.09}
+      - {id: J, type: non-forested, category: 1, on_site: 0.01, permanent_impact: 0.00}
+      - {id: K, type: non-forested, category: 1, on_site: 0.01, permanent_impact: 0.00}
+    note: >-
+      ⚠️ THESE ARE **ISOLATED** WETLANDS AND ARE A SEPARATE ACCOUNT FROM THE FEDERAL FILL. The
+      USACE NWP 39 verification authorizes 0.06 ac of two JURISDICTIONAL wetlands (E and G) plus
+      1,893 linear feet of four streams. This permit authorizes 0.74 ac of seven ISOLATED wetlands
+      (B, D, F, H, I, J, K) that are outside federal jurisdiction post-Sackett. The wetland ids do
+      not overlap, which is consistent with one delineation split between two authorities.
+      ⚠️ NEVER SUM THE TWO into a single "wetland impact" figure without saying which authority
+      each half sits under.
+
+  conditions:
+    - Permit valid 5 years from issuance
+    - Written notice to Ohio EPA on start and completion of site development and mitigation construction
+    - A copy of the permit kept on site for the duration of project and mitigation construction
+    - Inadvertent spills reported immediately to the Ohio EPA Spill Hotline (1-800-282-9378) and the §401 Manager
+    - Unpermitted impacts to surface waters or their buffers reported within 24 hours
+    - Pesticide application only under NPDES general permit OHG870003; may require an ODA applicator licence
+    - Ohio EPA inspection access at reasonable times
+
+  warnings:
+    - >-
+      Pages 3-8 of 9 were not transcribed in this pass — the mitigation terms, the notification
+      schedule (Part IV) and any appeal rights are in them. What is recorded above is Parts I-II
+      and the opening authorities.
+    - >-
+      This is the GRANT. The technical-review round that preceded it (Ramboll's 37-page response
+      of 2026-02-12, edoc-4003954) and the compensatory mitigation plan (edoc-3940079) are shelved
+      and unread.
+
+open_questions:
+  - id: IWP-68YARDS-BUCKCANYON-LINK
+    tag: '[open]'
+    question: >-
+      What joins 68 Yards, LLC (Chicago; this permit and the federal NWP 39 verification) to Buck
+      Canyon Properties, LLC / Buck Canyon LLC and Derek Harmon (Flemingsburg KY; the USACE
+      jurisdictional determination, the NPDES construction NOI and the parcel)? Four instruments,
+      two entity families, one project — and no document in the corpus connects them. Ohio SOS is
+      the obvious route and is retrieval-blocked (see the SOS registry epic); Illinois and Delaware
+      registries are untried.
+  - id: IWP-LIGHT-INDUSTRIAL-PARK
+    tag: '[open]'
+    question: >-
+      Does any other state filing for this site describe it as something other than a "light
+      industrial park"? The description matters because it is what the antidegradation
+      determination was made against.

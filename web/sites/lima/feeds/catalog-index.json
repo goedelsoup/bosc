@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "427e6ab9324c5852b20ba07a51f8082ad0832bdb4efe82e1b586ee8e57454c09",
+  "catalog_version": "98b0299307b69535e434c4efa403a94de1097d014a5f82826e73ed0c71546405",
   "contract_version": "2.1.0",
   "atoms": [
     {
@@ -1601,6 +1601,14 @@
       "site": "lima",
       "local_id": "oepa-van-wert",
       "title": "Ohio EPA NPDES Permit Extractions (Van Wert WWTP)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-west-union",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-west-union",
+      "title": "Ohio EPA Permit Extractions (West Union / Adams County — Buck Canyon)",
       "feed": "catalog"
     },
     {

@@ -1,0 +1,57 @@
+id: oepa-west-union
+title: Ohio EPA Permit Extractions (West Union / Adams County — Buck Canyon)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal) — the Buck Canyon
+    file pulled 2026-08-17 by Entity Name search, 32 documents shelved at
+    data/documents/oepa/west-union/ with hashes in that collection's filename-map.yaml
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:west-union
+storage:
+- relpath: extracted/oepa/west-union/252171W.iwp.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- oepa
+- isolated-wetland-permit
+- buck-canyon
+- 68-yards
+- west-union
+- adams-county
+- orc-6111
+- antidegradation
+notes: >-
+  The GRANT of a Level Two Isolated Wetland Permit for the Buck Canyon site, Sprigg Township —
+  Ohio EPA ID 252171W / package DSW401252171W, issued 2026-06-08 under R.C. Ch. 6111
+  §§6111.02-6111.028, valid five years. The first state environmental authorization in this
+  site's record, and it carries three things the corpus could not previously source.
+  (1) IT NAMES 68 YARDS, LLC WITH A PRINCIPAL AND AN ADDRESS — "Carrie Tillman, 68 Yards, LLC,
+  16 N. Green Street, Chicago, IL 60607, 68YardsLLC@protonmail.com". The corpus held that entity
+  as a bare name from the USACE NWP 39 verification. ⚠️ Its affiliation to Buck Canyon Properties,
+  LLC / Derek Harmon is STILL [open]: this permit does not connect them either, it just shows the
+  two entity families holding different instruments on one project.
+  (2) THE STATE'S OWN PROJECT DESCRIPTION IS "Construct a light industrial park." — not "data
+  center", while Adams County's government domain calls the same site an AWS campus. Both are
+  primary; the extraction records the discrepancy and resolves neither, and draws no inference of
+  concealment from a generic land-use description on an environmental permit.
+  (3) THE IMPACT ACCOUNT, and it must never be summed with the federal one: 0.74 ac of SEVEN
+  ISOLATED wetlands (B, D, F, H, I, J, K; 1.07 ac total on site) outside federal jurisdiction
+  post-Sackett, against the USACE NWP 39's 0.06 ac of TWO JURISDICTIONAL wetlands (E, G) plus
+  1,893 lf of four streams. Non-overlapping ids, two authorities, one delineation.
+  It also corroborates the site's ROUTE-BLIND finding from the state's own pen: the permit places
+  the project in the Cabin Creek-Ohio River watershed (HUC 05090201-06) while the profile screens
+  Ohio Brush Creek gage 03237500, and it carries the R.C. 6111 antidegradation determination that
+  "a lowering of water quality in the Ohio Brush-Whiteoak watershed (HUC 05090201) ... is
+  necessary".
+  ⚠️ PARTIAL READ, stated in the extraction's own warnings: pages 3-8 of 9 (mitigation terms,
+  Part IV notifications, appeal rights) are untranscribed, and the 31 other documents in the
+  collection — including the 554-page jurisdictional delineation report, the 196-page SWP3 and
+  the Kimley-Horn site map printing DISTURBED AREA = 535.00 AC — are shelved and unread
+  (lead OEPA-BUCK-CANYON-UNREAD). One document, edoc-3940059, is served TRUNCATED by Ohio EPA at
+  exactly 2 MiB and is retained as a locator only (lead OEPA-EDOC-3940059-TRUNCATED).

@@ -23,7 +23,26 @@ collections:      # whole data/documents/<slug> trees, e.g.  - aedg
   # same basis on which the Bistrozzi PTI (permits/bistrozzi-permits/4132514.pdf) is
   # published. A whole-collection rule is intended: OEPA pulls for future sites are agency
   # records and auto-publish by the same standing basis (#1370).
+  #
+  # ⚠️ AMENDED 2026-08-17 (#2050) — THE "NO PRIVATE PII" CLAIM ABOVE IS NO LONGER TRUE OF THIS
+  # COLLECTION, and the standing auto-publish rule is what made that matter. The West Union pull
+  # added 32 documents (`oepa/west-union/`, the Buck Canyon isolated-wetland and construction-
+  # stormwater files), and they cleared on this rule without a per-pull decision. Three of them —
+  # the NPDES Notice of Intent, its approval letter and the Kimley-Horn site map — print the home
+  # address and personal telephone of DEREK HARMON, who is the applicant of record as an
+  # INDIVIDUAL rather than a company.
+  #
+  # Published knowingly on the operator's decision, on the same footing as the Bowling Green OPSB
+  # service-list home address cleared under `grid/bowling-green/*`: a permit applicant's contact
+  # block is intrinsic to the instrument, Ohio EPA publishes these exact PDFs on its own portal,
+  # and the documents are load-bearing (the site map is the only source for the campus's
+  # DISTURBED AREA = 535.00 AC). The finding is recorded here rather than left to be discovered.
+  #
+  # ⚠️ FOR THE NEXT OEPA PULL: this collection now auto-publishes into a rule whose PII premise has
+  # been broken once. An `oepa/<slug>/` pull that carries an individual's contact details is no
+  # longer a surprise — check for one and record it here, or carve it out with a `withhold:`.
   # review: { by: goedelsoup, date: 2026-07-10, result: publish, basis: public-epa-agency-records }
+  # review: { by: goedelsoup, date: 2026-08-17, result: publish, basis: public-epa-agency-records }
   - oepa
   # The whole Findlay collection — 171 files (#1265): the Hancock County Commissioners' and
   # Allen Township trustees' meeting minutes, the township zoning book + map, the WARN

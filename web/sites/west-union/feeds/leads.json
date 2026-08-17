@@ -66,6 +66,39 @@
     "note": "OWED RECORD — R.C. 149.43 request for all trustee appointment resolutions 1999-2026."
   },
   {
+    "id": "OEPA-BUCK-CANYON-UNREAD",
+    "kind": "question",
+    "status": "review",
+    "tag": "open",
+    "title": "Five substantial Ohio EPA documents are shelved and unread",
+    "detail": "The 2026-08-17 eDoc pull brought in 32 Buck Canyon documents; one is extracted and five big ones are held, hashed and unread beyond page 1. The 554-page JURISDICTIONAL WATERS DELINEATION REPORT (edoc-3940065) is the document the USACE email production named and omitted. The 196-page SWP3 (edoc-4147395) is the most detailed engineering description of the site in the corpus and should carry grading limits, drainage areas and outfalls. Ramboll's 37-page technical response (edoc-4003954) is the review round that produced the permit. The mitigation plan (edoc-3940079) and seven ORAM v5.0 wetland scoring forms round it out. Also unfinished within the extracted permit itself: pages 3-8 of 9, which hold the mitigation terms and the Part IV notification schedule.",
+    "source": "data/documents/oepa/west-union/filename-map.yaml",
+    "issue": null,
+    "note": "Not a retrieval gap — a reading gap. Everything named here is already in the corpus."
+  },
+  {
+    "id": "OEPA-EDOC-3940059-TRUNCATED",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Ohio EPA serves one document of this file truncated at exactly 2 MiB",
+    "detail": "edoc-3940059.pdf arrives at exactly 2,097,152 bytes with the server's own Content-Length agreeing on all three attempts — a valid %PDF-1.7 header, no %%EOF, and refused by both pypdf and pdfium. The truncation is on Ohio EPA's side, not in transit. The bytes are retained under chain of custody as evidence of the defect, but the document's content is unknown and nothing may be cited from it. Routes: ask Ohio EPA DSW for a re-serve or a copy by R.C. 149.43, or check whether the same exhibit appears intact elsewhere in the 25-document application package.",
+    "source": "data/documents/oepa/west-union/filename-map.yaml (edoc-3940059 truncated block)",
+    "issue": null,
+    "note": "Worth reporting to Ohio EPA regardless of this project — a portal that silently serves 2 MiB of a larger file is a general integrity problem for anyone relying on that route."
+  },
+  {
+    "id": "BUCK-CANYON-ENTITY-FAMILIES",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Four instruments, two entity families, and nothing joins them",
+    "detail": "68 YARDS, LLC — Carrie Tillman, 16 N. Green Street, Chicago IL, 68YardsLLC@protonmail.com — holds the USACE NWP 39 verification and the Ohio Level Two Isolated Wetland Permit. BUCK CANYON PROPERTIES, LLC / BUCK CANYON LLC — Derek Harmon, Flemingsburg KY, derek@bigblueoutdoor.com — holds the USACE jurisdictional determination, the NPDES construction stormwater coverage, and county parcel 1830000070002. One project, four instruments, two entity families, and NO document in the corpus connects them. Ohio SOS is retrieval-blocked; ILLINOIS (68 Yards' stated domicile) and Delaware registries are untried and are the obvious next route.",
+    "source": "data/extracted/oepa/west-union/252171W.iwp.yaml (open question IWP-68YARDS-BUCKCANYON-LINK) · data/documents/usace/west-union/filename-map.yaml",
+    "issue": null,
+    "note": "OWED RECORD — this is the site's central unresolved entity question."
+  },
+  {
     "id": "ACRWD-CAMPUS-PARCEL-OWNERSHIP",
     "kind": "question",
     "status": "unanswered",

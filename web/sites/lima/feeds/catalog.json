@@ -143,8 +143,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "60f21df4bac19def9375c748c4bc689749d8b46ada4264e7057d4009b647b691",
-      "size_bytes": 37205,
+      "sha256": "553efe37ca055cc62a2f8fa5f1561b8bbc54061a559de707a74ef0bcf1cc8cfb",
+      "size_bytes": 43993,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -1023,8 +1023,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9baf83438af68fabe77646dfdcdb55f73d6e7688b65d65a7b56d7e65a0463acc",
-      "size_bytes": 385240,
+      "sha256": "f28932f597880d776c18cdbaed64c38856477f4f21aed5e705fcf19a856fd736",
+      "size_bytes": 387598,
       "lfs_materialized": true,
       "file_count": 14,
       "stale": false,
@@ -1356,8 +1356,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "903d68db78d7410e010b6f4506a61ff3ec413e6c1a31568a8cb3f7636af61576",
-      "size_bytes": 31832,
+      "sha256": "2287a50ca46e7344f4c1b96cf4569a1a37d188ba7975abfd1c74a452a3b171d8",
+      "size_bytes": 34190,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -4089,6 +4089,59 @@
     },
     "citation": {
       "source": "Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for permits at the Van Wert WWTP (permit 2PD00006, Van Wert County)",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-west-union",
+    "title": "Ohio EPA Permit Extractions (West Union / Adams County — Buck Canyon)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal) — the Buck Canyon file pulled 2026-08-17 by Entity Name search, 32 documents shelved at data/documents/oepa/west-union/ with hashes in that collection's filename-map.yaml",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:west-union",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "isolated-wetland-permit",
+      "buck-canyon",
+      "68-yards",
+      "west-union",
+      "adams-county",
+      "orc-6111",
+      "antidegradation"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/west-union/252171W.iwp.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "728c740a0597fd5faa8be4a5a0aa44b836d06ddee89d6839e40855b33c379db3",
+      "size_bytes": 7744,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal) — the Buck Canyon file pulled 2026-08-17 by Entity Name search, 32 documents shelved at data/documents/oepa/west-union/ with hashes in that collection's filename-map.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -9916,7 +9969,7 @@
     "collection": "reference",
     "status": "reviewed",
     "producer_kind": "connector",
-    "command": "parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson",
+    "command": "parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson (or, for a layer with no owner column at all, parcels --parcel <id,id,...> --geojson ...)",
     "connector_ref": "watermark.hydrology.connectors.allen_gis",
     "source": "Per-site county parcel GIS via the gis_parcel field-map, pulled as f=geojson reprojected to WGS84 (Fort Wayne = Allen County, IN iMap, parcel layer 10)",
     "external_url": "https://gis1.acimap.us/imapweb/rest/services/QueryLayers/QueryLayers/MapServer/10",
@@ -9941,10 +9994,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "76ce930b7a5c4481d035aa3ee15d8e43afb5073cba8557148f683e71c91352f5",
-      "size_bytes": 514518,
+      "sha256": "782aae8b21921fce4403ab5df9971adbc53b14e64c4e0c9658f7161bdfd4dce2",
+      "size_bytes": 531148,
       "lfs_materialized": true,
-      "file_count": 10,
+      "file_count": 11,
       "stale": false,
       "asof": null
     },
@@ -9954,7 +10007,7 @@
       "page": null,
       "pages": null,
       "confidence": "medium",
-      "note": "watermark parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson",
+      "note": "watermark parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson (or, for a layer with no owner column at all, parcels --parcel <id,id,...> --geojson ...)",
       "verified": true
     }
   },
