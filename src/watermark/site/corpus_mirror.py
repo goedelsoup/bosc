@@ -160,9 +160,9 @@ def _claim_token(tag: str | None) -> str | None:
       vocabulary the rest of the corpus is written in, so the bare word was the lossy form.
     * ``yidam open-questions`` decides a node is open by scanning its raw serialized text for
       the literal ``[open]`` (``yidam/cli/src/cmd/mod.rs::has_open_claim``). With the bare
-      word the real binary saw 2 open questions in this mirror against the 20 that are
-      actually open — it matched only the handful of nodes carrying ``[open]`` somewhere in
-      their prose.
+      word the real binary saw 2 open questions in this mirror against the 20 the replica
+      reported over the same tree — it matched only the handful of nodes carrying ``[open]``
+      somewhere in their prose.
 
     Readers normalize with ``.strip("[]")`` (:func:`watermark.site.corpus_nodes._evidence`),
     so the bracketing changes no downstream feed value. Idempotent.

@@ -90,9 +90,9 @@ def corpus_mirror(
             if len(regressions) > 10:
                 console.print(f"    [dim]… and {len(regressions) - 10} more[/]")
         if not regen.graph_check.passed:
-            for node in regen.graph_check.payload.get("nodes_with_issues", []):
-                console.print(f"  [red]{node.get('node', '?')}[/]")
-                for problem in node.get("problems", []):
+            for node, problems in regen.graph_check.nodes_with_issues:
+                console.print(f"  [red]{node}[/]")
+                for problem in problems:
                     console.print(f"    - {problem}")
             raise typer.Exit(code=1)
         console.print(f"[green]graph-check clean[/] — {len(mirror.nodes)} instances.")

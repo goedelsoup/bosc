@@ -252,7 +252,7 @@ def test_serves_the_real_lima_mirror_end_to_end() -> None:
     assert hits and all(h.label for h in hits)
 
 
-@pytest.mark.skipif(not yidam_cli.available(), reason="the yidam binary is not installed")
+@pytest.mark.skipif(not yidam_cli.usable(), reason="no yidam binary that speaks --format json")
 def test_open_questions_conformance_with_the_real_binary(tmp_path: Path) -> None:
     """BOSC's in-memory open-question predicate must return the same set as ``yidam
     open-questions`` over the same mirror.

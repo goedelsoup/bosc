@@ -155,8 +155,11 @@ run = "./deploy/rotate.sh list"
 #   so `watermark export` still runs offline with no Rust toolchain — the bundle feeds are
 #   post-passes over the in-memory Mirror, never over a rendered report.
 #
-#   REPORTS — the real `yidam` binary. graph-check / lint / corpus-index / open-questions over
-#   that mirror come from upstream, NOT from a Python replica. BOSC re-implemented them when
+#   REPORTS — the real `yidam` binary. The four corpus reports (graph-check / lint /
+#   corpus-index / open-questions) over that mirror are upstream's, NOT a Python replica's.
+#   The wiring here RUNS the two that carry a verdict — graph-check gates, lint ratchets; the
+#   other two are inventories, available on demand (`yidam corpus-index`, `yidam
+#   open-questions`) and used by the conformance tests. BOSC re-implemented them when
 #   obtaining the binary meant building the whole native ML stack; RFC-0003 retired that (the
 #   default `reports` build pulls no protoc, no lancedb, no ONNX runtime) and RFC-0016 Phase 0
 #   added `--format json`, so there is now a machine-readable verdict to consume rather than
@@ -205,6 +208,10 @@ if [ -z "$commit" ] || [ "$commit" = "unknown" ]; then
   echo "       Expected keys: origin / commit / template / committed." >&2
   exit 1
 fi
+if [ -z "$origin" ]; then
+  echo "ERROR: .yidam.toml records no origin — nothing to clone from." >&2
+  exit 1
+fi
 # https:// so no deploy key is needed; the origin repo is public.
 origin=$(echo "$origin" | sed 's|^git@github.com:|https://github.com/|')
 tmp=$(mktemp -d)
@@ -233,6 +240,10 @@ set -eu
 origin=$(sed -n 's/^ *origin *= *"\(.*\)"/\1/p' .yidam.toml)
 commit=$(sed -n 's/^ *commit *= *"\(.*\)"/\1/p' .yidam.toml)
 committed=$(sed -n 's/^ *committed *= *"\(.*\)"/\1/p' .yidam.toml)
+if [ -z "$origin" ] || [ -z "$commit" ]; then
+  echo "ERROR: .yidam.toml records no origin/commit — cannot compare." >&2
+  exit 1
+fi
 origin=$(echo "$origin" | sed 's|^git@github.com:|https://github.com/|')
 echo "origin    $origin"
 echo "pinned    $commit (committed $committed)"
