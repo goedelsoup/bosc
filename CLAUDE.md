@@ -86,6 +86,33 @@ over the mirror (`watermark.site.yidam_index`, `.yidam/index/` — `watermark co
 so it is *reconciled* with them, not a competing index (the `/ask` feed stays canonical for
 `/api/ask`). The skills are usable by repo-working agents now.
 
+**The yidam split — projection is ours, reports are upstream's.** BOSC is a *non-vendoring*
+derived repo: no `yidam/` · `sadhana/` · `samudaya/` overlay, no vendored prelude. It owns the
+**projection** (`watermark.site.corpus_mirror` — sites, leads, hypotheses, the claim vocabulary;
+pure Python, so `watermark export` still runs offline with no Rust). It does **not** own the four
+corpus **reports** over that mirror (`graph-check` · `lint` · `corpus-index` · `open-questions`) —
+those come from the real `yidam` binary via `watermark.site.yidam_cli`, which parses
+`--format json` (the RFC-0016 Phase 0 envelope: `format_version`, a `yidam` build block, and a
+per-violation `in_baseline` flag). **Never re-implement a yidam report in Python.** BOSC did,
+for the sound reason that the binary once required the whole native ML stack; RFC-0003's light
+`reports` build retired that (no protoc, no lancedb, ~20s to compile) and the replica was deleted
+because it had silently drifted — it reported 26 open questions where the binary saw 2.
+
+- **Install:** `mise run yidam-build` (clones the commit pinned in `.yidam.toml`, light build).
+  Rust is scoped to that task, not a repo-wide `[tools]` entry.
+- **Run:** `mise run yidam-reports`. Locally the binary is *optional* — `watermark corpus-mirror`
+  projects and says so when it cannot report. CI installs it and **gates** (the `corpus` job).
+- **The pin is `.yidam.toml`**, on upstream's schema (`origin`/`commit`/`template`/`committed`;
+  the old `cli`/`cli_ref` names are dead and fail `yidam-build`). `mise run yidam-vendor-status`
+  reports drift — a report, never a gate.
+- **`lint` gates against `.yidam/lint-baseline.yml`**, the one committed file under `.yidam/`
+  (the rest is regenerable and ignored). It enumerates accepted inherited debt so only a
+  *regression* fails; `orphan-in` is `info` upstream and never gates. Re-bless deliberately
+  (`yidam lint --bless`) and review the diff, like an extraction.
+- **`broken-prose-link` walks `docs/**`, not just the corpus.** Its baselined findings include
+  15 in `docs/reference/periplus/` — a **frozen, unmodified import**, which must not be edited
+  to satisfy a linter.
+
 ## Conventions
 
 - **Tooling & CI (full task reference + CI rationale: [DEVELOPMENT.md](DEVELOPMENT.md)):**

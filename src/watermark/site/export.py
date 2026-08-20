@@ -203,7 +203,9 @@ class BundleResult:
     # yidam corpus mirror (#1562): the mirror regenerated at the tail of the export, if any.
     mirror_nodes: int = 0
     mirror_graph_issues: int = 0
-    mirror_reports_dir: Path | None = None
+    # None when the yidam binary was not installed to report on the projection — distinct from
+    # 0, which means it ran and found the mirror clean.
+    mirror_checked: bool = False
     # Graph exports (#1574): the downloadable RDF/GraphML artifacts written under the bundle.
     exports: list[ExportRef] = field(default_factory=list)
 
@@ -1436,19 +1438,24 @@ def export_bundle(
     # corpus-mirror` is the hard gate); a mirror failure degrades to a warning, like embeddings.
     mirror_nodes = 0
     mirror_graph_issues = 0
-    reports_dir: Path | None = None
+    mirror_checked = False
     if out_dir is None:
         try:
             from watermark.site.corpus_mirror import regenerate_mirror
 
             regen = regenerate_mirror(settings, mirror=mirror)
             mirror_nodes = len(regen.mirror.nodes)
-            mirror_graph_issues = len(regen.graph_issues)
-            reports_dir = regen.reports_dir
-            if regen.graph_issues:
-                log.warning(
-                    "corpus_mirror.graph_issues", site=settings.site, count=len(regen.graph_issues)
-                )
+            mirror_checked = regen.checked
+            if regen.graph_check is not None:
+                total = regen.graph_check.payload.get("total_instances", 0)
+                clean = regen.graph_check.payload.get("clean_instances", 0)
+                mirror_graph_issues = max(0, int(total) - int(clean))
+                if not regen.graph_check.passed:
+                    log.warning(
+                        "corpus_mirror.graph_issues",
+                        site=settings.site,
+                        count=mirror_graph_issues,
+                    )
         except Exception as exc:
             log.warning(
                 "corpus_mirror.failed",
@@ -1465,6 +1472,6 @@ def export_bundle(
         row_total=row_total,
         mirror_nodes=mirror_nodes,
         mirror_graph_issues=mirror_graph_issues,
-        mirror_reports_dir=reports_dir,
+        mirror_checked=mirror_checked,
         exports=export_refs,
     )

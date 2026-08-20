@@ -183,15 +183,23 @@ def query_nodes(
 
 
 def open_question_nodes(mirror: Mirror) -> list[MirrorNode]:
-    """The still-open nodes — the in-memory peer of ``render_open_questions``.
+    """The still-open nodes — the in-memory peer of ``yidam open-questions``.
 
-    Faithful to :func:`watermark.site.corpus_mirror.render_open_questions`: a node is open when
-    its ``label`` starts with ``?``, it carries ``claim_tag: open`` (BOSC's structured ``[open]``
-    marker on leads + open hypothesis cells), or its serialized node text contains ``[open]``.
+    A node is open when its ``label`` starts with ``?``, it carries an ``[open]`` claim tag, or
+    its serialized node text contains ``[open]``.
+
+    Since the mirror began storing the bracketed token rather than the bare word
+    (:func:`watermark.site.corpus_mirror._claim_token`), the second and third arms coincide: a
+    tagged node's ``claim_tag: "[open]"`` is itself part of the serialized text. That is the
+    point — it is what makes this predicate and the Rust one
+    (``yidam/cli/src/cmd/mod.rs::has_open_claim``, a raw-text scan for the literal ``[open]``)
+    return the same set over the same mirror. The tag arm is kept explicit so the rule survives
+    a future change to how nodes serialize.
     """
     out: list[MirrorNode] = []
     for node in mirror.nodes:
-        if node.label.startswith("?") or node.meta.get("claim_tag") == "open":
+        tag = str(node.meta.get("claim_tag") or "").strip().strip("[]").lower()
+        if node.label.startswith("?") or tag == "open":
             out.append(node)
             continue
         text = yaml.safe_dump(node.to_dict(), sort_keys=False, allow_unicode=True)

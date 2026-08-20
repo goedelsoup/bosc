@@ -145,53 +145,147 @@ run = "./deploy/rotate.sh verify"
 description = "List the deploy stack's rotatable secrets and how each one is set"
 run = "./deploy/rotate.sh list"
 
-# === yidam corpus mirror (epic #1560 / #1561 / #1562) =======================
-# `watermark export` (and `watermark corpus-mirror`) projects the committed corpus into yidam
-# node format under the git-ignored .yidam/corpus/ and regenerates the yidam reports
-# (corpus-index / open-questions / graph-check / lint) under .yidam/reports/. BOSC replicates
-# yidam's report logic in Python (watermark.site.corpus_mirror), so the mirror regenerates
-# offline with no Rust toolchain — the pinned upstream is .yidam.toml.
+# === yidam corpus mirror + reports (epic #1560) =============================
+# TWO LAYERS, and the split between them is the whole design:
 #
-# The real `yidam` CLI is OPTIONAL. It is not published to crates.io and is not a `[tools]`
-# entry here (building it needs Rust 1.88 + protoc + lancedb — out of scope for BOSC's CI); to
-# use it, build it from the pinned ref (`cargo install --path yidam/cli` in a yidam checkout).
-# When it is on PATH, the `yidam-*` tasks below run its reports over the SAME mirror to
-# cross-check the Python replicas.
+#   PROJECTION — Python, BOSC-specific. `watermark corpus-mirror` (and the tail of every
+#   `watermark export`) projects the committed BOSC corpus into yidam node format under the
+#   git-ignored .yidam/corpus/. Nothing upstream can own this: it knows about sites, leads,
+#   hypotheses, and the [verified]/[inference]/[open] claim vocabulary. It stays pure Python,
+#   so `watermark export` still runs offline with no Rust toolchain — the bundle feeds are
+#   post-passes over the in-memory Mirror, never over a rendered report.
+#
+#   REPORTS — the real `yidam` binary. graph-check / lint / corpus-index / open-questions over
+#   that mirror come from upstream, NOT from a Python replica. BOSC re-implemented them when
+#   obtaining the binary meant building the whole native ML stack; RFC-0003 retired that (the
+#   default `reports` build pulls no protoc, no lancedb, no ONNX runtime) and RFC-0016 Phase 0
+#   added `--format json`, so there is now a machine-readable verdict to consume rather than
+#   prose to scrape. The pin is .yidam.toml; `mise run yidam-build` installs exactly it.
+#
+# Rust is deliberately NOT a repo-wide [tools] entry. It is scoped to `yidam-build`, so a
+# Python/TypeScript checkout never installs a toolchain it does not use.
+
 [tasks.corpus-mirror]
-description = "Regenerate the yidam corpus mirror + reports for the active site (Python engine)."
+description = "Project the BOSC corpus into the yidam node mirror for the active site (.yidam/corpus)."
 run = "uv run watermark corpus-mirror"
 
 # The wiki cross-link audit (#1571): flag unresolved [[wiki links]] (the hard gate), orphan
 # concepts, and under-linked concepts over the active site's glossary — the content-level pass
-# corpus-mirror's node-graph graph-check is blind to. CI runs the same command (the optional
+# the node-graph graph-check is blind to. CI runs the same command (the optional
 # corpus-hygiene gate); `--suggest` adds link hints, `--no-check` reports without failing.
 [tasks.wiki-lint]
 description = "Audit the wiki [[link]] cross-reference graph for the active site (#1571)."
 run = "uv run watermark wiki-lint"
 
 # The corpus VECTOR index (#1564): embed the mirror nodes into a LanceDB index (.yidam/index/)
-# with the same all-MiniLM-L6-v2 backend as the /ask embeddings, so `yidam serve --mcp` can
+# with the same all-MiniLM-L6-v2 backend as the /ask embeddings, so the research agent can
 # search the method-layer graph by meaning. Opt-in (downloads the ~80 MB model on first run);
 # the MCP server rebuilds it lazily too, so this task is only for a warm, committed-free artifact.
 [tasks.corpus-vector-index]
 description = "Build the LanceDB vector index over the yidam corpus mirror (.yidam/index; #1564)."
 run = "uv run watermark corpus-mirror --index"
 
-[tasks.yidam-graph-check]
-description = "Cross-check the mirror with the real yidam CLI (optional; needs `yidam` on PATH)."
-run = "yidam graph-check"
+# ── the yidam binary ────────────────────────────────────────────────────────
+# Installed from the commit pinned in .yidam.toml, never vendored: a vendored copy is a fork
+# that never gets rebuilt. Adapted from upstream's own `mise.yidam.toml` task, with the origin
+# rewritten to https so it needs no deploy key and behaves identically in CI.
+[tasks.yidam-build]
+description = "Install the yidam CLI at the commit pinned in .yidam.toml (light `reports` build)."
+tools = { rust = "1.88.0" }
+run = '''
+set -eu
+if [ ! -f .yidam.toml ]; then
+  echo "ERROR: no .yidam.toml — this repo has no recorded yidam provenance." >&2
+  exit 1
+fi
+origin=$(sed -n 's/^ *origin *= *"\(.*\)"/\1/p' .yidam.toml)
+commit=$(sed -n 's/^ *commit *= *"\(.*\)"/\1/p' .yidam.toml)
+if [ -z "$commit" ] || [ "$commit" = "unknown" ]; then
+  echo "ERROR: .yidam.toml records no resolvable commit (got \"${commit:-empty}\")." >&2
+  echo "       Expected keys: origin / commit / template / committed." >&2
+  exit 1
+fi
+# https:// so no deploy key is needed; the origin repo is public.
+origin=$(echo "$origin" | sed 's|^git@github.com:|https://github.com/|')
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+echo "cloning $origin at $commit …"
+git clone --quiet --filter=blob:none --no-checkout "$origin" "$tmp/yidam"
+git -C "$tmp/yidam" checkout --quiet "$commit"
+# The light `reports` build (cargo default). Add `--features full` only if you need
+# index-build / serve --mcp / sqlite / rdf — those pull protoc, fastembed and lancedb.
+cargo install --path "$tmp/yidam/yidam/cli" --locked
+echo
+# `yidam` has no --version flag; graph-check's envelope is where the build identifies itself.
+echo "installed $(yidam graph-check --format json 2>/dev/null \
+  | sed -n 's/.*"commit": "\([^"]*\)".*/\1/p' | head -n1)"
+'''
 
-[tasks.yidam-corpus-index]
-description = "Regenerate the corpus index with the real yidam CLI (optional)."
-run = "yidam corpus-index"
+# How far the pin has drifted. A REPORT, never a gate — this repo is entitled to stay pinned,
+# and a build that goes red because upstream moved is a build somebody switches off. Upstream
+# ships the same idea in its derived-repo CI; the vendored-prelude and commit-vocabulary
+# sections of theirs are omitted here because BOSC vendors no prelude and writes conventional
+# commits, not the yidam closed vocabulary.
+[tasks.yidam-vendor-status]
+description = "Report how far the pinned yidam commit has drifted behind origin (report, never a gate)."
+run = '''
+set -eu
+origin=$(sed -n 's/^ *origin *= *"\(.*\)"/\1/p' .yidam.toml)
+commit=$(sed -n 's/^ *commit *= *"\(.*\)"/\1/p' .yidam.toml)
+committed=$(sed -n 's/^ *committed *= *"\(.*\)"/\1/p' .yidam.toml)
+origin=$(echo "$origin" | sed 's|^git@github.com:|https://github.com/|')
+echo "origin    $origin"
+echo "pinned    $commit (committed $committed)"
+# `head -n1`: `git ls-remote <url> HEAD` can match more than one ref, and every extra line
+# would make the equality test below unsatisfiable.
+remote=$(git ls-remote "$origin" HEAD 2>/dev/null | cut -f1 | head -n1)
+if [ -z "$remote" ]; then
+  echo "remote    unreachable — cannot compare"
+  exit 0
+fi
+echo "origin    $remote (HEAD)"
+if [ "$remote" = "$commit" ]; then
+  echo
+  echo "up to date"
+  exit 0
+fi
+# Only clone on the branch where the answer is not already known: the ls-remote above
+# settles the common case for free.
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+if ! git clone --quiet --filter=blob:none --no-checkout "$origin" "$tmp/y" 2>/dev/null; then
+  echo "(could not fetch $origin for detail)"
+  exit 0
+fi
+behind=$(git -C "$tmp/y" rev-list --count "$commit..origin/HEAD" 2>/dev/null || echo 0)
+pinned_at=$(git -C "$tmp/y" log -1 --format=%at "$commit" 2>/dev/null || echo "")
+echo
+if [ -n "$pinned_at" ]; then
+  days=$(( ( $(date +%s) - pinned_at ) / 86400 ))
+  echo "behind    $behind commit(s), pinned $days day(s) ago"
+else
+  echo "behind    $behind commit(s)"
+fi
+echo
+echo "to adopt: re-pin .yidam.toml [yidam].commit, then \`mise run yidam-build\`"
+echo "          and re-run \`mise run yidam-reports\` — check ids and severities move."
+'''
 
-[tasks.yidam-open-questions]
-description = "List open questions with the real yidam CLI (optional)."
-run = "yidam open-questions"
-
-[tasks.yidam-lint]
-description = "Lint the mirror with the real yidam CLI (optional; advisory)."
-run = "yidam lint --warn"
+# The four corpus reports, from the binary. `graph-check` is the hard gate (nonzero on any
+# issue); `lint` gates against the .yidam/lint-baseline.yml ratchet rather than against zero,
+# so inherited debt is enumerable and only a REGRESSION fails.
+[tasks.yidam-reports]
+description = "Run the yidam corpus reports over the mirror (graph-check + lint). Needs `mise run yidam-build`."
+depends = ["corpus-mirror"]
+run = '''
+set -eu
+if ! command -v yidam >/dev/null 2>&1; then
+  echo "yidam is not on PATH — run \`mise run yidam-build\` first." >&2
+  exit 127
+fi
+yidam graph-check
+yidam lint
+'''
 
 [tasks.onboard-site]
 description = "Bootstrap a site's connector data — the catalog DAG in dependency order (#1025)"

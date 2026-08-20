@@ -18,15 +18,10 @@ from tests.conftest import ExportedBundle
 from watermark.config import Settings
 from watermark.hypotheses import HYPOTHESES, HypothesisAssessment
 from watermark.site.corpus_mirror import (
+    _claim_token,
     build_mirror,
-    lint_mirror,
     project_mirror,
     regenerate_mirror,
-    render_corpus_index,
-    render_graph_check,
-    render_lint,
-    render_open_questions,
-    validate_mirror,
     write_mirror,
 )
 from watermark.site.feeds import (
@@ -167,7 +162,7 @@ def _project(**overrides: object):
 def test_projection_writes_a_graph_check_clean_mirror(tmp_path: Path) -> None:
     corpus = tmp_path / ".yidam" / "corpus"
     write_mirror(_project(), corpus)
-    assert validate_mirror(corpus) == []  # the yidam graph-check rules pass
+    assert _links_all_resolve(corpus)  # the projection's own edge invariant
 
 
 def test_every_node_has_at_least_one_outgoing_link(tmp_path: Path) -> None:
@@ -203,10 +198,14 @@ def test_claim_tags_are_preserved(tmp_path: Path) -> None:
     for path in (corpus / "question").glob("*.yml"):
         data = yaml.safe_load(path.read_text())
         tags[path.stem] = data.get("claim_tag")
-    # leads carry their own tag (open|inference); the open hypothesis cell is [open]
-    assert tags["lead-lead-1"] == "open"
-    assert tags["lead-lead-2"] == "inference"
-    assert tags["open-water"] == "open"
+    # Leads carry their own tag; the open hypothesis cell is [open]. The value is the
+    # BRACKETED token, not the bare word — `yidam open-questions` decides a node is open by
+    # scanning its raw text for the literal `[open]`, so the bare form made the real binary
+    # under-report (2 open questions against 26). Readers normalize with `.strip("[]")`, so no
+    # downstream feed value changed. See corpus_mirror._claim_token.
+    assert tags["lead-lead-1"] == "[open]"
+    assert tags["lead-lead-2"] == "[inference]"
+    assert tags["open-water"] == "[open]"
 
 
 def test_provenance_survives_projection(tmp_path: Path) -> None:
@@ -261,7 +260,7 @@ def test_thin_site_is_still_connected(tmp_path: Path) -> None:
         concepts=[ConceptItem(slug="only", title="Only Concept")],
     )
     write_mirror(mirror, corpus)
-    assert validate_mirror(corpus) == []
+    assert _links_all_resolve(corpus)
     # minimum viable graph: the site anchor + 3 hypothesis nodes + 1 concept
     assert mirror.counts_by_class() == {"concept": 1, "artifact": 1, "hypothesis": 3}
 
@@ -281,153 +280,87 @@ def test_slug_collisions_are_deduped(tmp_path: Path) -> None:
     write_mirror(mirror, corpus)
     files = {p.name for p in (corpus / "artifact").glob("*.yml")}
     assert "acme-llc.yml" in files and "acme-llc-2.yml" in files
-    assert validate_mirror(corpus) == []  # both distinct, both connected
+    assert _links_all_resolve(corpus)  # both distinct, both connected
 
 
-# --- the validator itself (it must actually catch bad graphs) ------------------------------
-def test_validate_mirror_flags_orphan_class_and_broken_link(tmp_path: Path) -> None:
-    corpus = tmp_path / "corpus"
-    (corpus / "concept").mkdir(parents=True)
-    (corpus / "concept.ont.yml").write_text("class: concept\n")
-    # orphan: no links; also missing label
-    (corpus / "concept" / "orphan.yml").write_text("class: concept\n")
-    # broken link + unknown class
-    (corpus / "concept" / "bad.yml").write_text(
-        "class: nonesuch\nlabel: Bad\nlinks:\n  - target: nowhere.yml\n"
-    )
-    issues = {i.node: i.problems for i in validate_mirror(corpus)}
-    assert any("orphan node" in p for p in issues["concept/orphan.yml"])
-    assert any("missing 'label:'" in p for p in issues["concept/orphan.yml"])
-    assert any("broken link" in p for p in issues["concept/bad.yml"])
-    assert any("unknown class" in p for p in issues["concept/bad.yml"])
+# --- the projection's own invariants (BOSC's contract, not a yidam report) -----------------
+def _links_all_resolve(corpus: Path) -> bool:
+    """Every outgoing link resolves to a file that exists, relative to its own node's directory.
+
+    This is the guarantee :func:`write_mirror` makes, and it is checked here rather than by
+    running ``yidam graph-check``: the reports belong to the binary now
+    (:mod:`watermark.site.yidam_cli`), but a projection that emits dangling edges is a bug in
+    *this* module and must fail without a Rust toolchain present.
+    """
+    for inst in sorted(corpus.rglob("*.yml")):
+        if inst.name.endswith(".ont.yml"):
+            continue
+        data = yaml.safe_load(inst.read_text(encoding="utf-8")) or {}
+        for link in data.get("links") or []:
+            target = link.get("target")
+            if not target or not (inst.parent / target).resolve().exists():
+                return False
+    return True
 
 
-def test_render_corpus_index_lists_instances(tmp_path: Path) -> None:
-    corpus = tmp_path / "corpus"
-    write_mirror(_project(), corpus)
-    index = render_corpus_index(corpus)
-    assert "| Instance | Class | Label | Links out | Lines |" in index
-    assert "site-lima.yml" in index
-
-
-# --- the yidam reports: open-questions / graph-check / lint (#1562) -------------------------
-def test_open_questions_lists_only_open_nodes(tmp_path: Path) -> None:
+def test_projection_emits_no_dangling_edges(tmp_path: Path) -> None:
     corpus = tmp_path / "corpus"
     write_mirror(_project(), corpus)
-    report = render_open_questions(corpus)
-    # the [open]-tagged lead and the open hypothesis cell are open...
-    assert "question/lead-lead-1.yml" in report
-    assert "question/open-water.yml" in report
-    # ...the [inference] lead is NOT (not every question is an open question)
-    assert "question/lead-lead-2.yml" not in report
+    assert _links_all_resolve(corpus)
 
 
-def test_open_questions_is_faithful_to_yidam_signals(tmp_path: Path) -> None:
-    """yidam opens on a '?'-prefixed label OR a literal ``[open]`` in the text — both, plus
-    BOSC's structured ``claim_tag: open``, must trigger; an unrelated node must not."""
-    corpus = tmp_path / "corpus"
-    (corpus / "concept").mkdir(parents=True)
-    (corpus / "concept.ont.yml").write_text("class: concept\n")
-    (corpus / "concept" / "q-label.yml").write_text(
-        "class: concept\nlabel: '? a question label'\nlinks:\n  - target: other.yml\n"
-    )
-    (corpus / "concept" / "bracket.yml").write_text(
-        "class: concept\nlabel: Bracketed\ndescription: has [open] in text\n"
-        "links:\n  - target: other.yml\n"
-    )
-    (corpus / "concept" / "tagged.yml").write_text(
-        "class: concept\nlabel: Tagged\nclaim_tag: open\nlinks:\n  - target: other.yml\n"
-    )
-    (corpus / "concept" / "other.yml").write_text(
-        "class: concept\nlabel: Settled\nlinks:\n  - target: q-label.yml\n"
-    )
-    report = render_open_questions(corpus)
-    assert "concept/q-label.yml" in report  # label starts with '?'
-    assert "concept/bracket.yml" in report  # literal [open]
-    assert "concept/tagged.yml" in report  # structured claim_tag: open
-    assert "concept/other.yml" not in report  # settled — not open
-
-
-def test_open_questions_empty_reads_none() -> None:
-    # a corpus dir with no open nodes renders the yidam sentinel
-    import tempfile
-
-    with tempfile.TemporaryDirectory() as d:
-        assert render_open_questions(Path(d)) == "_No open questions._"
-
-
-def test_lint_is_advisory_and_flags_structural_gaps(tmp_path: Path) -> None:
-    corpus = tmp_path / "corpus"
-    (corpus / "concept").mkdir(parents=True)
-    (corpus / "concept.ont.yml").write_text("class: concept\n")
-    # missing description, orphan-out (no links) → and orphan-in (nothing points to it)
-    (corpus / "concept" / "lonely.yml").write_text("class: concept\nlabel: Lonely\n")
-    # unknown class + broken link + no description; it is pointed at by nobody (orphan-in)
-    (corpus / "concept" / "bad.yml").write_text(
-        "class: nonesuch\nlabel: Bad\nlinks:\n  - target: nowhere.yml\n"
-    )
-    by_node: dict[str, set[str]] = {}
-    for issue in lint_mirror(corpus):
-        by_node.setdefault(issue.node, set()).add(issue.kind)
-    assert {"no-description", "orphan-out", "orphan-in"} <= by_node["concept/lonely.yml"]
-    assert {"unknown-class", "broken-link", "no-description", "orphan-in"} <= by_node[
-        "concept/bad.yml"
-    ]
-    # the rendered report is advisory — it names the count as reported, not failing
-    text = render_lint(corpus)
-    assert "advisory" in text and "not failing" in text
-
-
-def test_lint_clean_on_a_fully_connected_described_graph(tmp_path: Path) -> None:
-    corpus = tmp_path / "corpus"
-    (corpus / "concept").mkdir(parents=True)
-    (corpus / "concept.ont.yml").write_text("class: concept\n")
-    (corpus / "concept" / "alpha.yml").write_text(
-        "class: concept\nlabel: Alpha\ndescription: A.\nlinks:\n  - target: beta.yml\n"
-    )
-    (corpus / "concept" / "beta.yml").write_text(
-        "class: concept\nlabel: Beta\ndescription: B.\nlinks:\n  - target: alpha.yml\n"
-    )
-    assert lint_mirror(corpus) == []
-    assert render_lint(corpus) == "lint: 2 instance(s) checked — all clean."
-
-
-def test_graph_check_report_text(tmp_path: Path) -> None:
+def test_every_node_carries_class_and_label(tmp_path: Path) -> None:
+    """`missing-class` / `missing-label` are lint checks upstream; the projection must never
+    produce either, so this asserts the input to those checks is already clean."""
     corpus = tmp_path / "corpus"
     write_mirror(_project(), corpus)
-    clean = render_graph_check(corpus)
-    assert "all clean" in clean
-    # a manufactured orphan flips the summary to an issue count
-    (corpus / "concept" / "orphan.yml").write_text("class: concept\nlabel: Orphan\n")
-    dirty = render_graph_check(corpus)
-    assert "with issues" in dirty and "orphan node" in dirty
+    for inst in corpus.rglob("*.yml"):
+        if inst.name.endswith(".ont.yml"):
+            continue
+        data = yaml.safe_load(inst.read_text(encoding="utf-8")) or {}
+        assert data.get("class"), f"{inst} has no class:"
+        assert data.get("label"), f"{inst} has no label:"
+
+
+# --- the claim token: what makes BOSC and yidam agree on "open" (F3) -----------------------
+def test_claim_token_brackets_bare_tags_and_is_idempotent() -> None:
+    assert _claim_token("open") == "[open]"
+    assert _claim_token("[open]") == "[open]"
+    assert _claim_token("inference") == "[inference]"
+    assert _claim_token("") is None
+    assert _claim_token(None) is None
+
+
+def test_open_nodes_serialize_the_literal_bracket_token(tmp_path: Path) -> None:
+    """``yidam open-questions`` decides a node is open by scanning its raw text for the literal
+    ``[open]`` (``cmd/mod.rs::has_open_claim``). Storing the bare word made the real binary
+    report 2 open questions against this repo's 26 — so the serialized bytes must carry it."""
+    corpus = tmp_path / "corpus"
+    write_mirror(_project(), corpus)
+    open_lead = corpus / "question" / "lead-lead-1.yml"
+    assert "[open]" in open_lead.read_text(encoding="utf-8")
+    # ...and an [inference] lead must NOT read as open
+    inference_lead = corpus / "question" / "lead-lead-2.yml"
+    text = inference_lead.read_text(encoding="utf-8")
+    assert "[inference]" in text and "[open]" not in text
 
 
 # --- integration: the real committed Lima corpus -------------------------------------------
 def test_regenerate_mirror_writes_corpus_and_reports(tmp_path: Path) -> None:
     """The one call behind `watermark corpus-mirror` and `watermark export`: over the real Lima
     corpus it writes the node tree, populates the corpus-index README, and drops all four
-    reports — graph-check clean, lint advisory."""
+    node tree, and the projection satisfies the invariants the yidam reports check."""
     settings = Settings(data_dir=REPO_ROOT / "data", site="lima")
     corpus = tmp_path / ".yidam" / "corpus"
-    reports = tmp_path / ".yidam" / "reports"
-    regen = regenerate_mirror(settings, corpus_dir=corpus, reports_dir=reports)
+    # check=False: this asserts the PROJECTION, and must pass with no Rust toolchain installed.
+    regen = regenerate_mirror(settings, corpus_dir=corpus, check=False)
 
-    assert regen.ok  # graph-check clean ⇒ the mirror is valid
-    assert regen.graph_issues == []
+    assert regen.ok  # unchecked is not failure
+    assert not regen.checked
+    assert regen.graph_check is None
     assert regen.mirror.nodes
-    # corpus written + the corpus-index REGEN block populated with real rows
-    index = (corpus / "README.md").read_text(encoding="utf-8")
-    assert "<!-- REGEN: yidam corpus-index -->" in index
-    assert "site-lima.yml" in index
-    # every report artifact landed
-    assert set(regen.reports) == {"open-questions.md", "graph-check.txt", "lint.txt"}
-    for path in regen.reports.values():
-        assert path.exists() and path.read_text(encoding="utf-8").strip()
-    assert (reports / "README.md").exists()
-    assert "all clean" in (reports / "graph-check.txt").read_text(encoding="utf-8")
-    # Lima has orphan-in question/relation nodes → lint reports advisory findings, never raises
-    assert regen.lint_issues
+    assert (corpus / "artifact" / "site-lima.yml").exists()
+    assert _links_all_resolve(corpus)
 
 
 def test_export_skips_the_canonical_mirror_for_a_redirected_bundle(
@@ -444,7 +377,7 @@ def test_export_skips_the_canonical_mirror_for_a_redirected_bundle(
     shared = exported_bundle("lima")
     assert shared.mirror_nodes == 0
     assert shared.mirror_graph_issues == 0
-    assert shared.mirror_reports_dir is None
+    assert shared.mirror_checked is False
 
 
 def test_build_mirror_over_the_real_lima_corpus_is_clean(tmp_path: Path) -> None:
@@ -453,7 +386,7 @@ def test_build_mirror_over_the_real_lima_corpus_is_clean(tmp_path: Path) -> None
     corpus = tmp_path / ".yidam" / "corpus"
     write_mirror(mirror, corpus)
 
-    assert validate_mirror(corpus) == []  # yidam graph-check would pass
+    assert _links_all_resolve(corpus)  # the projection's own edge invariant
     counts = mirror.counts_by_class()
     # the reference site exercises every kind
     assert counts["hypothesis"] == 3

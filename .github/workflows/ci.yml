@@ -45,6 +45,7 @@ jobs:
       data: ${{ steps.filter.outputs.data_any_changed }}
       frontend: ${{ steps.filter.outputs.frontend_any_changed }}
       markdown: ${{ steps.filter.outputs.markdown_any_changed }}
+      corpus: ${{ steps.filter.outputs.corpus_any_changed }}
     steps:
       - uses: actions/checkout@v4
       - uses: tj-actions/changed-files@v47.0.6
@@ -68,6 +69,20 @@ jobs:
               - 'pnpm-lock.yaml'
               - 'pnpm-workspace.yaml'
               - '.npmrc'
+              - 'mise.toml'
+              - '.github/workflows/ci.yml'
+            # The yidam corpus gate. `data/**` and the projection feed the mirror;
+            # `docs/**` + `**/*.md` matter because `broken-prose-link` walks repo prose, not
+            # just the corpus; `.yidam.toml` changes which binary runs; the baseline is the
+            # ratchet the gate compares against.
+            corpus:
+              - 'data/**'
+              - 'docs/**'
+              - '**/*.md'
+              - 'src/watermark/site/corpus_mirror.py'
+              - 'src/watermark/site/yidam_cli.py'
+              - '.yidam.toml'
+              - '.yidam/lint-baseline.yml'
               - 'mise.toml'
               - '.github/workflows/ci.yml'
             markdown:
@@ -193,6 +208,94 @@ jobs:
       - name: Test (shard ${{ matrix.group }}/6)
         run: uv run pytest -n auto --splits 6 --group ${{ matrix.group }}
 
+  # --- the yidam corpus gate ------------------------------------------------------------
+  #
+  # The four corpus reports come from the REAL `yidam` binary, not from a Python replica
+  # (retired — see watermark/site/yidam_cli.py). This is the job that makes that true: locally
+  # the binary is optional and `watermark corpus-mirror` degrades to projecting only, so
+  # without this the reports would run nowhere.
+  #
+  # Cheap on purpose. The light `reports` build pulls no protoc, no lancedb and no ML runtime,
+  # so it compiles in seconds; keyed on the pinned commit, the cache makes it near-free after
+  # the first run on a given pin.
+  corpus:
+    needs: changes
+    if: ${{ needs.changes.outputs.corpus == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-python-env
+
+      - name: Read the pinned yidam commit
+        id: pin
+        run: |
+          commit=$(sed -n 's/^ *commit *= *"\(.*\)"/\1/p' .yidam.toml)
+          origin=$(sed -n 's/^ *origin *= *"\(.*\)"/\1/p' .yidam.toml)
+          if [ -z "$commit" ] || [ "$commit" = "unknown" ]; then
+            echo "::error::.yidam.toml records no resolvable commit (got '${commit:-empty}')."
+            echo "::error::Expected keys: origin / commit / template / committed."
+            exit 1
+          fi
+          # https:// so CI needs no deploy key; the origin repo is public.
+          origin=$(echo "$origin" | sed 's|^git@github.com:|https://github.com/|')
+          { echo "source=$origin"; echo "commit=$commit"; } >> "$GITHUB_OUTPUT"
+
+      # Keyed on the pin, so re-pinning is the only thing that pays for a rebuild.
+      - name: Cache the yidam binary
+        id: yidam-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/yidam
+          key: yidam-${{ runner.os }}-${{ steps.pin.outputs.commit }}
+
+      - uses: dtolnay/rust-toolchain@stable
+        if: steps.yidam-cache.outputs.cache-hit != 'true'
+
+      - name: Install the yidam CLI (light `reports` build)
+        if: steps.yidam-cache.outputs.cache-hit != 'true'
+        run: |
+          git clone --filter=blob:none --no-checkout "${{ steps.pin.outputs.source }}" /tmp/yidam
+          git -C /tmp/yidam checkout --quiet "${{ steps.pin.outputs.commit }}"
+          cargo install --path /tmp/yidam/yidam/cli --locked
+
+      # Project the corpus, then let the binary report on it. `--no-check` here because the
+      # reports are run explicitly below, where their output is annotated.
+      - name: Project the corpus mirror
+        run: uv run watermark corpus-mirror --no-check
+
+      # The hard gate: every node carries a class and a label, and every edge resolves.
+      - name: graph-check
+        run: yidam graph-check
+
+      # Gates against .yidam/lint-baseline.yml, not against zero. Inherited debt is
+      # enumerable and only a REGRESSION fails — which is what keeps this gate switched on.
+      # Re-bless deliberately with `yidam lint --bless` and review the diff.
+      - name: lint (baseline ratchet)
+        run: yidam lint
+
+      # --- how stale is the pin? ----------------------------------------------------------
+      #
+      # A REPORT, never a gate. This repo is entitled to stay pinned, and a build that goes red
+      # because upstream moved is a build somebody switches off. It exists because staleness is
+      # invisible from inside a derived repo: this integration was itself 59 commits and 49 days
+      # behind before anyone measured it.
+      - name: Report how far the pin has drifted
+        continue-on-error: true
+        run: |
+          set -eu
+          cd /tmp/yidam 2>/dev/null || git clone --filter=blob:none --no-checkout \
+            "${{ steps.pin.outputs.source }}" /tmp/yidam && cd /tmp/yidam
+          git fetch --quiet origin
+          behind=$(git rev-list --count "${{ steps.pin.outputs.commit }}..origin/HEAD" 2>/dev/null || echo 0)
+          if [ "$behind" -eq 0 ]; then
+            echo "::notice::yidam pin is current with upstream."
+            exit 0
+          fi
+          pinned_at=$(git log -1 --format=%at "${{ steps.pin.outputs.commit }}" 2>/dev/null || echo "")
+          days=""
+          [ -n "$pinned_at" ] && days=", pinned $(( ( $(date +%s) - pinned_at ) / 86400 )) day(s) ago"
+          echo "::notice::yidam pin is $behind commit(s) behind upstream$days — re-pin .yidam.toml to adopt."
+
   # The required backend status check (#682): a thin aggregator over the three legs above.
   # It keeps the job name `check` (the gate keys on it — see .github/config/index.ts
   # `requiredChecks`) and `if: always()` so it ALWAYS reports a status, never stuck
@@ -200,18 +303,18 @@ jobs:
   # PR (all legs skipped) is green, and any leg failing fails `check`. `test` is a matrix
   # (6 shards), so its rolled-up result is success only when every shard passed.
   check:
-    needs: [changes, lint, types, catalog, test]
+    needs: [changes, lint, types, catalog, test, corpus]
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
       - name: Roll up backend legs
         run: |
-          echo "changes=${{ needs.changes.result }} lint=${{ needs.lint.result }} types=${{ needs.types.result }} catalog=${{ needs.catalog.result }} test=${{ needs.test.result }}"
+          echo "changes=${{ needs.changes.result }} lint=${{ needs.lint.result }} types=${{ needs.types.result }} catalog=${{ needs.catalog.result }} test=${{ needs.test.result }} corpus=${{ needs.corpus.result }}"
           if [ "${{ needs.changes.result }}" != "success" ]; then
             echo "::error::the changes filter job did not succeed (result: ${{ needs.changes.result }})"
             exit 1
           fi
-          for r in "${{ needs.lint.result }}" "${{ needs.types.result }}" "${{ needs.catalog.result }}" "${{ needs.test.result }}"; do
+          for r in "${{ needs.lint.result }}" "${{ needs.types.result }}" "${{ needs.catalog.result }}" "${{ needs.test.result }}" "${{ needs.corpus.result }}"; do
             case "$r" in
               success|skipped) ;;
               *) echo "::error::a backend check leg did not pass (result: $r)"; exit 1 ;;
