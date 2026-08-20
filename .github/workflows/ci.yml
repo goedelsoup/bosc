@@ -254,17 +254,40 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         if: steps.yidam-cache.outputs.cache-hit != 'true'
 
-      - name: Install the yidam CLI (light `reports` build)
-        if: steps.yidam-cache.outputs.cache-hit != 'true'
+      # Always, cache hit or miss: the contract check and the staleness report both read this
+      # tree, and on a cache hit the install step below does not run. Cheap — blobless clone.
+      - name: Fetch the pinned yidam source
         run: |
           git clone --filter=blob:none --no-checkout "${{ steps.pin.outputs.source }}" /tmp/yidam
           git -C /tmp/yidam checkout --quiet "${{ steps.pin.outputs.commit }}"
-          cargo install --path /tmp/yidam/yidam/cli --locked
+
+      - name: Install the yidam CLI (light `reports` build)
+        if: steps.yidam-cache.outputs.cache-hit != 'true'
+        run: cargo install --path /tmp/yidam/yidam/cli --locked
 
       # Project the corpus, then let the binary report on it. `--no-check` here because the
       # reports are run explicitly below, where their output is annotated.
       - name: Project the corpus mirror
         run: uv run watermark corpus-mirror --no-check
+
+      # The MCP contract is vendored (BOSC has no yidam tree, only the binary), so it can go
+      # stale silently. This is the only place both copies exist at once — the pin is already
+      # cloned here for the build, so proving they match costs one diff.
+      - name: The vendored MCP contract matches the pin
+        run: |
+          set -eu
+          src=/tmp/yidam/yidam/prelude/sdks/parity/mcp
+          if ! diff -u "$src/tools.json" src/watermark/agent/mcp_contract.json; then
+            echo "::error::src/watermark/agent/mcp_contract.json is not the contract at the pin."
+            echo "::error::Run 'mise run yidam-contract-sync' and review the diff."
+            exit 1
+          fi
+          if ! diff -ru "$src/cases" tests/fixtures/yidam-mcp/cases; then
+            echo "::error::the vendored conformance cases are not the ones at the pin."
+            echo "::error::Run 'mise run yidam-contract-sync'."
+            exit 1
+          fi
+          echo "vendored MCP contract matches ${{ steps.pin.outputs.commit }}"
 
       # The hard gate: every node carries a class and a label, and every edge resolves.
       - name: graph-check
@@ -286,8 +309,7 @@ jobs:
         continue-on-error: true
         run: |
           set -eu
-          cd /tmp/yidam 2>/dev/null || git clone --filter=blob:none --no-checkout \
-            "${{ steps.pin.outputs.source }}" /tmp/yidam && cd /tmp/yidam
+          cd /tmp/yidam
           git fetch --quiet origin
           # No `|| echo 0`: a rev-list that fails knows nothing, and reporting that as 0 would
           # print "pin is current" — the opposite of what the step just found out.

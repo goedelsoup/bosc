@@ -53,9 +53,12 @@ cosine-similarity retrieval to the research agent. Defers to the root
     below is additive and never touches it.**
   - **`watermark.site.yidam_index`** (`.yidam/index/`) — the projected **yidam corpus-mirror
     nodes** (the method-layer graph — entities/relationships/concepts/people/leads/hypotheses/
-    `[open]` claims); powers the `yidam_semantic_search` tool served through `yidam serve --mcp`
-    (#1564). Built by `watermark corpus-mirror --index` and lazily by the MCP server. Reuses
-    this `get_provider`, so it is *reconciled* with the `/ask` embeddings by construction.
+    `[open]` claims); powers the **vector arm of the MCP `retrieve` tool** (#1564). Built by
+    `watermark corpus-mirror --index` — **no longer lazily by the MCP server**: the frozen
+    contract requires `retrieve` to report `degraded: true` when no index is built rather than
+    embed one on the spot, which used to mean an agent's first search silently answered from a
+    space that had not existed a moment earlier. Reuses this `get_provider`, so it is
+    *reconciled* with the `/ask` embeddings by construction.
 - **CLI:** `watermark index` (`cli/retrieval.py`) rebuilds the LanceDB index from all sources
   (`--no-documents`/`--no-reference`/`--no-extracted`, `--collection`, `--site` for a scoped
   update). Tests are hermetic: the sentence-transformers provider is stubbed with deterministic

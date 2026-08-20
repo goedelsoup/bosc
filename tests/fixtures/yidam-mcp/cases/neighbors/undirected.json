@@ -1,0 +1,15 @@
+{
+  "tool": "neighbors",
+  "capability": "graph",
+  "why": "Reached from the node nothing points out of. The edge runs knowledge-graph → traversal, so answering from traversal at all requires walking it backwards — which is the half a directed implementation silently loses.",
+  "call": { "id": "concept/traversal" },
+  "expect": {
+    "fields": ["id", "neighbors"],
+    "count": { "neighbors": 1 },
+    "equalsAt": {
+      "neighbors.0.id": "concept/knowledge-graph",
+      "neighbors.0.direction": "in",
+      "neighbors.0.depth": 1
+    }
+  }
+}
