@@ -1,0 +1,10 @@
+{
+  "tool": "open_questions",
+  "why": "The predicate has two arms — a `?` label and an [open] claim — and the fixture carries one node flagged by each, never both. A server implementing only one arm returns one node instead of two, which is exactly the divergence a fixture flagged both ways cannot see.",
+  "call": {},
+  "expect": {
+    "fields": ["open_questions"],
+    "count": { "open_questions": 2 },
+    "each": { "open_questions": ["id", "label", "path"] }
+  }
+}

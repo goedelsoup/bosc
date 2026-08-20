@@ -1,0 +1,10 @@
+{
+  "tool": "list_nodes",
+  "why": "Core so a tools-only server is first-class. On a server that backs resources this MUST equal read_resource(\"yidam://corpus/<class>\") — the bridge is a naming rule, not a second implementation.",
+  "call": {},
+  "expect": {
+    "fields": ["nodes"],
+    "nonEmpty": ["nodes"],
+    "each": { "nodes": ["id", "class", "label", "description"] }
+  }
+}

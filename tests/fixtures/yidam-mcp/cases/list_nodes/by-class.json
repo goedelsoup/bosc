@@ -1,0 +1,9 @@
+{
+  "tool": "list_nodes",
+  "why": "The filter has to actually filter; a server ignoring `class` still answers plausibly.",
+  "call": { "class": "concept" },
+  "expect": {
+    "nonEmpty": ["nodes"],
+    "everyItemHas": { "nodes": { "class": "concept" } }
+  }
+}

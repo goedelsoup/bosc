@@ -282,6 +282,33 @@ echo "to adopt: re-pin .yidam.toml [yidam].commit, then \`mise run yidam-build\`
 echo "          and re-run \`mise run yidam-reports\` — check ids and severities move."
 '''
 
+# The frozen MCP tool contract (RFC-0005) that `watermark.agent.yidam_tools` implements, and
+# the conformance cases the test suite runs. Vendored rather than read from a yidam checkout,
+# because BOSC has no yidam tree — only the built binary. Refresh with this task when re-pinning;
+# CI proves the copy matches the pin, so a stale one cannot sit unnoticed.
+[tasks.yidam-contract-sync]
+description = "Re-vendor the MCP tool contract + conformance cases from the pinned yidam."
+run = '''
+set -eu
+origin=$(sed -n 's/^ *origin *= *"\(.*\)"/\1/p' .yidam.toml)
+commit=$(sed -n 's/^ *commit *= *"\(.*\)"/\1/p' .yidam.toml)
+if [ -z "$origin" ] || [ -z "$commit" ]; then
+  echo "ERROR: .yidam.toml records no origin/commit." >&2
+  exit 1
+fi
+origin=$(echo "$origin" | sed 's|^git@github.com:|https://github.com/|')
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+git clone --quiet --filter=blob:none --no-checkout "$origin" "$tmp/y"
+git -C "$tmp/y" checkout --quiet "$commit" -- yidam/prelude/sdks/parity/mcp
+src="$tmp/y/yidam/prelude/sdks/parity/mcp"
+cp "$src/tools.json" src/watermark/agent/mcp_contract.json
+cp "$src/VERSION" tests/fixtures/yidam-mcp/VERSION
+rm -rf tests/fixtures/yidam-mcp/cases
+cp -R "$src/cases" tests/fixtures/yidam-mcp/cases
+echo "re-vendored the MCP contract at $commit — review the diff, then run the conformance tests"
+'''
+
 # The four corpus reports, from the binary. `graph-check` is the hard gate (nonzero on any
 # issue); `lint` gates against the .yidam/lint-baseline.yml ratchet rather than against zero,
 # so inherited debt is enumerable and only a REGRESSION fails.

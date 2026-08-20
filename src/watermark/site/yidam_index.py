@@ -78,6 +78,25 @@ def default_index_dir(settings: Settings | None = None) -> Path:
     return settings.data_dir.parent / ".yidam" / "index"
 
 
+def index_exists(index_dir: Path) -> bool:
+    """Whether a built index table is present at ``index_dir``.
+
+    Separate from :meth:`YidamVectorIndex.exists` so a caller can ask *before* it has an
+    embedding provider — the MCP server declares `retrieve.vector` from this, and constructing
+    a provider to answer it would download the model to report that no index is there.
+    """
+    try:
+        import lancedb
+
+        if not index_dir.exists():
+            return False
+        resp = lancedb.connect(str(index_dir)).list_tables()
+        names = list(resp.tables) if hasattr(resp, "tables") else list(resp)
+        return _TABLE in names
+    except Exception:
+        return False
+
+
 class YidamVectorIndex:
     """A LanceDB table of embedded mirror nodes — build from a :class:`Mirror`, then query.
 

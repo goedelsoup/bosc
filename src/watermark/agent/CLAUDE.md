@@ -38,12 +38,20 @@ Wraps the Claude Agent SDK and the Anthropic Messages API. Defers to the root
     remaining Lima-specific hydrology tools (`stormwater_runoff`, `hydrology_scenario`,
     `tier1_swmm`) still return a `_reference_only(...)` notice off-home — tracked in #900.
 - `yidam_tools.py` — a **second** in-process SDK MCP server (`yidam`, namespace
-  `mcp__yidam__*`), BOSC's Python realization of `yidam serve --mcp` (#1563). It serves the
-  **yidam corpus mirror** (`watermark.site.corpus_mirror`, Epic #1560) — the committed corpus
-  projected into `yidam://corpus/<class>/<name>` nodes — so the agent can `list` / `read` /
-  `query` (keyword) / `semantic_search` (vector) nodes and run `open_questions` over the
-  projected method-layer graph (entities, relationships, concepts, people, leads, hypotheses,
-  `[open]` claims). It builds the mirror **in-memory** for the active site (offline read of
+  `mcp__yidam__*`), implementing the **frozen MCP tool contract** (RFC-0005), vendored beside it
+  as `mcp_contract.json`. Five bare-named tools — `retrieve` / `get_node` / `list_nodes` /
+  `open_questions` / `neighbors` — whose descriptions and input schemas are **read from that
+  file**, so a tool added upstream and not added here fails the conformance suite instead of
+  quietly not existing. **Never rename a tool or hand-write a schema here**; re-vendor with
+  `mise run yidam-contract-sync` (CI proves the copy matches the pin). Three rules the contract
+  makes non-negotiable: `retrieve` is **one adaptive tool** carrying `degraded` on every
+  response (never a keyword/vector pair — that makes the caller choose a vector space, its least
+  informed decision); `get_node` returns the **unified JSON model**, never a YAML render; and the
+  `open_questions` predicate is **frozen at two arms** (`?` label, `[open]` in text) — no server
+  may widen it. `capabilities()` declares what BOSC backs (`graph` yes; `phases`/`sangha` no —
+  they need a working yidam repo; `resources` no — SDK servers register tools only). It serves
+  the corpus mirror (`watermark.site.corpus_mirror`, Epic #1560) built **in-memory** for the
+  active site (offline read of
   committed corpus, cached per turn) rather than reading the git-ignored `.yidam/corpus/` tree,
   so it never depends on a prior `export`. `semantic_search` (#1564) queries the LanceDB vector
   index (`watermark.site.yidam_index`, `.yidam/index/`) — built by `watermark corpus-mirror

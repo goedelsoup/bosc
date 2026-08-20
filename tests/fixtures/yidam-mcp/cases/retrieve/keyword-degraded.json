@@ -1,0 +1,11 @@
+{
+  "tool": "retrieve",
+  "why": "The fixture has no vector index, so this is the arm every server hits first and the one whose flag matters most. A server that answered without `degraded` here would be claiming a vector space it does not have.",
+  "call": { "query": "knowledge graph" },
+  "expect": {
+    "fields": ["degraded", "results"],
+    "equals": { "degraded": true },
+    "nonEmpty": ["results"],
+    "each": { "results": ["path", "class", "label", "text", "score"] }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "tool": "get_node",
+  "why": "An id is written by hand at least as often as it is copied. Every server accepts the bare id and the repository path for the same node, or an agent that read a path out of one tool cannot pass it to another.",
+  "call": { "id": ".yidam/corpus/concept/knowledge-graph.yml" },
+  "expect": { "equals": { "id": "concept/knowledge-graph" } }
+}

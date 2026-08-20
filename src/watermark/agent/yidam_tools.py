@@ -8,14 +8,24 @@ method-layer graph (entities, relationships, wiki concepts, profiled people, the
 the boom-origin hypotheses, and the ``[open]`` claims) instead of re-deriving it from raw
 extractions. It closes the deferred "method-layer → in-app research agent" wiring.
 
-**Why a second server, and why tools (not MCP resources).** The agent wires in-process SDK
-MCP servers via :func:`claude_agent_sdk.create_sdk_mcp_server`, which registers **tools only**
-— it has no resource surface, and the Agent SDK's ``query()`` loop does not auto-attach MCP
-resources to the model the way it does tools. So the ``yidam://corpus/*`` "resources" the
-issue names are delivered as list/read **tools** (nodes are still addressed by their
-``yidam://corpus/<class>/<name>`` URI), alongside the ``open_questions`` and ``query`` tools.
-This is a dedicated ``yidam`` server so its namespace (``mcp__yidam__*``) stays distinct from
-the ``watermark`` extraction/hydrology tools in :mod:`watermark.agent.tools`.
+**This server implements the frozen MCP tool contract** (RFC-0005), vendored beside it as
+``mcp_contract.json``. Names are bare — ``retrieve``, ``get_node``, ``list_nodes``,
+``open_questions``, ``neighbors`` — because the server is already namespaced by its own name
+in every client that mounts one (here: ``mcp__yidam__*``). Tool descriptions and input schemas
+are read from that file rather than written here, so a tool added upstream and not added here
+fails the conformance test instead of quietly not existing.
+
+Before the freeze this server shared exactly **one name of five** with the Rust ``serve --mcp``
+and the TypeScript tools: it prefixed everything ``yidam_``, split retrieval into a keyword tool
+and a vector tool where the contract keeps one adaptive tool, returned a human YAML render where
+the contract specifies a JSON node model, omitted the ``degraded`` flag entirely, and had no
+``neighbors`` at all. An agent written against one server could not call another.
+
+**Why tools and not MCP resources.** :func:`claude_agent_sdk.create_sdk_mcp_server` registers
+**tools only** — there is no ``resources/*`` channel — so this server declares
+``resources: false`` and serves ``list_nodes`` / ``get_node`` as its tool peers. That is the
+contract's sanctioned shape for a tools-only server, and declaring it is what lets an agent read
+the hole once instead of finding it through a tool-not-found error.
 
 **What it serves.** The mirror is built **in-memory** for the active site via
 :func:`watermark.site.corpus_mirror.build_mirror` — the same projection ``watermark
@@ -29,7 +39,9 @@ projects the corpus once.
 
 from __future__ import annotations
 
+import json
 import re
+from pathlib import Path
 from typing import Any
 
 import yaml
@@ -38,7 +50,7 @@ from claude_agent_sdk import create_sdk_mcp_server, tool
 from watermark.agent.tracing import traced_tool
 from watermark.config import Settings, get_settings
 from watermark.site.corpus_mirror import CLASSES, Mirror, MirrorNode, build_mirror
-from watermark.site.yidam_index import YidamVectorIndex, default_index_dir
+from watermark.site.yidam_index import YidamVectorIndex, default_index_dir, index_exists
 
 YIDAM_SERVER_NAME = "yidam"
 
@@ -46,6 +58,9 @@ YIDAM_SERVER_NAME = "yidam"
 # `yidam serve --mcp` would expose as a resource). read/query accept the bare `<class>/<name>`
 # id or this full URI interchangeably.
 URI_SCHEME = "yidam://corpus/"
+
+# The repo-relative root a node path is reported under (`.yidam/corpus/<class>/<name>.yml`).
+_CORPUS_PREFIX = ".yidam/corpus/"
 
 # Cap a single query's result window — the corpus is small (Lima ≈ 170 nodes), so this is a
 # sanity bound on a caller-supplied `limit`, not a paging mechanism.
@@ -122,6 +137,11 @@ def normalize_id(raw: str) -> str:
     s = (raw or "").strip()
     if s.startswith(URI_SCHEME):
         s = s[len(URI_SCHEME) :]
+    # A repository path — what `retrieve` and `open_questions` report as `path`. An id is
+    # written by hand at least as often as it is copied, and an agent that read a path out of
+    # one tool must be able to pass it to another.
+    if s.startswith(_CORPUS_PREFIX):
+        s = s[len(_CORPUS_PREFIX) :]
     while s.startswith("../"):
         s = s[len("../") :]
     s = s.strip("/")
@@ -185,21 +205,20 @@ def query_nodes(
 def open_question_nodes(mirror: Mirror) -> list[MirrorNode]:
     """The still-open nodes — the in-memory peer of ``yidam open-questions``.
 
-    A node is open when its ``label`` starts with ``?``, it carries an ``[open]`` claim tag, or
-    its serialized node text contains ``[open]``.
+    **The predicate is frozen** (`mcp_contract.json`, `open_questions`): a node is open when its
+    ``label`` starts with ``?`` **or** its serialized text carries an ``[open]`` claim. Two arms,
+    and no server may add a third — *"a server that quietly widens this one makes two corpora
+    incomparable while both answer."*
 
-    Since the mirror began storing the bracketed token rather than the bare word
-    (:func:`watermark.site.corpus_mirror._claim_token`), the second and third arms coincide: a
-    tagged node's ``claim_tag: "[open]"`` is itself part of the serialized text. That is the
-    point — it is what makes this predicate and the Rust one
-    (``yidam/cli/src/cmd/mod.rs::has_open_claim``, a raw-text scan for the literal ``[open]``)
-    return the same set over the same mirror. The tag arm is kept explicit so the rule survives
-    a future change to how nodes serialize.
+    BOSC used to carry a third arm keyed on the structured ``claim_tag``, because its nodes
+    stored a bare ``open`` that the text scan could not see. That is fixed at the source now
+    (:func:`watermark.site.corpus_mirror._claim_token` serializes ``"[open]"``), so the tag is
+    *in* the text and the third arm became redundant before it became forbidden. Removing it is
+    behaviour-preserving — asserted by the conformance test, not assumed.
     """
     out: list[MirrorNode] = []
     for node in mirror.nodes:
-        tag = str(node.meta.get("claim_tag") or "").strip().strip("[]").lower()
-        if node.label.startswith("?") or tag == "open":
+        if node.label.startswith("?"):
             out.append(node)
             continue
         text = yaml.safe_dump(node.to_dict(), sort_keys=False, allow_unicode=True)
@@ -208,189 +227,348 @@ def open_question_nodes(mirror: Mirror) -> list[MirrorNode]:
     return out
 
 
-# --- rendering (node → the text a tool returns) ---------------------------------------------
-def _render_node(node: MirrorNode) -> str:
-    """One node as its ``yidam://corpus/...`` header + the exact YAML the mirror writes to disk."""
-    body = yaml.safe_dump(node.to_dict(), sort_keys=False, allow_unicode=True).rstrip()
-    return f"# {node_uri(node)}\n{body}"
+def resolve_link_target(source_class: str, target: str) -> str:
+    """The node id a link points at, resolved against the *source node's class dir*.
+
+    A mirror link serializes relative to where its node lives: a same-class edge is
+    ``other.yml`` and a cross-class one is ``../<class>/<name>.yml``. Resolving needs the source
+    class, which is why this cannot be :func:`normalize_id` — that one has no idea whose link
+    it is holding, so it would turn a same-class ``other.yml`` into the bare id ``other``.
+    """
+    t = (target or "").strip()
+    if t.endswith(".yml"):
+        t = t[: -len(".yml")]
+    if t.startswith("../"):
+        return t[len("../") :].strip("/")
+    return f"{source_class}/{t}" if "/" not in t else t
 
 
-def _render_index(nodes: list[MirrorNode], *, site: str) -> str:
-    """The list view — nodes grouped by class, one ``uri  label`` line each."""
-    if not nodes:
-        return f"No corpus nodes for site '{site}'."
-    lines = [f"yidam corpus mirror — site '{site}' — {len(nodes)} node(s):"]
-    for cls in CLASSES:
-        in_class = [n for n in nodes if n.node_class == cls]
-        if not in_class:
+def node_edges(mirror: Mirror) -> list[tuple[str, str, str]]:
+    """Every ``(from_id, to_id, relationship)`` in the mirror, targets resolved to node ids."""
+    return [
+        (node.id, resolve_link_target(node.node_class, link.target), link.relationship)
+        for node in mirror.nodes
+        for link in node.links
+    ]
+
+
+def neighbors_of(mirror: Mirror, node_id: str, depth: int = 1) -> list[dict[str, Any]]:
+    """Nodes reachable from ``node_id`` within ``depth`` hops, following edges **both ways**.
+
+    Breadth-first, so each node is reported once at its *shortest* hop, carrying the direction
+    of the edge it was reached by. Undirected because half the interesting connections are
+    inbound — it is the same reason the corpus has an ``orphan-in`` check at all, and a directed
+    walk silently loses that half.
+    """
+    start = find_node(mirror, node_id)
+    if start is None:
+        return []
+    by_id = {n.id: n for n in mirror.nodes}
+    edges = node_edges(mirror)
+    seen = {start.id}
+    queue: list[tuple[str, int]] = [(start.id, 0)]
+    found: list[dict[str, Any]] = []
+    while queue:
+        current, hop = queue.pop(0)
+        if hop >= depth:
             continue
-        lines.append(f"\n## {cls} ({len(in_class)})")
-        lines.extend(f"- {node_uri(n)}  —  {n.label}" for n in in_class)
-    return "\n".join(lines)
+        step = [(to, rel, "out") for (frm, to, rel) in edges if frm == current]
+        step += [(frm, rel, "in") for (frm, to, rel) in edges if to == current]
+        for nxt, relationship, direction in step:
+            if nxt in seen:
+                continue
+            seen.add(nxt)
+            hit = by_id.get(nxt)
+            found.append(
+                {
+                    "id": nxt,
+                    "label": hit.label if hit else "",
+                    "description": hit.description if hit else "",
+                    "relationship": relationship,
+                    "direction": direction,
+                    "depth": hop + 1,
+                }
+            )
+            queue.append((nxt, hop + 1))
+    return found
 
 
-# --- tools ----------------------------------------------------------------------------------
-@tool(
-    "yidam_list_nodes",
-    "List the active site's yidam corpus mirror nodes (the yidam://corpus/<class>/<name> "
-    f"graph projected from the BOSC corpus), grouped by class ({_CLASS_LIST}). Pass node_class "
-    "to list just one kind. Read a node's full detail with yidam_read_node.",
-    {
-        "type": "object",
-        "properties": {
-            "node_class": {
-                "type": "string",
-                "description": f"Optional: restrict to one class ({_CLASS_LIST}).",
-            },
-        },
-        "required": [],
-    },
+# --- the frozen contract ---------------------------------------------------------------------
+# Read from a vendored copy rather than restated in this file. The contract says why: *"This
+# file is the only place the list lives; a harness that restates it is a second freeze, which is
+# how three servers ended up sharing one name out of five capabilities."* Kept in sync with the
+# pin by the CI corpus job, which diffs it against the yidam it checks out.
+_CONTRACT: dict[str, Any] = json.loads(
+    (Path(__file__).with_name("mcp_contract.json")).read_text(encoding="utf-8")
 )
+
+
+def contract() -> dict[str, Any]:
+    """The frozen MCP tool contract (RFC-0005) this server implements."""
+    return _CONTRACT
+
+
+def _spec(name: str) -> dict[str, Any]:
+    """One tool's frozen name, description and input schema."""
+    for entry in _CONTRACT["tools"]:
+        if entry["name"] == name:
+            return dict(entry)
+    raise KeyError(f"no tool {name!r} in the frozen contract")
+
+
+def vector_ready(settings: Settings | None = None) -> bool:
+    """Whether a built vector index is on disk for the active site.
+
+    Deliberately does **not** build one. The old behaviour lazily embedded the whole mirror on
+    first search, which meant an agent's first `retrieve` silently produced results from a space
+    that had not existed a moment earlier — and, per RFC-0006, one whose weights differ from
+    yidam's anyway. The contract's rule is the opposite: say `vector: false`, answer degraded,
+    and let a human run `mise run corpus-vector-index` if they want the other arm.
+    """
+    settings = settings or get_settings()
+    return index_exists(default_index_dir(settings))
+
+
+def capabilities(settings: Settings | None = None) -> dict[str, Any]:
+    """What this server can actually back — filled honestly, not optimistically.
+
+    `phases` and `sangha` read live `ma/*` / `rigpa/*` refs and elector positions from a working
+    yidam repository; BOSC has neither, and no amount of projecting its corpus would produce
+    them. `resources` is false because the Agent SDK's in-process servers expose **tools only**
+    — there is no `resources/*` channel to serve the `yidam://` scheme over. Saying so is what
+    lets an agent read the hole once instead of discovering it through a tool-not-found error on
+    the call it cared about.
+    """
+    return {
+        "contract": _CONTRACT["contract"],
+        "retrieve": {"vector": vector_ready(settings)},
+        "graph": True,  # the mirror is a projected entity graph; edges are its point
+        "phases": False,
+        "sangha": False,
+        "resources": False,
+    }
+
+
+def served_tool_names(settings: Settings | None = None) -> list[str]:
+    """The contract tools this server backs: every ``core`` one, plus each declared capability.
+
+    Derived from the contract rather than written beside it, so a tool added upstream and not
+    added here fails the conformance test instead of quietly not existing.
+    """
+    caps = capabilities(settings)
+    out = []
+    for entry in _CONTRACT["tools"]:
+        tier = entry.get("tier", "core")
+        if tier == "core" or bool(caps.get(tier)):
+            out.append(entry["name"])
+    return out
+
+
+def _json(payload: dict[str, Any]) -> dict[str, Any]:
+    """Wrap a contract response as the MCP text block, JSON-encoded.
+
+    The envelope is the contract: a server returning its own YAML render hands every consumer a
+    second format to parse, which is the drift the frozen list exists to stop.
+    """
+    return _text(json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=False))
+
+
+def _error(message: str) -> dict[str, Any]:
+    """A tool-level failure the agent can read and react to."""
+    return {"content": [{"type": "text", "text": message}], "isError": True}
+
+
+def node_path(node_id: str) -> str:
+    """The repository path a node id addresses — what `retrieve`/`open_questions` report."""
+    return f".yidam/corpus/{node_id}.yml"
+
+
+def _node_model(node: MirrorNode) -> dict[str, Any]:
+    """One node in the unified model (RFC-0002).
+
+    ``content`` carries the node's full YAML body — that is where BOSC's projected provenance
+    (site / scope / claim_tag / source / issue / …) lives, and the contract reserves the field
+    for exactly this. The typed fields beside it are the ones every server must agree on.
+    """
+    return {
+        "id": node.id,
+        "class": node.node_class,
+        "label": node.label,
+        "description": node.description,
+        "content": yaml.safe_dump(node.to_dict(), sort_keys=False, allow_unicode=True).rstrip(),
+        "links": [
+            {"target": link.target, "relationship": link.relationship} for link in node.links
+        ],
+    }
+
+
+# --- tools (names, descriptions and schemas come from the contract) --------------------------
+_RETRIEVE = _spec("retrieve")
+
+
+@tool(_RETRIEVE["name"], _RETRIEVE["description"], _RETRIEVE["inputSchema"])
 @traced_tool
-async def yidam_list_nodes(args: dict[str, Any]) -> dict[str, Any]:
-    settings = get_settings()
-    mirror = _mirror(settings)
-    node_class = (args or {}).get("node_class") or None
+async def retrieve(args: dict[str, Any]) -> dict[str, Any]:
+    """One adaptive tool, not a split pair.
+
+    Offering `query` and `semantic_search` as separate names made the caller decide which vector
+    space it was in — the caller's least informed decision. `degraded` is present on **every**
+    response; there is no third state.
+    """
+    args = args or {}
+    query = str(args.get("query") or "").strip()
+    if not query:
+        return _error("missing required argument: query")
+    k = max(1, int(args.get("k") or 5))
+    node_class = args.get("class") or None
     if node_class is not None and node_class not in CLASSES:
-        return _text(f"Unknown node_class '{node_class}'. Valid: {_CLASS_LIST}.")
-    nodes = list_nodes(mirror, node_class=node_class)
-    return _text(_render_index(nodes, site=mirror.site))
+        return _error(f"unknown class {node_class!r}. Valid: {_CLASS_LIST}.")
 
-
-@tool(
-    "yidam_read_node",
-    "Read one yidam corpus node by id or URI (e.g. 'artifact/site-lima' or "
-    "'yidam://corpus/hypothesis/water'). Returns the node's label, description, projected "
-    "BOSC provenance (site/scope/claim_tag/source/…), and its outgoing links.",
-    {"id": str},
-)
-@traced_tool
-async def yidam_read_node(args: dict[str, Any]) -> dict[str, Any]:
     settings = get_settings()
     mirror = _mirror(settings)
-    node_id = (args or {}).get("id", "")
-    node = find_node(mirror, node_id)
+    if vector_ready(settings):
+        try:
+            hits = _index(settings).query(query, limit=k, node_class=node_class)
+            by_id = {n.id: n for n in mirror.nodes}
+            return _json(
+                {
+                    "degraded": False,
+                    "results": [
+                        {
+                            "path": node_path(hit.node_id),
+                            "class": hit.node_class,
+                            "label": hit.label,
+                            "text": (
+                                by_id[hit.node_id].description
+                                if hit.node_id in by_id
+                                else hit.description
+                            ),
+                            "score": round(float(hit.score), 6),
+                        }
+                        for hit in hits
+                    ],
+                }
+            )
+        except Exception as exc:  # the index exists but would not answer — say so, do not guess
+            log_hint = next(iter(str(exc).splitlines()), repr(exc))
+            return _json(
+                {
+                    "degraded": True,
+                    "results": _keyword_results(mirror, query, k, node_class),
+                    "note": f"vector retrieval unavailable ({log_hint}); answered by keyword",
+                }
+            )
+    return _json({"degraded": True, "results": _keyword_results(mirror, query, k, node_class)})
+
+
+def _keyword_results(
+    mirror: Mirror, query: str, k: int, node_class: str | None
+) -> list[dict[str, Any]]:
+    """Keyword hits in the contract's result shape, scored 0..1 by term coverage."""
+    terms = [t for t in re.split(r"\s+", query.lower().strip()) if t]
+    if not terms:
+        return []
+    scored: list[tuple[float, MirrorNode]] = []
+    for node in mirror.nodes:
+        if node_class is not None and node.node_class != node_class:
+            continue
+        haystack = f"{node.label} {node.description} {node.meta}".lower()
+        hits = sum(1 for t in terms if t in haystack)
+        if hits:
+            scored.append((hits / len(terms), node))
+    scored.sort(key=lambda s: (-s[0], s[1].id))
+    return [
+        {
+            "path": node_path(node.id),
+            "class": node.node_class,
+            "label": node.label,
+            "text": node.description,
+            "score": round(score, 6),
+        }
+        for score, node in scored[:k]
+    ]
+
+
+_GET_NODE = _spec("get_node")
+
+
+@tool(_GET_NODE["name"], _GET_NODE["description"], _GET_NODE["inputSchema"])
+@traced_tool
+async def get_node(args: dict[str, Any]) -> dict[str, Any]:
+    node_id = str((args or {}).get("id") or "")
+    if not node_id:
+        return _error("missing required argument: id")
+    node = find_node(_mirror(get_settings()), node_id)
     if node is None:
-        return _text(f"No corpus node: {node_id!r}. Use yidam_list_nodes to see valid ids.")
-    return _text(_render_node(node))
+        return _error(f"node not found: {node_id}")
+    return _json(_node_model(node))
 
 
-@tool(
-    "yidam_query",
-    "Search the active site's yidam corpus mirror by keyword — ranks nodes by matches over "
-    "label, description, and projected provenance. Optional node_class filter "
-    f"({_CLASS_LIST}) and limit (default 20). Read a hit with yidam_read_node.",
-    {
-        "type": "object",
-        "properties": {
-            "query": {"type": "string", "description": "Keyword(s) to match against nodes."},
-            "node_class": {
-                "type": "string",
-                "description": f"Optional: restrict to one class ({_CLASS_LIST}).",
-            },
-            "limit": {"type": "integer", "description": "Max hits to return (default 20)."},
-        },
-        "required": ["query"],
-    },
-)
+_LIST_NODES = _spec("list_nodes")
+
+
+@tool(_LIST_NODES["name"], _LIST_NODES["description"], _LIST_NODES["inputSchema"])
 @traced_tool
-async def yidam_query(args: dict[str, Any]) -> dict[str, Any]:
-    settings = get_settings()
-    mirror = _mirror(settings)
-    args = args or {}
-    query = str(args.get("query", "")).strip()
-    if not query:
-        return _text("Pass a non-empty 'query'.")
-    node_class = args.get("node_class") or None
+async def list_nodes_tool(args: dict[str, Any]) -> dict[str, Any]:
+    node_class = (args or {}).get("class") or None
     if node_class is not None and node_class not in CLASSES:
-        return _text(f"Unknown node_class '{node_class}'. Valid: {_CLASS_LIST}.")
-    limit = int(args.get("limit") or 20)
-    hits = query_nodes(mirror, query, node_class=node_class, limit=limit)
-    if not hits:
-        return _text(f"No corpus nodes match {query!r}.")
-    lines = [f"{len(hits)} match(es) for {query!r}:"]
-    for node in hits:
-        detail = f"  — {node.description}" if node.description else ""
-        lines.append(f"- {node_uri(node)}  [{node.node_class}]  {node.label}{detail}")
-    return _text("\n".join(lines))
+        return _error(f"unknown class {node_class!r}. Valid: {_CLASS_LIST}.")
+    nodes = list_nodes(_mirror(get_settings()), node_class=node_class)
+    return _json(
+        {
+            "nodes": [
+                {
+                    "id": n.id,
+                    "class": n.node_class,
+                    "label": n.label,
+                    "description": n.description,
+                }
+                for n in nodes
+            ]
+        }
+    )
 
 
-@tool(
-    "yidam_semantic_search",
-    "Semantically search the active site's yidam corpus mirror — ranks nodes by meaning "
-    "(vector similarity over all-MiniLM-L6-v2 embeddings of each node, the same model the /ask "
-    "index uses), complementing the exact-term yidam_query. Use it when the wording may differ "
-    "from the corpus (concepts, paraphrases). Optional node_class filter "
-    f"({_CLASS_LIST}) and limit (default 10). Read a hit with yidam_read_node.",
-    {
-        "type": "object",
-        "properties": {
-            "query": {
-                "type": "string",
-                "description": "Natural-language query to match by meaning.",
-            },
-            "node_class": {
-                "type": "string",
-                "description": f"Optional: restrict to one class ({_CLASS_LIST}).",
-            },
-            "limit": {"type": "integer", "description": "Max hits to return (default 10)."},
-        },
-        "required": ["query"],
-    },
-)
+_OPEN_QUESTIONS = _spec("open_questions")
+
+
+@tool(_OPEN_QUESTIONS["name"], _OPEN_QUESTIONS["description"], _OPEN_QUESTIONS["inputSchema"])
 @traced_tool
-async def yidam_semantic_search(args: dict[str, Any]) -> dict[str, Any]:
-    settings = get_settings()
+async def open_questions(_args: dict[str, Any]) -> dict[str, Any]:
+    nodes = open_question_nodes(_mirror(get_settings()))
+    return _json(
+        {"open_questions": [{"id": n.id, "label": n.label, "path": node_path(n.id)} for n in nodes]}
+    )
+
+
+_NEIGHBORS = _spec("neighbors")
+
+
+@tool(_NEIGHBORS["name"], _NEIGHBORS["description"], _NEIGHBORS["inputSchema"])
+@traced_tool
+async def neighbors(args: dict[str, Any]) -> dict[str, Any]:
     args = args or {}
-    query = str(args.get("query", "")).strip()
-    if not query:
-        return _text("Pass a non-empty 'query'.")
-    node_class = args.get("node_class") or None
-    if node_class is not None and node_class not in CLASSES:
-        return _text(f"Unknown node_class '{node_class}'. Valid: {_CLASS_LIST}.")
-    limit = int(args.get("limit") or 10)
-    hits = _index(settings).query(query, node_class=node_class, limit=limit)
-    if not hits:
-        return _text(f"No corpus nodes semantically match {query!r}.")
-    # Render from the live mirror node when it resolves, so a semantic hit reads identically to a
-    # keyword one (same URI/label/description) and stays consistent if the disk index lags.
-    mirror = _mirror(settings)
-    lines = [f"{len(hits)} semantic match(es) for {query!r}:"]
-    for hit in hits:
-        node = find_node(mirror, hit.node_id)
-        label = node.label if node else hit.label
-        description = node.description if node else hit.description
-        detail = f"  — {description}" if description else ""
-        lines.append(f"- {hit.uri}  [{hit.node_class}]  ({hit.score:.2f})  {label}{detail}")
-    return _text("\n".join(lines))
+    node_id = str(args.get("id") or "")
+    if not node_id:
+        return _error("missing required argument: id")
+    mirror = _mirror(get_settings())
+    start = find_node(mirror, node_id)
+    if start is None:
+        return _error(f"node not found: {node_id}")
+    depth = max(1, int(args.get("depth") or 1))
+    return _json({"id": start.id, "neighbors": neighbors_of(mirror, start.id, depth)})
 
 
-@tool(
-    "yidam_open_questions",
-    "List the active site's open threads from the corpus mirror — the leads board and the "
-    "[open]-tagged hypothesis claims (nodes with no documented nexus yet). The yidam "
-    "open-questions report, run against the live mirror.",
-    {},
-)
-@traced_tool
-async def yidam_open_questions(_args: dict[str, Any]) -> dict[str, Any]:
-    settings = get_settings()
-    mirror = _mirror(settings)
-    nodes = open_question_nodes(mirror)
-    if not nodes:
-        return _text(f"No open questions for site '{mirror.site}'.")
-    lines = [f"{len(nodes)} open question(s) for site '{mirror.site}':"]
-    lines.extend(f"- {node.label}  ({node_uri(node)})" for node in nodes)
-    return _text("\n".join(lines))
-
-
-ALL_TOOLS = [
-    yidam_list_nodes,
-    yidam_read_node,
-    yidam_query,
-    yidam_semantic_search,
-    yidam_open_questions,
-]
+# The served list, in contract order. Assembled from `served_tool_names()` so a capability this
+# server stops backing drops its tool rather than leaving one that answers wrongly.
+_HANDLERS: dict[str, Any] = {
+    "retrieve": retrieve,
+    "get_node": get_node,
+    "list_nodes": list_nodes_tool,
+    "open_questions": open_questions,
+    "neighbors": neighbors,
+}
+ALL_TOOLS = [_HANDLERS[name] for name in served_tool_names()]
 ALLOWED_TOOL_NAMES = [f"mcp__{YIDAM_SERVER_NAME}__{t.name}" for t in ALL_TOOLS]
 
 

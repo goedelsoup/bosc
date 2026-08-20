@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "contract": "0.1.0",
+  "description": "The frozen MCP tool contract (RFC-0005). Names are bare — no `yidam_` prefix — because the server is already namespaced by its own name in every client that mounts one. `tier` is `core` (every server MUST back it) or a capability name (backed iff the server declares that capability true). This file is the only place the list lives; a harness that restates it is a second freeze, which is how three servers ended up sharing one name out of five capabilities.",
+  "capabilities": {
+    "retrieve": {
+      "description": "Not a tier — `retrieve` is core either way. `vector: false` says the index is absent or unloadable, which is the same fact `degraded` reports per call; a server declaring it is promising every `retrieve` comes back degraded.",
+      "shape": { "vector": "boolean" }
+    },
+    "graph": "Backs the bidirectional walk. A server whose corpus is a projected mirror can still back it; one that holds no edges declares false.",
+    "phases": "Reads live `ma/*` and `rigpa/*` refs. Backable only by a server with the working git repository.",
+    "sangha": "Reads elector positions from those refs. Same constraint as `phases`.",
+    "resources": "Serves the `yidam://` URI scheme over MCP `resources/*`. A tools-only server declares false and MUST map each URI to its tool peer without diverging — `read_resource(\"yidam://corpus/<class>/<name>\")` returns the same node as `get_node(\"<class>/<name>\")`."
+  },
+  "tools": [
+    {
+      "name": "retrieve",
+      "tier": "core",
+      "description": "Semantic search over corpus nodes. Returns the top-k nodes by cosine similarity; degrades to keyword search (with \"degraded\": true) when the vector index is absent.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string", "description": "Natural-language query" },
+          "k": { "type": "integer", "description": "Number of results (default 5)" },
+          "class": { "type": "string", "description": "Restrict results to one class" }
+        },
+        "required": ["query"]
+      },
+      "response": {
+        "required": ["degraded", "results"],
+        "notes": "One adaptive tool, not a split pair. A server offering `query` and `semantic_search` as separate names has made the caller decide which vector space it is in, which is the caller's least informed decision. `degraded` MUST be present on every response — there is no third state."
+      }
+    },
+    {
+      "name": "get_node",
+      "tier": "core",
+      "description": "Fetch one corpus node by id (\"<class>/<name>\") — full YAML content plus outgoing links.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Node id, e.g. \"concept/confounding\"" }
+        },
+        "required": ["id"]
+      },
+      "response": {
+        "required": ["id", "class", "label", "description", "content", "links"],
+        "notes": "The unified node model (RFC-0002), as JSON. Not a language-specific YAML render: the envelope is the contract, and a server that returns its own serialization has made every consumer parse a second format."
+      }
+    },
+    {
+      "name": "list_nodes",
+      "tier": "core",
+      "description": "List corpus nodes, optionally restricted to one class. The tool form of the yidam://corpus/<class> resource.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "class": { "type": "string", "description": "Restrict to one class; omit for the whole corpus" }
+        }
+      },
+      "response": {
+        "required": ["nodes"],
+        "notes": "Core rather than optional so a tools-only server is first-class. Its result MUST equal `read_resource(\"yidam://corpus/<class>\")` on a server that backs resources."
+      }
+    },
+    {
+      "name": "open_questions",
+      "tier": "core",
+      "description": "All nodes flagged as open questions: label starts with \"?\" or the body contains an [open] claim.",
+      "inputSchema": { "type": "object", "properties": {} },
+      "response": {
+        "required": ["open_questions"],
+        "notes": "The predicate is frozen (RFC-0001) and no server may add arms to it. An extension — a `claim_tag` filter, say — is a different tool, because a server that quietly widens this one makes two corpora incomparable while both answer."
+      }
+    },
+    {
+      "name": "neighbors",
+      "tier": "graph",
+      "description": "Nodes linked to a given node, following edges in both directions up to `depth` hops (default 1).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "Node id, e.g. \"concept/confounding\"" },
+          "depth": { "type": "integer", "description": "Maximum hops (default 1)" }
+        },
+        "required": ["id"]
+      },
+      "response": {
+        "required": ["id", "neighbors"],
+        "notes": "Undirected: each reached node once, at its shortest hop, carrying the direction of the edge it was reached by. Half the interesting connections are inbound, which is why the corpus has an `orphan-in` check at all."
+      }
+    }
+  ]
+}

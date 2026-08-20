@@ -110,6 +110,10 @@ questions where the binary saw 2, and nothing could detect the gap.
   (the rest is regenerable and ignored). It enumerates accepted inherited debt so only a
   *regression* fails; `orphan-in` is `info` upstream and never gates. Re-bless deliberately
   (`yidam lint --bless`) and review the diff, like an extraction.
+- **The MCP surface implements the frozen tool contract** (RFC-0005), vendored as
+  `src/watermark/agent/mcp_contract.json` and re-vendored with `mise run yidam-contract-sync`;
+  CI proves the copy matches the pin. Tool names, descriptions and schemas come **from that
+  file** — never hand-written. See `src/watermark/agent/CLAUDE.md`.
 - **`broken-prose-link` walks `docs/**`, not just the corpus.** Its baselined findings include
   15 in `docs/reference/periplus/` — a **frozen, unmodified import**, which must not be edited
   to satisfy a linter.

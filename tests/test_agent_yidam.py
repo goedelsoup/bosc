@@ -8,8 +8,9 @@ committed corpus).
 
 from __future__ import annotations
 
-import re
+import json
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -50,7 +51,7 @@ def _tiny_mirror() -> Mirror:
         "lead-cooling",
         label="Cooling-water intake for the campus",
         description="Investigate the cooling-water source and volume.",
-        meta={"site": "demo", "claim_tag": "open", "lead_kind": "water"},
+        meta={"site": "demo", "claim_tag": "[open]", "lead_kind": "water"},
         links=[MirrorLink("../artifact/site-demo.yml", "on-site")],
     )
     return Mirror(site="demo", nodes=[anchor, hyp, lead])
@@ -117,7 +118,12 @@ def test_query_limit_is_validated_not_max_of_one() -> None:
     )
 
 
-def test_open_question_nodes_flags_the_claim_tag_marker() -> None:
+def test_open_question_nodes_uses_the_frozen_two_arm_predicate() -> None:
+    """`? ` label OR an `[open]` claim in the serialized text — and no third arm.
+
+    BOSC used to carry one keyed on the structured `claim_tag`. The mirror now serializes the
+    bracketed token (`corpus_mirror._claim_token`), so the tag IS the text and the second arm
+    already covers it; the contract forbids widening the predicate beyond these two."""
     mirror = _tiny_mirror()
     opens = yidam_tools.open_question_nodes(mirror)
     assert [n.id for n in opens] == ["question/lead-cooling"]
@@ -129,62 +135,83 @@ def _clear_cache() -> None:
     yidam_tools.clear_mirror_cache()
 
 
+async def _call(name: str, args: dict[str, object]) -> dict[str, Any]:
+    """Invoke a served tool and parse its JSON envelope (the contract's shape)."""
+    handler = next(t for t in yidam_tools.ALL_TOOLS if t.name == name)
+    result = await handler.handler(args)
+    assert not result.get("isError"), result["content"][0]["text"]
+    return dict(json.loads(result["content"][0]["text"]))
+
+
 async def test_tools_serve_the_tiny_mirror(monkeypatch: pytest.MonkeyPatch) -> None:
     mirror = _tiny_mirror()
     monkeypatch.setattr(yidam_tools, "_mirror", lambda settings=None: mirror)
 
-    listed = (await yidam_tools.yidam_list_nodes.handler({}))["content"][0]["text"]
-    assert "## hypothesis" in listed and "yidam://corpus/artifact/site-demo" in listed
+    listed = await _call("list_nodes", {})
+    assert {n["id"] for n in listed["nodes"]} >= {"artifact/site-demo", "hypothesis/water"}
+    assert all(set(n) >= {"id", "class", "label", "description"} for n in listed["nodes"])
 
-    filtered = (await yidam_tools.yidam_list_nodes.handler({"node_class": "question"}))["content"][
-        0
-    ]["text"]
-    assert "lead-cooling" in filtered and "site-demo" not in filtered
+    filtered = await _call("list_nodes", {"class": "question"})
+    assert [n["id"] for n in filtered["nodes"]] == ["question/lead-cooling"]
 
-    bad = (await yidam_tools.yidam_list_nodes.handler({"node_class": "bogus"}))["content"][0][
-        "text"
-    ]
-    assert "Unknown node_class" in bad
+    handler = next(t for t in yidam_tools.ALL_TOOLS if t.name == "list_nodes")
+    bad = await handler.handler({"class": "bogus"})
+    assert bad.get("isError") and "unknown class" in bad["content"][0]["text"]
 
-    read = (await yidam_tools.yidam_read_node.handler({"id": "yidam://corpus/hypothesis/water"}))[
-        "content"
-    ][0]["text"]
-    assert read.startswith("# yidam://corpus/hypothesis/water")
-    assert "class: hypothesis" in read and "assessed-at" in read
+    node = await _call("get_node", {"id": "yidam://corpus/hypothesis/water"})
+    assert node["id"] == "hypothesis/water" and node["class"] == "hypothesis"
+    assert "assessed-at" in {link["relationship"] for link in node["links"]}
 
-    miss = (await yidam_tools.yidam_read_node.handler({"id": "no/such"}))["content"][0]["text"]
-    assert "No corpus node" in miss
+    get_node = next(t for t in yidam_tools.ALL_TOOLS if t.name == "get_node")
+    miss = await get_node.handler({"id": "no/such"})
+    assert miss.get("isError") and "not found" in miss["content"][0]["text"]
 
-    q = (await yidam_tools.yidam_query.handler({"query": "cooling"}))["content"][0]["text"]
-    assert "yidam://corpus/question/lead-cooling" in q
-    assert (await yidam_tools.yidam_query.handler({"query": ""}))["content"][0][
-        "text"
-    ] == "Pass a non-empty 'query'."
+    hits = await _call("retrieve", {"query": "cooling"})
+    assert hits["degraded"] is True  # no index built for the tiny mirror
+    assert hits["results"][0]["path"] == ".yidam/corpus/question/lead-cooling.yml"
 
-    opens = (await yidam_tools.yidam_open_questions.handler({}))["content"][0]["text"]
-    assert "Cooling-water intake for the campus" in opens
+    retrieve = next(t for t in yidam_tools.ALL_TOOLS if t.name == "retrieve")
+    empty = await retrieve.handler({"query": "  "})
+    assert empty.get("isError") and "missing required argument" in empty["content"][0]["text"]
+
+    opens = await _call("open_questions", {})
+    assert [q["label"] for q in opens["open_questions"]] == ["Cooling-water intake for the campus"]
+    assert opens["open_questions"][0]["path"] == ".yidam/corpus/question/lead-cooling.yml"
 
 
-async def test_read_node_follows_a_rendered_cross_class_link(
+async def test_get_node_follows_a_rendered_cross_class_link(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    # The agent follows links straight from a node's rendered YAML: a cross-class edge reads
-    # `../artifact/site-demo.yml`. Feeding that verbatim back to read_node must resolve to the
+    # The agent follows links straight out of a node's `links[]`: a cross-class edge reads
+    # `../artifact/site-demo.yml`. Feeding that verbatim back to get_node must resolve to the
     # canonical id, not 404.
     mirror = _tiny_mirror()
     monkeypatch.setattr(yidam_tools, "_mirror", lambda settings=None: mirror)
 
-    hyp = (await yidam_tools.yidam_read_node.handler({"id": "hypothesis/water"}))["content"][0][
-        "text"
-    ]
-    target = re.search(r"target:\s*(\.\./artifact/\S+\.yml)", hyp)
-    assert target, "the hypothesis node should render a `../artifact/...` link"
+    hyp = await _call("get_node", {"id": "hypothesis/water"})
+    target = next(
+        link["target"] for link in hyp["links"] if link["target"].startswith("../artifact/")
+    )
+    followed = await _call("get_node", {"id": target})
+    assert followed["id"] == "artifact/site-demo" and followed["label"] == "Demo"
 
-    followed = (await yidam_tools.yidam_read_node.handler({"id": target.group(1)}))["content"][0][
-        "text"
-    ]
-    assert followed.startswith("# yidam://corpus/artifact/site-demo")
-    assert "label: Demo" in followed
+
+async def test_neighbors_walks_the_tiny_mirror_both_ways(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """`question/lead-cooling` links *to* the anchor and is pointed at by nothing, so reaching
+    it from the anchor at all requires walking that edge backwards — the half a directed
+    implementation silently loses. The hypothesis, which the anchor links out to, is reached
+    the easy way; both must appear."""
+    mirror = _tiny_mirror()
+    monkeypatch.setattr(yidam_tools, "_mirror", lambda settings=None: mirror)
+
+    body = await _call("neighbors", {"id": "artifact/site-demo"})
+    assert body["id"] == "artifact/site-demo"
+    reached = {n["id"]: n for n in body["neighbors"]}
+    assert reached["question/lead-cooling"]["direction"] == "in"
+    assert reached["hypothesis/water"]["direction"] == "out"
+    assert all(n["depth"] == 1 for n in body["neighbors"])
 
 
 def test_mirror_is_built_once_and_cached(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -202,8 +229,8 @@ def test_mirror_is_built_once_and_cached(monkeypatch: pytest.MonkeyPatch) -> Non
     assert calls["n"] == 1  # second call served from cache
 
 
-# --- semantic search (#1564): the vector index, served through the MCP backend --------------
-async def test_semantic_search_lazily_builds_the_index_and_ranks(
+# --- the vector arm of `retrieve` (#1564), served through the MCP backend -------------------
+async def test_retrieve_uses_the_vector_arm_when_an_index_is_built(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     from tests.test_yidam_index import _BagProvider
@@ -215,25 +242,40 @@ async def test_semantic_search_lazily_builds_the_index_and_ranks(
         "watermark.retrieval.embeddings.get_provider", lambda settings: _BagProvider()
     )
 
-    # No prior `watermark corpus-mirror --index` run — the first search must build the index
-    # from the in-memory mirror on demand (the `yidam serve --mcp` never-depends-on-a-build rule).
-    assert not (tmp_path / "index").exists()
-    out = (await yidam_tools.yidam_semantic_search.handler({"query": "cooling water intake"}))[
-        "content"
-    ][0]["text"]
-    assert "semantic match" in out
-    assert "yidam://corpus/question/lead-cooling" in out
-    assert (tmp_path / "index").exists()  # the LanceDB index was materialized
+    # Build it deliberately — `retrieve` must NOT create one as a side effect of being called.
+    yidam_tools._index().build(mirror)
+    assert yidam_tools.vector_ready()
+
+    body = await _call("retrieve", {"query": "cooling water intake"})
+    assert body["degraded"] is False
+    assert body["results"][0]["path"] == ".yidam/corpus/question/lead-cooling.yml"
 
 
-async def test_semantic_search_validates_its_args() -> None:
-    # Both guards short-circuit before the index is touched (no provider/model needed).
-    empty = (await yidam_tools.yidam_semantic_search.handler({"query": "  "}))["content"][0]["text"]
-    assert empty == "Pass a non-empty 'query'."
-    bad = (await yidam_tools.yidam_semantic_search.handler({"query": "x", "node_class": "bogus"}))[
-        "content"
-    ][0]["text"]
-    assert "Unknown node_class" in bad
+async def test_retrieve_degrades_rather_than_building_an_index_on_demand(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """The behaviour the frozen contract rules out.
+
+    The old `semantic_search` embedded the whole mirror on first call, so an agent's first
+    search silently answered from a vector space that had not existed a moment earlier — and
+    one whose weights differ from yidam's (RFC-0006). Now it says `degraded: true` and leaves
+    the index to `mise run corpus-vector-index`.
+    """
+    mirror = _tiny_mirror()
+    monkeypatch.setattr(yidam_tools, "_mirror", lambda settings=None: mirror)
+    monkeypatch.setattr(yidam_tools, "default_index_dir", lambda settings=None: tmp_path / "index")
+
+    body = await _call("retrieve", {"query": "cooling"})
+    assert body["degraded"] is True
+    assert not (tmp_path / "index").exists(), "retrieve built an index as a side effect"
+
+
+async def test_retrieve_validates_its_args() -> None:
+    retrieve = next(t for t in yidam_tools.ALL_TOOLS if t.name == "retrieve")
+    empty = await retrieve.handler({"query": "  "})
+    assert empty.get("isError") and "missing required argument" in empty["content"][0]["text"]
+    bad = await retrieve.handler({"query": "x", "class": "bogus"})
+    assert bad.get("isError") and "unknown class" in bad["content"][0]["text"]
 
 
 # --- against the real Lima mirror (offline read of the committed corpus) --------------------

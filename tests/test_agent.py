@@ -265,7 +265,10 @@ def test_yidam_backend_wires_a_second_server_and_can_be_disabled() -> None:
     # #1563: the yidam corpus-mirror backend is a second in-process MCP server, on by default.
     opts = ResearchAgent()._options()
     assert set(opts.mcp_servers) == {tools.SERVER_NAME, yidam_tools.YIDAM_SERVER_NAME}
-    assert opts.allowed_tools[-1] == "mcp__yidam__yidam_open_questions"
+    # Bare names — the server is already namespaced by its own name (`mcp__yidam__*`), which
+    # is why the frozen contract drops the redundant `yidam_` prefix.
+    assert opts.allowed_tools[-1] == "mcp__yidam__neighbors"
+    assert "mcp__yidam__retrieve" in opts.allowed_tools
 
     # enable_yidam=False drops the server + its tools, leaving only the base BOSC tools.
     bare = ResearchAgent(enable_yidam=False)._options()

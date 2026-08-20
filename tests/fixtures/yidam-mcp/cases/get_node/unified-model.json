@@ -1,0 +1,10 @@
+{
+  "tool": "get_node",
+  "why": "The envelope is the contract. A server returning its own YAML render passes a second format to every consumer, which is the drift this list exists to stop.",
+  "call": { "id": "concept/knowledge-graph" },
+  "expect": {
+    "fields": ["id", "class", "label", "description", "content", "links"],
+    "equals": { "id": "concept/knowledge-graph", "class": "concept", "label": "Knowledge graph" },
+    "each": { "links": ["target", "relationship"] }
+  }
+}
