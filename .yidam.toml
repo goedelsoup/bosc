@@ -1,25 +1,27 @@
 # .yidam.toml — the pinned yidam upstream for Project BOSC (epic #1560).
 #
-# BOSC bridges its committed corpus into yidam node format with `watermark corpus-mirror`
-# (and at the tail of every `watermark export`) under the git-ignored .yidam/ tree. It does
-# NOT vendor the yidam template or build the Rust `yidam` CLI: BOSC replicates yidam's report
-# logic in Python (watermark.site.corpus_mirror) so the mirror + reports regenerate offline,
-# with no Rust toolchain — which is why this repo has no yidam/ · sadhana/ · samudaya/ overlay.
-# `yidam embed` + `yidam index-build` are likewise realized in Python (watermark.site.yidam_index,
-# `watermark corpus-mirror --index`): a LanceDB vector index over the mirror under .yidam/index/,
-# on the same all-MiniLM-L6-v2 backend as the /ask embeddings, queried via `yidam serve --mcp`.
+# BOSC is a NON-VENDORING derived repository. It carries no yidam/ · sadhana/ · samudaya/
+# overlay and no .yidam/.vendor/prelude/: it consumes yidam as a tool, not as a template.
+# What it does carry is a corpus MIRROR — `watermark corpus-mirror` (and the tail of every
+# `watermark export`) projects the committed BOSC corpus into yidam node format under the
+# git-ignored .yidam/corpus/. That projection is BOSC-specific and stays in Python.
 #
-# This file pins the yidam version whose graph-check / corpus-index / open-questions / lint
-# rules the Python replicas track, so drift against upstream is visible. The optional
-# `mise run yidam-*` tasks (mise.toml) run the REAL `yidam` binary at this ref for a
-# cross-check, when it is installed. yidam's own drift tooling (`claudesync`) reads this file.
+# The four corpus REPORTS over that mirror — graph-check · lint · corpus-index ·
+# open-questions — are the real `yidam` binary's, not a Python replica's. BOSC re-implemented
+# them when the only way to obtain the binary was to build the whole native ML stack; RFC-0003
+# retired that constraint (`--no-default-features --features reports` is the default build and
+# needs no protoc, no lancedb, no ONNX runtime), and RFC-0016 Phase 0 added `--format json`, so
+# the binary is now the single source of truth for a verdict. Install it with
+# `mise run yidam-build`, which clones THIS commit and cargo-installs the light build.
+#
+# SCHEMA NOTE: the keys below are upstream's (`origin`/`commit`/`template`/`committed`), read by
+# `yidam-build`, `yidam-vendor-status`, and the CI corpus gate via `sed`. BOSC previously used
+# `cli`/`cli_ref`/`bootstrap` — fields it invented, which RFC-0004 proposed standardizing but
+# upstream settled differently. Those names are dead; a file carrying them fails `yidam-build`
+# with "records no resolvable commit".
 
 [yidam]
 origin    = "git@github.com:goedelsoup/yidam.git"
-template  = "0.1.0"  # template layer — matches a yidam monorepo tag
-bootstrap = "0.1.0"  # bootstrap protocol — matches PROTOCOL_VERSION in the yidam harness
-
-# The yidam CLI (cli/, v0.1.0) whose report logic watermark.site.corpus_mirror replicates.
-# Not published to crates.io; built from source with `cargo install --path yidam/cli`.
-cli         = "0.1.0"
-cli_ref     = "8f7ada9984a4ac69db3696a5dd8c8cd4012500d1"
+commit    = "7da7e220b696d3a82bac995893b96963b149fc65"
+template  = "untagged"
+committed = "2026-08-20"

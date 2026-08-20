@@ -154,7 +154,7 @@ class ExportedBundle:
     feed_count: int
     mirror_nodes: int
     mirror_graph_issues: int
-    mirror_reports_dir: str | None
+    mirror_checked: bool
 
 
 @pytest.fixture(scope="session")
@@ -200,11 +200,7 @@ def exported_bundle(_bundle_root: Path) -> Callable[[str], ExportedBundle]:
                             "feed_count": result.feed_count,
                             "mirror_nodes": result.mirror_nodes,
                             "mirror_graph_issues": result.mirror_graph_issues,
-                            "mirror_reports_dir": (
-                                None
-                                if result.mirror_reports_dir is None
-                                else str(result.mirror_reports_dir)
-                            ),
+                            "mirror_checked": result.mirror_checked,
                         }
                     ),
                     encoding="utf-8",

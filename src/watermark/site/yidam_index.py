@@ -139,7 +139,7 @@ class YidamVectorIndex:
                 "uri": node_uri(n.id),
                 "site": str(n.meta.get("site") or mirror.site),
                 "scope": str(n.meta.get("scope") or ""),
-                "claim_tag": str(n.meta.get("claim_tag") or ""),
+                "claim_tag": str(n.meta.get("claim_tag") or "").strip().strip("[]").lower(),
                 "text": node_text(n),
                 "vector": v,
             }

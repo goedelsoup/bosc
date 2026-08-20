@@ -15,12 +15,12 @@ import pytest
 
 from watermark.agent import yidam_tools
 from watermark.config import Settings
+from watermark.site import yidam_cli
 from watermark.site.corpus_mirror import (
     Mirror,
     MirrorLink,
     MirrorNode,
     build_mirror,
-    render_open_questions,
     write_mirror,
 )
 
@@ -252,15 +252,29 @@ def test_serves_the_real_lima_mirror_end_to_end() -> None:
     assert hits and all(h.label for h in hits)
 
 
-def test_open_questions_parity_with_the_disk_render(tmp_path: Path) -> None:
-    # The in-memory open set must equal what `yidam open-questions` renders over the written
-    # mirror — same predicate, projected vs. walked.
+@pytest.mark.skipif(not yidam_cli.available(), reason="the yidam binary is not installed")
+def test_open_questions_conformance_with_the_real_binary(tmp_path: Path) -> None:
+    """BOSC's in-memory open-question predicate must return the same set as ``yidam
+    open-questions`` over the same mirror.
+
+    This is the conformance test the Python replica could never be: it runs the *actual*
+    upstream rule (a raw-text scan for the literal ``[open]``, plus a ``?``-prefixed label)
+    rather than a re-implementation of it that claimed faithfulness in a docstring. It is what
+    caught, and now guards, the divergence that had the binary reporting 2 open questions where
+    BOSC reported 26 — the mirror was storing a bare ``open`` where the token was required.
+
+    Skipped when the binary is absent so an offline checkout still runs green; CI installs it,
+    so the gate is real there (``.github/workflows/ci.yml``, the ``corpus`` job).
+    """
     settings = Settings(site="lima", data_dir=REPO_ROOT / "data")
     mirror = build_mirror(settings)
-    write_mirror(mirror, tmp_path)
+    corpus = tmp_path / ".yidam" / "corpus"
+    write_mirror(mirror, corpus)
 
-    disk_render = render_open_questions(tmp_path)
-    disk_paths = set(re.findall(r"\(([^)]+\.yml)\)", disk_render))
+    report = yidam_cli.run_report("open-questions", root=tmp_path)
+    binary_paths = {
+        str(q["node"]).split(".yidam/corpus/", 1)[-1] for q in report.payload["open_questions"]
+    }
     mem_paths = {f"{n.node_class}/{n.name}.yml" for n in yidam_tools.open_question_nodes(mirror)}
-    assert mem_paths == disk_paths
+    assert mem_paths == binary_paths
     assert mem_paths  # Lima has open leads / [open] claims, so this is non-trivial

@@ -72,12 +72,24 @@ runs/
 
 # yidam corpus mirror + reports (`watermark corpus-mirror`, and every `watermark export`;
 # epic #1560/#1561/#1562). The committed corpus (entities, relationships, concepts, people,
-# leads, hypotheses, [open] claims) projected into yidam node format under .yidam/corpus/, plus
-# the regenerated reports (corpus-index / open-questions / graph-check / lint) under
-# .yidam/reports/. Regenerable, per-active-site, never a source of truth — so the whole .yidam/
-# tree stays out of git (like the content bundle). Regenerate: `watermark --site <slug> export`
-# (or `watermark corpus-mirror`). The upstream pin (.yidam.toml) IS committed.
-/.yidam/
+# leads, hypotheses, [open] claims) projected into yidam node format under .yidam/corpus/.
+# Regenerable, per-active-site, never a source of truth — so the tree stays out of git (like
+# the content bundle). Regenerate: `watermark --site <slug> export` (or `watermark
+# corpus-mirror`). The upstream pin (.yidam.toml) IS committed.
+#
+# The reports over that mirror are no longer written here at all: they come from the real
+# `yidam` binary now (`mise run yidam-reports`), not from a retired Python replica.
+# NOTE the trailing `/*` rather than `/`: git cannot re-include a file whose PARENT DIRECTORY
+# is excluded, so `/.yidam/` would make the negation below silently dead.
+/.yidam/*
+
+# ...with ONE exception. The lint baseline is a REVIEWED artifact, not a regenerable one: it
+# enumerates the inherited violations this repo has accepted, so `yidam lint` can gate on
+# whether a change made things *worse* rather than on whether the corpus is perfect. CI needs
+# it to reproduce the same verdict, and an uncommitted baseline means no ratchet at all —
+# every inherited finding reads as a regression and the gate gets switched off. Re-bless
+# deliberately (`yidam lint --bless`) and review the diff, exactly like an extraction.
+!/.yidam/lint-baseline.yml
 
 # RSEI v2.3.12 offline test fixture (a small committed Allen County slice zip). The
 # user's global gitignore excludes *.zip, so re-include just this fixture (#1148).
