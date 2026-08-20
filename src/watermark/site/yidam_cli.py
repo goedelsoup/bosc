@@ -15,9 +15,12 @@ to obtain the binary was to build the whole native ML stack. Two upstream change
   *verdict* to consume rather than prose to scrape.
 
 The replica's own docstrings claimed faithfulness to Rust symbols it had already drifted from, and
-nothing could detect it: the divergence was real (the binary reported 2 open questions against the
-replica's 20, because BOSC stored a bare ``open`` where ``has_open_claim`` scans for the literal
-``[open]``). Deleting the replica removes the drift surface rather than instrumenting it.
+nothing could detect it. The divergence was real and measured: over one and the same mirror, the
+binary reported **2** open questions where the replica reported **20** — BOSC stored a bare
+``open`` where ``has_open_claim`` scans the raw text for the literal ``[open]``. After the fix
+(:func:`watermark.site.corpus_mirror._claim_token`) the two return an identical set; on the
+current mirror that set is 26 nodes, but the number that matters is the 18 the tool could not
+see. Deleting the replica removes the drift surface rather than instrumenting it.
 
 **The binary is optional at runtime, required in CI.** ``watermark export`` must keep working
 offline with no Rust toolchain — the content bundle's feeds are post-passes over the in-memory
@@ -38,6 +41,7 @@ import re
 import shutil
 import subprocess
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -165,12 +169,43 @@ class Report:
         """Error-severity violations that are *not* in the baseline — what actually fails a build."""
         return tuple(v for c in self.checks if c.gates for v in c.violations if v.is_regression)
 
+    # -- graph-check body -------------------------------------------------------
+    # Typed here rather than read as `report.payload["..."]` at each call site. The payload is
+    # deliberately kept verbatim (unknown fields must survive), but that makes it untyped, and
+    # a consumer indexing it directly has quietly taken on the contract this module exists to
+    # own — an upstream rename would then surface as a silent default rather than a failure.
+    @property
+    def total_instances(self) -> int:
+        """Instances walked by ``graph-check``. 0 for any other report."""
+        return int(self.payload.get("total_instances", 0))
+
+    @property
+    def clean_instances(self) -> int:
+        """Instances ``graph-check`` found no issue with."""
+        return int(self.payload.get("clean_instances", 0))
+
+    @property
+    def instances_with_issues(self) -> int:
+        """How many instances ``graph-check`` faulted — the count, not the nodes."""
+        return max(0, self.total_instances - self.clean_instances)
+
+    @property
+    def nodes_with_issues(self) -> tuple[tuple[str, tuple[str, ...]], ...]:
+        """``(node, problems)`` for each faulted instance, in the order reported."""
+        return tuple(
+            (str(n.get("node", "?")), tuple(str(p) for p in n.get("problems", [])))
+            for n in self.payload.get("nodes_with_issues", [])
+        )
+
+    @property
+    def open_questions(self) -> tuple[str, ...]:
+        """Node paths ``open-questions`` flagged as still open."""
+        return tuple(str(q.get("node", "")) for q in self.payload.get("open_questions", []))
+
     def summary(self) -> str:
         """One line fit for a log or a CI annotation."""
         if self.command == "graph-check":
-            total = self.payload.get("total_instances", 0)
-            clean = self.payload.get("clean_instances", 0)
-            return f"graph-check: {clean}/{total} instances clean"
+            return f"graph-check: {self.clean_instances}/{self.total_instances} instances clean"
         if self.command == "lint":
             gate = self.payload.get("gate", {})
             return (
@@ -178,7 +213,7 @@ class Report:
                 f"{gate.get('baselined_violations', 0)} baselined"
             )
         if self.command == "open-questions":
-            return f"open-questions: {len(self.payload.get('open_questions', []))} open"
+            return f"open-questions: {len(self.open_questions)} open"
         if self.command == "corpus-index":
             return f"corpus-index: {len(self.payload.get('nodes', []))} nodes"
         return self.command
@@ -200,6 +235,35 @@ def yidam_path() -> Path | None:
 def available() -> bool:
     """Whether a ``yidam`` binary is installed. Says nothing about whether it *works*."""
     return yidam_path() is not None
+
+
+@lru_cache(maxsize=1)
+def usable() -> bool:
+    """Whether the installed binary can be *asked* for a machine-readable verdict.
+
+    Presence is not usability. Every `cargo install` of yidam on a machine writes the same
+    ``~/.cargo/bin/yidam`` whatever ref it was built from, so an unrelated checkout can leave
+    a binary here that predates ``--format json`` — it happened twice while this module was
+    being written. Gate skippable conformance tests on this rather than on :func:`available`,
+    so a stale binary skips them exactly as an absent one does instead of turning the suite
+    red for a reason that has nothing to do with the change under test.
+
+    Probes ``--help`` rather than running a report: it needs no corpus, no cwd, and cannot be
+    confused by a repository that legitimately has findings.
+    """
+    binary = yidam_path()
+    if binary is None:
+        return False
+    try:
+        proc = subprocess.run(
+            [str(binary), "graph-check", "--help"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return proc.returncode == 0 and "--format" in proc.stdout
 
 
 def pinned_commit(root: Path | None = None) -> str | None:

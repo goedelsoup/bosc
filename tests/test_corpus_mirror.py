@@ -201,7 +201,7 @@ def test_claim_tags_are_preserved(tmp_path: Path) -> None:
     # Leads carry their own tag; the open hypothesis cell is [open]. The value is the
     # BRACKETED token, not the bare word — `yidam open-questions` decides a node is open by
     # scanning its raw text for the literal `[open]`, so the bare form made the real binary
-    # under-report (2 open questions against 26). Readers normalize with `.strip("[]")`, so no
+    # under-report (2 against the 20 then open). Readers normalize with `.strip("[]")`, so no
     # downstream feed value changed. See corpus_mirror._claim_token.
     assert tags["lead-lead-1"] == "[open]"
     assert tags["lead-lead-2"] == "[inference]"
@@ -334,7 +334,8 @@ def test_claim_token_brackets_bare_tags_and_is_idempotent() -> None:
 def test_open_nodes_serialize_the_literal_bracket_token(tmp_path: Path) -> None:
     """``yidam open-questions`` decides a node is open by scanning its raw text for the literal
     ``[open]`` (``cmd/mod.rs::has_open_claim``). Storing the bare word made the real binary
-    report 2 open questions against this repo's 26 — so the serialized bytes must carry it."""
+    report 2 open questions where the replica reported 20 over the same tree — so the
+    serialized bytes must carry it."""
     corpus = tmp_path / "corpus"
     write_mirror(_project(), corpus)
     open_lead = corpus / "question" / "lead-lead-1.yml"

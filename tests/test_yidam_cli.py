@@ -145,7 +145,7 @@ def test_unknown_fields_are_ignored_not_fatal(monkeypatch: pytest.MonkeyPatch) -
 
 
 # --- conformance against the real binary ---------------------------------------------------
-@pytest.mark.skipif(not yidam_cli.available(), reason="the yidam binary is not installed")
+@pytest.mark.skipif(not yidam_cli.usable(), reason="no yidam binary that speaks --format json")
 def test_the_pinned_binary_speaks_the_contract_this_repo_understands() -> None:
     """The handshake, run for real. If upstream bumps ``format_version``, this fails here — at
     the seam — rather than somewhere downstream that mis-read a verdict."""
@@ -154,7 +154,7 @@ def test_the_pinned_binary_speaks_the_contract_this_repo_understands() -> None:
     assert report.command == "graph-check"
 
 
-@pytest.mark.skipif(not yidam_cli.available(), reason="the yidam binary is not installed")
+@pytest.mark.skipif(not yidam_cli.usable(), reason="no yidam binary that speaks --format json")
 def test_the_projection_passes_the_real_graph_check(tmp_path: Path) -> None:
     """The projection's contract, verified by the tool that defines it rather than by a replica.
 

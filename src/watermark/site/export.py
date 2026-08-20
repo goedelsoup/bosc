@@ -203,8 +203,9 @@ class BundleResult:
     # yidam corpus mirror (#1562): the mirror regenerated at the tail of the export, if any.
     mirror_nodes: int = 0
     mirror_graph_issues: int = 0
-    # None when the yidam binary was not installed to report on the projection — distinct from
-    # 0, which means it ran and found the mirror clean.
+    # Whether a usable yidam binary reported on the projection at all. Read it alongside
+    # `mirror_graph_issues`: 0 issues with `mirror_checked=False` means nobody looked, not that
+    # the mirror is clean.
     mirror_checked: bool = False
     # Graph exports (#1574): the downloadable RDF/GraphML artifacts written under the bundle.
     exports: list[ExportRef] = field(default_factory=list)
@@ -1447,9 +1448,7 @@ def export_bundle(
             mirror_nodes = len(regen.mirror.nodes)
             mirror_checked = regen.checked
             if regen.graph_check is not None:
-                total = regen.graph_check.payload.get("total_instances", 0)
-                clean = regen.graph_check.payload.get("clean_instances", 0)
-                mirror_graph_issues = max(0, int(total) - int(clean))
+                mirror_graph_issues = regen.graph_check.instances_with_issues
                 if not regen.graph_check.passed:
                     log.warning(
                         "corpus_mirror.graph_issues",

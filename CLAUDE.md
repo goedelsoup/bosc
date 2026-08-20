@@ -96,7 +96,8 @@ those come from the real `yidam` binary via `watermark.site.yidam_cli`, which pa
 per-violation `in_baseline` flag). **Never re-implement a yidam report in Python.** BOSC did,
 for the sound reason that the binary once required the whole native ML stack; RFC-0003's light
 `reports` build retired that (no protoc, no lancedb, ~20s to compile) and the replica was deleted
-because it had silently drifted — it reported 26 open questions where the binary saw 2.
+because it had silently drifted: over the same mirror the replica reported 20 open
+questions where the binary saw 2, and nothing could detect the gap.
 
 - **Install:** `mise run yidam-build` (clones the commit pinned in `.yidam.toml`, light build).
   Rust is scoped to that task, not a repo-wide `[tools]` entry.
