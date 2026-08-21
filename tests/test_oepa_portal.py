@@ -11,6 +11,7 @@ from typing import Any
 
 import pytest
 
+from watermark.config import Settings
 from watermark.oepa.portal import (
     PortalDoc,
     _hidden_fields,
@@ -215,14 +216,14 @@ def test_search_portal_requires_a_criterion() -> None:
 
 
 def test_permits_only_filters_client_side(
-    monkeypatch: pytest.MonkeyPatch, docs: list[PortalDoc]
+    monkeypatch: pytest.MonkeyPatch, docs: list[PortalDoc], civic_settings: Settings
 ) -> None:
     """The sweep is always all-types; ``permits_only`` narrows the parsed rows."""
     payload = {"rows": [d.model_dump() for d in docs], "total_pages": 3, "truncated": False}
     monkeypatch.setattr("watermark.oepa.portal.cached_get", lambda *a, **k: payload)
 
-    every = search_portal(settings=_settings(), county="CHAMPAIGN")
-    permits = search_portal(settings=_settings(), county="CHAMPAIGN", permits_only=True)
+    every = search_portal(settings=civic_settings, county="CHAMPAIGN")
+    permits = search_portal(settings=civic_settings, county="CHAMPAIGN", permits_only=True)
 
     assert len(every) == 8
     assert {d.doc_type for d in permits} == {
@@ -252,12 +253,6 @@ def _doc(**overrides: Any) -> PortalDoc:
     return PortalDoc.model_validate(base | overrides)
 
 
-def _settings() -> Any:
-    from watermark.config import Settings
-
-    return Settings(civic_offline=True)
-
-
 # ---------------------------------------------------------------------------
 # _is_truncated / PortalSweep
 # ---------------------------------------------------------------------------
@@ -281,7 +276,7 @@ def test_is_truncated(kwargs: dict[str, int], truncated: bool, why: str) -> None
 
 
 def test_sweep_reports_coverage_not_just_rows(
-    monkeypatch: pytest.MonkeyPatch, docs: list[PortalDoc]
+    monkeypatch: pytest.MonkeyPatch, docs: list[PortalDoc], civic_settings: Settings
 ) -> None:
     from watermark.oepa.portal import sweep_portal
 
@@ -293,7 +288,7 @@ def test_sweep_reports_coverage_not_just_rows(
         "truncated": True,
     }
     monkeypatch.setattr("watermark.oepa.portal.cached_get", lambda *a, **k: payload)
-    sweep = sweep_portal(settings=_settings(), county="FRANKLIN")
+    sweep = sweep_portal(settings=civic_settings, county="FRANKLIN")
 
     assert sweep.truncated is True
     assert sweep.rows_served == 2000
@@ -302,10 +297,10 @@ def test_sweep_reports_coverage_not_just_rows(
 
 
 def test_search_portal_returns_only_the_rows(
-    monkeypatch: pytest.MonkeyPatch, docs: list[PortalDoc]
+    monkeypatch: pytest.MonkeyPatch, docs: list[PortalDoc], civic_settings: Settings
 ) -> None:
     payload = {"rows": [d.model_dump() for d in docs], "total_pages": 1, "truncated": False}
     monkeypatch.setattr("watermark.oepa.portal.cached_get", lambda *a, **k: payload)
-    assert [d.docid for d in search_portal(settings=_settings(), county="CHAMPAIGN")] == [
+    assert [d.docid for d in search_portal(settings=civic_settings, county="CHAMPAIGN")] == [
         d.docid for d in docs
     ]
