@@ -99,8 +99,11 @@ for the sound reason that the binary once required the whole native ML stack; RF
 because it had silently drifted: over the same mirror the replica reported 20 open
 questions where the binary saw 2, and nothing could detect the gap.
 
-- **Install:** `mise run yidam-build` (clones the commit pinned in `.yidam.toml`, light build).
-  Rust is scoped to that task, not a repo-wide `[tools]` entry.
+- **Install:** `mise run yidam-build` — clones the pinned commit and installs to **`.yidam/bin/`**,
+  upstream's convention (its own `mise.yidam.toml` and the VS Code extension both resolve that
+  path as "this repository's own build"), never the shared `~/.cargo/bin`, which any other yidam
+  checkout silently overwrites. mise puts it on `PATH`. Rust is scoped to that task, not a
+  repo-wide `[tools]` entry.
 - **Run:** `mise run yidam-reports`. Locally the binary is *optional* — `watermark corpus-mirror`
   projects and says so when it cannot report. CI installs it and **gates** (the `corpus` job).
 - **The pin is `.yidam.toml`**, on upstream's schema (`origin`/`commit`/`template`/`committed`;

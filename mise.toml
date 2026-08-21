@@ -40,6 +40,10 @@ git-lfs = "latest"
 pulumi = "latest"  # deploy/ stack — `cd deploy && pulumi up` (see deploy/README.md)
 
 [env]
+# The repo-local yidam (see [tasks.yidam-build]) ahead of anything on the ambient PATH, so a
+# mise task saying `yidam` gets THIS repository's build at THIS repository's pin — never
+# whichever copy another checkout last wrote to ~/.cargo/bin. Upstream does the same.
+_.path = [".yidam/bin"]
 _.file = ".env"
 # Keep uv's managed virtualenv in-project so mise and uv agree on the interpreter.
 UV_PROJECT_ENVIRONMENT = ".venv"
@@ -225,20 +229,24 @@ git -C "$tmp/yidam" checkout --quiet "$commit"
 # renderers against it, and without the feature the RDF half silently does not run.
 # A full clean build with both is ~11s. `--features full` additionally pulls fastembed,
 # lancedb and protoc — only needed for index-build / serve --mcp / sqlite.
-# `--root .yidam/toolchain`, NOT the shared ~/.cargo/bin. Every `cargo install` of yidam on a
-# machine writes that one path whatever ref and feature set it was built from, so a yidam
-# checkout doing its own `cargo install --path .` (default features) silently replaces this
-# repo's build — observed six times in one session, twice downgrading a binary this repo's
-# conformance gate then SKIPPED against. A repo-local install cannot be clobbered by another
-# repo, and `.yidam/` is already git-ignored.
+# `--root .yidam`, NOT the shared ~/.cargo/bin. Every `cargo install` of yidam on a machine
+# writes that one path whatever ref and feature set it was built from, so a yidam checkout
+# doing its own `cargo install --path .` (default features) silently replaces this repo's
+# build — observed six times in one session, twice downgrading a binary this repo's
+# conformance gate then SKIPPED against.
+#
+# `.yidam/bin/` specifically: `cargo install --root DIR` writes DIR/bin, and upstream made
+# that path the convention (mise.yidam.toml at f05b620, and the VS Code extension resolves
+# `.yidam/bin/yidam` as "this repository's own build" before falling back to ~/.cargo/bin).
+# A private path here would be invisible to any tool that follows it.
 cargo install --path "$tmp/yidam/yidam/cli" --locked --features export-graph \
-  --root "$PWD/.yidam/toolchain"
+  --root "$PWD/.yidam"
 echo
 # `yidam` has no --version flag; graph-check's envelope is where the build identifies itself.
 # Probe the binary just installed by its full path, NOT bare `yidam`: the repo-local root is
 # deliberately not on PATH, so a bare name resolves to whatever the shared cargo bin holds —
 # which is how this line reported a commit the build had nothing to do with.
-bin="$PWD/.yidam/toolchain/bin/yidam"
+bin="$PWD/.yidam/bin/yidam"
 echo "installed $("$bin" graph-check --format json 2>/dev/null \
   | sed -n 's/.*"commit": "\([^"]*\)".*/\1/p' | head -n1) -> $bin"
 '''
