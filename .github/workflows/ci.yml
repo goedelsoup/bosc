@@ -431,6 +431,15 @@ jobs:
       - name: Check route budgets
         run: pnpm run check:routes
 
+      # The #2005 cross-site scope guard: no site may publish another site's record under its own
+      # URL. It was wired into `mise run //web:check` but never added here, so between #2005 and
+      # #2026 it ran in no CI job at all — while locally a vitest failure aborted the gate before
+      # it. Promotion is exactly when a leak is most likely, and this is the only check that can
+      # see one: it reads the emitted `dist/`, because three source-level heuristics were tried
+      # first and each both missed real leaks and flagged correct pages.
+      - name: Check site scope
+        run: pnpm run check:site-scope
+
   # Repo-wide Markdown lint (markdownlint-cli2). Node, but separate from the Astro
   # frontend job — it lints hand-authored docs across the repo (data/, docs/, root, …),
   # not the site. Config + ignores (generated docs, frontend, notebooks) live in

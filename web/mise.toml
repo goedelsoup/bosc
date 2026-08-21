@@ -33,16 +33,53 @@ description = "Frontend gate (CI parity): Biome lint + Markdown lint + astro/tsc
 # Skip the Python export and point bundle.ts at the committed sites/ fixtures.
 # sites is an explicit opt-in here — not a silent fallback from bundle.ts.
 env = { WATERMARK_SKIP_EXPORT = "1", WATERMARK_BUNDLE_DIR = "sites" }
-run = [
-  "pnpm run lint",        # Biome (format + lint) — the gate CI runs that `pnpm run check` omits
-  "pnpm exec markdownlint-cli2",   # web/'s Markdown (config: web/.markdownlint-cli2.yaml)
-  "pnpm run check",       # astro check + tsc (functions)
-  "pnpm test",            # vitest
-  "pnpm run build",       # astro build against sites/ (offline, no Python)
-  "pnpm run check:links", # internal-link check over the build
-  "pnpm run check:routes", # route depth / page-weight / document-permalink budgets (#1887)
-  "pnpm run check:site-scope", # no site publishes another site's record under its URL (#2005)
-]
+# Every step RUNS, and failures are aggregated at the end (#2026). This was a `run = [...]` list,
+# which mise aborts at the first non-zero step — so a single red suite in `pnpm test` silently took
+# the build and the three post-build guards with it, and the output was indistinguishable from a
+# run where they had executed and passed. `check:site-scope` is the one that matters: it proves no
+# site publishes another site's record under its own URL, it reads `dist/`, and the bug it exists
+# for (Sidney, Troy-Piqua and Lima all serving Lima's 164 timeline events) shipped undetected for
+# weeks. A gate you cannot tell apart from a skipped gate is not a gate.
+run = '''
+set -u
+failures=""
+built=1
+
+step() {
+  label="$1"; shift
+  printf '\n\033[1m── %s\033[0m\n' "$label"
+  if "$@"; then
+    return 0
+  fi
+  failures="${failures}  - ${label}
+"
+  return 1
+}
+
+step "lint (Biome)"            pnpm run lint            || true
+step "markdown (web/)"         pnpm exec markdownlint-cli2 || true
+step "types (astro + tsc)"     pnpm run check           || true
+step "tests (vitest)"          pnpm test                || true
+step "build (astro, offline)"  pnpm run build           || built=0
+
+# The three post-build guards read `dist/`. If the build failed there is no artifact to check, so
+# they are REPORTED as unrun rather than either cascading three misleading failures or vanishing.
+if [ "$built" = "1" ]; then
+  step "links"                 pnpm run check:links     || true
+  step "routes (#1887)"        pnpm run check:routes    || true
+  step "site-scope (#2005)"    pnpm run check:site-scope || true
+else
+  printf '\n\033[33mskipped (no build artifact):\033[0m links, routes, site-scope\n'
+  failures="${failures}  - build failed, so links / routes / site-scope did not run
+"
+fi
+
+if [ -n "$failures" ]; then
+  printf '\n\033[31m//web:check FAILED\033[0m\n%s' "$failures"
+  exit 1
+fi
+printf '\n\033[32m//web:check passed\033[0m — all 8 steps.\n'
+'''
 
 [tasks.test]
 description = "Frontend tests only (vitest)"

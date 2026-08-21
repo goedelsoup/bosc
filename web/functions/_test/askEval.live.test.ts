@@ -1,9 +1,16 @@
-// Faithfulness eval — live tier (#215). GATED on ANTHROPIC_API_KEY: skipped (so CI stays
-// cheap + offline) unless a key is present, then it calls the real model to assert the
-// grounding/refusal behavior the fixture tier can't prove — grounded answers cite, and
-// hallucination-bait that DOES retrieve context is still refused.
+// Faithfulness eval — live tier (#215). Calls the real model to assert the grounding/refusal
+// behavior the fixture tier can't prove — grounded answers cite, and hallucination-bait that
+// DOES retrieve context is still refused.
 //
-//   ANTHROPIC_API_KEY=sk-... npm test -- askEval.live   (optionally ASK_EVAL_MODEL=...)
+//   ASK_EVAL_LIVE=1 ANTHROPIC_API_KEY=sk-... npm test -- askEval.live  (optionally ASK_EVAL_MODEL=...)
+//
+// The opt-in is ASK_EVAL_LIVE, NOT the mere presence of a key (#2026). Gating on the key alone
+// looked equivalent — absent in CI, so CI stayed cheap and offline — but a key lives in `.env` on
+// every working machine, so the suite auto-armed inside `mise run //web:check`. That charged the
+// developer's account on every gate run and, worse, asserted determinism it does not have: 3-5 of
+// these 11 assertions fail on any given run because `allClaimsCited` judges free-form prose. The
+// resulting red aborted the gate before the build and the three post-build guards. An eval whose
+// pass/fail is a model sample belongs behind a deliberate flag, never in a blocking gate.
 
 import { describe, expect, it } from "vitest";
 import { assemblePrompt, extractCitations, isRefusal } from "@watermark/functions/api/_lib/ask";
@@ -12,6 +19,8 @@ import { retrieve } from "@watermark/functions/api/_lib/retrieval";
 import { CORPUS, HALLUCINATION_BAIT, IN_CORPUS } from "./askEval.fixtures";
 
 const apiKey = process.env.ANTHROPIC_API_KEY;
+/** Both are required: the deliberate flag AND a key to spend. */
+const live = process.env.ASK_EVAL_LIVE === "1" && Boolean(apiKey);
 const model = process.env.ASK_EVAL_MODEL || "claude-opus-4-8";
 const TIMEOUT = 60_000;
 
@@ -42,7 +51,7 @@ async function answer(question: string): Promise<{ text: string; hits: ReturnTyp
   return { text: res.text, hits };
 }
 
-describe.skipIf(!apiKey)("live faithfulness eval", () => {
+describe.skipIf(!live)("live faithfulness eval", () => {
   for (const { question } of IN_CORPUS) {
     it(
       `answers + cites: ${question}`,
