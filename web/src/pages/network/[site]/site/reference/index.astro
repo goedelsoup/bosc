@@ -38,11 +38,17 @@ const rows = (hasFeed("catalog", slug) ? loadFeed<CatalogItem[]>("catalog", slug
 const FRESHNESS_LABEL: Record<string, string> = {
   fresh: "current",
   stale: "past its cadence",
+  // `unpulled` is NOT `missing` (#2066): the site has no copy of a per-site dataset, which is a
+  // connector not yet run here — not a file gone from the checkout. Before the per-site
+  // observation landed, a site published the network's aggregate and could never report either.
+  unpulled: "not pulled for this site",
   missing: "not in this checkout",
   unmaterialized: "LFS pointer",
   unknown: "unreconciled",
 };
-const states = tally(rows.map((c) => FRESHNESS_LABEL[catalogFreshness(c.observed)] ?? "unreconciled"));
+const states = tally(
+  rows.map((c) => FRESHNESS_LABEL[catalogFreshness(c.observed, c.site_scope)] ?? "unreconciled"),
+);
 const refreshed = newestRefresh(rows);
 ---
 

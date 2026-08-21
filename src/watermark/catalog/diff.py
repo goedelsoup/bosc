@@ -24,7 +24,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
-from watermark.catalog.reconcile import ObservedEntry, load_observed, reconcile
+from watermark.catalog.reconcile import ObservedEntry, ObservedSite, load_observed, reconcile
 from watermark.catalog.sites import owner_matches
 from watermark.config import Settings, get_settings
 
@@ -65,7 +65,26 @@ class DiffEntry(BaseModel):
     changes: list[FieldChange] = []
 
 
-def _field_changes(before: ObservedEntry, after: ObservedEntry) -> list[FieldChange]:
+# A record with no copy of a slug-scoped dataset — what `--site` compares against when the
+# snapshot's `sites` map has no entry for the slug (absence IS `exists: false`, #2066).
+_ABSENT = ObservedSite(exists=False, sha256=None, size_bytes=0, lfs_materialized=True, file_count=0)
+
+
+def _for_site(record: ObservedEntry, site: str | None) -> ObservedEntry | ObservedSite:
+    """The record ``--site`` should compare: that site's own, when the entry has a site axis.
+
+    Without this a scoped diff reports the *network* delta under a site's name — re-pulling
+    findlay's baseline would show as a change to every site's `economics-baseline`, which is the
+    same conflation #2066 fixed in the published bundle.
+    """
+    if site is None or record.site_scope != "slug-scoped":
+        return record
+    return record.sites.get(site, _ABSENT)
+
+
+def _field_changes(
+    before: ObservedEntry | ObservedSite, after: ObservedEntry | ObservedSite
+) -> list[FieldChange]:
     """The moved observed fields between two records for the same entry id."""
     changes: list[FieldChange] = []
     for field in COMPARED_FIELDS:
@@ -89,7 +108,9 @@ def diff(
     ``site`` scopes the report to entries relevant to that slug (slug-scoped + basin-shared + the
     owner kinds), matched against each entry's *observed* ``site_scope`` — so a ``removed`` entry
     (whose catalog YAML no longer exists) is still scoped from its last-observed ownership rather
-    than dropped. When the snapshot is missing, every live entry reports as ``added``.
+    than dropped. It also narrows the per-entry field delta to **that site's own** record for a
+    slug-scoped dataset (#2066), so a sibling's re-pull no longer reports as this site's change.
+    When the snapshot is missing, every live entry reports as ``added``.
     """
     settings = settings or get_settings()
     before = load_observed(settings=settings)
@@ -112,7 +133,7 @@ def diff(
         elif a is None and b is not None:
             out.append(DiffEntry(id=eid, status="removed"))
         elif a is not None and b is not None:
-            changes = _field_changes(b, a)
+            changes = _field_changes(_for_site(b, site), _for_site(a, site))
             if changes:
                 out.append(DiffEntry(id=eid, status="changed", changes=changes))
     return out

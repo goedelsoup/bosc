@@ -687,7 +687,28 @@ from watermark.sites import (
 #   export` raises for an affected site until the enum lands, so enum, frontend labels, schema
 #   regeneration and the committed bundles are one atomic change. MINOR, back-compatible for data,
 #   schema refresh required.
-CONTRACT_VERSION = "2.1.0"
+# 2.2.0: a `slug-scoped` dataset's `observed` block is THIS SITE's, not the network's aggregate
+#   (#2066), and the reference build alone gains `observed_network` — the dataset's membership
+#   across the network. MINOR, back-compatible for readers, schema refresh required.
+#   `data/catalog/_observed.yaml` keyed observations by dataset id alone, with no site dimension,
+#   even for datasets it marked `site_scope: slug-scoped` — which resolve a `{site}`-templated
+#   relpath and therefore have a DIFFERENT FILE PER SITE. One aggregate record was rendered into
+#   every site's `catalog.json`, where it reads as a fact about that site. For
+#   `parcel-assemblage` that record was `file_count: 11 / size_bytes: 531148` — the sum across all
+#   eleven sites' files, not any one of them: mansfield's own file is 29,769 bytes, and lima,
+#   new-albany and piketon have NO SUCH FILE and still published `exists: true` over half a
+#   megabyte of their siblings' bytes. Two sites could also disagree about the same dataset purely
+#   by export recency, since the aggregate moves whenever ANY site's copy does.
+#   That last property is why the drift check was unusable: `export --check --all` reported
+#   "26 of 26 committed bundle(s) drifted" **on a clean tree**, every one of them on
+#   `catalog — fields: observed`, so a real regression was indistinguishable from the baseline.
+#   `observed` is now the site's own record, and a site with no file of its own resolves to
+#   `exists: false` rather than inheriting a sibling's checksum.
+#   The aggregate was worth keeping SOMEWHERE — `/about/catalog` is network-global — but not as
+#   sha/size/count, which move on every re-pull of any site and would have kept the reference
+#   bundle churning. `observed_network` is the membership figure instead (`sites_present` of
+#   `sites_total`), which moves only when the SET of sites holding a dataset changes.
+CONTRACT_VERSION = "2.2.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -1599,7 +1620,13 @@ class CatalogStorageFile(BaseModel):
 
 
 class CatalogObserved(BaseModel):
-    """The reconcile snapshot's observed half for a dataset (``data/catalog/_observed.yaml``)."""
+    """The reconcile snapshot's observed half for a dataset (``data/catalog/_observed.yaml``).
+
+    Scoped to the bundle's own site: for a ``slug-scoped`` dataset this is
+    ``entries.<id>.sites.<slug>``, and a site holding no copy gets a zeroed ``exists: false``
+    record rather than a sibling's bytes (#2066). See :class:`CatalogNetworkObserved` for the
+    network figure the reference build additionally carries.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
@@ -1610,6 +1637,22 @@ class CatalogObserved(BaseModel):
     file_count: int = 0
     stale: bool = False
     asof: str | None = None
+
+
+class CatalogNetworkObserved(BaseModel):
+    """How widely a ``slug-scoped`` dataset is held **across the network** (#2066).
+
+    Only the reference build carries this, and only for a slug-scoped dataset: it is the one
+    figure the network-global ``/about/catalog`` page needs that a single site's record cannot
+    give it. Deliberately *membership* rather than the old sha/size/file-count aggregate — a
+    checksum over eleven sites' concatenated files answers no question anyone has, and moved on
+    every re-pull of any site, which is what kept every committed bundle permanently drifted.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    sites_present: int  # registered sites holding their own copy of this dataset
+    sites_total: int  # registered sites in `watermark.sites.SITES`
 
 
 class CatalogItem(BaseModel):
@@ -1641,7 +1684,11 @@ class CatalogItem(BaseModel):
     last_refreshed: str | None = None
     tags: list[str] = Field(default_factory=list)
     storage: list[CatalogStorageFile] = Field(default_factory=list)
-    observed: CatalogObserved | None = None  # None until `watermark catalog reconcile` has run
+    # THIS SITE's observation (#2066). For a `slug-scoped` dataset that is the site's own file,
+    # not the network-wide aggregate it used to be; None until `watermark catalog reconcile` runs.
+    observed: CatalogObserved | None = None
+    # Reference build only, slug-scoped only: how many sites hold this dataset (see the class).
+    observed_network: CatalogNetworkObserved | None = None
     citation: Citation
 
 

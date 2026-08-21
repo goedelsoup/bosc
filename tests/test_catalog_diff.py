@@ -248,6 +248,78 @@ def test_site_scoping_filters_to_relevant_entries(tmp_path: Path) -> None:
     assert bryan == ["eia-consumer-energy"]  # lima-legacy filtered out
 
 
+def test_site_scoping_reports_only_that_sites_own_change(tmp_path: Path) -> None:
+    """``--site`` compares the site's OWN record for a slug-scoped dataset (#2066).
+
+    The entry-level record is the network aggregate, so it moves whenever any site's copy does —
+    a scoped diff over it reported a sibling's re-pull as this site's change, the same conflation
+    the published bundle carried.
+    """
+    settings = _settings(tmp_path)
+    _data(settings, "reference/eia/bryan/consumer-energy.yaml", "a: 1\n")
+    _data(settings, "reference/eia/columbus/consumer-energy.yaml", "a: 1\n")
+    _entry(
+        settings,
+        "eia-consumer-energy",
+        """\
+        id: eia-consumer-energy
+        title: T
+        scope: reference
+        site_scope: slug-scoped
+        producer:
+          kind: connector
+          source: x
+        storage:
+        - relpath: reference/eia/{site}/consumer-energy.yaml
+          media_type: application/x-yaml
+        refresh:
+          cadence: static
+        """,
+    )
+    _snapshot(settings)
+    _data(settings, "reference/eia/columbus/consumer-energy.yaml", "a: 2\n")  # a SIBLING's re-pull
+
+    # unscoped, the aggregate moved — that is a true statement about the network
+    assert [d.id for d in diff(settings=settings, now=_FIXED)] == ["eia-consumer-energy"]
+    # ...and columbus is the site it actually happened to
+    assert [d.id for d in diff(settings=settings, now=_FIXED, site="columbus")] == [
+        "eia-consumer-energy"
+    ]
+    # bryan's own copy did not move
+    assert diff(settings=settings, now=_FIXED, site="bryan") == []
+
+
+def test_site_scoping_reports_a_new_local_copy_as_exists_true(tmp_path: Path) -> None:
+    """A site gaining its first copy reads as ``exists: false -> true``, not as a size delta."""
+    settings = _settings(tmp_path)
+    _data(settings, "reference/eia/bryan/consumer-energy.yaml")
+    _entry(
+        settings,
+        "eia-consumer-energy",
+        """\
+        id: eia-consumer-energy
+        title: T
+        scope: reference
+        site_scope: slug-scoped
+        producer:
+          kind: connector
+          source: x
+        storage:
+        - relpath: reference/eia/{site}/consumer-energy.yaml
+          media_type: application/x-yaml
+        refresh:
+          cadence: static
+        """,
+    )
+    _snapshot(settings)
+    _data(settings, "reference/eia/columbus/consumer-energy.yaml")
+
+    [entry] = diff(settings=settings, now=_FIXED, site="columbus")
+    changes = {c.field: (c.before, c.after) for c in entry.changes}
+    assert changes["exists"] == (False, True)
+    assert changes["file_count"] == (0, 1)
+
+
 def test_site_scoping_keeps_removed_entries_via_observed_scope(tmp_path: Path) -> None:
     # A removed entry's catalog YAML is gone, so its relevance can't be recomputed from the live
     # catalog — it must be scoped from the snapshot's persisted site_scope, or --site hides it.

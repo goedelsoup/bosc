@@ -30,7 +30,7 @@ def _write_bundle(
     *,
     generated_at: str = "2026-01-01T00:00:00+00:00",
     readiness: dict[str, Any] | None = None,
-    contract: str = "2.1.0",
+    contract: str = "2.2.0",
     with_schemas: bool = False,
 ) -> Path:
     """A minimal bundle on disk: one JSON array file per feed plus a manifest that describes it."""
@@ -151,7 +151,7 @@ def test_readiness_and_contract_drift_are_manifest_findings(tmp_path: Path) -> N
         "lima",
         {"records": []},
         readiness={"tier": "case", "domains": {}},
-        contract="2.1.0",
+        contract="2.2.0",
     )
 
     subjects = {

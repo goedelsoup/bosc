@@ -278,10 +278,14 @@ export interface DatasetInstance {
 
 /**
  * A catalog entry's storage paths as they resolve FOR a site — the TS peer of
- * `bosc.catalog.sites._resolved_relpaths`. A `slug-scoped` entry's `{site}` template is the
- * site's own copy; the reference build is the one site that keeps an un-slugged peer where the
- * entry carries one (the `lima-legacy` reference convention), and falls back to its own template
- * expansion where it doesn't. Everything else uses the un-templated paths verbatim.
+ * `bosc.catalog.resolve.resolved_for_site`. A `slug-scoped` entry's `{site}` template is the
+ * site's own copy; the reference build is the one site that ALSO keeps the un-slugged peers where
+ * the entry carries them (the `lima-legacy` reference convention). Everything else uses the
+ * un-templated paths verbatim.
+ *
+ * The peers are a UNION with the reference build's own template expansions, not an alternative to
+ * them (#2066): `hydrology-reaches` gives Lima both an un-slugged `reach-nav.yaml` and a slugged
+ * `reaches/lima.geojson`, and an either/or rule silently dropped the second.
  *
  * This is what makes the block genuinely per-site with no new plumbing: Urbana is told it reads
  * `reference/rsei/urbana/inventory.yaml`, Troy-Piqua `reference/rsei/troy-piqua/inventory.yaml`.
@@ -297,8 +301,7 @@ function resolvedFiles(row: CatalogItem, slug: string, isReferenceBuild: boolean
     if (row.site_scope !== "slug-scoped") return paths.filter((p) => !p.includes("{site}"));
     const templated = paths.filter((p) => p.includes("{site}")).map((p) => p.replaceAll("{site}", slug));
     if (!isReferenceBuild) return templated;
-    const peers = paths.filter((p) => !p.includes("{site}"));
-    return peers.length > 0 ? peers : templated;
+    return [...paths.filter((p) => !p.includes("{site}")), ...templated];
   };
   return resolve().filter((p) => existsSync(repoPath("data", p)));
 }
@@ -338,7 +341,7 @@ export function referenceForSite(slug: string): SiteReferenceEntry[] {
         command: row.command ?? null,
         cadence: row.cadence,
         lastRefreshed: row.last_refreshed ?? null,
-        freshness: catalogFreshness(row.observed),
+        freshness: catalogFreshness(row.observed, row.site_scope),
       })),
     note: instanceNoteId(dataset.slug, slug),
   }));

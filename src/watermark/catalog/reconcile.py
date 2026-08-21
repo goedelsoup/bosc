@@ -12,6 +12,12 @@ which gates on this snapshot. It is offline and hermetic (stat + sha256 of commi
 network, no parquet/Arrow fingerprint — the data is YAML/CSV/PDF/GeoJSON). Slug-scoped
 ``{site}`` templates are expanded across the registered sites and resolved to the files that
 actually exist, so per-site absence (not every site has every dataset) is never a false miss.
+
+A slug-scoped entry is observed **twice** (#2066): once as the network-wide aggregate over every
+site's copy (the entry-level record, which ``check``/``diff``/``audit`` read), and once **per
+site** (``entries.<id>.sites.<slug>``, which ``watermark export`` publishes as that site's own
+fact). They were the same record until the aggregate was caught asserting 531,148 bytes and
+``exists: true`` for three sites that hold no such file at all.
 """
 
 from __future__ import annotations
@@ -24,6 +30,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict, Field
 
 from watermark.catalog import CatalogEntry, SiteScope, load_entries
+from watermark.catalog.resolve import member_exists, site_members
 from watermark.config import Settings, get_settings
 from watermark.sites import SITES
 
@@ -84,8 +91,39 @@ def _read_asof(path: Path) -> str | None:
     return None
 
 
+class ObservedSite(BaseModel):
+    """What reconcile saw on disk for one ``slug-scoped`` entry **at one site** (#2066).
+
+    A slug-scoped dataset resolves a ``{site}``-templated relpath, so it is a *different file per
+    site* — and the entry-level record above it is the network-wide aggregate of all of them
+    (11 files, their summed bytes, a hash over the whole set). Publishing that aggregate into a
+    site's bundle asserted an artifact the site does not have: three sites with no
+    ``parcel-assemblage.geojson`` at all published ``exists: true`` over 531,148 bytes belonging
+    to their siblings, and two sites disagreed about the same dataset purely by export recency.
+
+    So the site's own record is observed here, and ``watermark export`` publishes *this* as the
+    site's fact. **A slug with no file of its own gets no record** — absence resolves to
+    ``exists: false`` rather than inheriting a sibling's bytes.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    exists: bool
+    sha256: str | None  # this site's file hash (single-file) or its own aggregate
+    size_bytes: int
+    lfs_materialized: bool
+    file_count: int
+    asof: str | None = None  # this site's data timestamp — not the network's newest
+    stale: bool = False
+
+
 class ObservedEntry(BaseModel):
-    """What reconcile saw on disk for one catalog entry (the observed half)."""
+    """What reconcile saw on disk for one catalog entry (the observed half).
+
+    For a ``slug-scoped`` entry every field here is a **network-wide aggregate** over each site's
+    copy — see :class:`ObservedSite` for the per-site records, which is what a site's bundle
+    publishes. ``check``/``diff``/``audit`` read the aggregate; only the bundle is per-site.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
@@ -103,6 +141,9 @@ class ObservedEntry(BaseModel):
     # can scope an entry whose catalog YAML no longer exists — a ``removed`` entry can't be
     # re-classified from the live catalog, so the last-observed ownership is the only record.
     site_scope: SiteScope = "basin-shared"
+    # Per-site records for a ``slug-scoped`` entry with storage (#2066), keyed by slug and sorted.
+    # A slug with no file of its own is ABSENT from this map, and reads as `exists: false`.
+    sites: dict[str, ObservedSite] = Field(default_factory=dict)
 
 
 class ObservedSnapshot(BaseModel):
@@ -139,15 +180,22 @@ def _members(entry: CatalogEntry, settings: Settings) -> tuple[list[tuple[str, P
     return found, missing
 
 
-def _observe(entry: CatalogEntry, settings: Settings, now: date) -> ObservedEntry:
-    found, missing = _members(entry, settings)
+def _summarize(
+    found: list[tuple[str, Path]],
+    missing: list[str],
+    *,
+    entry: CatalogEntry,
+    now: date,
+    has_storage: bool,
+) -> dict[str, object]:
+    """The observed fields for one resolved member set — the whole entry's, or one site's.
+
+    Shared so a per-site record is computed by exactly the rules the entry-level one is: the
+    same existence predicate, the same single-file-vs-aggregate sha256, the same TTL comparison.
+    A site's record diverging from its own aggregate by *rule* rather than by data is how the
+    two views would drift apart again.
+    """
     pointers = [p for _, p in found if _is_lfs_pointer(p)]
-    lfs_materialized = not pointers
-    # An entry with no declared storage is a *virtual* node (#1020/#1024) — a pure aggregate
-    # in the dependency DAG (e.g. `onboard-bundle`) or a feed whose output is regenerable and
-    # git-ignored (the bundle). Nothing on disk to observe, so it counts as present.
-    exists = (not missing and len(found) >= 1) or not entry.storage
-    size_bytes = sum(p.stat().st_size for _, p in found)
 
     # sha256: the file's own hash for a single materialized file (so a pinned, file-level
     # checksum compares directly); a stable aggregate for multi-file; None when incomplete.
@@ -169,16 +217,50 @@ def _observe(entry: CatalogEntry, settings: Settings, now: date) -> ObservedEntr
         if ref_date is not None:
             stale = (now - ref_date).days > ttl
 
-    return ObservedEntry(
-        exists=exists,
-        sha256=sha256,
-        size_bytes=size_bytes,
-        lfs_materialized=lfs_materialized,
-        file_count=len(found),
-        missing=sorted(missing),
-        asof=asof,
-        stale=stale,
-        site_scope=entry.site_scope,
+    return {
+        "exists": member_exists(found, missing, has_storage=has_storage),
+        "sha256": sha256,
+        "size_bytes": sum(p.stat().st_size for _, p in found),
+        "lfs_materialized": not pointers,
+        "file_count": len(found),
+        "asof": asof,
+        "stale": stale,
+    }
+
+
+def _observe_sites(entry: CatalogEntry, settings: Settings, now: date) -> dict[str, ObservedSite]:
+    """One record per registered site that holds a copy of this ``slug-scoped`` dataset (#2066).
+
+    Only for a slug-scoped entry **with storage** — a virtual node (no storage) has nothing
+    per-site to say, and its aggregate record is already the right answer for every site. A slug
+    with no file of its own is left out of the map entirely: the bundle renders an absent slug as
+    ``exists: false``, which is the claim the aggregate was getting wrong.
+    """
+    if entry.site_scope != "slug-scoped" or not entry.storage:
+        return {}
+    out: dict[str, ObservedSite] = {}
+    for slug in sorted(SITES):
+        found, missing = site_members(entry, slug, settings)
+        if not found:
+            continue
+        out[slug] = ObservedSite.model_validate(
+            _summarize(found, missing, entry=entry, now=now, has_storage=True)
+        )
+    return out
+
+
+def _observe(entry: CatalogEntry, settings: Settings, now: date) -> ObservedEntry:
+    # An entry with no declared storage is a *virtual* node (#1020/#1024) — a pure aggregate
+    # in the dependency DAG (e.g. `onboard-bundle`) or a feed whose output is regenerable and
+    # git-ignored (the bundle). Nothing on disk to observe, so it counts as present.
+    found, missing = _members(entry, settings)
+    return ObservedEntry.model_validate(
+        {
+            **_summarize(found, missing, entry=entry, now=now, has_storage=bool(entry.storage)),
+            "missing": sorted(missing),
+            "site_scope": entry.site_scope,
+            "sites": _observe_sites(entry, settings, now),
+        }
     )
 
 
@@ -210,11 +292,20 @@ def observed_path(*, settings: Settings | None = None) -> Path:
     return settings.catalog_dir / OBSERVED_RELNAME
 
 
+def _entry_payload(entry: ObservedEntry) -> dict[str, object]:
+    """One entry's YAML mapping — ``sites`` omitted unless the entry actually has per-site records,
+    so the ~160 entries with no site axis are not each given an empty map to carry."""
+    payload = entry.model_dump()
+    if not payload["sites"]:
+        del payload["sites"]
+    return payload
+
+
 def _dump(snapshot: ObservedSnapshot) -> str:
-    """Deterministic YAML: stable field order, entries sorted by id."""
+    """Deterministic YAML: stable field order, entries sorted by id, sites sorted by slug."""
     payload = {
         "reconciled_at": snapshot.reconciled_at,
-        "entries": {eid: snapshot.entries[eid].model_dump() for eid in sorted(snapshot.entries)},
+        "entries": {eid: _entry_payload(snapshot.entries[eid]) for eid in sorted(snapshot.entries)},
     }
     return yaml.safe_dump(payload, sort_keys=False, allow_unicode=True, width=100)
 

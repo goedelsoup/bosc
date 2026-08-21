@@ -1937,7 +1937,11 @@ export interface CatalogStorageFile {
   media_type: string;
   lfs: boolean;
 }
-/** The reconcile snapshot for a dataset (`data/catalog/_observed.yaml`). */
+/** The reconcile snapshot for a dataset (`data/catalog/_observed.yaml`), scoped to THIS site.
+ *  For a `slug-scoped` dataset that is the site's own file — the bundle used to publish one
+ *  network-wide aggregate into every site's feed, so a site with no copy still read
+ *  `exists: true` over its siblings' bytes (#2066). A site holding no copy now reads
+ *  `exists: false` with zeroed counts. */
 export interface CatalogObserved {
   exists: boolean;
   sha256?: string | null;
@@ -1947,6 +1951,16 @@ export interface CatalogObserved {
   stale: boolean;
   asof?: string | null;
 }
+/** How widely a `slug-scoped` dataset is held across the network (#2066).
+ *  Carried by the REFERENCE BUILD ONLY — it is the one figure the network-global
+ *  `/about/catalog` page needs and a single site's record cannot give it. Membership rather
+ *  than bytes: a checksum over every site's concatenated files answers no question, and moved
+ *  on every re-pull of any site. */
+export interface CatalogNetworkObserved {
+  sites_present: number;
+  sites_total: number;
+}
+
 /** One registered dataset in the data catalog — what exists, where from, license, freshness. */
 export interface CatalogItem {
   id: string;
@@ -1968,16 +1982,26 @@ export interface CatalogItem {
   tags: string[];
   storage: CatalogStorageFile[];
   observed?: CatalogObserved | null;
+  observed_network?: CatalogNetworkObserved | null;
   citation: Citation;
 }
 
-/** A dataset's freshness state, derived from its reconcile snapshot. */
-export type CatalogFreshness = "fresh" | "stale" | "missing" | "unmaterialized" | "unknown";
+/** A dataset's freshness state, derived from its reconcile snapshot.
+ *  `unpulled` is distinct from `missing` on purpose (#2066): a `slug-scoped` dataset the site has
+ *  no copy of is not a gap in the checkout, it is a connector that has not been run here yet. The
+ *  two used to be indistinguishable because a site published its siblings' aggregate and so never
+ *  reported absence at all. */
+export type CatalogFreshness = "fresh" | "stale" | "missing" | "unpulled" | "unmaterialized" | "unknown";
 
-/** Reduce the observed snapshot to a single freshness state for display. */
-export function catalogFreshness(o: CatalogObserved | null | undefined): CatalogFreshness {
+/** Reduce the observed snapshot to a single freshness state for display.
+ *  Pass the row's `site_scope` to separate `unpulled` from `missing`; without it a per-site
+ *  dataset the site does not hold reads as a missing file, which is a different claim. */
+export function catalogFreshness(
+  o: CatalogObserved | null | undefined,
+  siteScope?: string,
+): CatalogFreshness {
   if (!o) return "unknown";
-  if (!o.exists) return "missing";
+  if (!o.exists) return siteScope === "slug-scoped" ? "unpulled" : "missing";
   if (!o.lfs_materialized) return "unmaterialized"; // LFS pointer in this checkout — expected
   if (o.stale) return "stale";
   return "fresh";
