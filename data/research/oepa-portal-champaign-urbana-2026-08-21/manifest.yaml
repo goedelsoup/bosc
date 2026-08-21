@@ -1,0 +1,4006 @@
+meta:
+  subject: Ohio EPA eDocument portal sweep — CHAMPAIGN x *URBANA*
+  county: CHAMPAIGN
+  program: NPDES
+  entity: '*URBANA*'
+  permit_id: null
+  doc_types: all
+  generated_at: '2026-08-21'
+  counts:
+    documents: 437
+    permits: 18
+  coverage:
+    truncated: false
+    rows_served: 437
+    pages_walked: 1
+    total_pages: 1
+    note: 'complete: the walk exhausted the reported pages.'
+crosswalk:
+- permit_id: 1GC05597
+  entity: PARKER TRUTEC-URBANA
+  documents: 1
+- permit_id: 1GC06169
+  entity: URBANA PK-8 SCHOOL
+  documents: 2
+- permit_id: 1GC06229
+  entity: HPLEX URBANA MOB
+  documents: 1
+- permit_id: 1GC07727
+  entity: URBANA CHAMPAIGN COUNTY SENIOR CENTER
+  documents: 2
+- permit_id: 1GC08050
+  entity: URBANA GRIMES FIELD
+  documents: 3
+- permit_id: 1GC08731
+  entity: URBANA 8" HDP PIPELINE RELOCATION
+  documents: 7
+- permit_id: 1GC08924
+  entity: 6943 URBANA TO ST PARIS 69KV TLINE PROJ
+  documents: 9
+- permit_id: 1GC08952
+  entity: DUNKIN' - URBANA
+  documents: 4
+- permit_id: 1GC09199
+  entity: 'URBANA DOLLAR GENERAL #25179'
+  documents: 5
+- permit_id: 1GQ00062
+  entity: CITY OF URBANA
+  documents: 31
+- permit_id: 1GR01395
+  entity: URBANA MATERIALS
+  documents: 5
+- permit_id: 1GRN00960
+  entity: URBANA WPCF  *
+  documents: 2
+- permit_id: 1IJ00142
+  entity: URBANA MATERIALS
+  documents: 6
+- permit_id: 1IN00012
+  entity: RITTAL CORP-URBANA
+  documents: 1
+- permit_id: 1IY00300
+  entity: URBANA WTP
+  documents: 18
+- permit_id: 1PD00011
+  entity: URBANA WPCF
+  documents: 328
+- permit_id: 1PT00100
+  entity: URBANA LOCAL ELEM SCH
+  documents: 11
+- permit_id: 8BU00698
+  entity: SUTPHEN CORPORATION - URBANA
+  documents: 1
+results:
+- docid: '4237221'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/20/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4237221
+- docid: '4237222'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/20/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4237222
+- docid: '4237223'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/20/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4237223
+- docid: '4237224'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/20/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4237224
+- docid: '4237225'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/20/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4237225
+- docid: '4227359'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227359
+- docid: '4227360'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227360
+- docid: '4227361'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227361
+- docid: '4227363'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227363
+- docid: '4227364'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227364
+- docid: '4227365'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227365
+- docid: '4227366'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227366
+- docid: '4227367'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227367
+- docid: '4227368'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227368
+- docid: '4227369'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227369
+- docid: '4227370'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227370
+- docid: '4227371'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227371
+- docid: '4227372'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227372
+- docid: '4227373'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227373
+- docid: '4227374'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227374
+- docid: '4227375'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227375
+- docid: '4227376'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227376
+- docid: '4227377'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227377
+- docid: '4227378'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227378
+- docid: '4227379'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227379
+- docid: '4227380'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227380
+- docid: '4227382'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227382
+- docid: '4227383'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227383
+- docid: '4227384'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227384
+- docid: '4227385'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227385
+- docid: '4227386'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227386
+- docid: '4227387'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227387
+- docid: '4227388'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227388
+- docid: '4227389'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227389
+- docid: '4227390'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227390
+- docid: '4227392'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227392
+- docid: '4227393'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227393
+- docid: '4227394'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227394
+- docid: '4227395'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227395
+- docid: '4227396'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227396
+- docid: '4227397'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227397
+- docid: '4227398'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227398
+- docid: '4227399'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227399
+- docid: '4227400'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227400
+- docid: '4227401'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227401
+- docid: '4227402'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227402
+- docid: '4227404'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227404
+- docid: '4227405'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227405
+- docid: '4227406'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227406
+- docid: '4227407'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227407
+- docid: '4227408'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227408
+- docid: '4227409'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227409
+- docid: '4227410'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227410
+- docid: '4227411'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227411
+- docid: '4227412'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227412
+- docid: '4227413'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227413
+- docid: '4227414'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227414
+- docid: '4227415'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227415
+- docid: '4227416'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227416
+- docid: '4227417'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227417
+- docid: '4227418'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227418
+- docid: '4227419'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227419
+- docid: '4227420'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227420
+- docid: '4227421'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227421
+- docid: '4227422'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227422
+- docid: '4227423'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227423
+- docid: '4227424'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227424
+- docid: '4227425'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227425
+- docid: '4227426'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227426
+- docid: '4227427'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227427
+- docid: '4227428'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227428
+- docid: '4227429'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227429
+- docid: '4227430'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227430
+- docid: '4227431'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227431
+- docid: '4227432'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227432
+- docid: '4227433'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227433
+- docid: '4227434'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227434
+- docid: '4227435'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227435
+- docid: '4227436'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 8/12/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4227436
+- docid: '4185932'
+  entity: SUTPHEN CORPORATION - URBANA
+  doc_type: NOV
+  doc_date: 7/10/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 8BU00698
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4185932
+- docid: '3981791'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 1/27/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SSO ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3981791
+- docid: '3959035'
+  entity: CITY OF URBANA
+  doc_type: NOV
+  doc_date: 1/6/2026
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3959035
+- docid: '3865781'
+  entity: URBANA WPCF
+  doc_type: Report
+  doc_date: 10/15/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: NONCOMPLIANCE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3865781
+- docid: '3858475'
+  entity: URBANA WPCF
+  doc_type: Inspection or Compliance Review
+  doc_date: 10/7/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: INSPECTION
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3858475
+- docid: '3858492'
+  entity: URBANA WPCF
+  doc_type: NOV
+  doc_date: 10/7/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3858492
+- docid: '3858493'
+  entity: URBANA WPCF
+  doc_type: ROV or RTC
+  doc_date: 10/7/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3858493
+- docid: '3832476'
+  entity: URBANA WPCF
+  doc_type: Permit - Intermediate
+  doc_date: 9/19/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: APP281864739
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3832476
+- docid: '3832477'
+  entity: URBANA WPCF
+  doc_type: Permit - Intermediate
+  doc_date: 9/19/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: APP281864739
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3832477
+- docid: '3832478'
+  entity: URBANA WPCF
+  doc_type: Permit - Intermediate
+  doc_date: 9/19/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: APP281864739
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3832478
+- docid: '3832479'
+  entity: URBANA WPCF
+  doc_type: Permit - Intermediate
+  doc_date: 9/19/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: APP281864739
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3832479
+- docid: '3816773'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 9/5/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: INSPECTION
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3816773
+- docid: '3711070'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711070
+- docid: '3711071'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711071
+- docid: '3711072'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711072
+- docid: '3711073'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711073
+- docid: '3711074'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711074
+- docid: '3711076'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711076
+- docid: '3711077'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711077
+- docid: '3711078'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711078
+- docid: '3711079'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711079
+- docid: '3711081'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711081
+- docid: '3711083'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711083
+- docid: '3711085'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711085
+- docid: '3711089'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711089
+- docid: '3711090'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711090
+- docid: '3711091'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711091
+- docid: '3711092'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711092
+- docid: '3711093'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711093
+- docid: '3711094'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711094
+- docid: '3711095'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711095
+- docid: '3711096'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/8/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3711096
+- docid: '3705914'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705914
+- docid: '3705915'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705915
+- docid: '3705916'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705916
+- docid: '3705917'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705917
+- docid: '3705918'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705918
+- docid: '3705919'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705919
+- docid: '3705920'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705920
+- docid: '3705921'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705921
+- docid: '3705922'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705922
+- docid: '3705923'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705923
+- docid: '3705924'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705924
+- docid: '3705925'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705925
+- docid: '3705926'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705926
+- docid: '3705927'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705927
+- docid: '3705928'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705928
+- docid: '3705929'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705929
+- docid: '3705930'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705930
+- docid: '3705931'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705931
+- docid: '3705932'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705932
+- docid: '3705933'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705933
+- docid: '3705934'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705934
+- docid: '3705935'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705935
+- docid: '3705936'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705936
+- docid: '3705937'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705937
+- docid: '3705940'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705940
+- docid: '3705942'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705942
+- docid: '3705943'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705943
+- docid: '3705944'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705944
+- docid: '3705945'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705945
+- docid: '3705951'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705951
+- docid: '3705952'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705952
+- docid: '3705953'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705953
+- docid: '3705954'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705954
+- docid: '3705955'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705955
+- docid: '3705956'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705956
+- docid: '3705958'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705958
+- docid: '3705959'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705959
+- docid: '3705960'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705960
+- docid: '3705961'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705961
+- docid: '3705962'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705962
+- docid: '3705964'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705964
+- docid: '3705965'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705965
+- docid: '3705966'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705966
+- docid: '3705967'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705967
+- docid: '3705969'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705969
+- docid: '3705970'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705970
+- docid: '3705971'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705971
+- docid: '3705972'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705972
+- docid: '3705973'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705973
+- docid: '3705974'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705974
+- docid: '3705975'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705975
+- docid: '3705976'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705976
+- docid: '3705977'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705977
+- docid: '3705978'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705978
+- docid: '3705979'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705979
+- docid: '3705980'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705980
+- docid: '3705981'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/3/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3705981
+- docid: '3613310'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 5/13/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3613310
+- docid: '3613311'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 5/13/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3613311
+- docid: '3613312'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 5/13/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3613312
+- docid: '3613313'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 5/13/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3613313
+- docid: '3412261'
+  entity: DUNKIN' - URBANA
+  doc_type: Permit - Short Term
+  doc_date: 2/5/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08952
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3412261
+- docid: '3406011'
+  entity: URBANA CHAMPAIGN COUNTY SENIOR CENTER
+  doc_type: Permit - Short Term
+  doc_date: 1/31/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC07727
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3406011
+- docid: '3406012'
+  entity: URBANA CHAMPAIGN COUNTY SENIOR CENTER
+  doc_type: Permit - Short Term
+  doc_date: 1/31/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC07727
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3406012
+- docid: '3386781'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386781
+- docid: '3386782'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386782
+- docid: '3386783'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386783
+- docid: '3386784'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386784
+- docid: '3386785'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386785
+- docid: '3386786'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386786
+- docid: '3386787'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386787
+- docid: '3386788'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386788
+- docid: '3386789'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386789
+- docid: '3386790'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386790
+- docid: '3386791'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386791
+- docid: '3386792'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386792
+- docid: '3386793'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386793
+- docid: '3386794'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386794
+- docid: '3386795'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386795
+- docid: '3386796'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386796
+- docid: '3386797'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386797
+- docid: '3386798'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386798
+- docid: '3386799'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386799
+- docid: '3386800'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386800
+- docid: '3386801'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386801
+- docid: '3386802'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386802
+- docid: '3386803'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386803
+- docid: '3386804'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386804
+- docid: '3386805'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/22/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3386805
+- docid: '3384566'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384566
+- docid: '3384567'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384567
+- docid: '3384568'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384568
+- docid: '3384569'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384569
+- docid: '3384570'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384570
+- docid: '3384571'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384571
+- docid: '3384572'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384572
+- docid: '3384573'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384573
+- docid: '3384574'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384574
+- docid: '3384575'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384575
+- docid: '3384576'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384576
+- docid: '3384577'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384577
+- docid: '3384578'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384578
+- docid: '3384579'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384579
+- docid: '3384580'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384580
+- docid: '3384581'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384581
+- docid: '3384582'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384582
+- docid: '3384583'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384583
+- docid: '3384584'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384584
+- docid: '3384585'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384585
+- docid: '3384586'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384586
+- docid: '3384587'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384587
+- docid: '3384588'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/21/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3384588
+- docid: '3380905'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/16/2025
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SSO ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3380905
+- docid: '3344567'
+  entity: 'URBANA DOLLAR GENERAL #25179'
+  doc_type: Permit - Short Term
+  doc_date: 12/20/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC09199
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3344567
+- docid: '3344568'
+  entity: 'URBANA DOLLAR GENERAL #25179'
+  doc_type: Permit - Short Term
+  doc_date: 12/20/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC09199
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3344568
+- docid: '3315678'
+  entity: 6943 URBANA TO ST PARIS 69KV TLINE PROJ
+  doc_type: Permit - Short Term
+  doc_date: 12/3/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08924
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3315678
+- docid: '3315679'
+  entity: 6943 URBANA TO ST PARIS 69KV TLINE PROJ
+  doc_type: Permit - Short Term
+  doc_date: 12/3/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08924
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3315679
+- docid: '3170919'
+  entity: URBANA WPCF  *
+  doc_type: ROV or RTC
+  doc_date: 9/3/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3170919
+- docid: '3124240'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 8/5/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: INSPECTION
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3124240
+- docid: '3124246'
+  entity: URBANA WPCF  *
+  doc_type: NOV
+  doc_date: 8/5/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3124246
+- docid: '2965482'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 6/17/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2965482
+- docid: '2965483'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 6/17/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2965483
+- docid: '2965484'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 6/17/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2965484
+- docid: '2965485'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 6/17/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2965485
+- docid: '2800822'
+  entity: URBANA WPCF  *
+  doc_type: Director's Authorization
+  doc_date: 4/10/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2800822
+- docid: '2796610'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 4/5/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: INSPECTION
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2796610
+- docid: '2784672'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 3/25/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: INSPECTION
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2784672
+- docid: '2700023'
+  entity: URBANA WPCF  *
+  doc_type: ROV or RTC
+  doc_date: 1/10/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2700023
+- docid: '2698103'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/9/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SSO ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2698103
+- docid: '2698106'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/9/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SSO ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2698106
+- docid: '2698107'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/9/2024
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SSO ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2698107
+- docid: '2656689'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656689
+- docid: '2656690'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656690
+- docid: '2656691'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656691
+- docid: '2656692'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656692
+- docid: '2656693'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656693
+- docid: '2656694'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656694
+- docid: '2656695'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656695
+- docid: '2656696'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656696
+- docid: '2656697'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656697
+- docid: '2656698'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656698
+- docid: '2656699'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656699
+- docid: '2656700'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656700
+- docid: '2656701'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656701
+- docid: '2656702'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656702
+- docid: '2656703'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656703
+- docid: '2656704'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656704
+- docid: '2656705'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656705
+- docid: '2656706'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656706
+- docid: '2656707'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656707
+- docid: '2656708'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656708
+- docid: '2656709'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656709
+- docid: '2656710'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656710
+- docid: '2656711'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2656711
+- docid: '2658331'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658331
+- docid: '2658332'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658332
+- docid: '2658333'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658333
+- docid: '2658334'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658334
+- docid: '2658335'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658335
+- docid: '2658336'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658336
+- docid: '2658337'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658337
+- docid: '2658338'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658338
+- docid: '2658339'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658339
+- docid: '2658340'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658340
+- docid: '2658341'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658341
+- docid: '2658342'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658342
+- docid: '2658343'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658343
+- docid: '2658344'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658344
+- docid: '2658345'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658345
+- docid: '2658346'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658346
+- docid: '2658347'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658347
+- docid: '2658348'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658348
+- docid: '2658349'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658349
+- docid: '2658350'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658350
+- docid: '2658351'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658351
+- docid: '2658352'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658352
+- docid: '2658353'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658353
+- docid: '2658354'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658354
+- docid: '2658355'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658355
+- docid: '2658356'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658356
+- docid: '2658357'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658357
+- docid: '2658358'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 12/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ANNUAL SEWAGE SLUDGE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2658358
+- docid: '2478163'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478163
+- docid: '2478164'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478164
+- docid: '2478165'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478165
+- docid: '2478166'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478166
+- docid: '2478227'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478227
+- docid: '2478726'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478726
+- docid: '2478727'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478727
+- docid: '2478728'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478728
+- docid: '2478730'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478730
+- docid: '2478731'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478731
+- docid: '2478732'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/27/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2478732
+- docid: '2458171'
+  entity: URBANA WPCF  *
+  doc_type: Director's Authorization
+  doc_date: 7/19/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2458171
+- docid: '2439074'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/11/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2439074
+- docid: '2439075'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/11/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2439075
+- docid: '2439076'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/11/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2439076
+- docid: '2439078'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/11/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2439078
+- docid: '2439676'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/11/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2439676
+- docid: '2439677'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/11/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2439677
+- docid: '2439678'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/11/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2439678
+- docid: '2439679'
+  entity: CITY OF URBANA
+  doc_type: Report
+  doc_date: 7/11/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: MS4 ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2439679
+- docid: '2384268'
+  entity: 6943 URBANA TO ST. PARIS 69KV TLINE PROJ
+  doc_type: Permit - Short Term
+  doc_date: 6/8/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08924
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2384268
+- docid: '2384269'
+  entity: 6943 URBANA TO ST. PARIS 69KV TLINE PROJ
+  doc_type: Permit - Short Term
+  doc_date: 6/8/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08924
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2384269
+- docid: '2384276'
+  entity: 6943 URBANA TO ST. PARIS 69KV TLINE PROJ
+  doc_type: Permit - Short Term
+  doc_date: 6/8/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08924
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2384276
+- docid: '2286958'
+  entity: URBANA MATERIALS
+  doc_type: Permit - Long Term
+  doc_date: 4/24/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IJ00142
+  description: PTF265285498
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2286958
+- docid: '2265941'
+  entity: 'URBANA DOLLAR GENERAL #25179'
+  doc_type: Permit - Short Term
+  doc_date: 4/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC09199
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2265941
+- docid: '2265943'
+  entity: 'URBANA DOLLAR GENERAL #25179'
+  doc_type: Permit - Short Term
+  doc_date: 4/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC09199
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2265943
+- docid: '2265945'
+  entity: 'URBANA DOLLAR GENERAL #25179'
+  doc_type: Permit - Short Term
+  doc_date: 4/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC09199
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2265945
+- docid: '2199868'
+  entity: URBANA MATERIALS
+  doc_type: Permit - Long Term
+  doc_date: 2/15/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IJ00142
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2199868
+- docid: '2162892'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/13/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SSO ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2162892
+- docid: '2162894'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/13/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SSO ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2162894
+- docid: '2162895'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/13/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SSO ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2162895
+- docid: '2154240'
+  entity: URBANA MATERIALS
+  doc_type: Inspection or Compliance Review
+  doc_date: 1/4/2023
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IJ00142
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2154240
+- docid: '2110685'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 11/25/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2110685
+- docid: '2110701'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 11/25/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2110701
+- docid: '2083689'
+  entity: URBANA 8" HDP PIPELINE RELOCATION
+  doc_type: Permit - Short Term
+  doc_date: 10/26/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08731
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2083689
+- docid: '2083695'
+  entity: URBANA 8" HDP PIPELINE RELOCATION
+  doc_type: Permit - Short Term
+  doc_date: 10/26/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08731
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2083695
+- docid: '2061261'
+  entity: DUNKIN' - URBANA
+  doc_type: Permit - Short Term
+  doc_date: 10/7/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08952
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2061261
+- docid: '2061262'
+  entity: DUNKIN' - URBANA
+  doc_type: Permit - Short Term
+  doc_date: 10/7/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08952
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2061262
+- docid: '2061264'
+  entity: DUNKIN' - URBANA
+  doc_type: Permit - Short Term
+  doc_date: 10/7/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08952
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2061264
+- docid: '2053964'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 9/29/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2053964
+- docid: '2042233'
+  entity: 6943 URBANA TO ST. PARIS 69KV TLINE PROJ
+  doc_type: Permit - Short Term
+  doc_date: 9/16/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08924
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2042233
+- docid: '2042235'
+  entity: 6943 URBANA TO ST. PARIS 69KV TLINE PROJ
+  doc_type: Permit - Short Term
+  doc_date: 9/16/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08924
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2042235
+- docid: '2042236'
+  entity: 6943 URBANA TO ST. PARIS 69KV TLINE PROJ
+  doc_type: Permit - Short Term
+  doc_date: 9/16/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08924
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2042236
+- docid: '2042239'
+  entity: 6943 URBANA TO ST. PARIS 69KV TLINE PROJ
+  doc_type: Permit - Short Term
+  doc_date: 9/16/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08924
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2042239
+- docid: '2157637'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 9/6/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2157637
+- docid: '2031325'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 9/2/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2031325
+- docid: '2031328'
+  entity: URBANA WPCF  *
+  doc_type: NOV
+  doc_date: 9/2/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2031328
+- docid: '2059946'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 7/25/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2059946
+- docid: '1846765'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 6/16/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SSO ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1846765
+- docid: '1846766'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 6/16/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SSO ANNUAL
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1846766
+- docid: '1818012'
+  entity: URBANA 8" HDP PIPELINE RELOCATION
+  doc_type: Permit - Short Term
+  doc_date: 5/18/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08731
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1818012
+- docid: '1818013'
+  entity: URBANA 8" HDP PIPELINE RELOCATION
+  doc_type: Permit - Short Term
+  doc_date: 5/18/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08731
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1818013
+- docid: '1818014'
+  entity: URBANA 8" HDP PIPELINE RELOCATION
+  doc_type: Permit - Short Term
+  doc_date: 5/18/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08731
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1818014
+- docid: '1818016'
+  entity: URBANA 8" HDP PIPELINE RELOCATION
+  doc_type: Permit - Short Term
+  doc_date: 5/18/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08731
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1818016
+- docid: '1818017'
+  entity: URBANA 8" HDP PIPELINE RELOCATION
+  doc_type: Permit - Short Term
+  doc_date: 5/18/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08731
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1818017
+- docid: '1796311'
+  entity: URBANA GRIMES FIELD
+  doc_type: Permit - Short Term
+  doc_date: 4/26/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08050
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1796311
+- docid: '1796314'
+  entity: URBANA GRIMES FIELD
+  doc_type: Permit - Short Term
+  doc_date: 4/26/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08050
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1796314
+- docid: '1755753'
+  entity: URBANA GRIMES FIELD
+  doc_type: Permit - Short Term
+  doc_date: 3/17/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC08050
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1755753
+- docid: '1752498'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Short Term
+  doc_date: 3/15/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GRN00960
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1752498
+- docid: '1752501'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Short Term
+  doc_date: 3/15/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GRN00960
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1752501
+- docid: '1740990'
+  entity: URBANA WTP
+  doc_type: Inspection or Compliance Review
+  doc_date: 3/1/2022
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1740990
+- docid: '1811186'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 11/1/2021
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1811186
+- docid: '1655248'
+  entity: URBANA WPCF  *
+  doc_type: Director's Authorization
+  doc_date: 10/8/2021
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1655248
+- docid: '1644659'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 9/23/2021
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1644659
+- docid: '1627932'
+  entity: CITY OF URBANA
+  doc_type: NOV
+  doc_date: 8/26/2021
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1627932
+- docid: '1598269'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 7/8/2021
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1598269
+- docid: '1297953'
+  entity: URBANA WPCF  *
+  doc_type: ROV or RTC
+  doc_date: 2/14/2020
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1297953
+- docid: '1304976'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 2/13/2020
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1304976
+- docid: '3492222'
+  entity: URBANA WPCF *
+  doc_type: Permit - Long Term
+  doc_date: 2/13/2020
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: BACKFILE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3492222
+- docid: '1150275'
+  entity: URBANA WPCF  *
+  doc_type: NOV
+  doc_date: 10/1/2019
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1150275
+- docid: '1297905'
+  entity: URBANA WPCF  *
+  doc_type: NOV
+  doc_date: 10/1/2019
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1297905
+- docid: '1149290'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 9/30/2019
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1149290
+- docid: '1119055'
+  entity: URBANA MATERIALS
+  doc_type: Inspection or Compliance Review
+  doc_date: 8/22/2019
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IJ00142
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1119055
+- docid: '1093575'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 7/15/2019
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1093575
+- docid: '1129014'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Permit - Intermediate
+  doc_date: 7/5/2019
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1129014
+- docid: '1038085'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Permit - Intermediate
+  doc_date: 4/19/2019
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1038085
+- docid: '1030008'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Inspection or Compliance Review
+  doc_date: 4/9/2019
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1030008
+- docid: '994269'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Permit - Intermediate
+  doc_date: 2/7/2019
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=994269
+- docid: '962001'
+  entity: URBANA WPCF  *
+  doc_type: Ohio EPA Monitoring
+  doc_date: 12/18/2018
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=962001
+- docid: '900469'
+  entity: URBANA WPCF  *
+  doc_type: Director's Authorization
+  doc_date: 9/6/2018
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=900469
+- docid: '865103'
+  entity: URBANA MATERIALS
+  doc_type: Permit - Intermediate
+  doc_date: 7/12/2018
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GR01395
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=865103
+- docid: '3928002'
+  entity: URBANA MATERIALS
+  doc_type: Permit - Long Term
+  doc_date: 7/12/2018
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GR01395
+  description: BACKFILE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3928002
+- docid: '860043'
+  entity: URBANA MATERIALS
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2018
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GR01395
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=860043
+- docid: '3366579'
+  entity: URBANA MATERIALSÂ
+  doc_type: Permit - Long Term
+  doc_date: 4/6/2018
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IJ00142
+  description: BACKFILE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3366579
+- docid: '804957'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Inspection or Compliance Review
+  doc_date: 3/30/2018
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=804957
+- docid: '847561'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Inspection or Compliance Review
+  doc_date: 3/30/2018
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=847561
+- docid: '2187009'
+  entity: URBANA MATERIALS
+  doc_type: Permit - Long Term
+  doc_date: 1/24/2018
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IJ00142
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2187009
+- docid: '752124'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 12/29/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=752124
+- docid: '778338'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 12/29/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=778338
+- docid: '694821'
+  entity: URBANA MATERIALS
+  doc_type: Inspection or Compliance Review
+  doc_date: 9/15/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GR01395
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=694821
+- docid: '698313'
+  entity: URBANA MATERIALS
+  doc_type: Inspection or Compliance Review
+  doc_date: 9/15/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GR01395
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=698313
+- docid: '2110540'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Permit - Short Term
+  doc_date: 8/25/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2110540
+- docid: '2110541'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 8/25/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2110541
+- docid: '3367419'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 8/25/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: BACKFILE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3367419
+- docid: '669002'
+  entity: URBANA PK-8 SCHOOL
+  doc_type: Inspection or Compliance Review
+  doc_date: 8/1/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC06169
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=669002
+- docid: '2187011'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 7/17/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2187011
+- docid: '2187012'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Permit - Short Term
+  doc_date: 7/17/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2187012
+- docid: '2187213'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 7/13/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2187213
+- docid: '2187215'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Permit - Short Term
+  doc_date: 7/13/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2187215
+- docid: '633131'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 5/10/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=633131
+- docid: '633141'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 5/10/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=633141
+- docid: '619435'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 5/2/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=619435
+- docid: '619459'
+  entity: HPLEX URBANA MOB
+  doc_type: Permit - Intermediate
+  doc_date: 5/2/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC06229
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=619459
+- docid: '600450'
+  entity: URBANA PK-8 SCHOOL
+  doc_type: Permit - Intermediate
+  doc_date: 3/21/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC06169
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=600450
+- docid: '1863583'
+  entity: URBANA WTP
+  doc_type: Permit - Short Term
+  doc_date: 3/6/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1863583
+- docid: '2187181'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 3/6/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2187181
+- docid: '554618'
+  entity: URBANA WPCF  *
+  doc_type: Report
+  doc_date: 1/23/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=554618
+- docid: '3969832'
+  entity: URBANA WPCF*
+  doc_type: Permit - Long Term
+  doc_date: 1/19/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: BACKFILE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3969832
+- docid: '554633'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 1/16/2017
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=554633
+- docid: '531472'
+  entity: URBANA WPCF  *
+  doc_type: Inspection or Compliance Review
+  doc_date: 12/14/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=531472
+- docid: '2187212'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 11/2/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2187212
+- docid: '2187219'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Permit - Short Term
+  doc_date: 11/2/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2187219
+- docid: '507576'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 10/14/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=507576
+- docid: '460536'
+  entity: PARKER TRUTEC-URBANA
+  doc_type: Inspection or Compliance Review
+  doc_date: 6/20/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GC05597
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=460536
+- docid: '474694'
+  entity: URBANA WPCF  *
+  doc_type: ROV or RTC
+  doc_date: 6/20/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=474694
+- docid: '455053'
+  entity: URBANA WPCF  *
+  doc_type: NOV
+  doc_date: 6/17/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=455053
+- docid: '441989'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 4/25/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=441989
+- docid: '441997'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 3/18/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=441997
+- docid: '474656'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 2/3/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=474656
+- docid: '385654'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 1/4/2016
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=385654
+- docid: '362052'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 11/30/2015
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=362052
+- docid: '474651'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 10/5/2015
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=474651
+- docid: '3127995'
+  entity: URBANA WPCF  *
+  doc_type: Plan
+  doc_date: 7/1/2015
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: ENFORCEMENT RESPONSE PLAN
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3127995
+- docid: '495116'
+  entity: CITY OF URBANA
+  doc_type: Permit - Intermediate
+  doc_date: 1/21/2015
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=495116
+- docid: '2223908'
+  entity: URBANA WTP
+  doc_type: Monitoring or Sampling
+  doc_date: 10/7/2014
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2223908
+- docid: '3088377'
+  entity: URBANA WPCF  *
+  doc_type: Permit - Intermediate
+  doc_date: 10/6/2014
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: RENEWAL LETTER
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3088377
+- docid: '2109591'
+  entity: URBANA WTP
+  doc_type: Monitoring or Sampling
+  doc_date: 9/18/2014
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2109591
+- docid: '2110535'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 8/14/2012
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2110535
+- docid: '2110153'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 6/29/2012
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2110153
+- docid: '2110557'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 6/25/2012
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2110557
+- docid: '2110098'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 12/22/2011
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2110098
+- docid: '3127994'
+  entity: URBANA WPCF  *
+  doc_type: Plan
+  doc_date: 11/14/2011
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: SEWER USE ORDINACE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3127994
+- docid: '2110552'
+  entity: URBANA WTP
+  doc_type: Permit - Long Term
+  doc_date: 9/29/2011
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IY00300
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2110552
+- docid: '3099101'
+  entity: URBANA LOCAL ELEM SCH
+  doc_type: Permit - Intermediate
+  doc_date: 9/29/2011
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PT00100
+  description: RENEWAL LETTER
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3099101
+- docid: '3128000'
+  entity: URBANA WPCF  *
+  doc_type: Plan
+  doc_date: 5/17/2011
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: LOCAL LIMITS
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3128000
+- docid: '289410'
+  entity: CITY OF URBANA
+  doc_type: DFFO - DFFO
+  doc_date: 11/1/2006
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1GQ00062
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=289410
+- docid: '3128001'
+  entity: URBANA WPCF  *
+  doc_type: Plan
+  doc_date: 12/14/2004
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: LOCAL LIMITS
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3128001
+- docid: '3128002'
+  entity: URBANA WPCF  *
+  doc_type: Plan
+  doc_date: 10/20/2004
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: LOCAL LIMITS
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3128002
+- docid: '3128003'
+  entity: URBANA WPCF  *
+  doc_type: Plan
+  doc_date: 3/23/2001
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: POTW MODIFICATIONS
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3128003
+- docid: '4060938'
+  entity: URBANA WPCF
+  doc_type: Permit - Long Term
+  doc_date: 6/21/1995
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: BACKFILE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4060938
+- docid: '4060937'
+  entity: URBANA WPCF*
+  doc_type: Permit - Long Term
+  doc_date: 3/13/1991
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: BACKFILE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4060937
+- docid: '3261236'
+  entity: RITTAL CORP-URBANA
+  doc_type: Permit - Long Term
+  doc_date: 2/8/1989
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1IN00012
+  description: BACKFILE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3261236
+- docid: '3939720'
+  entity: URBANA WPCF *
+  doc_type: Permit - Long Term
+  doc_date: 3/15/1985
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: BACKFILE
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3939720
+- docid: '3262108'
+  entity: URBANA WPCF  *
+  doc_type: Plan
+  doc_date: 6/25/1984
+  program: NPDES
+  county: CHAMPAIGN
+  permit_id: 1PD00011
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3262108

@@ -1,208 +1,216 @@
 meta:
-  subject: Canonical filename map for oepa/urbana/ — as-received eDoc IDs to canonical names
-  note: >
-    Per chain-of-custody rules, source files keep their as-received OEPA eDoc ID filenames.
-    This map records the canonical name, document type, and content-verified date for each file.
+  subject: Canonical filename map for oepa/urbana/ — as-received eDoc IDs to canonical
+    names
+  policy: non-destructive — originals keep as-received names
+  note: 'Per chain-of-custody rules, source files keep their as-received OEPA eDoc
+    ID filenames. This map records the canonical name, document type, and content-verified
+    date for each file.
 
+    '
+  generated_at: '2026-08-21'
 documents:
-  - edoc_id: "2784672"
-    filename: 2784672.pdf
-    canonical: oepa-1pd00011-urbana-wpcf-inspection-2024-03.pdf
-    type: npdes-inspection
-    kind: CEI
-    permit: 1PD00011
-    facility: City of Urbana WPCF (OH0027880)
-    inspection_date: "2024-03-14"
-    letter_date: "2024-03-22"
-    content_verified: text-layer
-    notes: Average flow 1.5 MGD (33% of 4.5 MGD design). 0 effluent limit violations.
+- edoc_id: '2784672'
+  filename: 2784672.pdf
+  canonical: oepa-1pd00011-urbana-wpcf-inspection-2024-03.pdf
+  type: npdes-inspection
+  kind: CEI
+  permit: 1PD00011
+  facility: City of Urbana WPCF (OH0027880)
+  inspection_date: '2024-03-14'
+  letter_date: '2024-03-22'
+  content_verified: text-layer
+  notes: Average flow 1.5 MGD (33% of 4.5 MGD design). 0 effluent limit violations.
+- edoc_id: '3816773'
+  filename: 3816773.pdf
+  canonical: oepa-1pd00011-urbana-wpcf-inspection-2025-08.pdf
+  type: npdes-inspection
+  kind: CEI
+  permit: 1PD00011
+  facility: City of Urbana WPCF (OH0027880)
+  inspection_date: '2025-08-13'
+  letter_date: '2025-09-05'
+  content_verified: text-layer
+  notes: Average flow 1.65 MGD (37% of 4.5 MGD design). 5 code events.
+- edoc_id: '3832476'
+  filename: 3832476.pdf
+  canonical: oepa-oh0027880-urbana-wpcf-renewal-app-2025-05.pdf
+  type: npdes-renewal-application
+  permit: OH0027880
+  facility: City of Urbana Water Pollution Control Facility
+  submitted: '2025-05-29'
+  content_verified: text-layer
+  notes: 'Form 1 / Form 2A / Form 2S. Outfall 001 at 40.095278 -83.797222, receiving
+    water: Mad River. Design flow 4.5 MGD. ~11,161 population, 5 industrial users
+    + septage. Industrial flow: 0.750 MGD (categorical SIUs). Permit expiration 2025-11-30.
 
-  - edoc_id: "3816773"
-    filename: 3816773.pdf
-    canonical: oepa-1pd00011-urbana-wpcf-inspection-2025-08.pdf
-    type: npdes-inspection
-    kind: CEI
-    permit: 1PD00011
-    facility: City of Urbana WPCF (OH0027880)
-    inspection_date: "2025-08-13"
-    letter_date: "2025-09-05"
-    content_verified: text-layer
-    notes: Average flow 1.65 MGD (37% of 4.5 MGD design). 5 code events.
+    '
+- edoc_id: '3858475'
+  filename: 3858475.pdf
+  canonical: oepa-1pd00011-urbana-wpcf-pci-2025-09.pdf
+  type: npdes-inspection
+  kind: PCI
+  permit: 1PD00011
+  facility: City of Urbana WPCF (OH0027880)
+  inspection_date: '2025-09-09'
+  letter_date: '2025-10-07'
+  content_verified: text-layer
+  notes: Pretreatment Compliance Inspection; 5 categorical industrial users.
+- edoc_id: '3858492'
+  also_edoc_id: '3858493'
+  filename: 3858492.pdf
+  sha256: 61c9e81800c8511be024bd65f5943050cf0825858734669eb3a82fedd561f30e
+  canonical: oepa-1pd00011-urbana-wpcf-nov-rov-2025-10.pdf
+  type: npdes-nov-rov
+  permit: 1PD00011
+  facility: City of Urbana WRF (OH0027880)
+  letter_date: '2025-10-07'
+  resolved_date: '2025-09-30'
+  status: resolved
+  content_verified: text-layer
+  notes: 'Combined Notice of Violation / RESOLUTION of Violation — Significant Non-Compliance
+    (SNC) under the pretreatment program. Not an open enforcement item: the letter
+    is captioned "Notice of Violation / Resolution of Violation" and resolves itself
+    on p. 2 — the one cited violation (late Q4-2024 Quarterly Industrial User Violation
+    Report; ORC 6111.07(A), OAC 3745-3-03(C), permit Part II.W.10) was a Level I Reportable
+    Non-compliance, which is what triggered the SNC categorization, and OEPA DSW received
+    the QIUVR 2025-09-30 — a week before the letter issued. Ohio EPA''s eDoc index
+    publishes these exact bytes under TWO docids: 3858492 (doc type "NOV") and 3858493
+    (doc type "ROV or RTC"). Both were fetched 2026-08-06 and are byte-identical to
+    this file (SHA-256 61c9e818…), so the resolution instrument the standing watch
+    (#1355) was waiting on is this file, already in corpus. The as-received filename
+    stays 3858492.pdf per chain of custody; 3858493 is recorded here as an alias,
+    not committed as a duplicate byte-identical file.
 
-  - edoc_id: "3832476"
-    filename: 3832476.pdf
-    canonical: oepa-oh0027880-urbana-wpcf-renewal-app-2025-05.pdf
-    type: npdes-renewal-application
-    permit: OH0027880
-    facility: City of Urbana Water Pollution Control Facility
-    submitted: "2025-05-29"
-    content_verified: text-layer
-    notes: >
-      Form 1 / Form 2A / Form 2S. Outfall 001 at 40.095278 -83.797222, receiving water: Mad River.
-      Design flow 4.5 MGD. ~11,161 population, 5 industrial users + septage.
-      Industrial flow: 0.750 MGD (categorical SIUs). Permit expiration 2025-11-30.
+    '
+- edoc_id: '2663158'
+  filename: 2663158.pdf
+  canonical: oepa-dswpti1586541-urbana-pti-south-high-street-2023-10.pdf
+  type: pti-surface-water
+  permit: DSWPTI1586541
+  facility: City of Urbana (collection system — South High Street PID 112019)
+  letter_date: '2023-10-19'
+  content_verified: text-layer
+  notes: 'OEPA Surface Water Permit to Install (long-term approval). South High Street
+    Improvements: ~280 lf new 8" sanitary sewer mains during road reconstruction.
+    Engineer: LJB Inc (Miamisburg). This is a collection-system instrument, not the
+    WWTP permit.
 
-  - edoc_id: "3858475"
-    filename: 3858475.pdf
-    canonical: oepa-1pd00011-urbana-wpcf-pci-2025-09.pdf
-    type: npdes-inspection
-    kind: PCI
-    permit: 1PD00011
-    facility: City of Urbana WPCF (OH0027880)
-    inspection_date: "2025-09-09"
-    letter_date: "2025-10-07"
-    content_verified: text-layer
-    notes: Pretreatment Compliance Inspection; 5 categorical industrial users.
+    '
+- edoc_id: '3492222'
+  filename: 3492222.pdf
+  canonical: oepa-oh0027880-urbana-wpcf-renewal-app-2020-02.pdf
+  type: npdes-renewal-application
+  permit: OH0027880
+  facility: City of Urbana WPCF (1PD00011)
+  submitted: '2020-02-13'
+  content_verified: text-layer
+  notes: 'Form 1 / Form 2A / Form 2S — permit renewal application for the 2020 cycle
+    (permit expiring Nov-30-2020). The 2025-cycle renewal is in eDoc 3832476. Both
+    are retained to provide the longitudinal NPDES record.
 
-  - edoc_id: "3858492"
-    also_edoc_id: "3858493"  # same bytes, published twice — see notes
-    filename: 3858492.pdf
-    sha256: "61c9e81800c8511be024bd65f5943050cf0825858734669eb3a82fedd561f30e"
-    canonical: oepa-1pd00011-urbana-wpcf-nov-rov-2025-10.pdf
-    type: npdes-nov-rov
-    permit: 1PD00011
-    facility: City of Urbana WRF (OH0027880)
-    letter_date: "2025-10-07"
-    resolved_date: "2025-09-30"
-    status: resolved
-    content_verified: text-layer
-    notes: >
-      Combined Notice of Violation / RESOLUTION of Violation — Significant Non-Compliance (SNC)
-      under the pretreatment program. Not an open enforcement item: the letter is captioned
-      "Notice of Violation / Resolution of Violation" and resolves itself on p. 2 — the one cited
-      violation (late Q4-2024 Quarterly Industrial User Violation Report; ORC 6111.07(A), OAC
-      3745-3-03(C), permit Part II.W.10) was a Level I Reportable Non-compliance, which is what
-      triggered the SNC categorization, and OEPA DSW received the QIUVR 2025-09-30 — a week before
-      the letter issued. Ohio EPA's eDoc index publishes these exact bytes under TWO docids:
-      3858492 (doc type "NOV") and 3858493 (doc type "ROV or RTC"). Both were fetched 2026-08-06
-      and are byte-identical to this file (SHA-256 61c9e818…), so the resolution instrument the
-      standing watch (#1355) was waiting on is this file, already in corpus. The as-received
-      filename stays 3858492.pdf per chain of custody; 3858493 is recorded here as an alias, not
-      committed as a duplicate byte-identical file.
+    '
+- edoc_id: '3832477'
+  filename: 3832477.pdf
+  canonical: oepa-oh0027880-urbana-wpcf-sludge-process-flow.pdf
+  type: process-diagram
+  permit: OH0027880
+  facility: City of Urbana WPCF
+  parent_edoc: '3832476'
+  content_verified: text-layer
+  notes: Sludge process flow diagram (exhibit to 3832476 permit renewal app). Undated.
+- edoc_id: '3832478'
+  filename: 3832478.pdf
+  canonical: oepa-oh0027880-urbana-wpcf-process-flow.pdf
+  type: process-diagram
+  permit: OH0027880
+  facility: City of Urbana Water Reclamation Facility
+  parent_edoc: '3832476'
+  content_verified: text-layer
+  notes: 'Full plant process flow diagram labeled "Urbana WRF Process Flow" (exhibit
+    to 3832476 permit renewal app). Shows full treatment train: headworks → BNR →
+    secondary clarification → UV disinfection → outfall/Mad River. Undated.
 
-  - edoc_id: "2663158"
-    filename: 2663158.pdf
-    canonical: oepa-dswpti1586541-urbana-pti-south-high-street-2023-10.pdf
-    type: pti-surface-water
-    permit: DSWPTI1586541
-    facility: City of Urbana (collection system — South High Street PID 112019)
-    letter_date: "2023-10-19"
-    content_verified: text-layer
-    notes: >
-      OEPA Surface Water Permit to Install (long-term approval). South High Street Improvements:
-      ~280 lf new 8" sanitary sewer mains during road reconstruction. Engineer: LJB Inc (Miamisburg).
-      This is a collection-system instrument, not the WWTP permit.
+    '
+- edoc_id: '3832479'
+  filename: 3832479.pdf
+  canonical: oepa-oh0027880-urbana-wpcf-survey-elevations.pdf
+  type: survey-exhibit
+  permit: OH0027880
+  facility: City of Urbana WPCF
+  parent_edoc: '3832476'
+  content_verified: text-layer
+  notes: Survey elevation sheet (exhibit to 3832476 permit renewal app). Spot elevations
+    ~983–1041 ft NAVD.
+- edoc_id: '3613310'
+  filename: 3613310.pdf
+  canonical: oepa-ohq000003-urbana-ms4-annual-report.pdf
+  type: ms4-annual-report
+  permit: OHQ000003
+  facility: City of Urbana (MS4)
+  content_verified: text-layer
+  notes: Small MS4 General Permit annual reporting form (stormwater).
+- edoc_id: '3959035'
+  filename: 3959035.pdf
+  canonical: oepa-1gq00062-urbana-ms4-nov-2026-01.pdf
+  type: npdes-nov
+  permit: 1GQ00062
+  facility: City of Urbana (MS4)
+  letter_date: '2026-01-05'
+  status: open
+  content_verified: text-layer
+  notes: 'NPDES Municipal Stormwater (MS4) Notice of Violation, from a 2025-12-17
+    MS4 program audit; cites five violations of permit OHQ000004 (SWMP not updated,
+    storm sewer system map not updated, no objective SWP3 review tool, construction
+    inspections not monthly, …), each closing with a request for a written plan of
+    corrective action. OPEN as of the 2026-08-06 re-check (#1355): the document carries
+    no resolution language (zero occurrences of "Resolution" / "resolved" / "Return
+    to Compliance" across its 36 pages) and it is the newest document under secondary
+    ID 1GQ00062 in the Ohio EPA eDoc index — no paired ROV/RTC has been filed. Contrast
+    3858492 above, which resolved itself on issue.
 
-  - edoc_id: "3492222"
-    filename: 3492222.pdf
-    canonical: oepa-oh0027880-urbana-wpcf-renewal-app-2020-02.pdf
-    type: npdes-renewal-application
-    permit: OH0027880
-    facility: City of Urbana WPCF (1PD00011)
-    submitted: "2020-02-13"
-    content_verified: text-layer
-    notes: >
-      Form 1 / Form 2A / Form 2S — permit renewal application for the 2020 cycle (permit
-      expiring Nov-30-2020). The 2025-cycle renewal is in eDoc 3832476. Both are retained
-      to provide the longitudinal NPDES record.
+    '
+- edoc_id: null
+  filename: 1PD00011.pdf
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00011.pdf
+  canonical: oepa-1pd00011-urbana-wrf-npdes-permit-issued-2020.pdf
+  type: npdes-permit
+  permit: 1PD00011
+  facility: City of Urbana Water Reclamation Facility (OH0027880)
+  issue_date: '2020-10-26'
+  effective_date: '2020-12-01'
+  expiration_date: '2025-11-30'
+  content_verified: text-layer
+  notes: 'Issued NPDES permit (Director Laurie A. Stevenson), 2020 renewal cycle,
+    42 pp. Final effluent limitations + monitoring for outfall 001 → Mad River. Design
+    flow 4.5 MGD. The first *issued* permit in corpus (prior Urbana records were renewal
+    applications, inspections, and NOVs).
 
-  - edoc_id: "3832477"
-    filename: 3832477.pdf
-    canonical: oepa-oh0027880-urbana-wpcf-sludge-process-flow.pdf
-    type: process-diagram
-    permit: OH0027880
-    facility: City of Urbana WPCF
-    parent_edoc: "3832476"
-    content_verified: text-layer
-    notes: Sludge process flow diagram (exhibit to 3832476 permit renewal app). Undated.
+    '
+- edoc_id: null
+  filename: 1PD00011.fs.pdf
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00011.fs.pdf
+  canonical: oepa-1pd00011-urbana-wrf-npdes-fact-sheet-2020.pdf
+  type: npdes-fact-sheet
+  permit: 1PD00011
+  facility: City of Urbana Water Reclamation Facility (OH0027880)
+  public_notice: 20-09-051
+  public_notice_date: '2020-09-22'
+  content_verified: text-layer
+  notes: 'NPDES permit renewal Fact Sheet, 2020 cycle, 33 pp. Carries the regulatory
+    Stream Flows / wasteload-allocation basis for the Mad River outfall: annual 7Q10
+    = 35 cfs, 1Q10 = 33 cfs, summer/winter 30Q10 = 40/45 cfs, harmonic mean = 95.2
+    cfs (all at USGS gage 03267000, per the 1997 flow document). The regulatory 7Q10
+    (35 cfs) replaces the earlier [derived] LP3 passby (53.67 cfs) on SiteProfile
+    ''urbana'' (passby_primary_cfs). This is the fact sheet the earlier README noted
+    as "not yet in corpus".
 
-  - edoc_id: "3832478"
-    filename: 3832478.pdf
-    canonical: oepa-oh0027880-urbana-wpcf-process-flow.pdf
-    type: process-diagram
-    permit: OH0027880
-    facility: City of Urbana Water Reclamation Facility
-    parent_edoc: "3832476"
-    content_verified: text-layer
-    notes: >
-      Full plant process flow diagram labeled "Urbana WRF Process Flow" (exhibit to 3832476
-      permit renewal app). Shows full treatment train: headworks → BNR → secondary clarification
-      → UV disinfection → outfall/Mad River. Undated.
-
-  - edoc_id: "3832479"
-    filename: 3832479.pdf
-    canonical: oepa-oh0027880-urbana-wpcf-survey-elevations.pdf
-    type: survey-exhibit
-    permit: OH0027880
-    facility: City of Urbana WPCF
-    parent_edoc: "3832476"
-    content_verified: text-layer
-    notes: Survey elevation sheet (exhibit to 3832476 permit renewal app). Spot elevations ~983–1041 ft NAVD.
-
-  - edoc_id: "3613310"
-    filename: 3613310.pdf
-    canonical: oepa-ohq000003-urbana-ms4-annual-report.pdf
-    type: ms4-annual-report
-    permit: OHQ000003
-    facility: City of Urbana (MS4)
-    content_verified: text-layer
-    notes: Small MS4 General Permit annual reporting form (stormwater).
-
-  - edoc_id: "3959035"
-    filename: 3959035.pdf
-    canonical: oepa-1gq00062-urbana-ms4-nov-2026-01.pdf
-    type: npdes-nov
-    permit: 1GQ00062
-    facility: City of Urbana (MS4)
-    letter_date: "2026-01-05"
-    status: open
-    content_verified: text-layer
-    notes: >
-      NPDES Municipal Stormwater (MS4) Notice of Violation, from a 2025-12-17 MS4 program audit;
-      cites five violations of permit OHQ000004 (SWMP not updated, storm sewer system map not
-      updated, no objective SWP3 review tool, construction inspections not monthly, …), each
-      closing with a request for a written plan of corrective action. OPEN as of the 2026-08-06
-      re-check (#1355): the document carries no resolution language (zero occurrences of
-      "Resolution" / "resolved" / "Return to Compliance" across its 36 pages) and it is the newest
-      document under secondary ID 1GQ00062 in the Ohio EPA eDoc index — no paired ROV/RTC has been
-      filed. Contrast 3858492 above, which resolved itself on issue.
-
-  # The issued 2020-cycle permit + fact sheet. Not eDoc-sourced: these come from Ohio EPA's
-  # published permits document library (dam.assets.ohio.gov/.../Portals/35/permits/doc/), which
-  # serves the *currently-effective* issued instruments keyed by OEPA permit number. As-received
-  # filenames (1PD00011.pdf / 1PD00011.fs.pdf) are kept per chain-of-custody. As of 2026-07 the
-  # doc/ path still served the 2020 issuance — the 2025 renewal (app eDoc 3832476) had not issued,
-  # so the permit is in administrative continuance past its 2025-11-30 expiration.
-  - edoc_id: null
-    filename: 1PD00011.pdf
-    source_url: "https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00011.pdf"
-    canonical: oepa-1pd00011-urbana-wrf-npdes-permit-issued-2020.pdf
-    type: npdes-permit
-    permit: 1PD00011
-    facility: City of Urbana Water Reclamation Facility (OH0027880)
-    issue_date: "2020-10-26"
-    effective_date: "2020-12-01"
-    expiration_date: "2025-11-30"
-    content_verified: text-layer
-    notes: >
-      Issued NPDES permit (Director Laurie A. Stevenson), 2020 renewal cycle, 42 pp. Final effluent
-      limitations + monitoring for outfall 001 → Mad River. Design flow 4.5 MGD. The first *issued*
-      permit in corpus (prior Urbana records were renewal applications, inspections, and NOVs).
-
-  - edoc_id: null
-    filename: 1PD00011.fs.pdf
-    source_url: "https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00011.fs.pdf"
-    canonical: oepa-1pd00011-urbana-wrf-npdes-fact-sheet-2020.pdf
-    type: npdes-fact-sheet
-    permit: 1PD00011
-    facility: City of Urbana Water Reclamation Facility (OH0027880)
-    public_notice: "20-09-051"
-    public_notice_date: "2020-09-22"
-    content_verified: text-layer
-    notes: >
-      NPDES permit renewal Fact Sheet, 2020 cycle, 33 pp. Carries the regulatory Stream Flows /
-      wasteload-allocation basis for the Mad River outfall: annual 7Q10 = 35 cfs, 1Q10 = 33 cfs,
-      summer/winter 30Q10 = 40/45 cfs, harmonic mean = 95.2 cfs (all at USGS gage 03267000, per the
-      1997 flow document). The regulatory 7Q10 (35 cfs) replaces the earlier [derived] LP3 passby
-      (53.67 cfs) on SiteProfile 'urbana' (passby_primary_cfs). This is the fact sheet the earlier
-      README noted as "not yet in corpus".
+    '
+- filename: 1PD00011.pdf
+  permit_id: 1PD00011
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00011.pdf
+  sha256: 8e146b2854218b2a1632d0b55de39521d6f5a5b4b70ea61b30a06cadb2515e8c
+  bytes: 183538
+  content_type: application/pdf
+  fetched_at: '2026-08-21T05:48:52.301645+00:00'
+  status: skipped_existing
+  note: null

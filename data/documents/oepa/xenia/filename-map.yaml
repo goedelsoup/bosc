@@ -1,0 +1,14 @@
+meta:
+  subject: OEPA/DAM permit download manifest
+  policy: non-destructive — originals keep as-received names
+  generated_at: '2026-08-21'
+documents:
+- filename: 1PD00015.pdf
+  permit_id: 1PD00015
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00015.pdf
+  sha256: d30ca9c84d0979256b31a875f39fffdef0af0d597335bbe5fad6c68266be88dd
+  bytes: 1394097
+  content_type: application/pdf
+  fetched_at: '2026-08-21T05:48:55.017067+00:00'
+  status: skipped_existing
+  note: null

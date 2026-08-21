@@ -2,16 +2,16 @@
   "site": "greenville",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-14T17:40:16+00:00",
+  "generated_at": "2026-08-21T05:54:59+00:00",
   "feed_count": 28,
-  "row_total": 398,
+  "row_total": 399,
   "readiness": {
     "tier": "backdrop",
     "domains": {
       "backdrop": "live",
       "facility": "absent",
       "places": "absent",
-      "record": "absent",
+      "record": "seeded",
       "inquiry": "seeded"
     }
   },
@@ -95,7 +95,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 1
     },
     {
       "name": "exhibits",

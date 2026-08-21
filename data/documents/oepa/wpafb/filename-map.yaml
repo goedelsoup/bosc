@@ -1,0 +1,14 @@
+meta:
+  subject: OEPA/DAM permit download manifest
+  policy: non-destructive — originals keep as-received names
+  generated_at: '2026-08-21'
+documents:
+- filename: edoc-2090290.pdf
+  permit_id: 1IN00274
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2090290
+  sha256: 1e893b75e24b33715d0fefed3a2ced5e709eba8f38aabee255709c48715aaeac
+  bytes: 19979
+  content_type: application/pdf
+  fetched_at: '2026-08-21T05:48:55.968703+00:00'
+  status: downloaded
+  note: null

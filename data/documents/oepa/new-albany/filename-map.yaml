@@ -1,0 +1,14 @@
+meta:
+  subject: OEPA/DAM permit download manifest
+  policy: non-destructive — originals keep as-received names
+  generated_at: '2026-08-21'
+documents:
+- filename: 4PC00001.pdf
+  permit_id: 4PC00001
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/4PC00001.pdf
+  sha256: ec650aa5bc3aa10c730b5d157717200bd44f0e7149d2398333a99faf71cda0a8
+  bytes: 957748
+  content_type: application/pdf
+  fetched_at: '2026-08-21T05:49:00.155393+00:00'
+  status: skipped_existing
+  note: null

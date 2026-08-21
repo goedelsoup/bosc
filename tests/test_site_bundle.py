@@ -759,6 +759,15 @@ def test_every_committed_bundle_readiness_matches_its_own_feed_counts() -> None:
 _BACKDROP_ABOVE_FLOOR: dict[str, dict[str, str]] = {
     # (west-union left this table at #2047 — the ACRWD ingest lifted its `record` domain to
     # `live` and the site to Case tier. See test_west_union_exports_at_case_tier below.)
+    #
+    # Toledo's instrument is the City of Toledo Bay View Park WWTP's NPDES permit, Ohio EPA
+    # `2PF00000` — `data/documents/oepa/toledo/2PF00000.pdf`, the DAM's own copy. It is one
+    # real cited document, so `record` reads `seeded` and NOT `live`: the site is still a
+    # Backdrop site whose corpus has exactly one instrument in it, which is the distinction
+    # this table exists to keep visible. It was found by resolving the plant's Ohio STATE
+    # permit number off the eDocument portal (`watermark oepa portal --site toledo`) — ECHO
+    # carries only the federal id, which the DAM permit URL cannot be keyed by.
+    "toledo": {"record": "seeded"},
 }
 
 

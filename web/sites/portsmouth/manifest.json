@@ -2,9 +2,9 @@
   "site": "portsmouth",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-14T17:40:53+00:00",
+  "generated_at": "2026-08-21T05:58:06+00:00",
   "feed_count": 24,
-  "row_total": 403,
+  "row_total": 404,
   "readiness": {
     "tier": "stub",
     "domains": {
@@ -95,7 +95,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 2
     },
     {
       "name": "exhibits",

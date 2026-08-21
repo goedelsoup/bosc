@@ -1,278 +1,395 @@
 meta:
-  subject: >
-    Canonical filename map for oepa/west-union/ — the complete Ohio EPA eDocument record for the
-    Buck Canyon project, Sprigg Township, Adams County, as of 2026-08-17. Thirty-two documents in
-    two instrument families: the **Level Two Isolated Wetland Permit** `DSW401252171W` / Ohio EPA
-    ID `252171W` (28 docs, application 2025-12-15 → grant 2026-06-08) and the **NPDES construction
-    stormwater** general-permit coverage `0GC04922*AG` under `OHC000006` (4 docs, 2026-06-08).
-  note: >-
-    ⚠️ THE PORTAL SENDS NO `Content-Disposition` — verified None on all 32 responses — so the
-    server supplies no filename and the **docid IS the as-served identity**. Files are therefore
-    named `edoc-<docid>.pdf` per the network's standing rule for this source, and the canonical
-    name each document would carry is recorded below. This is the documented naming convention,
-    not a rename.
-  retrieved: "2026-08-17"
-  source: >-
-    Ohio EPA eDocument public portal, https://edocpub.epa.ohio.gov/publicportal/edochome.aspx —
-    Entity Name search "BUCK CANYON", ASP.NET WebForms postback with a scraped
-    __VIEWSTATE/__EVENTVALIDATION and a cookie jar. Documents fetched at
-    ViewDocument.aspx?docid=<n>.
-  route_note: >-
-    ⚠️ THIS CORRECTS A COMMITTED NEGATIVE. data/extracted/west-union/data-centers.md recorded the
-    eDoc route for this site as METHOD-BLOCKED ("positive control, negative control and both
-    target queries returned byte-identical default grids"). It is not blocked. Re-run 2026-08-17
-    with controls: nonsense entity + ADAMS + AIR PERMIT → 0 rows; "QTS" → 35 rows including the
-    known Van Wert NPDES docs; "BUCK CANYON" → 32. The earlier attempt evidently mis-targeted the
-    form; the working field id for Entity Name is
-    `ctl00$search$KeywordPanel1$txtValue_-1_1_106_1`, and County / Program are PLAIN SELECTS
-    (`ddlValue_-1_1_104_1` / `ddlValue_-1_1_109_1`), not postback-only pickers.
-  air_permit_negative: >-
-    ⚠️ [verified negative] as of 2026-08-17: NO Ohio EPA AIR PERMIT document exists for this
-    project. Controls — entity BUCK CANYON / AMAZON / 68 YARDS / HARMON, each × county ADAMS ×
-    program AIR PERMIT → 0; the unfiltered ADAMS × AIR PERMIT list returns 220 documents,
-    date-descending, whose newest is 2026-06-05 (a routine W C Milling report) and which contains
-    no data-center-shaped entity. The positive control on the same filters (BUCK CANYON × ADAMS,
-    any program → 32) proves the query works. Record this as a DATED negative, never as a
-    permanent absence: OAC 3745-31-33 lets site preparation proceed before a PTI issues, so
-    construction activity is not evidence of one either way.
-  pii: >-
-    ⚠️ The NPDES applicant of record is an INDIVIDUAL, and his address and personal telephone are
-    printed on the permit, the NOI and the site map: Derek Harmon, 2505 Old KY-11, Flemingsburg KY
-    41041, (606) 845-0638. That is the applicant block of a public environmental permit — public
-    record by its nature, and the same class as any permittee's contact block — but it is a named
-    private individual's address rather than a corporate office, and it should be treated as such
-    if any of these files is ever cleared for publication. NOT CLEARED HERE.
-  duplicates: >-
-    Two byte-identical pairs are served under DIFFERENT docids and BOTH are kept: 3940076 ==
-    3940078 (sha 6b81f1b3…) and 3940081 == 3940082 (sha ba2c9adc…). The corpus's
-    byte-identical-duplicate removal rule is not applied, because here the docid is the identity
-    the agency published and collapsing the pair would destroy that mapping.
+  subject: 'Canonical filename map for oepa/west-union/ — the complete Ohio EPA eDocument
+    record for the Buck Canyon project, Sprigg Township, Adams County, as of 2026-08-17.
+    Thirty-two documents in two instrument families: the **Level Two Isolated Wetland
+    Permit** `DSW401252171W` / Ohio EPA ID `252171W` (28 docs, application 2025-12-15
+    → grant 2026-06-08) and the **NPDES construction stormwater** general-permit coverage
+    `0GC04922*AG` under `OHC000006` (4 docs, 2026-06-08).
 
+    '
+  policy: non-destructive — originals keep as-received names
+  note: ⚠️ THE PORTAL SENDS NO `Content-Disposition` — verified None on all 32 responses
+    — so the server supplies no filename and the **docid IS the as-served identity**.
+    Files are therefore named `edoc-<docid>.pdf` per the network's standing rule for
+    this source, and the canonical name each document would carry is recorded below.
+    This is the documented naming convention, not a rename.
+  retrieved: '2026-08-17'
+  source: Ohio EPA eDocument public portal, https://edocpub.epa.ohio.gov/publicportal/edochome.aspx
+    — Entity Name search "BUCK CANYON", ASP.NET WebForms postback with a scraped __VIEWSTATE/__EVENTVALIDATION
+    and a cookie jar. Documents fetched at ViewDocument.aspx?docid=<n>.
+  route_note: '⚠️ THIS CORRECTS A COMMITTED NEGATIVE. data/extracted/west-union/data-centers.md
+    recorded the eDoc route for this site as METHOD-BLOCKED ("positive control, negative
+    control and both target queries returned byte-identical default grids"). It is
+    not blocked. Re-run 2026-08-17 with controls: nonsense entity + ADAMS + AIR PERMIT
+    → 0 rows; "QTS" → 35 rows including the known Van Wert NPDES docs; "BUCK CANYON"
+    → 32. The earlier attempt evidently mis-targeted the form; the working field id
+    for Entity Name is `ctl00$search$KeywordPanel1$txtValue_-1_1_106_1`, and County
+    / Program are PLAIN SELECTS (`ddlValue_-1_1_104_1` / `ddlValue_-1_1_109_1`), not
+    postback-only pickers.'
+  air_permit_negative: '⚠️ [verified negative] as of 2026-08-17: NO Ohio EPA AIR PERMIT
+    document exists for this project. Controls — entity BUCK CANYON / AMAZON / 68
+    YARDS / HARMON, each × county ADAMS × program AIR PERMIT → 0; the unfiltered ADAMS
+    × AIR PERMIT list returns 220 documents, date-descending, whose newest is 2026-06-05
+    (a routine W C Milling report) and which contains no data-center-shaped entity.
+    The positive control on the same filters (BUCK CANYON × ADAMS, any program → 32)
+    proves the query works. Record this as a DATED negative, never as a permanent
+    absence: OAC 3745-31-33 lets site preparation proceed before a PTI issues, so
+    construction activity is not evidence of one either way.'
+  pii: '⚠️ The NPDES applicant of record is an INDIVIDUAL, and his address and personal
+    telephone are printed on the permit, the NOI and the site map: Derek Harmon, 2505
+    Old KY-11, Flemingsburg KY 41041, (606) 845-0638. That is the applicant block
+    of a public environmental permit — public record by its nature, and the same class
+    as any permittee''s contact block — but it is a named private individual''s address
+    rather than a corporate office, and it should be treated as such if any of these
+    files is ever cleared for publication. NOT CLEARED HERE.'
+  duplicates: 'Two byte-identical pairs are served under DIFFERENT docids and BOTH
+    are kept: 3940076 == 3940078 (sha 6b81f1b3…) and 3940081 == 3940082 (sha ba2c9adc…).
+    The corpus''s byte-identical-duplicate removal rule is not applied, because here
+    the docid is the identity the agency published and collapsing the pair would destroy
+    that mapping.'
+  generated_at: '2026-08-21'
 documents:
-  # ── The Level Two Isolated Wetland Permit — the granted instrument and its decisions ──────
-  - filename: edoc-4146849.pdf
-    canonical: oepa-buck-canyon-isolated-wetland-permit-252171W-grant-2026-06-08.pdf
-    type: isolated-wetland-permit-grant
-    date: "2026-06-08"
-    content_verified: text-layer
-    pages: 9
-    sha256: "a7f98ebebb14049daec82a4b04e7dca8da8829da6bc70b996cae3fc5475722f0"
-    bytes: 2113614
-    carries:
-      - "⚠️ THE GRANTED STATE INSTRUMENT: 'Grant of a Level Two Isolated Wetland Permit', Ohio EPA ID No. 252171W, under R.C. Chapter 6111 §§6111.02-6111.028. Valid 5 years from issuance."
-      - "⚠️ THE PERMITTEE IS 68 YARDS, LLC — WITH AN ADDRESS AND A PERSON: 'Carrie Tillman, 68 Yards, LLC, 16 N. Green Street, Chicago, IL 60607, 68YardsLLC@protonmail.com'. The corpus carried 68 Yards as a bare name on the USACE NWP 39 verification with its affiliation [open]; this is the first document giving it a principal, a street address and a contact."
-      - "⚠️ THE STATE'S PROJECT DESCRIPTION IS 'Construct a light industrial park.' — NOT a data center. Recorded verbatim and NOT reconciled: the county's own domain calls the same site an AWS campus, and this permit calls it a light industrial park."
-      - "IMPACTS TABLE: seven isolated wetlands (B, D, F, H, I, J, K), 1.07 ac total on site, 0.74 ac PERMANENTLY IMPACTED. Wetlands F (0.04), H (0.61) and I (0.09) are impacted in full; B, D, J and K are 0.00."
-      - "ANTIDEGRADATION FINDING: 'I have determined that a lowering of water quality in the Ohio Brush-Whiteoak watershed (HUC 05090201) as authorized by this permit is necessary.'"
-      - "⚠️ WATERSHED, and it disagrees with this site's profile: 'The project is partially located in two watersheds: … the Cabin Creek - Ohio River Watershed (HUC 05090201-06). Crooked Creek has a designated aquatic life use of warmwater habitat (WWH), agricultural water supply (AWS), industrial water supply (IWS), and primary contact recreation (PCR).' The profile screens Ohio Brush Creek gage 03237500 — see the route-blind finding in the register."
-      - "Conditions include on-site permit retention, 24-hour reporting of unpermitted impacts, spill-hotline notice, and Ohio EPA inspection access"
-
-  - filename: edoc-3955166.pdf
-    canonical: oepa-buck-canyon-iwp-application-administratively-complete-2025-12-31.pdf
-    type: agency-correspondence
-    date: "2025-12-31"
-    content_verified: text-layer
-    pages: 2
-    sha256: "ed9d9908e373a3b3014f7c2a609281fb66e70ed03905fa00124d57b80797a979"
-    bytes: 304495
-    carries:
-      - "Ohio EPA determines the Level Two IWP application 'received by the Agency on December 16, 2025' administratively complete, starting the R.C. 6111.023 90-day clock"
-      - "Signed Joseph Loucek, Application Coordinator, 401/Wetlands/Mitigation Section; copies to Rachel Secrest (Ohio EPA) and Jamie VanDusen, Ramboll — the same Ramboll project manager who ran the federal USACE file"
-
-  - filename: edoc-4003954.pdf
-    canonical: oepa-buck-canyon-ramboll-response-to-oepa-2026-02-12.pdf
-    type: applicant-correspondence
-    date: "2026-02-12"
-    content_verified: text-layer
-    pages: 37
-    sha256: "b01ee4765293f397fddf5239d780f1f04686000a42a530828c64734709805f58"
-    bytes: 7780963
-    carries:
-      - "Ramboll (8845 Governor's Hill Drive, Cincinnati) response package to Ohio EPA, 37 pp — the technical-review round between the completeness letter and the grant. Not yet read in full."
-
-  # ── The IWP application package, received 2025-12-15 (25 documents) ───────────────────────
-  - filename: edoc-3940058.pdf
-    canonical: oepa-buck-canyon-401-iwp-application-2025-12-15.pdf
-    type: permit-application
-    date: "2025-12-15"
-    content_verified: text-layer
-    pages: 3
-    sha256: "21954a872d58d3a5e0dfb83242424928c5f12e2e8aff7856015cfc64831e7e1f"
-    bytes: 241518
-    carries:
-      - "'Application for Section 401 Water Quality Certification', Application ID 486431445, form rev. 8/2014 — the head of the 25-document package `APP252171W`"
-
-  - filename: edoc-3940065.pdf
-    canonical: oepa-buck-canyon-jurisdictional-waters-delineation-report-2025.pdf
-    type: technical-report
-    date: "2025-12-15"
-    date_note: "The package's filing date; the report's own date was not read in this pass."
-    content_verified: text-layer
-    pages: 554
-    sha256: "1283acaf31218a5b89dab749d1385c5e97edfab237a53e7138241311ae953cdc"
-    bytes: 52634128
-    carries:
-      - "⚠️ THE DELINEATION REPORT ITSELF — 554 pages, 52.6 MB: 'Jurisdictional Waters Delineation Report, Buck Canyon Site'. This is the document the USACE email production NAMED and did not include (data/documents/usace/west-union/, `Jurisdictional WOTUS-Buck Canyon Site_Final Report-05 12 2025.pdf`), recorded there as [open]. It is now in the corpus, from the STATE file rather than the federal one."
-    notes: "Not yet read beyond page 1. The largest single document in this site's corpus."
-
-  - filename: edoc-3940060.pdf
-    canonical: oepa-buck-canyon-usace-correspondence-in-state-file.pdf
-    type: federal-correspondence
-    date: "2025-12-15"
-    content_verified: text-layer
-    pages: 6
-    sha256: "d034a5d281946cba7aaeaa45f929d5559427a5f02b455e2741fec66adad3cf65"
-    bytes: 348073
-    carries:
-      - "A U.S. Army Corps of Engineers, Huntington District letter filed as part of the STATE application — a federal document reaching the corpus by a state route"
-
-  - filename: edoc-3940064.pdf
-    canonical: oepa-buck-canyon-odnr-correspondence-2025.pdf
-    type: agency-correspondence
-    date: "2025-12-15"
-    content_verified: text-layer
-    pages: 4
-    sha256: "cfa55cf95a5d9b838add6cb79f2cd4463229538e694925d780719173db313c7e"
-    bytes: 368355
-    carries:
-      - "Ohio DNR letterhead (DeWine / Tressel / Mertz), Office of Real Estate — an ODNR review letter in the application package"
-
-  - filename: edoc-3940074.pdf
-    canonical: oepa-buck-canyon-usfws-letter-2025-08-26.pdf
-    type: agency-correspondence
-    date: "2025-08-26"
-    content_verified: text-layer
-    pages: 2
-    sha256: "edbffe45c8e8ccd44ca128367ff8339e1c250ee5513618ee1cce5269de626ea8"
-    bytes: 354913
-    carries:
-      - "U.S. Fish and Wildlife Service letter, 2025-08-26, addressed 'Dear Mr. Slack', Project Code 2025-0111667"
-      - "⚠️ DIGIT CHECK: the USACE email production records the USFWS project code as 2025-011167 (six digits after the year); this letter prints 2025-0111667 (seven). Both are transcribed from their own source and NOT reconciled here."
-
-  - filename: edoc-3940079.pdf
-    canonical: oepa-buck-canyon-proposed-mitigation-plan.pdf
-    type: mitigation-plan
-    date: "2025-12-15"
-    content_verified: text-layer
-    pages: 1
-    sha256: "52e2d5a2b81d53ce94fb06ac5bbd5ab0cca01f2f4b46e2d5112452f22562c961"
-    bytes: 172741
-    carries:
-      - "'BUCK CANYON PROPOSED MITIGATION PLAN — The proposed project will result in the una[voidable]…' — the compensatory-mitigation proposal for the permitted wetland loss"
-
-  - filename: edoc-3940080.pdf
-    canonical: oepa-buck-canyon-level-two-isolated-wetland-information.pdf
-    type: technical-report
-    date: "2025-12-15"
-    content_verified: text-layer
+- filename: edoc-4146849.pdf
+  canonical: oepa-buck-canyon-isolated-wetland-permit-252171W-grant-2026-06-08.pdf
+  type: isolated-wetland-permit-grant
+  date: '2026-06-08'
+  content_verified: text-layer
+  pages: 9
+  sha256: a7f98ebebb14049daec82a4b04e7dca8da8829da6bc70b996cae3fc5475722f0
+  bytes: 2113614
+  carries:
+  - '⚠️ THE GRANTED STATE INSTRUMENT: ''Grant of a Level Two Isolated Wetland Permit'',
+    Ohio EPA ID No. 252171W, under R.C. Chapter 6111 §§6111.02-6111.028. Valid 5 years
+    from issuance.'
+  - '⚠️ THE PERMITTEE IS 68 YARDS, LLC — WITH AN ADDRESS AND A PERSON: ''Carrie Tillman,
+    68 Yards, LLC, 16 N. Green Street, Chicago, IL 60607, 68YardsLLC@protonmail.com''.
+    The corpus carried 68 Yards as a bare name on the USACE NWP 39 verification with
+    its affiliation [open]; this is the first document giving it a principal, a street
+    address and a contact.'
+  - '⚠️ THE STATE''S PROJECT DESCRIPTION IS ''Construct a light industrial park.''
+    — NOT a data center. Recorded verbatim and NOT reconciled: the county''s own domain
+    calls the same site an AWS campus, and this permit calls it a light industrial
+    park.'
+  - 'IMPACTS TABLE: seven isolated wetlands (B, D, F, H, I, J, K), 1.07 ac total on
+    site, 0.74 ac PERMANENTLY IMPACTED. Wetlands F (0.04), H (0.61) and I (0.09) are
+    impacted in full; B, D, J and K are 0.00.'
+  - 'ANTIDEGRADATION FINDING: ''I have determined that a lowering of water quality
+    in the Ohio Brush-Whiteoak watershed (HUC 05090201) as authorized by this permit
+    is necessary.'''
+  - '⚠️ WATERSHED, and it disagrees with this site''s profile: ''The project is partially
+    located in two watersheds: … the Cabin Creek - Ohio River Watershed (HUC 05090201-06).
+    Crooked Creek has a designated aquatic life use of warmwater habitat (WWH), agricultural
+    water supply (AWS), industrial water supply (IWS), and primary contact recreation
+    (PCR).'' The profile screens Ohio Brush Creek gage 03237500 — see the route-blind
+    finding in the register.'
+  - Conditions include on-site permit retention, 24-hour reporting of unpermitted
+    impacts, spill-hotline notice, and Ohio EPA inspection access
+- filename: edoc-3955166.pdf
+  canonical: oepa-buck-canyon-iwp-application-administratively-complete-2025-12-31.pdf
+  type: agency-correspondence
+  date: '2025-12-31'
+  content_verified: text-layer
+  pages: 2
+  sha256: ed9d9908e373a3b3014f7c2a609281fb66e70ed03905fa00124d57b80797a979
+  bytes: 304495
+  carries:
+  - Ohio EPA determines the Level Two IWP application 'received by the Agency on December
+    16, 2025' administratively complete, starting the R.C. 6111.023 90-day clock
+  - Signed Joseph Loucek, Application Coordinator, 401/Wetlands/Mitigation Section;
+    copies to Rachel Secrest (Ohio EPA) and Jamie VanDusen, Ramboll — the same Ramboll
+    project manager who ran the federal USACE file
+- filename: edoc-4003954.pdf
+  canonical: oepa-buck-canyon-ramboll-response-to-oepa-2026-02-12.pdf
+  type: applicant-correspondence
+  date: '2026-02-12'
+  content_verified: text-layer
+  pages: 37
+  sha256: b01ee4765293f397fddf5239d780f1f04686000a42a530828c64734709805f58
+  bytes: 7780963
+  carries:
+  - Ramboll (8845 Governor's Hill Drive, Cincinnati) response package to Ohio EPA,
+    37 pp — the technical-review round between the completeness letter and the grant.
+    Not yet read in full.
+- filename: edoc-3940058.pdf
+  canonical: oepa-buck-canyon-401-iwp-application-2025-12-15.pdf
+  type: permit-application
+  date: '2025-12-15'
+  content_verified: text-layer
+  pages: 3
+  sha256: 21954a872d58d3a5e0dfb83242424928c5f12e2e8aff7856015cfc64831e7e1f
+  bytes: 241518
+  carries:
+  - '''Application for Section 401 Water Quality Certification'', Application ID 486431445,
+    form rev. 8/2014 — the head of the 25-document package `APP252171W`'
+- filename: edoc-3940065.pdf
+  canonical: oepa-buck-canyon-jurisdictional-waters-delineation-report-2025.pdf
+  type: technical-report
+  date: '2025-12-15'
+  date_note: The package's filing date; the report's own date was not read in this
+    pass.
+  content_verified: text-layer
+  pages: 554
+  sha256: 1283acaf31218a5b89dab749d1385c5e97edfab237a53e7138241311ae953cdc
+  bytes: 52634128
+  carries:
+  - '⚠️ THE DELINEATION REPORT ITSELF — 554 pages, 52.6 MB: ''Jurisdictional Waters
+    Delineation Report, Buck Canyon Site''. This is the document the USACE email production
+    NAMED and did not include (data/documents/usace/west-union/, `Jurisdictional WOTUS-Buck
+    Canyon Site_Final Report-05 12 2025.pdf`), recorded there as [open]. It is now
+    in the corpus, from the STATE file rather than the federal one.'
+  notes: Not yet read beyond page 1. The largest single document in this site's corpus.
+- filename: edoc-3940060.pdf
+  canonical: oepa-buck-canyon-usace-correspondence-in-state-file.pdf
+  type: federal-correspondence
+  date: '2025-12-15'
+  content_verified: text-layer
+  pages: 6
+  sha256: d034a5d281946cba7aaeaa45f929d5559427a5f02b455e2741fec66adad3cf65
+  bytes: 348073
+  carries:
+  - A U.S. Army Corps of Engineers, Huntington District letter filed as part of the
+    STATE application — a federal document reaching the corpus by a state route
+- filename: edoc-3940064.pdf
+  canonical: oepa-buck-canyon-odnr-correspondence-2025.pdf
+  type: agency-correspondence
+  date: '2025-12-15'
+  content_verified: text-layer
+  pages: 4
+  sha256: cfa55cf95a5d9b838add6cb79f2cd4463229538e694925d780719173db313c7e
+  bytes: 368355
+  carries:
+  - Ohio DNR letterhead (DeWine / Tressel / Mertz), Office of Real Estate — an ODNR
+    review letter in the application package
+- filename: edoc-3940074.pdf
+  canonical: oepa-buck-canyon-usfws-letter-2025-08-26.pdf
+  type: agency-correspondence
+  date: '2025-08-26'
+  content_verified: text-layer
+  pages: 2
+  sha256: edbffe45c8e8ccd44ca128367ff8339e1c250ee5513618ee1cce5269de626ea8
+  bytes: 354913
+  carries:
+  - U.S. Fish and Wildlife Service letter, 2025-08-26, addressed 'Dear Mr. Slack',
+    Project Code 2025-0111667
+  - '⚠️ DIGIT CHECK: the USACE email production records the USFWS project code as
+    2025-011167 (six digits after the year); this letter prints 2025-0111667 (seven).
+    Both are transcribed from their own source and NOT reconciled here.'
+- filename: edoc-3940079.pdf
+  canonical: oepa-buck-canyon-proposed-mitigation-plan.pdf
+  type: mitigation-plan
+  date: '2025-12-15'
+  content_verified: text-layer
+  pages: 1
+  sha256: 52e2d5a2b81d53ce94fb06ac5bbd5ab0cca01f2f4b46e2d5112452f22562c961
+  bytes: 172741
+  carries:
+  - '''BUCK CANYON PROPOSED MITIGATION PLAN — The proposed project will result in
+    the una[voidable]…'' — the compensatory-mitigation proposal for the permitted
+    wetland loss'
+- filename: edoc-3940080.pdf
+  canonical: oepa-buck-canyon-level-two-isolated-wetland-information.pdf
+  type: technical-report
+  date: '2025-12-15'
+  content_verified: text-layer
+  pages: 10
+  sha256: c8b9bb9c5d1a3234d26f267b04bf9186fa81579fd014eea596671f08bd9a1b9e
+  bytes: 7631764
+  carries:
+  - '''BUCK CANYON LEVEL 2 ISOLATED [WETLAND] INFORMATION'' — the Level Two narrative
+    supporting the IWP, source filename ''Buck Canyon Ohio EPA Level Two Information.Docx'''
+- filename: edoc-3940059.pdf
+  canonical: null
+  type: unreadable-truncated-response
+  date: '2025-12-15'
+  content_verified: none
+  pages: null
+  sha256: 19b8e55886143a3b13bcebec905df090bfc1e2313c27728934397026710eb82d
+  bytes: 2097152
+  truncated: ⚠️ SERVED TRUNCATED BY THE AGENCY, AND KEPT AS RECEIVED. The response
+    is exactly 2,097,152 bytes (2 MiB) and the server's own `Content-Length` header
+    says 2097152 on every attempt, so this is not a transfer error — Ohio EPA's portal
+    serves a truncated object at this docid. Retried three times with identical bytes.
+    The file has a valid `%PDF-1.7` header, NO `%%EOF`, and both pypdf and pdfium
+    refuse it ('Stream has ended unexpectedly' / 'Data format error'). Retained under
+    chain of custody as evidence of the portal defect; it is a LOCATOR, not a readable
+    document, and nothing may be cited from it. What it was is unknown.
+- filenames_group: ORAM v5.0 scoring forms
+  note: Seven Ohio Rapid Assessment Method v5.0 scoring forms, 10 pp each, one per
+    assessed wetland. Their individual wetland ids were not read in this pass; the
+    permit's impact table (edoc-4146849) is the authoritative summary.
+  members:
+  - filename: edoc-3940061.pdf
+    sha256: 8667705162ac6514707d38362272bce9d79d86170abcce0e2bf83a76f1feed3d
+    bytes: 2331675
     pages: 10
-    sha256: "c8b9bb9c5d1a3234d26f267b04bf9186fa81579fd014eea596671f08bd9a1b9e"
-    bytes: 7631764
-    carries:
-      - "'BUCK CANYON LEVEL 2 ISOLATED [WETLAND] INFORMATION' — the Level Two narrative supporting the IWP, source filename 'Buck Canyon Ohio EPA Level Two Information.Docx'"
-
-  - filename: edoc-3940059.pdf
-    canonical: null
-    type: unreadable-truncated-response
-    date: "2025-12-15"
-    content_verified: none
-    pages: null
-    sha256: "19b8e55886143a3b13bcebec905df090bfc1e2313c27728934397026710eb82d"
-    bytes: 2097152
-    truncated: >-
-      ⚠️ SERVED TRUNCATED BY THE AGENCY, AND KEPT AS RECEIVED. The response is exactly 2,097,152
-      bytes (2 MiB) and the server's own `Content-Length` header says 2097152 on every attempt, so
-      this is not a transfer error — Ohio EPA's portal serves a truncated object at this docid.
-      Retried three times with identical bytes. The file has a valid `%PDF-1.7` header, NO `%%EOF`,
-      and both pypdf and pdfium refuse it ('Stream has ended unexpectedly' / 'Data format error').
-      Retained under chain of custody as evidence of the portal defect; it is a LOCATOR, not a
-      readable document, and nothing may be cited from it. What it was is unknown.
-
-  # ── Wetland quality assessments (ORAM v5.0) and figures — bulk of the package ─────────────
-  - filenames_group: ORAM v5.0 scoring forms
-    note: >-
-      Seven Ohio Rapid Assessment Method v5.0 scoring forms, 10 pp each, one per assessed wetland.
-      Their individual wetland ids were not read in this pass; the permit's impact table (edoc-4146849)
-      is the authoritative summary.
-    members:
-      - {filename: edoc-3940061.pdf, sha256: "8667705162ac6514707d38362272bce9d79d86170abcce0e2bf83a76f1feed3d", bytes: 2331675, pages: 10}
-      - {filename: edoc-3940062.pdf, sha256: "86aef39fdbbe1615b37d6f89aa6f868447251ea6af58f121170a6894bda17ca8", bytes: 1584605, pages: 10}
-      - {filename: edoc-3940067.pdf, sha256: "aadd096c1c2cf885fed96414bf75ac6b8c6769bbb75fa409e7641a3aa6bb5c36", bytes: 1121114, pages: 10}
-      - {filename: edoc-3940068.pdf, sha256: "062f8ddd8f44d3169f39d1daf7107511fee41de1c5941075fcceb7488ef4c59d", bytes: 1399241, pages: 10}
-      - {filename: edoc-3940069.pdf, sha256: "542f02d6ad04febeafc3806daebc36b56d27ada5420ae716022e45e59d9a8045", bytes: 1921893, pages: 10}
-      - {filename: edoc-3940070.pdf, sha256: "15a13bf08c2258c3fb2eef9a97794f989ee7df4acbc282cea300e24199ff13c9", bytes: 1643046, pages: 10}
-      - {filename: edoc-3940071.pdf, sha256: "2f48596cf5b078d2798977fb44c0858b63114f1c5815c5df93129f86cca122a5", bytes: 1574139, pages: 10}
-
-  - filenames_group: Figures and resource maps
-    note: >-
-      Single-sheet figures from the application package. 3940076 and 3940078 are BYTE-IDENTICAL
-      under two docids; 3940081 and 3940082 likewise. Both pairs retained — see meta.duplicates.
-    members:
-      - {filename: edoc-3940063.pdf, sha256: "13ef43686a869d95e0d2b29c509efee49dbc35eea86a7e03622e02e2a9ecbd8d", bytes: 2864859, pages: 1, carries: "Area map naming Buttermilk Run Rd, Old State Rd, Fox Rd, Lick Skillet Rd, Ridgeland Rd and the Ohio River"}
-      - {filename: edoc-3940066.pdf, sha256: "129d8fc34ded3a46096c7229a50a1a8dba19cf13012edc6e408e68c164588941", bytes: 905304, pages: 5, carries: "'Figure 1. JD Review Area Overview' — the jurisdictional-determination review area"}
-      - {filename: edoc-3940072.pdf, sha256: "f1a2b185fe509ba92dc63197ddbfe71fa4a6690aa43bebfd08bfb07a5f4ae944", bytes: 2108927, pages: 1, carries: "Ginger Ridge Rd / US-52 vicinity figure"}
-      - {filename: edoc-3940073.pdf, sha256: "96a108fe416086d9a8f8b377e85080fe3a99d3a1f9ee6205d0c05e700fe4aca6", bytes: 2046738, pages: 1, carries: "Ginger Ridge Rd / US-52 vicinity figure (variant)"}
-      - {filename: edoc-3940075.pdf, sha256: "8719964da5971e6d738c49c6447954a85b3ebf85bd2a8d287f5bb1a82e5d2fe5", bytes: 2616933, pages: 1, carries: "Figure with no extractable text layer — read from the image"}
-      - {filename: edoc-3940076.pdf, sha256: "6b81f1b3bdd36774af2cc94d8a088be7a91f55438e523fd3ceec6c8707bee3eb", bytes: 1923221, pages: 1, carries: "⚠️ Resource figure labelling CARTER HOLLOW, OPOSSUM HOLLOW and ELK RUN — the named streams of the federal fill authorization"}
-      - {filename: edoc-3940077.pdf, sha256: "29b21b9b9a071182571da527de24ebe71bfbd1be2575aacbfca9f5fe3f7b8358", bytes: 1912401, pages: 1, carries: "Resource figure (Carter Hollow / Opossum Hollow / Elk Run, variant)"}
-      - {filename: edoc-3940078.pdf, sha256: "6b81f1b3bdd36774af2cc94d8a088be7a91f55438e523fd3ceec6c8707bee3eb", bytes: 1923221, pages: 1, carries: "BYTE-IDENTICAL to edoc-3940076"}
-      - {filename: edoc-3940081.pdf, sha256: "ba2c9adc5a4969dd865a5fc870cc21799ce2f1cfd99dc73c81161faaeb7233b1", bytes: 2067555, pages: 4, carries: "Four-sheet figure set, no extractable text layer"}
-      - {filename: edoc-3940082.pdf, sha256: "ba2c9adc5a4969dd865a5fc870cc21799ce2f1cfd99dc73c81161faaeb7233b1", bytes: 2067555, pages: 4, carries: "BYTE-IDENTICAL to edoc-3940081"}
-
-  # ── NPDES construction stormwater, 0GC04922*AG under OHC000006 ────────────────────────────
-  - filename: edoc-4147397.pdf
-    canonical: oepa-buck-canyon-npdes-construction-stormwater-approval-0GC04922AG-2026-06-08.pdf
-    type: npdes-general-permit-approval
-    date: "2026-06-08"
-    content_verified: text-layer
+  - filename: edoc-3940062.pdf
+    sha256: 86aef39fdbbe1615b37d6f89aa6f868447251ea6af58f121170a6894bda17ca8
+    bytes: 1584605
+    pages: 10
+  - filename: edoc-3940067.pdf
+    sha256: aadd096c1c2cf885fed96414bf75ac6b8c6769bbb75fa409e7641a3aa6bb5c36
+    bytes: 1121114
+    pages: 10
+  - filename: edoc-3940068.pdf
+    sha256: 062f8ddd8f44d3169f39d1daf7107511fee41de1c5941075fcceb7488ef4c59d
+    bytes: 1399241
+    pages: 10
+  - filename: edoc-3940069.pdf
+    sha256: 542f02d6ad04febeafc3806daebc36b56d27ada5420ae716022e45e59d9a8045
+    bytes: 1921893
+    pages: 10
+  - filename: edoc-3940070.pdf
+    sha256: 15a13bf08c2258c3fb2eef9a97794f989ee7df4acbc282cea300e24199ff13c9
+    bytes: 1643046
+    pages: 10
+  - filename: edoc-3940071.pdf
+    sha256: 2f48596cf5b078d2798977fb44c0858b63114f1c5815c5df93129f86cca122a5
+    bytes: 1574139
+    pages: 10
+- filenames_group: Figures and resource maps
+  note: Single-sheet figures from the application package. 3940076 and 3940078 are
+    BYTE-IDENTICAL under two docids; 3940081 and 3940082 likewise. Both pairs retained
+    — see meta.duplicates.
+  members:
+  - filename: edoc-3940063.pdf
+    sha256: 13ef43686a869d95e0d2b29c509efee49dbc35eea86a7e03622e02e2a9ecbd8d
+    bytes: 2864859
     pages: 1
-    sha256: "b7c5fbc34f0a7daebcb943ede4787f6b2287e3e165e23c4f547d0c4d5ab02aac"
-    bytes: 139130
-    carries:
-      - "⚠️ THE APPROVAL LETTER the register recorded as [open]: 'Approval Under Ohio EPA NPDES – Construction Site Stormwater General Permit – OHC000006'. Facility Buck Canyon LLC, 1022 Ginger Ridge Rd, Manchester, Adams County. Ohio EPA Facility Permit Number 0GC04922*AG. Effective 2026-06-08, EXPIRING 2028-04-22."
-      - "Addressed to Derek Harmon, 2505 Old KY-11, Flemingsburg KY 41041 — an individual, not a company"
-      - "Notes that additional operators must file a Co-Permittee NOI — so the builder's own coverage, if any, is a separate record"
-
-  - filename: edoc-4147394.pdf
-    canonical: oepa-buck-canyon-npdes-notice-of-intent-2026.pdf
-    type: npdes-notice-of-intent
-    date: "2026-06-08"
-    date_note: "Filed under the 2026-06-08 approval; the NOI's own signature date was not read in this pass."
-    content_verified: text-layer
-    pages: 2
-    sha256: "c0e356f5c0276a7d4f4f7a04cc2ad5584a089ca17774dc566bf6b1ad553bc0c1"
-    bytes: 10172
-    carries:
-      - "⚠️ THE NOI FORM ITSELF — the document the register lists as [open]. Application ID 286387384."
-      - "Applicant: Derek Harmon (an individual), 2505 Old KY-11, Flemingsburg KY 41041, (606) 845-0638, derek@bigblueoutdoor.com"
-      - "⚠️ A NEW PARTY — THE BUILDER: 'Facility Contact Person: Tom Cucuz, (313) 963-8000, tcucuz@walbridge.com'. Walbridge is a Detroit-headquartered construction contractor; no document previously in this corpus named a builder."
-      - "⚠️ A SECOND COORDINATE: the NOI gives Latitude 38.651394 / Longitude -83.665142. The USACE §106 correspondence gives 38.646748 / -83.659828. Both are transcribed from their own source; ~600 m apart, and NOT reconciled here."
-      - "Names its own attachment '2026-0223_BuckCanyon-EarlyGrading-SWPPP.pdf' — an EARLY GRADING SWPPP dated 2026-02-23, i.e. grading was being planned three and a half months before coverage issued"
-
-  - filename: edoc-4147395.pdf
-    canonical: oepa-buck-canyon-stormwater-pollution-prevention-plan-2026.pdf
-    type: swp3
-    date: "2026-06-08"
-    content_verified: text-layer
-    pages: 196
-    sha256: "aaa0831892eef347e7cbf3bf834d683e6d73abeb775ad529f30686cbc03c7603"
-    bytes: 33136050
-    carries:
-      - "⚠️ THE 196-PAGE STORMWATER POLLUTION PREVENTION PLAN for BUCK CANYON LLC, 1022 Ginger Ridge Road, Manchester OH 45144. The most detailed engineering description of the site in the corpus."
-    notes: "Not yet read beyond page 1 — a 196-page plan set is its own extraction job."
-
-  - filename: edoc-4147396.pdf
-    canonical: oepa-buck-canyon-site-location-map-kimley-horn.pdf
-    type: site-location-map
-    date: "2026-06-08"
-    content_verified: rendered-image
+    carries: Area map naming Buttermilk Run Rd, Old State Rd, Fox Rd, Lick Skillet
+      Rd, Ridgeland Rd and the Ohio River
+  - filename: edoc-3940066.pdf
+    sha256: 129d8fc34ded3a46096c7229a50a1a8dba19cf13012edc6e408e68c164588941
+    bytes: 905304
+    pages: 5
+    carries: '''Figure 1. JD Review Area Overview'' — the jurisdictional-determination
+      review area'
+  - filename: edoc-3940072.pdf
+    sha256: f1a2b185fe509ba92dc63197ddbfe71fa4a6690aa43bebfd08bfb07a5f4ae944
+    bytes: 2108927
     pages: 1
-    sha256: "de6a11b872ceb44af7cf0b19b957e629fe9b184f2b461c6103956b25a9c55ca7"
-    bytes: 289026
-    carries:
-      - "⚠️ THE SITE MAP — the document data/extracted/west-union/data-centers.md lists as [open]. 'SITE LOCATION MAP / BUCK CANYON / SPRIGG TOWNSHIP / ADAMS COUNTY, OH', Kimley-Horn and Associates, Inc., sheet 1."
-      - "⚠️ **DISTURBED AREA = 535.00 AC**, printed in the legend — the same 535.0 ac the Ohio EPA construction NOI carries, now with a drawn boundary rather than a bare number."
-      - "The site polygon is bounded by GINGER RIDGE ROAD on the west, US-52 on the south, and the OHIO RIVER to the south-east — matching the USACE description 'north and east of Ginger Ridge Road and west of U.S. Route 52'"
-      - "OWNER/DEVELOPER block: DEREK HARMON, 2505 Old KY-11, Flemingsburg KY 41041, (606) 845-0638, derek@bigblueoutdoor.com"
-      - "⚠️ CIVIL ENGINEER — A NEW PARTY: KIMLEY-HORN AND ASSOCIATES, INC, 7965 N High Street Suite 200, Columbus OH 43235, (614) 472-8550, contact Isabella Culliton. Kimley-Horn is the site civil engineer; Ramboll is the environmental consultant. Two different firms, two different roles."
-      - "Graphic scale 0-3000 ft; the drawn disturbance is plainly a SUBSET of the ~1,016-ac parcel 1830000079000, consistent with 535 ac of 1,016"
+    carries: Ginger Ridge Rd / US-52 vicinity figure
+  - filename: edoc-3940073.pdf
+    sha256: 96a108fe416086d9a8f8b377e85080fe3a99d3a1f9ee6205d0c05e700fe4aca6
+    bytes: 2046738
+    pages: 1
+    carries: Ginger Ridge Rd / US-52 vicinity figure (variant)
+  - filename: edoc-3940075.pdf
+    sha256: 8719964da5971e6d738c49c6447954a85b3ebf85bd2a8d287f5bb1a82e5d2fe5
+    bytes: 2616933
+    pages: 1
+    carries: Figure with no extractable text layer — read from the image
+  - filename: edoc-3940076.pdf
+    sha256: 6b81f1b3bdd36774af2cc94d8a088be7a91f55438e523fd3ceec6c8707bee3eb
+    bytes: 1923221
+    pages: 1
+    carries: ⚠️ Resource figure labelling CARTER HOLLOW, OPOSSUM HOLLOW and ELK RUN
+      — the named streams of the federal fill authorization
+  - filename: edoc-3940077.pdf
+    sha256: 29b21b9b9a071182571da527de24ebe71bfbd1be2575aacbfca9f5fe3f7b8358
+    bytes: 1912401
+    pages: 1
+    carries: Resource figure (Carter Hollow / Opossum Hollow / Elk Run, variant)
+  - filename: edoc-3940078.pdf
+    sha256: 6b81f1b3bdd36774af2cc94d8a088be7a91f55438e523fd3ceec6c8707bee3eb
+    bytes: 1923221
+    pages: 1
+    carries: BYTE-IDENTICAL to edoc-3940076
+  - filename: edoc-3940081.pdf
+    sha256: ba2c9adc5a4969dd865a5fc870cc21799ce2f1cfd99dc73c81161faaeb7233b1
+    bytes: 2067555
+    pages: 4
+    carries: Four-sheet figure set, no extractable text layer
+  - filename: edoc-3940082.pdf
+    sha256: ba2c9adc5a4969dd865a5fc870cc21799ce2f1cfd99dc73c81161faaeb7233b1
+    bytes: 2067555
+    pages: 4
+    carries: BYTE-IDENTICAL to edoc-3940081
+- filename: edoc-4147397.pdf
+  canonical: oepa-buck-canyon-npdes-construction-stormwater-approval-0GC04922AG-2026-06-08.pdf
+  type: npdes-general-permit-approval
+  date: '2026-06-08'
+  content_verified: text-layer
+  pages: 1
+  sha256: b7c5fbc34f0a7daebcb943ede4787f6b2287e3e165e23c4f547d0c4d5ab02aac
+  bytes: 139130
+  carries:
+  - '⚠️ THE APPROVAL LETTER the register recorded as [open]: ''Approval Under Ohio
+    EPA NPDES – Construction Site Stormwater General Permit – OHC000006''. Facility
+    Buck Canyon LLC, 1022 Ginger Ridge Rd, Manchester, Adams County. Ohio EPA Facility
+    Permit Number 0GC04922*AG. Effective 2026-06-08, EXPIRING 2028-04-22.'
+  - Addressed to Derek Harmon, 2505 Old KY-11, Flemingsburg KY 41041 — an individual,
+    not a company
+  - Notes that additional operators must file a Co-Permittee NOI — so the builder's
+    own coverage, if any, is a separate record
+- filename: edoc-4147394.pdf
+  canonical: oepa-buck-canyon-npdes-notice-of-intent-2026.pdf
+  type: npdes-notice-of-intent
+  date: '2026-06-08'
+  date_note: Filed under the 2026-06-08 approval; the NOI's own signature date was
+    not read in this pass.
+  content_verified: text-layer
+  pages: 2
+  sha256: c0e356f5c0276a7d4f4f7a04cc2ad5584a089ca17774dc566bf6b1ad553bc0c1
+  bytes: 10172
+  carries:
+  - ⚠️ THE NOI FORM ITSELF — the document the register lists as [open]. Application
+    ID 286387384.
+  - 'Applicant: Derek Harmon (an individual), 2505 Old KY-11, Flemingsburg KY 41041,
+    (606) 845-0638, derek@bigblueoutdoor.com'
+  - '⚠️ A NEW PARTY — THE BUILDER: ''Facility Contact Person: Tom Cucuz, (313) 963-8000,
+    tcucuz@walbridge.com''. Walbridge is a Detroit-headquartered construction contractor;
+    no document previously in this corpus named a builder.'
+  - '⚠️ A SECOND COORDINATE: the NOI gives Latitude 38.651394 / Longitude -83.665142.
+    The USACE §106 correspondence gives 38.646748 / -83.659828. Both are transcribed
+    from their own source; ~600 m apart, and NOT reconciled here.'
+  - Names its own attachment '2026-0223_BuckCanyon-EarlyGrading-SWPPP.pdf' — an EARLY
+    GRADING SWPPP dated 2026-02-23, i.e. grading was being planned three and a half
+    months before coverage issued
+- filename: edoc-4147395.pdf
+  canonical: oepa-buck-canyon-stormwater-pollution-prevention-plan-2026.pdf
+  type: swp3
+  date: '2026-06-08'
+  content_verified: text-layer
+  pages: 196
+  sha256: aaa0831892eef347e7cbf3bf834d683e6d73abeb775ad529f30686cbc03c7603
+  bytes: 33136050
+  carries:
+  - ⚠️ THE 196-PAGE STORMWATER POLLUTION PREVENTION PLAN for BUCK CANYON LLC, 1022
+    Ginger Ridge Road, Manchester OH 45144. The most detailed engineering description
+    of the site in the corpus.
+  notes: Not yet read beyond page 1 — a 196-page plan set is its own extraction job.
+- filename: edoc-4147396.pdf
+  canonical: oepa-buck-canyon-site-location-map-kimley-horn.pdf
+  type: site-location-map
+  date: '2026-06-08'
+  content_verified: rendered-image
+  pages: 1
+  sha256: de6a11b872ceb44af7cf0b19b957e629fe9b184f2b461c6103956b25a9c55ca7
+  bytes: 289026
+  carries:
+  - ⚠️ THE SITE MAP — the document data/extracted/west-union/data-centers.md lists
+    as [open]. 'SITE LOCATION MAP / BUCK CANYON / SPRIGG TOWNSHIP / ADAMS COUNTY,
+    OH', Kimley-Horn and Associates, Inc., sheet 1.
+  - ⚠️ **DISTURBED AREA = 535.00 AC**, printed in the legend — the same 535.0 ac the
+    Ohio EPA construction NOI carries, now with a drawn boundary rather than a bare
+    number.
+  - The site polygon is bounded by GINGER RIDGE ROAD on the west, US-52 on the south,
+    and the OHIO RIVER to the south-east — matching the USACE description 'north and
+    east of Ginger Ridge Road and west of U.S. Route 52'
+  - 'OWNER/DEVELOPER block: DEREK HARMON, 2505 Old KY-11, Flemingsburg KY 41041, (606)
+    845-0638, derek@bigblueoutdoor.com'
+  - '⚠️ CIVIL ENGINEER — A NEW PARTY: KIMLEY-HORN AND ASSOCIATES, INC, 7965 N High
+    Street Suite 200, Columbus OH 43235, (614) 472-8550, contact Isabella Culliton.
+    Kimley-Horn is the site civil engineer; Ramboll is the environmental consultant.
+    Two different firms, two different roles.'
+  - Graphic scale 0-3000 ft; the drawn disturbance is plainly a SUBSET of the ~1,016-ac
+    parcel 1830000079000, consistent with 535 ac of 1,016
+- filename: 0PC00019.pdf
+  permit_id: 0PC00019
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/0PC00019.pdf
+  sha256: d987cdb5d6a74b7e2b1b75c2315af6be2e0e85a36f007346710b2d453ace2a43
+  bytes: 1494575
+  content_type: application/pdf
+  fetched_at: '2026-08-21T05:48:53.962392+00:00'
+  status: skipped_existing
+  note: null

@@ -2,16 +2,16 @@
   "site": "mansfield",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-14T17:40:38+00:00",
+  "generated_at": "2026-08-21T05:56:15+00:00",
   "feed_count": 32,
-  "row_total": 484,
+  "row_total": 485,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "absent",
       "places": "live",
-      "record": "absent",
+      "record": "seeded",
       "inquiry": "seeded"
     }
   },
@@ -95,7 +95,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 1
     },
     {
       "name": "exhibits",
