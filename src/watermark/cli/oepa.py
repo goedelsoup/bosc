@@ -393,8 +393,10 @@ def portal(
 
     today = datetime.now(UTC).date().isoformat()
     # Every facet that narrows the query joins the key: a --county sweep and the same
-    # county narrowed by --entity are different result sets and must not share a manifest.
-    parts = [p for p in (county, entity, permit_id) if p]
+    # county narrowed by --entity (or run against a different --program) are different
+    # result sets and must not share a manifest. `program` always has a value, so it is
+    # always part of the key rather than only when non-default.
+    parts = [p for p in (county, program, entity, permit_id) if p]
     key = "-".join(re.sub(r"[^a-z0-9]+", "-", p.lower()).strip("-") for p in parts)
     out_dir = Path(out) if out else settings.data_dir / "research" / f"oepa-portal-{key}-{today}"
     out_dir.mkdir(parents=True, exist_ok=True)
