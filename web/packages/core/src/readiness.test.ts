@@ -207,22 +207,46 @@ describe("lensStatus (#1913)", () => {
     expect(statuses("findlay")).toEqual(statuses("lima"));
   });
 
-  it("locks all five on a stub-tier peer", () => {
-    // Coshocton: registered, committed bundle, every domain absent. Nothing is scaffolded for it.
+  it("opens only what a stub-tier peer's record earns, and nothing else", () => {
+    // Coshocton: registered, committed bundle, still Stub tier. Backdrop, places and facility are
+    // all absent, so Land, Power, Environment and Economy stay shut — nothing is scaffolded for it.
+    //
+    // This asserted all FIVE locked until the City of Coshocton WWTP's NPDES permit `0PD00004`
+    // landed and lifted `record` absent → seeded, which is the one domain Disclosure gates on.
+    // The site is not swapped out because there is nowhere to swap to: after that ingest NO
+    // registered site has `record: absent`, so "every lens locked" is no longer a state the
+    // network can produce. What the test is really for survives, and is what is asserted here —
+    // a lens opens on its OWN domain's evidence and on nothing else, so one permit opens exactly
+    // one lens and leaves the other four shut.
     expect(siteTier("coshocton")).toBe("stub");
-    for (const id of LENS_ORDER) expect(lensStatus("coshocton", id), id).toBe("locked");
+    expect(statuses("coshocton")).toEqual({
+      land: "locked",
+      power: "locked",
+      environment: "locked",
+      economy: "locked",
+      disclosure: "available",
+    });
   });
 
   it("opens the lenses a partial peer has the domains for, and only those", () => {
     // Mansfield is the clean mid-tier read: places live (a committed footprint) and the backdrop
-    // floor pulled, but no record and no disclosed facility. So Land opens off `places`, the two
-    // floor lenses open off the backdrop — and Power and Disclosure lock, each on its own domain.
+    // floor pulled, but no disclosed facility. So Land opens off `places`, the two floor lenses
+    // open off the backdrop, and Power locks on `facility`.
+    //
+    // Disclosure USED to lock here too, which made this the suite's one two-locks-on-two-domains
+    // case. It no longer does: the City of Mansfield WWTP's NPDES permit `2PE00001` landed in the
+    // corpus and lifted `record` absent → seeded, and Disclosure gates on exactly that domain. The
+    // expectation moves rather than the site being swapped out, because after that ingest NO
+    // registered site is left with `places` active and `record` absent — the shape is gone from
+    // the network, not just from this peer. Readiness is a standing property: it rose because a
+    // source landed, which is the system working. `facility` is still absent, so the "and only
+    // those" half of this test survives on Power.
     expect(statuses("mansfield")).toEqual({
       land: "available",
       power: "locked",
       environment: "available",
       economy: "available",
-      disclosure: "locked",
+      disclosure: "available",
     });
     // Power's lock here is the FACILITY half, not the section half: the economy section is open.
     expect(sectionStatus("mansfield", "economy")).toBe("available");
