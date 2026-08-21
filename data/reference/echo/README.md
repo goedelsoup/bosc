@@ -430,18 +430,32 @@ frontal-drainage sibling of another.
 
 ### What screens, and what does not
 
-**Nothing, today, and that is the honest state.** No Muskingum mainstem gage is registered in
-`mainstem-gages.yaml`, so every row reports `no_7q10` or `no_receiving_water` —
-**unscreenable, never unaffected**. Two things must be true of any gage registered here later:
+**8 of 149**, on two gages registered in `mainstem-gages.yaml`: the Tuscarawas at Newcomerstown
+(03129000, DA 2,443 mi²) and the Muskingum at McConnelsville (03150000, DA 7,422 mi²). Both are
+mouth-ward on their own mainstem, both carry a **cited `regulation` block quoting Straub 2001's
+REMARKS verbatim** — 17 flood-control reservoirs above McConnelsville, eight plus an out-of-basin
+diversion above Newcomerstown — and both are therefore `confidence: low` denominators integrating
+thousands of square miles. Read a ratio here as a magnitude check, not a reach-specific finding.
+All eight screened rows currently read `ok`.
 
-- It must carry a **cited regulation annotation**. The Muskingum Watershed Conservancy
-  District operates a Corps-partnered flood-control reservoir system across these subbasins,
-  so a gage below one of its structures measures a managed flow rather than a natural one.
-  Per `meta.cited_annotations`, an unannotated gage means "not yet read against the published
-  record", never "unregulated".
-- It must not be the **Ohio River at Greenup Dam**. That gage is scoped
-  `basins: [ohio-brush-creek]` precisely because the Muskingum meets the Ohio hundreds of
-  river miles above it, where the river carries a fraction of the drainage area gaged there.
+Two things registered here later must still be true, and are why the Ohio River gage at Greenup
+Dam is scoped `basins: [ohio-brush-creek]`: the Muskingum meets the Ohio hundreds of river miles
+above it, and an unannotated gage means "not yet read against the published record", never
+"unregulated".
+
+⚠️ **Neither gage screens Mansfield, the network's own Muskingum point.** Its WWTP discharges to
+Rocky Fork of the Mohican, and HUC-8 05040002 has **no usable gage at all**: every long record
+ended between 1975 and 1993 (Mohican at Greer to 1982, Black Fork at Loudonville to 1991, Clear
+Fork below Pleasant Hill to 1991, Touby Run to 1978) and every live gage is far under the
+20-climatic-year floor (Black Fork at Shelby ~14 yr, Rocky Fork at Lucas ~3 yr, Touby Run at
+W 6th ~2 yr). `rocky fork creek` and `mohican river` are deliberately unregistered, so those rows
+stay `no_7q10`. Mansfield's denominator has to come from its permit's fact sheet, which this
+corpus does not hold (#1429).
+
+⚠️ **"Little Muskingum River" is a different river** — a direct Ohio River tributary in Washington
+County (DA 210 mi²) that the 0504 pull picks up, and one POTW in the inventory names it. It is not
+an alias of the Muskingum, so that row stays unmatched rather than borrowing a 35x-larger
+denominator.
 
 ## Sandusky River basin (`sandusky-wwtp.*`)
 
@@ -464,14 +478,38 @@ Western Lake Erie independently — which is why `04100011` is absent from `MAUM
 
 ### What screens, and what does not
 
-Nothing yet: no Sandusky gage is registered in `mainstem-gages.yaml`.
+**1 of 31 — and it is a violation.** The inventory contains exactly one discharger naming
+"Sandusky River": **BUCYRUS WWTP**, 3.4 MGD, at the basin's headwaters.
+
+That single row is why this basin's entry in `mainstem-gages.yaml` **deliberately does not use the
+mouth-ward gage.** Registered is `04196000 Sandusky River near Bucyrus` (DA 88.8 mi²), the gage
+1.5 mi west of the plant — not `04198000` near Fremont (DA 1,251 mi²), which the
+"lowest gage on the mainstem" convention would have selected. Fremont integrates **14x** the
+facility's drainage area, and `watermark.hydrology.basin`'s own rule forbids precisely that: a
+discharger *"is never screened against a downstream river's larger 7Q10 (that would overstate
+dilution into a false 'ok')."*
+
+**The difference is the whole verdict.** On the Fremont gage this plant screens at ~4:1 and reads
+`tight`; on its own reach it is a **violation** — a derived 7Q10 of 2.38 cfs (Straub's published
+figure is 1.1) against a 5.26 cfs design flow, so the discharge runs roughly **two to five times
+the river it enters** at low flow. The mouth-ward convention would have published "tight" over an
+effluent-dominated stream. Both gages are carried in the entry — Fremont as a `cross_check_gage`,
+labelled as the worked example.
+
+Note what the regulation is here: the reservoirs Straub names 5.3–6.0 mi above the gage are
+**Bucyrus's own municipal supply**. The city withdraws its drinking water above the gage and
+discharges its effluent below it, and both sides of that loop sit inside the 88.8 mi² this
+denominator describes.
 
 ⚠️ **A bay is not a river reach, and a 7Q10 does not describe one.** The network's own point
-discharges to **Sandusky Bay**, an embayment at the river's mouth whose mixing volume is set
-by lake level, seiche and wind forcing rather than by streamflow. When the Sandusky River's
-mainstem gage is eventually registered, its aliases must **not** be extended to the bay: a
-river 7Q10 served to a bay outfall is not a conservative approximation, it is a category
-error.
+discharges to **Sandusky Bay** — the inventory carries the surface form `lake erie/sandusky bay` —
+an embayment whose mixing volume is set by lake level, seiche and wind rather than streamflow. It
+is deliberately not an alias, so that row stays `no_7q10`. A river 7Q10 served to a bay outfall is
+not a conservative approximation, it is a category error.
+
+⚠️ **If a downstream Sandusky River discharger appears in a later pull, do not leave it on this
+gage.** A headwaters 7Q10 understates dilution for anyone below it — the safe direction, but still
+wrong. The three downstream gages are carried as cross-checks for exactly that re-screening.
 
 ## Known gaps & caveats (read before using)
 
