@@ -8,7 +8,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-21"
   },
   {
     "id": "artifact/npdes-2pe00001",
@@ -19,7 +19,7 @@
     "links_out": 1,
     "links_in": 2,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-21"
   },
   {
     "id": "artifact/rocky-fork-of-the-mohican-river",
@@ -30,7 +30,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-21"
   },
   {
     "id": "artifact/site-mansfield",
@@ -987,7 +987,7 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-21"
   },
   {
     "id": "relation/npdes-2pe00001--discharges-to--rocky-fork-of-the-mohican-river",
@@ -998,6 +998,6 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-21"
   }
 ]

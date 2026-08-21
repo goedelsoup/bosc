@@ -337,8 +337,40 @@
       "schedule_of_compliance": {
         "citation": "Permit 2PE00001*PD, sheets 21-23, Part I.C",
         "tag": "[verified]",
+        "event_code_forms": {
+          "tag": "[verified]",
+          "note": "⚠️ THE PERMIT PRINTS ITS OWN EVENT CODES TWO DIFFERENT WAYS, and the blocks below preserve whichever form appears where each is transcribed rather than harmonizing them. The milestone table on sheet 21 prints them UNPADDED; the narrative sections print them ZERO-PADDED to five digits. So a code differing between `milestone_summary_report` and the narrative blocks is the DOCUMENT disagreeing with itself, not a transcription error.",
+          "table_vs_narrative": {
+            "pretreatment": {
+              "table": "52599",
+              "narrative": "52599",
+              "agree": true
+            },
+            "phosphorus_optimization": {
+              "table": "1299",
+              "narrative": "01299",
+              "agree": false
+            },
+            "tre_first_monitoring_report": {
+              "table": "7099",
+              "narrative": null,
+              "agree": false
+            },
+            "tre_bio_monitoring_report": {
+              "table": "34599",
+              "narrative": "34599",
+              "agree": true
+            },
+            "tre_final_compliance": {
+              "table": "5699",
+              "narrative": "05699",
+              "agree": false
+            }
+          },
+          "no_narrative_code_for_the_interim_report": "TRE step 2 (the 2026-04-01 interim report) is the one milestone the narrative gives NO event code at all — steps 3 and 4 end \"(Event Code 34599)\" and \"(Event Code 05699)\", and step 2 simply does not. The table's `7099` is the only code for that milestone anywhere in this permit. A records request citing an event code for the interim report should use `7099` and expect the agency's system may hold it padded."
+        },
         "milestone_summary_report": {
-          "note": "Transcribed verbatim from the permit's own table. These are CALENDAR dates the permit prints — not offsets, and not inferred.",
+          "note": "Transcribed verbatim from the permit's own table, INCLUDING its unpadded event codes — see event_code_forms above before diffing these against the narrative blocks. The dates are CALENDAR dates the permit prints — not offsets, and not inferred.",
           "milestones": [
             {
               "section": "Pretreatment",
@@ -385,7 +417,8 @@
             {
               "step": 2,
               "due": "2026-04-01",
-              "event_code": "07099",
+              "event_code": null,
+              "event_code_note": "THE NARRATIVE PRINTS NO EVENT CODE FOR THIS STEP. Items 3 and 4 end \"(Event Code 34599)\" and \"(Event Code 05699)\"; item 2 ends at \"...other relevant information that has been obtained.\" with no code. The milestone table's corresponding row (TRE First Monitoring Report, same 2026-04-01 due date) carries `7099` and is transcribed under `milestone_summary_report` above. No zero-padded `07099` appears anywhere in this document — omitted here rather than invented. See event_code_forms below.",
               "requirement": "Submit an interim report to the Ohio EPA Northwest District Office detailing the progress of the plant performance evaluation, including any biomonitoring results and other relevant information obtained."
             },
             {
@@ -417,7 +450,8 @@
         "phosphorus_optimization": {
           "part": "I.C.C",
           "due": "2026-04-01",
-          "event_code": "1299",
+          "event_code": "01299",
+          "event_code_note": "The zero-padded form is what THIS section prints (\"(Event Code 01299)\"). The milestone table prints the same code unpadded as `1299`; both are transcribed where each appears. See event_code_forms below.",
           "requirement": "Prepare and submit for acceptance a Phosphorus Discharge Optimization Evaluation plan — an evaluation of collected effluent data, possible source reduction measures, operational improvements and minor facility modifications that will optimize reductions in phosphorus discharges from the WWTP, including a proposed schedule for implementing any recommended measures."
         },
         "status_of_these_milestones": {
