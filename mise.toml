@@ -219,13 +219,28 @@ trap 'rm -rf "$tmp"' EXIT
 echo "cloning $origin at $commit …"
 git clone --quiet --filter=blob:none --no-checkout "$origin" "$tmp/yidam"
 git -C "$tmp/yidam" checkout --quiet "$commit"
-# The light `reports` build (cargo default). Add `--features full` only if you need
-# index-build / serve --mcp / sqlite / rdf — those pull protoc, fastembed and lancedb.
-cargo install --path "$tmp/yidam/yidam/cli" --locked
+# The light `reports` build (cargo default) PLUS `export-graph`, which is pure Rust
+# (oxrdf/oxttl — no protoc, no C, no ML runtime) and is what makes `export --format rdf`
+# available. That is not optional here: the RDF/GraphML conformance check compares BOSC's
+# renderers against it, and without the feature the RDF half silently does not run.
+# A full clean build with both is ~11s. `--features full` additionally pulls fastembed,
+# lancedb and protoc — only needed for index-build / serve --mcp / sqlite.
+# `--root .yidam/toolchain`, NOT the shared ~/.cargo/bin. Every `cargo install` of yidam on a
+# machine writes that one path whatever ref and feature set it was built from, so a yidam
+# checkout doing its own `cargo install --path .` (default features) silently replaces this
+# repo's build — observed six times in one session, twice downgrading a binary this repo's
+# conformance gate then SKIPPED against. A repo-local install cannot be clobbered by another
+# repo, and `.yidam/` is already git-ignored.
+cargo install --path "$tmp/yidam/yidam/cli" --locked --features export-graph \
+  --root "$PWD/.yidam/toolchain"
 echo
 # `yidam` has no --version flag; graph-check's envelope is where the build identifies itself.
-echo "installed $(yidam graph-check --format json 2>/dev/null \
-  | sed -n 's/.*"commit": "\([^"]*\)".*/\1/p' | head -n1)"
+# Probe the binary just installed by its full path, NOT bare `yidam`: the repo-local root is
+# deliberately not on PATH, so a bare name resolves to whatever the shared cargo bin holds —
+# which is how this line reported a commit the build had nothing to do with.
+bin="$PWD/.yidam/toolchain/bin/yidam"
+echo "installed $("$bin" graph-check --format json 2>/dev/null \
+  | sed -n 's/.*"commit": "\([^"]*\)".*/\1/p' | head -n1) -> $bin"
 '''
 
 # How far the pin has drifted. A REPORT, never a gate — this repo is entitled to stay pinned,

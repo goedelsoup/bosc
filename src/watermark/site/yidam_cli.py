@@ -219,12 +219,26 @@ class Report:
         return self.command
 
 
-def yidam_path() -> Path | None:
-    """The ``yidam`` binary, or ``None`` when it is not installed.
+def yidam_path(root: Path | None = None) -> Path | None:
+    """The ``yidam`` binary this repo should use, or ``None`` when none is installed.
 
-    ``cargo install`` puts it in ``~/.cargo/bin``, which is not always on a non-login shell's
-    PATH, so that location is checked explicitly rather than relying on the caller's environment.
+    Resolution order, and the first entry is the point:
+
+    1. ``.yidam/toolchain/bin/yidam`` — **this repository's own build**, installed by
+       ``mise run yidam-build`` at the pinned commit with the feature set the gates need.
+    2. ``PATH``.
+    3. ``~/.cargo/bin/yidam``, which is not always on a non-login shell's PATH.
+
+    The repo-local copy comes first because the shared cargo bin is contested: every
+    ``cargo install`` of yidam on a machine writes that same path whatever ref and features it
+    was built from. A yidam checkout running its own ``cargo install --path .`` replaced this
+    repo's binary six times in one session — twice with a build that could not answer
+    ``--format json``, and once with one lacking ``export-graph``, which silently turned the
+    graph-export conformance test into a skip. Preferring a path only this repo writes ends that.
     """
+    local = (root or Path.cwd()) / ".yidam" / "toolchain" / "bin" / "yidam"
+    if local.is_file():
+        return local
     found = shutil.which("yidam")
     if found:
         return Path(found)

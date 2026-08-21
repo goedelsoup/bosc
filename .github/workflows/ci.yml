@@ -248,8 +248,11 @@ jobs:
         id: yidam-cache
         uses: actions/cache@v4
         with:
-          path: ~/.cargo/bin/yidam
-          key: yidam-${{ runner.os }}-${{ steps.pin.outputs.commit }}
+          path: .yidam/toolchain/bin/yidam
+          # The feature set is part of the identity: a cached `reports`-only binary
+          # cannot answer `export --format rdf`, and would fail the conformance step
+          # in a way that looks like a renderer bug.
+          key: yidam-${{ runner.os }}-reports+export-graph-${{ steps.pin.outputs.commit }}
 
       - uses: dtolnay/rust-toolchain@stable
         if: steps.yidam-cache.outputs.cache-hit != 'true'
@@ -263,7 +266,9 @@ jobs:
 
       - name: Install the yidam CLI (light `reports` build)
         if: steps.yidam-cache.outputs.cache-hit != 'true'
-        run: cargo install --path /tmp/yidam/yidam/cli --locked
+        run: |
+          cargo install --path /tmp/yidam/yidam/cli --locked --features export-graph \
+            --root "$PWD/.yidam/toolchain"
 
       # Project the corpus, then let the binary report on it. `--no-check` here because the
       # reports are run explicitly below, where their output is annotated.
@@ -291,13 +296,32 @@ jobs:
 
       # The hard gate: every node carries a class and a label, and every edge resolves.
       - name: graph-check
-        run: yidam graph-check
+        run: .yidam/toolchain/bin/yidam graph-check
 
       # Gates against .yidam/lint-baseline.yml, not against zero. Inherited debt is
       # enumerable and only a REGRESSION fails — which is what keeps this gate switched on.
       # Re-bless deliberately with `yidam lint --bless` and review the diff.
       - name: lint (baseline ratchet)
-        run: yidam lint
+        run: .yidam/toolchain/bin/yidam lint
+
+      # --- graph-export conformance (#2053) -----------------------------------------------
+      #
+      # These tests live in tests/ but SKIP without a yidam binary, and the `test` job has none —
+      # so they would pass by skipping everywhere if they were not also run here, which is the
+      # failure mode a conformance check must not have. The capability is asserted first: if the
+      # binary cannot answer both formats the build fails loudly rather than skipping quietly.
+      - name: Graph-export conformance vs the pinned binary
+        run: |
+          set -eu
+          for fmt in graphml rdf; do
+            if ! .yidam/toolchain/bin/yidam export --list | grep -qE "^${fmt}[[:space:]]+✓"; then
+              echo "::error::the installed yidam cannot export ${fmt} — the conformance tests"
+              echo "::error::would SKIP rather than run. Build it with --features export-graph."
+              .yidam/toolchain/bin/yidam export --list
+              exit 1
+            fi
+          done
+          uv run pytest tests/test_graph_exports.py -q
 
       # --- how stale is the pin? ----------------------------------------------------------
       #

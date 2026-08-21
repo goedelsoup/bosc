@@ -28,6 +28,17 @@ prose docs):
 The BOSC mirror is always ``graph-check`` clean (every link resolves), so the unresolved path
 is a belt-and-braces fidelity guarantee, not an expected state.
 
+**That fidelity is now a test, not a claim** (#2053). ``tests/test_graph_exports.py`` runs the
+real pinned binary over the same mirror and compares structurally — node/edge sets and the
+GraphML key schema, subject IRIs and the ``yidam:`` predicate vocabulary. It is enforced in CI's
+``corpus`` job, which asserts the binary can answer both formats before running, so the check
+cannot pass by skipping.
+
+It was written because the claim above had already stopped being true: the binary emitted
+``yidam:genesisDate`` over this corpus and this module did not — :class:`ExportProvenance` had
+always carried the field and :func:`resolve_provenance` never populated it. GraphML was
+byte-for-byte sound the whole time. One half faithful, one half not, with no way to tell which.
+
 **SQLite** — yidam's ``export sqlite`` is a *vector* DB (sqlite-vec ``vec0`` table of
 embeddings); it needs the E4 vector index (#1564), so it is deferred to a follow-up. This
 module covers the two graph-structure serializations #1574 turns on: RDF and GraphML.
@@ -42,7 +53,7 @@ from pathlib import Path
 
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
-from watermark.site.corpus_mirror import CLASSES, Mirror
+from watermark.site.corpus_mirror import CLASSES, Mirror, resolve_link_target
 from watermark.sites import active_profile
 
 log = get_logger(__name__)
@@ -94,6 +105,42 @@ def _git_short_commit(repo_root: Path) -> str:
     return out.stdout.strip()
 
 
+def _git_genesis_date(repo_root: Path) -> str:
+    """The repo's first-commit date (``YYYY-MM-DD``), or ``""`` when git is unavailable.
+
+    The peer of yidam's ``git::genesis_date``: resolve the root commit, then read its author
+    date. This is what fills ``yidam:genesisDate`` in the RDF exports — a property BOSC's
+    renderer has always supported and never populated, so the binary emitted 18 `yidam:`
+    predicates over this corpus where BOSC emitted 17.
+
+    Note it derives from the commit's **date**, not its message. yidam separately warns that
+    BOSC's genesis message does not match its expected ``chore: genesis — <name>`` form and
+    falls back to the directory name for the *domain* — a different field, and not one worth
+    rewriting history to satisfy.
+    """
+    try:
+        root = subprocess.run(
+            ["git", "rev-list", "--max-parents=0", "HEAD"],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.split()
+        if not root:
+            return ""
+        # `root[0]`, not the last: yidam takes `.lines().next()`. Identical while there is one
+        # root commit, and this repo has one — but a grafted history would silently diverge.
+        return subprocess.run(
+            ["git", "log", "-1", "--format=%as", root[0]],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return ""
+
+
 def resolve_provenance(
     settings: Settings | None = None, *, generated_at: str = ""
 ) -> ExportProvenance:
@@ -104,30 +151,12 @@ def resolve_provenance(
     return ExportProvenance(
         domain=f"BOSC corpus mirror — {label}",
         commit=_git_short_commit(settings.data_dir.parent),
+        genesis=_git_genesis_date(settings.data_dir.parent),
         generated_at=generated_at,
     )
 
 
 # --- link-target resolution (yidam model::resolve_link_target, in Python) -------------------
-def resolve_link_target(source_class: str, target: str) -> str:
-    """Resolve a link ``target`` (a path relative to the source instance's class dir) to a node
-    id (``<class>/<name>``). Targets that escape the corpus dir are returned verbatim — faithful
-    to yidam's ``resolve_link_target`` (``../concept/formation.yml`` from class ``reach`` →
-    ``concept/formation``)."""
-    parts: list[str] = [source_class]
-    for comp in target.split("/"):
-        if comp in (".", ""):
-            continue
-        if comp == "..":
-            if not parts:  # escaped the corpus root — yidam returns the target verbatim
-                return target
-            parts.pop()
-        else:
-            parts.append(comp)
-    joined = "/".join(parts)
-    return joined[: -len(".yml")] if joined.endswith(".yml") else joined
-
-
 def property_local_name(relationship: str) -> str:
     """Relationship → RDF property local name (``"relates to"`` → ``relatesTo``); anything
     unusable, or the plain ``"link"``, falls back to ``linksTo``. Yidam's
