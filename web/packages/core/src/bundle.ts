@@ -149,7 +149,16 @@ export interface Manifest {
   exports?: ExportRef[];
 }
 
-function candidateDirs(slug: string): string[] {
+/** A candidate root, and whether its own `site` field has to be checked before it is accepted.
+ *  Every other candidate encodes the slug in its PATH (`<root>/<slug>`, `bundles/<slug>`), so the
+ *  directory alone proves which site it is. The flat single-bundle override cannot: one directory
+ *  answers for every slug, so its manifest is the only thing that knows. */
+interface Candidate {
+  dir: string;
+  checkSite: boolean;
+}
+
+function candidateDirs(slug: string): Candidate[] {
   const override = env.WATERMARK_BUNDLE_DIR;
   if (override) {
     const root = isAbsolute(override) ? override : resolve(cwd(), override);
@@ -160,31 +169,69 @@ function candidateDirs(slug: string): string[] {
     // that directory does not exist, and red on every machine that had ever run an export. A
     // resolution that depends on un-tracked local state is worse than one that finds nothing.
     // Prefer a per-site subdir of the override; fall back to it as a single bundle.
-    return [join(root, slug), root];
+    return [
+      { dir: join(root, slug), checkSite: false },
+      { dir: root, checkSite: true },
+    ];
   }
-  const dirs = [resolve(FRONTEND_ROOT, "..", "data", "site", "bundles", slug)];
+  const dirs = [{ dir: resolve(FRONTEND_ROOT, "..", "data", "site", "bundles", slug), checkSite: false }];
   // The pre-#727 single-site path, kept as a Lima-only fallback so an existing local
   // bundle keeps rendering until it's re-exported to the per-site path.
-  if (slug === LIMA_SLUG) dirs.push(resolve(FRONTEND_ROOT, "..", "data", "site", "bundle"));
+  if (slug === LIMA_SLUG) {
+    dirs.push({ dir: resolve(FRONTEND_ROOT, "..", "data", "site", "bundle"), checkSite: false });
+  }
   return dirs;
+}
+
+/** The roots consulted for a slug, for the not-found message. */
+function candidatePaths(slug: string): string[] {
+  return candidateDirs(slug).map((c) => c.dir);
+}
+
+/** Whether a flat root's manifest claims the slug being resolved. A fixture with no `site` field
+ *  (synthetic, or pre-#762) cannot self-identify, so it is accepted — that tolerance is what keeps
+ *  the single-bundle back-compat path working, and it mirrors `manifestOrNull`'s own guard. */
+function claimsSite(manifestPath: string, slug: string): boolean {
+  try {
+    const site = (JSON.parse(readFileSync(manifestPath, "utf-8")) as Partial<Manifest>).site;
+    return !site || site === slug;
+  } catch {
+    return false; // unreadable/corrupt: not a usable bundle for anyone
+  }
 }
 
 const cachedDirs = new Map<string, string>();
 
-/** The resolved bundle root for a site — the first candidate that holds a `manifest.json`. */
-export function bundleDir(slug: string = activeSite()): string {
+/** The resolved bundle root for a site, or null — the first candidate holding a `manifest.json`
+ *  that is actually THIS site's. Non-throwing peer of {@link bundleDir}. */
+function resolveBundleDir(slug: string): string | null {
   const cached = cachedDirs.get(slug);
   if (cached) return cached;
-  for (const dir of candidateDirs(slug)) {
-    if (existsSync(join(dir, "manifest.json"))) {
-      cachedDirs.set(slug, dir);
-      return dir;
-    }
+  for (const { dir, checkSite } of candidateDirs(slug)) {
+    const file = join(dir, "manifest.json");
+    if (!existsSync(file)) continue;
+    // A flat override root serves ONE bundle for every slug it is asked about, so without this it
+    // hands that bundle's feeds back under any name — `loadFeed("timeline", "urbana")` returning
+    // Lima's rows, which is the #2005 cross-site leak reintroduced one layer down. `manifestOrNull`
+    // has guarded this since #1628, but only for its own callers, and only when nothing had
+    // already cached the manifest under the wrong slug: any earlier `loadManifest`/`hasFeed` for
+    // that slug populated `cachedManifests` and the guard was skipped on the cache hit. Refusing
+    // the directory here is what makes the check hold for every reader and every call order.
+    if (checkSite && !claimsSite(file, slug)) continue;
+    cachedDirs.set(slug, dir);
+    return dir;
   }
+  return null;
+}
+
+/** The resolved bundle root for a site — the first candidate that holds a `manifest.json`. */
+export function bundleDir(slug: string = activeSite()): string {
+  const dir = resolveBundleDir(slug);
+  if (dir !== null) return dir;
   throw new Error(
     `No content bundle found for site "${slug}". Run \`npm run build\` (plugin exports ` +
       `automatically) or set WATERMARK_BUNDLE_DIR=sites to use the committed ` +
-      `fixtures. Looked in:\n  ${candidateDirs(slug).join("\n  ")}`,
+      `fixtures. Looked in:\n  ${candidatePaths(slug).join("\n  ")}`,
   );
 }
 
@@ -238,8 +285,7 @@ export function manifestOrNull(slug: string = activeSite()): Manifest | null {
   const cached = cachedManifests.get(slug);
   if (cached) return cached;
   if (missingBundles.has(slug)) return null;
-  const present = candidateDirs(slug).some((dir) => existsSync(join(dir, "manifest.json")));
-  if (!present) {
+  if (resolveBundleDir(slug) === null) {
     missingBundles.add(slug);
     return null;
   }
