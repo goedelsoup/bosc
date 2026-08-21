@@ -320,3 +320,49 @@ def test_open_questions_conformance_with_the_real_binary(tmp_path: Path) -> None
     mem_paths = {f"{n.node_class}/{n.name}.yml" for n in yidam_tools.open_question_nodes(mirror)}
     assert mem_paths == binary_paths
     assert mem_paths  # Lima has open leads / [open] claims, so this is non-trivial
+
+
+# --- the CLI's --site flag must survive importing this module ------------------------------
+def test_importing_the_cli_never_resolves_settings() -> None:
+    """`watermark --site <slug>` is silently ignored if anything calls `get_settings()` while
+    the CLI is being imported.
+
+    The global `--site` callback writes `WATERMARK_SITE` and then resolves settings — but
+    `get_settings` is `lru_cache`d, so an import-time call caches the DEFAULT site first and
+    the flag becomes decorative. It regressed exactly that way: `ALL_TOOLS` was built at module
+    scope from `capabilities()`, which asked whether a vector index existed *for the active
+    site*, and `watermark --site west-union corpus-mirror` wrote Lima's mirror without a word.
+
+    Silently serving one site's corpus under another site's flag is the worst failure this
+    repo has, so the invariant is asserted rather than remembered.
+    """
+    import importlib
+    import subprocess
+    import sys
+
+    probe = (
+        "import watermark.config as c\n"
+        "orig = c.get_settings\n"
+        "calls = []\n"
+        "c.get_settings = lambda *a, **k: (calls.append(1), orig(*a, **k))[1]\n"
+        "import watermark.cli  # noqa: F401\n"
+        "print(len(calls))\n"
+    )
+    # A subprocess, because this test suite has already imported the CLI: the question is what
+    # a *fresh* interpreter does, which is what the `watermark` entry point actually is.
+    out = subprocess.run([sys.executable, "-c", probe], capture_output=True, text=True, check=True)
+    assert out.stdout.strip() == "0", (
+        "something calls get_settings() while `watermark.cli` is imported, so the cached "
+        "Settings resolve the DEFAULT site and `--site` is ignored"
+    )
+    importlib.invalidate_caches()
+
+
+def test_served_tool_names_needs_no_settings() -> None:
+    """The narrow invariant behind the test above: the served list is a function of the static
+    capabilities alone. `retrieve.vector` describes an index's state, not whether a tool
+    exists, so deciding the list must never reach for the active site."""
+    import inspect
+
+    assert not inspect.signature(yidam_tools.served_tool_names).parameters
+    assert "neighbors" in yidam_tools.served_tool_names()

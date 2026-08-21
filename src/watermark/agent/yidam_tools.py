@@ -319,6 +319,22 @@ def vector_ready(settings: Settings | None = None) -> bool:
     return index_exists(default_index_dir(settings))
 
 
+#: The capabilities that do not depend on runtime state, and so can be answered at import time.
+#:
+#: Kept separate from :func:`capabilities` deliberately: the served tool LIST is a function of
+#: these alone (`retrieve` is core either way — `retrieve.vector` describes an index's state, not
+#: whether the tool exists), and computing the list must not touch :func:`get_settings`. Doing so
+#: at module scope poisons its ``lru_cache`` with the default site before the CLI's ``--site``
+#: callback can set ``WATERMARK_SITE`` — which silently served one site's corpus under another
+#: site's flag until it was caught.
+_STATIC_CAPABILITIES: dict[str, Any] = {
+    "graph": True,  # the mirror is a projected entity graph; edges are its point
+    "phases": False,
+    "sangha": False,
+    "resources": False,
+}
+
+
 def capabilities(settings: Settings | None = None) -> dict[str, Any]:
     """What this server can actually back — filled honestly, not optimistically.
 
@@ -331,21 +347,23 @@ def capabilities(settings: Settings | None = None) -> dict[str, Any]:
     """
     return {
         "contract": _CONTRACT["contract"],
+        # The one dynamic entry: whether an index is built for the ACTIVE site, answered now
+        # rather than at import. Never consulted to decide which tools are served.
         "retrieve": {"vector": vector_ready(settings)},
-        "graph": True,  # the mirror is a projected entity graph; edges are its point
-        "phases": False,
-        "sangha": False,
-        "resources": False,
+        **_STATIC_CAPABILITIES,
     }
 
 
-def served_tool_names(settings: Settings | None = None) -> list[str]:
+def served_tool_names() -> list[str]:
     """The contract tools this server backs: every ``core`` one, plus each declared capability.
 
     Derived from the contract rather than written beside it, so a tool added upstream and not
     added here fails the conformance test instead of quietly not existing.
+
+    Takes no settings and must never need any: this runs at import time to build ``ALL_TOOLS``,
+    and a :func:`get_settings` call here resolves — and caches — the wrong site.
     """
-    caps = capabilities(settings)
+    caps = _STATIC_CAPABILITIES
     out = []
     for entry in _CONTRACT["tools"]:
         tier = entry.get("tier", "core")
