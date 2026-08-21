@@ -627,6 +627,67 @@
     }
   },
   {
+    "id": "echo-muskingum-wwtp",
+    "title": "Muskingum-basin NPDES discharger inventory (EPA ECHO)",
+    "scope": "reference",
+    "collection": "echo",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "npdes --basin muskingum",
+    "connector_ref": "watermark.hydrology.connectors.echo",
+    "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+    "external_url": "https://echo.epa.gov/tools/web-services",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "throttled",
+    "site_scope": "basin:muskingum",
+    "cadence": "quarterly",
+    "ttl_days": 180,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "cwa",
+      "muskingum",
+      "ohio-river",
+      "wastewater"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/echo/muskingum-wwtp.all-npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/muskingum-wwtp.huc-counts.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/muskingum-wwtp.potw.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "e9858d5183587a18aef18a7ee0ec66af191265c0251f920413064e9c198d8453",
+      "size_bytes": 408249,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark npdes --basin muskingum",
+      "verified": true
+    }
+  },
+  {
     "id": "economics-baseline",
     "title": "Coshocton County, OH Economic Baseline (BLS QCEW + US Census ACS)",
     "scope": "reference",

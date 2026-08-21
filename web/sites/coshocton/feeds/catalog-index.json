@@ -1,6 +1,6 @@
 {
   "site": "coshocton",
-  "catalog_version": "6f6c70b94e097e832a18623dc856696cfe533fdf6e5e0f4e386f846900bcb445",
+  "catalog_version": "5a1c12e11e54f7d11e0742ca4487c3e988c2d7ca2a7b6d67ef40a7afd6cc1818",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -657,6 +657,14 @@
       "site": "coshocton",
       "local_id": "datacenter-industry",
       "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:coshocton:echo-muskingum-wwtp",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "echo-muskingum-wwtp",
+      "title": "Muskingum-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {

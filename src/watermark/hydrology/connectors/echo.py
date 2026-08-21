@@ -3,11 +3,12 @@
 Pulls the inventory of CWA-permitted facilities in a watershed from ECHO's Clean
 Water Act REST services (``cwa_rest_services``) at ``echodata.epa.gov``. Used to
 build verified per-basin inventories of wastewater dischargers (the Maumee, Great
-Miami, Little Miami, Scioto, and Ohio Brush Creek today; a basin is a :class:`Basin`
-registry entry, never hardcoded).
+Miami, Little Miami, Scioto, Ohio Brush Creek, Portage, Muskingum and Sandusky today;
+a basin is a :class:`Basin` registry entry, never hardcoded).
 
 A basin is a set of USGS HUC-8 subbasins (e.g. the Maumee's seven in
-:data:`MAUMEE_HUC8S`, the Scioto's three in :data:`SCIOTO_HUC8S`). ECHO is queried one
+:data:`MAUMEE_HUC8S`, the Scioto's three in :data:`SCIOTO_HUC8S`, the Muskingum's six in
+:data:`MUSKINGUM_HUC8S`). ECHO is queried one
 HUC-8 at a time and the results are deduplicated to one row per physical facility by FRS
 Registry ID (:func:`deduplicate`).
 
@@ -144,6 +145,47 @@ OHIO_BRUSH_CREEK_HUC8S: dict[str, str] = {
 # a different side of that site's water balance from the basin its effluent enters.
 PORTAGE_HUC8S: dict[str, str] = {
     "04100010": "Cedar-Portage",
+}
+
+# The Muskingum River basin (subregion 0504, an Ohio River tributary): ALL SIX HUC-8 subbasins,
+# enumerated from the USGS Watershed Boundary Dataset itself rather than typed from memory —
+# hydro.nationalmap.gov/arcgis/rest/services/wbd/MapServer layer 4 (8-digit HU / Subbasin),
+# `huc8 >= '05040000' AND huc8 <= '05049999'`, the same authoritative service
+# :mod:`watermark.hydrology.connectors.wbd` already reads. Every one returns `states=OH`: this is
+# the largest river basin lying wholly inside Ohio (~20,849 km² published WBD area).
+#
+# ⚠️ THE CONTRAST WITH 04100010 AND 05090201 IS THE POINT. Those two are cataloging units that
+# are NOT watersheds, and both carry a "scope is wider than the name" caveat for it. This
+# subregion is the opposite case and must not inherit that warning reflexively: all six units are
+# one river's drainage tree. The Tuscarawas and the Walhonding join AT Coshocton to form the
+# Muskingum mainstem; Wills Creek and the Licking are Muskingum tributaries below that. So a
+# discharger anywhere in 0504 is genuinely upstream of the basin mouth, and no unit here is a
+# frontal-drainage sibling of another.
+#
+# Network points, each verified against the same WBD service by its `data/sites.yaml` coordinate:
+# mansfield -> 05040002 (Mohican), coshocton -> 05040004 (Muskingum), newark -> 05040006
+# (Licking), zanesville -> 05040004 (Muskingum). new-albany returns 05060001 (Upper Scioto) and
+# stays a Scioto site — SCIOTO's caveat about that cluster spilling east over the divide into the
+# Licking describes the CLUSTER, not the registry point, and neither basin claims the other's.
+# The Sandusky River basin (subregion 0410, Western Lake Erie): the single HUC-8 cataloging unit
+# 04100011 "Sandusky", enumerated from the same USGS WBD service as MUSKINGUM_HUC8S below. Wholly
+# in Ohio (~4,715 km²) and the largest single subbasin in 0410 — bigger than the Auglaize.
+#
+# It is a SIBLING of the Maumee and the Portage, not part of either: all three drain independently
+# to Western Lake Erie, which is why 04100011 is absent from MAUMEE_HUC8S and PORTAGE_HUC8S above.
+# All four of the network's Sandusky-basin points sit inside this one unit, each verified against
+# the WBD service by its `data/sites.yaml` coordinate: sandusky, fremont, tiffin and bucyrus.
+SANDUSKY_HUC8S: dict[str, str] = {
+    "04100011": "Sandusky",
+}
+
+MUSKINGUM_HUC8S: dict[str, str] = {
+    "05040001": "Tuscarawas",
+    "05040002": "Mohican",
+    "05040003": "Walhonding",
+    "05040004": "Muskingum",
+    "05040005": "Wills",
+    "05040006": "Licking",
 }
 
 
@@ -301,8 +343,77 @@ PORTAGE = Basin(
         "here as a statement about an effluent-dominated stream, not a diluted one.",
     ),
 )
+MUSKINGUM = Basin(
+    slug="muskingum",
+    huc8s=MUSKINGUM_HUC8S,
+    watershed=(
+        "Muskingum River — 6 HUC-8 subbasins, subregion 0504 (Ohio River tributary; the largest "
+        "river basin lying wholly within Ohio)"
+    ),
+    subject="Muskingum-basin NPDES wastewater dischargers",
+    file_stem="muskingum-wwtp",
+    caveats=(
+        "THE INVENTORY IS PULLED; THE DENOMINATORS ARE NOT REGISTERED. No Muskingum-basin "
+        "mainstem gage exists in mainstem-gages.yaml, so a discharger here whose receiving water "
+        "this table cannot name reports no_7q10 — UNSCREENABLE, NEVER UNAFFECTED. That is the "
+        "deliberate state, not an oversight: it is better than the alternative this basin makes "
+        "easy, which is borrowing a downstream integrator. Before #1120 the only Ohio River gage "
+        "registered anywhere was Greenup Dam, and it is scoped `basins: [ohio-brush-creek]` for "
+        "exactly this reason — the Muskingum meets the Ohio hundreds of river miles above "
+        "Greenup, where the river carries a fraction of the drainage area gaged there.",
+        "THE BASIN IS RESERVOIR-REGULATED, AND ANY LOW-FLOW STATISTIC REGISTERED HERE LATER MUST "
+        "SAY SO. The Muskingum Watershed Conservancy District operates a flood-control reservoir "
+        "system across these subbasins in partnership with the US Army Corps of Engineers, so a "
+        "gage below one of its structures measures a managed flow rather than a natural one. Per "
+        "this table's meta.cited_annotations rule a `regulation` block must quote a published "
+        "third-party classification, and no such judgment for any gage in this basin has been "
+        "read into the corpus — so an unannotated Muskingum gage would mean 'not yet read against "
+        "the published record', never 'unregulated'.",
+        "SUBREGION 0504 IS ONE RIVER'S DRAINAGE TREE, unlike the Portage's 04100010 and Ohio "
+        "Brush Creek's 05090201, whose caveats warn that a cataloging unit is not a watershed. "
+        "Every subbasin here drains to the Muskingum mainstem and on to the Ohio at Marietta: "
+        "the Tuscarawas and the Walhonding form the Muskingum at Coshocton, and Wills Creek and "
+        "the Licking enter below. No unit here is a frontal-drainage sibling of another, so the "
+        "upstream/downstream reasoning a screen depends on is sound within this file.",
+    ),
+)
+SANDUSKY = Basin(
+    slug="sandusky",
+    huc8s=SANDUSKY_HUC8S,
+    watershed=(
+        "Sandusky River — 1 HUC-8 subbasin (04100011 Sandusky), subregion 0410 (Western Lake "
+        "Erie, direct to the lake rather than through the Maumee)"
+    ),
+    subject="Sandusky-basin NPDES wastewater dischargers",
+    file_stem="sandusky-wwtp",
+    caveats=(
+        "THE INVENTORY IS PULLED; NO SANDUSKY GAGE IS REGISTERED. mainstem-gages.yaml holds no "
+        "entry for this basin, so a discharger here reports no_7q10 — UNSCREENABLE, NEVER "
+        "UNAFFECTED — until one is registered with its drainage-area rationale.",
+        "A BAY IS NOT A RIVER REACH, AND A 7Q10 DOES NOT DESCRIBE ONE. The network's own point in "
+        "this basin discharges to SANDUSKY BAY, an embayment at the river's mouth, not to a "
+        "flowing reach. A low-flow dilution ratio presumes a stream whose discharge sets the "
+        "denominator; in an estuary the mixing volume is set by lake level, seiche and wind "
+        "forcing instead. Registering the Sandusky River's eventual mainstem gage must therefore "
+        "NOT extend an alias to the bay: a river 7Q10 served to a bay outfall is not a "
+        "conservative approximation, it is a category error.",
+        "This basin is a SIBLING of the Maumee and the Portage, not a part of either. All three "
+        "reach Western Lake Erie independently, so a Sandusky discharger is neither upstream nor "
+        "downstream of a Maumee or Portage one and must never borrow either basin's denominator.",
+    ),
+)
 BASINS: dict[str, Basin] = {
-    b.slug: b for b in (MAUMEE, GREAT_MIAMI, LITTLE_MIAMI, SCIOTO, OHIO_BRUSH_CREEK, PORTAGE)
+    b.slug: b
+    for b in (
+        MAUMEE,
+        GREAT_MIAMI,
+        LITTLE_MIAMI,
+        SCIOTO,
+        OHIO_BRUSH_CREEK,
+        PORTAGE,
+        MUSKINGUM,
+        SANDUSKY,
+    )
 }
 
 # Merged HUC-8 -> name map for the per-HUC fetch display label, DERIVED from the registry so

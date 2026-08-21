@@ -3617,7 +3617,7 @@
     "producer_kind": "manual",
     "command": null,
     "connector_ref": null,
-    "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, modified *VD → *WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
+    "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, revision 2PD00006*VD modified to 2PD00006*WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
     "external_url": null,
     "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
     "access_tier": "public",
@@ -3650,7 +3650,7 @@
     },
     "observed_network": null,
     "citation": {
-      "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, modified *VD → *WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
+      "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, revision 2PD00006*VD modified to 2PD00006*WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
       "source_kind": "reference",
       "page": null,
       "pages": null,

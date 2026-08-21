@@ -49,6 +49,8 @@ _BASIN_POTW_INVENTORY: dict[str, tuple[str, str]] = {
     "little-miami": ("echo", "little-miami-wwtp.potw.yaml"),
     "ohio-brush-creek": ("echo", "ohio-brush-creek-wwtp.potw.yaml"),
     "portage": ("echo", "portage-wwtp.potw.yaml"),
+    "muskingum": ("echo", "muskingum-wwtp.potw.yaml"),
+    "sandusky": ("echo", "sandusky-wwtp.potw.yaml"),
 }
 _MIN_YEARS = 20  # climatic years of record needed for a defensible LP3 7Q10
 

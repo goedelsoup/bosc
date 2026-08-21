@@ -1,0 +1,650 @@
+meta:
+  subject: Sandusky-basin NPDES wastewater dischargers
+  scope: POTWs only (CWPFacilityTypeIndicator == POTW)
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Sandusky River — 1 HUC-8 subbasin (04100011 Sandusky), subregion 0410
+    (Western Lake Erie, direct to the lake rather than through the Maumee)
+  huc8s:
+    '04100011': Sandusky
+  dedup_key: FRS RegistryID
+  count: 31
+  caveats:
+  - ECHO's CWA facility service has no CWNS column; the POTW flag rests on CWPFacilityTypeIndicator.
+  - Facilities link to HUCs via WATERS (FacDerivedHuc); a permit that didn't geocode
+    can be missed.
+  - design_flow_mgd is null where ECHO returned no value; it is never estimated.
+  - THE INVENTORY IS PULLED; NO SANDUSKY GAGE IS REGISTERED. mainstem-gages.yaml holds
+    no entry for this basin, so a discharger here reports no_7q10 — UNSCREENABLE,
+    NEVER UNAFFECTED — until one is registered with its drainage-area rationale.
+  - 'A BAY IS NOT A RIVER REACH, AND A 7Q10 DOES NOT DESCRIBE ONE. The network''s
+    own point in this basin discharges to SANDUSKY BAY, an embayment at the river''s
+    mouth, not to a flowing reach. A low-flow dilution ratio presumes a stream whose
+    discharge sets the denominator; in an estuary the mixing volume is set by lake
+    level, seiche and wind forcing instead. Registering the Sandusky River''s eventual
+    mainstem gage must therefore NOT extend an alias to the bay: a river 7Q10 served
+    to a bay outfall is not a conservative approximation, it is a category error.'
+  - This basin is a SIBLING of the Maumee and the Portage, not a part of either. All
+    three reach Western Lake Erie independently, so a Sandusky discharger is neither
+    upstream nor downstream of a Maumee or Portage one and must never borrow either
+    basin's denominator.
+facilities:
+- frs_registry_id: '110064255568'
+  name: ADAMS ACRES SUBDIV
+  npdes_id: OH0079049
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.035
+  design_flow_missing: false
+  receiving_water: MUSKELLUNGE CREEK
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000111301'
+  county: SANDUSKY
+  latitude: 41.33431
+  longitude: -83.20567
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110040036118'
+  name: ATTICA STP
+  npdes_id: OH0023957
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.2
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: 041000110805
+  county: SENECA
+  latitude: 41.0614
+  longitude: -82.89162
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110008604910'
+  name: BETTSVILLE WWTP
+  npdes_id: OH0058211
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.175
+  design_flow_missing: false
+  receiving_water: ANOTHER NPDES, VARIOUS, WOLF CREEK
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000111004'
+  county: SENECA
+  latitude: 41.24182
+  longitude: -83.23543
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110009823236'
+  name: BLOOMVILLE WWTP
+  npdes_id: OH0021032
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: GRIFFIN DITCH
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: 041000110805
+  county: SENECA
+  latitude: 41.05585
+  longitude: -83.01902
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110004722578'
+  name: BUCYRUS WWTP
+  npdes_id: OH0052922
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.4
+  design_flow_missing: false
+  receiving_water: SANDUSKY RIVER
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110405'
+  county: CRAWFORD
+  latitude: 40.79738
+  longitude: -82.99308
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110006699876'
+  name: BUMFORD ROAD WWTP SD 6A
+  npdes_id: OH0036757
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.006
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110502'
+  county: MARION
+  latitude: 40.620559
+  longitude: -83.24591
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110002451962'
+  name: CITY OF BELLEVUE WATER POLLUTION CONTROL FACILITY
+  npdes_id: OH0020672
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110103'
+  county: SANDUSKY
+  latitude: 41.28061
+  longitude: -82.87076
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: 1
+  queried_huc8: '04100011'
+- frs_registry_id: '110002321087'
+  name: CITY OF SANDUSKY WPC
+  npdes_id: OH0027332
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 15.7
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110201'
+  county: ERIE
+  latitude: 41.45134
+  longitude: -82.725
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110002321023'
+  name: CLYDE WWTP
+  npdes_id: OH0024686
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.9
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110204'
+  county: SANDUSKY
+  latitude: 41.31442
+  longitude: -82.98531
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110071710361'
+  name: CRESTLINE WWTP
+  npdes_id: OH0020664
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.95
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110401'
+  county: CRAWFORD
+  latitude: 40.79554
+  longitude: -82.7504
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 0
+  formal_enf_count: 1
+  queried_huc8: '04100011'
+- frs_registry_id: '110064592016'
+  name: DANBURY TWP WWTP
+  npdes_id: OH0053660
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.8
+  design_flow_missing: false
+  receiving_water: LAKE ERIE/SANDUSKY BAY
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000111405'
+  county: OTTAWA
+  latitude: 41.52056
+  longitude: -82.82242
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110002345463'
+  name: FREMONT WATER RECLAMATION CENTER
+  npdes_id: OH0025291
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 7.6
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000111302'
+  county: SANDUSKY
+  latitude: 41.358483
+  longitude: -83.104321
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110006217977'
+  name: HAMMER HEINSMAN WWTP
+  npdes_id: OH0039268
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.03
+  design_flow_missing: false
+  receiving_water: WOLF CREEK
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000111004'
+  county: SENECA
+  latitude: 41.122874
+  longitude: -83.145015
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110009009713'
+  name: HONEY CREEK VILLAGE
+  npdes_id: OH0122327
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: 041000110806
+  county: SENECA
+  latitude: 41.08389
+  longitude: -83.18836
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110006217067'
+  name: LINDSEY WWTP
+  npdes_id: OH0022489
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.215
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000111404'
+  county: SANDUSKY
+  latitude: 41.42139
+  longitude: -83.22304
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110009008769'
+  name: LINLARE SSD NO 2
+  npdes_id: OH0079120
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.025
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110403'
+  county: CRAWFORD
+  latitude: 40.82097
+  longitude: -82.90151
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110015798822'
+  name: MORTON SUBDIVISION WWTP
+  npdes_id: OH0132870
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110403'
+  county: CRAWFORD
+  latitude: 40.81412
+  longitude: -82.93069
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110009822175'
+  name: NEVADA WWTP
+  npdes_id: OH0058181
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.09
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110302'
+  county: WYANDOT
+  latitude: 40.8148
+  longitude: -83.14027
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110008636672'
+  name: NEW WASHINGTON WWTP
+  npdes_id: OH0048259
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.15
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: 041000110801
+  county: CRAWFORD
+  latitude: 40.9742
+  longitude: -82.8757
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110009153174'
+  name: ODOT DIST 1 PARK NO 1-29
+  npdes_id: OH0078603
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.007
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110603'
+  county: WYANDOT
+  latitude: 40.88197
+  longitude: -83.33534
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110045521137'
+  name: ODOT DIST 1 PARK NO 1-30
+  npdes_id: OH0078611
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.007
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110605'
+  county: WYANDOT
+  latitude: 40.91736
+  longitude: -83.35403
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110064265833'
+  name: RANCHWOOD COMMUNITY
+  npdes_id: OH0125741
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TRIB OF SANDUSKY RIVER, UN TRIB. SANDUSKY
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000120401'
+  county: CRAWFORD
+  latitude: 40.8132
+  longitude: -82.86136
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110012300241'
+  name: REPUBLIC WWTP
+  npdes_id: OH0130249
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.12
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000111102'
+  county: SENECA
+  latitude: 41.130294
+  longitude: -83.011949
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110006196151'
+  name: SAWMILL CREEK WWTP
+  npdes_id: OH0053082
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: null
+  county: ERIE
+  latitude: 41.41046
+  longitude: -82.59144
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110006700221'
+  name: SYCAMORE WWTP
+  npdes_id: OH0021989
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.16
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: 041000110903
+  county: WYANDOT
+  latitude: 40.95268
+  longitude: -83.17493
+  compliance_status: Effluent - Non-monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110000555952'
+  name: TIFFIN WATER POLLUTION CONTROL CENTER
+  npdes_id: OH0052949
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 4.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000111103'
+  county: SENECA
+  latitude: 41.136944
+  longitude: -83.164722
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110039740420'
+  name: UPPER SANDUSKY WWTP
+  npdes_id: OH0020001
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110704'
+  county: WYANDOT
+  latitude: 40.84133
+  longitude: -83.27783
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110006258655'
+  name: VILLAGE OF CAREY
+  npdes_id: OH0020206
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.91
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110604'
+  county: WYANDOT
+  latitude: 40.94674
+  longitude: -83.37024
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110008604769'
+  name: VILLAGE OF GREEN SPRINGS
+  npdes_id: OH0022578
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000111203'
+  county: SENECA
+  latitude: 41.25987
+  longitude: -83.05606
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110006699858'
+  name: WESTWOOD ACRES SUBDIV
+  npdes_id: OH0036501
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.02
+  design_flow_missing: false
+  receiving_water: TRIB TO MUSKELLUNGE CREEK
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000111301'
+  county: SANDUSKY
+  latitude: 41.33027
+  longitude: -83.176353
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'
+- frs_registry_id: '110006341896'
+  name: WYNFORD HS & ELEM SCH
+  npdes_id: OH0126667
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: GRASS RUN
+  huc8: '04100011'
+  huc8_name: Sandusky
+  huc12: '041000110404'
+  county: CRAWFORD
+  latitude: 40.81942
+  longitude: -83.0165
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '04100011'

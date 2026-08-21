@@ -1,6 +1,6 @@
 {
   "site": "columbus",
-  "catalog_version": "9cd9c25b5a1ef29c71410d89855b428105a87331a7cfaa0c3575fa52514a0270",
+  "catalog_version": "eee3b278d01e00350d286e585e8a6c9148dfa367b4775f2c27aedeef106fb28d",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -657,6 +657,14 @@
       "site": "columbus",
       "local_id": "datacenter-industry",
       "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:echo-scioto-wwtp",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "echo-scioto-wwtp",
+      "title": "Scioto-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {

@@ -179,3 +179,54 @@ def test_site_reference_path_slug_scopes_the_default_and_honours_a_pin() -> None
         filename="x.yaml",
     )
     assert pinned == data_dir / "reference/ferc/legacy.yaml"
+
+
+# --- watermark.hydrology.basin x watermark.hydrology.connectors.echo -----------------------
+#
+# The basin-screen coverage gap (#1120 follow-up): a registered site whose basin has no
+# committed POTW inventory screens against an EMPTY SET and reports `total=0`, which reads
+# exactly like "this basin has no dischargers". `basin._load_dischargers` returns `[]` for a
+# missing file on purpose — an absent inventory must never fall back to another basin's
+# dischargers — so the silence is a deliberate safety property and cannot be removed. What can
+# be removed is the possibility of a registered site sitting behind it unnoticed, which is what
+# these two guards do.
+#
+# All three failure modes below were live simultaneously and none of them raised anything:
+#   * `muskingum` (mansfield, coshocton) was in no registry at all — `_inventory_path` fell
+#     through to a conventional filename that did not exist.
+#   * `sandusky` (sandusky) was likewise unregistered.
+#   * `scioto` (columbus, new-albany, piketon, portsmouth) WAS registered in both
+#     `_BASIN_POTW_INVENTORY` and `echo.BASINS`, with a full three-HUC-8 `Basin` and curated
+#     mainstem gages waiting for it — and the inventory had simply never been pulled. That is
+#     the worse shape: the code advertised support and the screen returned nothing.
+
+
+def test_every_registered_sites_basin_is_a_registered_echo_basin() -> None:
+    """A profile's `basin` must name a basin the ECHO connector can actually pull."""
+    from watermark.hydrology.connectors.echo import BASINS
+
+    unregistered: dict[str, list[str]] = {}
+    for slug, prof in SITES.items():
+        if prof.basin not in BASINS:
+            unregistered.setdefault(prof.basin, []).append(slug)
+    assert not unregistered, (
+        f"registered sites sit on basins the ECHO connector does not know: {unregistered} — "
+        "add a `Basin` (HUC-8 set + caveats) in watermark.hydrology.connectors.echo rather "
+        "than letting `watermark npdes --basin` refuse it and the screen read total=0"
+    )
+
+
+def test_every_registered_sites_basin_has_a_committed_potw_inventory() -> None:
+    """...and that basin's inventory must be pulled, or its sites screen a silent empty set."""
+    from watermark.hydrology.basin import _BASIN_POTW_INVENTORY
+
+    missing: dict[str, list[str]] = {}
+    for slug, prof in SITES.items():
+        rel = _BASIN_POTW_INVENTORY.get(prof.basin, ("echo", f"{prof.basin}-wwtp.potw.yaml"))
+        if not (REPO_ROOT / "data" / "reference" / Path(*rel)).is_file():
+            missing.setdefault(prof.basin, []).append(slug)
+    assert not missing, (
+        f"registered sites screen against a POTW inventory that was never pulled: {missing} — "
+        "run `watermark npdes --basin <slug>` and commit the result. A missing file is an "
+        "EMPTY screen (total=0), which is indistinguishable from a basin with no dischargers"
+    )

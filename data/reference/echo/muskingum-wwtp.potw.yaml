@@ -1,0 +1,3027 @@
+meta:
+  subject: Muskingum-basin NPDES wastewater dischargers
+  scope: POTWs only (CWPFacilityTypeIndicator == POTW)
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Muskingum River — 6 HUC-8 subbasins, subregion 0504 (Ohio River tributary;
+    the largest river basin lying wholly within Ohio)
+  huc8s:
+    '05040001': Tuscarawas
+    '05040002': Mohican
+    '05040003': Walhonding
+    '05040004': Muskingum
+    '05040005': Wills
+    '05040006': Licking
+  dedup_key: FRS RegistryID
+  count: 149
+  caveats:
+  - ECHO's CWA facility service has no CWNS column; the POTW flag rests on CWPFacilityTypeIndicator.
+  - Facilities link to HUCs via WATERS (FacDerivedHuc); a permit that didn't geocode
+    can be missed.
+  - design_flow_mgd is null where ECHO returned no value; it is never estimated.
+  - 'THE INVENTORY IS PULLED; THE DENOMINATORS ARE NOT REGISTERED. No Muskingum-basin
+    mainstem gage exists in mainstem-gages.yaml, so a discharger here whose receiving
+    water this table cannot name reports no_7q10 — UNSCREENABLE, NEVER UNAFFECTED.
+    That is the deliberate state, not an oversight: it is better than the alternative
+    this basin makes easy, which is borrowing a downstream integrator. Before #1120
+    the only Ohio River gage registered anywhere was Greenup Dam, and it is scoped
+    `basins: [ohio-brush-creek]` for exactly this reason — the Muskingum meets the
+    Ohio hundreds of river miles above Greenup, where the river carries a fraction
+    of the drainage area gaged there.'
+  - THE BASIN IS RESERVOIR-REGULATED, AND ANY LOW-FLOW STATISTIC REGISTERED HERE LATER
+    MUST SAY SO. The Muskingum Watershed Conservancy District operates a flood-control
+    reservoir system across these subbasins in partnership with the US Army Corps
+    of Engineers, so a gage below one of its structures measures a managed flow rather
+    than a natural one. Per this table's meta.cited_annotations rule a `regulation`
+    block must quote a published third-party classification, and no such judgment
+    for any gage in this basin has been read into the corpus — so an unannotated Muskingum
+    gage would mean 'not yet read against the published record', never 'unregulated'.
+  - 'SUBREGION 0504 IS ONE RIVER''S DRAINAGE TREE, unlike the Portage''s 04100010
+    and Ohio Brush Creek''s 05090201, whose caveats warn that a cataloging unit is
+    not a watershed. Every subbasin here drains to the Muskingum mainstem and on to
+    the Ohio at Marietta: the Tuscarawas and the Walhonding form the Muskingum at
+    Coshocton, and Wills Creek and the Licking enter below. No unit here is a frontal-drainage
+    sibling of another, so the upstream/downstream reasoning a screen depends on is
+    sound within this file.'
+facilities:
+- frs_registry_id: '110006803272'
+  name: ATWOOD REGIONAL W & SD
+  npdes_id: OH0050253
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.65
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400010805
+  county: CARROLL
+  latitude: 40.52259
+  longitude: -81.3029
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110011016783'
+  name: BALTIC WWTP
+  npdes_id: OH0047783
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0001
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011001'
+  county: TUSCARAWAS
+  latitude: 40.45696
+  longitude: -81.69663
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110000735296'
+  name: BARBERTON WPCF
+  npdes_id: OH0024007
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 6.0
+  design_flow_missing: false
+  receiving_water: TUSCARAWAS RIVER
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010301'
+  county: SUMMIT
+  latitude: 40.98356
+  longitude: -81.60036
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110016191100'
+  name: BEACH CITY WWTP
+  npdes_id: OH0045489
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011103'
+  county: STARK
+  latitude: 40.64876
+  longitude: -81.5729
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006218538'
+  name: BREWSTER WWTP
+  npdes_id: OH0020567
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.665
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011103'
+  county: STARK
+  latitude: 40.710325
+  longitude: -81.597877
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110071711257'
+  name: BROKEN FENCE WWTP NO 32
+  npdes_id: OH0033901
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.04
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010301'
+  county: SUMMIT
+  latitude: 40.96954
+  longitude: -81.6234
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006274405'
+  name: CANAL FULTON REGIONAL WWTP
+  npdes_id: OH0022047
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400010309
+  county: STARK
+  latitude: 40.86299
+  longitude: -81.57054
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006660586'
+  name: CHIPPEWA LAKE SD NO 700
+  npdes_id: OH0026395
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.874
+  design_flow_missing: false
+  receiving_water: BUCK CREEK, UNNAMED TRIB OF CHIPPEWA CREEK
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010202'
+  county: MEDINA
+  latitude: 41.051129
+  longitude: -81.895872
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110064643998'
+  name: CITY OF CANTON WATER RECLAMATION FACILITY
+  npdes_id: OH0024350
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 39.0
+  design_flow_missing: false
+  receiving_water: NIMISHILLEN CREEK
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010506'
+  county: STARK
+  latitude: 40.75648
+  longitude: -81.37096
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: 1
+  queried_huc8: '05040001'
+- frs_registry_id: '110002040265'
+  name: CITY OF ORRVILLE WWTP
+  npdes_id: OH0020371
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.2
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010203'
+  county: WAYNE
+  latitude: 40.85904
+  longitude: -81.76368
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006273923'
+  name: COUNTRY LAWN CTR FOR REHAB NURSING HOME
+  npdes_id: OH0129461
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UT OF THE TUSCARAWAS RIVER, UT OF TUSCARAWAS RIVER
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011203'
+  county: STARK
+  latitude: 40.7097
+  longitude: -81.5582
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006261516'
+  name: DALTON WWTP
+  npdes_id: OH0021687
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.4
+  design_flow_missing: false
+  receiving_water: BEAVER DAM DITCH, ORRVILLE DITCH
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010306'
+  county: WAYNE
+  latitude: 40.799118
+  longitude: -81.690575
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009611429'
+  name: DEE MAR ALLOTMENT WWTP
+  npdes_id: OH0035831
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.07
+  design_flow_missing: false
+  receiving_water: FOHL DITCH TRIB OF TUSCARAWAS RIVER
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011203'
+  county: STARK
+  latitude: 40.73192
+  longitude: -81.46873
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110020794265'
+  name: DOVER WWTP
+  npdes_id: OH0024945
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.0
+  design_flow_missing: false
+  receiving_water: TUSCARAWAS RIVER
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011204'
+  county: TUSCARAWAS
+  latitude: 40.51833
+  longitude: -81.47708
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006223915'
+  name: DOYLESTOWN WPCF
+  npdes_id: OH0021342
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.5
+  design_flow_missing: false
+  receiving_water: SILVER CREEK, SIVER CREEK
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010207'
+  county: WAYNE
+  latitude: 40.96487
+  longitude: -81.68081
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009635430'
+  name: FORMER TRUMP RD SCHOOL
+  npdes_id: OH0129551
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UT OF E. BRANCH OF NIMISHILLEN CREEK
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010502'
+  county: STARK
+  latitude: 40.79668
+  longitude: -81.31976
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006273479'
+  name: FORTY CORNERS MOBILE VLG
+  npdes_id: OH0129399
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400010309
+  county: STARK
+  latitude: 40.8372
+  longitude: -81.54627
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009630961'
+  name: GNADENHUTTEN WWTP
+  npdes_id: OH0020869
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.25
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050600012003'
+  county: TUSCARAWAS
+  latitude: 40.357378
+  longitude: -81.437443
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006273166'
+  name: HARTVILLE WWTP
+  npdes_id: OH0020923
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.6
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010501'
+  county: STARK
+  latitude: 40.95741
+  longitude: -81.32864
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110011017005'
+  name: JEWETT WWTP
+  npdes_id: OH0041360
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.09
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010704'
+  county: HARRISON
+  latitude: 40.3691
+  longitude: -81.012
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110039701739'
+  name: KERR ALLOTMENT WWTP
+  npdes_id: OH0048437
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.008
+  design_flow_missing: false
+  receiving_water: TRIBUT, BEAVER DAM CREEK
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011703'
+  county: TUSCARAWAS
+  latitude: 40.45993
+  longitude: -81.39905
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110015972704'
+  name: KIDRON WWTP
+  npdes_id: OH0133451
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.16
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400010903
+  county: WAYNE
+  latitude: 40.734444
+  longitude: -81.726389
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110064334046'
+  name: LAKE HARMONY SUBDIV
+  npdes_id: OH0083933
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.036
+  design_flow_missing: false
+  receiving_water: SUGAR CREEK
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400010904
+  county: WAYNE
+  latitude: 40.79355
+  longitude: -81.73478
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110064610327'
+  name: LOUISVILLE WWTP
+  npdes_id: OH0026182
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.0
+  design_flow_missing: false
+  receiving_water: E. BRANCH NIMISHILLEN
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010502'
+  county: STARK
+  latitude: 40.81778
+  longitude: -81.27643
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: 1
+  queried_huc8: '05040001'
+- frs_registry_id: '110039693249'
+  name: MAGNOLIA VILLAGE WWTP
+  npdes_id: OH0091847
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.33
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010606'
+  county: STARK
+  latitude: 40.65549
+  longitude: -81.30905
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006699554'
+  name: MALVERN WATER POLLUTION CONTROL CENTER
+  npdes_id: OH0051144
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.8
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010605'
+  county: CARROLL
+  latitude: 40.68723
+  longitude: -81.19042
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: 1
+  queried_huc8: '05040001'
+- frs_registry_id: '110006223817'
+  name: MARSHALLVILLE WWTP
+  npdes_id: OH0022624
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.13
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010206'
+  county: WAYNE
+  latitude: 40.90496
+  longitude: -81.73389
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 2
+  formal_enf_count: 1
+  queried_huc8: '05040001'
+- frs_registry_id: '110000735223'
+  name: MASSILLON WWTP
+  npdes_id: OH0020516
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 17.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011202'
+  county: STARK
+  latitude: 40.76786
+  longitude: -81.52342
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009612534'
+  name: MAYFIELD PARK MHP
+  npdes_id: OH0131547
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010101'
+  county: SUMMIT
+  latitude: 40.97425
+  longitude: -81.45428
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110014390088'
+  name: MCWC - TAPPAN LAKE CAMPGROUND
+  npdes_id: OH0125121
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.051
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011503'
+  county: HARRISON
+  latitude: 40.320034
+  longitude: -81.191548
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006700070'
+  name: 'MELODY VILLAGE WWTP #10'
+  npdes_id: OH0027677
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.16
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010301'
+  county: SUMMIT
+  latitude: 40.976952
+  longitude: -81.641384
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110064266663'
+  name: MINERAL CITY WASTEWATER TREATMENT PLANT
+  npdes_id: OH0021504
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.15
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400010804
+  county: TUSCARAWAS
+  latitude: 40.599914
+  longitude: -81.355178
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110064255443'
+  name: MINERVA STP
+  npdes_id: OH0021849
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.93
+  design_flow_missing: false
+  receiving_water: SANDY CREEK
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010605'
+  county: STARK
+  latitude: 40.716574
+  longitude: -81.108539
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006219546'
+  name: MOLLY STARK HOSPITAL WWTP
+  npdes_id: OH0045926
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: UT OF EAST BRANCH NIMISHILLEN CREEK
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010502'
+  county: STARK
+  latitude: 40.87848
+  longitude: -81.24884
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009153548'
+  name: MOUNT EATON VILLAGE
+  npdes_id: OH0126233
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.045
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400010903
+  county: WAYNE
+  latitude: 40.694213
+  longitude: -81.701548
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006309583'
+  name: MT HOPE WWTP
+  npdes_id: OH0092282
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011101'
+  county: HOLMES
+  latitude: 40.624468
+  longitude: -81.780217
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009489142'
+  name: NEW PHILADELPHIA WWTP
+  npdes_id: OH0026727
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 4.5
+  design_flow_missing: false
+  receiving_water: TUSCARAWAS RIVER
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011704'
+  county: TUSCARAWAS
+  latitude: 40.47632
+  longitude: -81.42522
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006367564'
+  name: NEWCOMERSTOWN WWTP
+  npdes_id: OH0026689
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.25
+  design_flow_missing: false
+  receiving_water: TUSCARAWAS RIVER
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400011804
+  county: COSHOCTON
+  latitude: 40.267861
+  longitude: -81.626859
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006261115'
+  name: RITTMAN WWTP
+  npdes_id: OH0102857
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.6
+  design_flow_missing: false
+  receiving_water: RIVER STYX
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010204'
+  county: WAYNE
+  latitude: 40.97173
+  longitude: -81.76346
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110011016827'
+  name: SANDYVILLE-EAST SPARTA WASTEWATER TREATMENT PLANT
+  npdes_id: OH0048615
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010606'
+  county: TUSCARAWAS
+  latitude: 40.54141
+  longitude: -81.44171
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110008577922'
+  name: SEVILLE WWTP
+  npdes_id: OH0027375
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010205'
+  county: MEDINA
+  latitude: 41.0043
+  longitude: -81.86294
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006219216'
+  name: SHOOTERS SPORTS BAR
+  npdes_id: OH0133248
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.004
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010502'
+  county: STARK
+  latitude: 40.87835
+  longitude: -81.2574
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110008596867'
+  name: SMITHVILLE WWTP
+  npdes_id: OH0021971
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.28
+  design_flow_missing: false
+  receiving_water: SUGAR CREEK
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400010902
+  county: WAYNE
+  latitude: 40.86182
+  longitude: -81.84795
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006660773'
+  name: SPRING VALLEY ALLOTMENT WWTP
+  npdes_id: OH0064360
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.08
+  design_flow_missing: false
+  receiving_water: PLUM RUN - TRIBUTARY OF TUSCARAWAS RIVER
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010305'
+  county: STARK
+  latitude: 40.906942
+  longitude: -81.583291
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110045521253'
+  name: SPRINGWOOD LAKE CAMP CLUB
+  npdes_id: OH0128503
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011203'
+  county: STARK
+  latitude: 40.697562
+  longitude: -81.439072
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009699255'
+  name: SUGARCREEK WWTP
+  npdes_id: OH0027618
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011005'
+  county: TUSCARAWAS
+  latitude: 40.51259
+  longitude: -81.62229
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006699956'
+  name: TUSCARAWAS WWTP
+  npdes_id: OH0027855
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.15
+  design_flow_missing: false
+  receiving_water: TUSCARAWAS RIVER
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400011802
+  county: TUSCARAWAS
+  latitude: 40.3972
+  longitude: -81.3897
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110000737524'
+  name: TWIN CITY WWTP
+  npdes_id: OH0020079
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.7
+  design_flow_missing: false
+  receiving_water: STILLWATER CREEK
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011604'
+  county: TUSCARAWAS
+  latitude: 40.4059
+  longitude: -81.34466
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009822004'
+  name: UPPER TUSCARAWAS WWTP NO 36
+  npdes_id: OH0064017
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 4.0
+  design_flow_missing: false
+  receiving_water: TUSCARAWAS RIVER, TUSCARAWAS RV
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010101'
+  county: SUMMIT
+  latitude: 41.005352
+  longitude: -81.484543
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110010127031'
+  name: VILLAGE OF BOWERSTON WASTEWATER TREATMENT PLANT
+  npdes_id: OH0041378
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.051
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010707'
+  county: HARRISON
+  latitude: 40.4293
+  longitude: -81.18934
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006700294'
+  name: VILLAGE OF CARROLLTON
+  npdes_id: OH0020931
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.75
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400010801
+  county: CARROLL
+  latitude: 40.56537
+  longitude: -81.08398
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006219261'
+  name: VILLAGE OF NAVARRE WWTP
+  npdes_id: OH0020036
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011203'
+  county: STARK
+  latitude: 40.71933
+  longitude: -81.50856
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009822816'
+  name: VILLAGE OF SCIO WWTP
+  npdes_id: OH0029271
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.2
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010704'
+  county: HARRISON
+  latitude: 40.40367
+  longitude: -81.09245
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006660577'
+  name: VILLAGE OF STRASBURG WASTEWATER TREATMENT
+  npdes_id: OH0027553
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3375
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011105'
+  county: TUSCARAWAS
+  latitude: 40.59414
+  longitude: -81.52484
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110000737604'
+  name: WADSWORTH WWTP
+  npdes_id: OH0027936
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 5.0
+  design_flow_missing: false
+  receiving_water: RIVER STYX
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010204'
+  county: MEDINA
+  latitude: 41.00475
+  longitude: -81.7621
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006660871'
+  name: WAYNE COUNTY AIRPORT
+  npdes_id: OH0092207
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0015
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400010902
+  county: WAYNE
+  latitude: 40.87277
+  longitude: -81.878163
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009152843'
+  name: WAYNE COUNTY GINGERY ALLOTMENT STP
+  npdes_id: OH0036579
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.012
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400030601'
+  county: WAYNE
+  latitude: 40.88552
+  longitude: -81.91985
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006342528'
+  name: WEST COMMUNITY CENTER
+  npdes_id: OH0126381
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0057
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010406'
+  county: COLUMBIANA
+  latitude: 40.7472
+  longitude: -81.04206
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009152727'
+  name: WEST LAFAYETTE WWTP
+  npdes_id: OH0022284
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.32
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: 050400011904
+  county: COSHOCTON
+  latitude: 40.2741
+  longitude: -81.7441
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110009613178'
+  name: WILKSHIRE HILLS WWTP
+  npdes_id: OH0076261
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.75
+  design_flow_missing: false
+  receiving_water: TUSCARAWAS RIVER
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400011204'
+  county: TUSCARAWAS
+  latitude: 40.62791
+  longitude: -81.44167
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110006699652'
+  name: ZELRAY PARK WWTP NO 48
+  npdes_id: OH0045497
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.132
+  design_flow_missing: false
+  receiving_water: TURKEYFOOT LAKE
+  huc8: '05040001'
+  huc8_name: Tuscarawas
+  huc12: '050400010105'
+  county: SUMMIT
+  latitude: 40.96035
+  longitude: -81.55285
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040001'
+- frs_registry_id: '110012521235'
+  name: ASHLAND WWTP
+  npdes_id: OH0023906
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 5.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020601'
+  county: ASHLAND
+  latitude: 40.8765
+  longitude: -82.2805
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110008587029'
+  name: CAMP NUHOP
+  npdes_id: OH0126446
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: PLEASANT HILL LAKE
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020405'
+  county: ASHLAND
+  latitude: 40.63514
+  longitude: -82.33288
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110000553400'
+  name: CITY OF MANSFIELD WWTP
+  npdes_id: OH0026328
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 24.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020204'
+  county: RICHLAND
+  latitude: 40.74801
+  longitude: -82.48436
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: 1
+  queried_huc8: '05040002'
+- frs_registry_id: '110006368144'
+  name: CITY OF SHELBY WWTP
+  npdes_id: OH0023540
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020102'
+  county: RICHLAND
+  latitude: 40.9085
+  longitude: -82.64478
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110006661059'
+  name: FIN FEATHER AND FUR OUTFITTERS MINI-MALL
+  npdes_id: OH0126748
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.005
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020603'
+  county: ASHLAND
+  latitude: 40.85733
+  longitude: -82.25008
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110004667236'
+  name: GB FABRICATION CO
+  npdes_id: OH0126624
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UT OF BEAR RUN CREEK
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020102'
+  county: RICHLAND
+  latitude: 40.85761
+  longitude: -82.60471
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 1
+  formal_enf_count: 1
+  queried_huc8: '05040002'
+- frs_registry_id: '110009639588'
+  name: HERITAGE INN
+  npdes_id: OH0126543
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.015
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020202'
+  county: RICHLAND
+  latitude: 40.7822
+  longitude: -82.40705
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110009689239'
+  name: HIDDEN ACRES CAMPGROUND INC
+  npdes_id: OH0138665
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020501'
+  county: WAYNE
+  latitude: 40.94065
+  longitude: -82.14742
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110006309627'
+  name: OCTOBER HILLS WWTP
+  npdes_id: OH0092274
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.06
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: 050400020804
+  county: HOLMES
+  latitude: 40.588034
+  longitude: -82.190343
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110006358235'
+  name: ODNR - MOHICAN STATE FOREST WWTP
+  npdes_id: OH0052558
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.032
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020405'
+  county: ASHLAND
+  latitude: 40.60428
+  longitude: -82.30886
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110009629438'
+  name: ODOT REST AREA 3-36
+  npdes_id: OH0088269
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.02
+  design_flow_missing: false
+  receiving_water: UT TO MUDDY FORK
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020501'
+  county: RICHLAND COUNTY
+  latitude: 40.876457
+  longitude: -82.296045
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110006352730'
+  name: VILALGE OF PERRYSVILLE WASTEWATER TREATMENT PLANT
+  npdes_id: OH0021075
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.12
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: 050400020802
+  county: ASHLAND
+  latitude: 40.65316
+  longitude: -82.3096
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110064256273'
+  name: VILLAGE OF BUTLER REGIONAL WWTP
+  npdes_id: OH0021431
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.55
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020403'
+  county: RICHLAND
+  latitude: 40.593573
+  longitude: -82.422506
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110011017728'
+  name: VILLAGE OF LEXINGTON WWTP
+  npdes_id: OH0020257
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020303'
+  county: RICHLAND
+  latitude: 40.678725
+  longitude: -82.58454
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110006358208'
+  name: VILLAGE OF LOUDONVILLE WASTEWATER TREATMENT PLANT
+  npdes_id: OH0030996
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.2
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: 050400020803
+  county: ASHLAND
+  latitude: 40.636515
+  longitude: -82.235039
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110008596796'
+  name: WEST SALEM WWTP
+  npdes_id: OH0021377
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.554
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020501'
+  county: WAYNE
+  latitude: 40.96659
+  longitude: -82.11975
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110006278358'
+  name: WOOSTER OUTDOOR CTR DBA PLEASANT HILL OUTDOOR CAMP
+  npdes_id: OH0130541
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040002'
+  huc8_name: Mohican
+  huc12: '050400020405'
+  county: RICHLAND
+  latitude: 40.63142
+  longitude: -82.34283
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040002'
+- frs_registry_id: '110011017531'
+  name: APPLE CREEK WWTP
+  npdes_id: OH0023892
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.43
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030602'
+  county: WAYNE
+  latitude: 40.75546
+  longitude: -81.84806
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006203777'
+  name: BERLIN WWTP
+  npdes_id: OH0112127
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: 050400030802
+  county: HOLMES
+  latitude: 40.561143
+  longitude: -81.79971
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110015644677'
+  name: CHESTERVILLE WWTP
+  npdes_id: OH0124478
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.095
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030202'
+  county: MORROW
+  latitude: 40.47353
+  longitude: -82.67857
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110000551625'
+  name: CITY OF MOUNT VERNON
+  npdes_id: OH0026662
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 5.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030304'
+  county: KNOX
+  latitude: 40.37925
+  longitude: -82.468528
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110000735456'
+  name: CITY OF WOOSTER-WATER RESOURCE RECOVERYFACILITY
+  npdes_id: OH0028185
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 7.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030505'
+  county: WAYNE
+  latitude: 40.78571
+  longitude: -81.94968
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006261892'
+  name: CRESTON STP
+  npdes_id: OH0021172
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: KILLBUCK CREEK
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030501'
+  county: WAYNE
+  latitude: 40.98522
+  longitude: -81.9025
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110064257067'
+  name: DANVILLE WWTP
+  npdes_id: OH0024872
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.2
+  design_flow_missing: false
+  receiving_water: E. BRANCH OF JELLOWAY CREEK
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030402'
+  county: KNOX
+  latitude: 40.44298
+  longitude: -82.26934
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110009153496'
+  name: FREDERICKSBURG WWTP
+  npdes_id: OH0123501
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.06
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030606'
+  county: WAYNE
+  latitude: 40.67842
+  longitude: -81.87168
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006660531'
+  name: FREDERICKTOWN WWTP
+  npdes_id: OH0025283
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.7
+  design_flow_missing: false
+  receiving_water: N. BRANCH KOKOSING RIVER
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030103'
+  county: KNOX
+  latitude: 40.48007
+  longitude: -82.53414
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006307843'
+  name: GAMBIER WWTP
+  npdes_id: OH0025321
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.45
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030307'
+  county: KNOX
+  latitude: 40.375844
+  longitude: -82.381453
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006203731'
+  name: GUGGISBERG SWISS INN
+  npdes_id: OH0117609
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: DOUGHTY CREEK, UNNAMED TRIB OF DOUGHTY CREEK
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: 050400030802
+  county: HOLMES
+  latitude: 40.52331
+  longitude: -81.79961
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110008585049'
+  name: HOLMESVILLE WWTP
+  npdes_id: OH0125903
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.095
+  design_flow_missing: false
+  receiving_water: SALT CREEK
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030606'
+  county: HOLMES
+  latitude: 40.63501
+  longitude: -81.92466
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006309592'
+  name: JAIL WWTP
+  npdes_id: OH0117781
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0265
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030702'
+  county: HOLMES
+  latitude: 40.615
+  longitude: -81.917222
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006700089'
+  name: KILLBUCK WWTP
+  npdes_id: OH0025933
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.411
+  design_flow_missing: false
+  receiving_water: KILLBUCK CREEK
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: 050400030804
+  county: HOLMES
+  latitude: 40.48972
+  longitude: -81.98254
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110015745005'
+  name: KNOX COUNTY SEWER DISTRICT PLEASANT VIEW ACRES
+  npdes_id: OH0081671
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.024
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030305'
+  county: KNOX
+  latitude: 40.454
+  longitude: -82.39911
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006699885'
+  name: LITTLE JELLOWAY WWTP
+  npdes_id: OH0037117
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.9
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030401'
+  county: KNOX
+  latitude: 40.389863
+  longitude: -82.482767
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006309360'
+  name: MILLERSBURG WWTP
+  npdes_id: OH0020168
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.4
+  design_flow_missing: false
+  receiving_water: KILLBUCK CREEK
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030705'
+  county: HOLMES
+  latitude: 40.53732
+  longitude: -81.91641
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006699643'
+  name: SHREVE WWTP
+  npdes_id: OH0045373
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.483
+  design_flow_missing: false
+  receiving_water: N/A, SHREVE CREEK, SILVER CREEK
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030603'
+  county: WAYNE
+  latitude: 40.684063
+  longitude: -82.017192
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110012299887'
+  name: SPARTA WWTP
+  npdes_id: OH0130788
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.042
+  design_flow_missing: false
+  receiving_water: MILE RUN CREEK
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030202'
+  county: MORROW
+  latitude: 40.395472
+  longitude: -82.699309
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006309459'
+  name: THE INN AT HONEY RUN
+  npdes_id: OH0131661
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.014
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030703'
+  county: HOLMES
+  latitude: 40.573822
+  longitude: -81.873517
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110009673852'
+  name: VILLAGE OF WARSAW WASTEWATER TREATMENT PLANT
+  npdes_id: OH0050750
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.17
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: 050400030905
+  county: COSHOCTON
+  latitude: 40.3316
+  longitude: -82.0048
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006309413'
+  name: WALNUT CREEK WWTP
+  npdes_id: OH0102903
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.4
+  design_flow_missing: false
+  receiving_water: WALNUT CREEK
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400011004'
+  county: HOLMES
+  latitude: 40.4784
+  longitude: -81.9432
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110008585094'
+  name: WAYNE COUNTY BURBANK WWTP
+  npdes_id: OH0126063
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.07
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030502'
+  county: WAYNE
+  latitude: 40.988841
+  longitude: -82.005649
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110011017185'
+  name: WAYNE COUNTY EASTWOOD SUBDIVISION STP
+  npdes_id: OH0036561
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.16
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: 050400010901
+  county: WAYNE
+  latitude: 40.79768
+  longitude: -81.94729
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110006238197'
+  name: WEST HOLMES HIGH SCHOOL
+  npdes_id: OH0126195
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.042
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030701'
+  county: HOLMES
+  latitude: 40.578102
+  longitude: -82.016371
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110010127004'
+  name: WESTFIELD CENTER WWTP
+  npdes_id: OH0045390
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.635
+  design_flow_missing: false
+  receiving_water: CAMEL CREEK
+  huc8: '05040003'
+  huc8_name: Walhonding
+  huc12: '050400030502'
+  county: MEDINA
+  latitude: 41.01943
+  longitude: -81.93232
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040003'
+- frs_registry_id: '110002321041'
+  name: COSHOCTON WWTP
+  npdes_id: OH0024775
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 4.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: '050400040301'
+  county: COSHOCTON
+  latitude: 40.239874
+  longitude: -81.871516
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110009153316'
+  name: DEERFIELD ESTATES WWTP
+  npdes_id: OH0115240
+  npdes_ids_secondary:
+  - OH0099481
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.022
+  design_flow_missing: false
+  receiving_water: LITTLE MUSKINGUM RIVER
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: '050302010705'
+  county: WASHINGTON
+  latitude: 39.4158
+  longitude: -81.45394
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110009823218'
+  name: FRAZEYSBURG WWTP
+  npdes_id: OH0020800
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.183
+  design_flow_missing: false
+  receiving_water: NONE, WAKATOMIKA CREEK
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: '050400040204'
+  county: MUSKINGUM
+  latitude: 40.11319
+  longitude: -82.12039
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110045504076'
+  name: GLENFORD WWTP
+  npdes_id: OH0139963
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0
+  design_flow_missing: false
+  receiving_water: JONATHAN CREEK
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: '050400040407'
+  county: PERRY
+  latitude: 39.88744
+  longitude: -82.31526
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110008598268'
+  name: HERVIDA 4-H CAMP INC
+  npdes_id: OH0114898
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: 050400040903
+  county: WASHINGTON
+  latitude: 39.49618
+  longitude: -81.665
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110039724288'
+  name: LOWELL WWTP
+  npdes_id: OH0020311
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1081
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: '050400041203'
+  county: WASHINGTON
+  latitude: 39.5229
+  longitude: -81.51431
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110009642976'
+  name: MCCONNELSVILLE SEWER TREATMENT PLANT
+  npdes_id: OH0021466
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: 050400040808
+  county: MORGAN
+  latitude: 39.6512
+  longitude: -81.859
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110009821372'
+  name: MCCONNELSVILLES STATE ROUTE 78 PACKAGE SEWER PLT
+  npdes_id: OH0107905
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.017
+  design_flow_missing: false
+  receiving_water: NONE, UT TO BELL CREEK
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: 050400040808
+  county: MORGAN
+  latitude: 39.6725
+  longitude: -81.83843
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110009642235'
+  name: ODOT REST AREA 5-20
+  npdes_id: OH0076805
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: FROG RUN, NONE
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: '050400040602'
+  county: MUSKINGUM
+  latitude: 39.97679
+  longitude: -81.85842
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110006286367'
+  name: RIVERVIEW MANOR MHP
+  npdes_id: OH0127647
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: 050400040802
+  county: MUSKINGUM
+  latitude: 39.91315
+  longitude: -82.00146
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110006286394'
+  name: ROSEVILLE WWTP
+  npdes_id: OH0099287
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.671
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: '050400040503'
+  county: MUSKINGUM
+  latitude: 39.7884
+  longitude: -82.0793
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110008611733'
+  name: STOCKPORT WWTP
+  npdes_id: OH0020249
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.09
+  design_flow_missing: false
+  receiving_water: MUSKINGUM RIVER
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: 050400040809
+  county: MORGAN
+  latitude: 39.54351
+  longitude: -81.79328
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110011017773'
+  name: VILLAGE OF BEVERLY  WWTP
+  npdes_id: OH0020648
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: '050400041105'
+  county: WASHINGTON
+  latitude: 39.54646
+  longitude: -81.62779
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110006700114'
+  name: VILLAGE OF DRESDEN WWTP
+  npdes_id: OH0024953
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: '050600011603'
+  county: MUSKINGUM
+  latitude: 40.116553
+  longitude: -82.00885
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110008611760'
+  name: VILLAGE OF MALTA
+  npdes_id: OH0094528
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: 050400040808
+  county: MORGAN
+  latitude: 39.64873
+  longitude: -81.86289
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110000754657'
+  name: ZANESVILLE WWTP
+  npdes_id: OH0028240
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 18.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040004'
+  huc8_name: Muskingum
+  huc12: 050400040802
+  county: MUSKINGUM
+  latitude: 39.912776
+  longitude: -82.004166
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040004'
+- frs_registry_id: '110039693230'
+  name: BEECH MEADOWS WWTP
+  npdes_id: OH0050709
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.04
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050503'
+  county: GUERNSEY
+  latitude: 39.9313
+  longitude: -81.6738
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110000578483'
+  name: CAMBRIDGE WPCC
+  npdes_id: OH0024309
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.0
+  design_flow_missing: false
+  receiving_water: WILLS CREEK
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050504'
+  county: GUERNSEY
+  latitude: 40.035797
+  longitude: -81.603263
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110009821354'
+  name: MENTAL HEALTH CENTER WWTP
+  npdes_id: OH0107727
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.099
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050504'
+  county: GUERNSEY
+  latitude: 40.06982
+  longitude: -81.59374
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110009009679'
+  name: NEW CONCORD WWTP
+  npdes_id: OH0021024
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.448
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050501'
+  county: MUSKINGUM
+  latitude: 39.99396
+  longitude: -81.72174
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110006660835'
+  name: ODOT REST AREA 5-27
+  npdes_id: OH0076791
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050402'
+  county: GUERNSEY
+  latitude: 40.038373
+  longitude: -81.444319
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110012664651'
+  name: PLEASANT CITY WWTP
+  npdes_id: OH0128023
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.27
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050207'
+  county: GUERNSEY
+  latitude: 39.90859
+  longitude: -81.53619
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110009605016'
+  name: ROLLING HILLS SUBDIV WWTP
+  npdes_id: OH0075809
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UT TO WILLS CREEK
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050207'
+  county: GUERNSEY
+  latitude: 39.9481
+  longitude: -81.56211
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110009661669'
+  name: SALT FORK SP BEACH WWTP
+  npdes_id: OH0037842
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050406'
+  county: GUERNSEY
+  latitude: 40.081741
+  longitude: -81.46061
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110008995702'
+  name: SALT FORK SP CAMPGROUND WWTP
+  npdes_id: OH0037834
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.084
+  design_flow_missing: false
+  receiving_water: SALT FORK LAKE
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050406'
+  county: GUERNSEY
+  latitude: 40.0742
+  longitude: -81.49451
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110008995711'
+  name: SALT FORK SP LODGE & CABIN WWTP
+  npdes_id: OH0037851
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050406'
+  county: GUERNSEY
+  latitude: 40.10409
+  longitude: -81.52927
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110008995720'
+  name: SALT FORK SP MARINA WWTP
+  npdes_id: OH0037826
+  npdes_ids_secondary:
+  - OH0090999
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.043
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050406'
+  county: GUERNSEY
+  latitude: 40.081741
+  longitude: -81.46061
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110008629412'
+  name: SENECAVILLE WWTP
+  npdes_id: OH0041548
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.05
+  design_flow_missing: false
+  receiving_water: WILLS CREEK & SENECA FORK
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050105'
+  county: GUERNSEY
+  latitude: 39.93179
+  longitude: -81.45344
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110012300189'
+  name: SPRING VALLEY CAMPGROUND
+  npdes_id: OH0127990
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05040005'
+  huc8_name: Wills
+  huc12: '050400050206'
+  county: GUERNSEY
+  latitude: 40.00266
+  longitude: -81.59209
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040005'
+- frs_registry_id: '110006257656'
+  name: 4H CAMP OHIO TREATMENT SYSTEM
+  npdes_id: OH0124516
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: ROCKY FORK CREEK
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060503'
+  county: LICKING
+  latitude: 40.22858
+  longitude: -82.32794
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110064595335'
+  name: BUCKEYE LAKE WWTP
+  npdes_id: OH0039098
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060406'
+  county: LICKING
+  latitude: 39.9311
+  longitude: -82.48694
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110006304061'
+  name: CITY OF JOHNSTOWN WWTP
+  npdes_id: OH0020508
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.2
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060301'
+  county: LICKING
+  latitude: 40.142979
+  longitude: -82.690507
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110000735376'
+  name: CITY OF NEWARK WASTEWATER TREATMENT PLANT
+  npdes_id: OH0026671
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 9.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060504'
+  county: LICKING
+  latitude: 40.06108
+  longitude: -82.36319
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110006700338'
+  name: CITY OF PATASKALA WRF
+  npdes_id: OH0020273
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.1
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050302040302'
+  county: LICKING
+  latitude: 39.983581
+  longitude: -82.667997
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110006304481'
+  name: COUNTRY HILLS MOBILE HOME PARK
+  npdes_id: OH0131041
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060503'
+  county: LICKING
+  latitude: 40.11729
+  longitude: -82.285
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110001123720'
+  name: HEATH WWTP
+  npdes_id: OH0025763
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.25
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: 050400060409
+  county: LICKING
+  latitude: 40.03463
+  longitude: -82.41493
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110008618317'
+  name: KIRKERSVILLE WWTP
+  npdes_id: OH0114049
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: S FORK LICKING RIVER
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060504'
+  county: LICKING
+  latitude: 39.96036
+  longitude: -82.58966
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110006660595'
+  name: MILLERSPORT STP
+  npdes_id: OH0026531
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.302
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060404'
+  county: FAIRFIELD
+  latitude: 39.90439
+  longitude: -82.5338
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110039782802'
+  name: SOUTHWEST LICKING W & SD GALE RD ENVIR CTRL FAC
+  npdes_id: OH0113964
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 4.3
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060406'
+  county: LICKING
+  latitude: 39.96547
+  longitude: -82.57958
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110006304338'
+  name: SUBURBAN MHP LLC
+  npdes_id: OH0130737
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIBUTARY TO SWAMP RUN
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050600011005'
+  county: LICKING
+  latitude: 40.00594
+  longitude: -82.40222
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110006370738'
+  name: THORNVILLE WWTP
+  npdes_id: OH0027723
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060403'
+  county: PERRY
+  latitude: 39.89446
+  longitude: -82.42542
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110009820881'
+  name: VILLA VISTA MHP
+  npdes_id: OH0124362
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: 050400060409
+  county: LICKING
+  latitude: 39.98152
+  longitude: -82.46131
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110039722253'
+  name: VILLAGE OF GRANVILLE WASTERWATER TREATMENT FACILIT
+  npdes_id: OH0023345
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.911
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060304'
+  county: LICKING
+  latitude: 40.064272
+  longitude: -82.52046
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110012300465'
+  name: VILLAGE OF HEBRON WATER RECLAMATION FACILITY
+  npdes_id: OH0021539
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: 050400060409
+  county: LICKING
+  latitude: 39.98462
+  longitude: -82.486969
+  compliance_status: Effluent - Non-monthly Average Limit
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05040006'
+- frs_registry_id: '110006699965'
+  name: VILLAGE OF UTICA
+  npdes_id: OH0027898
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.423
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05040006'
+  huc8_name: Licking
+  huc12: '050400060203'
+  county: LICKING
+  latitude: 40.228541
+  longitude: -82.445609
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05040006'

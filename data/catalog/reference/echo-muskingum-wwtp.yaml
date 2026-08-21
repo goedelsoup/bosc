@@ -1,0 +1,55 @@
+id: echo-muskingum-wwtp
+title: Muskingum-basin NPDES discharger inventory (EPA ECHO)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: npdes --basin muskingum
+  connector_ref: watermark.hydrology.connectors.echo
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  external_url: https://echo.epa.gov/tools/web-services
+license: U.S. Government work (public domain)
+access_tier: throttled
+site_scope: basin:muskingum
+storage:
+- relpath: reference/echo/muskingum-wwtp.all-npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/echo/muskingum-wwtp.huc-counts.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/echo/muskingum-wwtp.potw.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+  ttl_days: 180
+provenance: connector
+schema_ref: watermark.hydrology.connectors.echo.Facility
+tags:
+- npdes
+- cwa
+- muskingum
+- ohio-river
+- wastewater
+notes: >-
+  Inventory of active CWA-permitted dischargers across all six HUC-8 subbasins of subregion 0504
+  — Tuscarawas, Mohican, Walhonding, Muskingum, Wills and Licking — deduplicated by FRS Registry
+  ID; every value is ECHO-returned and nulls are genuine. The subbasin set was enumerated from the
+  USGS Watershed Boundary Dataset itself (hydro.nationalmap.gov wbd/MapServer layer 4), not typed
+  from memory, and each network point was located against the same service. This basin was in
+  NEITHER the ECHO registry NOR basin._BASIN_POTW_INVENTORY until this pull, so mansfield and
+  coshocton screened an empty set and reported total=0 — indistinguishable from a basin with no
+  dischargers. Two guards in tests/test_shared_registries.py now make that state impossible for a
+  registered site. UNLIKE the Portage's 04100010 and Ohio Brush Creek's 05090201, this subregion
+  IS one river's drainage tree — the Tuscarawas and Walhonding form the Muskingum at Coshocton and
+  Wills Creek and the Licking enter below — so the upstream/downstream reasoning a screen depends
+  on is sound within this file and the "cataloging unit is not a watershed" caveat does NOT apply
+  here. What does apply: no Muskingum mainstem gage is registered in mainstem-gages.yaml, so every
+  row reports no_7q10 or no_receiving_water — UNSCREENABLE, NEVER UNAFFECTED. Registering one
+  later must carry a cited regulation annotation, because the Muskingum Watershed Conservancy
+  District operates a Corps-partnered flood-control reservoir system across these subbasins and a
+  gage below one of its structures measures managed flow. The Ohio River gage at Greenup Dam is
+  scoped basins:[ohio-brush-creek] and must not be extended here — the Muskingum meets the Ohio
+  hundreds of river miles above it. Headline counts for a given pull are dated in
+  data/reference/echo/README.md rather than restated here.
