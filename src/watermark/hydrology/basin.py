@@ -539,6 +539,20 @@ class BasinScreen(BaseModel):
     checks: list[AssimilativeCheck]
 
 
+def _inventory_relpath(basin: str) -> tuple[str, str]:
+    """The POTW inventory relpath for ``basin`` — registered, else the conventional name.
+
+    Split out from :func:`_inventory_path` so the CI coverage guard
+    (``tests/test_shared_registries.py``) can ask "does this basin's inventory exist" without
+    a ``Settings`` for one site. It previously re-implemented this lookup, which meant two
+    copies of one rule: changing the convention here — a different directory, a different
+    suffix — would leave the guard asserting the old shape and reporting green while every
+    unregistered basin resolved to a path nobody committed. That is the same silent
+    ``total=0`` the guard exists to eliminate, so the rule lives in exactly one place.
+    """
+    return _BASIN_POTW_INVENTORY.get(basin, ("echo", f"{basin}-wwtp.potw.yaml"))
+
+
 def _inventory_path(settings: Settings) -> Path:
     """The POTW inventory file for the active site's basin (``maumee-wwtp.potw.yaml`` etc.).
 
@@ -548,9 +562,7 @@ def _inventory_path(settings: Settings) -> Path:
     """
     from watermark.sites import active_profile
 
-    basin = active_profile(settings).basin
-    rel = _BASIN_POTW_INVENTORY.get(basin, ("echo", f"{basin}-wwtp.potw.yaml"))
-    return settings.reference_dir / Path(*rel)
+    return settings.reference_dir / Path(*_inventory_relpath(active_profile(settings).basin))
 
 
 def _load_dischargers(settings: Settings) -> list[dict[str, Any]]:

@@ -167,6 +167,15 @@ PORTAGE_HUC8S: dict[str, str] = {
 # (Licking), zanesville -> 05040004 (Muskingum). new-albany returns 05060001 (Upper Scioto) and
 # stays a Scioto site — SCIOTO's caveat about that cluster spilling east over the divide into the
 # Licking describes the CLUSTER, not the registry point, and neither basin claims the other's.
+MUSKINGUM_HUC8S: dict[str, str] = {
+    "05040001": "Tuscarawas",
+    "05040002": "Mohican",
+    "05040003": "Walhonding",
+    "05040004": "Muskingum",
+    "05040005": "Wills",
+    "05040006": "Licking",
+}
+
 # The Sandusky River basin (subregion 0410, Western Lake Erie): the single HUC-8 cataloging unit
 # 04100011 "Sandusky", enumerated from the same USGS WBD service as MUSKINGUM_HUC8S below. Wholly
 # in Ohio (~4,715 km²) and the largest single subbasin in 0410 — bigger than the Auglaize.
@@ -177,15 +186,6 @@ PORTAGE_HUC8S: dict[str, str] = {
 # the WBD service by its `data/sites.yaml` coordinate: sandusky, fremont, tiffin and bucyrus.
 SANDUSKY_HUC8S: dict[str, str] = {
     "04100011": "Sandusky",
-}
-
-MUSKINGUM_HUC8S: dict[str, str] = {
-    "05040001": "Tuscarawas",
-    "05040002": "Mohican",
-    "05040003": "Walhonding",
-    "05040004": "Muskingum",
-    "05040005": "Wills",
-    "05040006": "Licking",
 }
 
 
