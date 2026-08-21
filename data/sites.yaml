@@ -456,9 +456,14 @@ sites:
     place: "Mansfield"
     basin_label: "Rocky Fork Mohican · Muskingum"
     basin_major: "muskingum"
-    # [verified — Ohio EPA 2PE00001 fact sheet] the receiving water is Rocky Fork of Mohican River;
-    # kept null per the registry field guide above (tracking-only) — #1429 wires the confirmed
-    # NPDES receiving water once the record/water domain is active
+    # [verified — Ohio EPA permit 2PE00001*PD, Part II Item B, sheet 25] the receiving water is
+    # "Rocky Fork of the Mohican River", at River Mile 11.18. The citation is now the COMMITTED
+    # instrument (data/extracted/oepa/mansfield/2PE00001.npdes.yaml), not the fact sheet named
+    # here until #1429 — that fact sheet is not in the corpus. ⚠️ The permit's own authorization
+    # sentence leaves the stream name BLANK; only the station table names it.
+    # Still kept null per the registry field guide above (tracking-only) — #1429 wires the
+    # confirmed NPDES receiving water once the record/water domain is active, and record is
+    # `seeded`, not live.
     receiving_water: null
     state: "OH"
     county: "Richland County"

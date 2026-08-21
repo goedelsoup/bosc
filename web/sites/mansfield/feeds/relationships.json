@@ -1,5 +1,25 @@
 [
   {
+    "src": "CITY OF MANSFIELD",
+    "rel": "operates",
+    "dst": "npdes:2PE00001",
+    "date": "",
+    "ref": "2PE00001*PD",
+    "source": "oepa/mansfield/2PE00001.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PE00001",
+    "rel": "discharges_to",
+    "dst": "ROCKY FORK OF THE MOHICAN RIVER",
+    "date": "",
+    "ref": "2PE00001*PD",
+    "source": "oepa/mansfield/2PE00001.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

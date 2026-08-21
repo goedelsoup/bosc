@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "98b0299307b69535e434c4efa403a94de1097d014a5f82826e73ed0c71546405",
+  "catalog_version": "6d5e3766d35464f10db45072baf37f66f04de7655ee2dda2d8b1a3936603a9a6",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -1561,6 +1561,14 @@
       "site": "lima",
       "local_id": "oepa-cooling-reconciliation",
       "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-mansfield",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-mansfield",
+      "title": "Ohio EPA NPDES Permit Extractions (Mansfield / Richland County)",
       "feed": "catalog"
     },
     {

@@ -1,0 +1,62 @@
+id: oepa-mansfield
+title: Ohio EPA NPDES Permit Extractions (Mansfield / Richland County)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 2PE00001*PD (application OH0026328) for the City of
+    Mansfield Wastewater Treatment Plant, 385 S. Illinois Ave, Richland County; retrieved from
+    the Ohio EPA DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:mansfield
+storage:
+- relpath: extracted/oepa/mansfield/2PE00001.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- toxicity-reduction-evaluation
+- pretreatment
+- mansfield
+- richland-county
+- muskingum
+notes: 'The Mansfield WWTP permit read (#1429, epic #1425 — record domain + the discharge
+  geometry for hydrology). The revision held is **2PE00001*PD**, the modification with action
+  date 2025-06-17, effective 2025-07-01, expiring 2030-03-31 — NOT the *ND revision named in
+  #1429''s context and in the SiteProfile until this extraction; *ND is a prior revision and is
+  not in the corpus. Hand-read from the digitally generated PDF''s own text layer (no scan, no
+  OCR), so the file carries no render receipt per watermark.models.TranscribedExtraction; sheet 1
+  was additionally rendered at 300 DPI to verify one line, which is recorded in the file header
+  as a verification, not as the method. THE HEADLINE: Part I.C puts the plant under a **Toxicity
+  Reduction Evaluation** — five printed milestones (pretreatment local limits 2025-10-01;
+  Phosphorus Optimization Final Plan 2026-04-01; TRE first monitoring report 2026-04-01; TRE
+  bio-monitoring report 2027-04-01; TRE final compliance 2028-04-01), and the outfall-002
+  phase-in''s ONLY substantive change at month 37 is whole-effluent-toxicity limits on fathead
+  minnow (acute TUa 1.0, chronic TUc 1.22); Ceriodaphnia dubia stays monitor-only throughout and
+  every conventional limit is identical in both tables. Three milestones had lapsed as of
+  2026-08-21 — WHETHER THEY WERE FILED IS `[open]`, and past-due here means the date passed, not
+  that the city missed it; no ECHO/ICIS extract or submittal for this facility is committed. The
+  file also carries the full station geometry (001 technology-based / 002 water-quality-based,
+  both at 40°44''50"N 82°28''52"W; bypass 602, stormwater 603, influent 601, SSO 300, sludge
+  581/586/588; upstream 801 and downstream-farfield 901 at the SR 39 bridge) and the bypass''s
+  hard numeric precondition — no diversion through 602 "until a sustained peak flow of 19 MGD is
+  being processed through the secondary treatment system." FOUR DOCUMENT DEFECTS are recorded in
+  the extraction''s warnings rather than silently normalized: (1) the authorization sentence
+  leaves the RECEIVING WATER BLANK — verified against a 300 DPI render, so it is the instrument''s
+  defect, and the stream is recoverable only from Part II Item B; (2) the permit names TWO
+  different Ohio EPA district offices (TRE → Northwest, Pretreatment → Northeast) for the same
+  facility, so which office holds the file is `[open]` and it governs where a records request
+  goes; (3) Part I.A assigns the WET limits to station 002 while Part II Item U names station 001
+  for the biomonitoring program — different samples, and a TRE turns on which is toxic; (4)
+  several station cross-references are printed with seven digits instead of eight. NOT IN THIS
+  CORPUS and therefore not asserted here: the Fact Sheet (the source of #1429''s "329 violations
+  in five years", the 397.1 MG bypassed in 2020 and the Rocky Fork RM lineup) and the *ND
+  revision. Add further Mansfield OEPA extractions to storage as produced — the Cleveland-Cliffs
+  Mansfield Works permit 2ID00003*MD / OH0006840, two river miles upstream, is a known gap.'
