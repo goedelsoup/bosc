@@ -1,1 +1,1 @@
-"""OEPA document acquisition — discovery and fetch."""
+"""OEPA document acquisition — discovery, portal sweep, and fetch."""
