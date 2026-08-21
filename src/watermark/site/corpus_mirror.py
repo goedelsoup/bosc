@@ -173,6 +173,32 @@ def _claim_token(tag: str | None) -> str | None:
     return raw if raw.startswith("[") else f"[{raw.strip('[]')}]"
 
 
+def resolve_link_target(source_class: str, target: str) -> str:
+    """Resolve a link ``target`` to the node id (``<class>/<name>``) it points at.
+
+    A link serializes **relative to its own node's class dir** — :meth:`MirrorLink` writes
+    ``other.yml`` for a same-class edge and ``../<class>/<name>.yml`` for a cross-class one — so
+    inverting it needs the source class. That is why this lives here, beside the writer whose
+    convention it inverts, rather than beside either of its callers.
+
+    A full path-component walk, not a prefix strip: ``./`` is skipped, each ``..`` pops one
+    component, and a target that escapes the corpus root is returned **verbatim** — faithful to
+    yidam's ``model::resolve_link_target``, which every consumer of this graph agrees with.
+    """
+    parts: list[str] = [source_class]
+    for comp in target.split("/"):
+        if comp in (".", ""):
+            continue
+        if comp == "..":
+            if not parts:  # escaped the corpus root — yidam returns the target verbatim
+                return target
+            parts.pop()
+        else:
+            parts.append(comp)
+    joined = "/".join(parts)
+    return joined[: -len(".yml")] if joined.endswith(".yml") else joined
+
+
 def _meta_bits(node: MirrorNode) -> list[str]:
     """Salient, human-meaningful ``meta`` values for a node, flattened to search text.
 

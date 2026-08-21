@@ -49,7 +49,13 @@ from claude_agent_sdk import create_sdk_mcp_server, tool
 
 from watermark.agent.tracing import traced_tool
 from watermark.config import Settings, get_settings
-from watermark.site.corpus_mirror import CLASSES, Mirror, MirrorNode, build_mirror
+from watermark.site.corpus_mirror import (
+    CLASSES,
+    Mirror,
+    MirrorNode,
+    build_mirror,
+    resolve_link_target,
+)
 from watermark.site.yidam_index import YidamVectorIndex, default_index_dir, index_exists
 
 YIDAM_SERVER_NAME = "yidam"
@@ -225,22 +231,6 @@ def open_question_nodes(mirror: Mirror) -> list[MirrorNode]:
         if "[open]" in text:
             out.append(node)
     return out
-
-
-def resolve_link_target(source_class: str, target: str) -> str:
-    """The node id a link points at, resolved against the *source node's class dir*.
-
-    A mirror link serializes relative to where its node lives: a same-class edge is
-    ``other.yml`` and a cross-class one is ``../<class>/<name>.yml``. Resolving needs the source
-    class, which is why this cannot be :func:`normalize_id` — that one has no idea whose link
-    it is holding, so it would turn a same-class ``other.yml`` into the bare id ``other``.
-    """
-    t = (target or "").strip()
-    if t.endswith(".yml"):
-        t = t[: -len(".yml")]
-    if t.startswith("../"):
-        return t[len("../") :].strip("/")
-    return f"{source_class}/{t}" if "/" not in t else t
 
 
 def node_edges(mirror: Mirror) -> list[tuple[str, str, str]]:

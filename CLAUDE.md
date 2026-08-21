@@ -110,6 +110,12 @@ questions where the binary saw 2, and nothing could detect the gap.
   (the rest is regenerable and ignored). It enumerates accepted inherited debt so only a
   *regression* fails; `orphan-in` is `info` upstream and never gates. Re-bless deliberately
   (`yidam lint --bless`) and review the diff, like an extraction.
+- **The graph exports (`graph_exports.py`) are the one surviving renderer replica**, and they
+  stay: `web/sites/<slug>/exports/` is committed, so sourcing them from the binary would put Rust
+  back in the export path. Their fidelity is enforced instead — CI runs the real binary over the
+  same mirror and compares structurally (#2053). **Never "fix" a divergence by changing the
+  expectation**; the renderers must agree, or the difference must be a deliberate, recorded
+  decision.
 - **The MCP surface implements the frozen tool contract** (RFC-0005), vendored as
   `src/watermark/agent/mcp_contract.json` and re-vendored with `mise run yidam-contract-sync`;
   CI proves the copy matches the pin. Tool names, descriptions and schemas come **from that

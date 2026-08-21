@@ -2,19 +2,40 @@
 
 These serializers are the Python peer of yidam's ``export_rdf.rs`` / ``export_graphml.rs``: same
 IRI scheme (``yidam://corpus/<class>/<name>``), same vocabulary (owl/rdfs/skos/prov + ``yidam:``),
-same relationship→camelCase sanitizer, same link-target resolution, same GraphML key set. The
-tests assert that fidelity structurally (parse the XML/JSON back; check the Turtle triples), so a
-drift from the yidam renderers is caught here rather than by a downstream consumer.
+same relationship→camelCase sanitizer, same link-target resolution, same GraphML key set.
+
+Most tests here assert that shape against hand-written expectations. That is necessary and was
+not sufficient: it pins what BOSC *meant* to emit, never what yidam actually emits, so the two
+can agree with their own fixtures and disagree with each other. They did — the binary emitted
+`yidam:genesisDate` over this corpus and BOSC did not, for as long as the claim above went
+unchecked (#2053).
+
+The conformance tests at the bottom close that: they run the **real pinned binary** over the
+same mirror and compare structurally. They skip when it is absent; CI installs it, so the
+claim in this docstring is now enforced rather than asserted.
 """
 
 from __future__ import annotations
 
 import json
+import re
+import subprocess
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+import pytest
+
+from watermark.config import Settings
 from watermark.hypotheses import HYPOTHESES, HypothesisAssessment
-from watermark.site.corpus_mirror import Mirror, MirrorLink, MirrorNode, project_mirror
+from watermark.site import yidam_cli
+from watermark.site.corpus_mirror import (
+    Mirror,
+    MirrorLink,
+    MirrorNode,
+    build_mirror,
+    project_mirror,
+    write_mirror,
+)
 from watermark.site.feeds import ConceptItem, EntityNode, LeadItem, PersonItem, RelationshipEdge
 from watermark.site.graph_exports import (
     DATASET_IRI,
@@ -25,6 +46,7 @@ from watermark.site.graph_exports import (
     render_jsonld,
     render_turtle,
     resolve_link_target,
+    resolve_provenance,
     write_exports,
 )
 
@@ -87,6 +109,9 @@ def test_resolve_link_target_matches_yidam() -> None:
     assert resolve_link_target("reach", "./beta.yml") == "reach/beta"
     # escapes the corpus dir → returned verbatim
     assert resolve_link_target("reach", "../../skills/x.md") == "../../skills/x.md"
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_property_local_name_sanitizes() -> None:
@@ -254,3 +279,102 @@ def test_write_exports_emits_three_named_artifacts(tmp_path: Path) -> None:
         "jsonld": "application/ld+json",
         "graphml": "application/graphml+xml",
     }
+
+
+# --- conformance against the real yidam binary (#2053) ---------------------------------------
+#
+# The reason this exists: this module's docstring claims fidelity to yidam's `export_rdf.rs` /
+# `export_graphml.rs`, and until now nothing checked it. Measured when the check was written,
+# GraphML was structurally identical while RDF Turtle had already drifted — the binary emitted
+# `yidam:genesisDate` and BOSC did not, because `resolve_provenance` never populated a field the
+# renderer had always supported. Counts agreed; vocabulary did not. That is exactly the shape of
+# the `open-questions` divergence that went unnoticed for months (#2051).
+#
+# Structural, never byte-wise. Turtle statement order and GraphML attribute order are
+# serialization details neither side promises, and a byte diff would fail on them constantly —
+# which teaches everyone to ignore the check, the one failure mode worse than not having it.
+def _graphml_shape(path: Path) -> tuple[set[str], set[tuple[str, str]], set[str]]:
+    """(node ids, directed edges, `attr.name` key set) — what both renderers must agree on."""
+    ns = {"g": "http://graphml.graphdrawing.org/xmlns"}
+    root = ET.parse(path).getroot()
+    graph = root.find("g:graph", ns)
+    assert graph is not None, f"{path} has no <graph>"
+    return (
+        {n.get("id") or "" for n in graph.findall("g:node", ns)},
+        {(e.get("source") or "", e.get("target") or "") for e in graph.findall("g:edge", ns)},
+        {k.get("attr.name") or "" for k in root.findall("g:key", ns)},
+    )
+
+
+def _turtle_shape(path: Path) -> tuple[set[str], set[str]]:
+    """(subject IRIs, `yidam:` predicate vocabulary) — the ontology surface, not the bytes."""
+    text = path.read_text(encoding="utf-8")
+    return (
+        set(re.findall(r"<(yidam://corpus/[^>]+)>", text)),
+        set(re.findall(r"\b(yidam:[A-Za-z][A-Za-z0-9]*)\b", text)),
+    )
+
+
+def _binary_can(fmt: str) -> bool:
+    """Whether the pinned binary was built with the feature `fmt` needs."""
+    if not yidam_cli.usable():
+        return False
+    binary = yidam_cli.yidam_path()
+    assert binary is not None
+    listed = subprocess.run(
+        [str(binary), "export", "--list"], capture_output=True, text=True
+    ).stdout
+    return any(line.strip().startswith(fmt) and "✓" in line for line in listed.splitlines())
+
+
+@pytest.mark.skipif(not _binary_can("graphml"), reason="no yidam binary that can export graphml")
+def test_graphml_matches_the_real_yidam_renderer(tmp_path: Path) -> None:
+    settings = Settings(site="lima", data_dir=REPO_ROOT / "data")
+    mirror = build_mirror(settings)
+    corpus = tmp_path / ".yidam" / "corpus"
+    write_mirror(mirror, corpus)
+    write_exports(mirror, tmp_path / "ours", resolve_provenance(settings))
+
+    binary = yidam_cli.yidam_path()
+    assert binary is not None
+    out = tmp_path / "theirs.graphml"
+    subprocess.run(
+        [str(binary), "export", "--format", "graphml", "--out", str(out)],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    ours = _graphml_shape(tmp_path / "ours" / "corpus.graphml")
+    theirs = _graphml_shape(out)
+    assert ours[0] == theirs[0], "node sets differ"
+    assert ours[1] == theirs[1], "edge sets differ"
+    assert ours[2] == theirs[2], "GraphML key schema differs"
+
+
+@pytest.mark.skipif(not _binary_can("rdf"), reason="the yidam binary lacks --features export-graph")
+def test_turtle_matches_the_real_yidam_renderer(tmp_path: Path) -> None:
+    """The half that had already drifted. `yidam:genesisDate` is the one this caught."""
+    settings = Settings(site="lima", data_dir=REPO_ROOT / "data")
+    mirror = build_mirror(settings)
+    corpus = tmp_path / ".yidam" / "corpus"
+    write_mirror(mirror, corpus)
+    write_exports(mirror, tmp_path / "ours", resolve_provenance(settings))
+
+    binary = yidam_cli.yidam_path()
+    assert binary is not None
+    out = tmp_path / "theirs.ttl"
+    subprocess.run(
+        [str(binary), "export", "--format", "rdf", "--rdf-format", "turtle", "--out", str(out)],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    our_subjects, our_preds = _turtle_shape(tmp_path / "ours" / "corpus.ttl")
+    their_subjects, their_preds = _turtle_shape(out)
+    assert our_subjects == their_subjects, "subject IRIs differ"
+    assert our_preds == their_preds, (
+        f"the yidam: ontology vocabulary differs — "
+        f"only ours: {sorted(our_preds - their_preds)}, only theirs: {sorted(their_preds - our_preds)}"
+    )
