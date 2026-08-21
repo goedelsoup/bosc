@@ -218,11 +218,15 @@ def test_every_registered_sites_basin_is_a_registered_echo_basin() -> None:
 
 def test_every_registered_sites_basin_has_a_committed_potw_inventory() -> None:
     """...and that basin's inventory must be pulled, or its sites screen a silent empty set."""
-    from watermark.hydrology.basin import _BASIN_POTW_INVENTORY
+    # Resolve through the RUNTIME rule, never a copy of it: a guard that re-implements the
+    # path convention keeps asserting the old shape after the convention moves, and reports
+    # green while every basin resolves somewhere nobody committed — the same silent total=0
+    # this guard exists to eliminate.
+    from watermark.hydrology.basin import _inventory_relpath
 
     missing: dict[str, list[str]] = {}
     for slug, prof in SITES.items():
-        rel = _BASIN_POTW_INVENTORY.get(prof.basin, ("echo", f"{prof.basin}-wwtp.potw.yaml"))
+        rel = _inventory_relpath(prof.basin)
         if not (REPO_ROOT / "data" / "reference" / Path(*rel)).is_file():
             missing.setdefault(prof.basin, []).append(slug)
     assert not missing, (
