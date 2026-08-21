@@ -416,6 +416,61 @@
     }
   },
   {
+    "id": "oepa-mansfield",
+    "title": "Ohio EPA NPDES Permit Extractions (Mansfield / Richland County)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 2PE00001*PD (application OH0026328) for the City of Mansfield Wastewater Treatment Plant, 385 S. Illinois Ave, Richland County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:mansfield",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "toxicity-reduction-evaluation",
+      "pretreatment",
+      "mansfield",
+      "richland-county",
+      "muskingum"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/mansfield/2PE00001.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "90368459aef6ea930a960416738026e6f639cf5d0dbd3bdc40203093bc572167",
+      "size_bytes": 32301,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 2PE00001*PD (application OH0026328) for the City of Mansfield Wastewater Treatment Plant, 385 S. Illinois Ave, Richland County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "abatement-parameters",
     "title": "Richland County Abatement Parameters + What-If Scenario Knobs",
     "scope": "reference",

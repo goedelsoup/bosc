@@ -4203,8 +4203,11 @@ _MANSFIELD = SiteProfile(
     basin="muskingum",  # [verified] Rocky Fork → Mohican → Walhonding → Muskingum River → Ohio River;
     # shares Coshocton's basin slug (subregion 0504)
     nwis_sites=[
-        "03131000",  # [verified] Rocky Fork near Mansfield OH — the WWTP's (2PE00001*ND) receiving
-        # water; DA 39.0 mi²
+        "03131000",  # [verified] Rocky Fork near Mansfield OH — the WWTP's (2PE00001*PD) receiving
+        # water; DA 39.0 mi². The revision is *PD, the 2025-06-17 modification effective
+        # 2025-07-01, which is the one the corpus holds
+        # (data/extracted/oepa/mansfield/2PE00001.npdes.yaml). *ND, named here until #1429, is
+        # a prior revision nobody has captured.
         "03130500",  # [verified] Touby Run at Mansfield OH — the downtown-Mansfield creek; DA 5.44 mi²
         "03132500",  # [verified] Clear Fork at Newville OH — downstream of Clear Fork Reservoir
         # (the city's water supply); DA 174 mi²

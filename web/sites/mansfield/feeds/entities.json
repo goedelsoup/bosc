@@ -42,5 +42,74 @@
     "lei": "875500ULXB4CYQSJVA03",
     "uei": null,
     "federal_obligations": null
+  },
+  {
+    "key": "npdes:2PE00001",
+    "display": "Mansfield Wastewater Treatment Plant",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Mansfield Wastewater Treatment Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/mansfield/2PE00001.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF MANSFIELD",
+    "display": "City of Mansfield",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Mansfield"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/mansfield/2PE00001.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "ROCKY FORK OF THE MOHICAN RIVER",
+    "display": "Rocky Fork of the Mohican River",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Rocky Fork of the Mohican River"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/mansfield/2PE00001.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
   }
 ]

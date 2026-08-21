@@ -2,9 +2,9 @@
   "site": "mansfield",
   "bundle_version": "1.0.0",
   "contract_version": "2.2.0",
-  "generated_at": "2026-08-21T14:30:24+00:00",
+  "generated_at": "2026-08-21T16:11:49+00:00",
   "feed_count": 32,
-  "row_total": 485,
+  "row_total": 502,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -23,7 +23,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 1
     },
     {
       "name": "timeline",
@@ -39,7 +39,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 5
     },
     {
       "name": "relationships",
@@ -47,7 +47,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 3
     },
     {
       "name": "people",
@@ -207,7 +207,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 54
+      "count": 55
     },
     {
       "name": "geo/campus",
@@ -255,7 +255,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 86
+      "count": 91
     },
     {
       "name": "corpus-nodes",
@@ -263,7 +263,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 86
+      "count": 91
     },
     {
       "name": "ask-embeddings",

@@ -1,6 +1,6 @@
 {
   "site": "mansfield",
-  "catalog_version": "d57f541cce3eebaae340a9960f6431ffead0667c2f45535a438edfc22237388b",
+  "catalog_version": "50d0d72fdd7e24c3cd32788e3a7eb4449735cb05746936ab8a066c55e6a00b7e",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -908,6 +908,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:mansfield:oepa-mansfield",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "oepa-mansfield",
+      "title": "Ohio EPA NPDES Permit Extractions (Mansfield / Richland County)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:mansfield:oepa-ohd000001-coverage",
       "kind": "dataset",
       "site": "mansfield",
@@ -1036,6 +1044,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:mansfield:CITY OF MANSFIELD",
+      "kind": "entity",
+      "site": "mansfield",
+      "local_id": "CITY OF MANSFIELD",
+      "title": "City of Mansfield",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:mansfield:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "mansfield",
@@ -1049,6 +1065,22 @@
       "site": "mansfield",
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:mansfield:ROCKY FORK OF THE MOHICAN RIVER",
+      "kind": "entity",
+      "site": "mansfield",
+      "local_id": "ROCKY FORK OF THE MOHICAN RIVER",
+      "title": "Rocky Fork of the Mohican River",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:mansfield:npdes:2PE00001",
+      "kind": "entity",
+      "site": "mansfield",
+      "local_id": "npdes:2PE00001",
+      "title": "Mansfield Wastewater Treatment Plant",
       "feed": "entities"
     },
     {
@@ -1106,6 +1138,14 @@
       "local_id": "WWTP-CAPITAL-BILL",
       "title": "What capital bill (and what rate case) falls out of the WWTP facilities study + Ohio EPA's revised findings-and-orders?",
       "feed": "leads"
+    },
+    {
+      "handle": "record:mansfield:oepa/mansfield/2PE00001.npdes.yaml",
+      "kind": "record",
+      "site": "mansfield",
+      "local_id": "oepa/mansfield/2PE00001.npdes.yaml",
+      "title": "Mansfield Wastewater Treatment Plant",
+      "feed": "records"
     }
   ]
 }
