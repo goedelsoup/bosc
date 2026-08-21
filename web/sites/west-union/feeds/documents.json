@@ -5,6 +5,21 @@
     "description": "**Collection:** `oepa/` · immutable source evidence",
     "entries": [
       {
+        "rel": "oepa/west-union/0PC00019.pdf",
+        "name": "0PC00019.pdf",
+        "size_bytes": 1494575,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
         "rel": "oepa/west-union/edoc-3940058.pdf",
         "name": "edoc-3940058.pdf",
         "size_bytes": 241518,

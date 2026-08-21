@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "slug": "oepa",
+    "title": "Ohio EPA",
+    "description": "**Collection:** `oepa/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "oepa/piketon/0PB00031.pdf",
+        "name": "0PB00031.pdf",
+        "size_bytes": 437290,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  }
+]

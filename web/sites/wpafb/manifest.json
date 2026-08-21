@@ -2,9 +2,9 @@
   "site": "wpafb",
   "bundle_version": "1.0.0",
   "contract_version": "2.1.0",
-  "generated_at": "2026-08-14T17:41:37+00:00",
+  "generated_at": "2026-08-21T06:00:41+00:00",
   "feed_count": 32,
-  "row_total": 466,
+  "row_total": 467,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -101,7 +101,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 2
     },
     {
       "name": "exhibits",

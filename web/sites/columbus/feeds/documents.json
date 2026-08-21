@@ -1,1 +1,39 @@
-[]
+[
+  {
+    "slug": "oepa",
+    "title": "Ohio EPA",
+    "description": "**Collection:** `oepa/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "oepa/columbus/4PF00000.pdf",
+        "name": "4PF00000.pdf",
+        "size_bytes": 195305,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "oepa/columbus/4PF00001.pdf",
+        "name": "4PF00001.pdf",
+        "size_bytes": 1681764,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  }
+]

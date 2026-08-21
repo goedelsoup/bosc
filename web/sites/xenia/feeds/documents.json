@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "slug": "oepa",
+    "title": "Ohio EPA",
+    "description": "**Collection:** `oepa/` · immutable source evidence",
+    "entries": [
+      {
+        "rel": "oepa/xenia/1PD00015.pdf",
+        "name": "1PD00015.pdf",
+        "size_bytes": 1394097,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": true,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  }
+]

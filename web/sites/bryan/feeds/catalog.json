@@ -114,8 +114,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9baf83438af68fabe77646dfdcdb55f73d6e7688b65d65a7b56d7e65a0463acc",
-      "size_bytes": 385240,
+      "sha256": "02d09fa6183e64b49bec8aeaa37ee3ec939d7e4bef65266975b07bdf5ee5f327",
+      "size_bytes": 388689,
       "lfs_materialized": true,
       "file_count": 14,
       "stale": false,
@@ -2621,7 +2621,7 @@
     "collection": "reference",
     "status": "reviewed",
     "producer_kind": "connector",
-    "command": "parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson",
+    "command": "parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson (or, for a layer with no owner column at all, parcels --parcel <id,id,...> --geojson ...)",
     "connector_ref": "watermark.hydrology.connectors.allen_gis",
     "source": "Per-site county parcel GIS via the gis_parcel field-map, pulled as f=geojson reprojected to WGS84 (Fort Wayne = Allen County, IN iMap, parcel layer 10)",
     "external_url": "https://gis1.acimap.us/imapweb/rest/services/QueryLayers/QueryLayers/MapServer/10",
@@ -2646,10 +2646,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "76ce930b7a5c4481d035aa3ee15d8e43afb5073cba8557148f683e71c91352f5",
-      "size_bytes": 514518,
+      "sha256": "782aae8b21921fce4403ab5df9971adbc53b14e64c4e0c9658f7161bdfd4dce2",
+      "size_bytes": 531148,
       "lfs_materialized": true,
-      "file_count": 10,
+      "file_count": 11,
       "stale": false,
       "asof": null
     },
@@ -2659,7 +2659,7 @@
       "page": null,
       "pages": null,
       "confidence": "medium",
-      "note": "watermark parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson",
+      "note": "watermark parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson (or, for a layer with no owner column at all, parcels --parcel <id,id,...> --geojson ...)",
       "verified": true
     }
   },
