@@ -166,17 +166,28 @@ def update_filename_map(records: list[FetchedPermit], map_path: Path) -> None:
     def key(url: str, sha: str | None) -> tuple[str, str | None]:
         return (url, sha)
 
-    existing: dict[tuple[str, str | None], dict[str, Any]] = {}
+    # Entry order is preserved, and an entry is addressable only if the fetcher could have
+    # written it. A map may also hold WHOLLY hand-authored entries — the urbana and
+    # west-union maps predate this fetcher and key their documents by ``edoc_id`` with no
+    # ``source_url`` at all. Those carry no fetch identity, so they are never merged
+    # against and are written back verbatim; reading them as fetch records raised KeyError
+    # and blocked `watermark oepa fetch` outright on any site holding a curated map.
+    ordered: list[dict[str, Any]] = []
+    existing: dict[tuple[str, str | None], int] = {}
     meta: dict[str, Any] = dict(_DEFAULT_META)
     if map_path.exists():
         data = yaml.safe_load(map_path.read_text(encoding="utf-8")) or {}
         meta = {**meta, **(data.get("meta") or {})}
         for entry in data.get("documents", []):
-            existing[key(entry["source_url"], entry.get("sha256"))] = entry
+            ordered.append(entry)
+            url = entry.get("source_url")
+            if url is not None:
+                existing[key(url, entry.get("sha256"))] = len(ordered) - 1
 
     for r in records:
         k = key(r.source_url, r.sha256)
-        prior = existing.get(k, {})
+        index = existing.get(k)
+        prior = ordered[index] if index is not None else {}
         merged = r.model_dump()
         for field in _REVIEWED_KEYS:
             if field in prior:
@@ -184,9 +195,13 @@ def update_filename_map(records: list[FetchedPermit], map_path: Path) -> None:
         # A reviewed note outranks the fetcher's boilerplate; a fetch error still speaks.
         if prior.get("note") and r.status != "error":
             merged["note"] = prior["note"]
-        existing[k] = merged
+        if index is None:
+            ordered.append(merged)
+            existing[k] = len(ordered) - 1
+        else:
+            ordered[index] = merged
 
     meta["generated_at"] = datetime.now(UTC).date().isoformat()
-    doc = {"meta": meta, "documents": list(existing.values())}
+    doc = {"meta": meta, "documents": ordered}
     map_path.parent.mkdir(parents=True, exist_ok=True)
     map_path.write_text(yaml.safe_dump(doc, sort_keys=False, allow_unicode=True), encoding="utf-8")
