@@ -12,34 +12,23 @@ license: U.S. Government work (public domain)
 access_tier: public
 site_scope: slug-scoped
 storage:
+# Lima's un-slugged nav plan is the reference build's committed layout; every other member is
+# `{site}`-templated so the entry resolves PER SITE (#2066). It was ten hard-coded paths, which
+# meant the per-site resolver handed Lima all ten — including Fort Wayne's and Sidney's — and
+# handed the two sites that actually own them nothing.
 - relpath: reference/hydrology/reach-nav.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: reference/hydrology/reaches/lima.geojson
-  media_type: application/geo+json
-  lfs: false
-- relpath: reference/hydrology/fort-wayne/reach-nav.yaml
+- relpath: reference/hydrology/{site}/reach-nav.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: reference/hydrology/fort-wayne/network.yaml
+- relpath: reference/hydrology/{site}/network.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: reference/hydrology/fort-wayne/reaches.yaml
+- relpath: reference/hydrology/{site}/reaches.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: reference/hydrology/reaches/fort-wayne.geojson
-  media_type: application/geo+json
-  lfs: false
-- relpath: reference/hydrology/sidney/reach-nav.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: reference/hydrology/sidney/network.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: reference/hydrology/sidney/reaches.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: reference/hydrology/reaches/sidney.geojson
+- relpath: reference/hydrology/reaches/{site}.geojson
   media_type: application/geo+json
   lfs: false
 refresh:

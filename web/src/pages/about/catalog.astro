@@ -20,15 +20,29 @@ const countThrottled = items.filter((i) => i.access_tier === "throttled").length
 // Initial display order: by collection, then id
 const rows = [...items].sort((a, b) => a.collection.localeCompare(b.collection) || a.id.localeCompare(b.id));
 
-// `data-state` attribute: filter bucket ("fresh" vs everything else → "stale")
+// A `slug-scoped` dataset has a DIFFERENT FILE PER SITE, and this page is network-global: it
+// reads the reference build's bundle, so `observed` is that ONE site's copy (#2066). Reading it
+// as the dataset's state would report `parcel-assemblage` as "missing" on a page about the whole
+// data tree, for a dataset eleven sites hold. `catalogFreshness` separates that case out as
+// `unpulled` when given the row's scope, and `observed_network` carries the membership figure
+// the reference build publishes for exactly this page.
+function freshness(item: CatalogItem) {
+  return catalogFreshness(item.observed, item.site_scope);
+}
+
+// `data-state` attribute: filter bucket ("fresh" vs everything else → "stale"). A per-site
+// dataset the reference build simply does not hold is not a gap, so it is not filed as stale.
 function stateAttr(item: CatalogItem): string {
-  return catalogFreshness(item.observed) === "fresh" ? "fresh" : "stale";
+  const f = freshness(item);
+  return f === "fresh" || f === "unpulled" ? "fresh" : "stale";
 }
 
 // Chip class + label for the State column
 function stateChip(item: CatalogItem): { cls: string; label: string } {
-  const f = catalogFreshness(item.observed);
+  const f = freshness(item);
   switch (f) {
+    case "unpulled":
+      return { cls: "c-persite", label: "per-site" };
     case "fresh":
       return { cls: "c-fresh", label: "fresh" };
     case "stale":
@@ -43,6 +57,10 @@ function stateChip(item: CatalogItem): { cls: string; label: string } {
 }
 
 function fileSummary(it: CatalogItem): string {
+  // Per-site datasets are counted in SITES, not files: "1 file" would be the reference build's
+  // own copy reported as if it were the dataset (#2066).
+  const net = it.observed_network;
+  if (net) return `${net.sites_present} of ${net.sites_total} sites`;
   const n = it.observed?.file_count ?? it.storage.length;
   return `${n} file${n === 1 ? "" : "s"}`;
 }
@@ -673,6 +691,7 @@ function siteScopeLabel(scope: string): string {
     color: var(--bosc-danger);
     border-color: var(--bosc-danger);
   }
+  .c-persite,
   .c-lfs,
   .c-unknown {
     color: var(--td-open);

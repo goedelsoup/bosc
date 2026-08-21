@@ -148,15 +148,10 @@ Regenerate: `watermark reaches --write`
 | file | type | lfs |
 | --- | --- | --- |
 | `reference/hydrology/reach-nav.yaml` | application/x-yaml | no |
-| `reference/hydrology/reaches/lima.geojson` | application/geo+json | no |
-| `reference/hydrology/fort-wayne/reach-nav.yaml` | application/x-yaml | no |
-| `reference/hydrology/fort-wayne/network.yaml` | application/x-yaml | no |
-| `reference/hydrology/fort-wayne/reaches.yaml` | application/x-yaml | no |
-| `reference/hydrology/reaches/fort-wayne.geojson` | application/geo+json | no |
-| `reference/hydrology/sidney/reach-nav.yaml` | application/x-yaml | no |
-| `reference/hydrology/sidney/network.yaml` | application/x-yaml | no |
-| `reference/hydrology/sidney/reaches.yaml` | application/x-yaml | no |
-| `reference/hydrology/reaches/sidney.geojson` | application/geo+json | no |
+| `reference/hydrology/{site}/reach-nav.yaml` | application/x-yaml | no |
+| `reference/hydrology/{site}/network.yaml` | application/x-yaml | no |
+| `reference/hydrology/{site}/reaches.yaml` | application/x-yaml | no |
+| `reference/hydrology/reaches/{site}.geojson` | application/geo+json | no |
 
 ### `hydrology-swmm` — Tier-1 EPA SWMM5 Input Decks (Pre / As-Permitted / Full-Buildout / Detention / Sanitary)
 

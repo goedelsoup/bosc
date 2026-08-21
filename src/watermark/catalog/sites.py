@@ -11,6 +11,13 @@ Relevance by ``site_scope``: a ``basin-shared`` dataset is shared by every site;
 copy); a ``lima-legacy`` dataset belongs only to Lima's un-slugged files. **Presence** is
 resolved *for the site*: a slug-scoped entry is present for ``findlay`` only if
 ``…/findlay/…`` exists — which is exactly the onboarding-readiness signal.
+
+The per-site resolution itself lives in :mod:`watermark.catalog.resolve` (#2066), shared with
+:mod:`watermark.catalog.reconcile` so a site's *observation* and its *presence* cannot answer
+"what is this site's copy" two different ways — which they did: this module required **every**
+resolved member to exist, a stricter rule than reconcile's own, so the 21 sites holding their
+own ``rsei-inventory`` reported it missing over a ``{site}/enclave.yaml`` only the one
+federal-enclave site can have.
 """
 
 from __future__ import annotations
@@ -21,12 +28,15 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from watermark.catalog import CatalogEntry, Scope, SiteScope, load_entries
 from watermark.catalog.reconcile import reconcile
+from watermark.catalog.resolve import REFERENCE_LAYOUT_SITE, present_for_site, resolved_for_site
 from watermark.config import Settings, get_settings
 from watermark.sites import SITES, get_profile
 
 # Lima keeps its reference/extracted files un-slugged (the `lima-legacy`/un-templated peer);
 # every other site's slug-scoped copy lives under a `<slug>/` segment (the `{site}` template).
-_LEGACY_SITE = "lima"
+# Re-exported under its historical name; the rule itself now lives in `catalog.resolve` (#2066),
+# shared with `reconcile` so a site's observation and its presence answer one question once.
+_LEGACY_SITE = REFERENCE_LAYOUT_SITE
 
 
 def owner_matches(site_scope: SiteScope, slug: str) -> bool:
@@ -86,32 +96,6 @@ def site_title(entry: CatalogEntry, slug: str) -> str:
     )
 
 
-def _resolved_relpaths(entry: CatalogEntry, slug: str) -> list[str]:
-    """The storage relpaths that belong to ``slug`` for this entry.
-
-    For a slug-scoped entry: the ``{site}``→slug expansion(s) are the site's copy. Lima is the
-    exception only where it keeps an *un-slugged* peer (the reference convention, folded into
-    storage by backfill); where there is no such peer (the extracted tree, where Lima is just
-    another ``<slug>/``), Lima resolves to its template expansion like every other site. For
-    basin-shared / lima-legacy: the (un-templated) storage.
-    """
-    if entry.site_scope == "slug-scoped":
-        templated = [
-            s.relpath.replace("{site}", slug) for s in entry.storage if "{site}" in s.relpath
-        ]
-        if slug == _LEGACY_SITE:
-            peers = [s.relpath for s in entry.storage if "{site}" not in s.relpath]
-            return peers or templated  # un-slugged reference peer, else the lima/ expansion
-        return templated
-    return [s.relpath for s in entry.storage if "{site}" not in s.relpath]
-
-
-def _present_for_site(entry: CatalogEntry, slug: str, settings: Settings) -> bool:
-    """Whether ``slug``'s resolved files for this entry all exist on disk."""
-    resolved = _resolved_relpaths(entry, slug)
-    return bool(resolved) and all((settings.data_dir / rel).exists() for rel in resolved)
-
-
 class SiteDatasetStatus(BaseModel):
     """One catalog dataset's standing *for a given site*."""
 
@@ -120,9 +104,12 @@ class SiteDatasetStatus(BaseModel):
     id: str
     scope: Scope
     site_scope: SiteScope
-    present: bool  # the site's resolved files all exist on disk
-    stale: bool  # past refresh.ttl_days (entry-level, from reconcile)
-    resolved: list[str] = Field(default_factory=list)  # the site's relpaths for this dataset
+    present: bool  # this site's copy is on disk (no declared concrete member absent)
+    stale: bool  # past refresh.ttl_days — THIS site's copy, not the network's (#2066)
+    # Every location this site's copy may occupy. Usually one; the reference build can carry two
+    # for a slug-scoped dataset (its un-slugged peer AND a slugged file), and a site that has no
+    # copy is still told where one would go — which is what the onboarding gate needs.
+    resolved: list[str] = Field(default_factory=list)
 
 
 def site_view(
@@ -136,14 +123,18 @@ def site_view(
         if not is_relevant(entry, slug):
             continue
         obs = snapshot.entries.get(entry.id)
+        # Freshness for THIS site: a slug-scoped dataset carries its own `asof` per site, so the
+        # entry-level flag is the network's oldest copy, not this one's (#2066). Falls back to the
+        # entry record for the shared/single-owner scopes, which have no site axis.
+        site_obs = obs.sites.get(slug) if obs else None
         out.append(
             SiteDatasetStatus(
                 id=entry.id,
                 scope=entry.scope,
                 site_scope=entry.site_scope,
-                present=_present_for_site(entry, slug, settings),
-                stale=bool(obs and obs.stale),
-                resolved=_resolved_relpaths(entry, slug),
+                present=present_for_site(entry, slug, settings),
+                stale=bool(site_obs.stale if site_obs is not None else (obs and obs.stale)),
+                resolved=resolved_for_site(entry, slug),
             )
         )
     return sorted(out, key=lambda s: (s.scope, s.id))

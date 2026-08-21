@@ -152,6 +152,191 @@ def test_site_template_fans_out_to_existing_files(tmp_path: Path) -> None:
     assert obs.missing == []
 
 
+# --- the per-site axis (#2066) --------------------------------------------------------------
+_SLUG_SCOPED = """\
+    id: eia-consumer-energy
+    title: T
+    scope: reference
+    site_scope: slug-scoped
+    producer:
+      kind: connector
+      source: x
+    storage:
+    - relpath: reference/eia/{site}/consumer-energy.yaml
+      media_type: application/x-yaml
+    refresh:
+      cadence: static
+"""
+
+
+def test_slug_scoped_entry_is_observed_per_site(tmp_path: Path) -> None:
+    """Each site's own record, keyed by slug — NOT the network aggregate (#2066).
+
+    The aggregate is the whole bug: one record for a dataset that is a different file per site
+    was published into every site's bundle, so a site asserted its siblings' bytes as its own.
+    """
+    settings = _settings(tmp_path)
+    bryan = _data(settings, "reference/eia/bryan/consumer-energy.yaml", "bryan: 1\n")
+    columbus = _data(settings, "reference/eia/columbus/consumer-energy.yaml", "columbus: 22\n")
+    _entry(settings, "eia-consumer-energy", _SLUG_SCOPED)
+
+    obs = reconcile(settings=settings, now=_FIXED).entries["eia-consumer-energy"]
+
+    # the entry-level record stays the network aggregate — check/diff/audit read it
+    assert obs.file_count == 2
+    assert obs.size_bytes == bryan.stat().st_size + columbus.stat().st_size
+
+    # ...and each site now carries its OWN file's hash and size, not that sum
+    assert set(obs.sites) == {"bryan", "columbus"}
+    assert obs.sites["bryan"].file_count == 1
+    assert obs.sites["bryan"].size_bytes == bryan.stat().st_size
+    assert obs.sites["bryan"].sha256 == hashlib.sha256(bryan.read_bytes()).hexdigest()
+    assert obs.sites["columbus"].sha256 == hashlib.sha256(columbus.read_bytes()).hexdigest()
+    assert obs.sites["bryan"].sha256 != obs.sites["columbus"].sha256
+
+
+def test_a_site_with_no_copy_gets_no_record(tmp_path: Path) -> None:
+    """Absence is recorded by omission — the renderer reads it as ``exists: false``.
+
+    ``parcel-assemblage`` is the worked case: lima, new-albany and piketon hold no such file and
+    published ``exists: true`` over 531,148 bytes belonging to eleven other sites.
+    """
+    settings = _settings(tmp_path)
+    _data(settings, "reference/eia/bryan/consumer-energy.yaml")
+    _entry(settings, "eia-consumer-energy", _SLUG_SCOPED)
+
+    obs = reconcile(settings=settings, now=_FIXED).entries["eia-consumer-energy"]
+    assert set(obs.sites) == {"bryan"}
+    assert "lima" not in obs.sites
+    assert "piketon" not in obs.sites
+
+
+def test_one_absent_templated_member_does_not_hide_the_site(tmp_path: Path) -> None:
+    """A second ``{site}`` member only some sites can have is not the others' gap (#2066).
+
+    ``rsei-inventory`` declares ``{site}/enclave.yaml`` alongside ``{site}/inventory.yaml``, and
+    only the one federal-enclave site has an enclave — an all-members rule read 21 sites that
+    hold their own inventory as missing it.
+    """
+    settings = _settings(tmp_path)
+    _data(settings, "reference/rsei/bryan/inventory.yaml")
+    _data(settings, "reference/rsei/wpafb/inventory.yaml")
+    _data(settings, "reference/rsei/wpafb/enclave.yaml")
+    _entry(
+        settings,
+        "rsei-inventory",
+        """\
+        id: rsei-inventory
+        title: T
+        scope: reference
+        site_scope: slug-scoped
+        producer:
+          kind: connector
+          source: x
+        storage:
+        - relpath: reference/rsei/{site}/inventory.yaml
+          media_type: application/x-yaml
+        - relpath: reference/rsei/{site}/enclave.yaml
+          media_type: application/x-yaml
+        refresh:
+          cadence: static
+        """,
+    )
+    obs = reconcile(settings=settings, now=_FIXED).entries["rsei-inventory"]
+    assert obs.sites["bryan"].exists is True
+    assert obs.sites["bryan"].file_count == 1
+    assert obs.sites["wpafb"].file_count == 2
+
+
+def test_reference_build_keeps_its_un_slugged_peer_and_its_slugged_file(tmp_path: Path) -> None:
+    """The reference build resolves peers UNION templated, not one or the other (#2066).
+
+    ``hydrology-reaches`` gives Lima both an un-slugged ``reach-nav.yaml`` and a slugged
+    ``reaches/lima.geojson``; an either/or rule silently dropped the second.
+    """
+    settings = _settings(tmp_path)
+    _data(settings, "reference/hydrology/reach-nav.yaml")
+    _data(settings, "reference/hydrology/reaches/lima.geojson", "{}\n")
+    _data(settings, "reference/hydrology/reaches/sidney.geojson", "{}\n")
+    _data(settings, "reference/hydrology/sidney/reaches.yaml")
+    _entry(
+        settings,
+        "hydrology-reaches",
+        """\
+        id: hydrology-reaches
+        title: T
+        scope: reference
+        site_scope: slug-scoped
+        producer:
+          kind: connector
+          source: x
+        storage:
+        - relpath: reference/hydrology/reach-nav.yaml
+          media_type: application/x-yaml
+        - relpath: reference/hydrology/{site}/reaches.yaml
+          media_type: application/x-yaml
+        - relpath: reference/hydrology/reaches/{site}.geojson
+          media_type: application/geo+json
+        refresh:
+          cadence: static
+        """,
+    )
+    obs = reconcile(settings=settings, now=_FIXED).entries["hydrology-reaches"]
+    assert obs.sites["lima"].file_count == 2  # the peer AND reaches/lima.geojson
+    assert obs.sites["sidney"].file_count == 2  # its own two, never lima's peer
+    assert obs.sites["sidney"].sha256 != obs.sites["lima"].sha256
+
+
+def test_shared_and_virtual_entries_carry_no_site_axis(tmp_path: Path) -> None:
+    """Only a slug-scoped entry WITH storage is observed per site."""
+    settings = _settings(tmp_path)
+    _data(settings, "reference/echo/shared.yaml")
+    _entry(
+        settings,
+        "echo-shared",
+        _CONCRETE.format(
+            name="echo-shared", relpath="reference/echo/shared.yaml", cadence="static"
+        ),
+    )
+    _entry(
+        settings,
+        "virtual-node",
+        """\
+        id: virtual-node
+        title: T
+        scope: reference
+        site_scope: slug-scoped
+        producer:
+          kind: derived
+          source: x
+        storage: []
+        refresh:
+          cadence: static
+        """,
+    )
+    entries = reconcile(settings=settings, now=_FIXED).entries
+    assert entries["echo-shared"].sites == {}
+    # a virtual node has nothing on disk — it is present for everyone, with no per-site record
+    assert entries["virtual-node"].exists is True
+    assert entries["virtual-node"].sites == {}
+
+
+def test_per_site_records_survive_the_yaml_round_trip(tmp_path: Path) -> None:
+    settings = _settings(tmp_path)
+    _data(settings, "reference/eia/bryan/consumer-energy.yaml", "bryan: 1\n")
+    _entry(settings, "eia-consumer-energy", _SLUG_SCOPED)
+
+    snap = reconcile(settings=settings, now=_FIXED, reconciled_at="pin")
+    write_observed(snap, settings=settings)
+    reloaded = load_observed(settings=settings)
+    assert reloaded is not None
+    assert (
+        reloaded.entries["eia-consumer-energy"].sites == snap.entries["eia-consumer-energy"].sites
+    )
+    # an entry with no site axis writes no empty `sites:` map to carry
+    assert "sites:" in (settings.catalog_dir / "_observed.yaml").read_text(encoding="utf-8")
+
+
 # --- LFS pointer ---------------------------------------------------------------------------
 def test_lfs_pointer_is_present_but_unmaterialized(tmp_path: Path) -> None:
     settings = _settings(tmp_path)

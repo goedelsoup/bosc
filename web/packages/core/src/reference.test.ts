@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { repoPath } from "./bundle";
+import { hasFeed, loadFeed, repoPath } from "./bundle";
+import type { CatalogItem } from "./feeds";
 import {
   instanceNoteId,
   instanceSites,
@@ -233,5 +234,48 @@ describe("referenceForSite", () => {
         expect(noteFor(peer, dataset)).toBeNull();
       }
     }
+  });
+});
+
+// --- the per-site observation (#2066) --------------------------------------------------------
+// A `slug-scoped` dataset resolves a `{site}` template, so it is a DIFFERENT FILE PER SITE. The
+// bundle used to publish one network-wide aggregate into every site's `catalog.json`, where it
+// read as a fact about that site: mansfield's own `parcel-assemblage.geojson` is 29,769 bytes and
+// its bundle claimed 531,148 across 11 files, while three sites holding no such file at all
+// published `exists: true` over the same half megabyte.
+const catalogRow = (slug: string, id: string): CatalogItem | undefined =>
+  hasFeed("catalog", slug) ? loadFeed<CatalogItem[]>("catalog", slug).find((c) => c.id === id) : undefined;
+
+describe("published catalog observation", () => {
+  it("two sites holding the same dataset publish DIFFERENT bytes for it", () => {
+    const a = catalogRow("mansfield", "parcel-assemblage")?.observed;
+    const b = catalogRow("fort-wayne", "parcel-assemblage")?.observed;
+    expect(a?.exists).toBe(true);
+    expect(b?.exists).toBe(true);
+    expect(a?.file_count).toBe(1);
+    expect(b?.file_count).toBe(1);
+    expect(a?.sha256).not.toBe(b?.sha256);
+    expect(a?.size_bytes).not.toBe(b?.size_bytes);
+  });
+
+  it("a site holding no copy publishes exists:false, not a sibling's checksum", () => {
+    const row = catalogRow("piketon", "parcel-assemblage");
+    if (!row) return; // piketon's bundle carries only its own scope
+    expect(row.observed?.exists).toBe(false);
+    expect(row.observed?.file_count).toBe(0);
+    expect(row.observed?.sha256 ?? null).toBeNull();
+  });
+
+  it("only the reference build carries the network membership figure", () => {
+    // `/about/catalog` is network-global but reads the reference build's bundle, so without this
+    // a per-site dataset would render there as whatever Lima happens to hold — "missing", for a
+    // dataset eleven sites have. The denominator is the REGISTERED profiles reconcile fans out
+    // over (`bosc.sites.SITES`), not the larger `data/sites.yaml` roster this package reads.
+    const net = catalogRow("lima", "parcel-assemblage")?.observed_network;
+    expect(net?.sites_present).toBeGreaterThan(1);
+    expect(net?.sites_total).toBeGreaterThan(net?.sites_present ?? 0);
+    expect(net?.sites_total).toBeLessThanOrEqual(SITES.length);
+    // a sibling's bundle is strictly its own slice and asserts no network figure
+    expect(catalogRow("fort-wayne", "parcel-assemblage")?.observed_network ?? null).toBeNull();
   });
 });

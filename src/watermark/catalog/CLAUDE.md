@@ -11,6 +11,24 @@ subsystem audits). Driven by `watermark catalog …` (`cli/catalog.py`).
   the reconcile snapshot: per-entry existence, sha256, file count, LFS-materialization, `asof`,
   and staleness-vs-TTL. Every other command is a function of these two — nothing here fetches
   from the network.
+- **A `slug-scoped` dataset is observed TWICE, and only one of them is a site's fact** (#2066).
+  Its storage carries a `{site}` template, so it is a *different file per site*. The entry-level
+  record is the **network-wide aggregate** over every site's copy — summed bytes, a hash of the
+  whole set — and `check`/`diff`/`audit` read that. The per-site records live under
+  `entries.<id>.sites.<slug>`, and **that** is what `watermark export` publishes into a site's
+  `catalog.json`. A slug with no copy is ABSENT from the map and renders as `exists: false`.
+  Publishing the aggregate instead is what made `parcel-assemblage` claim 531,148 bytes and 11
+  files in mansfield's bundle for a 29,769-byte file, and `exists: true` in three bundles whose
+  sites hold no such file at all — and, because the aggregate moves whenever *any* site's copy
+  does, it kept `export --check --all` reporting 26 of 26 bundles drifted **on a clean tree**.
+- **`resolve.py` is the one per-site rule**, shared by `reconcile` and `sites` so a site's
+  observation and its presence answer the same question the same way. Two parts: what belongs to
+  a site (the `{site}` expansions, plus — for the reference build alone — the un-slugged peers, as
+  a **union**, since `hydrology-reaches` gives Lima both), and what counts as present (no declared
+  *concrete* member absent, and ≥1 member found). The predicate is deliberately reconcile's own:
+  a templated member's per-site absence is expected, never a gap — `rsei-inventory` templates a
+  `{site}/enclave.yaml` only the one federal-enclave site can have, and an all-members rule read
+  21 sites that hold their own inventory as missing it.
 - **An entry declares the dataset's contract.** `id` (kebab slug, unique), `title`, `scope`
   (`documents`/`extracted`/`reference`/`derived`/`bundle`/…), a `producer` (how it regenerates:
   `kind` + a `watermark` `command` + `connector_ref` dotted module path + human `source`), `storage`

@@ -23,7 +23,8 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from watermark.catalog import CatalogEntry, load_entries
 from watermark.catalog.reconcile import ObservedEntry, ObservedSnapshot, load_observed
-from watermark.catalog.sites import _resolved_relpaths, is_relevant
+from watermark.catalog.resolve import present_for_site
+from watermark.catalog.sites import is_relevant
 from watermark.config import Settings, get_settings
 from watermark.sites import SITES
 
@@ -111,11 +112,7 @@ def _site_coverage(
     out: list[SiteCoverage] = []
     for slug in sorted(SITES):
         relevant = [e for e in entries if is_relevant(e, slug)]
-        present = 0
-        for entry in relevant:
-            resolved = _resolved_relpaths(entry, slug)
-            if resolved and all((settings.data_dir / rel).exists() for rel in resolved):
-                present += 1
+        present = sum(1 for entry in relevant if present_for_site(entry, slug, settings))
         out.append(
             SiteCoverage(
                 slug=slug, total=len(relevant), present=present, missing=len(relevant) - present

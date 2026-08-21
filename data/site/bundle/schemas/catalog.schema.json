@@ -143,6 +143,17 @@
         ],
         "default": null
       },
+      "observed_network": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/CatalogNetworkObserved"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
       "citation": {
         "$ref": "#/$defs/Citation"
       }
@@ -164,9 +175,29 @@
     "type": "object"
   },
   "$defs": {
+    "CatalogNetworkObserved": {
+      "additionalProperties": false,
+      "description": "How widely a ``slug-scoped`` dataset is held **across the network** (#2066).\n\nOnly the reference build carries this, and only for a slug-scoped dataset: it is the one\nfigure the network-global ``/about/catalog`` page needs that a single site's record cannot\ngive it. Deliberately *membership* rather than the old sha/size/file-count aggregate — a\nchecksum over eleven sites' concatenated files answers no question anyone has, and moved on\nevery re-pull of any site, which is what kept every committed bundle permanently drifted.",
+      "properties": {
+        "sites_present": {
+          "title": "Sites Present",
+          "type": "integer"
+        },
+        "sites_total": {
+          "title": "Sites Total",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sites_present",
+        "sites_total"
+      ],
+      "title": "CatalogNetworkObserved",
+      "type": "object"
+    },
     "CatalogObserved": {
       "additionalProperties": false,
-      "description": "The reconcile snapshot's observed half for a dataset (``data/catalog/_observed.yaml``).",
+      "description": "The reconcile snapshot's observed half for a dataset (``data/catalog/_observed.yaml``).\n\nScoped to the bundle's own site: for a ``slug-scoped`` dataset this is\n``entries.<id>.sites.<slug>``, and a site holding no copy gets a zeroed ``exists: false``\nrecord rather than a sibling's bytes (#2066). See :class:`CatalogNetworkObserved` for the\nnetwork figure the reference build additionally carries.",
       "properties": {
         "exists": {
           "title": "Exists",

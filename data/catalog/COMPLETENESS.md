@@ -4,7 +4,7 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-17T13:47:34.832600+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-21T14:23:40.602303+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
@@ -96,32 +96,32 @@ Snapshot reconciled: **2026-08-17T13:47:34.832600+00:00**. Regenerate with `wate
 
 | site | relevant | present | missing |
 | --- | --- | --- | --- |
-| bowling-green | 60 | 51 | 9 |
-| bryan | 56 | 44 | 12 |
-| columbus | 53 | 42 | 11 |
-| coshocton | 53 | 36 | 17 |
-| defiance | 57 | 45 | 12 |
-| findlay | 68 | 59 | 9 |
-| fort-wayne | 46 | 34 | 12 |
-| greenville | 54 | 42 | 12 |
-| hamilton-middletown | 55 | 44 | 11 |
-| lima | 107 | 101 | 6 |
-| mansfield | 54 | 43 | 11 |
-| new-albany | 54 | 43 | 11 |
-| ottawa | 59 | 49 | 10 |
-| piketon | 53 | 36 | 17 |
-| portsmouth | 54 | 37 | 17 |
-| sandusky | 53 | 36 | 17 |
-| sidney | 63 | 54 | 9 |
-| springfield | 54 | 44 | 10 |
-| toledo | 58 | 46 | 12 |
-| troy-piqua | 59 | 50 | 9 |
-| urbana | 56 | 46 | 10 |
-| van-wert | 64 | 55 | 9 |
-| west-union | 58 | 48 | 10 |
-| wilmington | 59 | 50 | 9 |
-| wpafb | 56 | 48 | 8 |
-| xenia | 55 | 44 | 11 |
+| bowling-green | 60 | 54 | 6 |
+| bryan | 56 | 47 | 9 |
+| columbus | 53 | 45 | 8 |
+| coshocton | 53 | 38 | 15 |
+| defiance | 57 | 48 | 9 |
+| findlay | 68 | 62 | 6 |
+| fort-wayne | 46 | 38 | 8 |
+| greenville | 54 | 45 | 9 |
+| hamilton-middletown | 55 | 47 | 8 |
+| lima | 107 | 103 | 4 |
+| mansfield | 54 | 46 | 8 |
+| new-albany | 54 | 46 | 8 |
+| ottawa | 59 | 52 | 7 |
+| piketon | 53 | 38 | 15 |
+| portsmouth | 54 | 39 | 15 |
+| sandusky | 53 | 38 | 15 |
+| sidney | 63 | 58 | 5 |
+| springfield | 54 | 47 | 7 |
+| toledo | 58 | 49 | 9 |
+| troy-piqua | 59 | 53 | 6 |
+| urbana | 56 | 49 | 7 |
+| van-wert | 64 | 58 | 6 |
+| west-union | 58 | 51 | 7 |
+| wilmington | 59 | 53 | 6 |
+| wpafb | 56 | 50 | 6 |
+| xenia | 55 | 47 | 8 |
 
 ## Integrity gaps
 

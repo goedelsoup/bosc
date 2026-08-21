@@ -31,6 +31,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "watermark export — assembled from the committed corpus + reference datasets",
       "source_kind": "derived",
@@ -72,6 +73,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "virtual aggregate — resolved by `watermark catalog run onboard-bundle --site <slug>`",
       "source_kind": "derived",
@@ -150,6 +152,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Adams County Regional Water District records production received 2026-08-15 (34 PDFs — governance, board minutes 2024-01 to 2026-07, budgets/financials, the executed nondisclosure agreement and the Ginger Ridge Road water-main plan set), shelved at data/documents/west-union/acrwd/; hashes and content-verified dates in the per-genre filename-map.yaml. Ohio EPA 2026 PWS monitoring schedule (Adams County) for the PWS ID.",
       "source_kind": "reference",
@@ -220,6 +223,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Port Authority of Allen County (PAAC) / Allen Economic Development Group (AEDG) — the 'Responsive Records — Parent PRR' public-records production (PRR-01 bundle)",
       "source_kind": "document",
@@ -274,6 +278,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Tetra Tech OPC estimates, PRR-01 bundle (0-based PDF pages 317 summary, 318-327 detail)",
       "source_kind": "document",
@@ -340,6 +345,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen Township, Hancock County, OH Board of Trustees — minutes published on the township's own .gov (WordPress) at allentwphancockoh.gov/trustees/. The body is grounded in the committed Hancock County Directory of Officials 2026 (data/documents/findlay/reference/); its publishing block was discovered 2026-08-01.",
       "source_kind": "connector",
@@ -404,6 +410,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "American Township Board of Trustees (Allen County, OH) — minutes/agendas published at amertwp.us",
       "source_kind": "connector",
@@ -495,6 +502,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Five primary documents across two agencies, plus two blocked routes recorded as per-source negatives. SITING: the OPSB Staff Report of Investigation in case 25-0973-EL-BLN (report date 2026-01-27, DIS-stamped 1/27/2026, 26 pp incl. cover letter and project maps), captured 2026-08-01 from WTOL-11's mirror because the issuing docket system dis.puc.state.oh.us serves an F5/BIG-IP JavaScript bot-challenge to automated retrieval — the custody chain runs through a news organization and that is stated in data/documents/grid/bowling-green/filename-map.yaml. AIR: the whole Ohio EPA DAPC permit-to-install chain for facility 0387022027 / permit P0139272 — the application completeness letter (2025-12-08), the draft permit noticed for comment (2026-03-05, with the Permit Strategy Write-Up bound in), Ohio EPA's own public information session and hearing deck (2026-04-08), and the FINAL permit (2026-06-02, with a 42-comment Response to Comments) — retrieved 2026-08-01 from the Ohio EPA eDocument public portal (edocpub.epa.ohio.gov, searched by Entity Name \"WILL-POWER\") and the Ohio DAM (data/documents/oepa/bowling-green/air/filename-map.yaml). Every action: and digest block is a REVIEWED TRANSCRIPTION read from each PDF's own text layer; the one digit-level claim that could not rest on OCR (the draft write-up's mismatched facility ID) was confirmed by rendering the page image at 170 dpi. No vision extraction pass was run.",
       "source_kind": "reference",
@@ -584,6 +592,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Two newly captured documents plus three unblocked machine routes. DOCUMENTS: The Toledo Edison Company's whole filed retail tariff, P.U.C.O. No. 8, Schedule of Rates for Electric Service (168 pp, Table of Contents effective 2026-07-01, most sheets filed pursuant to Orders dated 2025-11-19 and 2026-02-18 in Case No. 24-0468-EL-AIR), retrieved 2026-08-05 from FirstEnergy's own Ohio tariff library; and the Edison Electric Institute's \"Large Load Projects and Tariffs (July 2026)\" compilation (16 pp, self-dated \"Updated July 17, 2026\"), held for the one fact it carries that no primary route would yield — the docket number of the pending FirstEnergy data-center tariff. Both committed under data/documents/grid/bowling-green/ with sha256s in that dir's filename-map.yaml. MACHINE ROUTES: EIA Form 860M (Preliminary Monthly Electric Generator Inventory, June 2026 edition, sha256 47d28a1e…3072) read programmatically for every generator in Wood County across its Operating, Planned, Retired and Canceled sheets, and searched whole-workbook for the Apollo project; the City of Bowling Green's own ArcGIS server (gis.bgohio.org, PublicData/UtilitiesWithZoning) queried for its electric-distribution, substation, municipal-boundary and current-zoning layers; and the Wood County Auditor's Vision/CAMA parcel service for the geometry those queries run against. Three regulatory forums were probed and recorded as blocked or limited rather than empty — PUCO DIS, the Ohio Supreme Court's docket, and the PJM queue.",
       "source_kind": "reference",
@@ -703,6 +712,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Fourteen primary documents from three public bodies, plus one live parcel-layer query and two blocked routes recorded as per-source negatives. TOWNSHIP: eleven files from Middleton Township's own minutes publication — the 2023-07-19 \"Project Accordion\" executive session, the 2023-09-20 CRA support resolution, the Getz (2023-03-29) and Busch (2023-05-03) seller-name rezonings, the 2025-01-15 site-plan review that puts a two-building construction schedule on the record, the 2024-11-20 Busch and SDT1 matters, the 2025-09-09 Eckel/Speck withdrawals, the 2026-01-07 meeting at which Meta's letter was read, that letter itself, and the 2026-07-07 R.C. 519.12 hearing on Application 2026041. All were located by sweeping the whole publication — 115 files for 2023-2026 downloaded and grepped, fifteen naming Liames or Project Accordion — so the negatives in this set rest on a stated search rather than on assumption. COUNTY COMMISSIONERS: the journal of the 2023-09-28 regular session, carrying Resolution 23-01249 and the record made in support of it, from the county's legacy static minutes tree (which publishes 2023 in full and stops at 2024-05-30). It has NO text layer — a Canon copier scan, read at 300 DPI with tesseract, with the resolution number cross-checked against the printed listing page. COUNTY PLANNING COMMISSION: the agendas of 2026-06-02 (with its attached parcel map) and 2026-07-07, from the CivicEngage Agenda Center, whose Content-Disposition headers supplied the served filenames the URLs lack. PARCEL LAYER: the Wood County auditor's Vision_Parcels MapServer layer 0, queried live on 2026-08-05 for the thirteen rezoned parcels and for the whole Liames holding, and re-probed for its own vintage (73,839 rows, max Sale_Date 2025-07-25, zero rows after it — unchanged since #1436). All document bytes are committed under data/documents/bowling-green/{middleton-township, commissioners,planning-commission}/ with sha256s in each directory's filename-map.yaml.",
       "source_kind": "reference",
@@ -778,6 +788,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Three primary instruments plus three federal systems. Ohio EPA NPDES permit 2PD00009*TD / application OH0024139 — the *TD renewal as issued (action date 2022-03-28, effective 2022-05-01, expires 2027-04-30) and its Fact Sheet Regarding an NPDES Permit to Discharge (Public Notice 22-02-025) — both fetched from the Ohio DAM 2026-08-01 (data/documents/oepa/bowling-green/filename-map.yaml). The City of Bowling Green's 2025 Drinking Water Consumer Confidence Report, PWS OH8700311, fetched from the City's own CivicPlus DocumentCenter 2026-08-01 (data/documents/bowling-green/drinking-water/filename-map.yaml). Both permit: blocks are REVIEWED TRANSCRIPTIONS read page-by-page from each PDF's embedded text layer — these are digitally generated documents, not scans, and no vision pass was run. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0024139/FRS 110002321005 and for PWS OH8700311 and OH8752212; eff_rest_services.get_effluent_chart for the DMR series; cwa_rest_services.get_facility_info over Wood County FIPS 39173 for the construction general-permit sweep), read 2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09.",
       "source_kind": "reference",
@@ -847,6 +858,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County Board of Commissioners — derived analysis mined from the published minutes/agenda corpus",
       "source_kind": "document",
@@ -906,6 +918,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County Board of Commissioners — meeting record scraped from commissioners.allencountyohio.com",
       "source_kind": "connector",
@@ -981,6 +994,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County Board of Commissioners — derived OCR parquet/JSON index over the meeting corpus",
       "source_kind": "derived",
@@ -1022,13 +1036,17 @@
       }
     ],
     "observed": {
-      "exists": true,
-      "sha256": "f28932f597880d776c18cdbaed64c38856477f4f21aed5e705fcf19a856fd736",
-      "size_bytes": 387598,
+      "exists": false,
+      "sha256": null,
+      "size_bytes": 0,
       "lfs_materialized": true,
-      "file_count": 14,
+      "file_count": 0,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 14,
+      "sites_total": 26
     },
     "citation": {
       "source": "BOSC site-onboarding discovery — verified public-record register of per-site data-center activity (Columbus/New Albany/Springfield)",
@@ -1087,6 +1105,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Data Center Dynamics; Journal-News (CRA/tax filing); WVXU; WCPO; Duke Energy Ohio Woodsdale 345-kV transmission project page; City of Trenton water/sewer pages; Butler County wastewater (LeSourdsville WRF); stopohiodatacenters.org (advocacy, leads only)",
       "source_kind": "reference",
@@ -1144,6 +1163,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "PJM public planning queue (PlanningQueues.xml, 9,263 projects); ODJFS public WARN notices 2024/2025/2026 (241 notices, served off the Ohio DAM) and the RK Industries notice PDF; EPA ECHO ICIS-Air and CWA for FIPS 39137; EPA RSEI v234 Putnam inventory; BLS QCEW 2023 (area 39137); Putnam County GIS Parcels layer + county auditor; Village of Ottawa Highland Industrial Park page; Putnam County CIC project register; stopohiodatacenters.org Putnam County profile. All queried 2026-07-31.",
       "source_kind": "reference",
@@ -1198,6 +1218,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Sidney City Council resolutions (69-25, 80-25, 81-25, 82-25, 26-26, 27-26); sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory",
       "source_kind": "reference",
@@ -1251,6 +1272,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "City of Piqua project page (piquaoh.gov/1673); Data Center Dynamics; Miami Valley Today; CivicCapacity water/wastewater analysis; Ohio EPA NPDES 1PD00008 (Piqua WWTP); Ohio EPA data-center general permit OHD000001; Hunterbrook (Meta attribution, investigative); Ryan Grissinger candidate-site tracker",
       "source_kind": "reference",
@@ -1305,6 +1327,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "QTS (q.com/data-centers/van-wert); Data Center Dynamics; Van Wert Independent (2026-05/06); Thor Equities / Form8tion (GlobeNewswire 2025-08-19); Ohio EPA data-center general permit OHD000001; City of Van Wert water-treatment page; Ohio EPA HUC-12 reports",
       "source_kind": "reference",
@@ -1356,13 +1379,14 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "2287a50ca46e7344f4c1b96cf4569a1a37d188ba7975abfd1c74a452a3b171d8",
-      "size_bytes": 34190,
+      "sha256": "bbbfaaa072badc847d80bd53f292c5ada698f35411a0e18e44f5bf843b1b270f",
+      "size_bytes": 35281,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Adams County official AWS page (amazon.adamscountyoh.gov) + its project brochure; PJM TEAC Dayton Supplemental deck 2026-02-03 (Need Dayton-2026-001); Ohio EPA DSW Construction + Industrial NOI general-permit lists (report date 2026-08-05); USACE Nationwide Permit 39 verification 2026-02-18 (via The People's Defender); WCPO I-Team (2026); Ohio Capital Journal / Ballotpedia (Conserve Ohio amendment)",
       "source_kind": "reference",
@@ -1420,6 +1444,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Web research sweep 2026-07-11 (#1277 grooming refresh / #1471; supersedes the 2026-07-03 scaffold, closes #519). Clinton County Port Authority data-center FAQ; govinfo docket 1:26-cv-00448; Ohio EPA OHD000001 draft-permit pages; WCPO/WDTN/wnewsj/WYSO reporting; in-corpus RSEI inventory + BLS QCEW baseline + NPDES fact sheet 1PD00013.fs.\n",
       "source_kind": "reference",
@@ -1475,6 +1500,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "BOSC corpus (written testimony §8 Ohio defense footprint; cloud-consumer-candidates.yaml; mandamus-analysis.md IL5/IL6 entity-level caution); onboarding self-research pass (data/research/onboard-wpafb-*/findings.md). The sited-facility web pass (parcel/SOS/OEPA) is still to-run.",
       "source_kind": "reference",
@@ -1528,6 +1554,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "BOSC corpus (Greene County economics baseline; Little-Miami ECHO inventory); Xenia onboarding self-research pass. The sited-facility web pass (parcel/SOS/EPA) is still to-run.",
       "source_kind": "reference",
@@ -1593,6 +1620,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA ECHO (eff_rest_services DMR) for the effluent record + BOSC discovery synthesis of the Fort Wayne WWTP / 'Project Zodiac' facility and its low-flow receiving water",
       "source_kind": "document",
@@ -1662,6 +1690,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Two routes. (1) Ohio EPA's eDocument public portal (edocpub.epa.ohio.gov), scripted, searched by Entity Name \"DEFIANCE WWTP\" — 1,097 documents, 950 of them under Secondary ID 2PD00013 — from which six were fetched on 2026-08-05 and committed under data/documents/oepa/defiance/ (see that directory's filename-map.yaml; the portal sends no Content-Disposition, so the docid is the as-served identity and is recorded beside every file). The permit:/ blocks are `watermark extract --kind npdes` output (text-primary over the first six pages plus the page-1 image); everything after them is a reviewed augmentation transcribed page-by-page from each PDF's embedded text layer — these are digitally generated Ohio EPA documents, not scans. (2) EPA ECHO's CWA services for the enforcement record — dfr_rest_services.get_dfr for FRS 110000544082 and case_rest_services.get_case_report for case 05-2024-0328 — read 2026-08-05 against the ICIS-NPDES system extract of 2026-07-31.",
       "source_kind": "reference",
@@ -1739,6 +1768,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA NPDES permit 2PD00008 / application OH0025135 — the 2024 *UD renewal fact sheet (Public Notice 205259), the 2025 *VD modification package as issued (Public Notice 216133, effective 2026-02-01), and that modification's draft public notice, all fetched from the Ohio DAM 2026-07-31 (data/documents/oepa/findlay/filename-map.yaml). The permit:/ blocks are `watermark extract --kind npdes` output (text-primary over the first six pages plus the page-1 image); everything after them is a reviewed augmentation transcribed page-by-page from each PDF's embedded text layer — these are digitally generated Ohio EPA documents, not scans. The allocation-chain record additionally reads the Maumee Watershed Nutrient TMDL Appendix 4 (Tables A4.1 / A4.3 / A4.5), general permit OHP000001 (Parts I.C.1, IV.A.1, IV.C, IV.D), and the December 2024 TMDL Biennial Report (pp. 13-14).",
       "source_kind": "reference",
@@ -1810,6 +1840,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Two Ohio Department of Job and Family Services WARN Act notices served from the Ohio DAM's jfs.ohio.gov/warn tree — The Goodyear Tire & Rubber Company's Tall Timbers Mold facility closing (received 2026-01-30) and Michigan Sugar Company's Findlay warehouse closing (received 2025-12-11) — plus the Ohio Brownfield Remediation Program Round 11 award-description packet distributed with the 2026-05-13 announcement (govdelivery). All three fetched 2026-07-31; per-file provenance in data/documents/findlay/warn/filename-map.yaml and data/documents/findlay/brownfield/filename-map.yaml. Verbatim transcription from each PDF's embedded text layer — digitally generated letters, not scans.",
       "source_kind": "reference",
@@ -1879,6 +1910,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "FEMA Flood Mitigation Assistance release (2026-04-22, corroborated via 13abc / Spectrum News / Rep. Latta's release); USACE LRD Blanchard River Watershed feasibility Review Plan (article #3643262, published 2024-01-11); the Hancock County Flood-Risk Reduction Program pages (hancockcountyflooding.com about-us / faq / eagle-creek-dry-storage / norfolk-southern); the 2018 Stantec/Jack Faucett benefit-cost analysis; City of Findlay LOMR + funds-obligation notices; WFIN bid reporting (2026-06-30). Web-sourced / manual transcription — several primary pages 403'd and are search-rendered (see per-file warnings).",
       "source_kind": "reference",
@@ -1979,6 +2011,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen Township's adopted Zoning Resolution effective 2026-05-11 and its district map; Allen Township Zoning Commission Resolutions 24-04-124M (proposed Section 1521, Data Centers) and 24-04-125M (replacing Section 1520, Energy Storage Systems), both adopted 2026-07-28; ATZC minutes for 2026-04-07, 2026-06-02, 2026-07-07 and the 2026-07-22 special drafting session; Interstate Capital LLC's zoning-amendment application and exhibits, received 2026-07-01; the Hancock County Board of Elections certified 2026 primary canvass (summary + statement of votes cast); and the Board of Hancock County Commissioners' published SB 52 notice carrying Resolution 167-22 and the proposed exclusion map. All captured under data/documents/findlay/governance/. The published appellate opinion in One Energy Ents., Inc. v. Allen Twp. Bd. of Trustees, 2026-Ohio-405 (3d Dist., 2026-02-09) is captured separately under data/documents/legal/one-energy-v-allen-twp/, filed by case rather than by site on the legal/thor-v-urbana precedent. Two secondary articles on the City of Findlay moratorium (The Ohio Register, The Pulse) are carried as [reference] web captures because the certified ordinance could not be obtained.",
       "source_kind": "reference",
@@ -2053,6 +2086,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "AEP Ohio Transmission Company's Letter of Notification for the Rocky Ford 138 kV Station Project (OPSB 24-0707-EL-BLN) and Ohio Power Company's Construction Notice for the Ebersole-Fostoria Central #2 138 kV Cut-In and Rocky Ford-Border Basin 138 kV Tie Line Project (OPSB 24-0706-EL-BNR), both filed 2024-09-10, plus AEP's public notice for the pair; Ohio Power Company's filed retail tariff P.U.C.O. No. 22 (Schedule DCT, Original Sheet Nos. 223-1..223-7); AEP's 2025 Load Forecast Adjustments presented to the PJM Load Analysis Subcommittee 2025-09-16. All four captured under data/documents/grid/findlay/. Secondary/uncommitted reads (cited by URL, not carried as bytes): One Power Co's Form S-1 (EDGAR CIK 2039139, filed 2025-01-23, withdrawn 2025-05-09), the OCC merit brief in Ohio S.Ct. 2025-1458, and the SEL / Goldwind / OnSite vendor releases.",
       "source_kind": "reference",
@@ -2136,6 +2170,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA ECHO public web services, pulled 2026-08-02 against an ICIS-NPDES system extract of 2026-07-31 and an SDWIS extract of 2026-07-09. Three services: dfr_rest_services.get_dfr for NPDES OH0025135 (the Detailed Facility Report — permit-schedule violations, compliance summary, inspections, assessed waters); eff_rest_services.get_effluent_chart for the same permit over 2023-01-01 to 2026-07-31 (the reported effluent record — total phosphorus, flow, mercury, overflow counts and volumes), pulled through this repository's own connector watermark.hydrology.connectors.echo_dmr.fetch_effluent_chart so every figure is regenerable; and sdw_rest_services.get_systems plus the SDWIS Detailed Facility Report for public water system OH3200111. The load equation, the Individual Load Limit, the Season Report requirement and the annual schedule of events are read from the committed general-permit bytes (data/documents/oepa/OHP000001.pdf and OHP000001_FS.pdf); the Schedule of Compliance and the station inventory are read from the committed permit bytes (data/documents/oepa/findlay/2PD00008.pdf, pages 14, 16 and 18).",
       "source_kind": "reference",
@@ -2195,6 +2230,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
       "source_kind": "document",
@@ -2260,6 +2296,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Board of Hancock County Commissioners, OH — agendas and minutes published in the county's CivicPlus/CivicEngage Agenda Center. The body and its standing \"9:30 am Tuesday & Thursday\" cadence are grounded in the committed Hancock County Directory of Officials 2026 (data/documents/findlay/reference/, p.1); the publishing block was discovered 2026-08-01.",
       "source_kind": "connector",
@@ -2309,6 +2346,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "data/documents/history/historyallencou00leesgoog_text.pdf",
       "source_kind": "document",
@@ -2367,6 +2405,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Indiana DEM, Office of Air Quality (Title V air permits) + Office of Water Quality (§401 Water Quality Certifications) — hand extraction of the verified facts from the committed source PDFs under data/documents/idem/<site>/",
       "source_kind": "document",
@@ -2422,6 +2461,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Lima-Allen County Regional Planning Commission (LACRPC) — the 36-document planning/zoning corpus",
       "source_kind": "document",
@@ -2481,6 +2521,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Lima-Allen County Regional Planning Commission (LACRPC) — published meeting documents",
       "source_kind": "connector",
@@ -2534,6 +2575,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Project BOSC — reviewed legal-analysis layer over the litigation/hearing corpus (standing completeness audit + cross-production referral map)",
       "source_kind": "document",
@@ -2589,6 +2631,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio General Assembly / LSC (H.B. 983, 136th G.A. — As Introduced) + Project BOSC analysis — provision-by-provision digest of the new R.C. Chapter 3744 and the R.C. 9.66(D)(2) amendment, and relevance to the network's water, cooling, discharge, grid, subsidy, and public-records work",
       "source_kind": "document",
@@ -2657,6 +2700,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County (records produced in the 2026 BOSC public-records request) + Project BOSC analysis — NDA/CRA/school-notice source instruments and the consolidated withholding map",
       "source_kind": "document",
@@ -2710,6 +2754,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County Board of Commissioners — PRR production batch 1 (cover letter 2026-06-05, Clerk of Board Brittany N. Woods)",
       "source_kind": "document",
@@ -2763,6 +2808,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County (Commissioners resolutions + Sanitary Engineering instruments) — PRR production batch 2 (items 5–15), received 2026-06-12",
       "source_kind": "document",
@@ -2816,6 +2862,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen Soil & Water Conservation District (custodian Lydia Archambo) — PRR production over the 4110 N. Cole St. site, received 2026-06-12",
       "source_kind": "document",
@@ -2875,6 +2922,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County Sanitary Engineering department (via the Board of Commissioners) — PRR production batch 3 (per-item native file trees, items 9/11/13/14/15), received 2026-07-24 on USB flash drive",
       "source_kind": "document",
@@ -2928,6 +2976,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Project BOSC analysis (#150) — cross-document ordering reconstruction from in-corpus produced records",
       "source_kind": "document",
@@ -3033,6 +3082,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "manual/scripted transcription from the batch-3 per-item trees (items 9/11/15) — born-digital text layers, scanned-instrument visual reads, textutil (.doc/.docx), and openpyxl (.xlsx); figures copied as printed, negative meter readings preserved",
       "source_kind": "document",
@@ -3086,6 +3136,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio General Assembly / LSC (H.B. 314, 136th G.A. — As Introduced and As Passed by the House) + Project BOSC analysis — provision digest, introduced→passed diff, and relevance to the R.C. 149.43 PRR/mandamus posture",
       "source_kind": "document",
@@ -3139,6 +3190,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio General Assembly — Select/Joint Data Center Study Committee (Co-Chairs Holmes & Chavez); reviewed reads of the 2026 hearing record",
       "source_kind": "document",
@@ -3192,6 +3244,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio General Assembly — Joint Data Center Study Committee; on-device transcript of the 2026-06-04 morning hearing audio",
       "source_kind": "document",
@@ -3245,6 +3298,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio General Assembly — Joint Data Center Study Committee; on-device transcript of the 2026-06-04 afternoon hearing audio",
       "source_kind": "document",
@@ -3298,6 +3352,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio General Assembly — Joint Data Center Study Committee; on-device transcript of the 2026-06-04 closing session",
       "source_kind": "document",
@@ -3351,6 +3406,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio General Assembly — Select Committee on Data Centers; on-device transcript of relator Cory Parent's oral interested-party testimony",
       "source_kind": "document",
@@ -3404,6 +3460,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Cory Parent (relator / interested-party witness) — testimony slide deck + cloud-pricing/AI-hardware data appendix",
       "source_kind": "document",
@@ -3457,6 +3514,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Cory Parent (relator / interested-party witness) — written testimony submitted to the Ohio Select Committee on Data Centers, dated 2026-06-01",
       "source_kind": "document",
@@ -3510,6 +3568,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Project BOSC web-vendor/CMS-custody audit of Allen County government sites (captured 2026-06-05); vendor corporate-registry records + county-level site profile",
       "source_kind": "document",
@@ -3563,6 +3622,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Project BOSC web-vendor audit — raw HTTP GET + WHOIS of 41 Allen County government/subdivision sites, captured 2026-06-05",
       "source_kind": "document",
@@ -3618,6 +3678,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Primary/authoritative instrument surfaces — USASpending.gov API, FedRAMP Marketplace, Google Cloud public-sector disclosures, Allen County GIS, corpus cross-references",
       "source_kind": "document",
@@ -3671,6 +3732,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "The Lima News (LimaOhio.com), an AIM Media Midwest paper — Q2–Q3 2026 construction & community-reaction coverage of the Google / Project BOSC data center, captured via the Yahoo News syndication mirror (limaohio.com is bot/CAPTCHA-gated; no Wayback snapshot). See data/documents/limaohio/SOURCES.md for chain of custody.",
       "source_kind": "reference",
@@ -3726,6 +3788,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "City of Mansfield legislation (Ord. 25-086) + Richland County Auditor CAMA; MDL 2873 (D.S.C.) docket; OSD PFAS PA/SI status report",
       "source_kind": "document",
@@ -3779,6 +3842,10 @@
       "file_count": 2,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 1,
+      "sites_total": 26
     },
     "citation": {
       "source": "Per-site governing bodies (e.g. City of Lima council) — published meeting documents, scraped per watershed-point site",
@@ -3882,6 +3949,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for the receiving-WWTP permits 2PH00006, 2PH00007, 2PK00002, the City of Lima WWTP renewal permit 2PE00000 (application OH0026069 — the municipal receiving plant), plus the Bistrozzi \"Bosc\" data-center indirect-discharge permit 2DP00130 (public notice + draft permit)",
       "source_kind": "document",
@@ -3977,6 +4045,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permits, general-permit coverages, 401/isolated-wetland authorizations, surface-water permits to install, fact sheets and draft public notices for facilities in Sidney, Ohio (Shelby County), retrieved from the eDocument public portal and the DAM permit slots",
       "source_kind": "document",
@@ -4032,6 +4101,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for permits at the Piqua wastewater treatment works (permit 1PD00008, Miami County)",
       "source_kind": "document",
@@ -4087,6 +4157,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for permits at the Van Wert WWTP (permit 2PD00006, Van Wert County)",
       "source_kind": "document",
@@ -4133,13 +4204,14 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "728c740a0597fd5faa8be4a5a0aa44b836d06ddee89d6839e40855b33c379db3",
-      "size_bytes": 7744,
+      "sha256": "037ce11c49fa574fb208532c16df56e15ac4ba5033d205e2f76ff2e0017d3761",
+      "size_bytes": 8468,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal) — the Buck Canyon file pulled 2026-08-17 by Entity Name search, 32 documents shelved at data/documents/oepa/west-union/ with hashes in that collection's filename-map.yaml",
       "source_kind": "document",
@@ -4225,6 +4297,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permits for facilities in Wilmington, OH (Clinton County); sourced from the Ohio EPA DAM (permits 1PD00013 + 1PD00013 fact sheet, 1PX00010, 1PV00089, 1IW00240, 1II00129, 1PT00125, 1MP00060)",
       "source_kind": "document",
@@ -4280,6 +4353,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "One Ohio Department of Job and Family Services WARN Act notice served from the Ohio DAM's jfs.ohio.gov/warn tree — RK Industries, Inc.'s expected closure of its automotive stamping and robotic-welding operation at 725 N Locust St, Ottawa (received 2024-05-16, ODJFS notice 007-24-042). Located by reading the ODJFS 2024/2025/2026 public notice lists record-by-record (241 notices, one Putnam County hit) while closing the #1423 facility-posture sweep. Fetched 2026-07-31; per-file provenance in data/documents/ottawa/warn/filename-map.yaml. The document is a SCAN with no body text layer — the read is a 300 DPI vision transcription, not a text-layer copy.",
       "source_kind": "reference",
@@ -4355,6 +4429,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Three primary instruments plus two federal compliance systems. Ohio EPA NPDES permit 2PD00028 / application OH0026921 — the *PD renewal as issued (action date 2025-01-22, effective 2025-03-01), its Fact Sheet for NPDES Permit Renewal (Public Notice 208357), and the draft public notice of the same permit — all fetched from the Ohio DAM 2026-07-31 (data/documents/oepa/ottawa/filename-map.yaml). The Village of Ottawa's 2025 Calendar Year Consumer Confidence Report, distributed 2026-07-01, fetched from the Village's own DocumentCenter (data/documents/ottawa/drinking-water/filename-map.yaml). All three permit:/ action:/ blocks are REVIEWED TRANSCRIPTIONS read page-by-page from each PDF's embedded text layer — these are digitally generated documents, not scans, and no vision pass was run. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0026921 and for OH6900711 with p_system=SDWIS; eff_rest_services.get_effluent_chart for the DMR series), read 2026-07-31 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09, and the Hancock County Flood-Risk Reduction Program's own project pages.",
       "source_kind": "reference",
@@ -4545,6 +4620,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA (DSW §401/PTI + DAPC air permits), USACE (wetland determinations), and Ohio Secretary of State (business filings)",
       "source_kind": "document",
@@ -4641,6 +4717,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA (DSW §401 / PTI) and USACE (waters-of-the-US / wetland determinations) for \"Project Dazzler\" — the hyperscale campus in Green Township, Scioto County, OH (EMH&T job 20250390), filed by the Dazzler-entity LLC",
       "source_kind": "document",
@@ -4705,6 +4782,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Perry Township Board of Trustees (Allen County, OH) — minutes/agendas published at perryallenohio.com",
       "source_kind": "connector",
@@ -4770,6 +4848,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Project engineers (EMH&T, WSP USA) / George J. Igel & Co. — the BOSC/LMA1A plan sheets and SWP3 stormwater plans",
       "source_kind": "document",
@@ -4850,6 +4929,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County Recorder — recorded deeds/instruments (incl. the Amazon/port-authority conveyance), named by instrument number",
       "source_kind": "document",
@@ -4905,6 +4985,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "U.S. EPA / U.S. DOJ + Ohio EPA — 1996 federal CWA consent decree, 2005 SSO-elimination agreement/CNA, and statewide NPDES Construction Stormwater General Permit OHC000006",
       "source_kind": "document",
@@ -4956,6 +5037,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio Attorney General, Environmental Enforcement Section — published consent orders (https://www.ohioattorneygeneral.gov/Files/About/Departments-and-Offices/Environmental-Enforcement-Section/Consent-Orders/). Served as flat files with no index, listing endpoint or API, so acquisition is manual and there is no connector to name here; the per-document provenance, source URL and verified sha256 live in data/documents/regulatory/west-union/filename-map.yaml.",
       "source_kind": "document",
@@ -5020,6 +5102,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Shawnee Township Board of Trustees (Allen County, OH) — minutes published at shawneetownshipohio.gov",
       "source_kind": "connector",
@@ -5071,6 +5154,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio DNR well-log census (R.C. 1521.05, reference/ohio-waterwells/shelby.csv); the original Federal Register notice 53 FR 15876 (govinfo package FR-1988-05-04, page images); the U.S. EPA national Sole Source Aquifer layer and Ohio EPA's SWAP and hydro/Aquifers MapServers; EPA SDWIS for PWSID OH7501214; the City of Sidney's Consumer Confidence Reports and Comprehensive Plan",
       "source_kind": "reference",
@@ -5208,6 +5292,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "City of Sidney legislative record — Resolutions 80-25, 81-25 and 82-25 (all adopted 2025-10-27) and 26-26 and 27-26 (both adopted 2026-04-27), each published with its executed agreement; the City staff water/sewer presentation of 2026-04-27; and the City Engineering Department grading permit signed 2026-05-15. Retrieved 2026-08-01 from the City of Sidney Document Center (sidneyoh.com/DocumentCenter/View/<id>) via the City's Proposed Data Center FAQ. Source bytes and provenance - data/documents/sidney/council/filename-map.yaml and data/documents/sidney/permits/filename-map.yaml. EXTENDED 2026-08-13 (issue 1998) through a SECOND City route - the Documents-On-Demand legislative portal (sidneycityoh.documents-on-demand.com), which this record had carried as Cloudflare-blocked and which is not. The 403 is an HTTP/2 fingerprint block, and the identical request over HTTP/1.1 returns 200. That route supplied Resolution 84-22 (2022-10-10, the act that established the City-Wide CRA), Resolution 69-25 (2025-09-08, which expands it and adds the thirty-year megaproject tier), Resolution 14-26 (2026-02-23, accepting the consolidation plat), and the approved Council minutes of 2025-09-08, 2025-10-27 and 2026-04-27. The 2025-10-27 minutes are image-only (zero extractable characters) and were read by OCR at 300 DPI; the other two carry a native text layer. EXTENDED AGAIN 2026-08-13 (the issue 1998 tail) with the LAND-USE SPINE off the same portal - Ordinance A-3225 (annexation of the 243.092 acres, 2025-07-28), Ordinance A-3226 (which zones it IIM the same night and closes this site's standing zoning question), and Ordinance A-3210 (the official zoning map whose declared coverage window ends 2025-01-13, which is why the City's own GIS could not answer it) - together with the Sidney Planning Commission minutes of 2025-06-16 and 2025-07-21 and the Council minutes of 2026-02-23. Every agent-reported sha256 was independently reproduced by a second pull before shelving. SLICE 2 adds the ZONING CODE layer off the same route - A-3219 (2025-04-28, which creates the \"Warehouse - Data Center\" use and makes it permitted by right in the IIM zone alone), A-3236 and A-3255 (the two later code amendments, which mention data centers zero times between them), A-3211 and A-3227 (the separate 53-acre county tract, shelved so a sweep cannot mistake it for the campus), A-3270 (the current official map, the first whose window contains the campus zoning), and the Planning Commission minutes of 2025-03-17 and 2026-02-18. Every hash independently reproduced.",
       "source_kind": "reference",
@@ -5270,6 +5355,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov), searched by Facility Name x County x Program: the Construction Site Stormwater General Permit coverage 1GC10596*AG and its NOI, site map and co-permittee approval; the Level One Isolated Wetland General Permit authorization 251911W (\"CMH-232\") and its 2026-01-15 modification; the Surface Water Permit to Install DSWPTI-260517 for the campus sanitary-sewer relocation; the City of Sidney's own Isolated Wetland Permit 252256W for the West Millcreek Road/Fair Road Development; and The AES Corporation's construction-stormwater coverage 1GC11112*AG for the 6694 Transmission Line Reroute. Plus, from the Ohio EPA DAM permit slots, NPDES permit 1PD00009*SD (application OH0027421, City of Sidney WWTP) and its draft-public-notice package carrying the 2022 renewal Fact Sheet. Cross-checked against EPA ECHO cwa_rest_services / air_rest_services and the Envirofacts ICIS_PERMIT and FRS_PROGRAM_FACILITY tables. Secondary, cited but carried as captured bytes: the Ohio EPA NPDES General Permits page bearing the 2026-07-21 Community Notice abandoning OHD000001, and AES Ohio's 2026-07-21 press release on its unopposed PUCO stipulation. The City of Sidney FAQ (sidneyoh.com/526) was read live and is cited by URL, not carried.",
       "source_kind": "reference",
@@ -5322,6 +5408,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "USGS NWIS 04193500 instantaneous-value record; travel time via USGS NLDI + Manning normal-depth; dam-failure timeline from the Napoleon / Huston Creek water-watch (#1497)",
       "source_kind": "reference",
@@ -5433,6 +5520,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Primary instruments — OEPA eDocs, USACE Huntington District filings, Corps JDs (permits/highland55/), City of Urbana council packets and approved minutes (urbana/council/)",
       "source_kind": "document",
@@ -5495,6 +5583,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Three documents pulled 2026-08-03 from the Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), committed at data/documents/oepa/van-wert/stormwater/ with a filename map: the applicant's Notice of Intent for coverage under NPDES general permit OHC000006 (EPA form 4494, Application ID 288738011, electronically submitted 2026-07-21 and certified under penalty of law by Tamir Mengesha, Project Manager), the site map it attaches (Site_Map_QTS_Van_Wert.pdf), and Ohio EPA's approval letter of 2026-07-30 granting coverage as facility permit 2GC08872*AG. All three carry clean native text layers and were transcribed from them; nothing was OCR'd. The portal serves no Content-Disposition header, so each file is named for the numeric docid that is its as-served identity. Located by entity-name search on \"QTS\", which returns the operator's whole Ohio fleet — 35 documents, of which these three are the only Van Wert rows.",
       "source_kind": "reference",
@@ -5561,6 +5650,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Five independent routes run 2026-08-05 for issue 1407. (1) THE CITY — the open WordPress REST media index at vanwert.org (298 attachments enumerated), which is the archive behind the rolling /ordinances/ window; every council minute and ordinance uploaded since the 2026-05-11 Mega Site vote was downloaded and read, and four were committed to data/documents/van-wert/council/ (the approved minutes of 2026-05-27, 2026-06-08 and 2026-07-13, plus the private-well ordinance 26-06-034). All are image-only scans with a zero-character text layer, so every quotation was read via watermark.civic.indexer.ocr_pdf at 300 DPI and re-read at 450 DPI before being written down; the 2026-07-13 approval page was verified VISUALLY (typed \"Approved on: July 27, 2026\" over wet-ink signatures). (2) THE COUNTY — the Board of Commissioners' published 2026 agenda index, one page carrying all 63 meeting dates from 2026-01-01 to 2026-08-06, captured to data/documents/van-wert/county/. (3) THE SCHOOL DISTRICT — Lincolnview Local's BoardDocs portal (go.boarddocs.com/oh/lls), meeting list and full agendas read by POST without auth for all twelve 2026 meetings. (4) THE STATE — the Ohio Tax Credit Authority's minutes for 2026-06-01 and 2026-06-29 pulled from the Ohio DAM and committed to data/documents/odd/tca/, the committed ODD tax-incentive export (data/reference/odd/tax_incentives.csv, pulled 2026-06-28) queried directly, and the Governor's 2026-05-27 pause notice captured to data/documents/odd/. (5) THE OPERATOR — a raw capture of q.com/data-centers/van-wert to data/documents/van-wert/operator/.",
       "source_kind": "reference",
@@ -5643,6 +5733,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Nine City of Van Wert documents pulled 2026-08-03 from the City's open WordPress upload tree (https://vanwert.org/wp-content/uploads/), committed at data/documents/van-wert/council/ with a filename map: the three emergency ordinances of 2026-05-11 in both posted variants (26-05-028 annexation body + exhibits, 26-05-029 code amendment body + Exhibit A, 26-05-030 conditional zoning body + Exhibits A/B/C), the certified 2026-05-04 statutory public-hearing record (107 pp), and the approved council minutes of 2026-04-27 and 2026-05-11. Seven of the nine carry no text layer at all; the other two (5.11.26.pdf, 5.4.26-Public-Hearing-1.pdf) carry a partial one covering only their typed attachments, their minutes bodies being images. So every figure was read via watermark.civic.indexer.ocr_pdf at 300 DPI with targeted 450/500-DPI re-renders and a 600-DPI render for the handwritten approval stamp, never from a filename or upload path. Located through the site's open WordPress REST media index — the /ordinances/ page is a rolling window of pending items and had already dropped the May 2026 ordinances.",
       "source_kind": "reference",
@@ -5706,6 +5797,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Seven routes, run 2026-08-05 and recorded separately. (1) Ohio EPA's eDocument public portal (edocpub.epa.ohio.gov), scripted, by Entity Name (\"QTS\", 35 documents statewide), by County x Program (VAN WERT x AIR PERMIT, 328 documents, newest 2026-08-04; VAN WERT x 401 WETLANDS, 4 documents; VAN WERT x NPDES) and by Secondary ID (2GC08872, 3 documents). That NPDES sweep surfaced two previously unheld documents — the Van Wert WWTP's NPDES Permit Compliance Schedule Update of 2026-07-28 and its twelve-month influent/effluent attachment, both now carried under data/documents/oepa/van-wert/ as edoc-4208904.pdf and edoc-4208905.pdf. (2) EPA ECHO dfr_rest_services.get_dfr for OH0027910, read 2026-08-05 against ICIS-NPDES extract 2026-07-31. (3) EPA Envirofacts ICIS_PERMIT, PERMIT_NAME/CONTAINING/QTS (31 rows, of which 3 are Ohio — all Licking/Franklin, none the Van Wert coverage, recorded as a propagation-lag hazard rather than a negative). (4) AEP Ohio Transmission's own project site, which serves the Letter of Notification and public notice for OPSB Case No. 26-0729-EL-BLN that the docketing system will not; the notice is committed under data/documents/grid/van-wert/ and the 88.7 MB LON is sha256-pinned and read rather than carried. (5) A direct probe of dis.puc.state.oh.us for 25-0697-EL-BLN, recorded as an access failure. (6) PJM's published Expedited Interconnection Track and BYONG rules. (7) Local and statewide press for the two ballot threads, which is the only public account of the Van Wert County Board of Elections certification of 2026-07-27 and is carried as [reference].",
       "source_kind": "reference",
@@ -5777,6 +5869,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Two primary instruments plus three federal systems. Ohio EPA NPDES permit 2PD00006*WD / application OH0027910 — the modification package as issued (action date 2026-05-18, Public Notice 221593, entered the Director's Journal 2026-06-30, effective 2026-07-01, expires 2030-05-31; a composite of the Director's transmittal letter, the 47-page modified permit and the modification's own 8-page Fact Sheet) and its draft public notice from the DAM's DraftPN slot — both fetched from the Ohio EPA DAM 2026-08-01 (data/documents/oepa/van-wert/filename-map.yaml). Ohio EPA re-serves the `permits/doc/` slot IN PLACE on modification, so the same URL that delivered the *VD renewal in June 2026 delivers the *WD package now; both sets of bytes are held and the manifest is keyed on URL plus sha256. Both permit: blocks are the pipeline's six-page read with header fields CORRECTED on review from the fact sheet bound inside the same PDF; the superseded extractor warnings are preserved in each file. The water-watch digest additionally reads EPA ECHO (dfr_rest_services.get_dfr for OH0027910, OH8100611 and OH0135569; sdw_rest_services.get_systems over Van Wert County OH for the public-water-system index) read 2026-08-01 against ICIS-NPDES extract 2026-07-24 and SDWIS extract 2026-07-09, and USGS NLDI / NHDPlus v2 (linked-data/comid/position plus upstream/downstream navigation) snapped 2026-08-01 to establish that the intake, the five CSOs and the outfall share one flowline and in what order. Issue 1860 added the fifth route: EPA ECHO eff_rest_services.get_effluent_chart for OH0027910, read 2026-08-04 — the permittee's own DMR record for total phosphorus (00665), CSO occurrence (74062), CSO volume (74063) and effluent flow (50050), sixteen requests, one per (calendar year x parameter code) because ECHO accepts exactly one parameter_code per call. Reported coverage 2023-01 through 2026-06, no gap in the phosphorus or flow series. The effluent-chart service had refused this permit outright on 2026-08-01 (read timeouts and a 502 across three-year and one-year windows); it answered normally on 2026-08-04, and the raw responses cache under data/cache/hydrology/echo_dmr/ with the exact curl in each block's `regenerate` key.",
       "source_kind": "reference",
@@ -5837,6 +5930,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen SWCD / OSU-Lima (captured project page) + edge-of-field monitoring secondary literature (Shedekar et al.)",
       "source_kind": "document",
@@ -5890,6 +5984,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Onboarding self-research pass (data/research/onboard-wilmington-*/findings.md); SiteProfile plant_receiving (WWTP NPDES OH0028134, cited); basin._MAINSTEM_GAGES Little Miami brackets. The drainage areas the DAR interpolation multiplies (USGS StreamStats / NWIS) are to-pull — not yet in the corpus.",
       "source_kind": "reference",
@@ -5973,6 +6068,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Eleven captured sources across four routes, plus five blocked-or-negative routes recorded as per-source negatives (PUCO DIS, the opsb.ohio.gov pretty-URL case pages, wnewsj.com, journal-news.com, and PJM's own 2025 TEAC materials). INTERCONNECTION: PJM's Transmission Expansion Advisory Committee \"Dayton Supplemental Projects\" decks for all three 2026 meetings (2026-02-03 item 06, 2026-05-08 item 05, 2026-07-07 item 11), retrieved 2026-08-06 from pjm.com and read from their PDF text layers. The 2026-07-07 deck carries M-3 Need Dayton-2025-002 (the Clinton Substation / Wilmington load ramp), Need Dayton-2025-001 (the Fayette Substation / Jeffersonville ramp) and the joint priced solution; the other two decks are committed because they establish that the Wilmington need appears in the July cycle ONLY, which is a read result rather than a lucky find. SITING: the statutory service copy of AES Ohio's Letter of Notification for OPSB case 25-0871-EL-BLN, obtained from the CITY OF WILMINGTON's own website (wilmingtonohio.gov, served via storage.googleapis.com/proudcity) rather than from the applicant — the custody chain runs through the local government that was served, and is stated in data/documents/grid/wilmington/filename-map.yaml. It is a two-page scan with NO text layer; its identity, dateline and text were read off a 200-DPI render, never from OCR digits or from its filename. APPLICANT MATERIAL: AES Ohio's Fayette-Clinton fact sheet (March 2026), project-need board and FAQ, plus its Fayette Customer East and West project pages — the last two captured because they are where AES, in its own words, attaches the \"1.5 GW\" to Jeffersonville. ARCHIVED: the AES Clinton 345kV Substation Extension project page, recovered from the Internet Archive's single 2023-03-30 capture after the live URL was unpublished (HTTP 403 Drupal \"Access denied\"). SECONDARY: a landowner-side consultancy's public information packet on the intervention filings, tagged [reference] throughout and used only as a finding aid to a docket the PUCO block keeps out of reach. GEOMETRY: the Clinton Substation was located on the Clinton County auditor's CAMA parcel layer — the same layer SiteProfile.parcels_url points at — and measured against the committed corridor geometry at data/reference/wilmington/parcel-assemblage.geojson; OpenStreetMap way/36923781 corroborates the name and voltages as [reference]. No vision extraction pass was run beyond the render read of the two-page service letter.",
       "source_kind": "reference",
@@ -6048,6 +6144,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Onboarding self-research pass (data/research/onboard-wpafb-*/findings.md) + the #1397 primary- record ingest: the US-EPA Sole Source Aquifer designation (53 FR 15876) and the WPAFB CERCLA §120 Federal Facility Agreement, transcribed/read from source PDFs now committed under data/documents/wpafb/** (see data/documents/wpafb/SOURCES.yaml), plus the City of Dayton 2025 CCR PFAS table and USGS/ATSDR corroboration. Read from clean text layers / OCR, not filenames.",
       "source_kind": "reference",
@@ -6099,6 +6196,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA ECHO eff_rest_services DMR for NPDES OH0026069 (City of Lima WWTP), Allen County OH",
       "source_kind": "connector",
@@ -6150,6 +6248,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA ECHO eff_rest_services DMR for NPDES OH0027049 (Piqua WWTP), Miami County OH",
       "source_kind": "connector",
@@ -6201,6 +6300,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA ECHO eff_rest_services DMR for NPDES OH0027421 (Sidney WWTP), Shelby County OH",
       "source_kind": "connector",
@@ -6258,6 +6358,10 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": {
+      "sites_present": 1,
+      "sites_total": 26
+    },
     "citation": {
       "source": "Ohio Revised Code (5715.01 assessment ratio; 122.175 DCTE scope; 3735.671(A)(2) school-compensation floor) + Ohio Department of Taxation county sales-and-use rate + a stated commercial-millage assumption; the withheld-knob bands are cross-referenced to reference/datacenter-industry/priors.yaml",
       "source_kind": "reference",
@@ -6308,6 +6412,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA AP-42, 5th ed., Vol. I, Ch. 3.4 (Large Stationary Diesel Engines, 10/96) — verbatim transcription of Table 3.4-1 (gaseous) and Table 3.4-2 (particle sizing) from the cited EPA PDF",
       "source_kind": "reference",
@@ -6358,6 +6463,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "40 CFR Part 50 / EPA NAAQS Table — verbatim transcription of the primary criteria-pollutant standards (µg/m³) from the cited EPA source",
       "source_kind": "reference",
@@ -6407,6 +6513,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County (OH) Board of Elections — statistics blocks of the three summary canvass PDFs",
       "source_kind": "derived",
@@ -6466,6 +6573,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County (OH) Board of Elections — precinct/SOVC result PDFs flattened to tidy long form",
       "source_kind": "derived",
@@ -6525,6 +6633,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County (OH) Board of Elections — official summary canvass PDFs (Electionware), parsed per (election, section, contest, choice)",
       "source_kind": "derived",
@@ -6654,6 +6763,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County (OH) Board of Elections — official result PDFs, downloaded verbatim",
       "source_kind": "reference",
@@ -6708,6 +6818,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County GIS public ArcGIS REST — 'Current Parcels' (auditor CAMA joined to geometry)",
       "source_kind": "connector",
@@ -6758,6 +6869,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit\" 2PD00009*TD (City of Bowling Green Water Pollution Control, application OH0024139) and the permit itself, as transcribed in data/extracted/oepa/bowling-green/2PD00009.fs.npdes.yaml and 2PD00009.npdes.yaml (#1439); facility coordinates (41.385022, -83.611078) from the EPA ECHO Portage-basin inventory data/reference/echo/portage-wwtp.potw.yaml (#1433)",
       "source_kind": "reference",
@@ -6813,6 +6925,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Vendor datasheets (NVIDIA H100/H200/B200/GB200; Google TPU v5e/v5p/v6e) + in-corpus relator data appendix",
       "source_kind": "reference",
@@ -6863,6 +6976,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Pooled meta-analysis of published industry reports (Epoch AI, US Chamber CTEC, McKinsey, Good Jobs First, Brookings, Virginia JLARC, DOE/LBNL, Green Grid/Vertiv)",
       "source_kind": "reference",
@@ -6912,6 +7026,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "USGS NWIS daily discharge (00060) for the campus's bracketing gages (Ottawa @ Lima, near Kalida) + the primary supply gage (Auglaize @ Fort Jennings); the reach-gain screen is derived [inference]",
       "source_kind": "derived",
@@ -6971,6 +7086,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
       "source_kind": "connector",
@@ -7030,6 +7146,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
       "source_kind": "connector",
@@ -7089,6 +7206,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
       "source_kind": "connector",
@@ -7140,6 +7258,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Hand-authored, document-cited corrections to ECHO's CWPStateWaterBodyName — Ohio EPA NPDES permit 2PE00000*OD (Lima WWTP), Ohio EPA NPDES fact sheet 2PD00006 Table 12 (Van Wert WWTP), and the EPA ECHO detailed facility report for OH0135569",
       "source_kind": "reference",
@@ -7200,6 +7319,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
       "source_kind": "connector",
@@ -7260,6 +7380,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
       "source_kind": "connector",
@@ -7311,12 +7432,16 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "773dc96b81a5fd9386ba5f430923a053e84e4819cd49ba84811a8728a201d8b9",
-      "size_bytes": 464394,
+      "sha256": "62b437ae75140c34a80aac0b8f76738059dea3a3d774cc4d152b14e4938b3207",
+      "size_bytes": 28195,
       "lfs_materialized": true,
-      "file_count": 22,
+      "file_count": 1,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 22,
+      "sites_total": 26
     },
     "citation": {
       "source": "BLS QCEW annual averages (keyless) + US Census ACS 5-year (B01003_001E population, B19013_001E median household income)",
@@ -7368,6 +7493,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "U.S. EIA — Form EIA-930 Hourly Electric Grid Monitor (BA region demand/net-gen/interchange)",
       "source_kind": "connector",
@@ -7416,12 +7542,16 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "534d3399b66f259df22e66254167a81b2c1caa35bf8998a8752d3447a4661552",
-      "size_bytes": 47694,
+      "sha256": "612a173bd5f294beaba3e29fd5a38318848d8f2660442600f1c0de2b17c6b213",
+      "size_bytes": 5296,
       "lfs_materialized": true,
-      "file_count": 22,
+      "file_count": 1,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 22,
+      "sites_total": 26
     },
     "citation": {
       "source": "U.S. EIA — API v2 seriesid route (state residential electricity/gas price, total retail sales)",
@@ -7471,12 +7601,16 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "09fd968643c5016a03974934253322be0179184a18787f97de39eb45e59a6408",
-      "size_bytes": 31135,
+      "sha256": "fc945979ece35e1e2a4154eaa392a6933bdd4e4b2118a8684193c4c55bad4188",
+      "size_bytes": 3113,
       "lfs_materialized": true,
-      "file_count": 10,
+      "file_count": 1,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 10,
+      "sites_total": 26
     },
     "citation": {
       "source": "Derived — facility draw (air permit, #87) sized against EIA state retail sales + residential price (#91)",
@@ -7528,12 +7662,16 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d2e0818fb626fcfbb5c9e8f8622da2eccf3712ab111a491171cb6b8c2e6dd417",
-      "size_bytes": 106211,
+      "sha256": "2ab050a83a478b54b134b39dc2c804a6dc338d7de9cc4cc82d4a42ea1b1e619b",
+      "size_bytes": 6288,
       "lfs_materialized": true,
-      "file_count": 22,
+      "file_count": 1,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 22,
+      "sites_total": 26
     },
     "citation": {
       "source": "U.S. EIA — Form EIA-861 (serving-utility retail sales) + Form EIA-930 (balancing-authority hourly demand)",
@@ -7578,13 +7716,17 @@
       }
     ],
     "observed": {
-      "exists": true,
-      "sha256": "d69863d130a518baf544bb97818770969e6d3bef345716430468434c868a719b",
-      "size_bytes": 31823,
+      "exists": false,
+      "sha256": null,
+      "size_bytes": 0,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 0,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 1,
+      "sites_total": 26
     },
     "citation": {
       "source": "DoD MIRTA (Military Installations, Ranges, and Training Areas) site-boundary register, published via Esri US Federal Data; boundaries encompass federally owned or otherwise managed lands as defined in the Base Structure Report",
@@ -7629,13 +7771,17 @@
       }
     ],
     "observed": {
-      "exists": true,
-      "sha256": "57b3e2f7ad57b80db208aae924e2588060359da31ace7b43efd47c2afdcd89c1",
-      "size_bytes": 12286,
+      "exists": false,
+      "sha256": null,
+      "size_bytes": 0,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 0,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 1,
+      "sites_total": 26
     },
     "citation": {
       "source": "DoD MIRTA (site boundary) × EPA SDWIS (public water systems) × EPA ECHO CWA (NPDES discharges) × EPA RSEI/TRI (toxic releases), joined to the enclave's committed grounding record (its CERCLA §120 Federal Facility Agreement) — a multi-source assembly",
@@ -7687,6 +7833,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EIA national series (net generation, retail price) + LBNL/DOE 2024 Data Center Energy Usage Report + Inflation Reduction Act (Pub. L. 117-169)",
       "source_kind": "connector",
@@ -7737,6 +7884,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Federal Power Act §§205/206/201(b) + FERC eLibrary dockets (ER24-2172, AD24-11-000) + FERC Form 1 (Ohio Power Co.)",
       "source_kind": "derived",
@@ -7789,6 +7937,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "OGRIP — Ohio Statewide Parcels Public View (owner ogrip_agol), FeatureServer layer 0, scoped County='Hancock' via the OHIO_STATEWIDE_PARCEL_SCHEMA field-map. Waterbody names/areas cross-checked against the USGS NHD Waterbody (Large Scale) layer; township attribution against the Census TIGER county-subdivision layer.",
       "source_kind": "connector",
@@ -7838,6 +7987,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "City of Findlay GIS — hosted ArcGIS FeatureServer 'FindlayZoning'",
       "source_kind": "connector",
@@ -7888,6 +8038,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, Findlay WPCC, 2024\" (permit 2PD00008, renewal suffix UD / application OH0025135), structured read at data/extracted/oepa/findlay/2PD00008.fs.npdes.yaml; outfall coordinates (41.049722, -83.667778) from the modification-suffix VD public notice's discharge-location table",
       "source_kind": "reference",
@@ -7938,6 +8089,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "GLEIF — REST API api.gleif.org (Golden Copy)",
       "source_kind": "connector",
@@ -7987,6 +8139,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Anthropic Admin API — usage_report/messages + cost_report (org usage & cost, by model/workspace)",
       "source_kind": "connector",
@@ -8041,6 +8194,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "AWS Cost Explorer (ce:GetCostAndUsage) + AWS Sustainability API (GetEstimatedCarbonEmissions, the Customer Carbon Footprint Tool's successor)",
       "source_kind": "connector",
@@ -8102,6 +8256,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (AWS / EPRI / Uptime Institute / Macknick et al.) + hand-curated LLM inference-energy coefficients (Epoch AI / Jegham et al. / Google)",
       "source_kind": "connector",
@@ -8152,6 +8307,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "derived from the GreenOps connector exports (AWS / GitHub / Anthropic) + the eGRID/WUE factor tables — the modeled usage → electricity → CO2e → water assembly",
       "source_kind": "derived",
@@ -8202,6 +8358,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "GitHub enhanced billing platform — /organizations/{org}/settings/billing/usage (Actions minutes by runner + Git LFS/Packages/shared storage, net cost)",
       "source_kind": "connector",
@@ -8357,6 +8514,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Mixed-provenance hydrology working set — USGS NWIS, Ohio EPA TMDL documents, SSURGO/document-derived stormwater inputs, and BOSC-derived routing/water-supply artifacts (per-file provenance tagged)",
       "source_kind": "derived",
@@ -8405,12 +8563,16 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "a3826bfb94c19d2b1e545e079befaa6ed6cd8c33611d7c7a6b3775285bc413b6",
-      "size_bytes": 18996,
+      "sha256": "9cc44a148540d672068876a59398e4175a2be20a1a410a49c5e2f0dcdf1a4fb1",
+      "size_bytes": 852,
       "lfs_materialized": true,
-      "file_count": 22,
+      "file_count": 1,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 22,
+      "sites_total": 26
     },
     "citation": {
       "source": "NOAA NWS HDSC Atlas-14 — precipitation-frequency point query (Partial-Duration Series, English depths)",
@@ -8472,6 +8634,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Cited 7Q10s read from Ohio EPA NPDES fact sheets (document) + mainstem 7Q10s derived from USGS NWIS daily discharge via log-Pearson III",
       "source_kind": "derived",
@@ -8520,12 +8683,16 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "259bd2e8e5fe316735747d701d425671babcb51af262c154e000a81474518e51",
-      "size_bytes": 58228,
+      "sha256": "b2d39601272ca643250ffbf7f1902ff3e2056b65d73b7913650f1ff3ee2f00dd",
+      "size_bytes": 2638,
       "lfs_materialized": true,
-      "file_count": 22,
+      "file_count": 1,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 22,
+      "sites_total": 26
     },
     "citation": {
       "source": "NASA POWER (Prediction Of Worldwide Energy Resources) — climatology point REST API (satellite-derived monthly/annual normals)",
@@ -8577,6 +8744,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio DNR, Division of Water — 'Principal Streams and Their Drainage Areas' (C.E. Sherman map, July 1925; reprinted 1999)",
       "source_kind": "reference",
@@ -8620,59 +8788,38 @@
         "lfs": false
       },
       {
-        "relpath": "reference/hydrology/reaches/lima.geojson",
-        "media_type": "application/geo+json",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/fort-wayne/reach-nav.yaml",
+        "relpath": "reference/hydrology/{site}/reach-nav.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "reference/hydrology/fort-wayne/network.yaml",
+        "relpath": "reference/hydrology/{site}/network.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "reference/hydrology/fort-wayne/reaches.yaml",
+        "relpath": "reference/hydrology/{site}/reaches.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "reference/hydrology/reaches/fort-wayne.geojson",
-        "media_type": "application/geo+json",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/sidney/reach-nav.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/sidney/network.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/sidney/reaches.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/reaches/sidney.geojson",
+        "relpath": "reference/hydrology/reaches/{site}.geojson",
         "media_type": "application/geo+json",
         "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "4d56c2a5e0b226e3fd5eef015263bfb903d32921466effc75e3dffdb62d2e2bc",
-      "size_bytes": 253553,
+      "sha256": "bf00d7b2bfd8b58cb58545fe603d7e56eb40123c77d38bc7a1ec5470e19c83ee",
+      "size_bytes": 90607,
       "lfs_materialized": true,
-      "file_count": 10,
+      "file_count": 2,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 3,
+      "sites_total": 26
     },
     "citation": {
       "source": "USGS NLDI navigation over the NHDPlus flowline network (per-site nav plans — Lima's mainstem gage 04187100 + WWTP snaps; Fort Wayne's three cited fork/mainstem gages; Sidney's mainstem + Loramie gages plus two campus-drainage snaps)",
@@ -8749,6 +8896,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "BOSC-generated EPA SWMM5 (.inp) model decks over the campus parcels + Atlas-14 design storm",
       "source_kind": "derived",
@@ -8800,6 +8948,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "USGS NWIS instantaneous-value record at 04193500 (Maumee River at Waterville OH) read against the Napoleon / Huston Creek fertilizer-spill timeline; travel time via NLDI + Manning",
       "source_kind": "derived",
@@ -8855,6 +9004,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "USGS National Map Watershed Boundary Dataset (WBD) — ArcGIS REST MapServer HU sublayers",
       "source_kind": "connector",
@@ -8905,6 +9055,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio DNR Water Well Locator (waterwells.ohiodnr.gov) — well-log export reconciled with the sealing-report export, both pulled 2026-07-28. Not connector-regenerable: the live MapServer now shows only the 1 active DEWATERING WELL (the 43 sealed wells dropped off the active layer).",
       "source_kind": "reference",
@@ -8964,6 +9115,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "City of Lima GIS public ArcGIS REST — zoning (layer 6) + FEMA DFIRM flood zones (layer 4, panel 39003C)",
       "source_kind": "connector",
@@ -9024,6 +9176,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio Legislative Service Commission — Status Report of Legislation (statusreport.lsc.ohio.gov)",
       "source_kind": "connector",
@@ -9084,6 +9237,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Registered watermark.sites SiteProfiles + per-node committed artifacts (economics, grid, RSEI, low-flow screen) joined over a curated cited basin topology",
       "source_kind": "derived",
@@ -9137,6 +9291,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio Department of Development public transparency portal — direct export",
       "source_kind": "reference",
@@ -9189,6 +9344,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio Department of Development public transparency portal — direct export",
       "source_kind": "reference",
@@ -9267,6 +9423,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio Tax Credit Authority public meeting minutes",
       "source_kind": "reference",
@@ -9318,6 +9475,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "DriveOhio (Ohio DOT) — prepared by AECOM; deliverable item 15",
       "source_kind": "reference",
@@ -9375,6 +9533,7 @@
       "stale": false,
       "asof": "2026-07-21"
     },
+    "observed_network": null,
     "citation": {
       "source": "watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)",
       "source_kind": "derived",
@@ -9428,6 +9587,7 @@
       "stale": false,
       "asof": "2026-07-21"
     },
+    "observed_network": null,
     "citation": {
       "source": "watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle",
       "source_kind": "derived",
@@ -9491,6 +9651,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio EPA Division of Surface Water — public notice and permit package",
       "source_kind": "reference",
@@ -9541,6 +9702,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
       "source_kind": "connector",
@@ -9591,6 +9753,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
       "source_kind": "connector",
@@ -9641,6 +9804,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
       "source_kind": "connector",
@@ -9691,6 +9855,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)",
       "source_kind": "connector",
@@ -9741,6 +9906,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05 (contractor completion/sealing logs), public ArcGIS MapServer (layer 0)",
       "source_kind": "connector",
@@ -9792,6 +9958,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio DNR, Division of Water Resources — water-well-log database, R.C. 1521.05 (contractor completion/sealing logs), public ArcGIS MapServer (layer 0)",
       "source_kind": "connector",
@@ -9842,6 +10009,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio LSC code portal — codes.ohio.gov",
       "source_kind": "connector",
@@ -9952,6 +10120,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Ohio LSC code portal — codes.ohio.gov",
       "source_kind": "connector",
@@ -9993,13 +10162,17 @@
       }
     ],
     "observed": {
-      "exists": true,
-      "sha256": "782aae8b21921fce4403ab5df9971adbc53b14e64c4e0c9658f7161bdfd4dce2",
-      "size_bytes": 531148,
+      "exists": false,
+      "sha256": null,
+      "size_bytes": 0,
       "lfs_materialized": true,
-      "file_count": 11,
+      "file_count": 0,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 11,
+      "sites_total": 26
     },
     "citation": {
       "source": "Per-site county parcel GIS via the gis_parcel field-map, pulled as f=geojson reprojected to WGS84 (Fort Wayne = Allen County, IN iMap, parcel layer 10)",
@@ -10066,6 +10239,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Periplus GIS project (the ../gis repository), copied unmodified at the BOSC fork-point commit",
       "source_kind": "reference",
@@ -10116,6 +10290,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "PJM Data Miner 2 (da_hrl_lmps, AEP zone) for LMP; PJM RPM Base Residual Auction + interconnection-queue reporting (transcribed) for capacity/queue",
       "source_kind": "connector",
@@ -10166,6 +10341,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA RSEI (per-chemical water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited design low flows (1Q10/7Q10/harmonic mean) × Ohio WQS criteria (OAC 3745-1) — a multi-source derivation",
       "source_kind": "derived",
@@ -10218,12 +10394,16 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "00f8b228c15b0a21aee41c7d9fee91f7951b751520348929ee8e83ae48b266dc",
-      "size_bytes": 3360686,
+      "sha256": "fd94ee0eb4025188ef8c2eb400e95aae858804d5b8bff6bb989177c39b6fa9e3",
+      "size_bytes": 163318,
       "lfs_materialized": true,
-      "file_count": 23,
+      "file_count": 1,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 22,
+      "sites_total": 26
     },
     "citation": {
       "source": "EPA RSEI Public Data Set v2.3.12 (EPA gaftp Public Release Data), version v2312",
@@ -10275,6 +10455,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit Renewal, City of Sidney WWTP, 2022\" (permit 1PD00009*SD / application OH0027421) and the ECHO Great Miami POTW inventory; coordinates from EPA FRS (ECHO lat/lon 40.2709, -84.15031, FRS Registry ID 110002345597)",
       "source_kind": "reference",
@@ -10324,6 +10505,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Allen County county-published rosters (Township Trustees & Fiscal Officers; Mayors; Govt-Structure) + live-web discovery of publishing blocks",
       "source_kind": "connector",
@@ -10374,6 +10556,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Hancock County, Ohio Directory of Officials 2026 (data/documents/findlay/reference/) for every grounded fact, plus a live-web discovery sweep of all 32 bodies (2026-08-01) for the publishing blocks.",
       "source_kind": "connector",
@@ -10438,6 +10621,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "City of Sidney \"Rules of the City Council, February 2024\" (adopted by ordinance) and the Shelby County \"2024 Township Representatives\" sheet, both committed under data/documents/sidney/reference/; publishing blocks from a read-only discovery pass (`watermark --site sidney subdivisions discover`) folded in by hand",
       "source_kind": "reference",
@@ -10491,6 +10675,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA Office of Water, Water Permits Division, Office of Wastewater Management",
       "source_kind": "reference",
@@ -10544,6 +10729,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "EPA-833-F-23-007 \"Thermal Discharges in NPDES Permits\" (June 2023), Tables 3-4/3-5/3-6 — verbatim transcription of the Great Lakes Representative Important Species thermal tolerances",
       "source_kind": "reference",
@@ -10594,6 +10780,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "City of Piqua GIS — hosted ArcGIS FeatureServer 'Zoning_Districts_public_view'",
       "source_kind": "connector",
@@ -10644,6 +10831,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Derived from Ohio EPA NPDES fact sheet 1PD00008.fs (City of Piqua WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 40.13128, -84.23466)",
       "source_kind": "reference",
@@ -10698,6 +10886,10 @@
       "file_count": 1,
       "stale": false,
       "asof": null
+    },
+    "observed_network": {
+      "sites_present": 1,
+      "sites_total": 26
     },
     "citation": {
       "source": "USASpending.gov API (api.usaspending.gov), U.S. Treasury",
@@ -10770,6 +10962,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "U.S. Geological Survey published reports — WRI 01-4140 (Straub, 2001) and SIR 2024-5075 (VonIns and Koltun, 2024, ver. 1.1), downloaded verbatim from pubs.usgs.gov",
       "source_kind": "reference",
@@ -10820,6 +11013,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, modified *VD → *WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
       "source_kind": "reference",
@@ -10873,6 +11067,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "Derived from Ohio EPA NPDES fact sheet 1PD00013.fs (City of Wilmington WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 39.4391, -83.85132). Clinton Substation added at #1469 — parcel geometry from the Clinton County auditor's CAMA layer (parcel 270-12-10-35-0000-00, DAYTON POWER & LIGHT COMPANY, 25.29 ac; centroid 39.39796, -83.85464), corroborated by OpenStreetMap way/36923781 (name=\"Clinton Substation\", substation=transmission, voltage=\"345000;69000\") 57 m away.",
       "source_kind": "reference",
@@ -10923,6 +11118,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "OAC 3745-1-35 (aquatic life, Tables 35-1/35-2/35-5/35-9) + 3745-1-33 (human health, Table 33-1) — verbatim transcription of the numeric criteria, cross-checked against EPA's National Recommended Water Quality Criteria",
       "source_kind": "reference",
@@ -10975,6 +11171,7 @@
       "stale": false,
       "asof": null
     },
+    "observed_network": null,
     "citation": {
       "source": "OAC 3745-1-35 Table 35-11 (inland streams/rivers, by geographic zone) + 3745-1-31 Table 31-1 (Lake Erie) + 3745-1-06 (O) Table 1 (thermal mixing zones) — verbatim transcription of the numeric temperature criteria (degF primary, degC derived)",
       "source_kind": "reference",

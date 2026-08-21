@@ -109,7 +109,18 @@ def test_slug_scoped_presence_is_per_site(tmp_path: Path) -> None:
     assert by_site["findlay"]["eia-consumer-energy"].present is False  # no findlay/ copy
     # Lima resolves to its un-slugged peer, which exists
     assert by_site["lima"]["eia-consumer-energy"].present is True
-    assert by_site["lima"]["eia-consumer-energy"].resolved == ["reference/eia/consumer-energy.yaml"]
+    # Both of Lima's candidate locations are named: the un-slugged peer it actually uses, and the
+    # slugged path it would use if it had one. The rule is a UNION rather than peer-else-slug
+    # (#2066) because `hydrology-reaches` gives the reference build BOTH at once, and either/or
+    # silently dropped the second. A slug-scoped member's absence is expected, never a gap.
+    assert by_site["lima"]["eia-consumer-energy"].resolved == [
+        "reference/eia/consumer-energy.yaml",
+        "reference/eia/lima/consumer-energy.yaml",
+    ]
+    # a sibling is never handed the reference build's un-slugged peer
+    assert by_site["bryan"]["eia-consumer-energy"].resolved == [
+        "reference/eia/bryan/consumer-energy.yaml"
+    ]
 
 
 def test_lima_uses_slug_segment_when_no_unslugged_peer(tmp_path: Path) -> None:
