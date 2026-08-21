@@ -45,8 +45,9 @@ MapLibre rather than using a deck `TileLayer` as the only base in production.
 - **Production shape:** a React island = `@deck.gl/react` `DeckGL` overlaid on a
   `react-map-gl/maplibre` `<Map>` (free vector basemap, e.g. CARTO Positron), with the
   dated **aerials as deck `TileLayer`s** interleaved on top. The
-  [`CorridorMap.tsx`](../spikes/deckgl-corridor/CorridorMap.tsx) reference is the starting
-  point; it drops into the Astro app once #63 lands.
+  `CorridorMap.tsx` reference was the starting point; it dropped into the Astro app
+  with #63. (That prototype tree was removed with the legacy SSG — see the status
+  note above.)
 - **Data:** consumes the typed GeoJSON feeds from **E1.4** (the spike used today's
   `gis-findings.geojson` directly). Styling stays data-driven — layer color/label/role as
   feature properties — so nothing is hardcoded per the project conventions.
@@ -93,5 +94,5 @@ MapLibre rather than using a deck `TileLayer` as the only base in production.
 fetch + parse the committed GeoJSON (76 features, 8 layers). It was **not** opened in a
 real browser during the spike (no browser automation + full disk), so a reviewer should
 do a quick visual pass per the run steps in the
-[spike README](../spikes/deckgl-corridor/README.md). The `.tsx` reference was not compiled
+prototype's own README. The `.tsx` reference was not compiled
 (no frontend scaffold yet — #63); it's a starting point, not a finished build.
