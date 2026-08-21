@@ -195,4 +195,34 @@ describe("per-site resolution", () => {
     const m = await loadBundleModule(parent);
     expect(() => m.loadManifest("nope")).toThrow(/site "nope"/);
   });
+
+  it("treats an explicit override as exclusive — no fall-through to a local export (#2002)", async () => {
+    const parent = makeSiteBundles({ lima: { manifest: manifestWith([]), files: {} } });
+    const m = await loadBundleModule(parent);
+
+    // The candidate list is the assertion surface, because the bug was invisible in the RESULT:
+    // before #2002 an override was merely the first candidate, so a slug it did not carry fell
+    // through to the git-ignored `data/site/bundles/<slug>` any local `watermark export`
+    // populates. That directory is absent in CI and present on a working machine, which is how
+    // this very suite passed CI while reading a developer's stale export locally. Asserting the
+    // error enumerates ONLY the override keeps the check independent of local state — the case
+    // above uses "nope", a slug no export ever writes, so it could never have caught this.
+    let looked = "";
+    try {
+      m.loadManifest("urbana");
+    } catch (e) {
+      looked = String(e);
+    }
+    expect(looked).toMatch(/site "urbana"/);
+    expect(looked).toContain(join(parent, "urbana"));
+    expect(looked).not.toContain(join("data", "site", "bundles"));
+    // ...and the Lima-only legacy single-site path is off the table too.
+    let limaLooked = "";
+    try {
+      m.loadManifest("lima");
+    } catch (e) {
+      limaLooked = String(e);
+    }
+    expect(limaLooked).toBe(""); // the fixture carries lima, so it resolves
+  });
 });

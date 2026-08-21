@@ -136,21 +136,30 @@ content-type) is covered offline by `functions/_test/docRoute.test.ts`.
 
 ## How the content bundle is resolved
 
-`@watermark/core`'s [`bundle.ts`](packages/core/src/bundle.ts) reads the bundle at build time. It picks the **first**
-directory that contains a `manifest.json`:
+`@watermark/core`'s [`bundle.ts`](packages/core/src/bundle.ts) reads the bundle at build time.
+Bundles are **per site**, so resolution takes a slug. It picks the **first** directory that
+contains a `manifest.json`:
 
-1. **`$WATERMARK_BUNDLE_DIR`** — explicit override (absolute or relative to CWD).
-2. **`../data/site/bundle`** — the real bundle, present after `watermark export`.
-3. **`./sample-bundle`** — the committed minimal fixture (the default in a fresh
-   checkout and in CI; see [`sample-bundle/README.md`](sample-bundle/README.md)).
+1. **`$WATERMARK_BUNDLE_DIR/<slug>`** — explicit override (absolute or relative to CWD).
+2. **`$WATERMARK_BUNDLE_DIR`** — the override as a single flat bundle (back-compat).
+3. **`../data/site/bundles/<slug>`** — the real per-site bundle, written by `watermark export`
+   (git-ignored; the `watermarkBundle` Vite plugin generates it in `buildStart`).
+4. **`../data/site/bundle`** — the legacy pre-#727 single-site path, Lima only.
 
-So a plain `pnpm run build` works with zero Python (it uses the fixture). To build
-the full site against real data:
+**An explicit `$WATERMARK_BUNDLE_DIR` is exclusive** (#2002): when it is set, (3) and (4) are not
+consulted at all, and a slug the override does not carry resolves to nothing. It used to be merely
+the first candidate — which meant a build or a test that pinned a root silently fell through to
+whatever a previous local `watermark export` had left on the machine. That directory is absent in
+CI and present on a working checkout, so the fall-through read as green there and red here.
+
+There is no fallback fixture: a plain `pnpm run build` with no override runs the Python export.
+For the offline, zero-Python build, opt in to the committed [`sites/`](sites/README.md) fixtures —
+which is exactly what `mise run //web:check` does:
 
 ```sh
-watermark export                                   # → data/site/bundle/  (the loader then prefers it)
-# or point anywhere:
-WATERMARK_BUNDLE_DIR=/path/to/bundle pnpm run build
+WATERMARK_SKIP_EXPORT=1 WATERMARK_BUNDLE_DIR=sites pnpm run build   # committed fixtures, offline
+watermark export                                                    # → data/site/bundles/<slug>/
+WATERMARK_BUNDLE_DIR=/path/to/bundles pnpm run build                # or point anywhere
 ```
 
 Read `manifest.json` first, then feeds it lists:
@@ -367,7 +376,7 @@ web/                     # @watermark/site — the Astro app
   functions/             # @watermark/functions — Cloudflare Pages Functions (see functions/README.md)
     _test/               #   the route/store tests (underscore = excluded from Pages routing)
   public/_redirects      # Cloudflare 301/302s: / → /bosc (302) + old Lima URLs → /bosc/*
-  sample-bundle/         # committed minimal bundle fixture (offline/CI build input)
+  sites/                 # committed per-site content bundles (offline/CI build input)
 ```
 
 ## Status / roadmap
