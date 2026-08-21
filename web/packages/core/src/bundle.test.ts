@@ -225,4 +225,38 @@ describe("per-site resolution", () => {
     }
     expect(limaLooked).toBe(""); // the fixture carries lima, so it resolves
   });
+
+  it("refuses a flat override root that names a different site", async () => {
+    // A flat root (no <slug>/ subdirs) answers for EVERY slug, so the path proves nothing about
+    // whose data it holds and the manifest's own `site` is the only thing that does. Without that
+    // check `loadFeed(name, "urbana")` hands back Lima's rows under Urbana's slug — the #2005
+    // cross-site leak, one layer below the guard that exists to catch it.
+    const dir = makeBundle(
+      { ...manifestWith([feed(1)]), site: "lima" },
+      {
+        "things.json": JSON.stringify([{ s: "lima" }]),
+      },
+    );
+    const m = await loadBundleModule(dir);
+
+    // Lima still resolves from it — this is the back-compat single-bundle path.
+    expect(m.bundleDir("lima")).toBe(dir);
+    expect(m.loadFeed("things", "lima")).toEqual([{ s: "lima" }]);
+
+    // Urbana must not, and must not silently fall through to a repo path either (#2002).
+    expect(() => m.loadFeed("things", "urbana")).toThrow(/site "urbana"/);
+    let looked = "";
+    try {
+      m.loadManifest("urbana");
+    } catch (e) {
+      looked = String(e);
+    }
+    expect(looked).not.toContain(join("data", "site", "bundles"));
+
+    // And the non-throwing reader agrees — AFTER the throwing one has run. `manifestOrNull` has
+    // its own site guard, but it returns a cached manifest before reaching it, so a prior
+    // `loadManifest`/`hasFeed` for the same slug used to poison the cache and defeat the guard.
+    // Refusing the directory at resolution is what makes the answer independent of call order.
+    expect(m.manifestOrNull("urbana")).toBeNull();
+  });
 });
