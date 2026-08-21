@@ -298,3 +298,141 @@ def coverage(
         document = blowdown.coverage_document(gp, coverages)
         path = blowdown.write_coverage(document, settings=settings, out=Path(out) if out else None)
         wrote(path)
+
+
+@oepa_app.command(name="portal")
+def portal(
+    county: str | None = typer.Option(
+        None, "--county", help="Ohio county in portal vocabulary (e.g. 'CHAMPAIGN')."
+    ),
+    slug: str | None = typer.Option(
+        None, "--site", help="Derive the county from a registered site's profile instead."
+    ),
+    program: str = typer.Option(
+        "NPDES", "--program", help="Portal program facet (e.g. 'NPDES', 'AIR PERMIT')."
+    ),
+    entity: str = typer.Option("", "--entity", help="Entity Name search term."),
+    permit_id: str = typer.Option("", "--permit-id", help="Package/Permit Number search term."),
+    permits_only: bool = typer.Option(
+        False,
+        "--permits-only",
+        help="Keep only Permit document types (filtered client-side; the sweep is all-types).",
+    ),
+    out: str | None = typer.Option(
+        None, "--out", help="Output directory (default: data/research/oepa-portal-<key>-<date>)."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Replay from cache/fixtures only; never touch the network."
+    ),
+) -> None:
+    """Sweep the Ohio EPA eDocument portal and write a permit crosswalk manifest.
+
+    The portal is the only route that serves Ohio **state** permit numbers, which is what
+    the DAM permit URL is keyed by — ECHO knows a facility only by its federal NPDES id.
+    A ``--county``/``--program`` sweep therefore *is* the federal->state crosswalk: match
+    an ECHO facility name against the ``entity`` column and read ``permit_id``.
+
+    No documents are downloaded; feed the resulting permit IDs to ``watermark oepa fetch``.
+    """
+    import re
+    from datetime import UTC, datetime
+
+    from watermark.config import Settings
+    from watermark.oepa.portal import permit_crosswalk, sweep_portal
+
+    if slug and county:
+        raise typer.BadParameter("pass --site or --county, not both", param_hint="--site")
+    if slug:
+        if slug not in SITES:
+            raise typer.BadParameter(
+                f"unknown site {slug!r}; known: {sorted(SITES)}", param_hint="--site"
+            )
+        raw = SITES[slug].county_name or ""
+        if not raw:
+            raise typer.BadParameter(f"site {slug!r} has no county on its profile")
+        # "Allen County, OH" -> "ALLEN"
+        county = raw.split(",")[0].removesuffix(" County").strip().upper()
+    if not any((county, entity, permit_id)):
+        raise typer.BadParameter("provide --county, --site, --entity or --permit-id")
+
+    settings = get_settings()
+    if offline:
+        settings = Settings(civic_offline=True)
+
+    sweep = sweep_portal(
+        settings=settings,
+        county=county or "",
+        program=program,
+        entity=entity,
+        permit_id=permit_id,
+        permits_only=permits_only,
+    )
+    docs = sweep.docs
+    crosswalk = permit_crosswalk(docs)
+
+    table = Table("permit_id", "entity", "docs")
+    counts: dict[str, int] = {}
+    for d in docs:
+        if d.is_permit_id:
+            counts[d.permit_id] = counts.get(d.permit_id, 0) + 1
+    for pid, name in sorted(crosswalk.items()):
+        table.add_row(pid, name[:56], str(counts.get(pid, 0)))
+    console.print(table)
+    console.print(
+        f"\n[bold]{len(docs)}[/] document(s) — [green]{len(crosswalk)}[/] distinct permit ID(s)."
+    )
+    if sweep.truncated:
+        console.print(
+            f"[yellow]⚠ TRUNCATED[/] — the portal served {sweep.rows_served} row(s) across "
+            f"{sweep.pages_walked}/{sweep.total_pages} page(s) and caps a single query, so this "
+            "is a FLOOR, not the county's full record. Narrow with --entity '*NAME*'."
+        )
+    if not docs:
+        console.print("[dim]No rows. Check the county/program spelling against the portal.[/]")
+        return
+
+    today = datetime.now(UTC).date().isoformat()
+    # Every facet that narrows the query joins the key: a --county sweep and the same
+    # county narrowed by --entity are different result sets and must not share a manifest.
+    parts = [p for p in (county, entity, permit_id) if p]
+    key = "-".join(re.sub(r"[^a-z0-9]+", "-", p.lower()).strip("-") for p in parts)
+    out_dir = Path(out) if out else settings.data_dir / "research" / f"oepa-portal-{key}-{today}"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    manifest_path = out_dir / "manifest.yaml"
+    manifest_path.write_text(
+        yaml.safe_dump(
+            {
+                "meta": {
+                    "subject": "Ohio EPA eDocument portal sweep — " + " x ".join(parts),
+                    "county": county,
+                    "program": program,
+                    "entity": entity or None,
+                    "permit_id": permit_id or None,
+                    "doc_types": "permits" if permits_only else "all",
+                    "generated_at": today,
+                    "counts": {"documents": len(docs), "permits": len(crosswalk)},
+                    "coverage": {
+                        "truncated": sweep.truncated,
+                        "rows_served": sweep.rows_served,
+                        "pages_walked": sweep.pages_walked,
+                        "total_pages": sweep.total_pages,
+                        "note": (
+                            "TRUNCATED: the portal caps a single query and re-serves "
+                            "overlapping pages; these rows are a floor, not the full set."
+                            if sweep.truncated
+                            else "complete: the walk exhausted the reported pages."
+                        ),
+                    },
+                },
+                "crosswalk": [
+                    {"permit_id": p, "entity": n, "documents": counts.get(p, 0)}
+                    for p, n in sorted(crosswalk.items())
+                ],
+                "results": [d.model_dump() for d in docs],
+            },
+            sort_keys=False,
+            allow_unicode=True,
+        ),
+        encoding="utf-8",
+    )
+    wrote(manifest_path)
