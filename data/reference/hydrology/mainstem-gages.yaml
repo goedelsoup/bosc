@@ -37,7 +37,9 @@ meta:
     matched by any alias). Author none of them from reasoning: each carries the instrument that
     says it, and `regulation.remark` quotes that instrument verbatim where it has words.
   cited_annotations_gap: >-
-    [open] Only the Blanchard entry is annotated so far — that is the gage #1458 was opened about.
+    [open] Four entries are annotated: the Blanchard (the gage #1458 was opened about) and the
+    three registered with the Muskingum and Sandusky basins, each carrying a `regulation` block
+    quoting Straub 2001's REMARKS verbatim. Every other entry is still unannotated.
     USGS SIR 2024-5075 table 1 publishes a Regulated/Unregulated classification for most of the
     other gages in this table (e.g. it calls Mad River near Urbana 03267000, Greenville Creek
     03264000, Stillwater 03265000, Maumee near Defiance 04192500 and Ottawa River at Lima 04187100
@@ -292,6 +294,216 @@ mainstems:
       Note this gage is a WITHDRAWAL-side reference for Wilmington (Caesar Creek Lake has been the
       City's principal raw supply since 1994), never an effluent-side screen: the binding constraint
       there is a contracted storage allocation, not a low-flow statistic.
+
+  # --- Muskingum basin (subregion 0504, → Ohio River) --------------------------
+  # Registered with the basin's ECHO inventory (#2069). Two gages, both mouth-ward on their own
+  # mainstem, both long-record. Read the reservations before quoting either.
+  #
+  # ⚠️ NEITHER OF THESE SCREENS MANSFIELD, the network's own Muskingum point. Its WWTP discharges
+  # to Rocky Fork of the Mohican, and HUC-8 05040002 has NO usable gage: every long record ended
+  # between 1975 and 1993 (Mohican at Greer 03136000 to 1982, Black Fork at Loudonville 03131500
+  # to 1991, Clear Fork below Pleasant Hill 03133500 to 1991, Touby Run 03130500 to 1978) and
+  # every live gage is far under the 20-climatic-year floor (Black Fork at Shelby 03129197 ~14 yr,
+  # Rocky Fork at Lucas 03131122 ~3 yr, Touby Run at W 6th 03130647 ~2 yr). No Mohican or Rocky
+  # Fork entry is registered here, so those receivers report `no_7q10` — unscreenable, never
+  # unaffected. Mansfield's own denominator has to come from its permit's fact sheet, which this
+  # corpus does not yet hold (#1429).
+  Muskingum River:
+    gage: "03150000"
+    aliases: [muskingum river]
+    note: >-
+      Muskingum River at McConnelsville (DA 7,422 mi², daily record since 1921). The mouth-ward
+      gage with a usable record: the two further downstream — Muskingum near Beverly (03150300)
+      and at Beverly (03150500) — are BELOW the 20-climatic-year floor (03150500 begins
+      2012-10-01, ~14 yr), so the convention's "lowest gage on the mainstem" stops here.
+      ⚠️ THIS DENOMINATOR IS RESERVOIR-REGULATED AND ENORMOUS. Straub 2001 states the flow is
+      regulated by 17 flood-control reservoirs 36.6-148 mi upstream plus a power plant 19 mi
+      upstream (see `regulation`), and at 7,422 mi² it integrates almost the whole basin — so it
+      is a magnitude check ("is this discharge one part in a hundred or one in a hundred
+      thousand"), never a reach-specific assimilative finding, and any facility upstream of
+      McConnelsville is being credited with more river than passes it.
+      ⚠️ "LITTLE MUSKINGUM RIVER" IS A DIFFERENT RIVER and is deliberately NOT an alias here. It
+      is a direct Ohio River tributary in Washington County (DA 210 mi², gage 03115400) that the
+      0504 pull picks up, and one POTW in the committed inventory names it. The alias list holds
+      the bare mainstem form only, so that row stays unmatched rather than borrowing a
+      35x-larger denominator — the same discipline that withholds a bare "brush creek" alias in
+      the Ohio Brush Creek basin.
+    published:
+      # Straub's period ends in 1992 and the derived LP3 fit runs the modern window; a gap
+      # between them is at least as much RECORD PERIOD as method. Never read one as correcting
+      # the other.
+      seven_q10_cfs: 651
+      one_q10_cfs: 551
+      thirty_q10_cfs: 750
+      ninety_q10_cfs: 959
+      harmonic_mean_cfs: 2930
+      drainage_area_sq_mi: 7422
+      period: October 1937 to October 1992
+      citation: >-
+        Straub, D.E., 2001, Low-Flow Characteristics of Streams in Ohio through Water Year 1997:
+        USGS Water-Resources Investigations Report 01-4140, printed p. 171, station "03150000
+        Muskingum River at McConnelsville, Ohio" — annual (Apr.-Mar.) magnitude-and-frequency
+        table, 10-yr recurrence column (1-day 551, 7-day 651, 30-day 750, 90-day 959) and
+        SELECTED STREAMFLOW CHARACTERISTICS (harmonic mean 2,930 ft3/s; average 7,780 ft3/s over
+        55 years; minimum daily 385 ft3/s). Figures read from a 300 DPI RENDER of the page, not
+        the text layer, which garbles digits elsewhere in these tables. Bytes:
+        data/reference/usgs/low-flow/wri20014140.pdf.
+    regulation:
+      status: regulated
+      remark: >-
+        Flow regulated by 17 flood-control reservoirs 36.6 mi to 148 mi upstream from station.
+        Some regulation at low flow by power plant 19 mi upstream from station.
+      citation: >-
+        Straub 2001 (above), station 03150000, REMARKS — quoted verbatim in `remark`. The
+        reservoirs are the Muskingum Watershed Conservancy District system, operated with the US
+        Army Corps of Engineers. ⚠️ USGS SIR 2024-5075 does NOT classify this gage: it is absent
+        from that report's table 1, table 1.1 and table 2.1, and the report states no reason
+        ([open]). Per that report's own inclusion rule an absence is NOT evidence of regulation —
+        regulated gages ARE listed there with full statistics — so this classification rests on
+        Straub's REMARKS, which state it outright.
+  Tuscarawas River:
+    gage: "03129000"
+    aliases: [tuscarawas river, tuscarawas rv]
+    note: >-
+      Tuscarawas River at Newcomerstown (DA 2,443 mi², daily record since 1921) — the mouth-ward
+      Tuscarawas gage, above the Walhonding confluence at Coshocton where the two form the
+      Muskingum. This is the most-used receiving water in the committed 0504 inventory (7 rows),
+      which is why both observed surface forms are registered: a permit spelling it
+      "Tuscarawas River, Tuscarawas RV" names one water twice, and the compound resolves only
+      because the second spelling is a registered alias.
+      ⚠️ REGULATED AND DIVERTED — see `regulation`: eight flood-control reservoirs 40-64 mi
+      upstream, plus an out-of-basin diversion at Portage Lakes. At 2,443 mi² it is a magnitude
+      check for the mainstem, not a reach-specific finding.
+      ⚠️ A TRIBUTARY OF THE TUSCARAWAS IS NOT THE TUSCARAWAS. The inventory carries "ut of the
+      tuscarawas river", "fohl ditch trib of tuscarawas river" and "plum run - tributary of
+      tuscarawas river"; none is registered, so each stays unmatched rather than being credited
+      with the mainstem's low flow — the same rule the Ohio River entry applies to "ut / ohio
+      river".
+    published:
+      seven_q10_cfs: 263
+      one_q10_cfs: 250
+      thirty_q10_cfs: 303
+      ninety_q10_cfs: 378
+      harmonic_mean_cfs: 1060
+      drainage_area_sq_mi: 2443
+      period: October 1937 to September 1997
+      citation: >-
+        Straub 2001 (above), printed p. 125, station "03129000 Tuscarawas River at Newcomerstown,
+        Ohio" — annual (Apr.-Mar.) magnitude-and-frequency table, 10-yr recurrence column (1-day
+        250, 7-day 263, 30-day 303, 90-day 378) and SELECTED STREAMFLOW CHARACTERISTICS (harmonic
+        mean 1,060 ft3/s; average 2,580 ft3/s over 60 years; minimum daily 216 ft3/s). Figures
+        read from a 300 DPI render of the page, not the text layer.
+    regulation:
+      status: regulated
+      remark: >-
+        Diversion from basin at Portage Lakes. Flow regulated by eight flood-control reservoirs
+        at points 40 mi to 64 mi upstream.
+      citation: >-
+        Straub 2001 (above), station 03129000, REMARKS — quoted verbatim in `remark`. Note this
+        gage records an OUT-OF-BASIN DIVERSION as well as storage regulation, so its low flow is
+        altered in both directions. ⚠️ USGS SIR 2024-5075 does not classify this gage either
+        (absent from its table 1) — same [open] as 03150000 above.
+
+  # --- Sandusky basin (subregion 0410, direct to Lake Erie) --------------------
+  # ⚠️ NO BAY ALIAS, EVER. The network's own Sandusky point (Sandusky / Perkins Twp) discharges
+  # to SANDUSKY BAY — the committed inventory carries the surface form "lake erie/sandusky bay" —
+  # and a bay is not a river reach. Its mixing volume is set by lake level, seiche and wind
+  # forcing, not by streamflow, so a 7Q10 describes nothing about it. That row must stay
+  # unmatched: serving it this gage would not be a conservative approximation, it would be a
+  # category error. The alias list below is the bare river form only, and `_match_low_flow`'s
+  # exact-surface-form lookup is what keeps it that way.
+  Sandusky River:
+    gage: "04196000"
+    aliases: [sandusky river]
+    note: >-
+      Sandusky River near Bucyrus (DA 88.8 mi², daily record since 1925) — deliberately NOT the
+      mouth-ward gage, and this is the one place in this table where that convention is set aside
+      on purpose.
+      The committed 0410 0011 inventory contains exactly ONE discharger naming "Sandusky River":
+      BUCYRUS WWTP, 3.4 MGD, at the basin's headwaters. The mouth-ward gage near Fremont
+      (04198000, DA 1,251 mi²) integrates roughly 14x that facility's drainage area, and
+      `watermark.hydrology.basin`'s own rule forbids exactly that — a discharger "is never
+      screened against a *downstream* river's larger 7Q10 (that would overstate dilution into a
+      false 'ok'); including a tributary needs that tributary's own gage or fact sheet." Bucyrus
+      has its own gage 1.5 mi west of the city, so the at-site denominator exists and is used.
+      ⚠️ THE DIFFERENCE IS THE WHOLE VERDICT, not a refinement. On the Fremont gage this plant
+      screens at ~4:1 and reads `tight`; on its own gage it is a VIOLATION — Straub's published
+      7Q10 here is 1.1 ft3/s against a 3.4 MGD (5.26 ft3/s) design flow, so the discharge is
+      roughly FIVE TIMES the river it enters at low flow. A mouth-ward denominator would have
+      published "tight" over an effluent-dominated stream.
+      ⚠️ IF A DOWNSTREAM SANDUSKY RIVER DISCHARGER APPEARS IN A LATER PULL, DO NOT LEAVE IT ON
+      THIS GAGE. A headwaters 7Q10 understates dilution for anyone below it — the safe direction
+      (it flags for review rather than clearing), but still wrong. That row needs its own gage or
+      fact sheet, and the three downstream gages are carried in `cross_check_gages` for it.
+    published:
+      seven_q10_cfs: 1.1
+      one_q10_cfs: 0.8
+      thirty_q10_cfs: 1.8
+      ninety_q10_cfs: 2.8
+      harmonic_mean_cfs: 8.32
+      drainage_area_sq_mi: 88.8
+      period: >-
+        September 1925 to November 1935, August 1938 to December 1951, January 1964 to
+        September 1981, October 1995 to September 1997
+      citation: >-
+        Straub, D.E., 2001, Low-Flow Characteristics of Streams in Ohio through Water Year 1997:
+        USGS Water-Resources Investigations Report 01-4140, printed p. 368, station "04196000
+        Sandusky River near Bucyrus, Ohio" — annual (Apr.-Mar.) magnitude-and-frequency table,
+        10-yr recurrence column (1-day 0.8, 7-day 1.1, 30-day 1.8, 90-day 2.8) and SELECTED
+        STREAMFLOW CHARACTERISTICS (harmonic mean 8.32 ft3/s; average 88.7 ft3/s over 42 years;
+        minimum daily 0.6 ft3/s). Figures read from a 300 DPI render of the page, not the text
+        layer. Note the record is DISCONTINUOUS across four spans; NWIS carries daily discharge
+        at this station to the present, which is the window the derived LP3 fit uses. Bytes:
+        data/reference/usgs/low-flow/wri20014140.pdf.
+    regulation:
+      status: regulated
+      remark: >-
+        Low flow slightly affected by operation of reservoirs, 5.3 mi to 6.0 mi upstream from
+        station, for municipal supply of Bucyrus.
+      citation: >-
+        Straub 2001 (above), station 04196000, REMARKS — quoted verbatim in `remark` — AND USGS
+        SIR 2024-5075 table 1, row "04196000 Sandusky River near Bucyrus, OH" (Continuous, DA
+        88.9 mi²), "Low-flow regulation status: Regulated". The two agree here, which is worth
+        recording because they DISAGREE at the mouth-ward gage: for 04198000 near Fremont, SIR
+        2024-5075 table 1 says "Regulated" while Straub's entry for the same station (printed
+        p. 376) records "REMARKS: None." Neither is corrected — they cover different periods
+        (Straub ends at water year 1997; SIR's window is 1975-2020) and SIR's classification is
+        the authors' own judgment. ⚠️ Note what the regulation IS here: the reservoirs 5.3-6.0 mi
+        upstream are Bucyrus's own MUNICIPAL SUPPLY. So the city withdraws its drinking water
+        above the gage and discharges its treated effluent below it, and both sides of that loop
+        are inside the 88.8 mi² this denominator describes.
+    cross_check_gages:
+      # Context only — never a denominator, never matched by an alias. These are the three
+      # downstream positions on the same river, carried so a reader can see how fast the
+      # denominator grows and can re-screen a future downstream discharger on the right one.
+      - gage: "04196500"
+        gage_name: Sandusky River near Upper Sandusky, OH
+        drainage_area_sq_mi: 298
+        regulation: regulated
+        citation: USGS SIR 2024-5075 table 1, row "04196500 Sandusky River near Upper Sandusky, OH" (Continuous).
+        note: 3.4x the Bucyrus drainage area.
+      - gage: "04197137"
+        gage_name: Sandusky River at Tiffin, OH
+        drainage_area_sq_mi: 966
+        regulation: regulated
+        citation: USGS SIR 2024-5075 table 1, row "04197137 Sandusky River at Tiffin, OH" (Continuous).
+        note: The Tiffin network point's own reach; 11x the Bucyrus drainage area.
+      - gage: "04198000"
+        gage_name: Sandusky River near Fremont, OH
+        seven_q10_cfs: 13.0
+        drainage_area_sq_mi: 1251
+        period: October 1923 to September 1935, August 1938 to September 1997
+        regulation: regulated
+        citation: >-
+          Straub 2001 printed p. 376 (7-day 10-yr 13 ft3/s; harmonic mean 106 ft3/s) for the
+          statistic; USGS SIR 2024-5075 table 1 for the regulation status, which Straub's own
+          "REMARKS: None." contradicts — see `regulation.citation` above.
+        note: >-
+          The mouth-ward gage, 14x the Bucyrus drainage area. This is the denominator the
+          "lowest gage on the mainstem" convention would have selected, and screening BUCYRUS
+          WWTP on it returns ~4:1 `tight` instead of the ~0.2:1 violation its own reach shows.
+          Carried here as the worked example of why this table's convention yields to the
+          conservatism argument.
 
   # --- Ohio Brush Creek basin -------------------------------------------------
   Ohio Brush Creek:
