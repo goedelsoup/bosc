@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-21T17:11:07.141752+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-21T18:03:01.035651+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **178** catalogued datasets — **177** reviewed.
-- **178** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **181** catalogued datasets — **180** reviewed.
+- **181** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -58,7 +58,7 @@ Snapshot reconciled: **2026-08-21T17:11:07.141752+00:00**. Regenerate with `wate
 | reference | bowling-green | 1 | 1 | 0 | 0 |
 | reference | compute | 1 | 1 | 0 | 0 |
 | reference | datacenter-industry | 1 | 1 | 0 | 0 |
-| reference | echo | 6 | 6 | 0 | 0 |
+| reference | echo | 9 | 9 | 0 | 0 |
 | reference | economics | 2 | 2 | 0 | 0 |
 | reference | eia | 4 | 4 | 0 | 0 |
 | reference | federal | 1 | 1 | 0 | 0 |
@@ -98,20 +98,20 @@ Snapshot reconciled: **2026-08-21T17:11:07.141752+00:00**. Regenerate with `wate
 | --- | --- | --- | --- |
 | bowling-green | 60 | 54 | 6 |
 | bryan | 56 | 47 | 9 |
-| columbus | 53 | 45 | 8 |
-| coshocton | 53 | 38 | 15 |
+| columbus | 54 | 46 | 8 |
+| coshocton | 54 | 39 | 15 |
 | defiance | 57 | 48 | 9 |
 | findlay | 68 | 62 | 6 |
 | fort-wayne | 46 | 38 | 8 |
 | greenville | 54 | 45 | 9 |
 | hamilton-middletown | 55 | 47 | 8 |
 | lima | 107 | 103 | 4 |
-| mansfield | 55 | 47 | 8 |
-| new-albany | 54 | 46 | 8 |
+| mansfield | 56 | 48 | 8 |
+| new-albany | 55 | 47 | 8 |
 | ottawa | 59 | 52 | 7 |
-| piketon | 53 | 38 | 15 |
-| portsmouth | 54 | 39 | 15 |
-| sandusky | 53 | 38 | 15 |
+| piketon | 54 | 39 | 15 |
+| portsmouth | 55 | 40 | 15 |
+| sandusky | 54 | 39 | 15 |
 | sidney | 63 | 58 | 5 |
 | springfield | 54 | 47 | 7 |
 | toledo | 58 | 49 | 9 |

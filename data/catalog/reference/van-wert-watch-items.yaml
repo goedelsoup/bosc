@@ -5,7 +5,8 @@ status: reviewed
 producer:
   kind: manual
   source: Derived from Ohio EPA "Fact Sheet for NPDES Permit, Van Wert WWTP" (permit 2PD00006,
-    modified *VD → *WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates
+    revision 2PD00006*VD modified to 2PD00006*WD effective 2026-07-01 / application OH0027910);
+    outfall 001 coordinates
     (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063,
     via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)
 license: Public record (Ohio R.C. 149.43 / U.S. Government work)

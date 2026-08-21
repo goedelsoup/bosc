@@ -1,0 +1,53 @@
+id: echo-scioto-wwtp
+title: Scioto-basin NPDES discharger inventory (EPA ECHO)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: npdes --basin scioto
+  connector_ref: watermark.hydrology.connectors.echo
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  external_url: https://echo.epa.gov/tools/web-services
+license: U.S. Government work (public domain)
+access_tier: throttled
+site_scope: basin:scioto
+storage:
+- relpath: reference/echo/scioto-wwtp.all-npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/echo/scioto-wwtp.huc-counts.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/echo/scioto-wwtp.potw.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+  ttl_days: 180
+provenance: connector
+schema_ref: watermark.hydrology.connectors.echo.Facility
+tags:
+- npdes
+- cwa
+- scioto
+- ohio-river
+- wastewater
+notes: >-
+  Inventory of active CWA-permitted dischargers across the three HUC-8 subbasins of subregion 0506
+  — Upper Scioto, Lower Scioto and Paint — deduplicated by FRS Registry ID; every value is
+  ECHO-returned and nulls are genuine. ⚠️ THE WORST SHAPE OF THE COVERAGE GAP THIS FILE CLOSES: the
+  `scioto` basin was ALREADY registered in both echo.BASINS (a full three-HUC-8 Basin, with a
+  caveat about the New Albany cluster) and basin._BASIN_POTW_INVENTORY, and curated Scioto
+  mainstem gages had been waiting in mainstem-gages.yaml since they were written — the pull had
+  simply never been run. So the code advertised support while four registered sites (columbus,
+  new-albany, piketon, portsmouth) screened an empty set and reported total=0. `_load_dischargers`
+  returns [] for a missing file by design, so nothing raised. The two guards added in
+  tests/test_shared_registries.py exist for exactly this: a registered basin with no committed
+  inventory now fails CI instead of reading as a basin with no dischargers. Unlike the Muskingum
+  and Sandusky pulls beside it, this basin's denominators ARE partly registered — the Scioto
+  mainstem at Higby, the Olentangy near Worthington, Big Walnut Creek and Big Darby Creek — so a
+  minority of rows screen. Read those with the derivation's own label: each is the 7Q10 AT THE
+  GAGE, a screening proxy for a discharge reach that differs by drainage-area ratio, and a gage
+  DOWNSTREAM of an outfall integrates a larger area and therefore overstates dilution. That
+  direction is safe for a violation finding and unsafe for an "ok" one. Headline counts for a
+  given pull are dated in data/reference/echo/README.md rather than restated here.

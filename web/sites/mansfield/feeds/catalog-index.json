@@ -1,6 +1,6 @@
 {
   "site": "mansfield",
-  "catalog_version": "50d0d72fdd7e24c3cd32788e3a7eb4449735cb05746936ab8a066c55e6a00b7e",
+  "catalog_version": "d4d932d9e82d774b216da3ced26f622c006b3f944519eac15fe3544e1e3413bb",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -657,6 +657,14 @@
       "site": "mansfield",
       "local_id": "datacenter-industry",
       "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:echo-muskingum-wwtp",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "echo-muskingum-wwtp",
+      "title": "Muskingum-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {

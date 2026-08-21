@@ -1,6 +1,6 @@
 {
   "site": "sandusky",
-  "catalog_version": "d3689a18f982f1577aa169a99fafd6853eb2494b654f950f945208d41e68b6bd",
+  "catalog_version": "402ac1998460950cdc644c18ac71ad875f1974b4db333f1b2c2bbf827da5754d",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -657,6 +657,14 @@
       "site": "sandusky",
       "local_id": "datacenter-industry",
       "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sandusky:echo-sandusky-wwtp",
+      "kind": "dataset",
+      "site": "sandusky",
+      "local_id": "echo-sandusky-wwtp",
+      "title": "Sandusky-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {

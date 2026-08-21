@@ -1,0 +1,40 @@
+meta:
+  subject: Muskingum-basin NPDES inventory — per-HUC counts
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Muskingum River — 6 HUC-8 subbasins, subregion 0504 (Ohio River tributary;
+    the largest river basin lying wholly within Ohio)
+huc_counts:
+- huc8: '05040001'
+  name: Tuscarawas
+  reported_count: 308
+  rows_pulled: 308
+  potw_rows_pulled: 61
+- huc8: '05040002'
+  name: Mohican
+  reported_count: 86
+  rows_pulled: 86
+  potw_rows_pulled: 17
+- huc8: '05040003'
+  name: Walhonding
+  reported_count: 81
+  rows_pulled: 81
+  potw_rows_pulled: 26
+- huc8: '05040004'
+  name: Muskingum
+  reported_count: 73
+  rows_pulled: 73
+  potw_rows_pulled: 17
+- huc8: '05040005'
+  name: Wills
+  reported_count: 44
+  rows_pulled: 44
+  potw_rows_pulled: 14
+- huc8: '05040006'
+  name: Licking
+  reported_count: 67
+  rows_pulled: 67
+  potw_rows_pulled: 16
+totals:
+  raw: 659
+  deduped: 630
+  potw: 149

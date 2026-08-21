@@ -1,6 +1,6 @@
 {
   "site": "portsmouth",
-  "catalog_version": "e49e6253cc40dfbae5a7daedb15a989cc097f6bbd8c9ac7bda158435bafe9bef",
+  "catalog_version": "5e7652c77d17ef2fd386cfcab9bda78d97d89afef8794aa6f2d787edb6ae277f",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -657,6 +657,14 @@
       "site": "portsmouth",
       "local_id": "datacenter-industry",
       "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:portsmouth:echo-scioto-wwtp",
+      "kind": "dataset",
+      "site": "portsmouth",
+      "local_id": "echo-scioto-wwtp",
+      "title": "Scioto-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {

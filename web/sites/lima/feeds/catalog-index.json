@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "6d5e3766d35464f10db45072baf37f66f04de7655ee2dda2d8b1a3936603a9a6",
+  "catalog_version": "a7a8f500221ea35e74037aeea0b0d9beb179edb7a1823075cc4204667776a003",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -972,6 +972,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:echo-muskingum-wwtp",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "echo-muskingum-wwtp",
+      "title": "Muskingum-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:echo-ohio-brush-creek-wwtp",
       "kind": "dataset",
       "site": "lima",
@@ -985,6 +993,22 @@
       "site": "lima",
       "local_id": "echo-portage-wwtp",
       "title": "Portage-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:echo-sandusky-wwtp",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "echo-sandusky-wwtp",
+      "title": "Sandusky-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:echo-scioto-wwtp",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "echo-scioto-wwtp",
+      "title": "Scioto-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {

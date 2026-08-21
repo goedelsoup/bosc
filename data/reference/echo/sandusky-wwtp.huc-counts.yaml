@@ -1,0 +1,15 @@
+meta:
+  subject: Sandusky-basin NPDES inventory — per-HUC counts
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Sandusky River — 1 HUC-8 subbasin (04100011 Sandusky), subregion 0410
+    (Western Lake Erie, direct to the lake rather than through the Maumee)
+huc_counts:
+- huc8: '04100011'
+  name: Sandusky
+  reported_count: 125
+  rows_pulled: 125
+  potw_rows_pulled: 31
+totals:
+  raw: 125
+  deduped: 124
+  potw: 31

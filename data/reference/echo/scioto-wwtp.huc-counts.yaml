@@ -1,0 +1,24 @@
+meta:
+  subject: Scioto-watershed NPDES inventory — per-HUC counts
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Scioto River — 3 HUC-8 subbasins, subregion 0506 (Ohio River tributary)
+huc_counts:
+- huc8: '05060001'
+  name: Upper Scioto
+  reported_count: 241
+  rows_pulled: 241
+  potw_rows_pulled: 75
+- huc8: '05060002'
+  name: Lower Scioto
+  reported_count: 92
+  rows_pulled: 92
+  potw_rows_pulled: 33
+- huc8: '05060003'
+  name: Paint
+  reported_count: 44
+  rows_pulled: 44
+  potw_rows_pulled: 16
+totals:
+  raw: 377
+  deduped: 362
+  potw: 123

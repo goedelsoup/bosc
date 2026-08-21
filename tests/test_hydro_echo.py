@@ -56,8 +56,30 @@ def test_basin_registry_and_resolve() -> None:
     assert echo.resolve_basin("ohio-brush-creek") is echo.OHIO_BRUSH_CREEK
     assert list(echo.OHIO_BRUSH_CREEK_HUC8S) == ["05090201"]
     assert echo.OHIO_BRUSH_CREEK.file_stem == "ohio-brush-creek-wwtp"
+    # The Muskingum is all six HUC-8s of subregion 0504, enumerated from the USGS WBD service.
+    # Pinned for the same reason as Ohio Brush Creek above — a typo reverts mansfield's and
+    # coshocton's screen to 0/0 silently.
+    assert echo.resolve_basin("muskingum") is echo.MUSKINGUM
+    assert list(echo.MUSKINGUM_HUC8S) == [
+        "05040001",
+        "05040002",
+        "05040003",
+        "05040004",
+        "05040005",
+        "05040006",
+    ]
+    assert echo.MUSKINGUM.file_stem == "muskingum-wwtp"
+    # The Sandusky is the single WLE HUC-8 that is neither Maumee nor Portage drainage.
+    assert echo.resolve_basin("sandusky") is echo.SANDUSKY
+    assert list(echo.SANDUSKY_HUC8S) == ["04100011"]
+    assert echo.SANDUSKY.file_stem == "sandusky-wwtp"
+    assert "04100011" not in echo.MAUMEE_HUC8S and "04100011" not in echo.PORTAGE_HUC8S
+    # An unregistered basin must RAISE rather than fall through to an empty screen.
+    # ⚠️ Use a synthetic slug, never a real Ohio basin: this assertion previously named
+    # "muskingum", which quietly became wrong the moment that basin was registered. Any real
+    # name here is a landmine armed for whoever onboards a site in it next.
     with pytest.raises(echo.EchoError, match="unknown basin"):
-        echo.resolve_basin("muskingum")
+        echo.resolve_basin("not-a-registered-basin")
 
 
 def test_huc8_names_cover_every_registered_basin() -> None:

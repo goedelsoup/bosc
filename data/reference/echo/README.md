@@ -21,13 +21,24 @@ WPAFB, Troy-Piqua, Hamilton-Middletown), the **Little Miami** (`watermark npdes 
 little-miami`, the Scenic-River sites Xenia and Wilmington / Todd Fork, a single HUC-8
 `05090202`), **Ohio Brush Creek** (`watermark npdes --basin ohio-brush-creek`, the
 direct-to-Ohio-River branch at West Union / Adams County — a single HUC-8 `05090201`; #1120),
-and the **Portage** (`watermark npdes --basin portage`, the direct-to-Lake-Erie branch at
-Bowling Green / Middleton Township — a single HUC-8 `04100010`; #1433).
-One further basin is **registered in the connector but not yet committed**:
-the **Scioto** (`--basin scioto`, the Columbus / New Albany data-center cluster) — deferred
-on an ECHO 300/hr throttle (HTTP 429). Run `watermark npdes --basin scioto` to write its
-`<basin>-wwtp.*` fileset when ECHO is healthy. Add a basin by registering it in
-`watermark.hydrology.connectors.echo`; never hardcode one into the connector.
+the **Portage** (`watermark npdes --basin portage`, the direct-to-Lake-Erie branch at
+Bowling Green / Middleton Township — a single HUC-8 `04100010`; #1433), the **Scioto**
+(`--basin scioto`, the Columbus / New Albany data-center cluster — three HUC-8s), the
+**Muskingum** (`--basin muskingum`, Mansfield and Coshocton — all six HUC-8s of subregion
+0504, the largest river basin lying wholly in Ohio), and the **Sandusky** (`--basin
+sandusky`, the Sandusky / Fremont / Tiffin / Bucyrus points — a single HUC-8 `04100011`).
+
+**Every basin a registered site sits on now has a committed inventory, and two guards in
+`tests/test_shared_registries.py` keep it that way.** Until they were added, three basins
+screened an empty set: `muskingum` and `sandusky` were in no registry at all, and `scioto`
+was registered here *and* in `basin._BASIN_POTW_INVENTORY` — with curated mainstem gages
+already waiting for it — while its pull sat deferred on an ECHO throttle (the note that used
+to stand in this paragraph). Seven registered sites therefore reported `total=0`, which reads
+exactly like a basin with no dischargers. `basin._load_dischargers` returns `[]` for a
+missing file **on purpose** — an absent inventory must never fall back to another basin's
+rows — so that silence is a safety property and stays; what the guards remove is the chance
+of a registered site sitting behind it unnoticed. Add a basin by registering it in
+`watermark.hydrology.connectors.echo`, then pull it; never hardcode one into the connector.
 
 ## What the watershed is
 
@@ -356,6 +367,112 @@ Files: `portage-wwtp.all-npdes.yaml`, `portage-wwtp.potw.yaml`,
 yet — closing the 21 null receivers means reading 21 permits' fact sheets, and each
 correction needs its own citation.
 
+## Scioto River basin (`scioto-wwtp.*`)
+
+The Columbus / New Albany data-center cluster, plus Piketon (PORTS) and Portsmouth on the
+lower river. Three HUC-8s, the same `p_huc` method and field shape as the others:
+
+| HUC-8 | subbasin |
+| --- | --- |
+| 05060001 | Upper Scioto |
+| 05060002 | Lower Scioto |
+| 05060003 | Paint |
+
+**2026-08-21 pull:** 377 rows → **362 facilities** after FRS dedup (**123 POTW**, 239
+non-POTW). 86 of the 123 POTWs carry no `receiving_water` and 12 no design flow.
+
+This basin is where the coverage gap took its worst shape. It was **already registered** in
+both `echo.BASINS` and `basin._BASIN_POTW_INVENTORY`, and the curated Scioto gages — the
+mainstem at Higby, the Olentangy near Worthington, Big Walnut Creek, Big Darby Creek — had
+been sitting in `mainstem-gages.yaml` waiting for it. Only the pull was missing, so the code
+advertised support while four registered sites screened nothing.
+
+### What screens, and what does not
+
+Unlike the Muskingum and Sandusky sections below, some rows here **do** screen, because this
+basin's denominators are partly registered. Read them with the derivation's own label: each
+is the 7Q10 **at the gage**, a screening proxy for a discharge reach that differs by
+drainage-area ratio. A gage **downstream** of an outfall integrates a larger drainage area
+and therefore **overstates** dilution — which is conservative for a `violation` finding and
+the wrong direction for an `ok` one. Treat a comfortable ratio on a downstream-integrator
+denominator as unproven rather than clean.
+
+## Muskingum River basin (`muskingum-wwtp.*`)
+
+Mansfield (Rocky Fork of the Mohican) and Coshocton (the Tuscarawas–Walhonding confluence),
+with Newark and Zanesville tracked above and below them. All six HUC-8s of subregion 0504 —
+the largest river basin lying wholly within Ohio:
+
+| HUC-8 | subbasin |
+| --- | --- |
+| 05040001 | Tuscarawas |
+| 05040002 | Mohican |
+| 05040003 | Walhonding |
+| 05040004 | Muskingum |
+| 05040005 | Wills |
+| 05040006 | Licking |
+
+The set was enumerated from the **USGS Watershed Boundary Dataset itself**
+(`hydro.nationalmap.gov/arcgis/rest/services/wbd/MapServer` layer 4), not typed from memory,
+and every network point was located against the same service: mansfield → 05040002,
+coshocton → 05040004, newark → 05040006, zanesville → 05040004.
+
+**2026-08-21 pull:** 659 rows → **630 facilities** after FRS dedup (**149 POTW**, 481
+non-POTW) — the network's largest POTW inventory, ahead of the Maumee's 130. 97 of the 149
+carry no `receiving_water` and 17 no design flow.
+
+**Unlike 04100010 and 05090201, this subregion IS one river's drainage tree.** Both of those
+carry a "scope is wider than the name" caveat because a WBD cataloging unit is not a
+watershed; that warning does **not** transfer here. The Tuscarawas and the Walhonding join at
+Coshocton to form the Muskingum mainstem, and Wills Creek and the Licking enter below, so
+every discharger in 0504 is genuinely upstream of the basin mouth and no unit is a
+frontal-drainage sibling of another.
+
+### What screens, and what does not
+
+**Nothing, today, and that is the honest state.** No Muskingum mainstem gage is registered in
+`mainstem-gages.yaml`, so every row reports `no_7q10` or `no_receiving_water` —
+**unscreenable, never unaffected**. Two things must be true of any gage registered here later:
+
+- It must carry a **cited regulation annotation**. The Muskingum Watershed Conservancy
+  District operates a Corps-partnered flood-control reservoir system across these subbasins,
+  so a gage below one of its structures measures a managed flow rather than a natural one.
+  Per `meta.cited_annotations`, an unannotated gage means "not yet read against the published
+  record", never "unregulated".
+- It must not be the **Ohio River at Greenup Dam**. That gage is scoped
+  `basins: [ohio-brush-creek]` precisely because the Muskingum meets the Ohio hundreds of
+  river miles above it, where the river carries a fraction of the drainage area gaged there.
+
+## Sandusky River basin (`sandusky-wwtp.*`)
+
+The Sandusky / Perkins Township point, with Fremont, Tiffin and Bucyrus tracked upstream. One
+HUC-8 — wholly in Ohio, and the largest single subbasin in subregion 0410, bigger than the
+Auglaize:
+
+| HUC-8 | subbasin |
+| --- | --- |
+| 04100011 | Sandusky |
+
+All four network points sit inside this one unit, each located against the USGS WBD service.
+
+**2026-08-21 pull:** 125 rows → **124 facilities** after FRS dedup (**31 POTW**, 93
+non-POTW). 22 of the 31 carry no `receiving_water`.
+
+It is a **sibling** of the Maumee and the Portage, not part of either — all three reach
+Western Lake Erie independently — which is why `04100011` is absent from `MAUMEE_HUC8S` and
+`PORTAGE_HUC8S`, and why no discharger here may borrow either basin's denominator.
+
+### What screens, and what does not
+
+Nothing yet: no Sandusky gage is registered in `mainstem-gages.yaml`.
+
+⚠️ **A bay is not a river reach, and a 7Q10 does not describe one.** The network's own point
+discharges to **Sandusky Bay**, an embayment at the river's mouth whose mixing volume is set
+by lake level, seiche and wind forcing rather than by streamflow. When the Sandusky River's
+mainstem gage is eventually registered, its aliases must **not** be extended to the bay: a
+river 7Q10 served to a bay outfall is not a conservative approximation, it is a category
+error.
+
 ## Known gaps & caveats (read before using)
 
 1. **No CWNS ID.** The ECHO CWA facility service has *no* CWNS column, so the
@@ -469,6 +586,18 @@ Source: Hand-authored, document-cited corrections to ECHO's CWPStateWaterBodyNam
 | --- | --- | --- |
 | `reference/echo/curation/maumee-wwtp.receiving-water.yaml` | application/x-yaml | no |
 
+### `echo-muskingum-wwtp` — Muskingum-basin NPDES discharger inventory (EPA ECHO)
+
+Source: EPA ECHO — cwa_rest_services (CWA v2017-10-13) · License: U.S. Government work (public domain) · Access: throttled · Site scope: basin:muskingum · Refresh: quarterly (ttl 180d)
+
+Regenerate: `watermark npdes --basin muskingum`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/echo/muskingum-wwtp.all-npdes.yaml` | application/x-yaml | no |
+| `reference/echo/muskingum-wwtp.huc-counts.yaml` | application/x-yaml | no |
+| `reference/echo/muskingum-wwtp.potw.yaml` | application/x-yaml | no |
+
 ### `echo-ohio-brush-creek-wwtp` — Ohio Brush Creek-basin NPDES discharger inventory (EPA ECHO)
 
 Source: EPA ECHO — cwa_rest_services (CWA v2017-10-13) · License: U.S. Government work (public domain) · Access: throttled · Site scope: basin:ohio-brush-creek · Refresh: quarterly (ttl 180d)
@@ -492,5 +621,29 @@ Regenerate: `watermark npdes --basin portage`
 | `reference/echo/portage-wwtp.all-npdes.yaml` | application/x-yaml | no |
 | `reference/echo/portage-wwtp.huc-counts.yaml` | application/x-yaml | no |
 | `reference/echo/portage-wwtp.potw.yaml` | application/x-yaml | no |
+
+### `echo-sandusky-wwtp` — Sandusky-basin NPDES discharger inventory (EPA ECHO)
+
+Source: EPA ECHO — cwa_rest_services (CWA v2017-10-13) · License: U.S. Government work (public domain) · Access: throttled · Site scope: basin:sandusky · Refresh: quarterly (ttl 180d)
+
+Regenerate: `watermark npdes --basin sandusky`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/echo/sandusky-wwtp.all-npdes.yaml` | application/x-yaml | no |
+| `reference/echo/sandusky-wwtp.huc-counts.yaml` | application/x-yaml | no |
+| `reference/echo/sandusky-wwtp.potw.yaml` | application/x-yaml | no |
+
+### `echo-scioto-wwtp` — Scioto-basin NPDES discharger inventory (EPA ECHO)
+
+Source: EPA ECHO — cwa_rest_services (CWA v2017-10-13) · License: U.S. Government work (public domain) · Access: throttled · Site scope: basin:scioto · Refresh: quarterly (ttl 180d)
+
+Regenerate: `watermark npdes --basin scioto`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/echo/scioto-wwtp.all-npdes.yaml` | application/x-yaml | no |
+| `reference/echo/scioto-wwtp.huc-counts.yaml` | application/x-yaml | no |
+| `reference/echo/scioto-wwtp.potw.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

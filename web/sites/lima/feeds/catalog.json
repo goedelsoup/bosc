@@ -3997,8 +3997,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "90368459aef6ea930a960416738026e6f639cf5d0dbd3bdc40203093bc572167",
-      "size_bytes": 32301,
+      "sha256": "dbd179f352c390df722acf7d37cc1413b4328e4283a80a0eb603f9245eb7b021",
+      "size_bytes": 34755,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -7325,6 +7325,67 @@
     }
   },
   {
+    "id": "echo-muskingum-wwtp",
+    "title": "Muskingum-basin NPDES discharger inventory (EPA ECHO)",
+    "scope": "reference",
+    "collection": "echo",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "npdes --basin muskingum",
+    "connector_ref": "watermark.hydrology.connectors.echo",
+    "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+    "external_url": "https://echo.epa.gov/tools/web-services",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "throttled",
+    "site_scope": "basin:muskingum",
+    "cadence": "quarterly",
+    "ttl_days": 180,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "cwa",
+      "muskingum",
+      "ohio-river",
+      "wastewater"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/echo/muskingum-wwtp.all-npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/muskingum-wwtp.huc-counts.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/muskingum-wwtp.potw.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "e9858d5183587a18aef18a7ee0ec66af191265c0251f920413064e9c198d8453",
+      "size_bytes": 408249,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark npdes --basin muskingum",
+      "verified": true
+    }
+  },
+  {
     "id": "echo-ohio-brush-creek-wwtp",
     "title": "Ohio Brush Creek-basin NPDES discharger inventory (EPA ECHO)",
     "scope": "reference",
@@ -7443,6 +7504,128 @@
       "pages": null,
       "confidence": "medium",
       "note": "watermark npdes --basin portage",
+      "verified": true
+    }
+  },
+  {
+    "id": "echo-sandusky-wwtp",
+    "title": "Sandusky-basin NPDES discharger inventory (EPA ECHO)",
+    "scope": "reference",
+    "collection": "echo",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "npdes --basin sandusky",
+    "connector_ref": "watermark.hydrology.connectors.echo",
+    "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+    "external_url": "https://echo.epa.gov/tools/web-services",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "throttled",
+    "site_scope": "basin:sandusky",
+    "cadence": "quarterly",
+    "ttl_days": 180,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "cwa",
+      "sandusky",
+      "lake-erie",
+      "wastewater"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/echo/sandusky-wwtp.all-npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/sandusky-wwtp.huc-counts.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/sandusky-wwtp.potw.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "b1282d90a4f2c9a0937a05ac452e4e52b7faef6ac54239ff83e4ade65276114a",
+      "size_bytes": 83561,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark npdes --basin sandusky",
+      "verified": true
+    }
+  },
+  {
+    "id": "echo-scioto-wwtp",
+    "title": "Scioto-basin NPDES discharger inventory (EPA ECHO)",
+    "scope": "reference",
+    "collection": "echo",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "npdes --basin scioto",
+    "connector_ref": "watermark.hydrology.connectors.echo",
+    "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+    "external_url": "https://echo.epa.gov/tools/web-services",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "throttled",
+    "site_scope": "basin:scioto",
+    "cadence": "quarterly",
+    "ttl_days": 180,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "cwa",
+      "scioto",
+      "ohio-river",
+      "wastewater"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/echo/scioto-wwtp.all-npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/scioto-wwtp.huc-counts.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/scioto-wwtp.potw.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "b0498078bf6fd00561c30ca090835d47346ea52b63d4b3c5613b4694dab27d8e",
+      "size_bytes": 254384,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark npdes --basin scioto",
       "verified": true
     }
   },
@@ -11037,7 +11220,7 @@
     "producer_kind": "manual",
     "command": null,
     "connector_ref": null,
-    "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, modified *VD → *WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
+    "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, revision 2PD00006*VD modified to 2PD00006*WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
     "external_url": null,
     "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
     "access_tier": "public",
@@ -11070,7 +11253,7 @@
     },
     "observed_network": null,
     "citation": {
-      "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, modified *VD → *WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
+      "source": "Derived from Ohio EPA \"Fact Sheet for NPDES Permit, Van Wert WWTP\" (permit 2PD00006, revision 2PD00006*VD modified to 2PD00006*WD effective 2026-07-01 / application OH0027910); outfall 001 coordinates (40.8882410, -84.58437518) and the single-flowline reach geometry (NHDPlus v2 COMID 15653063, via NLDI) from the committed data/extracted/van-wert/water-watch.yaml (#1406)",
       "source_kind": "reference",
       "page": null,
       "pages": null,

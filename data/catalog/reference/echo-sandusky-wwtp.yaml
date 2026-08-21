@@ -1,0 +1,52 @@
+id: echo-sandusky-wwtp
+title: Sandusky-basin NPDES discharger inventory (EPA ECHO)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: npdes --basin sandusky
+  connector_ref: watermark.hydrology.connectors.echo
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  external_url: https://echo.epa.gov/tools/web-services
+license: U.S. Government work (public domain)
+access_tier: throttled
+site_scope: basin:sandusky
+storage:
+- relpath: reference/echo/sandusky-wwtp.all-npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/echo/sandusky-wwtp.huc-counts.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/echo/sandusky-wwtp.potw.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: quarterly
+  ttl_days: 180
+provenance: connector
+schema_ref: watermark.hydrology.connectors.echo.Facility
+tags:
+- npdes
+- cwa
+- sandusky
+- lake-erie
+- wastewater
+notes: >-
+  Inventory of active CWA-permitted dischargers across HUC-8 04100011 "Sandusky", deduplicated by
+  FRS Registry ID; every value is ECHO-returned and nulls are genuine. Wholly in Ohio and the
+  largest single subbasin in subregion 0410 — bigger than the Auglaize. All four of the network's
+  Sandusky-basin points (sandusky, fremont, tiffin, bucyrus) sit inside this one unit, each
+  located against the USGS WBD service. Like the Muskingum, this basin was in neither registry
+  until this pull, so the sandusky site screened an empty set and reported total=0; the guards in
+  tests/test_shared_registries.py now prevent that for any registered site. It is a SIBLING of the
+  Maumee and the Portage rather than part of either — all three reach Western Lake Erie
+  independently — which is why 04100011 is absent from MAUMEE_HUC8S and PORTAGE_HUC8S and why no
+  discharger here may borrow either basin's denominator. No Sandusky gage is registered in
+  mainstem-gages.yaml, so every row reports no_7q10 or no_receiving_water — UNSCREENABLE, NEVER
+  UNAFFECTED. ⚠️ A BAY IS NOT A RIVER REACH: the network's own point discharges to SANDUSKY BAY, an
+  embayment whose mixing volume is set by lake level, seiche and wind rather than by streamflow, so
+  registering the Sandusky River's eventual mainstem gage must NOT extend an alias to the bay — a
+  river 7Q10 served to a bay outfall is a category error, not a conservative approximation.
+  Headline counts for a given pull are dated in data/reference/echo/README.md rather than restated
+  here.

@@ -627,6 +627,67 @@
     }
   },
   {
+    "id": "echo-scioto-wwtp",
+    "title": "Scioto-basin NPDES discharger inventory (EPA ECHO)",
+    "scope": "reference",
+    "collection": "echo",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "npdes --basin scioto",
+    "connector_ref": "watermark.hydrology.connectors.echo",
+    "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+    "external_url": "https://echo.epa.gov/tools/web-services",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "throttled",
+    "site_scope": "basin:scioto",
+    "cadence": "quarterly",
+    "ttl_days": 180,
+    "last_refreshed": null,
+    "tags": [
+      "npdes",
+      "cwa",
+      "scioto",
+      "ohio-river",
+      "wastewater"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/echo/scioto-wwtp.all-npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/scioto-wwtp.huc-counts.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/echo/scioto-wwtp.potw.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "b0498078bf6fd00561c30ca090835d47346ea52b63d4b3c5613b4694dab27d8e",
+      "size_bytes": 254384,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "EPA ECHO — cwa_rest_services (CWA v2017-10-13)",
+      "source_kind": "connector",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": "watermark npdes --basin scioto",
+      "verified": true
+    }
+  },
+  {
     "id": "economics-baseline",
     "title": "Licking County, OH Economic Baseline (BLS QCEW + US Census ACS)",
     "scope": "reference",

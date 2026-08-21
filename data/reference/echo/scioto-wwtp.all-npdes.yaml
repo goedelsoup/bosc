@@ -1,0 +1,7284 @@
+meta:
+  subject: Scioto-watershed NPDES wastewater dischargers
+  scope: all active CWA-permitted dischargers
+  source: EPA ECHO — cwa_rest_services (CWA v2017-10-13)
+  watershed: Scioto River — 3 HUC-8 subbasins, subregion 0506 (Ohio River tributary)
+  huc8s:
+    '05060001': Upper Scioto
+    '05060002': Lower Scioto
+    '05060003': Paint
+  dedup_key: FRS RegistryID
+  count: 362
+  caveats:
+  - ECHO's CWA facility service has no CWNS column; the POTW flag rests on CWPFacilityTypeIndicator.
+  - Facilities link to HUCs via WATERS (FacDerivedHuc); a permit that didn't geocode
+    can be missed.
+  - design_flow_mgd is null where ECHO returned no value; it is never estimated.
+  - The New Albany cluster straddles the Scioto/Muskingum divide; its Licking River
+    (Muskingum, subregion 0504) side is NOT in this Scioto inventory.
+facilities:
+- frs_registry_id: '110056280251'
+  name: AGG ROCK MATERIALS CO
+  npdes_id: OH0055174
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012301'
+  county: FRANKLIN
+  latitude: 39.91396
+  longitude: -83.02063
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009008714'
+  name: ALTON RV PARK
+  npdes_id: OH0124532
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012201'
+  county: FRANKLIN
+  latitude: 39.95019
+  longitude: -83.17526
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008587234'
+  name: ALUM CREEK WATER RECLAMATION FACILITY
+  npdes_id: OH0121380
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 10.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011601'
+  county: DELAWARE
+  latitude: 40.289024
+  longitude: -83.07228
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110069997771'
+  name: APPLE LANE SUBDIVISION
+  npdes_id: OH0146544
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: HONEY CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010304'
+  county: MARION COUNTY
+  latitude: 40.53476
+  longitude: -83.13863
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009622239'
+  name: AQUA OHIO WATER - MARION
+  npdes_id: OH0151605
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010303'
+  county: MARION
+  latitude: 40.593113
+  longitude: -83.153664
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006322185'
+  name: AQUA OHIO WATER CO INC - LAKE DARBY WWTP
+  npdes_id: OH0036005
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BIG DARBY CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012102'
+  county: FRANKLIN
+  latitude: 39.959623
+  longitude: -83.233489
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110064273771'
+  name: AQUA OHIO WATER CO INC - WORTHINGTON HILLS WTP
+  npdes_id: OH0008982
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011102'
+  county: FRANKLIN
+  latitude: 40.12596
+  longitude: -83.03576
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110064611022'
+  name: AQUA OHIO WATER CO. INC. - BLACKLICK WWTP
+  npdes_id: OH0036021
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.2
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011504'
+  county: FRANKLIN
+  latitude: 39.89583
+  longitude: -82.85958
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006227430'
+  name: AQUA OHIO WATER CO. INC. - HUBER RIDGE WWTP
+  npdes_id: OH0036013
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.03
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011602'
+  county: FRANKLIN
+  latitude: 40.08436
+  longitude: -82.917
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008634068'
+  name: ASHLEY WWTP
+  npdes_id: OH0054488
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.19
+  design_flow_missing: false
+  receiving_water: UT OF WEST BRANCH ALUM CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011401'
+  county: DELAWARE
+  latitude: 40.39474
+  longitude: -82.94532
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110009822576'
+  name: ASHVILLE COUNTRY ESTATES
+  npdes_id: OH0036072
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIB TO WALNUT CREEK, UT WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011805
+  county: PICKAWAY
+  latitude: 39.77063
+  longitude: -82.92638
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110067376173'
+  name: ASHVILLE VILLAGE WRRF
+  npdes_id: OH0142581
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.8
+  design_flow_missing: false
+  receiving_water: WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011806
+  county: PICKAWAY COUNTY
+  latitude: 39.709722
+  longitude: -82.958056
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110070125054'
+  name: ASPHALT MATERIALS INC - EDISON PLANT
+  npdes_id: OH0142727
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: WHETSTONE CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010902
+  county: MORROW
+  latitude: 40.555616
+  longitude: -82.86493
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006298498'
+  name: B & B LODGE
+  npdes_id: OH0121215
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: STORM SEWER TO BIG DARBY, STORM SEWER TO BIG DARBY CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012102'
+  county: FRANKLIN
+  latitude: 39.94798
+  longitude: -83.23643
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110026463707'
+  name: BATTELLE MEMORIAL INSTITUTE
+  npdes_id: OH0004529
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011103'
+  county: FRANKLIN
+  latitude: 39.9907
+  longitude: -83.02144
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110026172727'
+  name: BATTELLE MEMORIAL INSTITUTE
+  npdes_id: OH0005461
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SILVER CREEK LAKE
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012102'
+  county: MADISON
+  latitude: 39.981994
+  longitude: -83.262498
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009821309'
+  name: BENJAMIN LOGAN HIGH SCHOOL
+  npdes_id: OH0108944
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIBUTARY OF MIL CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010601'
+  county: LOGAN
+  latitude: 40.406372
+  longitude: -83.656629
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008633871'
+  name: BERACHAH CHURCH WWTP
+  npdes_id: OH0121398
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0035
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011101'
+  county: DELAWARE
+  latitude: 40.3341
+  longitude: -83.07408
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110012660021'
+  name: BLUE WILLOW MOBILE HOME PARK
+  npdes_id: OH0053830
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.015
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011002'
+  county: MARION
+  latitude: 40.61362
+  longitude: -83.02536
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009699424'
+  name: BUCKEYE TRAILS
+  npdes_id: OH0113638
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012304'
+  county: PICKAWAY
+  latitude: 39.77661
+  longitude: -82.94898
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006283681'
+  name: BUCKEYE TRAILS - L
+  npdes_id: OH0034827
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SCIOTO RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012304'
+  county: PICKAWAY
+  latitude: 39.77786
+  longitude: -82.94889
+  compliance_status: Compliance/Permit Schedule - Reporting
+  informal_enf_count: 1
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110006698920'
+  name: BUCKEYE VALLEY MIDDLE & HIGH SCHLS
+  npdes_id: OH0121410
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OLENTANGY RIVER, UNNAMED TRIBUTARY TO OLENTANGY RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011007'
+  county: DELAWARE
+  latitude: 40.35058
+  longitude: -83.09233
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008614749'
+  name: CALEDONIA WWTP
+  npdes_id: OH0021750
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0759
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010804
+  county: MARION
+  latitude: 40.63291
+  longitude: -82.96509
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110070694028'
+  name: CAMP WAKATOMIKA
+  npdes_id: OH0149781
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.004
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050400040104'
+  county: FRANKLIN COUNTY
+  latitude: 39.972
+  longitude: -83.049347
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008585995'
+  name: CAMP WISSALOHICAN SANITARY SEWER DISTRICT
+  npdes_id: OH0124371
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0044
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012101'
+  county: MADISON
+  latitude: 39.9776
+  longitude: -83.2525
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006208415'
+  name: CANAAN COMMUNITY MHP
+  npdes_id: OH0038211
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012101'
+  county: MADISON
+  latitude: 40.01752
+  longitude: -83.26345
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008573203'
+  name: CANAL WINCHESTER WWTP
+  npdes_id: OH0024333
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.48
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011802
+  county: FRANKLIN
+  latitude: 39.83029
+  longitude: -82.82018
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006212847'
+  name: CANDLEWOOD LAKE WWTP
+  npdes_id: OH0081370
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010902
+  county: MORROW
+  latitude: 40.61559
+  longitude: -82.76599
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000382309'
+  name: CAPITAL RESIN CORP
+  npdes_id: OH0081612
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: KIAN RUN/SCIOTO RIVER, KIANRUN/SCIOTO RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012302'
+  county: FRANKLIN
+  latitude: 39.912778
+  longitude: -82.987222
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008611644'
+  name: CARDINGTON WWTP
+  npdes_id: OH0023361
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.5
+  design_flow_missing: false
+  receiving_water: WHETSTONE, WHETSTONE CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010902
+  county: MORROW
+  latitude: 40.503701
+  longitude: -82.899618
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006278170'
+  name: CAROUSEL COURT MHP
+  npdes_id: OH0050636
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UTT KINNIKINNICK CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600020501'
+  county: PICKAWAY
+  latitude: 39.629777
+  longitude: -82.954759
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110067437054'
+  name: CARVEL MANOR MHP
+  npdes_id: OH0142603
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNN TRIB TO SCIOTO RIVER, UNNAMED TRIBUTARY TO SCIOTO RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012304'
+  county: PICKAWAY COUNTY
+  latitude: 39.724227
+  longitude: -83.021751
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110039408496'
+  name: CENTRAL OHIO BIOENERGY LLC
+  npdes_id: OH0142271
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: NONE
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012302'
+  county: FRANKLIN
+  latitude: 39.90522
+  longitude: -83.02354
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000906306'
+  name: CENTRAL OHIO FARMERS CO-OP MARION BULK PLANT
+  npdes_id: OH0122599
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010303'
+  county: MARION
+  latitude: 40.58006
+  longitude: -83.13972
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000814307'
+  name: CENTRAL OHIO FARMERS CO-OP- (KENTON BULK PLANT)
+  npdes_id: OH0122572
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010104'
+  county: HARDIN
+  latitude: 40.64765
+  longitude: -83.62556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110001623636'
+  name: CITGO PETROLEUM
+  npdes_id: OH0054739
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011203'
+  county: FRANKLIN
+  latitude: 40.101017
+  longitude: -83.189593
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000551251'
+  name: CITY OF COLUMBUS
+  npdes_id: OHL024741
+  npdes_ids_secondary:
+  - OH0024741
+  ownership: POTW
+  facility_type: POTW
+  permit_type: Associated Permit Record
+  design_flow_mgd: 114.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011603'
+  county: FRANKLIN
+  latitude: 39.81624
+  longitude: -82.99851
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000545456'
+  name: CITY OF COLUMBUS
+  npdes_id: OHL024732
+  npdes_ids_secondary:
+  - OH0024732
+  ownership: POTW
+  facility_type: POTW
+  permit_type: Associated Permit Record
+  design_flow_mgd: 68.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012302'
+  county: FRANKLIN
+  latitude: 39.91231
+  longitude: -83.01811
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072220084'
+  name: CITY OF COLUMBUS BRIDGES
+  npdes_id: OHGZ00084
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012302'
+  county: null
+  latitude: 39.96448
+  longitude: -83.00293
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110071710570'
+  name: CITY OF KENTON WWTP
+  npdes_id: OH0025925
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010401'
+  county: HARDIN
+  latitude: 40.63617
+  longitude: -83.59823
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110039783570'
+  name: CITY OF MARION, DIV OF WATER POLLUTION CONTROL
+  npdes_id: OH0026352
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 10.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010303'
+  county: MARION
+  latitude: 40.58599
+  longitude: -83.17671
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008633853'
+  name: CITY OF SUNBURY
+  npdes_id: OH0055093
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011306'
+  county: DELAWARE COUNTY
+  latitude: 40.23231
+  longitude: -82.86121
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000745711'
+  name: COLUMBUS WEST TERMINAL
+  npdes_id: OH0070661
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011205'
+  county: FRANKLIN
+  latitude: 39.96903
+  longitude: -83.10951
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110024560232'
+  name: COMPANY WRENCH
+  npdes_id: OH0151768
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011705'
+  county: FAIRFIELD
+  latitude: 39.78176
+  longitude: -82.69296
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000391479'
+  name: CONSUMER LIGHTING US LLC - BUCYRUS LAMP PLANT
+  npdes_id: OH0143715
+  npdes_ids_secondary:
+  - OHP000209
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SANDUSKY RIVER, SANDUSKY RIVER AND LITTLE SCIOTO RIVER, UNNAMED
+    TRIB TO LITTLE SCIOTO
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010302'
+  county: CRAWFORD
+  latitude: 40.79443
+  longitude: -82.97403
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006283832'
+  name: COOK CREEK NATURE PRESERVE WWTW
+  npdes_id: OH0114103
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011806
+  county: PICKAWAY
+  latitude: 39.68561
+  longitude: -82.98238
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006325636'
+  name: COUNTRYSIDE MHP
+  npdes_id: OH0121355
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.018
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011204'
+  county: FRANKLIN
+  latitude: 40.05617
+  longitude: -83.15835
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110028166543'
+  name: CRAWFORD PORK
+  npdes_id: OH0146676
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: NA
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010302'
+  county: MARION
+  latitude: 40.68854
+  longitude: -83.06012
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006699787'
+  name: CROTTINGER ESTATES WWTP
+  npdes_id: OH0039128
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.007
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011904
+  county: MADISON
+  latitude: 40.140614
+  longitude: -83.250769
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006195660'
+  name: CRYSTAL LAKE MHP
+  npdes_id: OH0101788
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011007'
+  county: DELAWARE
+  latitude: 40.34944
+  longitude: -83.04144
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110072221658'
+  name: D239 INDIAN LAKE EXPANSION
+  npdes_id: OHGH00756
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010102'
+  county: null
+  latitude: 40.674444
+  longitude: -83.840556
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006197114'
+  name: DARBY HOUSE WASTEWATER TREATMENT PLANT
+  npdes_id: OH0113603
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0035
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012102'
+  county: FRANKLIN
+  latitude: 39.92429
+  longitude: -83.21323
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006699796'
+  name: DARBY MEADOWS WWTP
+  npdes_id: OH0039144
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: UNT TO ROBINSON RUN, UT TO ROBINSON RUN
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011905
+  county: UNION
+  latitude: 40.1613
+  longitude: -83.3161
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110015642054'
+  name: DARBYDALE WWTP
+  npdes_id: OH0130923
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.45
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012202'
+  county: FRANKLIN
+  latitude: 39.85472
+  longitude: -83.16833
+  compliance_status: Effluent - Non-monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009008698'
+  name: DBM MATERIALS LLC
+  npdes_id: OH0124257
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011603'
+  county: FRANKLIN
+  latitude: 39.866301
+  longitude: -82.926844
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008579644'
+  name: DEER CREEK CAMPING RESORT
+  npdes_id: OH0113611
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.015
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600020207'
+  county: PICKAWAY
+  latitude: 39.7745
+  longitude: -83.05063
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006236616'
+  name: DEL-CO WATER CO - OLD STATE MCNAMARA FACILITY
+  npdes_id: OH0124494
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: DITCH FLOWING TO ALUM CRE, DITCH TO ALUM CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011601'
+  county: DELAWARE
+  latitude: 40.18461
+  longitude: -82.99142
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008995739'
+  name: DEL-CO WATER CO INC
+  npdes_id: OH0030538
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011101'
+  county: DELAWARE
+  latitude: 40.19977
+  longitude: -83.055449
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006823651'
+  name: DELAWARE MHP
+  npdes_id: OH0121185
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011007'
+  county: DELAWARE
+  latitude: 40.328977
+  longitude: -83.066563
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110070386968'
+  name: DELAWARE STATE PARK
+  npdes_id: OH0142638
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.025
+  design_flow_missing: false
+  receiving_water: DELAWARE LAKE
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011006'
+  county: DELAWARE COUNTY
+  latitude: 40.370833
+  longitude: -83.070833
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110046557542'
+  name: DELAWARE WTP 2
+  npdes_id: OH0142476
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011007'
+  county: DELAWARE
+  latitude: 40.341667
+  longitude: -83.069167
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110067180302'
+  name: DUBLIN COMMUNITY RECREATION CENTER
+  npdes_id: OH0142611
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011203'
+  county: FRANKLIN COUNTY
+  latitude: 40.10478
+  longitude: -83.13878
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009426380'
+  name: DUBLIN RD WTP
+  npdes_id: OH0029891
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011205'
+  county: FRANKLIN
+  latitude: 39.9687
+  longitude: -83.03485
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110010358184'
+  name: DUREZ CORPORATION
+  npdes_id: OH0006769
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010103'
+  county: HARDIN
+  latitude: 40.62329
+  longitude: -83.62132
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110004609291'
+  name: E C BABBERT
+  npdes_id: OH0136531
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UT OF WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011802
+  county: FAIRFIELD
+  latitude: 39.84279
+  longitude: -82.78187
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072224555'
+  name: E.02700 A A90 TURKEY RUN WOF LINE LOWERING - OH
+  npdes_id: OHGH00675
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011803
+  county: null
+  latitude: 39.680901
+  longitude: -82.839118
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110027252611'
+  name: EARNHART HILL REGIONAL W&S DIST WTP
+  npdes_id: OH0136395
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012305'
+  county: PICKAWAY
+  latitude: 39.6736
+  longitude: -82.94674
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110071710373'
+  name: EDISON WWTP
+  npdes_id: OH0101761
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.08
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010902
+  county: MORROW
+  latitude: 40.53563
+  longitude: -82.870193
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008626683'
+  name: ELDRIDGE STATION HILLS WWTP
+  npdes_id: OH0078999
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.008
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010403'
+  county: HARDIN
+  latitude: 40.6222
+  longitude: -83.494799
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110046562448'
+  name: EMERALD BIOENERGY
+  npdes_id: OH0142492
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: NA, NONE
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010903
+  county: MORROW
+  latitude: 40.444722
+  longitude: -82.960833
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 3
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110006699867'
+  name: ENCHANTED ACRES MHP WASTEWATER TREATMENT PLANT
+  npdes_id: OH0036722
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012303'
+  county: FRANKLIN
+  latitude: 39.87104
+  longitude: -82.98863
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000382595'
+  name: EVANS ADHESIVE CORPORATION, LTD
+  npdes_id: OH0096954
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011103'
+  county: FRANKLIN
+  latitude: 40.05183
+  longitude: -83.04564
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009630630'
+  name: FAIRBANKS MIDDLE & HS
+  npdes_id: OH0131016
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BUCK RUN
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011905
+  county: UNION
+  latitude: 40.16025
+  longitude: -83.39326
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009822512'
+  name: FAIRWAYVIEW STP
+  npdes_id: OH0039292
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.033
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010401'
+  county: HARDIN
+  latitude: 40.63607
+  longitude: -83.57222
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009152978'
+  name: FLAT BRANCH WWTP
+  npdes_id: OH0047953
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: BIG DARBY, BIG DARBY CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011901
+  county: LOGAN
+  latitude: 40.27377
+  longitude: -83.55726
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110011017194'
+  name: FOUNTAIN PLACE WWTP SD 5A
+  npdes_id: OH0036773
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: QU QUA CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011004'
+  county: MARION
+  latitude: 40.52819
+  longitude: -83.10267
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008572703'
+  name: GALENA WWTP NO 2
+  npdes_id: OH0136336
+  npdes_ids_secondary:
+  - OH0114171
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011306'
+  county: DELAWARE
+  latitude: 40.21957
+  longitude: -82.87756
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110002463977'
+  name: GALION WWTP
+  npdes_id: OH0025313
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.7
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010801
+  county: CRAWFORD
+  latitude: 40.72291
+  longitude: -82.81312
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000608110'
+  name: GLEN-GERY CORP - IBERIA PLANT
+  npdes_id: OH0058599
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: FLAT RUN
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010803
+  county: MORROW COUNTY
+  latitude: 40.65642
+  longitude: -82.86041
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008614623'
+  name: GRANDVIEW ESTATES SD 2A
+  npdes_id: OH0036765
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.28
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010301'
+  county: MARION
+  latitude: 40.64285
+  longitude: -83.08128
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006311348'
+  name: GREEN HILLS COACH PARK LTD
+  npdes_id: OH0126918
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIB OF TAYLOR CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010103'
+  county: HARDIN
+  latitude: 40.58968
+  longitude: -83.6404
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110010432718'
+  name: GREEN MEADOWS MHP
+  npdes_id: OH0054526
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.081
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012004'
+  county: MADISON
+  latitude: 39.98037
+  longitude: -83.39176
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006298318'
+  name: GREEN TREE MHP
+  npdes_id: OH0105902
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012102'
+  county: MADISON
+  latitude: 39.94874
+  longitude: -83.24091
+  compliance_status: Effluent - Non-monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006196981'
+  name: GROVEPORT MADISON SCHOOLS CRUISER ACELL
+  npdes_id: OH0101800
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011504'
+  county: FRANKLIN
+  latitude: 39.87943
+  longitude: -82.88373
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110017695074'
+  name: GROVES AT NEWMANS CROSSING POTW
+  npdes_id: OH0135437
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.022
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011004'
+  county: MARION
+  latitude: 40.499376
+  longitude: -83.087583
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006328740'
+  name: HANK'S TEXAS BBQ RESTAURANT
+  npdes_id: OH0106178
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0036
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011202'
+  county: DELAWARE
+  latitude: 40.355986
+  longitude: -82.990068
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110005968863'
+  name: HAP CREMEAN WTP
+  npdes_id: OH0030716
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011502'
+  county: FRANKLIN
+  latitude: 40.05683
+  longitude: -82.89519
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110034179555'
+  name: HARDIN CO SOLID WASTE FAC TRANSFER STATION
+  npdes_id: OHP000069
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010104'
+  county: HARDIN
+  latitude: 40.65622
+  longitude: -83.63554
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009821906'
+  name: HARMONY SUBDIV SD 5B
+  npdes_id: OH0078387
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010304'
+  county: MARION
+  latitude: 40.5338
+  longitude: -83.16821
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006324913'
+  name: HAYDEN HEIGHTS MHP
+  npdes_id: OH0136051
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.04
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011204'
+  county: FRANKLIN
+  latitude: 40.07827
+  longitude: -83.18492
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110004655668'
+  name: HERITAGE ASPHALT LLC - COLUMBUS PLANT
+  npdes_id: OH0101931
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011205'
+  county: FRANKLIN
+  latitude: 39.96741
+  longitude: -83.10037
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110015640751'
+  name: HICKORY HILLS GOLF CLUB
+  npdes_id: OH0131024
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.003
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012202'
+  county: FRANKLIN
+  latitude: 39.87986
+  longitude: -83.23506
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072223574'
+  name: HILLIARD TERMINAL
+  npdes_id: OHGH00746
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011205'
+  county: null
+  latitude: 39.992778
+  longitude: -83.133889
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110056157117'
+  name: HOME CITY ICE CO
+  npdes_id: OH0142689
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011504'
+  county: FRANKLIN
+  latitude: 39.87501
+  longitude: -82.88446
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072186708'
+  name: HOME ROAD WATER PLANT
+  npdes_id: OH0151752
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011202'
+  county: null
+  latitude: 40.1904
+  longitude: -83.14321
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000382979'
+  name: HONDA DMA - EAST LIBERTY AUTO PLANT
+  npdes_id: OH0105210
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011901
+  county: LOGAN
+  latitude: 40.335921
+  longitude: -83.551086
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110043812158'
+  name: HONDA MARYSVILLE AUTO PLANT (BRWP)
+  npdes_id: OH0097039
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TRIBUTARY TO FLAT BRANCH
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011901
+  county: UNION
+  latitude: 40.278217
+  longitude: -83.507965
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006328777'
+  name: HOOVER WOODS WWTP
+  npdes_id: OH0101877
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0264
+  design_flow_missing: false
+  receiving_water: TRIBUTARY TO HOOVER RESOVOIR
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011308
+  county: DELAWARE
+  latitude: 40.18441
+  longitude: -82.86234
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110022185017'
+  name: HYLEN SOUDERS ELEM SCH
+  npdes_id: OH0136255
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011307'
+  county: DELAWARE
+  latitude: 40.16834
+  longitude: -82.82614
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000739452'
+  name: INDUSTRIAL CONTAINER SERVICES OH LLC
+  npdes_id: OH0101605
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNZINGER DITCH
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011503'
+  county: FRANKLIN
+  latitude: 39.99406
+  longitude: -82.83353
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000381738'
+  name: INVERSYS CONTROLS- RANCO NORTH AMERICA
+  npdes_id: OH0004502
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BIG DARBY CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011905
+  county: UNION
+  latitude: 40.125031
+  longitude: -83.27184
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009649238'
+  name: JONATHAN ALDER JUNIOR HIGH SCHOOL
+  npdes_id: OH0130834
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0125
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012101'
+  county: MADISON
+  latitude: 40.06683
+  longitude: -83.29173
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110024460929'
+  name: JUMPIN JIM'S
+  npdes_id: OH0138291
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIBUTARY OF THE SCIOTO RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '051201010302'
+  county: HARDIN
+  latitude: 40.63422
+  longitude: -83.60203
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110069997915'
+  name: KBCO FRANK ROAD COMPOST FACILITY
+  npdes_id: OH0142662
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: WILLAMS DITCH, WILLIAMS DITCH
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012302'
+  county: FRANKLIN COUNTY
+  latitude: 39.909045
+  longitude: -83.02351
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006206505'
+  name: KIRKMONT CENTER
+  npdes_id: OH0118591
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050800011502
+  county: LOGAN
+  latitude: 40.3363
+  longitude: -83.64238
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009822647'
+  name: KNOLLWOOD VILLAGE SUBDIV WWTP
+  npdes_id: OH0036242
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.02
+  design_flow_missing: false
+  receiving_water: HARGUS CREEK, HOMINY CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600020401'
+  county: PICKAWAY
+  latitude: 39.62354
+  longitude: -82.90696
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009001631'
+  name: LEO YASSENOFF JEWISH CENTER RECREATIONAL DAY CAMP
+  npdes_id: OH0101842
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011308
+  county: FRANKLIN
+  latitude: 40.11871
+  longitude: -82.87464
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110040769040'
+  name: LIBERTY TWP REGIONAL TREATMENT FACILITY
+  npdes_id: OH0142344
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: MILL CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010602'
+  county: UNION
+  latitude: 40.333775
+  longitude: -83.451434
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110064334028'
+  name: LITTLE WALNUT SYCAMORE WRF
+  npdes_id: OH0121088
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.75
+  design_flow_missing: false
+  receiving_water: LITTLE WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011802
+  county: FAIRFIELD
+  latitude: 39.83227
+  longitude: -82.75394
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110071094184'
+  name: LOGAN COUNTY EASTERN REGIONAL SEWER DISTRICT WWTP
+  npdes_id: OH0151131
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.0
+  design_flow_missing: false
+  receiving_water: OTTER CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010601'
+  county: LOGAN COUNTY
+  latitude: 40.331724
+  longitude: -83.570596
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110027372714'
+  name: LOWER SCIOTO WATER RECLAMATION FACILITY
+  npdes_id: OH0136247
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.8
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011202'
+  county: DELAWARE
+  latitude: 40.21709
+  longitude: -83.14393
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006105981'
+  name: MAI MFG
+  npdes_id: OH0121304
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010602'
+  county: UNION
+  latitude: 40.2952
+  longitude: -83.34122
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110011016612'
+  name: MARENGO VILLAGE
+  npdes_id: OH0053881
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.038
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011302'
+  county: MORROW
+  latitude: 40.40188
+  longitude: -82.80387
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110004622016'
+  name: MARTEL BAKERY MIX LLC
+  npdes_id: OH0102725
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SHUMAKER DITCH
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010804
+  county: MARION
+  latitude: 40.67315
+  longitude: -82.91508
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110039783605'
+  name: MARYSVILLE WATER RECLAMATION FACILITY
+  npdes_id: OH0136271
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 8.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010604'
+  county: UNION
+  latitude: 40.19168
+  longitude: -83.265242
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006311339'
+  name: MCGUFFEY STP
+  npdes_id: OH0026271
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.12
+  design_flow_missing: false
+  receiving_water: COTTONWOOD DITCH
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010101'
+  county: HARDIN
+  latitude: 40.69341
+  longitude: -83.78528
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 4
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009675887'
+  name: MECHANICSBURG WWTP
+  npdes_id: OH0022209
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.23
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012003'
+  county: CHAMPAIGN
+  latitude: 40.070814
+  longitude: -83.550161
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 2
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110006699457'
+  name: MILL CREEK ESTATES WWTP
+  npdes_id: OH0070815
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.105
+  design_flow_missing: false
+  receiving_water: MILL CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010604'
+  county: UNION
+  latitude: 40.23178
+  longitude: -83.30301
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110015648245'
+  name: MODERN TRAILER PARK LLC
+  npdes_id: OH0130699
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011503'
+  county: FRANKLIN
+  latitude: 39.95683
+  longitude: -82.76344
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009608594'
+  name: MONROE ELEMENTARY SCHOOL
+  npdes_id: OH0130974
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.007
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012004'
+  county: MADISON
+  latitude: 40.009114
+  longitude: -83.416715
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006202992'
+  name: MORTON BUILDINGS INC WWTP
+  npdes_id: OH0138487
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010401'
+  county: HARDIN
+  latitude: 40.61282
+  longitude: -83.58933
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006700356'
+  name: MT GILEAD WWTP
+  npdes_id: OH0020362
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.82
+  design_flow_missing: false
+  receiving_water: WHETSTONE CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010902
+  county: MORROW
+  latitude: 40.54132
+  longitude: -82.84131
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008574596'
+  name: MT VICTORY WWTP
+  npdes_id: OH0078271
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.09
+  design_flow_missing: false
+  receiving_water: PANTHER CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010402'
+  county: HARDIN
+  latitude: 40.554634
+  longitude: -83.523437
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000562089'
+  name: MT. GILEAD PETROLUEM BULK PLANT
+  npdes_id: OH0142433
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010902
+  county: MORROW
+  latitude: 40.518333
+  longitude: -82.85
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110040323824'
+  name: NATIONAL LIME & STONE CO - RADNOR FAC
+  npdes_id: OH0142328
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: COUNTY TILE TO SCIOTO RIV, TILE TO SCIOTO RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010505'
+  county: DELAWARE
+  latitude: 40.364722
+  longitude: -83.161389
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009602910'
+  name: NATIONAL LIME & STONE CO - WARRENSBURG PLT
+  npdes_id: OH0114154
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SCIOTO RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010704'
+  county: DELAWARE
+  latitude: 40.30299
+  longitude: -83.17934
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009647980'
+  name: NATIONAL LIME & STONE CO MARION PLANT
+  npdes_id: OH0006254
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: HARVEY DITCH
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010301'
+  county: MARION
+  latitude: 40.629387
+  longitude: -83.119811
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110063926783'
+  name: NATIONAL LIME AND STONE CO DELAWARE PLANT
+  npdes_id: OH0097021
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UT TO SCIOTO
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010704'
+  county: DELAWARE COUNTY
+  latitude: 40.277346
+  longitude: -83.128646
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072225015'
+  name: NCHP 20 MAINLINE PIPELINE 1B
+  npdes_id: OHGH00815
+  npdes_ids_secondary:
+  - OHGH00799
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011103'
+  county: null
+  latitude: 40.02408
+  longitude: -83.01509
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072222963'
+  name: NCHP 20 PIPELINE REPLACEMENT-PHASE 1
+  npdes_id: OHGH00796
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011602'
+  county: null
+  latitude: 40.02174
+  longitude: -82.9583
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072227624'
+  name: NCHP 20IN PIPELINE  - PHASE 1
+  npdes_id: OHGH00794
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011103'
+  county: null
+  latitude: 40.023986
+  longitude: -83.015236
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072231343'
+  name: NCHP 8  INDIANOLA LATERAL
+  npdes_id: OHGH00825
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011103'
+  county: null
+  latitude: 40.02408
+  longitude: -83.01509
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072223998'
+  name: NCHP 8  PIPELINE REPLACEMENT-PHASE 1
+  npdes_id: OHGH00795
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011602'
+  county: null
+  latitude: 40.02505
+  longitude: -82.99752
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072223924'
+  name: NCHP PHASE 2 (RIDGEVIEW) PIPELINE
+  npdes_id: OHGH00857
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011103'
+  county: null
+  latitude: 40.017933
+  longitude: -83.02605
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072227210'
+  name: NCHP PHASE 2B PIPELINE REPLACEMENT
+  npdes_id: OHGH00905
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011103'
+  county: null
+  latitude: 40.01194
+  longitude: -83.05669
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072232726'
+  name: NCHP PHASE 3B PIPELINE REPLACEMENT
+  npdes_id: OHGH00859
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011602'
+  county: null
+  latitude: 40.02201
+  longitude: -82.95035
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006698868'
+  name: NEW DAY FARMS LLC - MAD RIVER FACILITY
+  npdes_id: OH0130761
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010702'
+  county: UNION
+  latitude: 40.39403
+  longitude: -83.4535
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110043479697'
+  name: NEW DAY FARMS, LLC (FARM 3 FACILITY)
+  npdes_id: OH0142387
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010702'
+  county: LOGAN
+  latitude: 40.389849
+  longitude: -83.487779
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009630710'
+  name: NEW DOVER ESTATES MHP
+  npdes_id: OH0102130
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010604'
+  county: UNION
+  latitude: 40.26054
+  longitude: -83.26594
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006328429'
+  name: NISSAN NORTH INC
+  npdes_id: OH0106194
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAM. TRIB. OF OLENTANGY RIVER, UNNAMED TRIB TO OLENTANGY
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011102'
+  county: FRANKLIN
+  latitude: 40.139774
+  longitude: -83.01724
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006347471'
+  name: NORTH LEWISBURG WWTP
+  npdes_id: OH0023582
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.42
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011902
+  county: CHAMPAIGN
+  latitude: 40.22632
+  longitude: -83.54813
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 1
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110009821050'
+  name: NORTH QUARRY ESTATES
+  npdes_id: OH0122297
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.02
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010304'
+  county: MARION
+  latitude: 40.52019
+  longitude: -83.15096
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110071906076'
+  name: NORTHSTAR WATER RECLAMATION FACILITY
+  npdes_id: OH0151697
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.8
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011305'
+  county: null
+  latitude: 40.286861
+  longitude: -82.883111
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000381836'
+  name: NOVELIS ALR ROLLED PRODUCTS INC
+  npdes_id: OH0003891
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011806
+  county: PICKAWAY
+  latitude: 39.72928
+  longitude: -82.96726
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000741715'
+  name: NUCOR STEEL MARION
+  npdes_id: OH0138789
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010304'
+  county: MARION
+  latitude: 40.5707
+  longitude: -83.1388
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009642716'
+  name: ODOT - DISTRICT 6
+  npdes_id: OHGZ00082
+  npdes_ids_secondary:
+  - OHGZ00049
+  - OHGZ00077
+  - OHGZ00078
+  - OHGZ00079
+  - OHGZ00080
+  - OHGZ00081
+  - OHGZ00083
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600020202'
+  county: DELAWARE
+  latitude: 40.29789
+  longitude: -83.0498
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110004651181'
+  name: ODOT OFFICE OF AVIATION FUEL FARM FACILITY
+  npdes_id: OH0124036
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011102'
+  county: FRANKLIN
+  latitude: 40.09084
+  longitude: -83.06851
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009678401'
+  name: ODOTREST AREA 04-42 WWTP
+  npdes_id: OH0088137
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050301030501'
+  county: FRANKLIN
+  latitude: 39.956721
+  longitude: -83.046155
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110072231160'
+  name: OH25-395 M.002613 TCO-WILLIAMS-FANCHER RD. ARISTOTLE POD
+  npdes_id: OHGH00877
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011501'
+  county: null
+  latitude: 40.13072
+  longitude: -82.76247
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110007381948'
+  name: OHIO AIR NATIONAL GUARD 121 ARW
+  npdes_id: OH0124095
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAME TRIB BIG WALNUT CR, UNNAME TRIB BIG WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011603'
+  county: FRANKLIN
+  latitude: 39.816383
+  longitude: -82.942009
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110070691253'
+  name: OHIO SOIL RECYCLING LLC
+  npdes_id: OH0142506
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011602'
+  county: FRANKLIN
+  latitude: 39.931667
+  longitude: -82.9325
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006327251'
+  name: OLD TOWN TAVERN
+  npdes_id: OH0136506
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011802
+  county: FRANKLIN
+  latitude: 39.83538
+  longitude: -82.80143
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110039777943'
+  name: OLENTANGY ENVIRONMENTAL CONTROL CENTER
+  npdes_id: OH0054399
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 6.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011102'
+  county: DELAWARE
+  latitude: 40.14076
+  longitude: -83.03925
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110011015356'
+  name: OSTRANDER WWTP
+  npdes_id: OH0105929
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.09
+  design_flow_missing: false
+  receiving_water: MILL CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010603'
+  county: DELAWARE
+  latitude: 40.25917
+  longitude: -83.20617
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006803290'
+  name: PARROTT VILLAGE WWTP
+  npdes_id: OH0039152
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.02
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010602'
+  county: UNION
+  latitude: 40.2902
+  longitude: -83.35107
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000570016'
+  name: PARSONS AVE WTP
+  npdes_id: OH0081604
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BIG WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011603'
+  county: FRANKLIN
+  latitude: 39.84817
+  longitude: -82.99059
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110002345677'
+  name: PICKAWAY CORRECTIONAL INSTITUTION
+  npdes_id: OH0054224
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.3
+  design_flow_missing: false
+  receiving_water: BIG DARBY CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012203'
+  county: PICKAWAY
+  latitude: 39.79366
+  longitude: -83.16286
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110002464191'
+  name: PICKERINGTON WASTEWATER TREATMENT PLANT
+  npdes_id: OH0031119
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.2
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011704'
+  county: FAIRFIELD
+  latitude: 39.87345
+  longitude: -82.75992
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110039728603'
+  name: PLAIN CITY WWTP
+  npdes_id: OH0027057
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.25
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011905
+  county: MADISON
+  latitude: 40.1036
+  longitude: -83.26073
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006295106'
+  name: PLEASANT ACRES MH COMMUNITY LLC
+  npdes_id: OH0053856
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010304'
+  county: MARION
+  latitude: 40.52415
+  longitude: -83.13607
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110069347362'
+  name: PLEASANT ACRES MOBILE HOME PAR
+  npdes_id: OH0120910
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BIG DARBY CREEK VIA UT
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012202'
+  county: FRANKLIN COUNTY
+  latitude: 39.83009
+  longitude: -82.93407
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110024560189'
+  name: PLEASANT LOCAL SCHOOLS
+  npdes_id: OH0138312
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: LITTLE SCIOTO RIVER, UNNAMED TRIBUTARTY TO THE LITTLE SIOTO RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010304'
+  county: MARION
+  latitude: 40.52018
+  longitude: -83.13791
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110032825986'
+  name: POET BIOREFINING - MARION
+  npdes_id: OH0138860
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010303'
+  county: MARION
+  latitude: 40.61855
+  longitude: -83.15954
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006323665'
+  name: PONDEROSA MHP, LLC.
+  npdes_id: OH0101974
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0152
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011204'
+  county: FRANKLIN
+  latitude: 40.07955
+  longitude: -83.15808
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110064150056'
+  name: PORT COLUMBUS INTERNATIONAL AIRPORT
+  npdes_id: OH0124311
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: MASON RUN
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011505'
+  county: FRANKLIN
+  latitude: 39.9985
+  longitude: -82.88949
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000493378'
+  name: RAIL PRODUCTS INTL - NATIONAL ELECTRIC COIL INC
+  npdes_id: OH0004952
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OLENTANGY RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011103'
+  county: FRANKLIN
+  latitude: 39.99101
+  longitude: -83.02893
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008626647'
+  name: REED ROAD WWTP
+  npdes_id: OH0078981
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0072
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010102'
+  county: LOGAN
+  latitude: 40.572409
+  longitude: -83.828072
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110008585717'
+  name: REFLECTIONS SUBDIVISION
+  npdes_id: OH0124079
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.004
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010602'
+  county: UNION
+  latitude: 40.26728
+  longitude: -83.47273
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009822139'
+  name: RICHWOOD PLANT
+  npdes_id: OH0054500
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: FULTON CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010504'
+  county: UNION
+  latitude: 40.43322
+  longitude: -83.29346
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009630603'
+  name: RICHWOOD WWTP
+  npdes_id: OH0027260
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.38
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010504'
+  county: UNION
+  latitude: 40.4181
+  longitude: -83.29258
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009614676'
+  name: RICKENBACKER INTERNATIONAL AIRPORT
+  npdes_id: OH0081639
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011805
+  county: FRANKLIN
+  latitude: 39.8178
+  longitude: -82.93278
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006294811'
+  name: RIDGEDALE ELEMENTARY SCHOOL
+  npdes_id: OH0138339
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TRIB TO THE LITTLE SIOTO RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010302'
+  county: MARION
+  latitude: 40.64737
+  longitude: -83.17329
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006294839'
+  name: RIVERBEND CAMPGROUND
+  npdes_id: OH0132586
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011003'
+  county: MARION
+  latitude: 40.56834
+  longitude: -82.99575
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110055636682'
+  name: ROYAL AMERICAN LINKS GOLF
+  npdes_id: OH0105813
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.015
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011308
+  county: DELAWARE
+  latitude: 40.18112
+  longitude: -82.8268
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110039701873'
+  name: RUSHSYLVANIA WWTP
+  npdes_id: OH0020575
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010201'
+  county: LOGAN
+  latitude: 40.46103
+  longitude: -83.66389
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110071403969'
+  name: SAFETY-KLEEN SYSTEMS INC
+  npdes_id: OH0151625
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011505'
+  county: FRANKLIN COUNTY
+  latitude: 39.985233
+  longitude: -82.897581
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006263827'
+  name: SAINT JOHNS EVANGELICAL LUTHERN CHURCH
+  npdes_id: OH0102008
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011905
+  county: UNION
+  latitude: 40.1882
+  longitude: -83.35042
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006699135'
+  name: SAVKO MATERIALS 1, LLC
+  npdes_id: OH0106275
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011905
+  county: MADISON
+  latitude: 40.105576
+  longitude: -83.251451
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006803245'
+  name: SCIOTO HILLS WWTP
+  npdes_id: OH0055221
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.084
+  design_flow_missing: false
+  receiving_water: O'SHAUNHENSSY RESERVOIR, O'SHAUNHNESSY RES
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011007'
+  county: DELAWARE
+  latitude: 40.178506
+  longitude: -83.123076
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110040038955'
+  name: SD NO 7 WATER RECLAMATION PLANT
+  npdes_id: OH0058157
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.75
+  design_flow_missing: false
+  receiving_water: GRAVE CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011002'
+  county: MARION
+  latitude: 40.54727
+  longitude: -83.07755
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110004651724'
+  name: SEWER MAINTENANCE
+  npdes_id: OH0106267
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011602'
+  county: FRANKLIN
+  latitude: 39.94132
+  longitude: -82.95432
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110022520609'
+  name: SHELLY MATERIALS INC - LOCKBOURNE PLANT 001345
+  npdes_id: OH0131032
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BIG WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011603'
+  county: FRANKLIN
+  latitude: 39.83269
+  longitude: -82.99002
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110001622833'
+  name: SHELLY MATERIALS INC - OSTRANDER
+  npdes_id: OH0054313
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UT TO MILL CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010604'
+  county: DELAWARE
+  latitude: 40.21365
+  longitude: -83.20277
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110027243604'
+  name: SHELLY MATERIALS INC - YORK CENTER QUARRY
+  npdes_id: OH0130893
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BOKES CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010702'
+  county: LOGAN
+  latitude: 40.41602
+  longitude: -83.45289
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110001630405'
+  name: SHELLY MATERIALS INC-MARBLE CLIFF QUARRY
+  npdes_id: OH0004847
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SCIOTO RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011205'
+  county: FRANKLIN
+  latitude: 40.0145
+  longitude: -83.10167
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110004697454'
+  name: SHELLY MATERIALS INC. DBA COLUMBUS LIMESTONE, INC.
+  npdes_id: OH0006475
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012302'
+  county: FRANKLIN
+  latitude: 39.899952
+  longitude: -83.026324
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006328492'
+  name: SHROYERS HOMES MHP
+  npdes_id: OH0070912
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OLENTANGY RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011007'
+  county: DELAWARE
+  latitude: 40.32663
+  longitude: -83.0692
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110004604447'
+  name: SIMS BROTHERS INC
+  npdes_id: OH0057991
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010304'
+  county: MARION
+  latitude: 40.57007
+  longitude: -83.13537
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110071240640'
+  name: SOMOCO WWTP
+  npdes_id: OH0149811
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.145
+  design_flow_missing: false
+  receiving_water: ALUM CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011402'
+  county: MORROW COUNTY
+  latitude: 40.374167
+  longitude: -82.883333
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110004572668'
+  name: 'SPEEDWAY LLC #9247'
+  npdes_id: OH0102083
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OLENTANGY RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011102'
+  county: DELAWARE
+  latitude: 40.14095
+  longitude: -83.01732
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006347328'
+  name: SPRING MEADOWS CARE CENTER
+  npdes_id: OH0134180
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.015
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012002'
+  county: CHAMPAIGN
+  latitude: 40.1639
+  longitude: -83.55201
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006297961'
+  name: SUBURBANS COMMUNITY MHP
+  npdes_id: OH0054259
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012101'
+  county: MADISON
+  latitude: 40.07037
+  longitude: -83.24551
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110015641206'
+  name: SUGAR GROVE LAKE WWTP
+  npdes_id: OH0132748
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600010801
+  county: CRAWFORD
+  latitude: 40.748667
+  longitude: -82.915194
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009604357'
+  name: SUNSPROUT FARMS OF CENTRAL OH LLC
+  npdes_id: OH0105864
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011103'
+  county: FRANKLIN
+  latitude: 40.0193
+  longitude: -82.98151
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009666352'
+  name: SWACO FRANKLIN COUNTY SANITARY LANDFILL
+  npdes_id: OH0070947
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012303'
+  county: FRANKLIN
+  latitude: 39.842015
+  longitude: -83.110295
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110064265209'
+  name: SYCAMORE CREEK WATER RECLAMATION FACILITY
+  npdes_id: OH0054844
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.8
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011704'
+  county: FAIRFIELD
+  latitude: 39.89184
+  longitude: -82.71359
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006803307'
+  name: TAWA ESTATES WWTP
+  npdes_id: OH0039187
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0075
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010505'
+  county: UNION
+  latitude: 40.41595
+  longitude: -83.26216
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110070382600'
+  name: THE BACK ROWE
+  npdes_id: OH0146668
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010304'
+  county: MARION COUNTY
+  latitude: 40.533321
+  longitude: -83.158243
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110043749735'
+  name: THE BROOK
+  npdes_id: OH0142239
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0075
+  design_flow_missing: false
+  receiving_water: ANOTHER NPDES PERMIT HOLDER, BUNKY RUN, LANDFILL
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011402'
+  county: MORROW
+  latitude: 40.390623
+  longitude: -82.863649
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009427888'
+  name: THE OLEN CORPORATION, COLUMBUS PLANT
+  npdes_id: OH0142336
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012303'
+  county: FRANKLIN
+  latitude: 39.86479
+  longitude: -83.00474
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110011696664'
+  name: THE SCOTTS COMPANY
+  npdes_id: OH0005193
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: CROSSES RUN
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010604'
+  county: UNION
+  latitude: 40.209703
+  longitude: -83.313333
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006109558'
+  name: TOLLES CAREER & TECHNICAL CENTER
+  npdes_id: OH0121096
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: POWELL DITCH TO BIG DARBY
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012101'
+  county: MADISON
+  latitude: 40.05708
+  longitude: -83.29086
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006347355'
+  name: TRIAD LOCAL SCH WWTP
+  npdes_id: OH0127574
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BRUSH LAKE, UNNAMED TRIBUTARY OF BRUSH LAKE
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012002'
+  county: CHAMPAIGN
+  latitude: 40.18006
+  longitude: -83.58772
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009615407'
+  name: TRILLIUM FARM HOLDINGS LLC - LAYER SITE 3
+  npdes_id: OH0131148
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: NA, UT OTTER FORK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011303'
+  county: LICKING
+  latitude: 40.221869
+  longitude: -82.715483
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110046336283'
+  name: TRILLIUM FARM HOLDINGS LLC - LAYER SITE 5
+  npdes_id: OH0138207
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: MCDONALD CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010202'
+  county: HARDIN
+  latitude: 40.529175
+  longitude: -83.439431
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110064646094'
+  name: TUSSING RD WATER RECLAIMATION FACILITY
+  npdes_id: OH0054305
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BLACKLICK CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011503'
+  county: FAIRFIELD
+  latitude: 39.92844
+  longitude: -82.79119
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006294973'
+  name: UNITED MOBILE HOMES OF OHIO - WOOD VALLEY MHP
+  npdes_id: OH0111236
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011001'
+  county: MARION
+  latitude: 40.61747
+  longitude: -82.976656
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110064600935'
+  name: UPPER OLENTANGY WATER RECLAMATION CENTER
+  npdes_id: OH0024911
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 10.0
+  design_flow_missing: false
+  receiving_water: OLENTANGY RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011101'
+  county: DELAWARE
+  latitude: 40.29207
+  longitude: -83.06113
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110004579661'
+  name: USDA FOREST SERVICE
+  npdes_id: OH0020184
+  npdes_ids_secondary: []
+  ownership: Federal
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.012
+  design_flow_missing: false
+  receiving_water: OLENTANGY RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011007'
+  county: DELAWARE
+  latitude: 40.3541
+  longitude: -83.06519
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006326190'
+  name: UWV-CARTER'S MHP LLC
+  npdes_id: OH0121258
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012301'
+  county: FRANKLIN
+  latitude: 39.90706
+  longitude: -83.07325
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110000814325'
+  name: VERITY ENTERPRISES
+  npdes_id: OH0121444
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011101'
+  county: DELAWARE
+  latitude: 40.29361
+  longitude: -83.07668
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006311650'
+  name: VILLAGE OF ALGER WWTP
+  npdes_id: OH0058327
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.15
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010101'
+  county: HARDIN
+  latitude: 40.70704
+  longitude: -83.84305
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110006700132'
+  name: VILLAGE OF BALTIMORE WASTEWATER TREATMENT PLANT
+  npdes_id: OH0023990
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011705'
+  county: FAIRFIELD
+  latitude: 39.84419
+  longitude: -82.62407
+  compliance_status: Effluent - Non-monthly Average Limit
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110011014883'
+  name: VILLAGE OF COMMERICAL POINT WWTP
+  npdes_id: OH0124001
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.43
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012304'
+  county: PICKAWAY
+  latitude: 39.77467
+  longitude: -83.0078
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009153067'
+  name: VILLAGE OF LARUE WWTP
+  npdes_id: OH0053180
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010405'
+  county: MARION
+  latitude: 40.57325
+  longitude: -83.36211
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009153049'
+  name: VILLAGE OF NEW BLOOMINGTON WWTP
+  npdes_id: OH0054038
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.125
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010406'
+  county: MARION
+  latitude: 40.5839
+  longitude: -83.31484
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009152969'
+  name: VILLAGE OF PROSPECT WASTEWATER TREATMENT PLAN
+  npdes_id: OH0047902
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.24
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010505'
+  county: MARION
+  latitude: 40.4412
+  longitude: -83.1879
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110015640760'
+  name: 'VILLAGE OF SOUTH BLOOMFIELD WWTP #2'
+  npdes_id: OH0130991
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012304'
+  county: PICKAWAY
+  latitude: 39.713531
+  longitude: -82.965032
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110011016621'
+  name: VILLAGE OF WEST JEFFERSON
+  npdes_id: OH0054321
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.2
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600012006'
+  county: MADISON
+  latitude: 39.93962
+  longitude: -83.2681
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110070669232'
+  name: WAGRAM WWTC
+  npdes_id: OH0149772
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 2.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011704'
+  county: LICKING COUNTY
+  latitude: 39.956111
+  longitude: -82.731944
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110044240906'
+  name: WALDO WWTP
+  npdes_id: OH0143499
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.06
+  design_flow_missing: false
+  receiving_water: OLENTANGY RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011005'
+  county: MARION
+  latitude: 40.451691
+  longitude: -83.075775
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110012300312'
+  name: WALNUT CREEK SEWER DISTRICT WWTP
+  npdes_id: OH0054917
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011702'
+  county: FAIRFIELD
+  latitude: 39.821515
+  longitude: -82.556521
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110012299896'
+  name: WALNUT ELEMENTARY SCHOOL
+  npdes_id: OH0130800
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011804
+  county: PICKAWAY
+  latitude: 39.689834
+  longitude: -82.89303
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009821489'
+  name: WALNUT HEIGHTS SUBDIV
+  npdes_id: OH0101834
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.063
+  design_flow_missing: false
+  receiving_water: WALNUT CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011806
+  county: PICKAWAY
+  latitude: 39.68964
+  longitude: -82.9714
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006328571'
+  name: WESTERVILLE ESTATES MHP
+  npdes_id: OH0055239
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: ROCKY FORK CREEK
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011501'
+  county: DELAWARE
+  latitude: 40.13351
+  longitude: -82.83686
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009663578'
+  name: WESTERVILLE WTP
+  npdes_id: OH0008575
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011601'
+  county: FRANKLIN
+  latitude: 40.126111
+  longitude: -82.944444
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110037514605'
+  name: WHEELERS SLUDGE HOLDING TANK
+  npdes_id: OH0142158
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: 050600011806
+  county: FRANKLIN
+  latitude: 39.75014
+  longitude: -82.9652
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110009648177'
+  name: WHIRLPOOL CORP - MARION DIV
+  npdes_id: OH0126594
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600010304'
+  county: MARION
+  latitude: 40.58601
+  longitude: -83.16882
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110006328385'
+  name: WORTHINGTON ARMS MHP
+  npdes_id: OH0081213
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OLENTANGY RIVER
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011101'
+  county: DELAWARE
+  latitude: 40.21993
+  longitude: -83.03456
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: 1
+  queried_huc8: '05060001'
+- frs_registry_id: '110006307521'
+  name: WYANDOT GOLF AND DINING
+  npdes_id: OH0124184
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: NONE PROVIDED
+  huc8: '05060001'
+  huc8_name: Upper Scioto
+  huc12: '050600011301'
+  county: KNOX
+  latitude: 40.29167
+  longitude: -82.73882
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060001'
+- frs_registry_id: '110001627963'
+  name: ALUCHEM OF JACKSON INC
+  npdes_id: OH0041122
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BUCKEYE CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: 050600020802
+  county: JACKSON
+  latitude: 39.0635
+  longitude: -82.68072
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110015782063'
+  name: BEAVER PIKE ENTERPRISES LLC
+  npdes_id: OH0139874
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BUCKEYE TO LITTLE SALT CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: 050600020802
+  county: JACKSON
+  latitude: 39.0606
+  longitude: -82.67257
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110049164615'
+  name: BEAVER WWTP
+  npdes_id: OH0041505
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.06
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021302'
+  county: PIKE
+  latitude: 39.029494
+  longitude: -82.819823
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110037514696'
+  name: BEST SAND SOUTHERN WALKER RIDGE QUARRY
+  npdes_id: OH0135321
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021101'
+  county: PIKE
+  latitude: 39.11499
+  longitude: -82.81518
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110071953321'
+  name: BIG BEAR LAKE FAMILY RESORT
+  npdes_id: OH0151726
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0015
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021602'
+  county: null
+  latitude: 38.92419
+  longitude: -83.04796
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110032825370'
+  name: BLUE HAVEN MHP
+  npdes_id: OH0136476
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020405'
+  county: FAIRFIELD
+  latitude: 39.63207
+  longitude: -82.83537
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110011014794'
+  name: BRIAR BERRY MHP
+  npdes_id: OH0124702
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021603'
+  county: SCIOTO
+  latitude: 38.88684
+  longitude: -83.0213
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110027253567'
+  name: BUTLER SPRINGS CHRISTIAN CAMP & RETREAT CTR
+  npdes_id: OH0137561
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SUNFISH CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021201'
+  county: HIGHLAND
+  latitude: 39.11324
+  longitude: -83.376787
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110071206486'
+  name: CAMP BOUNTIFUL
+  npdes_id: OH0151416
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: PIGEON CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: 050600020804
+  county: JACKSON COUNTY
+  latitude: 39.109534
+  longitude: -82.755999
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110000395260'
+  name: CENTRUS ENERGY CORP AMERICAN CENTRIFUGE OPERATING LLC
+  npdes_id: OH0115401
+  npdes_ids_secondary: []
+  ownership: Federal
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UN. TRIB. OF SCIOTO RIVER, UT OF SCIOTO RIVER AND WEST DITCH, X-6619
+    STP
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021602'
+  county: PIKE
+  latitude: 39.010113
+  longitude: -83.026022
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110001623379'
+  name: CHILLICOTHE CORRECTIONAL INSTITUTE WASTEWATER PLNT
+  npdes_id: OH0076490
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 4.4
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600011102'
+  county: ROSS
+  latitude: 39.35388
+  longitude: -82.99527
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110064637406'
+  name: CHILLICOTHE WWTP - EASTERLY
+  npdes_id: OH0024406
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.8
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020503'
+  county: ROSS
+  latitude: 39.328205
+  longitude: -82.948446
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110008605759'
+  name: CHURCHES OF CHRIST IN CHRISTIAN UNION
+  npdes_id: OH0094579
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021202'
+  county: ROSS
+  latitude: 39.1954
+  longitude: -83.15394
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110009822638'
+  name: CIRCLE HILL SUBDIV WWTP
+  npdes_id: OH0036234
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.03
+  design_flow_missing: false
+  receiving_water: HOMINEY CREEK, HOMINY CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020401'
+  county: PICKAWAY
+  latitude: 39.58484
+  longitude: -82.9126
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110000735321'
+  name: CIRCLEVILLE WWTP
+  npdes_id: OH0024465
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 4.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020403'
+  county: PICKAWAY
+  latitude: 39.59384
+  longitude: -82.92777
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110071710789'
+  name: CLARKSBURG WWTP
+  npdes_id: OH0021547
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.06
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020302'
+  county: ROSS
+  latitude: 39.50519
+  longitude: -83.15039
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110039720754'
+  name: COALTON WWTP
+  npdes_id: OH0050776
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.1
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020701'
+  county: JACKSON
+  latitude: 39.116151
+  longitude: -82.612557
+  compliance_status: null
+  informal_enf_count: 3
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110072182487'
+  name: DEER CREEK WRF
+  npdes_id: OH0151771
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 5.0
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020102'
+  county: null
+  latitude: 39.947794
+  longitude: -83.41823
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110000381881'
+  name: DUPONT CIRCLEVILLE PLANT
+  npdes_id: OH0006327
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SCIOTO RIVER
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020403'
+  county: PICKAWAY
+  latitude: 39.55762
+  longitude: -82.96377
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006700427'
+  name: EARNHART HILL REGIONAL W & SD WTP
+  npdes_id: OH0008672
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020403'
+  county: FAIRFIELD
+  latitude: 39.56652
+  longitude: -82.955074
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110011015052'
+  name: EARNHART HILL REGIONAL WATER & SEWER RIVER DR WWTP
+  npdes_id: OH0121371
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020405'
+  county: PICKAWAY
+  latitude: 39.50671
+  longitude: -82.98317
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110024560544'
+  name: EDGEWOOD MANOR II
+  npdes_id: OH0135135
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021602'
+  county: SCIOTO
+  latitude: 38.931944
+  longitude: -83.0675
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110046552930'
+  name: FLUOR - BWXT PORTSMOUTH LLC
+  npdes_id: OH0006092
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: BIG RUN, LITTLE BEAVER CREEK, SCIOTO RIVER, UNNAMED TRIBUTARY REFERRED
+    TO AS WEST DITCH, UT TO LITTLE BEAVER CREEK, X-230K SOUTH HOLDING POND, X-6619
+    SEWAGE TREATMENT PLANT
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021602'
+  county: PIKE
+  latitude: 39.010113
+  longitude: -83.026022
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110004573060'
+  name: HANSON AGGREGATES MIDWEST INC-PLUM RUN QUARRY
+  npdes_id: OH0005151
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: CEDAR FORK/SCIOTO BRUSH, SCIOTO BRUSH CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021503'
+  county: ADAMS
+  latitude: 38.950006
+  longitude: -83.363135
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110071539364'
+  name: HARPER'S MINI MART
+  npdes_id: OH0151639
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020405'
+  county: null
+  latitude: 39.53255
+  longitude: -82.84118
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110015646434'
+  name: HOCKING HILLS ELEMENTARY SCHOOL
+  npdes_id: OH0128155
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020604'
+  county: HOCKING
+  latitude: 39.45078
+  longitude: -82.51607
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006203438'
+  name: HOCKING HILLS STATE PARK CAMPGROUND
+  npdes_id: OH0037567
+  npdes_ids_secondary:
+  - OH0037575
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.026
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: 050600020902
+  county: HOCKING
+  latitude: 39.43366
+  longitude: -82.54879
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110000735232'
+  name: JACKSON WWTP
+  npdes_id: OH0020834
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 3.79
+  design_flow_missing: false
+  receiving_water: SALT LICK CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: 050600020805
+  county: JACKSON
+  latitude: 39.06143
+  longitude: -82.65119
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006278107'
+  name: KENOWA ESTATES MHC
+  npdes_id: OH0091057
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020503'
+  county: ROSS
+  latitude: 39.35775
+  longitude: -83.00305
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006278116'
+  name: KENWOOD VILLAGE MHP
+  npdes_id: OH0120715
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020502'
+  county: ROSS
+  latitude: 39.431169
+  longitude: -83.046725
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110071885200'
+  name: KNOLLWOOD SUBDIVISION WASTEWATER TREATMENT PLANT
+  npdes_id: OH0151699
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.049
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020401'
+  county: null
+  latitude: 39.617778
+  longitude: -82.901111
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110008608505'
+  name: LATHAM LIMESTONE LLC
+  npdes_id: OH0041491
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021201'
+  county: PIKE
+  latitude: 39.09315
+  longitude: -83.28061
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006309949'
+  name: LAURELVILLE WWTP
+  npdes_id: OH0050784
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.2
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020605'
+  county: HOCKING
+  latitude: 39.464267
+  longitude: -82.733353
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110063382708'
+  name: LOGAN ELM LOCAL SCHOOLS
+  npdes_id: OH0142719
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020405'
+  county: PICKAWAY
+  latitude: 39.560278
+  longitude: -82.848056
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006108639'
+  name: LONDON TRAVEL CENTER
+  npdes_id: OH0028401
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020103'
+  county: MADISON
+  latitude: 39.952506
+  longitude: -83.379017
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110009649327'
+  name: LONDON WTP
+  npdes_id: OH0041734
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OAK RUN
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020105'
+  county: MADISON
+  latitude: 39.88446
+  longitude: -83.45402
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110000735278'
+  name: LONDON WWTP
+  npdes_id: OH0023779
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 5.8
+  design_flow_missing: false
+  receiving_water: EQ LAND APP, LANDFILL, OAK RUN, TRANSFER
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020105'
+  county: MADISON
+  latitude: 39.87677
+  longitude: -83.43411
+  compliance_status: Effluent - Non-monthly Average Limit
+  informal_enf_count: 5
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006298407'
+  name: MADISON CO SEWER DIST NO 1
+  npdes_id: OH0102041
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.15
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020103'
+  county: MADISON
+  latitude: 39.950707
+  longitude: -83.381109
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110014326292'
+  name: 'MADISON COUNTY SEWER DISTRICT #2'
+  npdes_id: OH0130915
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020105'
+  county: MADISON
+  latitude: 39.9486
+  longitude: -83.49014
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006298434'
+  name: MADISON PLAINS HS
+  npdes_id: OH0070572
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020201'
+  county: MADISON
+  latitude: 39.789933
+  longitude: -83.487038
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110010126808'
+  name: MELVIN STONE CO - WILLIAMSPORT
+  npdes_id: OH0007765
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: DEER CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020207'
+  county: PICKAWAY
+  latitude: 39.61612
+  longitude: -83.21119
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006298121'
+  name: MOUNT STERLING WWTP
+  npdes_id: OH0026654
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.0
+  design_flow_missing: false
+  receiving_water: DEER CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020204'
+  county: MADISON
+  latitude: 39.71598
+  longitude: -83.26061
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110009641405'
+  name: ODNR DEER CREEK STATE PARK STP
+  npdes_id: OH0036081
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.06
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020205'
+  county: PICKAWAY
+  latitude: 39.63738
+  longitude: -83.24187
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110063617901'
+  name: ODOT REST AREA 09-23
+  npdes_id: OH0099635
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.014
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021602'
+  county: SCIOTO COUNTY
+  latitude: 38.953687
+  longitude: -83.023383
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110009153147'
+  name: ODOT REST AREA 6-21
+  npdes_id: OH0081485
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.02
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020101'
+  county: MADISON
+  latitude: 39.939
+  longitude: -83.53275
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110037938328'
+  name: OHIO BASIC MINERALS INC - BARBEE
+  npdes_id: OH0139734
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: TRIB OF WHISKEY R, TRIB OF WHISKEY RUN, UNNAMED TRIBUTARY OF WHISKEY
+    RUN
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: 050600020906
+  county: ROSS
+  latitude: 39.170556
+  longitude: -82.800278
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110043319806'
+  name: OHIO BASIC MINERALS INC - SCIOTO
+  npdes_id: OH0140007
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UT TO CARR'S RUN, UT TO CARRS RUN
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021101'
+  county: PIKE
+  latitude: 39.128355
+  longitude: -82.828026
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110043697489'
+  name: OHIO SANDS, LLC
+  npdes_id: OH0151764
+  npdes_ids_secondary:
+  - OH0140121
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: 050600020804
+  county: PIKE
+  latitude: 39.10672
+  longitude: -82.79685
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110064265236'
+  name: OLD MANS CAVE CHALETS INC
+  npdes_id: OH0115312
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UTT LITTLE BLACKJACK BRNH
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020604'
+  county: HOCKING
+  latitude: 39.4561
+  longitude: -82.50737
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110069584658'
+  name: OTWAY WASTEWATER IMPROVEMENTS
+  npdes_id: OH0144851
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.018
+  design_flow_missing: false
+  receiving_water: BLOODY RUN
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021504'
+  county: SCIOTO COUNTY
+  latitude: 38.865
+  longitude: -83.189722
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110001103083'
+  name: PARKER HANNIFIN CORP
+  npdes_id: OH0104132
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021103'
+  county: PIKE
+  latitude: 39.102721
+  longitude: -82.998865
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006283477'
+  name: PICKAWAY ELEM SCH WWTP
+  npdes_id: OH0124559
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIB TO SCIOTO, UNNAMED TRIBUARY TO THE SCIOTO RIVER
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020404'
+  county: PICKAWAY
+  latitude: 39.51917
+  longitude: -82.93398
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006698911'
+  name: PICKETT FENCES MHP
+  npdes_id: OH0121134
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: GLADE RUN, UNNAMED TRIBUTARY OF GLADE RUN
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020103'
+  county: MADISON
+  latitude: 39.94071
+  longitude: -83.3464
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110072223527'
+  name: PIKE COUNTY ODOT GARAGE
+  npdes_id: OHGZ00025
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021303'
+  county: null
+  latitude: 39.04667
+  longitude: -83.02021
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006278134'
+  name: PIKE LAKE STATE PARK WWTP
+  npdes_id: OH0037699
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.02
+  design_flow_missing: false
+  receiving_water: MORGAN'S FORK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021202'
+  county: ROSS
+  latitude: 39.15882
+  longitude: -83.22135
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110001629578'
+  name: PIKE SANITATION LANDFILL
+  npdes_id: OHP000221
+  npdes_ids_secondary:
+  - OH0128066
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021304'
+  county: PIKE
+  latitude: 39.082643
+  longitude: -82.957147
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110012522341'
+  name: PIKE WATER INC
+  npdes_id: OH0094561
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021304'
+  county: PIKE
+  latitude: 39.075126
+  longitude: -83.038788
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110030994468'
+  name: PIKETON DEPLETED URANIUM HEXAFLUORIDE (DUF6) CONV
+  npdes_id: OH0135241
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021602'
+  county: PIKE
+  latitude: 39.010113
+  longitude: -83.026022
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110017746821'
+  name: PIKETON WTP
+  npdes_id: OH0134830
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021304'
+  county: PIKE
+  latitude: 39.06758
+  longitude: -83.0203
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110007158128'
+  name: PPG INDUSTRIES OHIO INC
+  npdes_id: OH0004251
+  npdes_ids_secondary:
+  - OH0131067
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: OUTFALL 001, SCIPPO CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020405'
+  county: PICKAWAY
+  latitude: 39.55713
+  longitude: -82.94526
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006237624'
+  name: QUEEN CITY MHP
+  npdes_id: OH0125148
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021002'
+  county: ROSS
+  latitude: 39.29759
+  longitude: -82.89964
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110037514623'
+  name: RICHMOND DALE SD
+  npdes_id: OH0135224
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.03
+  design_flow_missing: false
+  receiving_water: SALT CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: 050600020906
+  county: ROSS
+  latitude: 39.199815
+  longitude: -82.811928
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110072230444'
+  name: ROSS COUNTY ODOT GARAGE
+  npdes_id: OHGZ00026
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020503'
+  county: null
+  latitude: 39.36651
+  longitude: -83.02383
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110010127317'
+  name: ROSS COUNTY WATER NORTH PLANT
+  npdes_id: OH0127949
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020502'
+  county: ROSS
+  latitude: 39.415997
+  longitude: -83.009627
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006216996'
+  name: ROSS COUNTY WATER SOUTH PLANT
+  npdes_id: OH0059927
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020502'
+  county: ROSS
+  latitude: 39.408811
+  longitude: -83.002185
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110044255025'
+  name: RUMPKE WASTE INC SCIOTO COUNTY SANITARY LANDFILL
+  npdes_id: OHP000136
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021507'
+  county: SCIOTO
+  latitude: 38.830181
+  longitude: -83.123966
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110011016220'
+  name: SCAFF STARRETT WWTP
+  npdes_id: OH0076384
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.08
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021604'
+  county: SCIOTO
+  latitude: 38.79505
+  longitude: -83.01541
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006217370'
+  name: SCIOTO COUNTY LOCAL SCHOOLS/NORTHWEST SCHOOL
+  npdes_id: OH0115223
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.031
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021507'
+  county: SCIOTO
+  latitude: 38.88218
+  longitude: -83.08707
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110072231073'
+  name: SCIOTO COUNTY ODOT GARAGE
+  npdes_id: OHGZ00021
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021603'
+  county: null
+  latitude: 38.860074
+  longitude: -82.989413
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110011017265'
+  name: SCIOTO COUNTY REGIONAL WATER DISTRICT NO. 1
+  npdes_id: OH0031674
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021603'
+  county: SCIOTO
+  latitude: 38.88058
+  longitude: -82.99192
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006276485'
+  name: SCIOTO WATER INC
+  npdes_id: OH0115126
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021603'
+  county: SCIOTO
+  latitude: 38.911646
+  longitude: -83.011385
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110046123823'
+  name: SHOWA ALUMINUM CORP OF AMERICA
+  npdes_id: OHP000143
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020204'
+  county: MADISON
+  latitude: 39.72204
+  longitude: -83.28082
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110069996804'
+  name: SOFIDEL AMERICA CORP CIRCLEVILLE
+  npdes_id: OH0142654
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SCIOTO RIVER
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020405'
+  county: PICKAWAY COUNTY
+  latitude: 39.545833
+  longitude: -82.941944
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006699812'
+  name: SOUTHERN OHIO CORRECTIONAL FACILITY
+  npdes_id: OH0039284
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.6
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021603'
+  county: SCIOTO
+  latitude: 38.85692
+  longitude: -82.98663
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110000382130'
+  name: STEPHENS PIPE AND STEEL INC
+  npdes_id: OHP000147
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020204'
+  county: MADISON
+  latitude: 39.71381
+  longitude: -83.27479
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110022520137'
+  name: STOUTSVILLE WWTP
+  npdes_id: OH0136221
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.125
+  design_flow_missing: false
+  receiving_water: SCIPPO CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020405'
+  county: FAIRFIELD
+  latitude: 39.59921
+  longitude: -82.83604
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006660700'
+  name: TAR HOLLOW STATE PARK
+  npdes_id: OH0037940
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.012
+  design_flow_missing: false
+  receiving_water: PINE RUN, UT OF PINE RUN
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: 050600020904
+  county: HOCKING
+  latitude: 39.37967
+  longitude: -82.74224
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110009822077'
+  name: UNION HEIGHTS SUBDIV WWTP
+  npdes_id: OH0059013
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.06
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020502'
+  county: ROSS
+  latitude: 39.439787
+  longitude: -83.010142
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110039716377'
+  name: VILLAGE OF KINGSTON WWTP
+  npdes_id: OH0025941
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.13
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020406'
+  county: ROSS
+  latitude: 39.4765
+  longitude: -82.9157
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110009822898'
+  name: VILLAGE OF PIKETON WASTEWATER PLANT
+  npdes_id: OH0027031
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021304'
+  county: PIKE
+  latitude: 39.0604
+  longitude: -83.0446
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: 1
+  queried_huc8: '05060002'
+- frs_registry_id: '110006106196'
+  name: WATER DISTRICT 1 LIME LAGOON DISCHARGE
+  npdes_id: OH0101940
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: 'JONES DITCH #2'
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020105'
+  county: MADISON
+  latitude: 39.956712
+  longitude: -83.506651
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110000914645'
+  name: WAVERLY WASTEWATER TREATMENT PLANT
+  npdes_id: OH0023353
+  npdes_ids_secondary:
+  - OH0107824
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.8
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021104'
+  county: PIKE
+  latitude: 39.11075
+  longitude: -82.98094
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006258254'
+  name: WESTERN JUNIOR/SENIOR HIGH SCHOOL
+  npdes_id: OH0124826
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.0155
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021204'
+  county: PIKE
+  latitude: 39.103055
+  longitude: -83.255277
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110012299878'
+  name: WESTFALL HIGH SCHOOL
+  npdes_id: OH0130770
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020301'
+  county: PICKAWAY
+  latitude: 39.65493
+  longitude: -83.1199
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110006700230'
+  name: WILLIAMSPORT WWTP
+  npdes_id: OH0022519
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.15
+  design_flow_missing: false
+  receiving_water: DEER CREEK
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020304'
+  county: PICKAWAY
+  latitude: 39.57639
+  longitude: -83.12105
+  compliance_status: null
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110004594984'
+  name: WILLOWWOOD GLOBAL LLC
+  npdes_id: OH0136549
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020204'
+  county: MADISON
+  latitude: 39.72888
+  longitude: -83.23531
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110009152950'
+  name: WINTERGREEN HILLS SUBDIV WWTP
+  npdes_id: OH0036251
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.012
+  design_flow_missing: false
+  receiving_water: HARGUS RUN, UNNAMED TRIBUTARY
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600020401'
+  county: PICKAWAY
+  latitude: 39.6195
+  longitude: -82.87046
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110000814343'
+  name: WORLD KINECT ENERGY SERVICES - WAVERLY BULK PLT
+  npdes_id: OH0120855
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060002'
+  huc8_name: Lower Scioto
+  huc12: '050600021103'
+  county: PIKE
+  latitude: 39.129264
+  longitude: -82.983546
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060002'
+- frs_registry_id: '110004586127'
+  name: BLACKHORSE ENERGY LLC -  WASHINGTO C H BULK
+  npdes_id: OH0121479
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030103'
+  county: FAYETTE
+  latitude: 39.5338
+  longitude: -83.44662
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006699536'
+  name: BLOOMINGBURG WWTP
+  npdes_id: OH0054364
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.25
+  design_flow_missing: false
+  receiving_water: EAST FORK OF PAINT CREEK, EAST FORK PAINT CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030102'
+  county: FAYETTE
+  latitude: 39.602933
+  longitude: -83.403256
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006310492'
+  name: COUNTRY HOME MOBILE COURT
+  npdes_id: OH0118109
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UT OF ROCK FORK LAKE
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030504'
+  county: HIGHLAND
+  latitude: 39.21208
+  longitude: -83.4404
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110009153281'
+  name: FLAKES FORD ESTATES
+  npdes_id: OH0101681
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.014
+  design_flow_missing: false
+  receiving_water: PAINT CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030601'
+  county: FAYETTE
+  latitude: 39.47062
+  longitude: -83.39714
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006216825'
+  name: FRANKFORT WWTP
+  npdes_id: OH0021482
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.19
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: 050600030903
+  county: ROSS
+  latitude: 39.399436
+  longitude: -83.182069
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: 1
+  queried_huc8: '05060003'
+- frs_registry_id: '110044240853'
+  name: GOOD HOPE WWTP
+  npdes_id: OH0142441
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.032
+  design_flow_missing: false
+  receiving_water: INDIAN CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030601'
+  county: FAYETTE
+  latitude: 39.448215
+  longitude: -83.366496
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006236714'
+  name: GREENFIELD PRODUCTS INC
+  npdes_id: OHP000067
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030602'
+  county: HIGHLAND
+  latitude: 39.363941
+  longitude: -83.391462
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110000735250'
+  name: GREENFIELD, VILLAGE OF
+  npdes_id: OH0021083
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.64
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030602'
+  county: ROSS
+  latitude: 39.343349
+  longitude: -83.376825
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110031109869'
+  name: HICKORY HILLS LAKE WWTP
+  npdes_id: OH0137707
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: HEADS BRANCH
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030505'
+  county: HIGHLAND
+  latitude: 39.207676
+  longitude: -83.58922
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110071092667'
+  name: HIGHCO INC.
+  npdes_id: OH0151246
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIBUTARY TO DODSON CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: 050902021003
+  county: HIGHLAND COUNTY
+  latitude: 39.205056
+  longitude: -83.693
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110072222187'
+  name: HIGHLAND COUNTY ODOT GARAGE
+  npdes_id: OHGZ00034
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030503'
+  county: null
+  latitude: 39.199759
+  longitude: -83.597568
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006310599'
+  name: HIGHLAND COUNTY WATER CO INC
+  npdes_id: OH0008923
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED DITCH ROCKY FORK CREEK, UNNAMED DITCH/ROCKY FORK CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030505'
+  county: ROSS
+  latitude: 39.227791
+  longitude: -83.379625
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110004722337'
+  name: HIGHLAND PRECISION PLATING INC
+  npdes_id: OHP000074
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030502'
+  county: HIGHLAND
+  latitude: 39.20939
+  longitude: -83.63025
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006310321'
+  name: HILLSBORO WWTP
+  npdes_id: OH0020389
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030502'
+  county: HIGHLAND
+  latitude: 39.233292
+  longitude: -83.610113
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006326813'
+  name: I-71 & ST RTE 35 WATER SYSTEM
+  npdes_id: OH0151650
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030103'
+  county: FAYETTE
+  latitude: 39.53596
+  longitude: -83.43958
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110000392833'
+  name: ITW - HOBART CORP
+  npdes_id: OHP000086
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: Individual IU Permit (Non-NPDES)
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030502'
+  county: HIGHLAND
+  latitude: 39.23124
+  longitude: -83.61062
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110019896816'
+  name: JEFFERSONVILLE WWTP NO 2
+  npdes_id: OH0136191
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.05
+  design_flow_missing: false
+  receiving_water: SUGAR CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030201'
+  county: FAYETTE
+  latitude: 39.64155
+  longitude: -83.5519
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110015641108'
+  name: LAKESIDE ESTATES WWTP
+  npdes_id: OH0133591
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030407'
+  county: HIGHLAND
+  latitude: 39.282665
+  longitude: -83.41482
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006310358'
+  name: LEESBURG WWTP
+  npdes_id: OH0050881
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.4
+  design_flow_missing: false
+  receiving_water: LEES CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030403'
+  county: HIGHLAND
+  latitude: 39.3503
+  longitude: -83.54858
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110009152692'
+  name: MARTIN MARIETTA MATERIALS BLUEROCK QUARRY
+  npdes_id: OH0010332
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030602'
+  county: HIGHLAND
+  latitude: 39.387978
+  longitude: -83.388646
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110072223376'
+  name: MELVIN STONE - MARSHALL
+  npdes_id: OH0151770
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030504'
+  county: null
+  latitude: 39.157222
+  longitude: -83.507222
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110070919599'
+  name: MENARDS INC.
+  npdes_id: OH0149802
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: SUGAR CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030201'
+  county: FAYETTE COUNTY
+  latitude: 39.628333
+  longitude: -83.531944
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006214532'
+  name: NEW HOLLAND WWTP
+  npdes_id: OH0054518
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.145
+  design_flow_missing: false
+  receiving_water: NORTH FORK OF PAINT CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: 050600030805
+  county: PICKAWAY
+  latitude: 39.54192
+  longitude: -83.26418
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110009606836'
+  name: OHIO ASPHALTIC LIMESTONE CORP
+  npdes_id: OH0151648
+  npdes_ids_secondary:
+  - OH0137626
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030502'
+  county: HIGHLAND
+  latitude: 39.24745
+  longitude: -83.6803
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110011017087'
+  name: PAINT CREEK STATE PARK WWTP
+  npdes_id: OH0041025
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.022
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030603'
+  county: ROSS
+  latitude: 39.240556
+  longitude: -83.355278
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006699073'
+  name: PETRO CELL
+  npdes_id: OH0114162
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: PAINT CREEK, PAINT CREEK VIA DITCH
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: 050600030804
+  county: FAYETTE
+  latitude: 39.527537
+  longitude: -83.406906
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110000395117'
+  name: PIXELLE SPECIALTY SOLUTIONS LLC
+  npdes_id: OH0004481
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: 001, PAINT, PAINT CREEK, STORM WATER TO HONEY CREEK. W CHILPACO
+    CATCH BASIN, STORM WATER TO HONEY CREEK.CALDWELL AND 8TH ST., STORM WATER TO HONEY
+    CREEK.NEAR 11TH ST GUARDHOUSE, STORM WATER TO HONEY CREEK.NORTH END 12 PAPER MACH
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600031003'
+  county: ROSS
+  latitude: 39.325
+  longitude: -82.974444
+  compliance_status: null
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110027372732'
+  name: PLEASANT ACRES MHP
+  npdes_id: OH0137596
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: UNNAMED TRIB ROCKY FORK CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030503'
+  county: HIGHLAND
+  latitude: 39.20691
+  longitude: -83.5855
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 1
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006278152'
+  name: PLEASANT VALLEY REGIONAL SD
+  npdes_id: OH0050491
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.9
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: 050600030904
+  county: ROSS
+  latitude: 39.355938
+  longitude: -83.050598
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110012299850'
+  name: PRAIRIE KNOLLS MHP
+  npdes_id: OH0130702
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: PAINT CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030103'
+  county: FAYETTE
+  latitude: 39.62182
+  longitude: -83.48849
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110072110177'
+  name: PROJECT GALAXY
+  npdes_id: OH0151745
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030304'
+  county: FAYETTE COUNTY
+  latitude: 39.6243
+  longitude: -83.5891
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110072227875'
+  name: PROJECT GALAXY
+  npdes_id: OHGH00907
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: General Permit Covered Facility
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030304'
+  county: null
+  latitude: 39.608255
+  longitude: -83.611003
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110071710914'
+  name: 'RATTLESNAKE SD #1 WWTP'
+  npdes_id: OH0036196
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 1.5
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030304'
+  county: FAYETTE
+  latitude: 39.61526
+  longitude: -83.60427
+  compliance_status: Compliance/Permit Schedule - Violations
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110008574925'
+  name: ROCKY FORK LAKE WWTP
+  npdes_id: OH0119075
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.3
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030503'
+  county: HIGHLAND
+  latitude: 39.180556
+  longitude: -83.547778
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110064265655'
+  name: ROLLING ACRES WWTP
+  npdes_id: OH0041165
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.01
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: 050902021003
+  county: HIGHLAND
+  latitude: 39.2025
+  longitude: -83.6127
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006344269'
+  name: SABINA WWTP
+  npdes_id: OH0022128
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.38
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030301'
+  county: CLINTON
+  latitude: 39.49456
+  longitude: -83.63308
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110008586048'
+  name: SOUTH SALEM WWTP
+  npdes_id: OH0127779
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.031
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030701'
+  county: ROSS
+  latitude: 39.34362
+  longitude: -83.30316
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110006297952'
+  name: SOUTH SOLON WWTP
+  npdes_id: OH0021458
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.098
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030304'
+  county: MADISON
+  latitude: 39.7377
+  longitude: -83.612685
+  compliance_status: Failure to Report DMR - Not Received
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110015645195'
+  name: TA JEFFERSONVILLE
+  npdes_id: OH0130818
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030304'
+  county: FAYETTE
+  latitude: 39.61552
+  longitude: -83.60433
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110008586324'
+  name: THE MELVIN STONE COMPANY
+  npdes_id: OH0120774
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: 050600030903
+  county: FAYETTE
+  latitude: 39.46331
+  longitude: -83.23674
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110070919390'
+  name: TOW PATH MATERIALS INC
+  npdes_id: OH0148954
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: PAINT CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: 050600030904
+  county: ROSS COUNTY
+  latitude: 39.354444
+  longitude: -83.093056
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110043805585'
+  name: VALERO RENEWABLE FUELS CO LLC - BLOOMINGBURG
+  npdes_id: OH0136417
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: null
+  design_flow_missing: true
+  receiving_water: EAST FORK PAINT CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030102'
+  county: FAYETTE
+  latitude: 39.597501
+  longitude: -83.390444
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110071066676'
+  name: VILLAGE OF BAINBRIDGE WWTP
+  npdes_id: OH0149101
+  npdes_ids_secondary: []
+  ownership: NON-POTW
+  facility_type: NON-POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 0.149
+  design_flow_missing: false
+  receiving_water: null
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030704'
+  county: ROSS COUNTY
+  latitude: 39.235476
+  longitude: -83.25542
+  compliance_status: Effluent - Monthly Average Limit
+  informal_enf_count: 2
+  formal_enf_count: null
+  queried_huc8: '05060003'
+- frs_registry_id: '110000914379'
+  name: WASHINGTON COURT HOUSE WWTP
+  npdes_id: OH0028002
+  npdes_ids_secondary: []
+  ownership: POTW
+  facility_type: POTW
+  permit_type: NPDES Individual Permit
+  design_flow_mgd: 6.0
+  design_flow_missing: false
+  receiving_water: PAINT CREEK
+  huc8: '05060003'
+  huc8_name: Paint
+  huc12: '050600030103'
+  county: FAYETTE
+  latitude: 39.53529
+  longitude: -83.42534
+  compliance_status: null
+  informal_enf_count: 0
+  formal_enf_count: null
+  queried_huc8: '05060003'

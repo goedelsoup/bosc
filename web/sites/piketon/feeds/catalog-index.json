@@ -1,6 +1,6 @@
 {
   "site": "piketon",
-  "catalog_version": "734e67829a5887f56ab484cfbb12257ddb4c18e6423d30cc89773f44248619e9",
+  "catalog_version": "65bdd0bbc1502c43d718f2ab097b85aef8e27bedb5263685f5501a1896a710a3",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -657,6 +657,14 @@
       "site": "piketon",
       "local_id": "datacenter-industry",
       "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:piketon:echo-scioto-wwtp",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "echo-scioto-wwtp",
+      "title": "Scioto-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {

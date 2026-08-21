@@ -1,6 +1,6 @@
 {
   "site": "new-albany",
-  "catalog_version": "fffc6c95c58f75587e9750a8a19247f730efc7064774d634cde3903ace1d662c",
+  "catalog_version": "6d4a6775845c3c2ba0cc14834fddb1b1b2b22210f8d44b06ea86e82a6373caae",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -657,6 +657,14 @@
       "site": "new-albany",
       "local_id": "datacenter-industry",
       "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:echo-scioto-wwtp",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "echo-scioto-wwtp",
+      "title": "Scioto-basin NPDES discharger inventory (EPA ECHO)",
       "feed": "catalog"
     },
     {
