@@ -1,0 +1,29 @@
+# What in this repository is not authored here.
+#
+# Checks that read prose (`broken-prose-link`) skip or re-address these regions instead of
+# reporting findings nobody here can act on. This replaces baseline entries for the same files:
+# a baseline records "we accept this violation", which is the wrong claim when the truth is
+# "this file is not ours to edit" — and a baselined entry that is later repaired FAILS the
+# gate, so baselining a frozen import makes the build depend on nobody ever re-syncing it.
+#
+# `.yidam/.vendor/` is built in and is deliberately not declared here.
+# Regenerate the JSON Schema for this file with `yidam schema` (.yidam/schemas/).
+
+imported:
+  - path: docs/reference/periplus
+    # Its own README: "Analysis narratives copied, unmodified, from the Periplus (`../gis`)
+    # repo at the BOSC fork point." The links inside point at that repo's layout, not this
+    # one's, and editing them to satisfy a linter would falsify the record the directory
+    # exists to keep — 15 of this repo's 26 baselined broken-prose-link findings sit here.
+    from: the Periplus repository, at the BOSC fork point (frozen, unmodified)
+
+generated:
+  - path: .yidam/corpus
+    # The projected corpus mirror. Every node here is written by the projection from the
+    # committed corpus; a malformed link is a bug in the projection, not in a file anyone
+    # edited. Reported to the generator rather than to whoever last touched the tree.
+    by: watermark corpus-mirror (watermark.site.corpus_mirror)
+  - path: .yidam/exports
+    by: watermark corpus-mirror --exports (watermark.site.graph_exports)
+  - path: .yidam/schemas
+    by: yidam schema

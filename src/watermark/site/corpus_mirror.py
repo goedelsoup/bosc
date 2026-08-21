@@ -166,6 +166,19 @@ def _claim_token(tag: str | None) -> str | None:
 
     Readers normalize with ``.strip("[]")`` (:func:`watermark.site.corpus_nodes._evidence`),
     so the bracketing changes no downstream feed value. Idempotent.
+
+    **Do not revert this to the bare word.** Upstream has since added a structural route —
+    a class may declare, in its ``.ont.yml``, which properties carry an evidence tag
+    (``yidam/cli/src/claims.rs``, `goedelsoup/yidam` `6aaf18e`, filed from here as
+    goedelsoup/yidam#127) — so ``yidam open-questions`` *would* now find a bare ``open``.
+    Its MCP contract would not: the frozen ``open_questions`` predicate is **two arms**, and
+    the note beside it forbids exactly this extension by name ("a ``claim_tag`` filter, say,
+    is a different tool"). BOSC's own MCP server implements that frozen predicate
+    (:mod:`watermark.agent.yidam_tools`) and its conformance test asserts the two-arm set.
+
+    So the bracketed token is the only form that satisfies **both** surfaces. Reverting would
+    fix the CLI and silently empty the MCP tool. The upstream inconsistency is reported;
+    until it settles, this stays.
     """
     raw = (tag or "").strip()
     if not raw:

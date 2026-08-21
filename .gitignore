@@ -91,6 +91,13 @@ runs/
 # deliberately (`yidam lint --bless`) and review the diff, exactly like an extraction.
 !/.yidam/lint-baseline.yml
 
+# ...and the authorship manifest, for the same reason: it is a REVIEWED statement about which
+# files this repository did not write (a frozen import, the generated mirror), and the checks
+# that read prose consult it. CI must see the same declaration a developer does, or it reports
+# findings against material nobody here can act on. `yidam schema` writes its JSON Schema to
+# the (ignored) .yidam/schemas/.
+!/.yidam/authorship.yml
+
 # RSEI v2.3.12 offline test fixture (a small committed Allen County slice zip). The
 # user's global gitignore excludes *.zip, so re-include just this fixture (#1148).
 !tests/fixtures/rsei/*.zip

@@ -15,8 +15,6 @@
 # a message does not make the baseline stale.
 violations:
   broken-prose-link:
-  - node: .yidam/corpus/question/lead-gh-155.yml:5
-    detail: '`../blob/main/data/extracted/legal/prr-mandamus/bosc-site-permit-sequence.yaml` does not resolve from this file''s directory'
   - node: docs/DOSSIER.md:231
     detail: '`entities.md` does not resolve from this file''s directory'
   - node: docs/DOSSIER.md:246
@@ -35,35 +33,5 @@ violations:
     detail: '`../data/people/` does not resolve from this file''s directory'
   - node: docs/poi-subsystem.md:275
     detail: '`../data/people/` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:1128
-    detail: '`source-docs/` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:1186
-    detail: '`source-docs/` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:122
-    detail: '`source-docs/bistrozzi-permits/wsgr-michael-j-montfort-bio.pdf` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:1248
-    detail: '`../siting/evaluations/demin-plant.yaml` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:195
-    detail: '`source-docs/bistrozzi-permits/elementix-michael-montfort-dfw.pdf` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:275
-    detail: '`source-docs/bistrozzi-plans/LMA1A-95-SPS-2025-10-28.odg` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:28
-    detail: '`source-docs/dazzler-permits/4071710.pdf` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:347
-    detail: '`source-docs/recorder/bistrozzi-llc-instruments-2026-04-15.txt` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:506
-    detail: '`source-docs/recorder/port-authority/` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:574
-    detail: '`../sources.yaml` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:621
-    detail: '`source-docs/bistrozzi-permits/` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:778
-    detail: '`../corridor-centerline.geojson` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:822
-    detail: '`source-docs/bistrozzi-permits/` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:90
-    detail: '`source-docs/dazzler-permits/4081890.pdf` does not resolve from this file''s directory'
-  - node: docs/reference/periplus/bosc-supporting-docs.md:906
-    detail: '`../siting/evaluations/demin-plant.yaml` does not resolve from this file''s directory'
   - node: docs/toxics-and-the-corridor.md:173
     detail: '`gis-map.md` does not resolve from this file''s directory'
