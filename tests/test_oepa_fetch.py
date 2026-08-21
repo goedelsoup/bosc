@@ -111,3 +111,46 @@ def test_reviewed_note_does_not_mask_a_fetch_error(tmp_path: Path) -> None:
     update_filename_map([failed], path)
 
     assert _documents(path)[0]["note"] == "fetch failed: ConnectError: nope"
+
+
+def test_hand_authored_entries_survive_a_fetch(tmp_path: Path) -> None:
+    """A curated entry has no ``source_url`` and must be preserved verbatim.
+
+    The urbana and west-union maps predate this fetcher and key their documents by
+    ``edoc_id``. Reading such an entry as a fetch record raised ``KeyError: 'source_url'``,
+    which blocked ``watermark oepa fetch`` outright on any site holding a curated map.
+    """
+    map_path = tmp_path / "filename-map.yaml"
+    curated = {
+        "edoc_id": "2784672",
+        "filename": "2784672.pdf",
+        "canonical": "oepa-1pd00011-urbana-wpcf-inspection-2024-03.pdf",
+        "content_verified": "text-layer",
+    }
+    map_path.write_text(
+        yaml.safe_dump({"meta": {"subject": "curated"}, "documents": [curated]}),
+        encoding="utf-8",
+    )
+
+    update_filename_map([_record("aa")], map_path)
+
+    documents = _documents(map_path)
+    assert curated in documents, "the hand-authored entry was dropped or rewritten"
+    # The fetched record is appended after it, not merged into it.
+    assert documents[0] == curated
+    assert documents[1]["source_url"] == _URL
+    # A hand-authored ``meta`` still survives.
+    assert yaml.safe_load(map_path.read_text())["meta"]["subject"] == "curated"
+
+
+def test_curated_entries_are_not_duplicated_across_repeat_fetches(tmp_path: Path) -> None:
+    map_path = tmp_path / "filename-map.yaml"
+    curated = {"edoc_id": "1", "filename": "1.pdf"}
+    map_path.write_text(yaml.safe_dump({"documents": [curated]}), encoding="utf-8")
+
+    update_filename_map([_record("aa")], map_path)
+    update_filename_map([_record("aa")], map_path)
+
+    documents = _documents(map_path)
+    assert [d for d in documents if d.get("edoc_id") == "1"] == [curated]
+    assert len([d for d in documents if d.get("source_url") == _URL]) == 1
