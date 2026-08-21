@@ -23,15 +23,5 @@ violations:
     detail: '`../economics-baseline.md` does not resolve from this file''s directory'
   - node: docs/bigger-picture.md:114
     detail: '`../economics-baseline.md` does not resolve from this file''s directory'
-  - node: docs/deckgl-spike.md:48
-    detail: '`../spikes/deckgl-corridor/CorridorMap.tsx` does not resolve from this file''s directory'
-  - node: docs/deckgl-spike.md:96
-    detail: '`../spikes/deckgl-corridor/README.md` does not resolve from this file''s directory'
-  - node: docs/onboarding.md:37
-    detail: '`../src/watermark/sites.py` does not resolve from this file''s directory'
-  - node: docs/poi-subsystem.md:20
-    detail: '`../data/people/` does not resolve from this file''s directory'
-  - node: docs/poi-subsystem.md:275
-    detail: '`../data/people/` does not resolve from this file''s directory'
   - node: docs/toxics-and-the-corridor.md:173
     detail: '`gis-map.md` does not resolve from this file''s directory'

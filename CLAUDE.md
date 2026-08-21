@@ -123,6 +123,14 @@ questions where the binary saw 2, and nothing could detect the gap.
   `src/watermark/agent/mcp_contract.json` and re-vendored with `mise run yidam-contract-sync`;
   CI proves the copy matches the pin. Tool names, descriptions and schemas come **from that
   file** — never hand-written. See `src/watermark/agent/CLAUDE.md`.
+- ⚠️ **The five baselined `broken-prose-link` findings are LINK_MAP pages — do not "fix" them.**
+  `entities.md`, `candidates.md`, `gis-map.md` and `economics-baseline.md` (×2) are legacy
+  generated pages that no longer exist as files; `@watermark/core`'s `rehype-doc-links.ts`
+  rewrites them to their new-IA routes at build time, matching by basename so a wrong-depth
+  `../economics-baseline.md` resolves too. They are dead only as raw files, which is the
+  documented cost of keeping the `docs/**` source canonical. Repointing them at real files
+  would break the rewrite and lose the route. Everything else that check found was genuine rot
+  and is fixed.
 - **`broken-prose-link` walks `docs/**`, not just the corpus.** Its baselined findings include
   15 in `docs/reference/periplus/` — a **frozen, unmodified import**, which must not be edited
   to satisfy a linter.

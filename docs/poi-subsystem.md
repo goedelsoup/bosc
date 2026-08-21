@@ -17,7 +17,7 @@ engineering plan — publish it only via the curated narrative set, not by defau
 ## Executive summary / the abstraction
 
 A **POI is the third curated entity type — *place* — peer to *person*
-([`data/entities/people/`](../data/people/)) and *org* ([`data/entities/`](../data/entities/)).**
+([`data/entities/people/`](../data/entities/people/)) and *org* ([`data/entities/`](../data/entities/)).**
 Same artifact shape: a markdown file with frontmatter, cited to the corpus,
 **depth-marked**, linked into the entity graph. The place-specific *enrichment* is
 **geometry** (geocoding), and the deepest depth rung is **imagery tracking**.
@@ -272,7 +272,7 @@ flag + tracking block), and the curation is hand-editing `data/entities/poi/` (l
 
 ## Sources / prior art in-repo
 
-- People store + depth idiom: [`data/entities/people/`](../data/people/), `watermark.people`.
+- People store + depth idiom: [`data/entities/people/`](../data/entities/people/), `watermark.people`.
 - Candidate→profile machinery: `watermark.candidates`, `watermark.civic` (discover/registry).
 - Geocoding anchors: `watermark.hydrology.connectors.allen_gis` (parcels),
   `lima_gis` (spatial floodzone queries), ECHO/RSEI (facility coords).

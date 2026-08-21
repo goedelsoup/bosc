@@ -34,7 +34,7 @@ long before it is `selectable`.
 
 ### 1. Register the `SiteProfile` (code edit)
 
-A site's identity is a `SiteProfile` in [`src/watermark/sites.py`](../src/watermark/sites.py)
+A site's identity is a `SiteProfile` in [`src/watermark/sites/`](../src/watermark/sites/)
 `SITES` — the Python peer of the frontend registry. **Start from the scaffold, not a Lima
 copy** — Lima's values are Lima-specific and the ones you forget will silently produce wrong
 output:
