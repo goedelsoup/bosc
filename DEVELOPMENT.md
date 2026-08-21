@@ -176,7 +176,7 @@ See [docs/onboarding.md](docs/onboarding.md) for the full runbook.
 
 ## Frontend
 
-The frontend is a self-contained Node project. It builds offline against
-`web/sample-bundle/` (no Python, no LFS, no API keys). See
+The frontend is a self-contained Node project. It builds offline against the committed
+per-site bundles in `web/sites/` (no Python, no LFS, no API keys). See
 [web/README.md](web/README.md) for the Pages Functions (submit/ask/doc)
 local testing approach, the wrangler dev stack, and the Cloudflare deployment.
