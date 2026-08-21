@@ -224,8 +224,12 @@ def yidam_path(root: Path | None = None) -> Path | None:
 
     Resolution order, and the first entry is the point:
 
-    1. ``.yidam/toolchain/bin/yidam`` — **this repository's own build**, installed by
+    1. ``.yidam/bin/yidam`` — **this repository's own build**, installed by
        ``mise run yidam-build`` at the pinned commit with the feature set the gates need.
+       That path is upstream's convention, not a local invention: `mise.yidam.toml` installs
+       there, and the VS Code extension resolves it as "this repository's own build" before
+       falling back to the shared bin. A private path here would be invisible to anything
+       that follows the convention.
     2. ``PATH``.
     3. ``~/.cargo/bin/yidam``, which is not always on a non-login shell's PATH.
 
@@ -236,7 +240,7 @@ def yidam_path(root: Path | None = None) -> Path | None:
     ``--format json``, and once with one lacking ``export-graph``, which silently turned the
     graph-export conformance test into a skip. Preferring a path only this repo writes ends that.
     """
-    local = (root or Path.cwd()) / ".yidam" / "toolchain" / "bin" / "yidam"
+    local = (root or Path.cwd()) / ".yidam" / "bin" / "yidam"
     if local.is_file():
         return local
     found = shutil.which("yidam")
@@ -253,31 +257,55 @@ def available() -> bool:
 
 @lru_cache(maxsize=1)
 def usable() -> bool:
-    """Whether the installed binary can be *asked* for a machine-readable verdict.
+    """Whether the installed binary can be trusted to answer questions about *this* corpus.
 
-    Presence is not usability. Every `cargo install` of yidam on a machine writes the same
-    ``~/.cargo/bin/yidam`` whatever ref it was built from, so an unrelated checkout can leave
-    a binary here that predates ``--format json`` — it happened twice while this module was
-    being written. Gate skippable conformance tests on this rather than on :func:`available`,
-    so a stale binary skips them exactly as an absent one does instead of turning the suite
-    red for a reason that has nothing to do with the change under test.
+    Two conditions, and the second is the one accepting ``--format`` cannot give you:
 
-    Probes ``--help`` rather than running a report: it needs no corpus, no cwd, and cannot be
-    confused by a repository that legitimately has findings.
+    1. It answers ``--format json`` with a readable envelope at the contract version this
+       module understands.
+    2. Its build commit **is the pinned one**.
+
+    Presence is not usability, and neither is accepting the flag. Every ``cargo install`` of
+    yidam on a machine writes the same ``~/.cargo/bin/yidam`` whatever ref it was built from,
+    so an unrelated checkout can leave one here that predates ``--format json`` — that happened
+    repeatedly while this module was written. Checking only the flag then accepts the *next*
+    case: a binary that "emits a perfect envelope and a wrong payload" (upstream's phrase, from
+    hardening its editor against exactly this in ``5e7a1fa``) because it predates some corpus
+    feature. The failure lands downstream as a confusing assertion about someone else's work.
+
+    Comparing provenance is the cheap version of the golden comparison they built: a binary at
+    the pin cannot predate anything the pin contains. A mismatch means "rebuild"
+    (``mise run yidam-build``), and treating it as unusable makes skippable conformance tests
+    skip rather than fail on a binary that was never the subject of the change. CI installs
+    from the pin, so it is exact there.
     """
     binary = yidam_path()
     if binary is None:
         return False
     try:
         proc = subprocess.run(
-            [str(binary), "graph-check", "--help"],
+            [str(binary), "graph-check", "--format", "json"],
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=60,
         )
     except (OSError, subprocess.SubprocessError):
         return False
-    return proc.returncode == 0 and "--format" in proc.stdout
+    # The exit code is not consulted: `graph-check` exits nonzero when it HAS findings, which
+    # is a verdict about the corpus and says nothing about the binary.
+    try:
+        envelope = json.loads(proc.stdout)
+    except (json.JSONDecodeError, ValueError):
+        return False
+    if str(envelope.get("format_version", "")) != CONTRACT_VERSION:
+        return False
+    built = str(envelope.get("yidam", {}).get("commit", ""))
+    pinned = pinned_commit()
+    if not pinned or not built or built in {"unknown", "?"}:
+        # Nothing to compare against — the envelope is all the assurance available.
+        return True
+    # The envelope carries a short commit; the pin is full-length.
+    return pinned.startswith(built)
 
 
 def pinned_commit(root: Path | None = None) -> str | None:

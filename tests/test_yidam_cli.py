@@ -83,6 +83,51 @@ def test_build_block_reports_the_feature_set(monkeypatch: pytest.MonkeyPatch) ->
     assert report.build.is_light  # the `reports` build CI pins — no index/serve
 
 
+# --- usability is provenance, not flag support ----------------------------------------------
+def _usable_with(monkeypatch: pytest.MonkeyPatch, stdout: str) -> bool:
+    class _Proc:
+        returncode = 0
+
+    _Proc.stdout = stdout  # type: ignore[attr-defined]
+    monkeypatch.setattr(yidam_cli, "yidam_path", lambda root=None: Path("/fake/yidam"))
+    monkeypatch.setattr(yidam_cli.subprocess, "run", lambda *a, **k: _Proc())
+    monkeypatch.setattr(yidam_cli, "pinned_commit", lambda root=None: "f05b62042e2228f0091")
+    yidam_cli.usable.cache_clear()
+    try:
+        return yidam_cli.usable()
+    finally:
+        yidam_cli.usable.cache_clear()
+
+
+def test_a_binary_at_the_pin_is_usable(monkeypatch: pytest.MonkeyPatch) -> None:
+    assert _usable_with(
+        monkeypatch, json.dumps(_envelope(passed=True)).replace('"2930415"', '"f05b620"')
+    )
+
+
+def test_a_binary_off_the_pin_is_not_usable(monkeypatch: pytest.MonkeyPatch) -> None:
+    """The case a flag probe cannot see.
+
+    A binary from another commit answers `--format json` perfectly and then answers questions
+    about the *corpus* with whatever it knew at its own commit — upstream's "perfect envelope
+    and a wrong payload". It surfaces downstream as a confusing assertion about someone else's
+    build, so it counts as unusable and skippable tests skip.
+    """
+    off_pin = _envelope(passed=True)
+    off_pin["yidam"]["commit"] = "7be9ce8"
+    assert not _usable_with(monkeypatch, json.dumps(off_pin))
+
+
+def test_an_unreadable_answer_is_not_usable(monkeypatch: pytest.MonkeyPatch) -> None:
+    assert not _usable_with(monkeypatch, "error: unexpected argument '--format' found")
+
+
+def test_an_unknown_contract_version_is_not_usable(monkeypatch: pytest.MonkeyPatch) -> None:
+    future = _envelope(passed=True)
+    future["format_version"] = "2"
+    assert not _usable_with(monkeypatch, json.dumps(future))
+
+
 # --- the baseline ratchet ------------------------------------------------------------------
 def test_in_baseline_is_per_violation_not_per_check(monkeypatch: pytest.MonkeyPatch) -> None:
     """Inherited debt and a regression can sit under the *same* check.

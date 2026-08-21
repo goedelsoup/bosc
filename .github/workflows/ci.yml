@@ -248,7 +248,7 @@ jobs:
         id: yidam-cache
         uses: actions/cache@v4
         with:
-          path: .yidam/toolchain/bin/yidam
+          path: .yidam/bin/yidam
           # The feature set is part of the identity: a cached `reports`-only binary
           # cannot answer `export --format rdf`, and would fail the conformance step
           # in a way that looks like a renderer bug.
@@ -268,7 +268,7 @@ jobs:
         if: steps.yidam-cache.outputs.cache-hit != 'true'
         run: |
           cargo install --path /tmp/yidam/yidam/cli --locked --features export-graph \
-            --root "$PWD/.yidam/toolchain"
+            --root "$PWD/.yidam"
 
       # Project the corpus, then let the binary report on it. `--no-check` here because the
       # reports are run explicitly below, where their output is annotated.
@@ -296,13 +296,13 @@ jobs:
 
       # The hard gate: every node carries a class and a label, and every edge resolves.
       - name: graph-check
-        run: .yidam/toolchain/bin/yidam graph-check
+        run: .yidam/bin/yidam graph-check
 
       # Gates against .yidam/lint-baseline.yml, not against zero. Inherited debt is
       # enumerable and only a REGRESSION fails — which is what keeps this gate switched on.
       # Re-bless deliberately with `yidam lint --bless` and review the diff.
       - name: lint (baseline ratchet)
-        run: .yidam/toolchain/bin/yidam lint
+        run: .yidam/bin/yidam lint
 
       # --- graph-export conformance (#2053) -----------------------------------------------
       #
@@ -314,10 +314,10 @@ jobs:
         run: |
           set -eu
           for fmt in graphml rdf; do
-            if ! .yidam/toolchain/bin/yidam export --list | grep -qE "^${fmt}[[:space:]]+✓"; then
+            if ! .yidam/bin/yidam export --list | grep -qE "^${fmt}[[:space:]]+✓"; then
               echo "::error::the installed yidam cannot export ${fmt} — the conformance tests"
               echo "::error::would SKIP rather than run. Build it with --features export-graph."
-              .yidam/toolchain/bin/yidam export --list
+              .yidam/bin/yidam export --list
               exit 1
             fi
           done
