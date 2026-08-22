@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "2.2.0",
-  "generated_at": "2026-08-22T17:06:39+00:00",
+  "generated_at": "2026-08-22T22:40:19+00:00",
   "feed_count": 56,
-  "row_total": 2706,
+  "row_total": 4055,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -429,7 +429,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/passages.schema.json",
       "kind": "collection",
-      "count": 1145
+      "count": 2494
     },
     {
       "name": "catalog-index",

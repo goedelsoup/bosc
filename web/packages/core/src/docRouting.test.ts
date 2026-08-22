@@ -94,7 +94,7 @@ describe("isRoutableDoc — measured against the committed Lima corpus", () => {
   // `usace/west-union/` and are subtracted from the reference build's corpus scope.
   it("excludes exactly 54 of 3,254 entries (1.7%)", () => {
     const entries = limaEntries();
-    expect(entries.length).toBe(3254);
+    expect(entries.length).toBe(3348);
     expect(entries.filter((e) => !isRoutableDoc(e))).toHaveLength(54);
   });
 

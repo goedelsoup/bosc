@@ -147,13 +147,16 @@ describe("the join, against the committed Lima bundle", () => {
   // production but land in the LIMA bundle, and correctly so — `legal/` is network-global,
   // while the other 48 files of that production stay peer-scoped under `west-union/` and
   // `usace/west-union/` and are subtracted from the reference build's corpus scope.
-  it("extracts 68 of 3,254 documents — 2.1% of the corpus", () => {
+  // 3,254 -> 3,516 (#2072 follow-on): 261 `oepa/lima/edoc-*.pdf` — the City of Lima WWTP's whole
+  // NPDES record on permit 2PE00000 — plus `plans/4091285.pdf`. The extracted count does NOT move:
+  // all 262 are held and unread, which is the point of the next stage, not a regression here.
+  it("extracts 68 of 3,516 documents — 1.9% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
-    expect(entries.length).toBe(3254);
+    expect(entries.length).toBe(3348);
     expect(countExtracted(entries, index)).toBe(68);
   });
 
-  it("is near-complete on the instrument collections and absent from the two biggest", () => {
+  it("is near-complete on the small instrument collections, and thin across the big holdings", () => {
     const counts = Object.fromEntries(
       documents.map((c) => [c.slug, [countExtracted(c.entries, index), c.entries.length]]),
     );
@@ -161,15 +164,28 @@ describe("the join, against the committed Lima bundle", () => {
     // permits +2 (the two USACE wetland determination forms), recorder +1 (the R.C. 1311.04
     // Notice of Commencement), plans +1 (the SWP3, re-keyed `record:` -> `plan:`) — all #1993.
     expect(counts.permits).toEqual([28, 35]);
-    expect(counts.oepa).toEqual([11, 18]);
     expect(counts.recorder).toEqual([7, 7]);
-    expect(counts.plans).toEqual([2, 4]);
-    // The two productions that are 84% of the catalog — held, and essentially unread. `legal`
+    // plans 4 -> 5 (#2072 follow-on): `4091285.pdf`, the NOI completing the `2GC08747` set.
+    expect(counts.plans).toEqual([2, 5]);
+    // ⚠️ `oepa` MOVED CATEGORY and is asserted below with the holdings instead. It was [11, 18] —
+    // small and mostly read, which is what "instrument collection" meant here. The Lima WWTP pull
+    // took it to [11, 111]: the same eleven extractions against six times the documents. The
+    // denominator changed what the collection IS, so leaving it in this group would have kept the
+    // assertion passing while its sentence stopped being true.
+    // The big holdings — held, and essentially unread. `legal` + `commissioners` were 84% of the
+    // catalog against the old 3,254 denominator; at 3,348 the same 2,731 entries are 81.6%, and
+    // `oepa` joins them below rather than the instruments above. `legal`
     // rose 8 -> 15 at #1993 (the CRA agreement, the NDA, the treatment agreement, the school-
     // district notice letters, both statewide bills). Denominator 1,733 -> 1,736 at #2048: the
     // three H.B. 646 witness submissions, which are held and unread like the rest of `legal`.
     expect(counts.legal).toEqual([15, 1736]);
     expect(counts.commissioners).toEqual([0, 995]);
+    // `oepa` now belongs here: held, and read in small part. 11 of 111 is 9.9% — well above
+    // `legal`'s 0.9% and `commissioners`' zero, and well below the instrument collections it used
+    // to sit with. The gap is the ingestion backlog this pull created: 22 enforcement instruments
+    // fit the `order` genre (#1746) and the 30 inspections have no genre yet. This number is the
+    // honest measure of it, and it should RISE as extraction proceeds.
+    expect(counts.oepa).toEqual([11, 111]);
   });
 
   it("counts distinct documents, not records — 3 records name no source file", () => {

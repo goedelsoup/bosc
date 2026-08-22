@@ -102,7 +102,7 @@ describe("summarizeCollections — against the committed Lima corpus", () => {
   // `usace/west-union/` and are subtracted from the reference build's corpus scope.
   it("summarizes all 21 collections", () => {
     expect(summaries).toHaveLength(21);
-    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3254);
+    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3348);
   });
 
   it("finds the one production that is half the catalog", () => {
