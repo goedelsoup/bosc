@@ -522,10 +522,10 @@ results:
   entity: ROBERT BOSCH BATTERY SYSTEMS LLC
   doc_type: Inspection or Compliance Review
   doc_date: 6/14/2019
-  program: RCRA C
-  county: HAZARDOUS WASTE
-  permit_id: WARREN
-  description: OHR000177212
+  program: RCRA C - HAZARDOUS WASTE
+  county: WARREN
+  permit_id: OHR000177212
+  description: null
   url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1073231
 - docid: '1070204'
   entity: BOSCH REXROTH CORP
@@ -540,10 +540,10 @@ results:
   entity: ROBERT BOSCH BATTERY SYSTEMS LLC
   doc_type: Inspection or Compliance Review
   doc_date: 5/28/2019
-  program: RCRA C
-  county: HAZARDOUS WASTE
-  permit_id: WARREN
-  description: OHR000177212
+  program: RCRA C - HAZARDOUS WASTE
+  county: WARREN
+  permit_id: OHR000177212
+  description: null
   url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1062355
 - docid: '1084687'
   entity: BOSCH REXROTH CORP
@@ -1026,10 +1026,10 @@ results:
   entity: ROBERT BOSCH BATTERY SYSTEMS LLC
   doc_type: Inspection or Compliance Review
   doc_date: 11/23/2015
-  program: RCRA C
-  county: HAZARDOUS WASTE
-  permit_id: WARREN
-  description: OHR000177212
+  program: RCRA C - HAZARDOUS WASTE
+  county: WARREN
+  permit_id: OHR000177212
+  description: null
   url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=361156
 - docid: '225869'
   entity: ROBERT BOSCH BATTERY SYSTEMS LLC
@@ -1062,8 +1062,8 @@ results:
   entity: HUGO BOSCA CO INC
   doc_type: NOV
   doc_date: 5/16/1991
-  program: RCRA C
-  county: HAZARDOUS WASTE
-  permit_id: CLARK
-  description: OHD004285920
+  program: RCRA C - HAZARDOUS WASTE
+  county: CLARK
+  permit_id: OHD004285920
+  description: null
   url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3833828
