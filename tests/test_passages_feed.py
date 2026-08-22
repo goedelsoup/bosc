@@ -26,6 +26,7 @@ from watermark.site.feeds import PassageItem
 from watermark.site.passages import (
     PassageExtraction,
     _published_pdf_entries,
+    _repair_surrogate_pairs,
     artifact_path,
     build_passages,
     has_broken_text_layer,
@@ -76,7 +77,45 @@ def _broken_tounicode(pages: list[str], shift: int) -> bytes:
     ).encode()
 
 
-def _write_text_pdf(path: Path, pages: list[str], *, unicode_shift: int | None = None) -> None:
+def _surrogate_tounicode(pages: list[str], chars: str) -> bytes:
+    """A ``ToUnicode`` CMap that splits a surrogate pair across TWO ``bfchar`` entries.
+
+    This is the real defect in ``oepa/lima/edoc-4175534.pdf`` p.15, and it is NOT the obvious
+    one. A four-byte destination (``<D835DC45>``) is a *legitimate* way to write U+1D445 and
+    pypdf combines it correctly — a fixture built that way reproduces nothing. The damaged font
+    instead maps two different character codes to the two HALVES::
+
+        <80> -> <D835>      (high surrogate, alone)
+        <81> -> <DC45>      (low surrogate, alone)
+
+    pypdf decodes each entry independently, so the halves only look like a pair once
+    concatenated. Each is a lone surrogate: representable in a Python ``str``, not encodable to
+    UTF-8, and therefore invisible until serialization — which is how one page of one document
+    killed the entire 261-document ``watermark passages`` write.
+
+    Generated rather than committed, for the same reason as :func:`_broken_tounicode`: it
+    reproduces the real bytes exactly instead of a hand-typed approximation of them.
+    """
+    high, low = chars[0], chars[1]
+    codes = sorted({ord(c) for text in pages for c in text})
+    halves = {ord(high): "D835", ord(low): "DC45"}
+    entries = "".join(f"<{c:02X}> <{halves.get(c, f'{c:04X}')}>\n" for c in codes)
+    return (
+        "/CIDInit /ProcSet findresource begin\n12 dict begin\nbegincmap\n"
+        "/CMapName /Surrogate def\n/CMapType 2 def\n"
+        "1 begincodespacerange\n<00> <FF>\nendcodespacerange\n"
+        f"{len(codes)} beginbfchar\n{entries}endbfchar\n"
+        "endcmap\nCMapName currentdict /CMap defineresource pop\nend\nend"
+    ).encode()
+
+
+def _write_text_pdf(
+    path: Path,
+    pages: list[str],
+    *,
+    unicode_shift: int | None = None,
+    surrogate_chars: str | None = None,
+) -> None:
     """Hand-assemble a minimal multi-page PDF whose pages carry a real text layer.
 
     ``unicode_shift`` attaches a deliberately broken ``ToUnicode`` CMap (see
@@ -89,10 +128,14 @@ def _write_text_pdf(path: Path, pages: list[str], *, unicode_shift: int | None =
         return len(objs)
 
     page_ids: list[int] = []
-    if unicode_shift is None:
+    if unicode_shift is None and surrogate_chars is None:
         font_id = obj(b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>")
     else:
-        cmap = _broken_tounicode(pages, unicode_shift)
+        cmap = (
+            _surrogate_tounicode(pages, surrogate_chars)
+            if surrogate_chars is not None
+            else _broken_tounicode(pages, unicode_shift or 0)
+        )
         cmap_id = obj(b"<< /Length %d >>\nstream\n%b\nendstream" % (len(cmap), cmap))
         font_id = obj(
             b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /ToUnicode %d 0 R >>" % cmap_id
@@ -195,6 +238,57 @@ def test_unreadable_pdf_degrades(tmp_path: Path) -> None:
     )
     passages = build_passages(feed, docs)  # must not raise
     assert {p.document_id for p in passages} == {"oepa/real.pdf"}
+
+
+def test_surrogate_pairs_are_recombined_not_dropped() -> None:
+    """A UTF-16 pair denotes one real character and must survive as that character.
+
+    Some ``ToUnicode`` CMaps encode astral characters as surrogate pairs and pypdf yields the
+    halves separately. Lima's WWTP capacity report (``oepa/lima/edoc-4175534.pdf`` p.15) writes
+    its removal-efficiency formula in a mathematical-italic font, so ``U+D835 U+DC45`` arrives
+    where the document prints ``U+1D445``.
+    """
+    assert _repair_surrogate_pairs("x\U0001d445y") == "x\U0001d445y"
+    assert _repair_surrogate_pairs("R\ud835\udc45 = 1") == "R\U0001d445 = 1"
+
+
+def test_an_orphan_surrogate_is_removed_without_a_replacement_char() -> None:
+    """Regression: an unpaired surrogate must not become U+FFFD.
+
+    Round-tripping the whole string through ``errors="replace"`` is the obvious repair and the
+    wrong one — it swaps the orphan for a visible U+FFFD, which is a silent edit to quoted
+    public-record text and precisely what :func:`_repair_cp1252_punctuation` refuses to do.
+    A half-surrogate denotes nothing, so removal is the only honest outcome.
+    """
+    assert _repair_surrogate_pairs("a\ud800b") == "ab"
+    assert _repair_surrogate_pairs("a\udc45b") == "ab"
+    assert "\ufffd" not in _repair_surrogate_pairs("a\ud800b")
+
+
+def test_clean_text_is_returned_unchanged() -> None:
+    assert (
+        _repair_surrogate_pairs("plain ASCII \u2014 and a dash") == "plain ASCII \u2014 and a dash"
+    )
+
+
+def test_every_emitted_passage_encodes_to_utf8(tmp_path: Path) -> None:
+    """The invariant the crash violated: a passage must survive serialization.
+
+    A lone surrogate is representable in a Python ``str`` and NOT encodable to UTF-8, so it
+    passes every text-level check and then kills the write. ``watermark passages`` died on one
+    page of one document out of 261 with a ``PydanticSerializationError``, after doing the work.
+    """
+    docs = tmp_path / "documents"
+    _write_text_pdf(docs / "oepa/math.pdf", ["removal efficiency RI"], surrogate_chars="RI")
+    passages = build_passages(_collection([_doc("oepa/math.pdf", published=True)]), docs)
+    assert passages, "the fixture must produce a passage, not an empty read"
+    for item in passages:
+        item.text.encode("utf-8")  # must not raise
+        assert not any(0xD800 <= ord(c) <= 0xDFFF for c in item.text)
+    # Encodability alone would also hold if the repair simply DELETED both halves, which is a
+    # silent edit to quoted text rather than a repair. Assert the character the document
+    # actually prints survives.
+    assert any("\U0001d445" in item.text for item in passages)
 
 
 def test_published_pdf_entries_filters_correctly() -> None:

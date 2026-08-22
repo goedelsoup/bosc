@@ -125,6 +125,43 @@ _CP1252_C1 = {
 }
 
 
+_SURROGATE_RE = re.compile(r"[\ud800-\udfff]")
+# A well-formed UTF-16 pair: a high surrogate followed by a low one. Matched explicitly so a
+# pair is recombined and an ORPHAN is removed, rather than round-tripping the whole string
+# through ``errors="replace"`` — which would swap the orphan for U+FFFD, a visible edit to
+# quoted public-record text and exactly what the CP1252 repair above refuses to do.
+_SURROGATE_PAIR_RE = re.compile(r"[\ud800-\udbff][\udc00-\udfff]")
+
+
+def _repair_surrogate_pairs(text: str) -> str:
+    """Recombine UTF-16 surrogate pairs pypdf hands back as separate code points.
+
+    A third damage mode, distinct from the two above and from #1966's broken CMap. Some
+    ``ToUnicode`` CMaps encode astral characters as UTF-16 **surrogate pairs**, and pypdf
+    yields the two halves as individual code points rather than the character they jointly
+    denote: Lima's WWTP capacity report writes its removal-efficiency formula in a
+    mathematical-italic font, so ``U+D835 U+DC45`` reaches the output where the document
+    prints ``U+1D445`` (MATHEMATICAL ITALIC CAPITAL R).
+
+    That is not cosmetic. A lone surrogate is representable in a Python ``str`` and **not**
+    encodable to UTF-8, so it survives every check that operates on text and then kills the
+    write — ``watermark passages`` died on one page of one document out of 261 with a
+    ``PydanticSerializationError``, having already done the work.
+
+    Paired halves are recombined into the character the document actually prints (the same
+    repair-don't-drop rule as :func:`_repair_cp1252_punctuation` — this is quoted
+    public-record text). A surrogate with no partner denotes nothing and cannot be encoded,
+    so it is dropped; it is the only outcome available, and it is rare enough to be worth a
+    warning at the call site rather than a silent pass.
+    """
+    if not _SURROGATE_RE.search(text):
+        return text
+    paired = _SURROGATE_PAIR_RE.sub(
+        lambda m: m.group(0).encode("utf-16", "surrogatepass").decode("utf-16"), text
+    )
+    return _SURROGATE_RE.sub("", paired)
+
+
 def _repair_cp1252_punctuation(text: str) -> str:
     """Map stray C1 bytes onto the CP1252 characters they actually encode.
 
@@ -281,7 +318,11 @@ def build_passages(
                 # It also keeps an OCR read (tesseract ends every page with \x0c) from looking like
                 # the damage it was called in to clear. The CP1252 repair runs alongside it and in
                 # the other direction — those bytes are real punctuation and are restored, not cut.
-                text = _repair_cp1252_punctuation(_strip_control_bytes(text)).strip()
+                # The surrogate repair runs last and guards the WRITE: a lone surrogate passes
+                # every text-level check and then fails to encode to UTF-8 at serialization.
+                text = _repair_surrogate_pairs(
+                    _repair_cp1252_punctuation(_strip_control_bytes(text))
+                ).strip()
                 if not text:
                     continue
                 page_1 = page_idx + 1
