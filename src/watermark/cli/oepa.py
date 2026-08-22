@@ -233,6 +233,7 @@ def fetch(
             "downloaded": "green",
             "skipped_existing": "dim",
             "conflict": "yellow",
+            "truncated": "red",
             "error": "red",
         }.get(r.status, "")
         table.add_row(

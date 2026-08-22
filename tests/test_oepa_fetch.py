@@ -17,7 +17,12 @@ from pathlib import Path
 
 import yaml
 
-from watermark.oepa.fetch import FetchedPermit, update_filename_map
+from watermark.oepa.fetch import (
+    FetchedPermit,
+    _basename,
+    _pdf_is_complete,
+    update_filename_map,
+)
 
 _URL = "https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PD00006.pdf"
 
@@ -154,3 +159,157 @@ def test_curated_entries_are_not_duplicated_across_repeat_fetches(tmp_path: Path
     documents = _documents(map_path)
     assert [d for d in documents if d.get("edoc_id") == "1"] == [curated]
     assert len([d for d in documents if d.get("source_url") == _URL]) == 1
+
+
+# ---------------------------------------------------------------------------
+# portal-served documents: naming and truncation
+# ---------------------------------------------------------------------------
+
+
+def test_portal_documents_are_named_by_docid() -> None:
+    """Regression: every portal document would otherwise be called ``ViewDocument.aspx``.
+
+    The portal addresses a document by query string, so ``urlparse(url).path`` is the same
+    for all of them and carries no filename. Sending the 261-document ``2PE00000`` set
+    through the old basename would have written one file and 260 ``conflict`` rows, each
+    annotated "same name, different bytes" — a false collision report, since those are
+    different documents that never shared a name to begin with.
+    """
+    assert (
+        _basename("https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4192703", None)
+        == "edoc-4192703.pdf"
+    )
+    # Matches the convention already committed for the hand-curated west-union tree.
+    assert (
+        _basename("https://edocpub.epa.ohio.gov/publicportal/viewdocument.aspx?DOCID=3940058", None)
+        == "edoc-3940058.pdf"
+    )
+
+
+def test_dam_documents_keep_their_as_received_name() -> None:
+    """The DAM route is unchanged — its URL basename is a real filename."""
+    assert _basename(_URL, None) == "2PD00006.pdf"
+    assert _basename(_URL, 'attachment; filename="2PD00006_mod.pdf"') == "2PD00006_mod.pdf"
+
+
+def test_a_pdf_with_bytes_after_its_eof_marker_is_refused() -> None:
+    """The marker must be LAST, not merely present near the end.
+
+    A body cut mid-object after an incremental-update section still carries an earlier
+    `%%EOF` well inside any trailing window, so a substring test passes it. All 261 documents
+    of the Lima WWTP pull end with the marker under `rstrip()`, so the strict rule costs
+    nothing on real agency PDFs.
+    """
+    assert not _pdf_is_complete(b"%PDF-1.7\n" + b"x" * 100 + b"\n%%EOF\n" + b"truncated tail")
+    # Trailing whitespace is normal and must still pass.
+    assert _pdf_is_complete(b"%PDF-1.7\n" + b"x" * 100 + b"\n%%EOF\n\r\n  ")
+
+
+def test_a_pdf_without_its_eof_marker_is_refused() -> None:
+    """The portal has served a body truncated at exactly 2 MiB with an agreeing length.
+
+    Neither a short read nor a Content-Length mismatch exposes that, so the terminating
+    marker is the only signal — and committing a half-copied PDF into litigation evidence
+    is worse than failing the fetch.
+    """
+    assert not _pdf_is_complete(b"%PDF-1.7\n" + b"x" * 4096)
+
+
+def test_a_complete_pdf_passes() -> None:
+    assert _pdf_is_complete(b"%PDF-1.7\n" + b"x" * 4096 + b"\n%%EOF\n")
+
+
+def test_a_non_pdf_response_is_not_judged_by_the_eof_rule() -> None:
+    """An HTML error page is a different failure, handled elsewhere — don't mislabel it."""
+    assert _pdf_is_complete(b"<html><body>Not found</body></html>")
+
+
+def test_a_successful_retry_retires_the_failed_row(tmp_path: Path) -> None:
+    """Regression: a transient 500 left a permanent row describing no document.
+
+    A failed fetch has no hash, so it keys as ``(url, None)``. The retry that succeeds
+    carries a digest and lands under a *different* key, so the failure was unreachable
+    forever — the Lima WWTP pull 500'd on 22 of 261 documents, served every one on retry,
+    and produced a manifest of 283 rows against 261 files, 22 of them with an empty
+    ``filename``.
+    """
+    path = tmp_path / "filename-map.yaml"
+    failed = FetchedPermit(
+        filename="",
+        permit_id="2PE00000",
+        source_url=_URL,
+        sha256=None,
+        bytes=None,
+        content_type=None,
+        fetched_at=None,
+        status="error",
+        note="fetch failed: HTTPStatusError: Server error '500 Internal Server Error'",
+    )
+    update_filename_map([failed], path)
+    assert [e["status"] for e in _documents(path)] == ["error"]
+
+    update_filename_map([_record("aa" * 32)], path)
+    rows = _documents(path)
+    assert [e["status"] for e in rows] == ["downloaded"]
+    assert rows[0]["filename"] == "2PD00006.pdf"
+
+
+def test_a_success_retires_a_failure_recorded_later_in_the_same_batch(tmp_path: Path) -> None:
+    """Regression: retirement must not depend on the order records arrive in.
+
+    Retiring as each record is walked misses the batch that succeeds and THEN errors on the
+    same URL — the failure is appended after the success has already run, so nothing retires
+    it. The set of successful URLs is computed up front instead.
+    """
+    path = tmp_path / "filename-map.yaml"
+    failed = FetchedPermit(
+        filename="",
+        permit_id="2PD00006",
+        source_url=_URL,
+        sha256=None,
+        bytes=None,
+        content_type=None,
+        fetched_at=None,
+        status="error",
+    )
+    update_filename_map([_record("aa" * 32), failed], path)
+    rows = _documents(path)
+    assert [e["status"] for e in rows] == ["downloaded"]
+    assert all(e["filename"] for e in rows)
+
+
+def test_retiring_a_failure_leaves_other_urls_untouched(tmp_path: Path) -> None:
+    """The rebuild after a deletion must not disturb unrelated provenance."""
+    path = tmp_path / "filename-map.yaml"
+    other = "https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/OTHER.pdf"
+    update_filename_map(
+        [
+            _record("bb" * 32, filename="OTHER.pdf").model_copy(update={"source_url": other}),
+            FetchedPermit(
+                filename="",
+                permit_id="2PD00006",
+                source_url=_URL,
+                sha256=None,
+                bytes=None,
+                content_type=None,
+                fetched_at=None,
+                status="error",
+            ),
+        ],
+        path,
+    )
+    update_filename_map([_record("cc" * 32)], path)
+    rows = _documents(path)
+    assert len(rows) == 2
+    assert {e["source_url"] for e in rows} == {other, _URL}
+    assert all(e["status"] == "downloaded" for e in rows)
+
+
+def test_two_successful_captures_of_one_url_still_coexist(tmp_path: Path) -> None:
+    """The *VD/*WD case must survive the retirement rule — only *failures* are retired."""
+    path = tmp_path / "filename-map.yaml"
+    update_filename_map([_record("dd" * 32)], path)
+    update_filename_map([_record("ee" * 32, filename="2PD00006.aabbccdd.pdf")], path)
+    rows = _documents(path)
+    assert len(rows) == 2
+    assert {e["sha256"] for e in rows} == {"dd" * 32, "ee" * 32}

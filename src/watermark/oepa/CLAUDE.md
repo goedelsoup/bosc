@@ -56,10 +56,37 @@ at all**: `1IN00274` (the WPAFB bioslurper NPDES) 404s there while the portal se
 fine at `ViewDocument.aspx?docid=2090290`. So a 404 from the DAM is *not* evidence the
 permit doesn't exist — fall back to `PortalDoc.url`.
 
-⚠️ Portal documents have **no `Content-Disposition`**, so the docid is the as-served
-identity: name those `edoc-<docid>.pdf` and record the canonical name in the filename map.
-⚠️ At least one docid is served **truncated at exactly 2 MiB** with the server's own
-`Content-Length` agreeing — check for a trailing `%%EOF` before trusting a large response.
+Both of that route's hazards are now enforced in `fetch.py` rather than left to the caller
+— they were warnings here for a while, and a warning does not survive a 261-document fetch:
+
+- Portal documents have **no `Content-Disposition`** and no filename in the URL *path* (the
+  docid is a query parameter), so the as-received basename was `ViewDocument.aspx` for
+  **every** document the portal serves. `_basename` now names them `edoc-<docid>.pdf`,
+  matching the hand-curated west-union/urbana trees. Without it a bulk fetch writes one
+  file and N-1 `conflict` rows reporting "same name, different bytes" — a false collision,
+  since those documents never shared a name.
+- At least one docid is served **truncated at exactly 2 MiB** with the server's own
+  `Content-Length` agreeing, so neither a short read nor a length check exposes it.
+  `_pdf_is_complete` requires the trailing `%%EOF` and the fetch is recorded `truncated`
+  **instead of written** — `data/documents/**` is litigation evidence, and a silently
+  half-copied PDF is the one outcome it cannot tolerate. A `truncated` row means re-fetch
+  and compare, never retry-and-commit.
+
+## The results table is variable-shape, and two fields lied about it
+
+Positional reads of a portal row are the recurring defect in this module, twice over
+(#2072). Anything read by offset needs a fixture test before it is trusted at volume:
+
+- **The permit-number search field is a decoy.** The criterion row the portal *labels*
+  "Package/Permit Number" (`…_121_1`) indexes nothing and answers every query with a
+  well-formed empty 200. The permit number lives in **Secondary ID** (`…_111_1`). An empty
+  result is indistinguishable from "no such permit", so the crosswalk's targeted lookup
+  silently reported every permit as absent (`_DECOY_PERMIT_FIELD`).
+- **A program name can contain the row separator.** `RCRA C - HAZARDOUS WASTE` and
+  `GRANTS - CLEAN DIESEL` are 2 of the Program select's 45 options. Read as one segment,
+  the program eats its own tail and every column right of it shifts left — the county
+  landing in `program`, the permit number in `county`. `_read_program` resolves the real
+  width first; an unrecognised program still reads as a single segment.
 
 ## Fetch discipline
 
