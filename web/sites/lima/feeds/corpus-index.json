@@ -1565,11 +1565,11 @@
     "id": "question/lead-h1-draw",
     "node_class": "question",
     "kind": "lead",
-    "label": "The consumptive cooling draw against the river's cited 7Q10",
+    "label": "The consumptive cooling draw is closed as modelled, and the 7Q10 is no longer the binding constraint",
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
-    "lines": 14,
+    "lines": 23,
     "updated": null
   },
   {
@@ -1620,11 +1620,11 @@
     "id": "question/lead-oepa-2dp00130",
     "node_class": "question",
     "kind": "lead",
-    "label": "Public-comment window on the Bistrozzi \"Bosc\" indirect-discharge permit closes ~2026-07-31",
+    "label": "The comment window on the Bistrozzi \"Bosc\" indirect-discharge permit closed, and no final permit has issued",
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
-    "lines": 21,
+    "lines": 24,
     "updated": null
   },
   {

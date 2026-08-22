@@ -3,6 +3,26 @@ meta:
   generated_at: '2026-07-31'
   policy: non-destructive — originals keep as-received names
 documents:
+- filename: 2DP00130.pdf
+  permit_id: 2DP00130
+  source_url: null
+  sha256: ae76bff9b192bd0d17c69fbdb14df96198a48e0d7804da346debc4f55b4f22e8
+  bytes: 607617
+  content_type: application/pdf
+  status: committed
+  content_verified: '2026-08-22'
+  note: >-
+    Added retroactively — this file was committed without a manifest entry, so the corpus held the
+    Lima campus's own discharge permit with no recorded provenance. Content-verified 2026-08-22 from
+    the text layer (24 pp, p0): "Ohio EPA Permit No. 2DP00130*AP", Public Notice No. 222503, Date of
+    Public Notice July 1, 2026; Indirect Discharge Permit to a POTW that does not have a State
+    Approved Pretreatment Program; applicant BISTROZZI LLC, 4110 N COLE ST, Lima OH 45801; facility
+    "Bosc" at the same address, Allen County. Structured read:
+    data/extracted/oepa/2DP00130.npdes.yaml. `source_url` and `fetched_at` are null because they were
+    not recorded at acquisition and must not be reconstructed after the fact — the DAM permit URL for
+    2DP00130 404s as of 2026-08-22, and the eDocument portal does not serve this notice at all (it
+    carries only the 2026-05-13 application package under entity AMERICAN-BATH WWTP), so no candidate
+    URL can be content-verified against these bytes.
 - filename: 2PE00000.pdf
   permit_id: 2PE00000
   source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PE00000.pdf

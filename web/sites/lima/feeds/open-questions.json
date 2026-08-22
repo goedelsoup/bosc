@@ -2,9 +2,9 @@
   {
     "id": "OEPA-2DP00130",
     "origin": "lead",
-    "question": "Public-comment window on the Bistrozzi \"Bosc\" indirect-discharge permit closes ~2026-07-31",
-    "detail": "Ohio EPA has a draft Indirect Discharge Permit (2DP00130*AP, Public Notice 222503, dated 2026-07-01) out for public comment — BISTROZZI LLC's \"Bosc\" data center at 4110 N Cole St, Lima, proposing to route domestic waste + non-contact cooling water through a private sanitary main and a temporary lift station to the American–Bath WWTP (a POTW that lacks a State-approved pretreatment program). Monitored parameters are water temperature, pH, and flow rate; the draft expires 2028-12-31. The 30-day comment window (standard Ohio EPA practice) puts the deadline at ~2026-07-31 — the exact end date is inferred from the July 1 notice, not printed on the permit.",
-    "source": "Ohio EPA Public Notice 222503 · data/extracted/oepa/2DP00130.npdes.yaml",
+    "question": "The comment window on the Bistrozzi \"Bosc\" indirect-discharge permit closed, and no final permit has issued",
+    "detail": "Ohio EPA noticed a draft Indirect Discharge Permit (2DP00130*AP, Public Notice 222503, dated 2026-07-01) — BISTROZZI LLC's \"Bosc\" data center at 4110 N Cole St, Lima, routing domestic waste + non-contact cooling water through a private sanitary main and a temporary lift station to the American–Bath WWTP (a POTW that lacks a State-approved pretreatment program). Monitored parameters are water temperature, pH, and flow rate; the draft expires 2028-12-31. The 30-day window put the close at ~2026-07-31 (inferred from the notice date, not printed on the permit). Checked on 2026-08-22, 22 days after that close: Ohio EPA's eDocument portal serves 23 documents under 2DP00130 and every one of them is the 2026-05-13 application package (APP285104563). There is no approval row, no response-to-comments, and no final permit — a complete, untruncated result set, so the absence is the portal's answer and not a paging artifact. The comparison that makes it legible is the campus's own air permit (0302022054), which shows DRAFT FOR PUBLIC COMMENT (2026-01-29) followed by APPROVAL OR ACKNOWLEDGEMENT (2026-05-28); an issued permit has a shape, and this one does not have it yet. [verified: absence, portal-complete]",
+    "source": "Ohio EPA Public Notice 222503 · data/extracted/oepa/2DP00130.npdes.yaml · eDocument portal sweep 2026-08-22 (data/research/oepa-portal-2dp00130-2026-08-22/)",
     "kind": "signal",
     "status": "unanswered",
     "issue": null,

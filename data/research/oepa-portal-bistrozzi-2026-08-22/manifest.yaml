@@ -1,0 +1,136 @@
+meta:
+  subject: Ohio EPA eDocument portal sweep — *BISTROZZI*
+  county: null
+  program: ''
+  entity: '*BISTROZZI*'
+  permit_id: null
+  doc_types: all
+  generated_at: '2026-08-22'
+  counts:
+    documents: 13
+    permits: 0
+  coverage:
+    truncated: false
+    rows_served: 13
+    pages_walked: 1
+    total_pages: 1
+    note: 'complete: the walk exhausted the reported pages.'
+crosswalk: []
+results:
+- docid: '4230060'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 8/14/2026
+  program: SURFACE WATER PERMIT TO INSTALL
+  county: ALLEN
+  permit_id: DSWPTI-260597
+  description: APPROVAL OR ACKNOWLEDGEMENT
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4230060
+- docid: '4230062'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 8/14/2026
+  program: SURFACE WATER PERMIT TO INSTALL
+  county: ALLEN
+  permit_id: DSWPTI-260597
+  description: APPROVAL OR ACKNOWLEDGEMENT
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4230062
+- docid: '4230061'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 8/14/2026
+  program: SURFACE WATER PERMIT TO INSTALL
+  county: ALLEN
+  permit_id: DSWPTI-260597
+  description: APPROVAL OR ACKNOWLEDGEMENT
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4230061
+- docid: '4132514'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 5/28/2026
+  program: AIR PERMIT
+  county: ALLEN
+  permit_id: '0302022054'
+  description: APPROVAL OR ACKNOWLEDGEMENT - P0138965
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4132514
+- docid: '4230068'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 5/27/2026
+  program: SURFACE WATER PERMIT TO INSTALL
+  county: ALLEN
+  permit_id: DSWPTI-260597
+  description: APPLICATION AND SUPPORT
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4230068
+- docid: '4074527'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 4/7/2026
+  program: SURFACE WATER PERMIT TO INSTALL
+  county: ALLEN
+  permit_id: DSWPTI-260294
+  description: APPROVAL OR ACKNOWLEDGEMENT
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4074527
+- docid: '4074529'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 4/7/2026
+  program: SURFACE WATER PERMIT TO INSTALL
+  county: ALLEN
+  permit_id: DSWPTI-260294
+  description: APPROVAL OR ACKNOWLEDGEMENT
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4074529
+- docid: '4074551'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 3/16/2026
+  program: SURFACE WATER PERMIT TO INSTALL
+  county: ALLEN
+  permit_id: DSWPTI-260294
+  description: APPLICATION AND SUPPORT
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4074551
+- docid: '3987141'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 1/29/2026
+  program: AIR PERMIT
+  county: ALLEN
+  permit_id: '0302022054'
+  description: DRAFT FOR PUBLIC COMMENT - P0138965
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3987141
+- docid: '3987144'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 1/29/2026
+  program: AIR PERMIT
+  county: ALLEN
+  permit_id: '0302022054'
+  description: DRAFT FOR PUBLIC COMMENT - P0138965
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3987144
+- docid: '3859883'
+  entity: BISTROZZI LLC
+  doc_type: Trade Secret Correspondence
+  doc_date: 10/8/2025
+  program: AIR PERMIT
+  county: ALLEN
+  permit_id: '0302022054'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3859883
+- docid: '3866942'
+  entity: BISTROZZI LLC
+  doc_type: Permit - Long Term
+  doc_date: 10/7/2025
+  program: AIR PERMIT
+  county: ALLEN
+  permit_id: '0302022054'
+  description: CORRESPONDENCE - P0138965
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3866942
+- docid: '3859888'
+  entity: BISTROZZI LLC
+  doc_type: Trade Secret Correspondence
+  doc_date: 10/2/2025
+  program: AIR PERMIT
+  county: ALLEN
+  permit_id: '0302022054'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3859888

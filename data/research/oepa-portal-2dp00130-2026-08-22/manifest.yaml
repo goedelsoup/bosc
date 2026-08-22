@@ -1,0 +1,229 @@
+meta:
+  subject: Ohio EPA eDocument portal sweep — 2DP00130
+  county: null
+  program: ''
+  entity: null
+  permit_id: 2DP00130
+  doc_types: all
+  generated_at: '2026-08-22'
+  counts:
+    documents: 23
+    permits: 1
+  coverage:
+    truncated: false
+    rows_served: 23
+    pages_walked: 1
+    total_pages: 1
+    note: 'complete: the walk exhausted the reported pages.'
+crosswalk:
+- permit_id: 2DP00130
+  entity: AMERICAN-BATH WWTP
+  documents: 23
+results:
+- docid: '4116201'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116201
+- docid: '4116202'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116202
+- docid: '4116203'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116203
+- docid: '4116204'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116204
+- docid: '4116205'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116205
+- docid: '4116206'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116206
+- docid: '4116207'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116207
+- docid: '4116218'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116218
+- docid: '4116219'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116219
+- docid: '4116220'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116220
+- docid: '4116221'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116221
+- docid: '4116222'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116222
+- docid: '4116223'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116223
+- docid: '4116224'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116224
+- docid: '4116225'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116225
+- docid: '4116226'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116226
+- docid: '4116227'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116227
+- docid: '4116228'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116228
+- docid: '4116229'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116229
+- docid: '4116232'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116232
+- docid: '4116233'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116233
+- docid: '4116234'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116234
+- docid: '4116235'
+  entity: AMERICAN-BATH WWTP
+  doc_type: Permit - Long Term
+  doc_date: 5/13/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2DP00130
+  description: APPLICATION AND SUPPORT - APP285104563
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116235
