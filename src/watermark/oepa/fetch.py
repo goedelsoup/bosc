@@ -11,11 +11,28 @@ Chain-of-custody rules (mirrors :mod:`watermark.civic.downloader`):
 * An identical existing file is skipped (hash match → ``skipped_existing``).
 * A differing file under the same name is kept alongside the original
   (``<name>.<sha8>.ext``, status ``conflict``).
+
+Two eDocument-portal behaviours break those rules and are handled explicitly, because both
+corrupt a bulk fetch while every individual response looks fine:
+
+* **A portal document has no ``Content-Disposition`` and no filename in its URL path.** The
+  document is addressed by query string (``ViewDocument.aspx?docid=4192703``), so the
+  as-received basename is ``ViewDocument.aspx`` for *every* document the portal serves —
+  a 261-document fetch would land one file plus 260 ``conflict`` rows, each reported as
+  "same name, different bytes" when nothing actually collided. :func:`_basename` names these
+  ``edoc-<docid>.pdf`` instead, matching the convention the corpus already uses for the
+  hand-curated west-union and urbana trees.
+* **At least one docid is served truncated at exactly 2 MiB**, with the server's own
+  ``Content-Length`` agreeing, so neither a short read nor a length mismatch reveals it.
+  :func:`_pdf_is_complete` checks for the trailing ``%%EOF`` marker and the fetch is recorded
+  ``truncated`` rather than written — a silently half-copied PDF is the one outcome this
+  corpus cannot tolerate, since ``data/documents/**`` is litigation evidence.
 """
 
 from __future__ import annotations
 
 import hashlib
+import re
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
@@ -36,7 +53,23 @@ _DAM_PERMIT_BASE = (
     "https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/{id}.pdf"
 )
 
-FetchStatus = Literal["downloaded", "skipped_existing", "conflict", "error"]
+FetchStatus = Literal["downloaded", "skipped_existing", "conflict", "error", "truncated"]
+
+# The portal addresses a document by query string, not by path, so its URL carries no
+# filename at all. The docid IS the as-served identity.
+_PORTAL_DOC_RE = re.compile(r"ViewDocument\.aspx\?docid=(\d+)", re.I)
+
+# A PDF ends with a %%EOF marker, optionally followed by whitespace. The portal has served
+# a response truncated at exactly 2 MiB whose Content-Length agreed with the short body, so
+# the marker is the only signal that the bytes are incomplete.
+#
+# The marker must be the LAST thing in the file, not merely present near the end: a body cut
+# mid-object after an incremental-update section still carries an earlier `%%EOF` well inside
+# any trailing window, and a substring test would pass it. Verified against all 261 documents
+# of the Lima WWTP pull — every one ends with the marker under `rstrip()`, so the strict rule
+# costs nothing on real agency PDFs.
+_PDF_MAGIC = b"%PDF-"
+_PDF_EOF = b"%%EOF"
 
 
 class FetchedPermit(BaseModel):
@@ -60,7 +93,22 @@ def dam_url(permit_id: str) -> str:
     return _DAM_PERMIT_BASE.format(id=permit_id)
 
 
+def _pdf_is_complete(content: bytes) -> bool:
+    """Whether a PDF response carries its terminating ``%%EOF`` marker.
+
+    Only applied to bodies that actually announce themselves as PDFs — a non-PDF response
+    (an HTML error page, say) is not judged by this rule and is left to the callers that
+    already handle it.
+    """
+    if not content.startswith(_PDF_MAGIC):
+        return True
+    return content.rstrip().endswith(_PDF_EOF)
+
+
 def _basename(url: str, content_disposition: str | None) -> str:
+    portal = _PORTAL_DOC_RE.search(url)
+    if portal:
+        return f"edoc-{portal.group(1)}.pdf"
     if content_disposition:
         for part in content_disposition.split(";"):
             part = part.strip()
@@ -99,6 +147,15 @@ def fetch_one(
         base.note = f"fetch failed: {type(exc).__name__}: {exc}"
         log.warning("oepa.fetch.error", url=url, error=str(exc))
         return base
+
+    if not _pdf_is_complete(content):
+        base.note = (
+            f"refused: PDF body of {len(content)} bytes has no trailing %%EOF — the portal "
+            "serves some documents truncated with a Content-Length that agrees, so this is "
+            "not a short read to retry blindly. Re-fetch and compare before committing."
+        )
+        log.warning("oepa.fetch.truncated", url=url, bytes=len(content))
+        return base.model_copy(update={"status": "truncated", "bytes": len(content)})
 
     digest = hashlib.sha256(content).hexdigest()
     filename = _basename(url, disposition)
@@ -160,6 +217,15 @@ def update_filename_map(records: list[FetchedPermit], map_path: Path) -> None:
       ``as_received_name`` and a hand-written ``note`` are the human half of the manifest and
       are not derivable from an HTTP response; they are carried forward onto the matching entry.
       A hand-authored ``meta`` is likewise preserved (only ``generated_at`` is refreshed).
+
+    A **failed** fetch has no hash, so it cannot be keyed the same way and would otherwise be
+    unreachable forever: the retry that succeeds carries a digest, lands under a different key,
+    and leaves the failure behind as a permanent row with an empty ``filename`` describing no
+    document. The Lima WWTP pull hit that immediately — the portal 500'd on 22 of 261 documents
+    and served every one of them on retry, leaving a manifest of 283 rows against 261 files.
+    So a record that *succeeds* first retires any unsuccessful row for the same URL. Two
+    successful captures of one URL still coexist; that is the ``*VD``/``*WD`` case above, and
+    it is the whole reason the hash is in the key.
     """
     from typing import Any
 
@@ -184,7 +250,33 @@ def update_filename_map(records: list[FetchedPermit], map_path: Path) -> None:
             if url is not None:
                 existing[key(url, entry.get("sha256"))] = len(ordered) - 1
 
+    # A URL that succeeds ANYWHERE in this batch retires its hashless rows, computed up front
+    # rather than as each record is walked. Order-dependent retirement missed the batch that
+    # succeeds and then errors on the same URL — the failure is appended after the success has
+    # already run, so nothing retires it and the phantom row survives.
+    succeeded_urls = {r.source_url for r in records if r.sha256 is not None}
+
+    def _retire_failures_for(url: str) -> None:
+        """Drop rows for ``url`` that never produced a file (no hash, so no identity)."""
+        if existing.pop(key(url, None), None) is None:
+            return
+        ordered[:] = [
+            e for e in ordered if not (e.get("source_url") == url and e.get("sha256") is None)
+        ]
+        # Indices shifted; rebuild the address book rather than patch it.
+        existing.clear()
+        for i, entry in enumerate(ordered):
+            u = entry.get("source_url")
+            if u is not None:
+                existing[key(u, entry.get("sha256"))] = i
+
     for r in records:
+        if r.source_url in succeeded_urls:
+            _retire_failures_for(r.source_url)
+            if r.sha256 is None:
+                # A failed attempt on a URL this batch also captured. It describes an HTTP
+                # event, not a document, and the capture is the record that survives.
+                continue
         k = key(r.source_url, r.sha256)
         index = existing.get(k)
         prior = ordered[index] if index is not None else {}
