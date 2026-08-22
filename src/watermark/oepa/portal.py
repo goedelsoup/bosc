@@ -20,6 +20,11 @@ Mechanics (ASP.NET WebForms, no auth, no rate limit observed):
    walk pages.  The pager exists only on the results page — sending it with the initial
    search returns HTTP 500.
 
+A permit-number lookup must go through the **Secondary ID** criterion row; the row the
+portal labels "Package/Permit Number" indexes nothing and answers every query with an
+empty 200 (:data:`_DECOY_PERMIT_FIELD`).  That is the difference between "this permit has
+no documents" and "we asked the wrong column", and the portal will not tell you which.
+
 A county-wide sweep is **best-effort, not an enumeration**: the portal caps any one query
 at :data:`_RESULT_CAP` rows and its pages overlap, so a large county returns fewer distinct
 documents than it holds.  :func:`sweep_portal` reports that as :attr:`PortalSweep.truncated`.  To resolve
@@ -84,8 +89,13 @@ _FIELD_PREFIX = "ctl00$search$KeywordPanel1$"
 _COUNTY_FIELD = "ddlValue_-1_1_104_1"
 _ENTITY_FIELD = "txtValue_-1_1_106_1"
 _PROGRAM_FIELD = "ddlValue_-1_1_109_1"
+# The permit number lives in **Secondary ID** (``…_111_1``), not in the row labelled
+# "Package/Permit Number" (``…_121_1``).  That row is postable and indexes nothing: every
+# value returns a well-formed 200 with zero rows, including permit numbers the portal has
+# just served in its own results column.  Searching ``2GC08747`` there returns nothing
+# while the same string in Secondary ID returns the permit's eight documents.
 _SECONDARY_FIELD = "txtValue_-1_1_111_1"
-_PERMIT_FIELD = "txtValue_-1_1_121_1"
+_DECOY_PERMIT_FIELD = "txtValue_-1_1_121_1"
 
 _PAGE_NUM_FIELD = "ctl00$results$DocHitList$DocHitList_CurrentPageNum"
 _PAGE_SIZE_FIELD = "ctl00$results$DocHitList$DocHitList_CurrentPageSize"
@@ -225,13 +235,16 @@ def _search_form(
     an *empty* row makes the portal discard the whole criteria set and return an
     unfiltered result page (observed: a CHAMPAIGN/NPDES sweep coming back with Franklin
     County 401-wetlands rows).  Only populated rows are joined with ``And``.
+
+    ``permit_id`` is posted to **Secondary ID**, not to the row labelled "Package/Permit
+    Number" — see :data:`_DECOY_PERMIT_FIELD`.
     """
     rows = (
         ("104_1", _COUNTY_FIELD, county),
         ("106_1", _ENTITY_FIELD, entity),
         ("109_1", _PROGRAM_FIELD, program),
-        ("111_1", _SECONDARY_FIELD, ""),
-        ("121_1", _PERMIT_FIELD, permit_id),
+        ("111_1", _SECONDARY_FIELD, permit_id),
+        ("121_1", _DECOY_PERMIT_FIELD, ""),
     )
     form = dict(hidden)
     for suffix, field, value in rows:
@@ -358,8 +371,10 @@ def sweep_portal(
     """Search the eDocument portal and return the matching rows with their coverage facts.
 
     ``county`` and ``program`` are portal vocabulary (``"CHAMPAIGN"``, ``"NPDES"``) and
-    are intersected.  ``entity`` matches the Entity Name field, ``permit_id`` the
-    Package/Permit Number field.  Both text fields take a bare term as a *prefix* match
+    are intersected.  ``entity`` matches the Entity Name field; ``permit_id`` matches the
+    **Secondary ID** field, which is where the portal indexes the state permit number —
+    the row labelled "Package/Permit Number" matches nothing at all
+    (:data:`_DECOY_PERMIT_FIELD`).  Both text fields take a bare term as a *prefix* match
     and support ``*`` wildcards — ``"*XENIA*"`` is the contains-search, and is the way to
     resolve one facility without a county-wide (and possibly ``truncated``) sweep.  The
     field operator is Equal/Not-Equal only; there is no "contains" operator.  ``permits_only`` keeps just the ``Permit*`` doc types —
