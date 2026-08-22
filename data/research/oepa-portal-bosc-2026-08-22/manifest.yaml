@@ -1,0 +1,1069 @@
+meta:
+  subject: Ohio EPA eDocument portal sweep — *BOSC*
+  county: null
+  program: ''
+  entity: '*BOSC*'
+  permit_id: null
+  doc_types: all
+  generated_at: '2026-08-22'
+  counts:
+    documents: 115
+    permits: 5
+  coverage:
+    truncated: false
+    rows_served: 115
+    pages_walked: 1
+    total_pages: 1
+    note: 'complete: the walk exhausted the reported pages.'
+crosswalk:
+- permit_id: 1GR01121
+  entity: ROBERT BOSCH BATTERY SYSTEMS LLC
+  documents: 2
+- permit_id: 2GC08747
+  entity: BERRY ROAD AND COLE STREET ROUNDABOUT/BOSC STORM OUTFALL
+  documents: 4
+- permit_id: 3GK18612
+  entity: STEVEN BOSCH
+  documents: 4
+- permit_id: 3IN00243
+  entity: BOSCH REXROTH CORP
+  documents: 3
+- permit_id: 8BU00229
+  entity: BOSCOTT METALS
+  documents: 3
+results:
+- docid: '4091285'
+  entity: BERRY ROAD AND COLE STREET ROUNDABOUT/BOSC STORM OUTFALL
+  doc_type: Permit - Short Term
+  doc_date: 4/22/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2GC08747
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4091285
+- docid: '4091286'
+  entity: BERRY ROAD AND COLE STREET ROUNDABOUT/BOSC STORM OUTFALL
+  doc_type: Permit - Short Term
+  doc_date: 4/22/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2GC08747
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4091286
+- docid: '4091287'
+  entity: BERRY ROAD AND COLE STREET ROUNDABOUT/BOSC STORM OUTFALL
+  doc_type: Permit - Short Term
+  doc_date: 4/22/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2GC08747
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4091287
+- docid: '4091289'
+  entity: BERRY ROAD AND COLE STREET ROUNDABOUT/BOSC STORM OUTFALL
+  doc_type: Permit - Short Term
+  doc_date: 4/22/2026
+  program: NPDES
+  county: ALLEN
+  permit_id: 2GC08747
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4091289
+- docid: '4011312'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 2/18/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4011312
+- docid: '4007485'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 2/17/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4007485
+- docid: '4006230'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 2/13/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4006230
+- docid: '4009043'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 1/30/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4009043
+- docid: '3977737'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 1/21/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3977737
+- docid: '3974496'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 1/19/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: APP252260W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3974496
+- docid: '3974497'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 1/19/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: APP252260W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3974497
+- docid: '3974498'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 1/19/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: APP252260W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3974498
+- docid: '3969235'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 1/13/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3969235
+- docid: '3966517'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 1/6/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3966517
+- docid: '3949585'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 12/23/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3949585
+- docid: '3933660'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 12/9/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: APP252260W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3933660
+- docid: '3933661'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 12/9/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: APP252260W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3933661
+- docid: '3796349'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 8/18/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3796349
+- docid: '3788677'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 8/12/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3788677
+- docid: '3789048'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 8/12/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3789048
+- docid: '3727949'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/18/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727949
+- docid: '3727950'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/18/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727950
+- docid: '3727951'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/18/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727951
+- docid: '3728018'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/18/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3728018
+- docid: '3727059'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/17/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727059
+- docid: '3727544'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/17/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727544
+- docid: '3727545'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/17/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727545
+- docid: '3727546'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/17/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727546
+- docid: '3727547'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/17/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727547
+- docid: '3727548'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/17/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727548
+- docid: '3702676'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702676
+- docid: '3702677'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702677
+- docid: '3702678'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702678
+- docid: '3702679'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702679
+- docid: '3702680'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702680
+- docid: '3702681'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702681
+- docid: '3702682'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702682
+- docid: '3702684'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702684
+- docid: '2540991'
+  entity: STEVEN BOSCH
+  doc_type: Permit - Short Term
+  doc_date: 9/1/2023
+  program: NPDES
+  county: TRUMBULL
+  permit_id: 3GK18612
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2540991
+- docid: '2326376'
+  entity: STEVEN BOSCH
+  doc_type: Permit - Short Term
+  doc_date: 5/22/2023
+  program: NPDES
+  county: TRUMBULL
+  permit_id: 3GK18612
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2326376
+- docid: '2326378'
+  entity: STEVEN BOSCH
+  doc_type: Permit - Short Term
+  doc_date: 5/22/2023
+  program: NPDES
+  county: TRUMBULL
+  permit_id: 3GK18612
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2326378
+- docid: '2326379'
+  entity: STEVEN BOSCH
+  doc_type: Permit - Short Term
+  doc_date: 5/22/2023
+  program: NPDES
+  county: TRUMBULL
+  permit_id: 3GK18612
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2326379
+- docid: '1177983'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 11/11/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1177983
+- docid: '1175369'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Reports
+  doc_date: 11/5/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381008'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1175369
+- docid: '1169650'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Reports
+  doc_date: 10/18/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381008'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1169650
+- docid: '1169654'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Reports
+  doc_date: 10/18/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381008'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1169654
+- docid: '1157521'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 10/10/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1157521
+- docid: '1148516'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 9/10/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1148516
+- docid: '1139971'
+  entity: BOSCH REXROTH CORP
+  doc_type: Inspection or Compliance Review
+  doc_date: 9/4/2019
+  program: NPDES
+  county: WAYNE
+  permit_id: 3IN00243
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1139971
+- docid: '1115240'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 8/19/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381008'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1115240
+- docid: '1114394'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 8/12/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1114394
+- docid: '1101905'
+  entity: ROBERT BOSCH BATTERY SYSTEMS LLC
+  doc_type: Compliance Notification
+  doc_date: 7/24/2019
+  program: CESSATION OF REGULATED OPERATIONS
+  county: WARREN
+  permit_id: CRO2737
+  description: CESSATION OF REGULATED OPERATIONS
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1101905
+- docid: '1093911'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 7/10/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1093911
+- docid: '1084895'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 7/1/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381008'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1084895
+- docid: '1073231'
+  entity: ROBERT BOSCH BATTERY SYSTEMS LLC
+  doc_type: Inspection or Compliance Review
+  doc_date: 6/14/2019
+  program: RCRA C
+  county: HAZARDOUS WASTE
+  permit_id: WARREN
+  description: OHR000177212
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1073231
+- docid: '1070204'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 6/10/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1070204
+- docid: '1062355'
+  entity: ROBERT BOSCH BATTERY SYSTEMS LLC
+  doc_type: Inspection or Compliance Review
+  doc_date: 5/28/2019
+  program: RCRA C
+  county: HAZARDOUS WASTE
+  permit_id: WARREN
+  description: OHR000177212
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1062355
+- docid: '1084687'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Reports
+  doc_date: 5/21/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381008'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1084687
+- docid: '1053872'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 5/10/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1053872
+- docid: '1042158'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 4/24/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1042158
+- docid: '1011695'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 3/11/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=1011695
+- docid: '997224'
+  entity: BOSCH REXROTH CORP
+  doc_type: Cost Recovery
+  doc_date: 2/14/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=997224
+- docid: '990686'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 2/4/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=990686
+- docid: '986613'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 1/29/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=986613
+- docid: '978908'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 1/10/2019
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=978908
+- docid: '976549'
+  entity: BOSCH REXROTH CORP
+  doc_type: Permit - Intermediate
+  doc_date: 1/4/2019
+  program: NPDES
+  county: WAYNE
+  permit_id: 3IN00243
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=976549
+- docid: '983864'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Reports
+  doc_date: 12/15/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=983864
+- docid: '960495'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 12/11/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=960495
+- docid: '981722'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Reports
+  doc_date: 11/23/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=981722
+- docid: '948412'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Reports
+  doc_date: 11/21/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=948412
+- docid: '948413'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Reports
+  doc_date: 11/20/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=948413
+- docid: '938901'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 11/6/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=938901
+- docid: '929777'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 10/25/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=929777
+- docid: '923544'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 10/11/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=923544
+- docid: '903893'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 9/11/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=903893
+- docid: '883577'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 8/9/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=883577
+- docid: '870850'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 7/9/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=870850
+- docid: '870744'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 6/12/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=870744
+- docid: '803581'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 4/8/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=803581
+- docid: '804953'
+  entity: BOSCOTT METALS
+  doc_type: Permit - Intermediate
+  doc_date: 4/6/2018
+  program: NPDES
+  county: MIAMI
+  permit_id: 8BU00229
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=804953
+- docid: '781676'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 3/2/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=781676
+- docid: '778123'
+  entity: BOSCH REXROTH CORP
+  doc_type: Cost Recovery
+  doc_date: 2/26/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=778123
+- docid: '776095'
+  entity: BOSCH REXROTH CORP
+  doc_type: Cost Recovery
+  doc_date: 2/22/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=776095
+- docid: '767081'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 2/2/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=767081
+- docid: '766568'
+  entity: BOSCOTT METALS
+  doc_type: Permit - Intermediate
+  doc_date: 1/29/2018
+  program: NPDES
+  county: MIAMI
+  permit_id: 8BU00229
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=766568
+- docid: '803505'
+  entity: BOSCOTT METALS
+  doc_type: Permit - Intermediate
+  doc_date: 1/25/2018
+  program: NPDES
+  county: MIAMI
+  permit_id: 8BU00229
+  description: 'NULL'
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=803505
+- docid: '766990'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 1/11/2018
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=766990
+- docid: '735456'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 12/1/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=735456
+- docid: '723152'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 11/3/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=723152
+- docid: '723181'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Reports
+  doc_date: 11/1/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=723181
+- docid: '717807'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Reports
+  doc_date: 10/27/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=717807
+- docid: '718390'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 10/13/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=718390
+- docid: '740713'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 10/10/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=740713
+- docid: '696294'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 9/18/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=696294
+- docid: '688893'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 9/8/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=688893
+- docid: '689733'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 9/6/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=689733
+- docid: '685181'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 8/31/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=685181
+- docid: '691312'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 8/18/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=691312
+- docid: '693376'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 8/14/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=693376
+- docid: '672254'
+  entity: ROBERT BOSCH BATTERY SYSTEMS LLC
+  doc_type: Inspection or Compliance Review
+  doc_date: 8/7/2017
+  program: NPDES
+  county: WARREN
+  permit_id: 1GR01121
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=672254
+- docid: '676198'
+  entity: ROBERT BOSCH BATTERY SYSTEMS LLC
+  doc_type: Inspection or Compliance Review
+  doc_date: 8/7/2017
+  program: NPDES
+  county: WARREN
+  permit_id: 1GR01121
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=676198
+- docid: '693384'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 8/3/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=693384
+- docid: '693388'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 7/26/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=693388
+- docid: '645224'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 6/5/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=645224
+- docid: '599776'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 4/3/2017
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=599776
+- docid: '554417'
+  entity: BOSCH REXROTH CORP
+  doc_type: Report
+  doc_date: 1/17/2017
+  program: NPDES
+  county: WAYNE
+  permit_id: 3IN00243
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=554417
+- docid: '599830'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 8/2/2016
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=599830
+- docid: '599864'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 7/8/2016
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=599864
+- docid: '616446'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 6/3/2016
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=616446
+- docid: '616442'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 4/5/2016
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381003'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=616442
+- docid: '361156'
+  entity: ROBERT BOSCH BATTERY SYSTEMS LLC
+  doc_type: Inspection or Compliance Review
+  doc_date: 11/23/2015
+  program: RCRA C
+  county: HAZARDOUS WASTE
+  permit_id: WARREN
+  description: OHR000177212
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=361156
+- docid: '225869'
+  entity: ROBERT BOSCH BATTERY SYSTEMS LLC
+  doc_type: Permit - Long Term
+  doc_date: 9/25/2012
+  program: AIR PERMIT
+  county: WARREN
+  permit_id: '1483140437'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=225869
+- docid: '318475'
+  entity: ROBERT BOSCH BATTERY SYSTEMS LLC
+  doc_type: Permit - Long Term
+  doc_date: 8/29/2012
+  program: AIR PERMIT
+  county: WARREN
+  permit_id: '1483140437'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=318475
+- docid: '654245'
+  entity: BOSCH REXROTH CORP
+  doc_type: Remediation Response
+  doc_date: 5/21/2007
+  program: REMEDIAL RESPONSE
+  county: WAYNE
+  permit_id: '285001381007'
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=654245
+- docid: '3833828'
+  entity: HUGO BOSCA CO INC
+  doc_type: NOV
+  doc_date: 5/16/1991
+  program: RCRA C
+  county: HAZARDOUS WASTE
+  permit_id: CLARK
+  description: OHD004285920
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3833828
