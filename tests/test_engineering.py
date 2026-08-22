@@ -142,3 +142,23 @@ def test_approximate_marker_is_preserved_not_dropped() -> None:
 def test_engineering_and_sanitary_are_registered_doc_kinds() -> None:
     assert "engineering" in extract_stage.DOC_EXTRACTORS
     assert "sanitary" in extract_stage.DOC_EXTRACTORS
+
+
+def test_extract_help_lists_every_registered_kind() -> None:
+    """The ``--kind`` help is the only place a user learns which kinds exist.
+
+    It had gone stale: ``order`` and ``award`` were registered by #1746 and never added,
+    so the enforcement genre — consent decrees, DFFOs, NOVs — was reachable but
+    undiscoverable, and the Lima WWTP judicial-order backlog looked like it needed a new
+    model that already existed. A registry the docs don't list is a registry nobody uses.
+    """
+    from typer.testing import CliRunner
+
+    from watermark.cli import app
+
+    rendered = CliRunner().invoke(app, ["extract", "--help"], env={"COLUMNS": "200"}).output
+    kinds = rendered.split("Document kind:", 1)[1]
+    # The help text wraps, so normalise the box-drawing and whitespace away before matching.
+    flat = " ".join(kinds.replace("│", " ").split())
+    missing = [k for k in extract_stage.DOC_EXTRACTORS if k not in flat.split(".", 1)[0]]
+    assert not missing, f"--kind help omits registered kinds: {missing}"
