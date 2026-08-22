@@ -85,6 +85,19 @@ _RESULT_CAP = 2000
 # ("Permit", "Permit - Short Term", "Permit - Long Term", "Permit - Intermediate").
 _PERMIT_DOC_TYPE_PREFIX = "Permit"
 
+# Program values that themselves contain the row separator.  Every column right of the
+# program shifts left by one when these are read as a single segment, which silently swaps
+# `county` and `permit_id` — the two fields the crosswalk keys on.  Transcribed from the
+# portal's own Program select (`_PROGRAM_FIELD`); these are the only two of its 45 options
+# that embed " - " ("SALT PILE CLEAN-UP" has a hyphen but no spaces around it).
+_MULTI_SEGMENT_PROGRAMS = frozenset(
+    {
+        "RCRA C - HAZARDOUS WASTE",
+        "GRANTS - CLEAN DIESEL",
+    }
+)
+_MAX_PROGRAM_SEGMENTS = 2
+
 _FIELD_PREFIX = "ctl00$search$KeywordPanel1$"
 _COUNTY_FIELD = "ddlValue_-1_1_104_1"
 _ENTITY_FIELD = "txtValue_-1_1_106_1"
@@ -175,12 +188,35 @@ def _split_entity_and_doc_type(left: str) -> tuple[str, str | None]:
     return " - ".join(segs[:-1]), segs[-1]
 
 
+def _read_program(segs: list[str], start: int) -> tuple[str, int]:
+    """Read the program field at ``start``; return it and the index of the county after it.
+
+    The program is one segment for 43 of the portal's 45 programs and two for the other
+    two (:data:`_MULTI_SEGMENT_PROGRAMS`), so it cannot be read at a fixed offset.  Longest
+    match wins, and an unrecognised program is read as a single segment — that keeps an
+    unfamiliar program parsing as it always did rather than swallowing its county.
+    """
+    for width in range(_MAX_PROGRAM_SEGMENTS, 1, -1):
+        candidate = " - ".join(segs[start : start + width])
+        if candidate in _MULTI_SEGMENT_PROGRAMS:
+            return candidate, start + width
+    return (segs[start] if start < len(segs) else ""), start + 1
+
+
 def _parse_rows(page: str) -> list[PortalDoc]:
     """Extract every result row from a portal results page.
 
     Anchors on the doc date rather than counting segments from either end: the entity
     name and the doc type both admit the ``" - "`` separator, but exactly one field
-    matches ``M/D/YYYY``, and the columns to its right are fixed-offset.
+    matches ``M/D/YYYY``.
+
+    The columns to its right are **not** all fixed-offset, which is the trap.  The program
+    can itself contain the separator (``RCRA C - HAZARDOUS WASTE``), and reading it as one
+    segment shifts every field after it: the county lands in ``program``, the permit number
+    in ``county``, and the handler id in ``permit_id``.  Nothing about the result looks
+    malformed — ``WARREN`` is a perfectly plausible permit number to a parser — so
+    :func:`_read_program` resolves the program's real width first and the rest are offset
+    from *it*, not from the date.
     """
     docs: list[PortalDoc] = []
     for row in _ROW_RE.findall(page):
@@ -195,14 +231,17 @@ def _parse_rows(page: str) -> list[PortalDoc]:
             continue
         segs = [_html.unescape(s).strip() for s in text_match.group(1).split(" - ")]
         date_i = next((i for i, s in enumerate(segs) if _DATE_RE.match(s)), None)
-        # Need program, county and secondary-id to the right of the date.
-        if date_i is None or date_i + 3 >= len(segs):
+        if date_i is None:
+            continue
+        program, county_i = _read_program(segs, date_i + 1)
+        # Need county and secondary-id to the right of the program.
+        if county_i + 1 >= len(segs):
             continue
         entity, doc_type = _split_entity_and_doc_type(" - ".join(segs[:date_i]))
         # Everything between the secondary id and the trailing docid echo is description,
         # padded with a variable number of empty segments ("1PY00002 -  -  -  - PTF285…").
         # Keep the segments that carry text; the padding is layout, not data.
-        description = " - ".join(s for s in segs[date_i + 4 : -1] if s) or None
+        description = " - ".join(s for s in segs[county_i + 2 : -1] if s) or None
         docid = id_match.group(1)
         docs.append(
             PortalDoc(
@@ -210,9 +249,9 @@ def _parse_rows(page: str) -> list[PortalDoc]:
                 entity=entity,
                 doc_type=doc_type,
                 doc_date=segs[date_i],
-                program=segs[date_i + 1],
-                county=segs[date_i + 2],
-                permit_id=segs[date_i + 3],
+                program=program,
+                county=segs[county_i],
+                permit_id=segs[county_i + 1],
                 description=description,
                 url=VIEW_DOCUMENT_URL.format(docid=docid),
             )

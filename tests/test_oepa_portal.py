@@ -130,6 +130,43 @@ def test_description_ignores_empty_padding_segments(
     assert next(d for d in docs if d.docid == docid).description == description
 
 
+def test_a_program_containing_the_separator_does_not_shift_the_columns() -> None:
+    """Regression: ``RCRA C - HAZARDOUS WASTE`` is one field that looks like two.
+
+    Read at a fixed offset from the date, it consumed the program slot alone and pushed
+    every column right of it one place left — the county landing in ``program``, the permit
+    number in ``county``, and the RCRA handler id in ``permit_id``. Nothing looks malformed
+    afterwards, which is what makes it dangerous: ``WARREN`` is a plausible permit number
+    to a parser, and the crosswalk keys on exactly the two fields that got swapped.
+
+    Verbatim row text from the *BOSCH* sweep of 2026-08-22 (docid 1073231).
+    """
+    row = (
+        '<tr><td>1</td><td></td><td><a href="ViewDocument.aspx?docid=1073231">'
+        "ROBERT BOSCH BATTERY SYSTEMS LLC - Inspection or Compliance Review - 6/14/2019"
+        " - RCRA C - HAZARDOUS WASTE - WARREN - OHR000177212 - 1073231</a></td></tr>"
+    )
+    (doc,) = _parse_rows(row)
+    assert doc.program == "RCRA C - HAZARDOUS WASTE"
+    assert doc.county == "WARREN"
+    assert doc.permit_id == "OHR000177212"
+    assert doc.description is None
+    assert doc.entity == "ROBERT BOSCH BATTERY SYSTEMS LLC"
+    assert doc.doc_type == "Inspection or Compliance Review"
+
+
+def test_an_unknown_multi_word_program_is_still_read_as_one_segment() -> None:
+    """An unrecognised program must not swallow its county — single-segment is the floor."""
+    row = (
+        '<tr><td>1</td><td></td><td><a href="ViewDocument.aspx?docid=42">'
+        "ACME - Report - 1/2/2020 - SOME NEW PROGRAM - ALLEN - 1PD00001 - 42</a></td></tr>"
+    )
+    (doc,) = _parse_rows(row)
+    assert doc.program == "SOME NEW PROGRAM"
+    assert doc.county == "ALLEN"
+    assert doc.permit_id == "1PD00001"
+
+
 def test_rows_without_a_docid_are_skipped() -> None:
     assert _parse_rows("<tr><td>1</td><td></td><td><a>NO LINK HERE</a></td></tr>") == []
 
