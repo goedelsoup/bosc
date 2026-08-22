@@ -87,7 +87,20 @@ def test_no_collision_across_the_committed_corpus() -> None:
     # global, not peer-scoped, so the reference build reads it. The other 48 files of that same
     # production do NOT appear here, because `west-union/` and `usace/west-union/` are west-union's
     # eponymous prefixes and are subtracted from Lima's scope (#1505). Reviewed: all 3254 distinct.
-    assert len(rels) == 3254, "a corpus change belongs in review, not a silent collision"
+    # 3254 → 3348 (#2072 follow-on): 93 `oepa/lima/edoc-*.pdf` — the enforcement, inspection and
+    # permit-action tranche of the City of Lima WWTP's NPDES record on permit 2PE00000 — plus
+    # `plans/4091285.pdf`, the Notice of Intent completing the `2GC08747` Bosc storm-outfall set.
+    # They reach the LIMA bundle directly rather than by network-global scope: both `oepa/lima/`
+    # and Lima's flat `plans/` are its own prefixes.
+    # The portal pull resolved 261 documents and 168 are deliberately NOT committed (routine
+    # reports, monitoring/sampling, plan sets, and 16 permit-application packages that were alone
+    # ~712 MB) — the repository exceeded its Git-LFS budget. Their docids live in
+    # `data/research/oepa-portal-2pe00000-2026-08-22/manifest.yaml` and each is re-fetchable, so a
+    # later commit of any of them moves this number again and SHOULD.
+    # Reviewed: 3348 rels, 3348 distinct rels, 3348 distinct handles — zero collisions. Checked as a
+    # set rather than inferred from the count, because "the number moved by what I expected" is not
+    # evidence of anything on a jump this size.
+    assert len(rels) == 3348, "a corpus change belongs in review, not a silent collision"
     assert len({document_id(rel) for rel in rels}) == len(rels)
 
 

@@ -83,7 +83,7 @@ describe("documentId — the corpus it has to address", () => {
   // `usace/west-union/` and are subtracted from the reference build's corpus scope.
   it("mints a distinct handle for all 3,254 committed Lima rels", () => {
     const rels = limaRels();
-    expect(rels.length).toBe(3254); // a corpus change should surface here, not as a silent collision
+    expect(rels.length).toBe(3348); // a corpus change should surface here, not as a silent collision
     const ids = new Set(rels.map(documentId));
     expect(ids.size).toBe(rels.length);
   });

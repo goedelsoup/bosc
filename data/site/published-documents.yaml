@@ -48,8 +48,67 @@ collections:      # whole data/documents/<slug> trees, e.g.  - aedg
   # ⚠️ FOR THE NEXT OEPA PULL: this collection now auto-publishes into a rule whose PII premise has
   # been broken once. An `oepa/<slug>/` pull that carries an individual's contact details is no
   # longer a surprise — check for one and record it here, or carve it out with a `withhold:`.
+  # ⚠️ AMENDED 2026-08-22 — THE LARGEST SINGLE PULL THIS COLLECTION HAS TAKEN, and the first where
+  # the PII in it belongs to people who are not party to the permit at all.
+  #
+  # `oepa/lima/` added **93 documents (182 MB)** — the enforcement, inspection and permit-action
+  # tranche of the City of Lima WWTP's NPDES record on permit 2PE00000, 2014-2026: 12 Judicial
+  # Orders, a DFFO, 3 NOVs, 4 ROV/RTC, 30 inspections, 38 permit actions, and the correspondence
+  # and incident/investigation reports. This is not a permit file; it is a municipal sewage
+  # plant's operating and enforcement history, a different genre from everything cleared above.
+  # So it was screened rather than assumed, and the screen is recorded here because the standing
+  # rule cleared it automatically.
+  #
+  # THE SCREEN BELOW COVERS ALL 261 DOCUMENTS THE PORTAL PULL RESOLVED, not only the 93 committed.
+  # The other 168 (routine reports, monitoring/sampling, plan sets, and the 16 permit-application
+  # packages that were alone ~712 MB) were fetched and screened but deliberately NOT committed —
+  # the repository exceeded its Git-LFS budget, and 1.35 GB of routine operating paperwork is the
+  # part of this record that earns its bytes least. Their docids are recorded in
+  # data/research/oepa-portal-2pe00000-2026-08-22/manifest.yaml and each is re-fetchable, so the
+  # record of what EXISTS stays complete. Screening them anyway is deliberate: if any is committed
+  # later it arrives already cleared, rather than auto-publishing on this same rule unexamined.
+  #
+  # SCREEN (2026-08-22): 10,436 of 10,455 pages — **99.8%**. 9,076 pages read from the text layer;
+  # the remaining 1,379 were image-only and were OCR'd (tesseract, via `site.passages.ocr_page_text`
+  # — the same reader the retrieval index uses) rather than counted clean, which is the #2031 rule:
+  # a regex over a scan returns clean because there is no text, not because there is no PII. 19
+  # pages stayed blank after OCR and are the honest residue of this pass.
+  #   ZERO SSNs — the single ###-##-#### match is `EPA 4104 (720-05-3910)`, a form number on a
+  #     1978 form.
+  #   ZERO dates of birth. ZERO personal email: all 326 addresses are institutional (86% .gov/.us —
+  #     epa.ohio.gov, cityhall.lima.oh.us, limaohio.gov — the rest Barnes & Thornburg, Frost Brown
+  #     Todd, Schottenstein Zox, consultants, the county). No free-mail domain appears anywhere.
+  #   Street-address matches resolved to facilities, OCR variants of one address, outfall/node
+  #     numbers with leading zeros (`002 Collett Street` is an OUTFALL NUMBER beside an SSO basin
+  #     name), and pump-station elevations in a hydraulic model (`840 West Street` is 840 ft).
+  #
+  # ⚠️ THE ONE REAL FINDING — FOUR SLUDGE-APPLICATION DOCUMENTS NAME PRIVATE INDIVIDUALS.
+  # All four are among the 168 NOT committed here. Recorded anyway, because they are re-fetchable
+  # by docid and a later commit of them must not have to rediscover this:
+  #   edoc-1301558 (25 blocks) · edoc-1301627 (21) · edoc-1301621 (14) · edoc-1301401 (2)
+  # ~62 "owner/operator of the farm" blocks on Ohio EPA site-inspection request forms for
+  # agricultural land receiving sewage sludge, each printing a named individual and their full
+  # home/farm address (e.g. the owner of a 98-acre application site in Auglaize Township; a farm
+  # owner and its operator in Elida).
+  #
+  # These are NOT the #2050 shape and the difference was weighed rather than glossed. Derek Harmon
+  # was the APPLICANT — an individual who chose to file, whose contact block is intrinsic to his own
+  # instrument. These are THIRD PARTIES: neighbours whose land received biosolids under someone
+  # else's permit, incidental to it, and roughly sixty of them rather than one.
+  #
+  # Published knowingly on the operator's decision (2026-08-22), on the standing basis: they are
+  # Ohio EPA public agency records, Ohio EPA serves these exact PDFs from its own public portal, and
+  # a sludge-application site's location and consenting landowner are the substance of the record
+  # rather than an incidental detail in it — a land-application program cannot be audited without
+  # knowing whose land. Recorded here, in the specific, so it is a decision on the file and not a
+  # discovery waiting to happen.
+  #
+  # ⚠️ FOR THE NEXT OEPA PULL: the warning below still stands, and this pull is now its second
+  # instance. The premise has been broken twice. Treat "agency records contain no private PII" as
+  # false for this collection and screen every pull — including the image-only pages.
   # review: { by: goedelsoup, date: 2026-07-10, result: publish, basis: public-epa-agency-records }
   # review: { by: goedelsoup, date: 2026-08-17, result: publish, basis: public-epa-agency-records }
+  # review: { by: goedelsoup, date: 2026-08-22, result: publish, basis: public-epa-agency-records }
   - oepa
   # The whole Findlay collection — 171 files (#1265): the Hancock County Commissioners' and
   # Allen Township trustees' meeting minutes, the township zoning book + map, the WARN
