@@ -191,6 +191,23 @@ def test_populated_criterion_rows_are_anded_and_empty_ones_are_not() -> None:
     assert form[p + "ddlConn_-1_1_121_1"] == "Or"  # permit number — empty
 
 
+def test_permit_id_goes_to_secondary_id_not_the_permit_number_row() -> None:
+    """Regression: the row labelled "Package/Permit Number" indexes nothing.
+
+    Posting a permit number to ``…_121_1`` returns a well-formed 200 with zero rows for
+    *every* value — including permit numbers the portal itself has just served in that
+    same results column (``2GC08747`` finds nothing there, and eight documents in
+    Secondary ID).  An empty result is indistinguishable from "no such permit", so the
+    crosswalk's targeted lookup silently reported every permit as absent.
+    """
+    form = _search_form({}, county="", program="", entity="", permit_id="2DP00130")
+    p = "ctl00$search$KeywordPanel1$"
+    assert form[p + "txtValue_-1_1_111_1"] == "2DP00130"
+    assert form[p + "ddlConn_-1_1_111_1"] == "And"
+    assert form[p + "txtValue_-1_1_121_1"] == ""
+    assert form[p + "ddlConn_-1_1_121_1"] == "Or"
+
+
 def test_doc_type_is_never_sent_as_a_real_id() -> None:
     """The doc-type select is postback-activated; a real id on the search 500s."""
     form = _search_form({}, county="ALLEN", program="NPDES", entity="", permit_id="")
