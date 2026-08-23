@@ -157,10 +157,13 @@ describe("the join, against the committed Lima bundle", () => {
   // below said 3,348. The assertion was right.
   // 68 -> 69 (#2075): `oepa/lima/edoc-412983.order.yaml`, the 2015 federal consent decree. The
   // first of the 93 to be read, and the first `order`-genre extraction Lima has.
-  it("extracts 69 of 3,348 documents — 2.1% of the corpus", () => {
+  // 69 -> 85 (#2075 follow-on): the enforcement tranche — the 1994 DFFO, the 2005 U.S. EPA
+  // administrative order, the 2016 NOV/ROV/incident-report burst, two City letters, the 2026 NOV,
+  // and one misfiled Mansfield letter. Sixteen documents, all `order`.
+  it("extracts 85 of 3,348 documents — 2.5% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
     expect(entries.length).toBe(3348);
-    expect(countExtracted(entries, index)).toBe(69);
+    expect(countExtracted(entries, index)).toBe(85);
   });
 
   it("is near-complete on the small instrument collections, and thin across the big holdings", () => {
@@ -187,17 +190,19 @@ describe("the join, against the committed Lima bundle", () => {
     // three H.B. 646 witness submissions, which are held and unread like the rest of `legal`.
     expect(counts.legal).toEqual([15, 1736]);
     expect(counts.commissioners).toEqual([0, 995]);
-    // `oepa` now belongs here: held, and read in small part. 12 of 111 is 10.8% — well above
+    // `oepa` now belongs here: held, and read in small part. 28 of 111 is 25.2% — well above
     // `legal`'s 0.9% and `commissioners`' zero, and well below the instrument collections it used
     // to sit with. The gap is the ingestion backlog this pull created, and it should RISE as
-    // extraction proceeds — 11 -> 12 at #2075 is the first step, the 2015 consent decree.
+    // extraction proceeds — 11 -> 12 at #2075 (the consent decree), 12 -> 28 at its follow-on
+    // (the whole enforcement tranche, 1994-2026). The remaining 83 are 36 permit actions, 30
+    // inspections, 9 progress reports, and one byte-identical duplicate never to be extracted.
     // ⚠️ The remaining 92 do NOT map 22-to-`order` as this comment once said. The portal's
     // "Judicial Order" doc type is a FILING DRAWER, not a genre: of its 12 rows exactly ONE is an
     // order (the decree), NINE are paragraph-33 semiannual progress reports filed under it, and TWO
     // are City of Lima letters. A progress report reports AGAINST obligations rather than imposing
     // them, so `--kind order` would have produced eleven wrong artifacts and ten near-duplicate
     // "decrees". Read a document before assuming its doc type is its genre.
-    expect(counts.oepa).toEqual([12, 111]);
+    expect(counts.oepa).toEqual([28, 111]);
   });
 
   it("counts distinct documents, not records — 3 records name no source file", () => {
@@ -209,7 +214,8 @@ describe("the join, against the committed Lima bundle", () => {
     // by a genre added for another site entirely.
     // 57 -> 73 at contract 2.1.0 (#1993), eight new genres across one classifier change.
     // 73 -> 74 (#2075): the Lima consent decree, which publishes into the `enforcement` group.
-    expect(records.length).toBe(74);
+    // 74 -> 90 (#2075 follow-on): the sixteen-document enforcement tranche, same group.
+    expect(records.length).toBe(90);
     // 5 -> 3, and this is the deliberate change the note below predicted. `_source_ref` now
     // resolves three further committed provenance shapes — `provenance.source_path` /
     // `provenance.sources`, the connector read's `meta.sources` (a dict of NAMED lists, so every
@@ -218,8 +224,8 @@ describe("the join, against the committed Lima bundle", () => {
     // What remains is genuinely unjoinable: the two OPC artifacts and one FEMA obligation, none of
     // which names a single source document.
     expect(records.filter((r) => !r.source_doc_rel).length).toBe(3);
-    // The joinable side of the same 73 -> 74: the decree names its source document, so the index
-    // gains an entry rather than joining the three that name none.
-    expect(index.size).toBe(69);
+    // The joinable side of the same 73 -> 74 -> 90: every one of these names its source document,
+    // so the index gains an entry each rather than joining the three that name none.
+    expect(index.size).toBe(85);
   });
 });

@@ -1,0 +1,67 @@
+doc_id: edoc-3063821-2c7c08eb
+source_path: data/documents/oepa/lima/edoc-3063821.pdf
+kind: order
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Phin o\nEnvironmentai \nProtection Agency \nMike DeWine, Governor\
+  \ \n!on Husted, Lt. Governor \nLaurie A. Stevenson, Director \nRe: Mansfield WWTP\
+  \ \nCorrespondence \nNPDES \nRichland County \n2PE00000 \nMarch 4, 2020 \nMr. Robert\
+  \ Coker Jr., WWTP Manager \n385 South illinois Avenue \nMansfield, Ohio 44905 \n\
+  Dear Mr. Coker: \nOhio EPA is in receipt of your letter dated February 24, 2020,\
+  \ regarding poikutants Control Strategy \nrequired by the wastewater treatment plant\
+  \ (WWTP) National Pollutant Discharge Elimination System \n(NPDES) permit Part I,\
+  \ C- A.2. \nThe Control Strategy is required to outline how the WWTP w"
+order:
+  confidence: high
+  warnings:
+  - '⚠️ MISFILED AT THE AGENCY, AND SHELVED WITH ITS SOURCE ANYWAY. This document''s
+    subject is the MANSFIELD WWTP in RICHLAND County — not Lima, and not Allen County.
+    Its own Ohio EPA reference block reads "Re: Mansfield WWTP / Correspondence /
+    NPDES / Richland County / 2PE00000", pairing Mansfield''s plant and county with
+    LIMA''s permit number. That is why a portal sweep of permit 2PE00000 returned
+    it, and why it sits in data/documents/oepa/lima/.'
+  - 'The extraction is shelved under oepa/lima/ because the extracted tree MIRRORS
+    its source and the source is immutable — the byte was served under Lima''s permit
+    and keeps that identity. Nothing here is Lima evidence: `respondent`, `facility`
+    and every figure describe Mansfield. Read the shelf as custody, not as attribution.'
+  - '`permit_no: 2PE00000` is AS PRINTED and is the error itself, not a transcription
+    of Mansfield''s real permit. Do not ''correct'' it to a Mansfield permit number
+    — the printed value is the evidence that the misfiling happened. Mansfield''s
+    actual NPDES id is not stated in this document.'
+  - Permit number '2PE00000' may be a placeholder or file-reference identifier rather
+    than the full active NPDES permit number; verify against permit records.
+  agency: Ohio EPA
+  instrument: correspondence
+  case_no: null
+  respondent: City of Mansfield (Mr. Robert Coker Jr., WWTP Manager)
+  facility: Mansfield WWTP
+  permit_no: 2PE00000
+  issued_date: '2020-03-04'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: PMP report must be prepared for all pollutants other than hexavalent
+      chromium and bis(2-ethylhexyl)phthalate (which Ohio EPA agrees may be excluded)
+      and submitted annually as required by NPDES permit Part I, C-A.3.
+    deadline: null
+    status: null
+  penalty_usd: null
+  stipulated_penalties: null
+  status: null
+  summary: Ohio EPA responds to the Mansfield WWTP's February 24, 2020 letter regarding
+    the Pollutants Control Strategy required under NPDES permit Part I, C-A.2. Ohio
+    EPA concurs with the WWTP's request to exclude hexavalent chromium and bis(2-ethylhexyl)phthalate
+    from the Pollutant Minimization Program (PMP) report requirements, given five
+    years of non-detect data for those parameters. The City is directed to continue
+    submitting the annual PMP report for all other pollutants per Part I, C-A.3.
+  note: Ohio EPA's response to the City of Mansfield's 2020-02-24 submittal of the
+    pollutant Control Strategy required by its NPDES permit Part I, C-A.2 — covering
+    copper, dissolved hexavalent chromium and bis(2-ethylhexyl)phthalate. Mansfield
+    is a registered site in this network (the first documented data-center rejection
+    site), so this is a document Mansfield's own record should know about; it is reachable
+    only because Ohio EPA filed it under Lima's permit number. Raised as a follow-up
+    rather than acted on here — moving or re-shelving the source byte is exactly what
+    the chain-of-custody rule forbids.

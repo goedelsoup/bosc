@@ -1,0 +1,95 @@
+doc_id: edoc-3957823-53e314c7
+source_path: data/documents/oepa/lima/edoc-3957823.pdf
+kind: order
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Nicole Cantello \nOffice of Regional Counsel (C- 14J) \nU.S.\
+  \ EPA, Region 5 \n77 West Jackson Boulevard \nChicago, IL 60604-3590 \n~~~000o0\
+  \ \n~ SCHOTTENSTEI N \nZOX&DUNNCo„LPA \nJOSEPH M. REIDY \n614/462-2207 \nFAX — 614222-3482\
+  \ \nE-MAIL: JREIDY@SZD.COM \nMarch 11, 2005 \nREcEjvED \nMAR 151005 \nOIpOEP  \n\
+  ~y,w p.0  A. \nRE: City of Lima, Ohio Docket No.: V-W-05-AO-08 \nDear Ms. Cantello:\
+  \ \nAs indicated in my February 18, 2005 letter and our subsequent telephone conversation,\
+  \ the City \nof Lima (City) is unable to meet the deadlines imposed in the February\
+  \ 7, 2005 Order. As you know, that \nOrder required the submis"
+order:
+  confidence: high
+  warnings:
+  - OCR layer contained garbled text on several fields (dates, docket number); values
+    verified against page image.
+  - 'Docket number rendered as ''V-W- ÔS #°— Ô~'' in OCR on order page but clearly
+    reads V-W-05-AO-08 on the cover letter and order header.'
+  - Exact deadlines (15-day, 30-day, 180-day) computed from Order receipt date of
+    Feb. 7, 2005 — actual receipt date by City not explicitly confirmed in documents.
+  - No civil penalty assessed in this Order; enforcement action threatened for non-compliance.
+  agency: U.S. EPA, Region 5
+  instrument: Administrative Order (Findings of Violations, Order for Compliance and
+    Request for Information) with associated correspondence
+  case_no: V-W-05-AO-08
+  respondent: City of Lima, Ohio
+  facility: City of Lima POTW, 1200 Fort Amanda Road, Lima, Ohio; 120 miles separate
+    sewers, 204 miles combined sewers
+  permit_no: OH0026069
+  issued_date: '2005-02-07'
+  effective_date: '2005-02-07'
+  supersedes: null
+  obligations:
+  - requirement: Submit written certification of intent to comply with the Order
+    deadline: '2005-02-22'
+    status: City indicated via Feb 18, 2005 letter it could not accept the Order as
+      proposed and sought to negotiate a Consent Order instead
+  - requirement: Immediately cease and desist all SSOs from all discharge points in
+      the sanitary sewer system
+    deadline: null
+    status: Not met — City acknowledged inability to immediately comply
+  - requirement: Submit detailed written Sanitary Sewer Overflow Elimination Plan
+      (SSOEP) for U.S. EPA approval
+    deadline: '2005-03-09'
+    status: Missed — City's March 11, 2005 letter states SSOEP not anticipated to
+      be completed until approximately June 20, 2005
+  - requirement: Implement the SSOEP
+    deadline: '2005-08-05'
+    status: Pending SSOEP completion
+  - requirement: Begin sampling SSO discharge points for fecal coliform, e-coli, and
+      ammonia
+    deadline: '2005-03-09'
+    status: In progress — City's March 11, 2005 letter states sampling of representative
+      SSOs to begin that month
+  - requirement: Submit monthly Compliance Progress Reports (CPR) including SSO sampling
+      data, descriptions of actions taken, daily rainfall data, and copy of DMR
+    deadline: null
+    status: Ongoing — City committed to submitting CPRs as sampling data is collected
+  penalty_usd: null
+  stipulated_penalties: Not specified in the Order; failure to comply may subject
+    City to further enforcement action under 33 U.S.C. § 1319
+  status: active
+  summary: U.S. EPA Region 5 issued an Administrative Order on February 7, 2005 to
+    the City of Lima, Ohio under CWA Sections 308 and 309(a), finding violations of
+    NPDES Permit No. OH0026069 due to 36+ sanitary sewer overflow (SSO) discharge
+    points discharging untreated sewage to the Ottawa River. The Order required the
+    City to certify compliance, immediately cease SSOs, submit a Sanitary Sewer Overflow
+    Elimination Plan (SSOEP) within 30 days, implement it within 180 days, and begin
+    monthly SSO sampling and Compliance Progress Reports. The City, through counsel
+    (Schottenstein, Zox & Dunn), responded that it could not meet the deadlines, anticipated
+    completing the SSOEP by approximately June 20, 2005, and proposed negotiating
+    a Consent Order in lieu of accepting the administrative order as issued.
+  note: 'The file contains: (1) the Feb. 7, 2005 U.S. EPA Administrative Order; (2)
+    the City''s Feb. 18, 2005 response letter rejecting the Order and proposing a
+    Consent Order; (3) the City''s March 11, 2005 status letter to Nicole Cantello
+    (U.S. EPA ORC) reporting inability to meet SSOEP deadline and beginning SSO sampling;
+    and (4) a Lima News article describing potential $147 million cost and 83% sewer
+    rate increase. The permit expiration date is March 31, 2007. The 30-day SSOEP
+    deadline computed from Feb. 7, 2005 receipt is approximately March 9, 2005; the
+    180-day implementation deadline is approximately August 5, 2005.'

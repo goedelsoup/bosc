@@ -1,0 +1,65 @@
+doc_id: edoc-2710530-95535dd4
+source_path: data/documents/oepa/lima/edoc-2710530.pdf
+kind: order
+pages_read:
+- 0
+- 1
+- 2
+- 3
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "City of Lima, Ohio 50 Town Square Lima, Ohio 45801-4900 \n419\
+  \ ~228-5482 Fax 419~ 221-5199 www.cityha!!.lima.oh.us \n1 \nDavid J. Berger, Mayor\
+  \ \nMay 30, 2019 \nChief \nWater Enforcement and Compliance Assurance Branch \n\
+  Water Division \nUS Environmentai Protection Agency, Region V \n77 West Jackson\
+  \ Blvd. \nChicago, IL 60604 \nNicole Cante!!o \nAssociate Regiona! Counsel \nUS\
+  \ E.nvironmenta! Protection Agency, Region V \n77 West Jackson Blvd. \nChicago,\
+  \ IL 60604 \ncantello.nicole@epa.gov  \nOhio Environmental Protection Agency \n\
+  Division of Surface Water \nAttn: Manager, Permits and Comp!iance \nPO Box 1049\
+  \ \nColumb"
+order:
+  confidence: high
+  warnings:
+  - Case/civil-action number for the underlying Consent Decree is not stated in this
+    letter — only referenced generically as 'the Consent Decree among the United States,
+    the State of Ohio and the City of Lima'.
+  - No penalty or stipulated-penalty figures appear in this correspondence document.
+  - This is a request letter from the respondent, not an order issued by the agency;
+    approval status is unknown from this page alone.
+  agency: U.S. EPA Region V / Ohio EPA
+  instrument: correspondence (extension request letter)
+  case_no: null
+  respondent: City of Lima, Ohio
+  facility: City of Lima Wastewater Treatment Plant (Nitrification Towers)
+  permit_no: null
+  issued_date: '2019-05-30'
+  effective_date: null
+  supersedes: Consent Decree among the United States, the State of Ohio, and the City
+    of Lima (Appendix C)
+  obligations:
+  - requirement: One-year sampling period to determine compliance with Performance
+      Criteria applicable to the Nitrification Towers (original period per Appendix
+      C of the Consent Decree)
+    deadline: '2019-07-31'
+    status: Extension requested — original period deemed insufficient due to inadequate
+      wet weather sampling events
+  - requirement: Requested one-year extension of Nitrification Towers sampling period
+      to determine compliance with Performance Criteria (August 1, 2019 through July
+      31, 2020)
+    deadline: '2020-07-31'
+    status: Requested — pending EPA and Ohio EPA approval
+  penalty_usd: null
+  stipulated_penalties: null
+  status: null
+  summary: The City of Lima, Ohio, through its Director of Utilities, wrote to U.S.
+    EPA Region V and Ohio EPA on May 30, 2019, requesting a one-year extension of
+    the Nitrification Towers sampling period under Appendix C of the applicable Consent
+    Decree — from August 1, 2019 through July 31, 2020 — because the original July
+    2018–July 2019 period produced insufficient wet-weather sampling events to evaluate
+    tower performance. The letter details the operational complications (bearing failure,
+    seeding issues, sewer detention problems, flow-meter uncertainties, and limited
+    peak wet-weather events) that prevented adequate data collection, and provides
+    effluent quality data from the four peak wet-weather tests conducted between February
+    and May 2019.
+  note: null

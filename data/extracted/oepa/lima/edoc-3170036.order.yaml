@@ -1,0 +1,60 @@
+doc_id: edoc-3170036-65397577
+source_path: data/documents/oepa/lima/edoc-3170036.pdf
+kind: order
+pages_read:
+- 0
+- 1
+- 2
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "{+' \nLIMA, OHIO \n,.,. \nCITY OF LIMA, OHIO David J. Berger,\
+  \ Mayor \n50 Town Square Lima Ohio 45$01-4900 419122$-5462 Fax 4 1 9122 1-52 14\
+  \ \nwww.cit'hall.lima.oh.us . \nAugust 7, 2017 \nChief RECE/t, \nWater Enforcement\
+  \ and Compliance Assurance Branch el) \nWater Division AUG 2017 U.S. Environmental\
+  \ Protection Agency, Region 5 p N,Q\n . P A 77 West Jackson Blvd N. W ~ Chicago,\
+  \ I1linois, 60604 \nRe: CASE: 3:14-CV-02551-JZ Doc #5 Filed: 0111311.5 \nThis letter\
+  \ is sent pursuant to Paragraphs 58, 64, 65 and 69 of the Lima Consent Decree. The\
+  \ incident that \noccurred at the Lima WWTP on July 22, 2017, in which"
+order:
+  confidence: high
+  warnings:
+  - 'Document package contains two letters: one dated August 7, 2017 (force majeure/penalty
+    waiver request) and one dated July 31, 2017 (incident report/notification); both
+    are correspondence referencing the Lima Consent Decree.'
+  - Discharge amount is listed as 'Unknown' in the incident report.
+  - OCR layer had several digit errors; dates and case number verified against image.
+  agency: U.S. EPA, Region 5
+  instrument: correspondence
+  case_no: '3:14-CV-02551-JZ Doc #5 Filed: 01/13/15'
+  respondent: City of Lima, Ohio
+  facility: Lima Wastewater Treatment Plant (WWTP)
+  permit_no: null
+  issued_date: '2017-08-07'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: Force majeure notification and request to excuse noncompliance and
+      waive stipulated penalties resulting from direct lightning strike to Lima WWTP
+      on July 22, 2017, pursuant to Paragraphs 58, 64, 65, and 69 of the Lima Consent
+      Decree.
+    deadline: null
+    status: pending — waiver requested
+  - requirement: Incident report (Part VII, Section A, 34) for discharge to Ottawa
+      River caused by lightning strike on July 22, 2017; Incident ID# 1707EPA0000654-i001.
+      Report filed July 31, 2017.
+    deadline: null
+    status: filed 2017-07-31
+  penalty_usd: null
+  stipulated_penalties: Stipulated penalties requested to be waived due to force majeure
+    event (direct lightning strike to Lima WWTP on July 22, 2017).
+  status: null
+  summary: Two letters from Michael H. Caprella, Director of Utilities, City of Lima,
+    Ohio, to U.S. EPA Region 5. The August 7, 2017 letter invokes the force majeure
+    provisions (Paragraphs 58, 64, 65, and 69) of the Lima Consent Decree (Case 3:14-CV-02551-JZ),
+    requesting that noncompliance caused by a direct lightning strike to the Lima
+    WWTP on July 22, 2017 be excused and that any stipulated penalties be waived.
+    The July 31, 2017 letter is the underlying incident report detailing the lightning
+    strike, resulting loss of power and discharge to the Ottawa River, and the remedial
+    measures taken to restore plant operations.
+  note: null
