@@ -1,0 +1,50 @@
+doc_id: edoc-463755-6c7ab447
+source_path: data/documents/oepa/lima/edoc-463755.pdf
+kind: order
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: ''
+order:
+  confidence: high
+  warnings:
+  - Permit number '2PE00000' is taken directly from the Re line and may be a facility/case
+    identifier rather than a standard NPDES permit number — verify.
+  - 14-day deadline calculated from letter date of 2016-07-11; exact deadline date
+    not explicitly stated in document.
+  - No civil penalty assessed in this letter; penalty language is precautionary/prospective
+    only.
+  agency: Ohio EPA
+  instrument: correspondence
+  case_no: 2PE00000
+  respondent: City of Lima
+  facility: Lima WWTP
+  permit_no: 2PE00000
+  issued_date: '2016-07-11'
+  effective_date: null
+  supersedes: Notice of Violation letter dated 2016-06-01
+  obligations:
+  - requirement: 'Submit a revised Standard Operating Procedure (SOP) for filling
+      the sodium hypochlorite tank that: (1) corrects the Ohio EPA Spill Hotline number
+      to 1-800-282-9378, and (2) includes a statement that in the event of a release
+      of sodium hypochlorite, a grab sample of the final effluent will be collected
+      and analyzed for residual chlorine.'
+    deadline: '2016-07-25'
+    status: pending
+  penalty_usd: null
+  stipulated_penalties: null
+  status: active
+  summary: This is a follow-up correspondence from Ohio EPA's Northwest District Office,
+    Division of Surface Water, responding to the City of Lima's June 15, 2016 reply
+    to a June 1, 2016 Notice of Violation (NOV) related to a Sodium Hypochlorite Incident
+    at the Lima WWTP. The letter constitutes a partial resolution of the NOV and requests
+    that the City submit a revised SOP for filling the sodium hypochlorite tank within
+    14 days, addressing two specific corrections. Failure to comply may result in
+    administrative or civil penalties under Ohio Revised Code Chapter 6111.07.
+  note: Letter signed by Peggy B. Christie, Division of Surface Water, Northwest District
+    Office. Re line references NPDES and Allen County. The permit number field "2PE00000"
+    appears in the Re line as an identifier. The 14-day deadline from July 11, 2016
+    resolves to approximately July 25, 2016. The document is titled "Partial Resolution
+    of Violation," indicating the NOV is not fully closed.

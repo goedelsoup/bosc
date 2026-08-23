@@ -165,6 +165,14 @@ def test_committed_lima_manifest_loads() -> None:
         "lacrpc:_01132026-261",
         "lacrpc:_01272026-262",
         "lacrpc:_02102026-266",
+        # The 2026-08-22 Lima WWTP portal pull (#2075 follow-on). Two byte-identical situations, and
+        # neither is a corpus defect — the portal addresses a document by docid, so one filing can
+        # be reachable at several, and a DAM fetch can land the same bytes a second time under a
+        # different name. `2PE00000-OD` is the 2023 issued permit, held once from the DAM (already
+        # extracted) and once from the portal; the flow-diagram cluster is three docids inside one
+        # 2022 application package serving a single page.
+        "oepa:2PE00000-OD",
+        "oepa:2PE00000-app256207483-flow-diagram",
     }
     by_id = {c.id: c for c in versions.clusters}
     # Every cluster's canonical is one of its own members (never a dangling ref).

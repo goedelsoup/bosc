@@ -1,0 +1,62 @@
+doc_id: edoc-3170417-72ba3c4c
+source_path: data/documents/oepa/lima/edoc-3170417.pdf
+kind: order
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "■ \n~o Ohio Environmental \nProtection Agency \nDivision of\
+  \ Environmental Response, NOTICE OF Investigation and Enforcement \nVIOLATION ER\
+  \ PROGRAM \nOhio EPA (ncident Number: 116 0 — iDate of Discovery: Qj ~ G j\"€ \n\
+  Entity:  y '~~ ~1~l~ \nAddress: j q~,'} W t,_! ì- / A f7?LF Y~ Cl f i r7 ? ' \n\
+  Phone: r~~ -~. Cellular: \n \nEmail: \n \nThis is to advise that due to circ, umstances\
+  \ noted below you have responsibility for one or more violations of the following\
+  \ Ohio \nRevised Code chapters: ~3704, 3714, 3734, _3750, _6109, 6111, or . LOhio\
+  \ Administrative Code 3745-1-04. \nDescriqtion of violation(s) / inc \nc 3"
+order:
+  confidence: medium
+  warnings:
+  - OCR text layer was largely illegible; all key fields were read directly from the
+    page image.
+  - Incident number read from image as 1607-02-1456; OCR rendered it unreliably.
+  - Date of Discovery confirmed as 07-25-2016 from image.
+  - Recipient printed name read as Eric Markley; date of signature not legible on
+    this page.
+  - Issuing OSC name appears to be David Schilt (david.schilt@epa.ohio.gov, 419-373-3041)
+    — partially handwritten.
+  - Page 1 of 2 only; page 2 not provided, additional obligations or details may be
+    on the next page.
+  agency: Ohio EPA – Division of Environmental Response, Investigation and Enforcement
+    (ER Program)
+  instrument: NOV
+  case_no: 1607-02-1456
+  respondent: Lima WWTP (signed by Eric Markley)
+  facility: Lima WWTP, 1200 Ft Amanda Rd, Lima, OH
+  permit_no: null
+  issued_date: '2016-07-25'
+  effective_date: '2016-07-25'
+  supersedes: null
+  obligations:
+  - requirement: Monitor DO at the outfall, headgate, and a point between
+    deadline: null
+    status: null
+  - requirement: Monitor outfall discharge
+    deadline: null
+    status: null
+  - requirement: Plan in place to aerate / increase DO
+    deadline: null
+    status: null
+  - requirement: OEPA recommends removal of sludge from bottom of river
+    deadline: null
+    status: null
+  penalty_usd: null
+  stipulated_penalties: null
+  status: active
+  summary: Ohio EPA issued this Notice of Violation to Lima WWTP (incident no. 1607-02-1456)
+    following discovery on July 25, 2016 of an unknown amount of sludge released to
+    the Ottawa River, with black material observed floating on the river between Ridgegate
+    Road and the outfall. Initial abatement actions required include monitoring DO
+    at the outfall and intermediate points, monitoring outfall discharge, implementing
+    aeration to increase DO, and removing sludge from the river bottom.
+  note: null

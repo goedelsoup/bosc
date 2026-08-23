@@ -1,0 +1,48 @@
+doc_id: edoc-3967455-8fef9810
+source_path: data/documents/oepa/lima/edoc-3967455.pdf
+kind: order
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "CITY OF LIMA, OHIO David J. Berger, Mayor \n50Town Square. L-ima,\
+  \ Ohio 45801-4900 419/228-5462 Fax 419/221-5214 \nFebruary 24, 1995 \nRECEIVED \\\
+  \ \nEE8 2 1995 \\ \nu ~+W.DPdA. \n../ \nMs. Elizabeth Wick \nEnforcement Group Leader\
+  \ \nDivision of Surface Water \nNWDO - Ohio EPA \n347 N. Dunbridge Road \nBowling\
+  \ Green, Ohio 43402 \nRe: Director's Final Findings and Orders \nSanitary Sewer\
+  \ Overflows \nDear Ms. Wick: \nEnclosed herewith are three copies of the City of\
+  \ Lima, Ohio \nGeneral Plan for Abatement of Sanitary Sewer Overflows, as \nrequired\
+  \ by Director's Final Findings and Orders, dated February \n25, 1994. \nTh"
+order:
+  confidence: medium
+  warnings:
+  - Permit number '2PE00000' is handwritten at the top of the page and read from the
+    image; OCR did not reliably capture it.
+  - No case number is explicitly printed on this letter; the reference instrument
+    is the DFFO dated 1994-02-25.
+  - Received stamp date reads FEB 24 1995 in image, consistent with the letter date.
+  agency: Ohio EPA
+  instrument: correspondence
+  case_no: null
+  respondent: City of Lima, Ohio
+  facility: City of Lima Sanitary Sewer System
+  permit_no: 2PE00000
+  issued_date: '1995-02-24'
+  effective_date: null
+  supersedes: Director's Final Findings and Orders dated 1994-02-25
+  obligations:
+  - requirement: Submit General Plan for Abatement of Sanitary Sewer Overflows (three
+      copies enclosed with this letter, prepared by URS Consultants, Columbus)
+    deadline: null
+    status: met
+  penalty_usd: null
+  stipulated_penalties: null
+  status: null
+  summary: This is a February 24, 1995 transmittal letter from Gary Sheely, Director
+    of Utilities for the City of Lima, Ohio, to Ms. Elizabeth Wick, Enforcement Group
+    Leader at Ohio EPA NWDO, enclosing three copies of the City of Lima General Plan
+    for Abatement of Sanitary Sewer Overflows as required by the Director's Final
+    Findings and Orders dated February 25, 1994. The report was prepared by URS Consultants,
+    Columbus, with input from City of Lima officials and staff.
+  note: null

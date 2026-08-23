@@ -1,0 +1,61 @@
+doc_id: edoc-469760-803ec0eb
+source_path: data/documents/oepa/lima/edoc-469760.pdf
+kind: order
+pages_read:
+- 0
+- 1
+- 2
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "r~s rown add~~~ ATTORNEYS \nStephen P Samuels \nMember \n6 4.559.7259\
+  \ (t) \n614.464,1737 (f) \nssamuefs@fbtlaw.com  \nV~A ELECTRONIC MAIL \nVIA. REGULAR\
+  \ NYA~L \nElizabeth A. Wick \nEnvironmental Engineer/Section Manager \nOhio EPA,\
+  \ Northwest District Office \n347 N. Dunbridge Rd. \nBowling Green, OH 43402 \n\
+  Dear Ms. Wick: \nJUL 2 \nOHiO E. p A \nEr}fity:  ._. .L \nEoc Subtype:. \nProgram;\
+  \ — \nCr~ur:ty: ____ \nsecanc~ary i[): \nJuly 25, 2016 \nThis is in response to\
+  \ your letter dated July 11, regarding the Notice of Violation dated \nJune 1, 2.016.\
+  \ Although y~u did. not direct that letter to me, I assume it was writt"
+order:
+  confidence: medium
+  warnings:
+  - No case number or permit number is printed on the letter; fields left null.
+  - Facility name and municipality not explicitly stated in letter body — inferred
+    as Allen County area from SOP spill contacts (Allen County EMA at 567-242-9074).
+  - Secondary ID on received stamp is only partially legible; transcribed as 'AVEO0000'
+    but may differ.
+  - OCR layer was unreliable; phone numbers and dates verified against image.
+  - SOP effective date reads '7-14-1f' in OCR; image confirms '7-14-16'.
+  agency: Ohio EPA, Northwest District Office
+  instrument: correspondence
+  case_no: null
+  respondent: The City (represented by Stephen P. Samuels, Frost Brown Todd LLC)
+  facility: Wastewater treatment facility (hypochlorite disinfection), Allen County
+    area
+  permit_no: null
+  issued_date: '2016-07-25'
+  effective_date: null
+  supersedes: Notice of Violation dated 2016-06-01; prior letter dated 2016-06-15
+  obligations:
+  - requirement: Prepare and submit a revised Standard Operating Procedure (SOP) for
+      filling the hypochlorite tank, incorporating the additional information requested
+      by Ohio EPA in response to the Notice of Violation dated June 1, 2016.
+    deadline: null
+    status: met — revised SOP submitted with this letter on 2016-07-25; respondent
+      asserts NOV fully resolved
+  penalty_usd: null
+  stipulated_penalties: null
+  status: closed
+  summary: Attorney Stephen P. Samuels of Frost Brown Todd LLC responds on behalf
+    of the City to Ohio EPA Northwest District Office's July 11, 2016 letter concerning
+    the June 1, 2016 Notice of Violation. The letter transmits a revised SOP for filling
+    the hypochlorite tank (effective 2016-07-14, signed by Acting Supervisor Eric
+    Markley) and asserts that the City has complied with all NOV requests and that
+    the NOV is fully resolved. The SOP governs PPE, tank truck unloading procedures,
+    spill response, and chlorine residual sampling at Station 001.
+  note: 'The letter is dated July 25, 2016. The RECEIVED stamp reads JUL 27 2016,
+    Ohio EPA NWDO. The attached SOP bears an effective date of 7-14-16 and is signed
+    by Eric Markley, Acting Supervisor. CC list includes Mayor David Berger, Gary
+    Sheely, Michael Caprella, Tony Geiger, Fred Andes, Saul Allen, Erik Markley, David
+    Schnipke, Peggy Christie, Bill Fischbein. Document reference: 0128598.0618391
+    4839-9925-6885v1. Secondary ID on stamp appears to read AVEO0000 (partially legible).'

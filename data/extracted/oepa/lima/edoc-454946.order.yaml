@@ -1,0 +1,78 @@
+doc_id: edoc-454946-185f5bea
+source_path: data/documents/oepa/lima/edoc-454946.pdf
+kind: order
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "r~s r®wn Oddr.c ATTORNEYS \nJune 15, 2016 \nVIA ELECTRONIC MAIL\
+  \ \nVIA RLGULAR MAIL \nEli~abeth A. Wick \nEnvironmental EngineerlSection Manager\
+  \ \nOhio EPA, Northwest District Office \n347 N. Dunbridge Rd. \nBowling Green,\
+  \ OH 43402 \nStephen P Samuels \nMem ber \n614.559.7259 (t) \n614.464.1737 (f) \n\
+  0H10 ~,p~, \t ssamuels@fbtlaw.com  \n®~e~akFo~m \n:r~t~Fy:  \nDoc Typ~:._.., \n\
+  L3ac Subtype: \nPrc?~!r~m: —.-\nLUtif Ity: _ ^ -- \nSscy !O: \nDear Ms. Wick: \n\
+  This is written in response to your Notice of Violation dated June 1, 2016. Since\
+  \ my May \n12, 2016 letter, we have learned that the sodium hypochlorite (NaOCI)\
+  \ los"
+order:
+  confidence: high
+  warnings:
+  - This document is a respondent's (City of Lima) response letter to an NOV — not
+    the NOV itself or an agency enforcement order; the instrument classification reflects
+    that.
+  - The originating NOV is dated June 1, 2016, and was issued by Ohio EPA NWDO (Elizabeth
+    A. Wick); that document is not fully reproduced here.
+  - Permit number '2PE00000' is cited in the letter text; OCR rendered it inconsistently
+    but the image text confirms '2PE00000' on page 2.
+  - SOP effective date appears to be '6-14-16' (June 14, 2016) per the handwritten
+    notation, verified against image.
+  - No case number or docket number is referenced in this correspondence.
+  agency: Ohio EPA, Northwest District Office
+  instrument: correspondence (response to NOV)
+  case_no: null
+  respondent: City of Lima
+  facility: Lima Wastewater Treatment Plant (WWTP)
+  permit_no: 2PE00000
+  issued_date: '2016-06-15'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: Submit report detailing the City's investigation of the NaOCl incident,
+      conclusions, and procedures to prevent recurrence (enclosed with this letter)
+    deadline: null
+    status: met
+  - requirement: Adopt and implement Standard Operating Procedure (SOP) for sodium
+      hypochlorite handling to prevent future losses
+    deadline: '2016-06-14'
+    status: met
+  - requirement: File formal request to approve Eric Markley as operator of record
+    deadline: null
+    status: met — filed 2016-06-10
+  - requirement: SOP to contain notification requirements for release of hazardous
+      substances, including contact info for Allen County EMA and Ohio EPA Spill Hotline
+    deadline: null
+    status: met
+  - requirement: Address all six NOV findings within 15 days of receipt of the June
+      1, 2016 NOV
+    deadline: null
+    status: met — responded via this letter
+  penalty_usd: null
+  stipulated_penalties: null
+  status: active
+  summary: This is a June 15, 2016 response letter from Frost Brown Todd LLC (attorneys
+    for the City of Lima) to Ohio EPA's Northwest District Office, written in reply
+    to a Notice of Violation dated June 1, 2016, concerning the loss of approximately
+    2,500 gallons of sodium hypochlorite (NaOCl) at the Lima WWTP on April 12–14,
+    2016. The City disputes each of the six alleged violations on legal grounds but
+    commits to implementing protocol changes, encloses an incident investigation report,
+    and provides an adopted SOP to prevent recurrence. No civil penalty is assessed
+    in this document; it is a respondent's correspondence rather than an agency enforcement
+    order.
+  note: null

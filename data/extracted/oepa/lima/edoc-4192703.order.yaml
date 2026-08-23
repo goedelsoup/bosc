@@ -1,0 +1,60 @@
+doc_id: edoc-4192703-cf6d1893
+source_path: data/documents/oepa/lima/edoc-4192703.pdf
+kind: order
+pages_read:
+- 0
+- 1
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: " \n \n \n Northwest District Office \n347 N. Dunbridge Road\
+  \ \nBowling Green, Ohio 43402 U.S.A. \n 419 | 352 8461 \nepa.ohio.gov \n    \n The\
+  \ State of Ohio is an Equal Opportunity Employer and Provider of ADA Services \n\
+  \ \nJuly 16, 2026 \n \nTransmitted Electronically \n \nMr. Mike Caprella, Utilities\
+  \ Director  \nCity of Lima  \n50 Town Square  \nLima, Ohio 45804 \n \n \nRe: Lima\
+  \ WWTP \n Notice of Violation (NOV)  \n NOV \n NPDES \n Allen County \n 2PE00000\
+  \ \n \nSubject: Notice of Violation \n \nDear Mr. Caprella: \nOhio EPA, Division\
+  \ of Surface Water (DSW), conducted an inspection of the Lima Wastewater \nTreatment\
+  \ Plant (WW"
+order:
+  confidence: high
+  warnings:
+  - No case number printed on this instrument.
+  - The 30-day response deadline is relative to receipt date, not a fixed ISO date
+    — no absolute deadline date can be determined from the document.
+  - Permit number '2PE00000' confirmed in both image and OCR; may warrant verification
+    against official NPDES records as trailing zeros could indicate a placeholder
+    or redaction.
+  agency: Ohio EPA, Division of Surface Water (DSW)
+  instrument: NOV
+  case_no: null
+  respondent: City of Lima
+  facility: Lima Wastewater Treatment Plant (WWTP)
+  permit_no: 2PE00000
+  issued_date: '2026-07-16'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: Provide a plan and timeline to return to compliance with the NPDES
+      permit, addressing effluent limit violations for low level mercury, E. coli,
+      total suspended solids, dissolved oxygen, pH – minimum, CBOD5, and ammonia (including
+      significant noncompliance for ammonia).
+    deadline: null
+    status: null
+  - requirement: Within thirty (30) days of receipt of this letter, provide documentation
+      to Ohio EPA DSW of actions taken and/or to be taken to resolve the cited violation(s).
+      Documentation may include written correspondence, updated policies, and photographs,
+      submitted via postal service or electronically to peggy.christie@epa.ohio.gov.
+    deadline: null
+    status: null
+  penalty_usd: null
+  stipulated_penalties: null
+  status: active
+  summary: Ohio EPA DSW issued this Notice of Violation to the City of Lima on July
+    16, 2026, following an inspection of the Lima WWTP on July 7, 2026. The NOV identifies
+    effluent limit violations for low level mercury, E. coli, total suspended solids,
+    dissolved oxygen, pH – minimum, CBOD5, and ammonia under NPDES permit 2PE00000,
+    with the City in significant noncompliance (SNC) for ammonia. The City is required
+    to submit a compliance plan and timeline, along with supporting documentation,
+    within 30 days of receipt.
+  note: null

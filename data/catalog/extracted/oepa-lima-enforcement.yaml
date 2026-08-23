@@ -4,14 +4,61 @@ scope: extracted
 status: reviewed
 producer:
   kind: extracted
-  source: Ohio EPA eDocument portal — the enforcement instruments on NPDES permit 2PE00000 (City
-    of Lima WWTP), fetched 2026-08-22 by `watermark oepa fetch` and shelved under
-    data/documents/oepa/lima/
+  source: Ohio EPA eDocument portal — the enforcement instruments on NPDES permit 2PE00000 (City of Lima
+    WWTP), fetched 2026-08-22 by `watermark oepa fetch` and shelved under data/documents/oepa/lima/
 license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:lima
 storage:
+- relpath: extracted/oepa/lima/edoc-1914753.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1914761.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-2710530.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3063821.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170036.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170415.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170417.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3296496.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3957823.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3957824.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3967455.order.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-412983.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-4192703.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-454946.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-463755.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-469760.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-470936.order.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:
@@ -25,19 +72,35 @@ tags:
 - cso
 - sso
 - lima
-notes: >-
-  The enforcement half of the Lima WWTP record, kept separate from the permit extractions in
-  `oepa` (which are NPDES permits, fact sheets and public notices) because a consent decree is a
-  different instrument: it imposes obligations rather than authorising a discharge, and it is read
-  by the enforcement timeline, not the permit feed. `edoc-412983.order.yaml` is the federal Clean
-  Water Act consent decree — United States and the State of Ohio v. City of Lima, Case No.
-  3:14 CV 2551 (N.D. Ohio), entered 2015-01-13 — transcribed body-and-appendices, including the
-  Appendix A "Table A.1" integrated control schedule that runs 2014 through 2038 with a final
-  post-construction compliance monitoring report due 2043-12-31. NOT a text-layer-only read: the
-  decree's 39 appendix pages and two substantive body pages carry no text layer and were recovered
-  by rotation-corrected OCR against the page images, so this artifact holds figures that are not
-  reachable from `data/site/passages.ndjson`, which indexes only the 64 body pages. The other 92
-  documents in that tree (9 paragraph-33 progress reports, 30 inspections, 38 permit actions, the
-  1994 DFFO, 3 NOVs, 4 ROV/RTC, 2 city letters, 2 incident reports, 2 correspondence items and 1
-  investigation report) are ingested but NOT yet extracted — add each to
-  this entry, or to a genre-appropriate sibling, as it is worked.
+notes: "The enforcement half of the Lima WWTP record, kept separate from the permit extractions in `oepa`\n\
+  (NPDES permits, fact sheets, public notices) because these instruments impose obligations rather\nthan\
+  \ authorising a discharge, and are read by the enforcement group rather than the permit feed.\n\nThe\
+  \ spine now runs 1994 → 2026 and is continuous:\n\n  1994-02-25  DFFO (Ohio EPA)          27 unpermitted\
+  \ SSO points documented 1992-05 → 1993-05, of\n                                       36 known; General\
+  \ Plan ordered by 1995-02-25\n  2005-02-07  Administrative Order     U.S. EPA Region 5, Docket V-W-05-AO-08,\
+  \ CWA §§308/309(a);\n              (U.S. EPA)               36 numbered SSO discharge points; SSO Elimination\
+  \ Plan\n  2015-01-13  Consent decree           Case 3:14 CV 2551 (N.D. Ohio); Table A.1 runs to 2038,\
+  \ final\n              (U.S. + Ohio)            post-construction compliance report 2043-12-31\n  2016\
+  \        NOV / ROV / IPIR burst   the enforcement activity around the headworks construction\n  2026-07-16\
+  \  NOV (Ohio EPA DSW)       effluent-limit violations for low level mercury, E. coli,\n            \
+  \                           TSS, dissolved oxygen, pH-minimum, CBOD5 and ammonia, with\n           \
+  \                            the City in SIGNIFICANT NONCOMPLIANCE (SNC) for ammonia\n\n⚠️ The portal's\
+  \ doc_type is a FILING DRAWER, not a genre, and it disagreed with the document in\nfive of these sixteen:\
+  \ two rows typed \"NOV\" are the City's replies to one, a row typed\n\"Investigation Report\" is itself\
+  \ an NOV, and two typed \"Judicial Order\" are City of Lima letters.\nEvery `instrument` here was read\
+  \ from the document.\n\n⚠️ `edoc-3063821.order.yaml` is NOT LIMA EVIDENCE. Ohio EPA misfiled a MANSFIELD\
+  \ WWTP\n(Richland County) letter under Lima's permit number — the letter's own reference block reads\n\
+  \"Mansfield WWTP / Richland County / 2PE00000\" — so a 2PE00000 sweep returned it. The extraction is\n\
+  shelved here because the extracted tree mirrors its immutable source, not because the subject is\nLima's.\
+  \ Its own warnings say so at length.\n\nStill ingested and NOT yet extracted — 76 of the 93:\n  36 \
+  \ permit actions (`Permit - Intermediate`) — heterogeneous: issued NPDES permits 2PE00000*MD /\n   \
+  \   *ND / *PD, draft public notices, a fact sheet, modification approvals, a mercury variance\n    \
+  \  application, a 2013 City ordinance, the 2022 renewal application package APP256207483, and\n    \
+  \  a run of City/agency correspondence. Genre is per-document, not per-drawer.\n   1  `edoc-2363112.pdf`\
+  \ — NEVER to be extracted. Byte-identical (sha256 b140e19c5e26) to\n      `oepa/2PE00000.pdf`, which\
+  \ is already extracted as `oepa/2PE00000.npdes.yaml`. Recorded as a\n      cluster in `data/site/document-versions.yaml`.\n\
+  \  30  inspections / compliance reviews — NO GENRE FITS. An Ohio EPA inspection letter reports\n   \
+  \   observations and findings; it imposes nothing, so `order` is wrong, and `notice` is an\n      R.C.\
+  \ 1311.04 mechanic's-lien filing, not this. Needs a model.\n   9  paragraph-33 semiannual progress reports\
+  \ — NO GENRE FITS. A progress report reports AGAINST\n      obligations rather than imposing them; extracting\
+  \ one as an `order` would publish a\n      near-duplicate of the decree. Needs a model.\n"
