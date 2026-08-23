@@ -1205,6 +1205,7 @@
     "title": "correspondence (Resolution of Violation letter)",
     "confidence": "high",
     "warnings": [
+      "Twin capture: edoc-1914753 and edoc-470936 are the SAME Ohio EPA Resolution of Violation letter of 2016-08-01, served at two portal docids as two different scans (NOT byte-identical — four distinct sha256s across the two 2016 letter pairs). The two independent reads disagreed, one finding a 2016-07-25 'deadline' that is in fact the date the City had ALREADY submitted the SOP. Reconciled to one reading; the cluster is declared in data/site/document-versions.yaml.",
       "OCR rendered permit number as '2PE00000' — verified against image which shows '2PE00000'. The OCR also rendered 'WWTP' as 'WVVTP' in the subject line; corrected per image."
     ],
     "fields": {
@@ -1216,19 +1217,13 @@
       "permit_no": "2PE00000",
       "issued_date": "2016-08-01",
       "effective_date": null,
-      "supersedes": "Partial Resolution of Violation (PROV) letter dated July 11, 2016; NOV dated June 1, 2016",
-      "obligations": [
-        {
-          "requirement": "Resolve all violations outlined in the NOV dated June 1, 2016, including submission of a revised Standard Operating Practice (SOP) for filling the sodium hypochlorite tank.",
-          "deadline": null,
-          "status": "met — Ohio EPA confirmed all violations resolved as of August 1, 2016"
-        }
-      ],
+      "supersedes": null,
+      "obligations": [],
       "penalty_usd": null,
       "stipulated_penalties": "Administrative or civil penalties may still be pursued under ORC Section 6111 for violations noted in the June 1, 2016 NOV; decision dependent on future compliance with Ohio EPA requirements.",
       "status": "closed",
       "summary": "This August 1, 2016 letter from Ohio EPA's Division of Surface Water, Northwest District Office, confirms that the City of Lima WWTP has resolved all violations identified in the June 1, 2016 Notice of Violation (NOV), following the City's July 25, 2016 response that included a revised SOP for filling the sodium hypochlorite tank. Ohio EPA notes that administrative or civil penalties under ORC Section 6111 may still be sought but have not yet been assessed. The letter effectively closes the compliance matter raised by the June 2016 NOV.",
-      "note": null
+      "note": "A Resolution of Violation letter CLOSES a sequence; it imposes nothing. The obligations list is therefore empty by design, not by omission. The chain it closes: Ohio EPA NOV 2016-06-01 -> the City's 2016-06-15 response -> Ohio EPA Partial Resolution of Violation 2016-07-11 -> the City's 2016-07-25 response through counsel (Frost Brown Todd) enclosing a revised Standard Operating Practice for filling the sodium hypochlorite tank -> this letter. The SOP submission is a COMPLETED act the letter acknowledges receiving, not a future deadline."
     },
     "approximate_paths": [],
     "citation": {
@@ -1263,7 +1258,7 @@
       "permit_no": "2PE00000",
       "issued_date": "2016-07-11",
       "effective_date": null,
-      "supersedes": "June 1, 2016 Notice of Violation (NOV) letter",
+      "supersedes": null,
       "obligations": [
         {
           "requirement": "Submit a revised Standard Operating Practice (SOP) for filling the sodium hypochlorite tank, including: (1) corrected Ohio EPA Spill Hotline number (1-800-282-9378), and (2) a statement that in the event of a sodium hypochlorite release, a grab sample of the final effluent will be collected and analyzed for residual chlorine.",
@@ -1275,7 +1270,7 @@
       "stipulated_penalties": "Failure to comply with ORC Chapter 6111.07 may result in an administrative or civil penalty.",
       "status": "active",
       "summary": "This July 11, 2016 Ohio EPA correspondence from the Northwest District Office responds to the City of Lima's June 15, 2016 reply to a June 1, 2016 Notice of Violation regarding a Sodium Hypochlorite Incident at the Lima WWTP. The letter identifies two required revisions to the facility's SOP for filling the sodium hypochlorite tank and directs the City to submit a revised SOP within 14 days to achieve partial resolution of the NOV. No civil penalty is assessed at this time, but non-compliance may result in administrative or civil penalties under ORC Chapter 6111.07.",
-      "note": null
+      "note": "A Partial Resolution of Violation partially resolves the 2016-06-01 NOV; it does not replace it, so `supersedes` is null. Twin capture with the other 2016-07-11 docid — the cluster is declared in data/site/document-versions.yaml."
     },
     "approximate_paths": [],
     "citation": {
@@ -1310,7 +1305,7 @@
       "permit_no": null,
       "issued_date": "2019-05-30",
       "effective_date": null,
-      "supersedes": "Consent Decree among the United States, the State of Ohio, and the City of Lima (Appendix C)",
+      "supersedes": null,
       "obligations": [
         {
           "requirement": "One-year sampling period to determine compliance with Performance Criteria applicable to the Nitrification Towers (original period per Appendix C of the Consent Decree)",
@@ -1327,7 +1322,7 @@
       "stipulated_penalties": null,
       "status": null,
       "summary": "The City of Lima, Ohio, through its Director of Utilities, wrote to U.S. EPA Region V and Ohio EPA on May 30, 2019, requesting a one-year extension of the Nitrification Towers sampling period under Appendix C of the applicable Consent Decree — from August 1, 2019 through July 31, 2020 — because the original July 2018–July 2019 period produced insufficient wet-weather sampling events to evaluate tower performance. The letter details the operational complications (bearing failure, seeding issues, sewer detention problems, flow-meter uncertainties, and limited peak wet-weather events) that prevented adequate data collection, and provides effluent quality data from the four peak wet-weather tests conducted between February and May 2019.",
-      "note": null
+      "note": "The City's 2019-05-30 letter REQUESTS a one-year extension of the Appendix C nitrification-tower sampling period. A request does not modify or extend the Consent Decree; USEPA/OEPA granted it on 2019-06-20 (per progress report edoc-1104344). `supersedes` is null: the decree stayed in force throughout."
     },
     "approximate_paths": [],
     "citation": {
@@ -1409,7 +1404,7 @@
     "fields": {
       "agency": "U.S. EPA, Region 5",
       "instrument": "correspondence",
-      "case_no": "3:14-CV-02551-JZ Doc #5 Filed: 01/13/15",
+      "case_no": "3:14-CV-02551-JZ",
       "respondent": "City of Lima, Ohio",
       "facility": "Lima Wastewater Treatment Plant (WWTP)",
       "permit_no": null,
@@ -1432,7 +1427,7 @@
       "stipulated_penalties": "Stipulated penalties requested to be waived due to force majeure event (direct lightning strike to Lima WWTP on July 22, 2017).",
       "status": null,
       "summary": "Two letters from Michael H. Caprella, Director of Utilities, City of Lima, Ohio, to U.S. EPA Region 5. The August 7, 2017 letter invokes the force majeure provisions (Paragraphs 58, 64, 65, and 69) of the Lima Consent Decree (Case 3:14-CV-02551-JZ), requesting that noncompliance caused by a direct lightning strike to the Lima WWTP on July 22, 2017 be excused and that any stipulated penalties be waived. The July 31, 2017 letter is the underlying incident report detailing the lightning strike, resulting loss of power and discharge to the Ottawa River, and the remedial measures taken to restore plant operations.",
-      "note": null
+      "note": "Reference block on the letter cites the decree as 'CASE: 3:14-CV-02551-JZ Doc #5 Filed: 01/13/15' — the trailing text identifies ONE filing inside the case, not the case. `case_no` holds the case number alone so this row joins the decree extraction (edoc-412983.order.yaml) and the other instruments in the chain."
     },
     "approximate_paths": [],
     "citation": {
@@ -1465,7 +1460,7 @@
     "fields": {
       "agency": "Ohio EPA – Emergency Response Section",
       "instrument": "Initial Pollution Incident Report (IPIR)",
-      "case_no": "1607-02-1456//0",
+      "case_no": "1607-02-1456",
       "respondent": "Lima WWTP",
       "facility": "Lima WWTP – 1200 FT Amanda Rd, Lima, Allen County, OH",
       "permit_no": null,
@@ -1483,7 +1478,7 @@
       "stipulated_penalties": null,
       "status": "active",
       "summary": "This is an Initial Pollution Incident Report (IPIR) filed on 07/26/2016 documenting a sewage overflow/bypass at the Lima WWTP (Allen County, NW District) that occurred on 07/25/2016 at 23:00. The cause was a power failure during ongoing construction, resulting in sewage discharge to the Ottawa River (surface water/storm media). The incident was reported by the facility's Environmental Manager, Dave Schnipke, and DSW/WW was notified the following morning.",
-      "note": null
+      "note": "Ohio EPA spill id, printed on this IPIR as '1607-02-1456//0'. `case_no` holds the incident id alone so it joins edoc-3170417 (the NOV on the same 2016-07 Lima WWTP sludge release), which prints it without the suffix. The trailing '//0' is the printed sequence suffix and is recorded here rather than dropped."
     },
     "approximate_paths": [],
     "citation": {
@@ -1570,6 +1565,9 @@
     "title": "Initial Pollution Incident Report (IPIR)",
     "confidence": "medium",
     "warnings": [
+      "⚠️ NOT LIMA EVIDENCE — the SECOND misfiled document in this tree, after edoc-3063821. This is an Ohio EPA Emergency Response Section Initial Pollution Incident Report for a GLYCOL release by RAILTECH at 25 Interstate Drive, NAPOLEAN [sic] — HENRY County, spill id 1607-35-1349110, citizen-reported 2016-07-13. It has no connection to Lima, Allen County, or permit 2PE00000.",
+      "Shelved under oepa/lima/ because the extracted tree mirrors its immutable source and the portal served this docid in the 2PE00000 sweep. Read the shelf as CUSTODY, not attribution — as with edoc-3063821, every figure here describes another facility entirely.",
+      "Why a 2PE00000 sweep returns it is NOT established by this document. The IPIR itself names no permit; the portal's own index is what associates the docid with 2PE00000. Recorded as an open question rather than guessed at.",
       "This is an IPIR (Initial Pollution Incident Report), not a classic enforcement order (consent decree, DFFO, NOV, etc.); it is a precursor/intake document that may lead to enforcement.",
       "Permit number '2PE00000' is read from the top-right handwritten/stamped field on the image — OCR renders it ambiguously; verify against source.",
       "Spill ID rendered as '1607-35-1349//0' — OCR shows '1607-35-1349110'; image confirms '1607-35-1349//0'.",
@@ -1596,7 +1594,7 @@
       "stipulated_penalties": null,
       "status": "active",
       "summary": "This Ohio EPA Emergency Response Section Initial Pollution Incident Report (IPIR), dated 7/14/2016 and assigned Spill ID 1607-35-1349//0, documents a citizen complaint received on 07/13/2016 alleging that RAILTECH, located at 25 Interstate Drive in Napoleon (Henry County), OH, is repeatedly dumping glycol directly into a nearby creek and across railroad tracks into a pond behind a hospital during tank-cleaning operations. The product spilled is glycol; affected media include surface water/storm water and land. The report was referred to DSW/WW and RRS/SIS for follow-up.",
-      "note": null
+      "note": "A Henry County spill report reachable only because Ohio EPA's portal indexes it under Lima's permit number. Two of the sixteen documents in this tranche turned out to be other facilities' records — which is itself a finding about the portal as a source: a permit-scoped sweep is not a permit-scoped result set, and every document in one must be read before it is attributed."
     },
     "approximate_paths": [],
     "citation": {
@@ -1618,9 +1616,9 @@
     "title": "Administrative Order (Findings of Violations, Order for Compliance and Request for Information) with associated correspondence",
     "confidence": "high",
     "warnings": [
+      "DEADLINES ARE RELATIVE, NOT FIXED. The Order runs its clocks from RECEIPT, and the City's receipt date is nowhere in this record. The three deadlines are stated in the Order's own terms with a ~-marked estimate computed off the 2005-02-07 issue date, rather than published as ISO dates that would read as established fact. The STATUSES are a different matter and stand: each is sourced to the City's own 2005-02-18 and 2005-03-11 letters in this same bundle.",
       "OCR layer contained garbled text on several fields (dates, docket number); values verified against page image.",
       "Docket number rendered as 'V-W- ÔS #°— Ô~' in OCR on order page but clearly reads V-W-05-AO-08 on the cover letter and order header.",
-      "Exact deadlines (15-day, 30-day, 180-day) computed from Order receipt date of Feb. 7, 2005 — actual receipt date by City not explicitly confirmed in documents.",
       "No civil penalty assessed in this Order; enforcement action threatened for non-compliance."
     ],
     "fields": {
@@ -1636,7 +1634,7 @@
       "obligations": [
         {
           "requirement": "Submit written certification of intent to comply with the Order",
-          "deadline": "2005-02-22",
+          "deadline": "within 15 days of RECEIPT (receipt date not confirmed in the record; ~2005-02-22 if received on the 2005-02-07 issue date)",
           "status": "City indicated via Feb 18, 2005 letter it could not accept the Order as proposed and sought to negotiate a Consent Order instead"
         },
         {
@@ -1646,17 +1644,17 @@
         },
         {
           "requirement": "Submit detailed written Sanitary Sewer Overflow Elimination Plan (SSOEP) for U.S. EPA approval",
-          "deadline": "2005-03-09",
+          "deadline": "within 30 days of RECEIPT (receipt date not confirmed; ~2005-03-09 if received on the 2005-02-07 issue date)",
           "status": "Missed — City's March 11, 2005 letter states SSOEP not anticipated to be completed until approximately June 20, 2005"
         },
         {
           "requirement": "Implement the SSOEP",
-          "deadline": "2005-08-05",
+          "deadline": "within 180 days of RECEIPT (receipt date not confirmed; ~2005-08-05 if received on the 2005-02-07 issue date)",
           "status": "Pending SSOEP completion"
         },
         {
           "requirement": "Begin sampling SSO discharge points for fecal coliform, e-coli, and ammonia",
-          "deadline": "2005-03-09",
+          "deadline": "within 30 days of RECEIPT (receipt date not confirmed; ~2005-03-09 if received on the 2005-02-07 issue date)",
           "status": "In progress — City's March 11, 2005 letter states sampling of representative SSOs to begin that month"
         },
         {
@@ -1770,7 +1768,7 @@
       "permit_no": "2PE00000",
       "issued_date": "1995-02-24",
       "effective_date": null,
-      "supersedes": "Director's Final Findings and Orders dated 1994-02-25",
+      "supersedes": null,
       "obligations": [
         {
           "requirement": "Submit General Plan for Abatement of Sanitary Sewer Overflows (three copies enclosed with this letter, prepared by URS Consultants, Columbus)",
@@ -1782,7 +1780,7 @@
       "stipulated_penalties": null,
       "status": null,
       "summary": "This is a February 24, 1995 transmittal letter from Gary Sheely, Director of Utilities for the City of Lima, Ohio, to Ms. Elizabeth Wick, Enforcement Group Leader at Ohio EPA NWDO, enclosing three copies of the City of Lima General Plan for Abatement of Sanitary Sewer Overflows as required by the Director's Final Findings and Orders dated February 25, 1994. The report was prepared by URS Consultants, Columbus, with input from City of Lima officials and staff.",
-      "note": null
+      "note": "The City of Lima's 1995-02-24 letter to Ohio EPA enclosing the General Plan the 1994-02-25 DFFO ordered. A submittal made UNDER an order does not supersede it — the DFFO stayed in force, and the 2005 U.S. EPA order found 36 SSO points still discharging a decade later."
     },
     "approximate_paths": [],
     "citation": {
@@ -2194,8 +2192,10 @@
     "rel": "oepa/lima/edoc-463755.order.yaml",
     "group": "enforcement",
     "title": "correspondence",
-    "confidence": "high",
+    "confidence": "medium",
     "warnings": [
+      "case_no was read as '2PE00000' — that is the PERMIT number, not a case number, and this letter prints no docket or case number at all. Corrected to null to agree with edoc-1914761, the text-layer twin of the same 2016-07-11 Partial Resolution of Violation letter.",
+      "⚠️ This document has NO TEXT LAYER, so `source_text_excerpt` is empty and the entire reading came from one rendered page image. Confidence lowered high -> medium accordingly: the twin carries the same letter with a readable text layer and is the better copy to cite.",
       "Permit number '2PE00000' is taken directly from the Re line and may be a facility/case identifier rather than a standard NPDES permit number — verify.",
       "14-day deadline calculated from letter date of 2016-07-11; exact deadline date not explicitly stated in document.",
       "No civil penalty assessed in this letter; penalty language is precautionary/prospective only."
@@ -2203,13 +2203,13 @@
     "fields": {
       "agency": "Ohio EPA",
       "instrument": "correspondence",
-      "case_no": "2PE00000",
+      "case_no": null,
       "respondent": "City of Lima",
       "facility": "Lima WWTP",
       "permit_no": "2PE00000",
       "issued_date": "2016-07-11",
       "effective_date": null,
-      "supersedes": "Notice of Violation letter dated 2016-06-01",
+      "supersedes": null,
       "obligations": [
         {
           "requirement": "Submit a revised Standard Operating Procedure (SOP) for filling the sodium hypochlorite tank that: (1) corrects the Ohio EPA Spill Hotline number to 1-800-282-9378, and (2) includes a statement that in the event of a release of sodium hypochlorite, a grab sample of the final effluent will be collected and analyzed for residual chlorine.",
@@ -2221,7 +2221,7 @@
       "stipulated_penalties": null,
       "status": "active",
       "summary": "This is a follow-up correspondence from Ohio EPA's Northwest District Office, Division of Surface Water, responding to the City of Lima's June 15, 2016 reply to a June 1, 2016 Notice of Violation (NOV) related to a Sodium Hypochlorite Incident at the Lima WWTP. The letter constitutes a partial resolution of the NOV and requests that the City submit a revised SOP for filling the sodium hypochlorite tank within 14 days, addressing two specific corrections. Failure to comply may result in administrative or civil penalties under Ohio Revised Code Chapter 6111.07.",
-      "note": "Letter signed by Peggy B. Christie, Division of Surface Water, Northwest District Office. Re line references NPDES and Allen County. The permit number field \"2PE00000\" appears in the Re line as an identifier. The 14-day deadline from July 11, 2016 resolves to approximately July 25, 2016. The document is titled \"Partial Resolution of Violation,\" indicating the NOV is not fully closed."
+      "note": "A Partial Resolution of Violation partially resolves the 2016-06-01 NOV; it does not replace it, so `supersedes` is null. Twin capture with the other 2016-07-11 docid — the cluster is declared in data/site/document-versions.yaml."
     },
     "approximate_paths": [],
     "citation": {
@@ -2229,7 +2229,7 @@
       "source_kind": "document",
       "page": 1,
       "pages": null,
-      "confidence": "high",
+      "confidence": "medium",
       "note": null,
       "verified": true
     },
@@ -2258,7 +2258,7 @@
       "permit_no": null,
       "issued_date": "2016-07-25",
       "effective_date": null,
-      "supersedes": "Notice of Violation dated 2016-06-01; prior letter dated 2016-06-15",
+      "supersedes": null,
       "obligations": [
         {
           "requirement": "Prepare and submit a revised Standard Operating Procedure (SOP) for filling the hypochlorite tank, incorporating the additional information requested by Ohio EPA in response to the Notice of Violation dated June 1, 2016.",
@@ -2270,7 +2270,7 @@
       "stipulated_penalties": null,
       "status": "closed",
       "summary": "Attorney Stephen P. Samuels of Frost Brown Todd LLC responds on behalf of the City to Ohio EPA Northwest District Office's July 11, 2016 letter concerning the June 1, 2016 Notice of Violation. The letter transmits a revised SOP for filling the hypochlorite tank (effective 2016-07-14, signed by Acting Supervisor Eric Markley) and asserts that the City has complied with all NOV requests and that the NOV is fully resolved. The SOP governs PPE, tank truck unloading procedures, spill response, and chlorine residual sampling at Station 001.",
-      "note": "The letter is dated July 25, 2016. The RECEIVED stamp reads JUL 27 2016, Ohio EPA NWDO. The attached SOP bears an effective date of 7-14-16 and is signed by Eric Markley, Acting Supervisor. CC list includes Mayor David Berger, Gary Sheely, Michael Caprella, Tony Geiger, Fred Andes, Saul Allen, Erik Markley, David Schnipke, Peggy Christie, Bill Fischbein. Document reference: 0128598.0618391 4839-9925-6885v1. Secondary ID on stamp appears to read AVEO0000 (partially legible)."
+      "note": "The City's counsel (Frost Brown Todd) responding on 2016-07-25 to Ohio EPA's 2016-07-11 Partial Resolution of Violation. A respondent's letter does not supersede the agency instrument it answers; Ohio EPA closed the sequence itself on 2016-08-01."
     },
     "approximate_paths": [],
     "citation": {
@@ -2296,6 +2296,7 @@
     "title": "correspondence (Resolution of Violation letter)",
     "confidence": "high",
     "warnings": [
+      "Twin capture: edoc-1914753 and edoc-470936 are the SAME Ohio EPA Resolution of Violation letter of 2016-08-01, served at two portal docids as two different scans (NOT byte-identical — four distinct sha256s across the two 2016 letter pairs). The two independent reads disagreed, one finding a 2016-07-25 'deadline' that is in fact the date the City had ALREADY submitted the SOP. Reconciled to one reading; the cluster is declared in data/site/document-versions.yaml.",
       "OCR rendered permit number as '2PE00000' — confirmed against image as '2PE00000'.",
       "OCR rendered 'July' as 'Jufy' and 'included' as 'incfuded' — text layer unreliable in spots but key dates and numbers verified against image."
     ],
@@ -2308,24 +2309,13 @@
       "permit_no": "2PE00000",
       "issued_date": "2016-08-01",
       "effective_date": null,
-      "supersedes": "Partial Resolution of Violation (PROV) letter dated 2016-07-11; NOV dated 2016-06-01",
-      "obligations": [
-        {
-          "requirement": "Submit revised Standard Operating Practice (SOP) for filling the sodium hypochlorite tank in response to the July 11, 2016 PROV letter",
-          "deadline": "2016-07-25",
-          "status": "met — documentation submitted by Mr. Samuels on July 25, 2016"
-        },
-        {
-          "requirement": "Resolve all violations outlined in the NOV dated June 1, 2016",
-          "deadline": null,
-          "status": "met — Ohio EPA determined all violations resolved as of this letter"
-        }
-      ],
+      "supersedes": null,
+      "obligations": [],
       "penalty_usd": null,
       "stipulated_penalties": "None assessed at this time; Director retains authority to seek administrative or civil penalties under ORC Section 6111 for violations noted in the June 1, 2016 NOV, contingent on future compliance",
       "status": "closed",
       "summary": "This August 1, 2016 letter from Ohio EPA's Division of Surface Water (Northwest District Office), signed by Peggy B. Christie, notifies the City of Lima that its Wastewater Treatment Plant has resolved all violations identified in the June 1, 2016 NOV, following submission of a revised SOP for filling the sodium hypochlorite tank. The letter closes out the violation for compliance purposes but preserves the Director's right to pursue civil or administrative penalties under ORC Section 6111.",
-      "note": null
+      "note": "A Resolution of Violation letter CLOSES a sequence; it imposes nothing. The obligations list is therefore empty by design, not by omission. The chain it closes: Ohio EPA NOV 2016-06-01 -> the City's 2016-06-15 response -> Ohio EPA Partial Resolution of Violation 2016-07-11 -> the City's 2016-07-25 response through counsel (Frost Brown Todd) enclosing a revised Standard Operating Practice for filling the sodium hypochlorite tank -> this letter. The SOP submission is a COMPLETED act the letter acknowledges receiving, not a future deadline."
     },
     "approximate_paths": [],
     "citation": {

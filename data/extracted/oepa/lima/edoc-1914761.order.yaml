@@ -6,21 +6,19 @@ pages_read:
 image_pages_read:
 - 0
 dpi: 150
-source_text_excerpt: "h i o\n \nOhio Environmental \nProtection Agency \nJohn R. Kasich,\
-  \ Governor \nMary Taylor, Lt. Governor \nCraig W. Butler, Director \nRe: Lima WWTP\
-  \ \nPartial Resolution of Violation \nNPDES \nAllen County \n2PE00000 \nJuly 11,\
-  \ 2016 \nMayor and Council \nCity of Lima \n50 Town Square \nLima. Ohio 45801 \n\
-  Dear Mayor and Council: \nThank you for your June 15, 2016, response to my June\
-  \ 1, 2016, Notice of Violation (NOV) letter. I have \nreviewed the City's investigation\
-  \ report of the Sodium Hypochlorite Incident and the Standard Operating \nPractice\
-  \ (SOP) for filling the sodium hypochlorite tank. In order to resolve "
+source_text_excerpt: "h i o\n \nOhio Environmental \nProtection Agency \nJohn R. Kasich, Governor \nMary\
+  \ Taylor, Lt. Governor \nCraig W. Butler, Director \nRe: Lima WWTP \nPartial Resolution of Violation\
+  \ \nNPDES \nAllen County \n2PE00000 \nJuly 11, 2016 \nMayor and Council \nCity of Lima \n50 Town Square\
+  \ \nLima. Ohio 45801 \nDear Mayor and Council: \nThank you for your June 15, 2016, response to my June\
+  \ 1, 2016, Notice of Violation (NOV) letter. I have \nreviewed the City's investigation report of the\
+  \ Sodium Hypochlorite Incident and the Standard Operating \nPractice (SOP) for filling the sodium hypochlorite\
+  \ tank. In order to resolve "
 order:
   confidence: high
   warnings:
-  - Permit number '2PE00000' verified against image — OCR reads '2PE00000', which
-    appears correct.
-  - Deadline of 2016-07-25 is inferred as 14 calendar days from the letter date of
-    2016-07-11; not explicitly stated as a calendar date in the document.
+  - Permit number '2PE00000' verified against image — OCR reads '2PE00000', which appears correct.
+  - Deadline of 2016-07-25 is inferred as 14 calendar days from the letter date of 2016-07-11; not explicitly
+    stated as a calendar date in the document.
   - No formal case number is printed on this document.
   agency: Ohio EPA
   instrument: correspondence
@@ -30,25 +28,24 @@ order:
   permit_no: 2PE00000
   issued_date: '2016-07-11'
   effective_date: null
-  supersedes: June 1, 2016 Notice of Violation (NOV) letter
+  supersedes: null
   obligations:
-  - requirement: 'Submit a revised Standard Operating Practice (SOP) for filling the
-      sodium hypochlorite tank, including: (1) corrected Ohio EPA Spill Hotline number
-      (1-800-282-9378), and (2) a statement that in the event of a sodium hypochlorite
-      release, a grab sample of the final effluent will be collected and analyzed
-      for residual chlorine.'
+  - requirement: 'Submit a revised Standard Operating Practice (SOP) for filling the sodium hypochlorite
+      tank, including: (1) corrected Ohio EPA Spill Hotline number (1-800-282-9378), and (2) a statement
+      that in the event of a sodium hypochlorite release, a grab sample of the final effluent will be
+      collected and analyzed for residual chlorine.'
     deadline: '2016-07-25'
     status: pending
   penalty_usd: null
-  stipulated_penalties: Failure to comply with ORC Chapter 6111.07 may result in an
-    administrative or civil penalty.
+  stipulated_penalties: Failure to comply with ORC Chapter 6111.07 may result in an administrative or
+    civil penalty.
   status: active
-  summary: This July 11, 2016 Ohio EPA correspondence from the Northwest District
-    Office responds to the City of Lima's June 15, 2016 reply to a June 1, 2016 Notice
-    of Violation regarding a Sodium Hypochlorite Incident at the Lima WWTP. The letter
-    identifies two required revisions to the facility's SOP for filling the sodium
-    hypochlorite tank and directs the City to submit a revised SOP within 14 days
-    to achieve partial resolution of the NOV. No civil penalty is assessed at this
-    time, but non-compliance may result in administrative or civil penalties under
-    ORC Chapter 6111.07.
-  note: null
+  summary: This July 11, 2016 Ohio EPA correspondence from the Northwest District Office responds to the
+    City of Lima's June 15, 2016 reply to a June 1, 2016 Notice of Violation regarding a Sodium Hypochlorite
+    Incident at the Lima WWTP. The letter identifies two required revisions to the facility's SOP for
+    filling the sodium hypochlorite tank and directs the City to submit a revised SOP within 14 days to
+    achieve partial resolution of the NOV. No civil penalty is assessed at this time, but non-compliance
+    may result in administrative or civil penalties under ORC Chapter 6111.07.
+  note: A Partial Resolution of Violation partially resolves the 2016-06-01 NOV; it does not replace it,
+    so `supersedes` is null. Twin capture with the other 2016-07-11 docid — the cluster is declared in
+    data/site/document-versions.yaml.

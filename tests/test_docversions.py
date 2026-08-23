@@ -173,8 +173,28 @@ def test_committed_lima_manifest_loads() -> None:
         # 2022 application package serving a single page.
         "oepa:2PE00000-OD",
         "oepa:2PE00000-app256207483-flow-diagram",
+        # Twin captures: ONE Ohio EPA letter served at TWO docids as two different scans. NOT
+        # byte-identical (four distinct sha256s), so these are `v2` content twins rather than
+        # `duplicate`s — both stay readable evidence. Declared because two independent extractions
+        # of one letter disagreed, which is precisely what a cluster exists to surface.
+        "oepa:2PE00000-prov-2016-07-11",
+        "oepa:2PE00000-rov-2016-08-01",
     }
     by_id = {c.id: c for c in versions.clusters}
+    # The 2026-08-22 Lima pull's two KINDS of multiplicity are distinguished by `version`, and the
+    # distinction is load-bearing: `duplicate` means byte-identical (search_passages collapses those
+    # outright), while `v2` means the same filing captured twice with genuinely differing bytes —
+    # two scans of one letter, both readable. Asserting only the ids would let a later edit flip one
+    # into the other and silently change what retrieval collapses.
+    for cid in ("oepa:2PE00000-OD", "oepa:2PE00000-app256207483-flow-diagram"):
+        assert {m.version for m in by_id[cid].members} == {"duplicate"}, cid
+    for cid in ("oepa:2PE00000-prov-2016-07-11", "oepa:2PE00000-rov-2016-08-01"):
+        assert {m.version for m in by_id[cid].members} == {"v2"}, cid
+    # The already-extracted DAM copy is the canonical of the 2023 permit pair, so the portal capture
+    # never becomes the cite target for a permit that was read from the other copy.
+    assert by_id["oepa:2PE00000-OD"].canonical == "oepa/2PE00000.pdf"
+    # The text-layer capture is canonical for each twin pair — never the image-only/poorer scan.
+    assert by_id["oepa:2PE00000-prov-2016-07-11"].canonical == "oepa/lima/edoc-1914761.pdf"
     # Every cluster's canonical is one of its own members (never a dangling ref).
     for c in versions.clusters:
         assert any(m.rel == c.canonical for m in c.members)

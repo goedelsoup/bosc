@@ -6,26 +6,32 @@ pages_read:
 image_pages_read:
 - 0
 dpi: 150
-source_text_excerpt: "~ r 2p~oa~oo \nI(ii oEPA 50 West Town Street, Suite 700 • P,O\
-  \ Box 1049 • Calumbus, OH 43216-1049 • wwwepa.ohio,gc \nEmerqency Response Section\
-  \ - Initial Pollution Incident Report (IPIR) \n7t1412016 \nSpill td Number: 1607-35-1349110\
-  \ \nReported By: KELLY DONLEY \nTitle: CITIZEN \nTelephone: (419) 906-4859 \nAffiliation:\
-  \ N/A \nDistrict: NW \nReported: 07/13/2016 10:44 \nDiscovered: 07/13/2016 10:44\
-  \ \next: Occurred: 00/00/0000 \nChronic: N \nCounty: HENRY CitylTownship: NAPOLEAN\
-  \ \nDid Spiller Report ? N Complaint ? N \nReceived By: KNERR, RIKKI Priority: 3\
-  \ \nLocal EPC ? N Did you tell the Spiller to Call the N.R."
+source_text_excerpt: "~ r 2p~oa~oo \nI(ii oEPA 50 West Town Street, Suite 700 • P,O Box 1049 • Calumbus,\
+  \ OH 43216-1049 • wwwepa.ohio,gc \nEmerqency Response Section - Initial Pollution Incident Report (IPIR)\
+  \ \n7t1412016 \nSpill td Number: 1607-35-1349110 \nReported By: KELLY DONLEY \nTitle: CITIZEN \nTelephone:\
+  \ (419) 906-4859 \nAffiliation: N/A \nDistrict: NW \nReported: 07/13/2016 10:44 \nDiscovered: 07/13/2016\
+  \ 10:44 \next: Occurred: 00/00/0000 \nChronic: N \nCounty: HENRY CitylTownship: NAPOLEAN \nDid Spiller\
+  \ Report ? N Complaint ? N \nReceived By: KNERR, RIKKI Priority: 3 \nLocal EPC ? N Did you tell the\
+  \ Spiller to Call the N.R."
 order:
   confidence: medium
   warnings:
-  - This is an IPIR (Initial Pollution Incident Report), not a classic enforcement
-    order (consent decree, DFFO, NOV, etc.); it is a precursor/intake document that
-    may lead to enforcement.
-  - Permit number '2PE00000' is read from the top-right handwritten/stamped field
-    on the image — OCR renders it ambiguously; verify against source.
-  - Spill ID rendered as '1607-35-1349//0' — OCR shows '1607-35-1349110'; image confirms
-    '1607-35-1349//0'.
-  - No penalty, compliance schedule, or formal order obligations are present in this
-    document.
+  - ⚠️ NOT LIMA EVIDENCE — the SECOND misfiled document in this tree, after edoc-3063821. This is an Ohio
+    EPA Emergency Response Section Initial Pollution Incident Report for a GLYCOL release by RAILTECH
+    at 25 Interstate Drive, NAPOLEAN [sic] — HENRY County, spill id 1607-35-1349110, citizen-reported
+    2016-07-13. It has no connection to Lima, Allen County, or permit 2PE00000.
+  - Shelved under oepa/lima/ because the extracted tree mirrors its immutable source and the portal served
+    this docid in the 2PE00000 sweep. Read the shelf as CUSTODY, not attribution — as with edoc-3063821,
+    every figure here describes another facility entirely.
+  - Why a 2PE00000 sweep returns it is NOT established by this document. The IPIR itself names no permit;
+    the portal's own index is what associates the docid with 2PE00000. Recorded as an open question rather
+    than guessed at.
+  - This is an IPIR (Initial Pollution Incident Report), not a classic enforcement order (consent decree,
+    DFFO, NOV, etc.); it is a precursor/intake document that may lead to enforcement.
+  - Permit number '2PE00000' is read from the top-right handwritten/stamped field on the image — OCR renders
+    it ambiguously; verify against source.
+  - Spill ID rendered as '1607-35-1349//0' — OCR shows '1607-35-1349110'; image confirms '1607-35-1349//0'.
+  - No penalty, compliance schedule, or formal order obligations are present in this document.
   agency: Ohio EPA – Emergency Response Section
   instrument: Initial Pollution Incident Report (IPIR)
   case_no: 1607-35-1349//0
@@ -36,20 +42,20 @@ order:
   effective_date: '2016-07-13'
   supersedes: null
   obligations:
-  - requirement: Suspected illegal dumping of glycol directly into the creek behind
-      the facility and across the tracks into a pond behind a hospital — incident
-      requires investigation and enforcement follow-up.
+  - requirement: Suspected illegal dumping of glycol directly into the creek behind the facility and across
+      the tracks into a pond behind a hospital — incident requires investigation and enforcement follow-up.
     deadline: null
     status: reported/open
   penalty_usd: null
   stipulated_penalties: null
   status: active
-  summary: This Ohio EPA Emergency Response Section Initial Pollution Incident Report
-    (IPIR), dated 7/14/2016 and assigned Spill ID 1607-35-1349//0, documents a citizen
-    complaint received on 07/13/2016 alleging that RAILTECH, located at 25 Interstate
-    Drive in Napoleon (Henry County), OH, is repeatedly dumping glycol directly into
-    a nearby creek and across railroad tracks into a pond behind a hospital during
-    tank-cleaning operations. The product spilled is glycol; affected media include
-    surface water/storm water and land. The report was referred to DSW/WW and RRS/SIS
-    for follow-up.
-  note: null
+  summary: This Ohio EPA Emergency Response Section Initial Pollution Incident Report (IPIR), dated 7/14/2016
+    and assigned Spill ID 1607-35-1349//0, documents a citizen complaint received on 07/13/2016 alleging
+    that RAILTECH, located at 25 Interstate Drive in Napoleon (Henry County), OH, is repeatedly dumping
+    glycol directly into a nearby creek and across railroad tracks into a pond behind a hospital during
+    tank-cleaning operations. The product spilled is glycol; affected media include surface water/storm
+    water and land. The report was referred to DSW/WW and RRS/SIS for follow-up.
+  note: 'A Henry County spill report reachable only because Ohio EPA''s portal indexes it under Lima''s
+    permit number. Two of the sixteen documents in this tranche turned out to be other facilities'' records
+    — which is itself a finding about the portal as a source: a permit-scoped sweep is not a permit-scoped
+    result set, and every document in one must be read before it is attributed.'
