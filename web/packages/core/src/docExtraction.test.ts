@@ -147,13 +147,20 @@ describe("the join, against the committed Lima bundle", () => {
   // production but land in the LIMA bundle, and correctly so — `legal/` is network-global,
   // while the other 48 files of that production stay peer-scoped under `west-union/` and
   // `usace/west-union/` and are subtracted from the reference build's corpus scope.
-  // 3,254 -> 3,516 (#2072 follow-on): 261 `oepa/lima/edoc-*.pdf` — the City of Lima WWTP's whole
-  // NPDES record on permit 2PE00000 — plus `plans/4091285.pdf`. The extracted count does NOT move:
-  // all 262 are held and unread, which is the point of the next stage, not a regression here.
-  it("extracts 68 of 3,516 documents — 1.9% of the corpus", () => {
+  // 3,254 -> 3,348 (#2072 follow-on): 93 `oepa/lima/edoc-*.pdf` — the enforcement, inspection and
+  // permit-action tranche of the City of Lima WWTP's NPDES record on permit 2PE00000 — plus
+  // `plans/4091285.pdf`. The portal pull resolved 261 documents and all were fetched, but the
+  // repository had exceeded its Git-LFS budget, so 168 (1.35 GB of routine reports, monitoring and
+  // application packages) were deliberately NOT committed; every deferred docid is recorded in
+  // `data/research/oepa-portal-2pe00000-2026-08-22/manifest.yaml` and is re-fetchable. The comment
+  // here said 3,516 for one release — the count as if all 261 had landed — while the assertion
+  // below said 3,348. The assertion was right.
+  // 68 -> 69 (#2075): `oepa/lima/edoc-412983.order.yaml`, the 2015 federal consent decree. The
+  // first of the 93 to be read, and the first `order`-genre extraction Lima has.
+  it("extracts 69 of 3,348 documents — 2.1% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
     expect(entries.length).toBe(3348);
-    expect(countExtracted(entries, index)).toBe(68);
+    expect(countExtracted(entries, index)).toBe(69);
   });
 
   it("is near-complete on the small instrument collections, and thin across the big holdings", () => {
@@ -180,12 +187,17 @@ describe("the join, against the committed Lima bundle", () => {
     // three H.B. 646 witness submissions, which are held and unread like the rest of `legal`.
     expect(counts.legal).toEqual([15, 1736]);
     expect(counts.commissioners).toEqual([0, 995]);
-    // `oepa` now belongs here: held, and read in small part. 11 of 111 is 9.9% — well above
+    // `oepa` now belongs here: held, and read in small part. 12 of 111 is 10.8% — well above
     // `legal`'s 0.9% and `commissioners`' zero, and well below the instrument collections it used
-    // to sit with. The gap is the ingestion backlog this pull created: 22 enforcement instruments
-    // fit the `order` genre (#1746) and the 30 inspections have no genre yet. This number is the
-    // honest measure of it, and it should RISE as extraction proceeds.
-    expect(counts.oepa).toEqual([11, 111]);
+    // to sit with. The gap is the ingestion backlog this pull created, and it should RISE as
+    // extraction proceeds — 11 -> 12 at #2075 is the first step, the 2015 consent decree.
+    // ⚠️ The remaining 92 do NOT map 22-to-`order` as this comment once said. The portal's
+    // "Judicial Order" doc type is a FILING DRAWER, not a genre: of its 12 rows exactly ONE is an
+    // order (the decree), NINE are paragraph-33 semiannual progress reports filed under it, and TWO
+    // are City of Lima letters. A progress report reports AGAINST obligations rather than imposing
+    // them, so `--kind order` would have produced eleven wrong artifacts and ten near-duplicate
+    // "decrees". Read a document before assuming its doc type is its genre.
+    expect(counts.oepa).toEqual([12, 111]);
   });
 
   it("counts distinct documents, not records — 3 records name no source file", () => {
@@ -196,7 +208,8 @@ describe("the join, against the committed Lima bundle", () => {
     // records taxonomy had no bucket for — the same failure mode #1724 fixed for Urbana, found here
     // by a genre added for another site entirely.
     // 57 -> 73 at contract 2.1.0 (#1993), eight new genres across one classifier change.
-    expect(records.length).toBe(73);
+    // 73 -> 74 (#2075): the Lima consent decree, which publishes into the `enforcement` group.
+    expect(records.length).toBe(74);
     // 5 -> 3, and this is the deliberate change the note below predicted. `_source_ref` now
     // resolves three further committed provenance shapes — `provenance.source_path` /
     // `provenance.sources`, the connector read's `meta.sources` (a dict of NAMED lists, so every
@@ -205,6 +218,8 @@ describe("the join, against the committed Lima bundle", () => {
     // What remains is genuinely unjoinable: the two OPC artifacts and one FEMA obligation, none of
     // which names a single source document.
     expect(records.filter((r) => !r.source_doc_rel).length).toBe(3);
-    expect(index.size).toBe(68);
+    // The joinable side of the same 73 -> 74: the decree names its source document, so the index
+    // gains an entry rather than joining the three that name none.
+    expect(index.size).toBe(69);
   });
 });

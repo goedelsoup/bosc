@@ -6,7 +6,9 @@ pages_read: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1
   46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68,
   69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91,
   92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102]
-image_pages_read: [30, 33, 67, 68, 69, 70, 71, 72, 79, 90, 95, 96, 97, 99, 100, 101, 102]
+image_pages_read: [0, 30, 33, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
+  79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100,
+  101, 102]
 dpi: 300
 method: >-
   Hybrid. The decree BODY (pp. 0-63, court-stamped "1 of 64" - "64 of 64") carries a clean text
@@ -22,6 +24,12 @@ method: >-
   Appendices A, B, C, D, E and F are transcribed only to the depth stated in `obligations` and
   the warnings below - the figure sheets (pp. 67-69, 79, 90, 95-99) are maps and planting
   schedules that carry no obligation text and were not transcribed.
+  `image_pages_read` is every page RASTERIZED, and the reads behind it are not uniform: p0 is the
+  only page a VISION MODEL saw (rendered at 150 DPI, the `order` spec's `image_pages=1`); pp. 30,
+  33 and 64-102 were rendered at 300 DPI and read by TESSERACT, of which pp. 67-72, 79, 90, 95-97
+  and 99-102 needed rotation correction; p72 was additionally verified by eye against a 200 DPI
+  render. `dpi: 300` records the OCR render, which produced everything transcribed here that the
+  text layer did not.
 order:
   confidence: high
   warnings:
@@ -174,8 +182,8 @@ order:
     The Cole St. basin row matters to this project beyond its place in the schedule. The Bosc
     campus address is 4110 N Cole St, and Table A.1 schedules the Cole St. basin's pump-station
     and relief-sewer upgrades to bid 2034-09-20 and achieve full operation 2036-04-01, sized to a
-    5-year storm - the lower of the decree's two protection tiers, and the second-latest of its
-    twelve control measures. Under para 50 the $1,000/day stipulated penalty for an SSO in that
+    5-year storm - the lower of the decree's two protection tiers, and tenth of its twelve control
+    measures by completion date (Findlay Road 2037-03-31 and Fifteenth St. 2038-04-01 are later). Under para 50 the $1,000/day stipulated penalty for an SSO in that
     basin does not begin to accrue until that 2036 date. THIS IS NOT YET A FINDING ABOUT THE
     CAMPUS: a sewer basin named for a street is not evidence that a parcel on that street drains
     to it. The decree gives the testable handle - the Cole St. basin's control measures address

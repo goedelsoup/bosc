@@ -38,5 +38,6 @@ notes: >-
   by rotation-corrected OCR against the page images, so this artifact holds figures that are not
   reachable from `data/site/passages.ndjson`, which indexes only the 64 body pages. The other 92
   documents in that tree (9 paragraph-33 progress reports, 30 inspections, 38 permit actions, the
-  1994 DFFO, 3 NOVs, 4 ROV/RTC, 2 city letters) are ingested but NOT yet extracted — add each to
+  1994 DFFO, 3 NOVs, 4 ROV/RTC, 2 city letters, 2 incident reports, 2 correspondence items and 1
+  investigation report) are ingested but NOT yet extracted — add each to
   this entry, or to a genre-appropriate sibling, as it is worked.
