@@ -170,16 +170,6 @@
     "relation_basis": null
   },
   {
-    "src": "MICHAEL CAPRELLA",
-    "rel": "operates",
-    "dst": "npdes:2PE00000",
-    "date": "",
-    "ref": "2PE00000*ND",
-    "source": "oepa/lima/edoc-1840393.npdes.yaml",
-    "relation_class": null,
-    "relation_basis": null
-  },
-  {
     "src": "CITY OF LIMA WWTP",
     "rel": "operates",
     "dst": "npdes:2PE00000",
@@ -190,11 +180,21 @@
     "relation_basis": null
   },
   {
-    "src": "npdes:2PE00000",
+    "src": "CITY OF LIMA",
+    "rel": "operates",
+    "dst": "CITY OF LIMA LONG TERM CONTROL PLAN CITY OF LIMA WWTP",
+    "date": "",
+    "ref": "",
+    "source": "oepa/lima/edoc-3170365.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF LIMA LONG TERM CONTROL PLAN CITY OF LIMA WWTP",
     "rel": "discharges_to",
     "dst": "OTTAWA RIVER GENERAL HIGH QUALITY WATER ALSO REFERENCED AUGLAIZE RIVER",
     "date": "",
-    "ref": "2PE00000*1076869",
+    "ref": "",
     "source": "oepa/lima/edoc-3170365.npdes.yaml",
     "relation_class": null,
     "relation_basis": null

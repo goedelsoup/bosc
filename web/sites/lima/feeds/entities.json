@@ -598,6 +598,29 @@
     "federal_obligations": null
   },
   {
+    "key": "CITY OF LIMA LONG TERM CONTROL PLAN CITY OF LIMA WWTP",
+    "display": "City of Lima (Long Term Control Plan) / City of Lima WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Lima (Long Term Control Plan) / City of Lima WWTP"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-3170365.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "CITY OF LIMA WWTP",
     "display": "City of Lima WWTP",
     "kind": "facility",
@@ -825,14 +848,13 @@
     "relation_class": null,
     "relation_basis": null,
     "variants": [
-      "City of Lima (Long Term Control Plan) / City of Lima WWTP",
       "City of Lima WWTP",
       "City of Lima Wastewater Treatment Plant",
       "City of Lima Wastewater Treatment Plant (WWTP)"
     ],
     "signals": [],
     "roles": {
-      "facility": 8
+      "facility": 7
     },
     "parcels": [],
     "addresses": [],
@@ -843,7 +865,6 @@
       "oepa/lima/edoc-2479810.npdes.yaml",
       "oepa/lima/edoc-2710532.npdes.yaml",
       "oepa/lima/edoc-2710555.npdes.yaml",
-      "oepa/lima/edoc-3170365.npdes.yaml",
       "oepa/lima/edoc-3187291.npdes.yaml"
     ],
     "lei": null,
@@ -1047,12 +1068,13 @@
     ],
     "signals": [],
     "roles": {
-      "applicant": 6
+      "applicant": 7
     },
     "parcels": [],
     "addresses": [],
     "sources": [
       "oepa/2PE00000.npdes.yaml",
+      "oepa/lima/edoc-1840393.npdes.yaml",
       "oepa/lima/edoc-2363111.npdes.yaml",
       "oepa/lima/edoc-2479810.npdes.yaml",
       "oepa/lima/edoc-2710532.npdes.yaml",
@@ -1685,29 +1707,6 @@
     "federal_obligations": null
   },
   {
-    "key": "MICHAEL CAPRELLA",
-    "display": "Michael Caprella",
-    "kind": "individual",
-    "classification": "individual",
-    "relation_class": null,
-    "relation_basis": null,
-    "variants": [
-      "Michael Caprella"
-    ],
-    "signals": [],
-    "roles": {
-      "applicant": 1
-    },
-    "parcels": [],
-    "addresses": [],
-    "sources": [
-      "oepa/lima/edoc-1840393.npdes.yaml"
-    ],
-    "lei": null,
-    "uei": null,
-    "federal_obligations": null
-  },
-  {
     "key": "MICHAEL MONTFORT",
     "display": "Michael Montfort",
     "kind": "individual",
@@ -2202,12 +2201,13 @@
     ],
     "signals": [],
     "roles": {
-      "receiving_water": 9
+      "receiving_water": 10
     },
     "parcels": [],
     "addresses": [],
     "sources": [
       "oepa/2PE00000.npdes.yaml",
+      "oepa/lima/edoc-1840393.npdes.yaml",
       "oepa/lima/edoc-2363111.npdes.yaml",
       "oepa/lima/edoc-2479810.npdes.yaml",
       "oepa/lima/edoc-2710532.npdes.yaml",
