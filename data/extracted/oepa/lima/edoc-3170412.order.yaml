@@ -1,0 +1,90 @@
+doc_id: edoc-3170412-944b6bdc
+source_path: data/documents/oepa/lima/edoc-3170412.pdf
+kind: order
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "c f~ \nLIMA, OHIO \nCITY OF LIMA, OHIO David J. Berger, Mayor\
+  \ \n50 Town Square Lima, Ohio 45801-4900 4191228-5462 Fax 419l221-5214 \nwwna.ciwhalt.1ima,oh.us\
+  \ \nSeptember 15, 2014 \nPeggy Christie \n347 N. Dunbridge Road \nBowling Green,\
+  \ OH 43402 \nRE: Antidegradation Addeendum NPDES permit # 2PEOOOOOMD \nDear Peggy,\
+  \ \nI have enclosed the corrected and signed Antidegradation Addendum. If you have\
+  \ any questions or \ncomments, please call me at 419l221-5191 \nSincerely yours,\
+  \ \nRussell Bales \nSupervisor, WWTP \n\n\nPage 1 \nState af+Wfa ErMairotnnentat\
+  \ Protecijnn emcy \nDIVISION OF SURFACE WATER \n' ~ \" • . • . • ~ •"
+order:
+  confidence: medium
+  warnings:
+  - OCR layer contains multiple transcription errors (e.g., '2PEOOOOOMD', '4191228-5462');
+    permit number verified from image as '2PE00000MD'.
+  - No formal enforcement order (DFFO, consent decree, NOV) is present — this package
+    consists of compliance correspondence and permit renewal application materials;
+    enforcement instrument classification is 'correspondence'.
+  - Notice of Commencement date in the September 9, 2014 letter states March 28, 2014,
+    but the Notice of Commencement document itself is dated 03/13/2014 per its header
+    — possible discrepancy; both dates noted.
+  - Case number not referenced in any document; field set to null.
+  - Signature date on Antidegradation Addendum Section E is partially illegible in
+    OCR; form version dated June 30, 1997.
+  agency: Ohio EPA / City of Lima, Ohio
+  instrument: correspondence
+  case_no: null
+  respondent: City of Lima, Ohio
+  facility: City of Lima Wastewater Treatment Plant (WWTP), 1200 Fort Amanda Road,
+    Lima, OH 45804
+  permit_no: 2PE00000MD
+  issued_date: '2014-09-15'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: Submission of corrected and signed Antidegradation Addendum for NPDES
+      permit renewal (per OAC 3745-1-05 Antidegradation rule), transmitted to Ohio
+      EPA Northwest District Office.
+    deadline: null
+    status: met
+  - requirement: Advertise for bid, award a construction contract, and commence construction
+      of the Time-Critical Lift Station Project (Part I, C, b, ii & iii — Schedules).
+      Contract awarded to Peterson Construction; URS Consultants retained as engineer
+      of record. Notice of Commencement issued March 28, 2014.
+    deadline: null
+    status: met
+  - requirement: Final completion of City of Lima Sanitary Lift Station Improvements
+      project (improvements to 24 sanitary lift stations). Project approximately 30%
+      complete at time of letter.
+    deadline: '2015-01-31'
+    status: in progress
+  - requirement: NPDES Permit Renewal application (Form 2A) submitted for City of
+      Lima Wastewater Treatment Plant, including Antidegradation Addendum and General
+      Information Form.
+    deadline: null
+    status: submitted
+  penalty_usd: null
+  stipulated_penalties: null
+  status: active
+  summary: This document package is correspondence from the City of Lima WWTP Supervisor
+    (Russell Bales) and Environmental Compliance Manager to Ohio EPA Northwest District
+    Office (Peggy Christie) transmitting a corrected and signed Antidegradation Addendum
+    for NPDES permit renewal (No. 2PE00000MD). A companion letter dated September
+    9, 2014 certifies compliance with the NPDES permit schedule requirement to advertise,
+    award, and commence the Time-Critical Lift Station Improvements project, with
+    construction approximately 30% complete and a final completion target of January
+    31, 2015. The package also includes the NPDES Form 2A permit renewal application
+    and supporting documentation for the Lima WWTP.
+  note: null

@@ -1,0 +1,144 @@
+doc_id: edoc-3170357-31dd7e4f
+source_path: data/documents/oepa/lima/edoc-3170357.pdf
+kind: order
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "r\n \nBrFo~wn~ i'oddL\nATTORNEYS \nMAY 2 5 2016 \nOHIO E.P.A.\
+  \ \nN.W.D.O. \nStephen P Samuels \nMember \n614.559.7259 (t) \n614.464.1737 (f)\
+  \ \nssamuels@fbtlaw.com \nMay 23, 2016 \nVIA EMAIL AND REGULAR DELIVERY \nOhio Environmental\
+  \ Protection Agency \nDivision of Surface Water \nPermits Processing Unit \n50 West\
+  \ Town Street, Suite 700 \nP.O. Box 1049 \nColumbus, Ohio 43216-1049  \nOhio Environmental\
+  \ Protection Agency \nNorthwest District Office \n347 North Dunbridge Street \n\
+  Bowling Green, Ohio 43402 \nRe: NPDES Draft Pernzit No. 2PEO0000*ND \nCity of Lima\
+  \ Wastewater Treatment Plant (WWTP) \nDear Sirs and Mesdames: \nTha"
+order:
+  confidence: high
+  warnings:
+  - This is a comment/correspondence letter, not an enforcement order or DFFO; it
+    is submitted BY the regulated party (City of Lima) TO Ohio EPA commenting on a
+    draft NPDES permit.
+  - Permit number reads '2PE00000*ND' in the letter header and 'POOOOOOxND' in the
+    attached comments — OCR unreliable; image confirms '2PE00000*ND'.
+  - No case number, civil penalty, or stipulated penalty terms are present — this
+    is a pre-enforcement permit comment letter.
+  - No issued/effective dates for obligations — all items are requests/objections
+    directed to OEPA for action in the final permit.
+  agency: Ohio EPA
+  instrument: correspondence
+  case_no: null
+  respondent: City of Lima, Ohio
+  facility: City of Lima Wastewater Treatment Plant (WWTP)
+  permit_no: 2PE00000*ND
+  issued_date: '2016-05-23'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: Delete concentration and weekly limits for phosphorus; only monthly
+      limits required under Ohio Admin. Code 3745-33-06(C)
+    deadline: null
+    status: null
+  - requirement: Reduce monitoring frequency for Alpha-BHC to 1/yr; remove from Tracking
+      of Group 4 Parameters (Part II, Paragraph M, p. 47)
+    deadline: null
+    status: null
+  - requirement: Retain mercury effluent limits from currently effective (*MD) permit
+      rather than reducing; continue mercury reduction program; address mercury variance
+      language in Section EE
+    deadline: null
+    status: null
+  - requirement: Discontinue monitoring for free cyanide (detected only once in 65
+      samples); remove from Tracking of Group 4 Parameters
+    deadline: null
+    status: null
+  - requirement: Meet with OEPA for comprehensive discussion of legal/technical justification
+      and economic feasibility of acute and chronic toxicity limits
+    deadline: null
+    status: null
+  - requirement: Discontinue monitoring and effluent limits for bis(2-ethylhexyl)
+      phthalate; correct apparent transposition of monthly and maximum limits
+    deadline: null
+    status: null
+  - requirement: Discontinue monitoring and effluent limits for hexavalent chromium
+      (no detections in 3+ years, 30+ samples)
+    deadline: null
+    status: null
+  - requirement: 'Correct CSO Monitoring introductory text typo in Part I.B.1 (p.
+      14): ''sludge sampling'' should read ''outfall sampling'''
+    deadline: null
+    status: null
+  - requirement: Revise biosolids section (p. 23) to reflect that City submitted and
+      OEPA accepted testing showing no pathogen regrowth; update subsection '1' per
+      *MD permit language
+    deadline: null
+    status: null
+  - requirement: Add note on p. 24 allowing scum dewatered and landfilled to be excluded
+      from monitoring/reporting requirements, as in *MD permit
+    deadline: null
+    status: null
+  - requirement: Revise Note 'a' on p. 25 to add 'or a facility with an Ohio EPA-approved
+      sludge management plan', consistent with *MD permit and Ohio Admin. Code 3745-40-03
+    deadline: null
+    status: null
+  - requirement: Change upstream Dissolved Oxygen monitoring from daily to monthly
+      (p. 28), consistent with *MD permit and other upstream parameters
+    deadline: null
+    status: null
+  - requirement: Revise Part d.vii (p. 31) to read 'Complete construction as soon
+      as possible, but no later than 66 months from the effective date of the previous
+      permit'
+    deadline: null
+    status: null
+  - requirement: Add language from *MD permit to Part I.C, Section D.1 (p. 34) regarding
+      reasonable potential for water quality violations and local limits
+    deadline: null
+    status: null
+  - requirement: 'Correct Tracking of Group 4 Parameters (Part II, M, p. 47): remove
+      Free Cyanide, Alpha-BHC, and Selenium; revise third paragraph per City''s proposed
+      language'
+    deadline: null
+    status: null
+  - requirement: Provide basis for revisions to waste load allocation values in Part
+      II, AA.5 local limits (p. 52)
+    deadline: null
+    status: null
+  - requirement: Correct mercury variance application date in Part II, EE.1.3 (p.
+      57) from July 15, 2016 to July 15, 2015
+    deadline: null
+    status: null
+  - requirement: Remove stormwater Parts IV, V, and VI (pp. 73-94) or limit applicability
+      to WWTP site only, not entire collection system
+    deadline: null
+    status: null
+  - requirement: Provide flow data and methodology used to distribute Ottawa River
+      assimilative capacity and develop City of Lima's wasteload allocation (Fact
+      Sheet, p. 12)
+    deadline: null
+    status: null
+  - requirement: Provide basis for flow and background data used to calculate WLA,
+      which differ significantly from previous permit basis (Fact Sheet, p. 37)
+    deadline: null
+    status: null
+  - requirement: Request entire relevant STORET database for City of Lima and Ottawa
+      River; request meeting with OEPA to discuss permit comments
+    deadline: null
+    status: null
+  penalty_usd: null
+  stipulated_penalties: null
+  status: null
+  summary: This is a May 23, 2016 comment letter from Stephen P. Samuels of Frost
+    Brown Todd LLC, counsel for the City of Lima, Ohio, submitted to Ohio EPA's Division
+    of Surface Water and Northwest District Office regarding NPDES Draft Permit No.
+    2PE00000*ND for the City of Lima Wastewater Treatment Plant. The letter transmits
+    23 detailed preliminary comments and objections to specific terms and conditions
+    in the draft permit, including limits for phosphorus, mercury, toxicity, and various
+    priority pollutants, as well as requests for STORET data and a meeting with OEPA
+    to discuss the issues raised.
+  note: null

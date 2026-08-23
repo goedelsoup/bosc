@@ -1,0 +1,49 @@
+doc_id: edoc-3170389-caadee3a
+source_path: data/documents/oepa/lima/edoc-3170389.pdf
+kind: order
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "r ( ooDol~ \nLIMA, OH10 CITY OF LIMA, OHIO David J. Berger,\
+  \ Mayor \n50 Town Square Lima Ohio 45801-0900 419/228-5462 Fax 419/221-5214 \nwww.ciivhal1.1iina.oh.us\
+  \ , \nJune 19, 2015 \nMs. Peggy Christie \nOhio EPA \n347 North Dunbridge Road \n\
+  Bowling Green, OH 43402-9398 \nPeggy Christie, \nI am giving notice that construction\
+  \ and demolition activities are going to commence the week of \nJuly 6, 2015 at\
+  \ the Lima Wastewater Treatment Plant. The old chlorine gas building is going to\
+  \ be \ndemolished and then primary tanks 1 and 2 will be demolished in the initial\
+  \ part of the project. This \nwill restrict our flo"
+order:
+  confidence: medium
+  warnings:
+  - Case/reference number '2PE00000' read from top-right of image; OCR rendered it
+    unreliably as 'ooDol~' — verified against image as '2PE00000'.
+  - This is an informational notice letter, not a formal enforcement order; categorized
+    as correspondence.
+  - No penalty, permit number, or effective date stated in the document.
+  agency: Ohio EPA
+  instrument: correspondence
+  case_no: 2PE00000
+  respondent: City of Lima, Ohio
+  facility: Lima Wastewater Treatment Plant
+  permit_no: null
+  issued_date: '2015-06-19'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: Construction and demolition activities to commence at Lima Wastewater
+      Treatment Plant — demolition of old chlorine gas building, followed by demolition
+      of primary tanks 1 and 2. Maximum flow restricted to 30–35 mgd while primary
+      tanks 1 and 2 are down.
+    deadline: '2015-07-06'
+    status: null
+  penalty_usd: null
+  stipulated_penalties: null
+  status: null
+  summary: Letter dated June 19, 2015 from Russell C. Bales, Supervisor of the Lima
+    Wastewater Treatment Plant, to Ms. Peggy Christie at Ohio EPA providing notice
+    that construction and demolition activities will commence the week of July 6,
+    2015. The old chlorine gas building and primary tanks 1 and 2 are to be demolished,
+    restricting plant flow capacity to a maximum of 30–35 mgd during that period.
+  note: null

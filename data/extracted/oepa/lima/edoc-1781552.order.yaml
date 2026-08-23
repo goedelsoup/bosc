@@ -1,0 +1,75 @@
+doc_id: edoc-1781552-7effeb58
+source_path: data/documents/oepa/lima/edoc-1781552.pdf
+kind: order
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "City of Lima Allen County, Ohio ~ \nSharetta Smith, Mayor \n\
+  50 Town Square \nLima, Ohio 45801-4900 \nPhone: 419-228-5462 \nFax: 419-221-5257\
+  \ \nwww.cityhall.lima.oh.us \nApril 7, 2022 \nDavid Brumbaugh \nOhio EPA \nDivision\
+  \ of Surface Water \n50 W. Town St., Suite 700 \nColumbus, OH 43215 \nRE: Elimination\
+  \ of Stations 036 and 057 from the City of Lima’s NPDES Permit 2PE00000*ND \nMr.\
+  \ Brumbaugh, \nThis letter is provided to document the permanent elimination of\
+  \ Stations 057 (Treatment Plant \nBypass) and 036 (CSO) and the modification to\
+  \ 035 (which is noted at 35a, 35b and 35c in the City \nof Lima’s Consent Dec"
+order:
+  confidence: high
+  warnings:
+  - No civil-action or consent decree docket number is printed in this letter — case_no
+    set to null.
+  - NPDES permit number '2PE00000*ND' contains an asterisk as printed; verify exact
+    permit number against permit records.
+  - OCR on engineering drawing pages is heavily corrupted; data from those pages not
+    relied upon for structured fields.
+  agency: Ohio EPA, Division of Surface Water
+  instrument: correspondence
+  case_no: null
+  respondent: City of Lima, Ohio
+  facility: City of Lima Wastewater Treatment Plant / Sewer System
+  permit_no: 2PE00000*ND
+  issued_date: '2022-04-07'
+  effective_date: null
+  supersedes: City of Lima Consent Decree (stations 35a, 35b, 35c referenced)
+  obligations:
+  - requirement: Permanent elimination of Station 057 (Treatment Plant Bypass) — bypass
+      gate blocked with concrete and gate operator not reinstalled during Contract
+      50 work in 2016
+    deadline: '2016'
+    status: completed
+  - requirement: Permanent elimination of Station 036 (CSO) — catch basin leads and
+      overflow plugged and manhole lined per MWH 2015 drawings
+    deadline: '2015'
+    status: completed
+  - requirement: Modification of Station 035 (noted as 35a, 35b, and 35c in the City
+      of Lima's Consent Decree) per MWH 2015 drawings
+    deadline: '2015'
+    status: completed
+  - requirement: Official request to Ohio EPA to eliminate Stations 057 and 036 from
+      NPDES Permit 2PE00000*ND during the permit renewal process
+    deadline: null
+    status: pending
+  penalty_usd: null
+  stipulated_penalties: null
+  status: active
+  summary: Letter dated April 7, 2022 from City of Lima Wastewater Supervisor Kim
+    Furry to Ohio EPA's David Brumbaugh documenting the permanent elimination of Stations
+    057 (Treatment Plant Bypass) and 036 (CSO) and the modification of Station 035
+    (35a, 35b, 35c under the City's Consent Decree) from NPDES Permit 2PE00000*ND.
+    The work was accomplished during Contract 50 (2016) for Station 057 and via MWH
+    2015 drawings for Stations 036 and 035. The letter formally requests that Ohio
+    EPA remove Stations 057 and 036 from the NPDES permit during its renewal.
+  note: Letter authored by Kim Furry, Wastewater Supervisor, City of Lima. CC to Michael
+    Caprella (Utilities Director), Eric Bontrager (Environmental Compliance Manager),
+    and Shawn Dershem (Assistant Wastewater Supervisor). Attachments include photos
+    of Influent Structure 2 (Contract 50 work) and MWH 2015 engineering drawings for
+    CSO-036 reconfiguration (Sheets PP-13 and PP-14, Lima Upstream Regulators Sewer
+    Separation Project, issued for bid June 2015).

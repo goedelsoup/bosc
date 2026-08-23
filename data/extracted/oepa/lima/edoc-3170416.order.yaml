@@ -1,0 +1,48 @@
+doc_id: edoc-3170416-119dde83
+source_path: data/documents/oepa/lima/edoc-3170416.pdf
+kind: order
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "+ . . \nk *+ t~ * -A. * + •. \nCITY OF LIMA, OHIO David J. Berger,\
+  \ Mayor \n50 Town Square Lima Ohio 45801-4900 419/228-5462 Fax 419/221-5214 \nwww.cityhall.lima.oh.tis\
+  \ \nMs. Peggy Chri.sty \nOhio EPA \n347 North Dunbridge Road \nBowiing Green, OH\
+  \ 43402-9398 \nRe: NPDES Permit No. 2PE00000*MD 5-16-16 \nThis letter is to inform\
+  \ you that a change in Operator of Record has been made at the City of Lima \nWWTP.\
+  \ Mr. Russell C. Bales has left the position as Supervvisor. I have been appointed\
+  \ the position \nof Acti.ng Supervisor of the Luna WWTP, and I have submitted the\
+  \ Class TV application, and will be \nthe Op"
+order:
+  confidence: high
+  warnings:
+  - NPDES Permit No. rendered as '2PE00000*MD' in both OCR and image — the asterisk
+    may be an OCR artifact for a digit or letter; verify exact permit number against
+    Ohio EPA records.
+  - OCR rendered 'Luna WWTP' (should be 'Lima WWTP') and 'Class TV' (should be 'Class
+    IV') — image confirms correct readings as Lima and Class IV.
+  - This is administrative correspondence notifying a personnel/operator-of-record
+    change, not a traditional enforcement instrument (no penalties, orders, or compliance
+    schedule).
+  - Permit number suffix '*MD' is unusual and may be partially misread; image appears
+    to confirm but should be verified.
+  agency: Ohio EPA
+  instrument: correspondence
+  case_no: null
+  respondent: City of Lima, Ohio
+  facility: City of Lima Waste Water Treatment Plant (Lima WWTP)
+  permit_no: 2PE00000*MD
+  issued_date: '2016-05-16'
+  effective_date: null
+  supersedes: null
+  obligations: []
+  penalty_usd: null
+  stipulated_penalties: null
+  status: null
+  summary: This letter from Eric Markley, Acting Supervisor of the City of Lima WWTP,
+    notifies Ohio EPA (Ms. Peggy Christy) that a change in Operator of Record has
+    occurred at the Lima WWTP. Russell C. Bales has vacated the Supervisor position,
+    and Eric Markley has been appointed Acting Supervisor, submitted the Class IV
+    application, and will serve as Operator of Record.
+  note: null

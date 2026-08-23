@@ -1,0 +1,328 @@
+doc_id: edoc-1840394-59817829
+source_path: data/documents/oepa/lima/edoc-1840394.pdf
+kind: engineering
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 200
+source_text_excerpt: 'PLANTEFFLUENTWATER
+
+  NITRIFICATIONTOWERSCHLORINECONTACT
+
+  (SODIUMBISULFITE)OTTAWA  RIVER
+
+  STATIONPUMP
+
+  SETTLINGSECONDARY
+
+  EFFLUENT
+
+  AERATIONPRIMARYSETTLINGSCREENING
+
+  POLYMER
+
+  SCREENINGS
+
+  PRIMARYSLUDGEPUMPSTATIONSTATIONPUMPSLUDGESECONDARYRETURN  SLUDGE
+
+  THICKENINGSLUDGEWASTE  SLUDGESTATIONPUMPSLUDGETHICKENED
+
+  DIGESTIONDEWATERING
+
+  POLYMERCLASS ASLUDGEPROCESSING
+
+  LIMEALKALINEMATERIAL
+
+  STORAGESOLIDSBIOLAND  APPLICATION
+
+  PRIMARYDECHLORINATION
+
+  INFLUENTSTRUCTURENo.3SOUTH SEWERNORTH SEWER
+
+  STRUCTURENo.2
+
+  SEPTAGEFROMTRUCKUNLOADINGSTATIONGRITTANKS
+
+  HYDROGRITTER(GRIT REMOVAL)
+
+  OUTFALL
+
+  DISINFECTION (SODIUMHYPOCHLORITE)
+
+  SECOND'
+record:
+  confidence: high
+  warnings:
+  - Record date interpreted from drawing reference 'TOL-6998002FD09-Model 06/15/19
+    05-422' — the '06/15/19' likely refers to 2019-06-15 but only '05-422' and 'Model'
+    appear clearly; date set to 2019-05 cautiously.
+  - No flow-rate or hydraulic design parameters are shown on this process flow diagram
+    — it is schematic only.
+  - Project number read as 'TOL-6998002FD09-Model' from the lower-left drawing reference
+    block; verify against titleblock.
+  project_name: City of Lima, Ohio Wastewater Treatment Plant O & M Manual
+  facility_name: City of Lima, Ohio Wastewater Treatment Plant
+  record_type: specification
+  discipline: sanitary / wastewater
+  record_date: 2019-05
+  project_no: TOL-6998002FD09-Model
+  site_address: City of Lima, Ohio
+  prepared_by:
+  - name: Jones & Henry Engineers, Ltd.
+    discipline: civil / environmental engineering
+    location: www.jheng.com
+  sheets:
+  - sheet_id: Figure 1-2
+    title: Process Flow Diagram
+  components:
+  - name: Influent Structure No. 3
+    category: structure
+    quantity: null
+    specs: []
+    note: null
+  - name: Structure No. 2
+    category: structure
+    quantity: null
+    specs: []
+    note: null
+  - name: MH-17
+    category: structure
+    quantity: null
+    specs: []
+    note: Manhole connecting North Sewer and South Sewer
+  - name: North Sewer
+    category: pipe
+    quantity: null
+    specs: []
+    note: null
+  - name: South Sewer
+    category: pipe
+    quantity: null
+    specs: []
+    note: null
+  - name: Screening
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: byproduct
+      value: Screenings
+      unit: null
+    note: null
+  - name: Grit Tanks
+    category: tank
+    quantity: null
+    specs: []
+    note: null
+  - name: Hydrogritter (Grit Removal)
+    category: equipment
+    quantity: null
+    specs: []
+    note: null
+  - name: Primary Settling
+    category: structure
+    quantity: null
+    specs: []
+    note: null
+  - name: Primary Sludge Pump Station
+    category: pump
+    quantity: null
+    specs: []
+    note: null
+  - name: Aeration
+    category: equipment
+    quantity: null
+    specs: []
+    note: null
+  - name: Secondary Settling
+    category: structure
+    quantity: null
+    specs: []
+    note: null
+  - name: Secondary Sludge Pump Station
+    category: pump
+    quantity: null
+    specs: []
+    note: null
+  - name: Nitrification Towers
+    category: equipment
+    quantity: null
+    specs: []
+    note: null
+  - name: Chlorine Contact
+    category: structure
+    quantity: null
+    specs: []
+    note: null
+  - name: Secondary Effluent Pump Station
+    category: pump
+    quantity: null
+    specs: []
+    note: null
+  - name: Primary Effluent Pump Station
+    category: pump
+    quantity: null
+    specs: []
+    note: null
+  - name: Sludge Thickening
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: bypass
+      value: Sludge Thickener Bypass
+      unit: null
+    note: null
+  - name: Thickened Sludge Pump Station
+    category: pump
+    quantity: null
+    specs: []
+    note: null
+  - name: Digestion
+    category: equipment
+    quantity: null
+    specs: []
+    note: null
+  - name: Dewatering
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: chemical addition
+      value: Polymer
+      unit: null
+    note: null
+  - name: Class A Sludge Processing
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: chemical addition - 1
+      value: Lime
+      unit: null
+    - parameter: chemical addition - 2
+      value: Alkaline Material
+      unit: null
+    note: null
+  - name: Bio Solids Storage
+    category: tank
+    quantity: null
+    specs: []
+    note: null
+  - name: Septage from Truck Unloading Station
+    category: equipment
+    quantity: null
+    specs: []
+    note: null
+  - name: Ferrous Chloride Alternate 1A
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: chemical
+      value: Ferrous Chloride
+      unit: null
+    - parameter: point of application
+      value: Alternate 1A
+      unit: null
+    note: null
+  - name: Ferrous Chloride Alternate 1B
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: chemical
+      value: Ferrous Chloride
+      unit: null
+    - parameter: point of application
+      value: Alternate 1B
+      unit: null
+    note: null
+  - name: Ferrous Chloride Alternate 2
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: chemical
+      value: Ferrous Chloride
+      unit: null
+    - parameter: point of application
+      value: Alternate 2 - upstream of Primary Settling
+      unit: null
+    note: null
+  - name: Ferrous Chloride Alternate 3
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: chemical
+      value: Ferrous Chloride
+      unit: null
+    - parameter: point of application
+      value: Alternate 3 - upstream of Aeration
+      unit: null
+    note: null
+  - name: Ferrous Chloride Alternate 4
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: chemical
+      value: Ferrous Chloride
+      unit: null
+    - parameter: point of application
+      value: Alternate 4 - upstream of Secondary Settling
+      unit: null
+    note: null
+  - name: Disinfection (Sodium Hypochlorite)
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: chemical
+      value: Sodium Hypochlorite
+      unit: null
+    note: null
+  - name: Dechlorination (Sodium Bisulfite)
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: chemical
+      value: Sodium Bisulfite
+      unit: null
+    note: null
+  - name: Sodium Hypochlorite Feed
+    category: equipment
+    quantity: null
+    specs:
+    - parameter: chemical
+      value: Sodium Hypochlorite
+      unit: null
+    note: Also fed to Chlorine Contact basin
+  design_parameters:
+  - parameter: outfall receiving water
+    value: Ottawa River
+    unit: null
+  - parameter: land application
+    value: Bio Solids land applied after Class A processing
+    unit: null
+  key_features:
+  - Process flow diagram (Figure 1-2) from the O&M Manual for the City of Lima, Ohio
+    Wastewater Treatment Plant
+  - Influent received from North Sewer and South Sewer via MH-17 and two influent
+    structures
+  - Septage accepted from truck unloading station
+  - 'Preliminary treatment: Screening and Grit Removal (Hydrogritter)'
+  - 'Primary treatment: Primary Settling with Primary Sludge Pump Station'
+  - 'Secondary treatment: Aeration, Secondary Settling, Secondary Sludge Pump Station,
+    Nitrification Towers'
+  - Disinfection with Sodium Hypochlorite; Dechlorination with Sodium Bisulfite before
+    Ottawa River outfall
+  - Ferrous Chloride addition at four alternate points for phosphorus removal
+  - Polymer addition at multiple points including Primary Effluent Pump Station and
+    Dewatering
+  - 'Sludge processing train: Sludge Thickening → Digestion → Dewatering → Class A
+    Sludge Processing → Bio Solids Storage → Land Application'
+  - Sludge Thickener Bypass provision shown as dashed line
+  - Return sludge loop from Secondary Sludge Pump Station back to Aeration
+  summary: This record is Figure 1-2 from the City of Lima, Ohio Wastewater Treatment
+    Plant Operations & Maintenance Manual, prepared by Jones & Henry Engineers, Ltd.
+    It presents a complete process flow diagram for the municipal WWTP, illustrating
+    the full liquid and solids treatment trains from influent screening through biological
+    treatment, disinfection/dechlorination, and discharge to the Ottawa River. The
+    solids train proceeds through thickening, digestion, dewatering, Class A sludge
+    processing, bio-solids storage, and land application, with multiple chemical addition
+    points (Ferrous Chloride alternates, Polymer, Sodium Hypochlorite, Sodium Bisulfite,
+    Lime, Alkaline Material) shown throughout.
+  note: null

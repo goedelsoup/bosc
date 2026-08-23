@@ -4783,6 +4783,253 @@
     "source_doc_published": false
   },
   {
+    "rel": "oepa/lima/edoc-1520341.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "No formal case number is referenced in this letter.",
+      "The OCR shows '2/5/2021' near the address block, which appears to be the date of the City of Lima's original staffing reduction request — not a second instrument date.",
+      "NPDES permit number 2PE00000 may be a placeholder or redacted number; recorded exactly as printed."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Lima (Jerry Coffey, Plant Manager)",
+      "facility": "Lima WWTP",
+      "permit_no": "2PE00000",
+      "issued_date": "2021-02-17",
+      "effective_date": "2021-02-17",
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "An operator of record with a minimum of a Class IV Wastewater certificate shall be physically present at the system 5 days per week for a minimum of 20 hours per week.",
+          "deadline": null,
+          "status": "active"
+        },
+        {
+          "requirement": "The system shall meet the criteria specified in the approved operating plan.",
+          "deadline": null,
+          "status": "active"
+        },
+        {
+          "requirement": "Any change in circumstances under which the staffing reduction was approved (including failure to physically staff the plant with a Class IV operator of record) will require the system to immediately return to compliance with minimum staffing requirements under OAC Rule 3745-7-04(C)(1).",
+          "deadline": null,
+          "status": "active"
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": "active",
+      "summary": "Ohio EPA Director Laurie A. Stevenson approved the City of Lima's request for a reduction in minimum staffing requirements at the Lima WWTP (NPDES #2PE00000), pursuant to OAC Rule 3745-7-04(C)(3)(a)(i). The approved reduction allows staffing to be reduced to 20 hours per week, provided a Class IV Wastewater operator of record is physically present 5 days per week. If the conditions of the approved operating plan are not met, the facility must immediately return to full minimum staffing requirements.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1520341.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1520341.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1781552.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "No civil-action or consent decree docket number is printed in this letter — case_no set to null.",
+      "NPDES permit number '2PE00000*ND' contains an asterisk as printed; verify exact permit number against permit records.",
+      "OCR on engineering drawing pages is heavily corrupted; data from those pages not relied upon for structured fields."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Lima, Ohio",
+      "facility": "City of Lima Wastewater Treatment Plant / Sewer System",
+      "permit_no": "2PE00000*ND",
+      "issued_date": "2022-04-07",
+      "effective_date": null,
+      "supersedes": "City of Lima Consent Decree (stations 35a, 35b, 35c referenced)",
+      "obligations": [
+        {
+          "requirement": "Permanent elimination of Station 057 (Treatment Plant Bypass) — bypass gate blocked with concrete and gate operator not reinstalled during Contract 50 work in 2016",
+          "deadline": "2016",
+          "status": "completed"
+        },
+        {
+          "requirement": "Permanent elimination of Station 036 (CSO) — catch basin leads and overflow plugged and manhole lined per MWH 2015 drawings",
+          "deadline": "2015",
+          "status": "completed"
+        },
+        {
+          "requirement": "Modification of Station 035 (noted as 35a, 35b, and 35c in the City of Lima's Consent Decree) per MWH 2015 drawings",
+          "deadline": "2015",
+          "status": "completed"
+        },
+        {
+          "requirement": "Official request to Ohio EPA to eliminate Stations 057 and 036 from NPDES Permit 2PE00000*ND during the permit renewal process",
+          "deadline": null,
+          "status": "pending"
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": "active",
+      "summary": "Letter dated April 7, 2022 from City of Lima Wastewater Supervisor Kim Furry to Ohio EPA's David Brumbaugh documenting the permanent elimination of Stations 057 (Treatment Plant Bypass) and 036 (CSO) and the modification of Station 035 (35a, 35b, 35c under the City's Consent Decree) from NPDES Permit 2PE00000*ND. The work was accomplished during Contract 50 (2016) for Station 057 and via MWH 2015 drawings for Stations 036 and 035. The letter formally requests that Ohio EPA remove Stations 057 and 036 from the NPDES permit during its renewal.",
+      "note": "Letter authored by Kim Furry, Wastewater Supervisor, City of Lima. CC to Michael Caprella (Utilities Director), Eric Bontrager (Environmental Compliance Manager), and Shawn Dershem (Assistant Wastewater Supervisor). Attachments include photos of Influent Structure 2 (Contract 50 work) and MWH 2015 engineering drawings for CSO-036 reconfiguration (Sheets PP-13 and PP-14, Lima Upstream Regulators Sewer Separation Project, issued for bid June 2015)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1781552.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1781552.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1851184.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "Permit number '2PE00000*ND' contains an asterisk which may be a redaction or OCR artifact — verify exact permit number against source document.",
+      "OCR rendered 'Caprella' as 'Cap ella' and '916/21' as a date for Lima Memorial Hospital — corrected from image context.",
+      "Document is compliance correspondence/progress report, not a primary enforcement instrument (no penalty, no order terms)."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Lima",
+      "facility": "City of Lima Wastewater Treatment Plant (POTW)",
+      "permit_no": "2PE00000*ND",
+      "issued_date": "2022-06-27",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "Submit annual update to the Control Strategy for Dissolved Hexavalent Chromium, per NPDES Permit 2PE00000*ND, Part I, C – Schedule of Compliance, B,3",
+          "deadline": null,
+          "status": "met"
+        },
+        {
+          "requirement": "Continue twice-per-year sampling of industries throughout the City for hexavalent chromium",
+          "deadline": null,
+          "status": "met"
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": "active",
+      "summary": "The City of Lima's Director of Utilities, Michael H. Caprella, submitted the annual Hexavalent Chromium Control Strategy progress report to Ohio EPA as required by NPDES Permit 2PE00000*ND, Part I, C – Schedule of Compliance, B,3. The report covers monitoring results from June 2021 through June 2022 for the WWTP effluent (Outfall 001) and industrial pretreatment sampling, finding no detectable levels of hexavalent chromium in the collection system or treatment plant effluent. No updates to the control strategy were required, as all results were below detectable limits and the POTW is meeting its permit limits.",
+      "note": "This is a compliance correspondence letter (annual progress report) rather than a direct enforcement order. The City of Lima is the reporting/respondent party; Ohio EPA Northwest District Office and NPDES Permit Unit are the recipients. All monitoring results for Outfall 001 show \"AA 3.0\" (non-detect at 3.0 µg/L method detection limit) except one 1/24/22 result of 10.0 (dilution required). Industry results similarly show non-detects with some requiring dilution. No PMP sources identified; no further remedial actions required."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1851184.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1851184.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1879637.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "Received stamp date (JUN 23 2022) precedes the letter date (June 27, 2022), which is logically inconsistent — possible stamping error or OCR misread of the received date.",
+      "Permit number contains an asterisk ('2PE00000*ND') which may be a masking/redaction convention or OCR artifact; verified against image as printed.",
+      "This is a compliance update letter/correspondence, not a primary enforcement instrument (no DFFO, consent decree, or NOV present in this document)."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Lima",
+      "facility": "City of Lima Wastewater Treatment Plant (POTW), Lima, Ohio",
+      "permit_no": "2PE00000*ND",
+      "issued_date": "2022-06-27",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "Submit annual update to the Control Strategy for Dissolved Hexavalent Chromium, as required by NPDES Permit 2PE00000*ND, Part I, C – Schedule of Compliance, B,3",
+          "deadline": null,
+          "status": "met — update submitted June 27, 2022"
+        },
+        {
+          "requirement": "Monitor effluent (Outfall 001) and industrial sources for Hexavalent Chromium per pretreatment/NPDES permit requirements",
+          "deadline": null,
+          "status": "ongoing — all results below detectable limits; no sources required to implement PMP requirements"
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": "active",
+      "summary": "The City of Lima's Director of Utilities, Michael H. Caprella, submitted to Ohio EPA Northwest District Office the annual update to Lima's Control Strategy for Dissolved Hexavalent Chromium, as required by NPDES Permit 2PE00000*ND, Part I, C – Schedule of Compliance, B,3. The attached progress report covers monitoring results from June 2021 through June 2022 for Outfall 001 and numerous industrial pretreatment sources, all of which were below detectable limits for hexavalent chromium. No further control strategy updates were needed as the POTW is meeting its permit limits and no known sources of hexavalent chromium have been identified.",
+      "note": "Document is a compliance correspondence letter (not a DFFO or consent decree) transmitting the annual Hexavalent Chromium Control Strategy progress report to Ohio EPA NWDO, per schedule-of-compliance requirements in NPDES Permit 2PE00000*ND. The permit number \"2PE00000*ND\" is rendered with an asterisk in the original; OCR confirmed against image. Received stamp reads JUN 23 2022, letter dated June 27, 2022 — discrepancy noted (received stamp precedes letter date; likely a stamping error)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1879637.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1879637.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "oepa/lima/edoc-1914753.order.yaml",
     "group": "enforcement",
     "title": "correspondence (Resolution of Violation letter)",
@@ -4866,6 +5113,52 @@
       "verified": true
     },
     "source_doc_rel": "oepa/lima/edoc-1914761.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1974720.order.yaml",
+    "group": "enforcement",
+    "title": "extension letter",
+    "confidence": "high",
+    "warnings": [
+      "OCR rendered permit number as '2PE00000' — confirmed against image as '2PE00000'.",
+      "OCR misread 'Allen County' as 'Ailen County' — corrected to Allen County per image."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "extension letter",
+      "case_no": null,
+      "respondent": "City of Lima",
+      "facility": "City of Lima WWTP",
+      "permit_no": "2PE00000",
+      "issued_date": "2015-01-29",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "Complete Cable Road and Hickory Knoll lift station construction projects (as listed in Part I.C.b. of the NPDES permit); provide Ohio EPA Northwest District Office with written notification upon completion.",
+          "deadline": "2015-04-01",
+          "status": "extended"
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": null,
+      "summary": "Ohio EPA grants a time extension to the City of Lima for completion of the Cable Road and Hickory Knoll lift station construction projects originally listed in the compliance schedule of NPDES permit 2PE00000. Because the permit was set to expire February 28, 2015, a formal permit modification was deemed impractical; instead, Ohio EPA extended the completion deadline to April 1, 2015, and required written notification upon project completion.",
+      "note": "Letter is in response to the City of Lima's request dated December 8, 2014. Signed by Elizabeth A. Wick, P.E., Environmental Engineer/Section Manager, Division of Surface Water, Ohio EPA Northwest District Office. NPDES permit was set to expire February 28, 2015."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1974720.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1974720.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": true
   },
@@ -5031,6 +5324,408 @@
     "source_doc_published": true
   },
   {
+    "rel": "oepa/lima/edoc-3170357.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "This is a comment/correspondence letter, not an enforcement order or DFFO; it is submitted BY the regulated party (City of Lima) TO Ohio EPA commenting on a draft NPDES permit.",
+      "Permit number reads '2PE00000*ND' in the letter header and 'POOOOOOxND' in the attached comments — OCR unreliable; image confirms '2PE00000*ND'.",
+      "No case number, civil penalty, or stipulated penalty terms are present — this is a pre-enforcement permit comment letter.",
+      "No issued/effective dates for obligations — all items are requests/objections directed to OEPA for action in the final permit."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Lima, Ohio",
+      "facility": "City of Lima Wastewater Treatment Plant (WWTP)",
+      "permit_no": "2PE00000*ND",
+      "issued_date": "2016-05-23",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "Delete concentration and weekly limits for phosphorus; only monthly limits required under Ohio Admin. Code 3745-33-06(C)",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Reduce monitoring frequency for Alpha-BHC to 1/yr; remove from Tracking of Group 4 Parameters (Part II, Paragraph M, p. 47)",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Retain mercury effluent limits from currently effective (*MD) permit rather than reducing; continue mercury reduction program; address mercury variance language in Section EE",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Discontinue monitoring for free cyanide (detected only once in 65 samples); remove from Tracking of Group 4 Parameters",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Meet with OEPA for comprehensive discussion of legal/technical justification and economic feasibility of acute and chronic toxicity limits",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Discontinue monitoring and effluent limits for bis(2-ethylhexyl) phthalate; correct apparent transposition of monthly and maximum limits",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Discontinue monitoring and effluent limits for hexavalent chromium (no detections in 3+ years, 30+ samples)",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Correct CSO Monitoring introductory text typo in Part I.B.1 (p. 14): 'sludge sampling' should read 'outfall sampling'",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Revise biosolids section (p. 23) to reflect that City submitted and OEPA accepted testing showing no pathogen regrowth; update subsection '1' per *MD permit language",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Add note on p. 24 allowing scum dewatered and landfilled to be excluded from monitoring/reporting requirements, as in *MD permit",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Revise Note 'a' on p. 25 to add 'or a facility with an Ohio EPA-approved sludge management plan', consistent with *MD permit and Ohio Admin. Code 3745-40-03",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Change upstream Dissolved Oxygen monitoring from daily to monthly (p. 28), consistent with *MD permit and other upstream parameters",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Revise Part d.vii (p. 31) to read 'Complete construction as soon as possible, but no later than 66 months from the effective date of the previous permit'",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Add language from *MD permit to Part I.C, Section D.1 (p. 34) regarding reasonable potential for water quality violations and local limits",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Correct Tracking of Group 4 Parameters (Part II, M, p. 47): remove Free Cyanide, Alpha-BHC, and Selenium; revise third paragraph per City's proposed language",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Provide basis for revisions to waste load allocation values in Part II, AA.5 local limits (p. 52)",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Correct mercury variance application date in Part II, EE.1.3 (p. 57) from July 15, 2016 to July 15, 2015",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Remove stormwater Parts IV, V, and VI (pp. 73-94) or limit applicability to WWTP site only, not entire collection system",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Provide flow data and methodology used to distribute Ottawa River assimilative capacity and develop City of Lima's wasteload allocation (Fact Sheet, p. 12)",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Provide basis for flow and background data used to calculate WLA, which differ significantly from previous permit basis (Fact Sheet, p. 37)",
+          "deadline": null,
+          "status": null
+        },
+        {
+          "requirement": "Request entire relevant STORET database for City of Lima and Ottawa River; request meeting with OEPA to discuss permit comments",
+          "deadline": null,
+          "status": null
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": null,
+      "summary": "This is a May 23, 2016 comment letter from Stephen P. Samuels of Frost Brown Todd LLC, counsel for the City of Lima, Ohio, submitted to Ohio EPA's Division of Surface Water and Northwest District Office regarding NPDES Draft Permit No. 2PE00000*ND for the City of Lima Wastewater Treatment Plant. The letter transmits 23 detailed preliminary comments and objections to specific terms and conditions in the draft permit, including limits for phosphorus, mercury, toxicity, and various priority pollutants, as well as requests for STORET data and a meeting with OEPA to discuss the issues raised.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170357.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170357.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170389.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "medium",
+    "warnings": [
+      "Case/reference number '2PE00000' read from top-right of image; OCR rendered it unreliably as 'ooDol~' — verified against image as '2PE00000'.",
+      "This is an informational notice letter, not a formal enforcement order; categorized as correspondence.",
+      "No penalty, permit number, or effective date stated in the document."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "correspondence",
+      "case_no": "2PE00000",
+      "respondent": "City of Lima, Ohio",
+      "facility": "Lima Wastewater Treatment Plant",
+      "permit_no": null,
+      "issued_date": "2015-06-19",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "Construction and demolition activities to commence at Lima Wastewater Treatment Plant — demolition of old chlorine gas building, followed by demolition of primary tanks 1 and 2. Maximum flow restricted to 30–35 mgd while primary tanks 1 and 2 are down.",
+          "deadline": "2015-07-06",
+          "status": null
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": null,
+      "summary": "Letter dated June 19, 2015 from Russell C. Bales, Supervisor of the Lima Wastewater Treatment Plant, to Ms. Peggy Christie at Ohio EPA providing notice that construction and demolition activities will commence the week of July 6, 2015. The old chlorine gas building and primary tanks 1 and 2 are to be demolished, restricting plant flow capacity to a maximum of 30–35 mgd during that period.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170389.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170389.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170394.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "medium",
+    "warnings": [
+      "Exact issued date not printed on the letter — no explicit date visible in the letter body or header; estimated from context as sometime before June 2, 2015.",
+      "Permit number '2PE00000' read from handwritten notation at top right of page; OCR rendered it as 'b0000' and image shows '2PE00000' — verified against image.",
+      "This is a status-report correspondence letter, not a formal enforcement instrument (consent decree, DFFO, NOV, etc.); it is filed under a permit/case but does not itself impose orders or penalties."
+    ],
+    "fields": {
+      "agency": "City of Lima, Ohio / Ohio EPA Division of Surface Water",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Lima, Ohio",
+      "facility": "Lima Wastewater Treatment Plant (Lima WWTP)",
+      "permit_no": "2PE00000",
+      "issued_date": "2015",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "CMAR (Peterson Construction Company/URS) to submit bids for any work they intend to self-perform to the City of Lima",
+          "deadline": "2015-06-02T15:00:00",
+          "status": null
+        },
+        {
+          "requirement": "All other subcontractors to e-mail bids to Mike Fritchie with Peterson Construction Company/URS",
+          "deadline": "2015-06-03T10:00:00",
+          "status": null
+        },
+        {
+          "requirement": "Notice to proceed with Headworks and Primary Clarification Improvements project anticipated",
+          "deadline": "2015-06-15",
+          "status": null
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": null,
+      "summary": "This is a status-report letter from Russell C. Bales, Supervisor of the City of Lima WWTP, to Ms. Peggy Christie at the Ohio EPA Division of Surface Water Northwest District Office. It reports on the construction contracts for the Headworks and Primary Clarification Improvements at Lima WWTP, noting that the guaranteed maximum price has been established, bids are divided into 7 major packages, and notice to proceed is anticipated by June 15, 2015. Peterson Construction Company/URS (now AECOM) are the Construction Managers at Risk (CMAR).",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170394.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170394.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170400.order.yaml",
+    "group": "enforcement",
+    "title": "extension letter",
+    "confidence": "high",
+    "warnings": [
+      "Permit number reads '2PE00000*MD' — the asterisk may represent additional digits not fully legible; verified against image and OCR appears consistent.",
+      "OCR renders 'complete' as 'complet' in one instance — confirmed as OCR artifact only.",
+      "Overall program completion date given as 'April 14, 2015' in the first paragraph, while the specific extension request deadline is 'April 1, 2015' — both dates captured as stated."
+    ],
+    "fields": {
+      "agency": "Ohio EPA (OEPA-Northwest District)",
+      "instrument": "extension letter",
+      "case_no": "URS Project No. 14578549",
+      "respondent": "City of Lima, Ohio",
+      "facility": "City of Lima Lift Stations (all 30 lift stations, including Cable Road and Hickory Knoll)",
+      "permit_no": "2PE00000*MD",
+      "issued_date": "2014-12-08",
+      "effective_date": null,
+      "supersedes": "NPDES Permit 2PE00000*MD, Part I, C.b compliance schedule (original January 1, 2015 deadline for Cable Road and Hickory Knoll lift stations)",
+      "obligations": [
+        {
+          "requirement": "Complete improvements to Cable Road lift station",
+          "deadline": "2015-04-01",
+          "status": "extended (original deadline 2015-01-01)"
+        },
+        {
+          "requirement": "Complete improvements to Hickory Knoll lift station",
+          "deadline": "2015-04-01",
+          "status": "extended (original deadline 2015-01-01)"
+        },
+        {
+          "requirement": "Complete improvements to all 30 lift stations (overall program)",
+          "deadline": "2015-04-14",
+          "status": "in progress (11 of 30 completed as of letter date)"
+        },
+        {
+          "requirement": "Complete improvements to Allentown Road, Lost Creek, Gloria Road, and Sugar Street lift stations (NPDES Part I, C.b listed stations)",
+          "deadline": null,
+          "status": "completed"
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": "active",
+      "summary": "The City of Lima's Environmental Compliance Manager, David L. Schnipke, writes to OEPA-Northwest District requesting a time extension under NPDES Permit 2PE00000*MD, Part I, C.b for two lift stations (Cable Road and Hickory Knoll) that cannot meet the original January 1, 2015 completion deadline due to construction difficulties and an easement acquisition issue. The letter requests a new completion deadline of April 1, 2015 for those two stations, noting that 11 of 30 total lift stations are already complete and all are expected to be finished by April 14, 2015.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170400.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170400.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170412.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "medium",
+    "warnings": [
+      "OCR layer contains multiple transcription errors (e.g., '2PEOOOOOMD', '4191228-5462'); permit number verified from image as '2PE00000MD'.",
+      "No formal enforcement order (DFFO, consent decree, NOV) is present — this package consists of compliance correspondence and permit renewal application materials; enforcement instrument classification is 'correspondence'.",
+      "Notice of Commencement date in the September 9, 2014 letter states March 28, 2014, but the Notice of Commencement document itself is dated 03/13/2014 per its header — possible discrepancy; both dates noted.",
+      "Case number not referenced in any document; field set to null.",
+      "Signature date on Antidegradation Addendum Section E is partially illegible in OCR; form version dated June 30, 1997."
+    ],
+    "fields": {
+      "agency": "Ohio EPA / City of Lima, Ohio",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Lima, Ohio",
+      "facility": "City of Lima Wastewater Treatment Plant (WWTP), 1200 Fort Amanda Road, Lima, OH 45804",
+      "permit_no": "2PE00000MD",
+      "issued_date": "2014-09-15",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "Submission of corrected and signed Antidegradation Addendum for NPDES permit renewal (per OAC 3745-1-05 Antidegradation rule), transmitted to Ohio EPA Northwest District Office.",
+          "deadline": null,
+          "status": "met"
+        },
+        {
+          "requirement": "Advertise for bid, award a construction contract, and commence construction of the Time-Critical Lift Station Project (Part I, C, b, ii & iii — Schedules). Contract awarded to Peterson Construction; URS Consultants retained as engineer of record. Notice of Commencement issued March 28, 2014.",
+          "deadline": null,
+          "status": "met"
+        },
+        {
+          "requirement": "Final completion of City of Lima Sanitary Lift Station Improvements project (improvements to 24 sanitary lift stations). Project approximately 30% complete at time of letter.",
+          "deadline": "2015-01-31",
+          "status": "in progress"
+        },
+        {
+          "requirement": "NPDES Permit Renewal application (Form 2A) submitted for City of Lima Wastewater Treatment Plant, including Antidegradation Addendum and General Information Form.",
+          "deadline": null,
+          "status": "submitted"
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": "active",
+      "summary": "This document package is correspondence from the City of Lima WWTP Supervisor (Russell Bales) and Environmental Compliance Manager to Ohio EPA Northwest District Office (Peggy Christie) transmitting a corrected and signed Antidegradation Addendum for NPDES permit renewal (No. 2PE00000MD). A companion letter dated September 9, 2014 certifies compliance with the NPDES permit schedule requirement to advertise, award, and commence the Time-Critical Lift Station Improvements project, with construction approximately 30% complete and a final completion target of January 31, 2015. The package also includes the NPDES Form 2A permit renewal application and supporting documentation for the Lima WWTP.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170412.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170412.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "oepa/lima/edoc-3170415.order.yaml",
     "group": "enforcement",
     "title": "Initial Pollution Incident Report (IPIR)",
@@ -5074,6 +5769,48 @@
       "verified": true
     },
     "source_doc_rel": "oepa/lima/edoc-3170415.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170416.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "NPDES Permit No. rendered as '2PE00000*MD' in both OCR and image — the asterisk may be an OCR artifact for a digit or letter; verify exact permit number against Ohio EPA records.",
+      "OCR rendered 'Luna WWTP' (should be 'Lima WWTP') and 'Class TV' (should be 'Class IV') — image confirms correct readings as Lima and Class IV.",
+      "This is administrative correspondence notifying a personnel/operator-of-record change, not a traditional enforcement instrument (no penalties, orders, or compliance schedule).",
+      "Permit number suffix '*MD' is unusual and may be partially misread; image appears to confirm but should be verified."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Lima, Ohio",
+      "facility": "City of Lima Waste Water Treatment Plant (Lima WWTP)",
+      "permit_no": "2PE00000*MD",
+      "issued_date": "2016-05-16",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": null,
+      "summary": "This letter from Eric Markley, Acting Supervisor of the City of Lima WWTP, notifies Ohio EPA (Ms. Peggy Christy) that a change in Operator of Record has occurred at the Lima WWTP. Russell C. Bales has vacated the Supervisor position, and Eric Markley has been appointed Acting Supervisor, submitted the Class IV application, and will serve as Operator of Record.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170416.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170416.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": true
   },
@@ -5139,6 +5876,238 @@
       "verified": true
     },
     "source_doc_rel": "oepa/lima/edoc-3170417.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170424.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "OCR rendered case number as '3:14-C1t-02S51-.IZ'; verified from image as '3:14-CV-02551-JZ'",
+      "OCR rendered DOJ No. as '90-5-1-1-08433'; verified from image as '90-5-1-1-08433'",
+      "90-day warning sign deadline calculated from letter date 2017-05-26 yielding approx. 2017-08-24",
+      "Pages appended to the letter (Hydrostatic Discharge Inspection FAQs – Draft Guidance – August 1, 2017) appear to be a separate OEPA internal guidance document unrelated to this enforcement instrument and were not extracted"
+    ],
+    "fields": {
+      "agency": "U.S. EPA / DOJ / Ohio Attorney General",
+      "instrument": "correspondence",
+      "case_no": "3:14-CV-02551-JZ",
+      "respondent": "City of Lima, Ohio",
+      "facility": "City of Lima Sanitary Sewer System (SSS)",
+      "permit_no": null,
+      "issued_date": "2017-05-26",
+      "effective_date": null,
+      "supersedes": "Consent Decree entered into on January 13, 2015",
+      "obligations": [
+        {
+          "requirement": "Inspect and exercise all air release valves associated with the sanitary force mains on an annual basis (Section 5.3 – Hydrogen Sulfide Monitoring and Control)",
+          "deadline": null,
+          "status": "committed"
+        },
+        {
+          "requirement": "Line five manholes in the Bowman Road Area downstream of a force main discharge affected by hydrogen sulfide as part of the 2017 capital improvement budget",
+          "deadline": "2017-12-31",
+          "status": "committed"
+        },
+        {
+          "requirement": "Post permanent warning sign at SSO #337 (Lost Creek) within 90 days of letter date",
+          "deadline": "2017-08-24",
+          "status": "committed"
+        },
+        {
+          "requirement": "Revise SOERP to describe how Environmental Compliance Manager determines whether temporary warning signs related to SSO discharges are warranted (Section 5.5 – Emergency Preparedness and Response)",
+          "deadline": null,
+          "status": "committed"
+        },
+        {
+          "requirement": "Maintain $250,000 contingency line item in annual budget for emergency sanitary needs (Section 5.1 – Maintenance and Budgeting)",
+          "deadline": null,
+          "status": "active"
+        },
+        {
+          "requirement": "Revise CMOM Program Plan to reflect a cleaning schedule of the entire SSS at least once every 5 years (Section 6.4/6.5)",
+          "deadline": null,
+          "status": "committed"
+        },
+        {
+          "requirement": "Maintain 10-year CCTV inspection schedule (Section 6.4/6.5)",
+          "deadline": null,
+          "status": "committed"
+        },
+        {
+          "requirement": "Revise manhole inspection schedule to reflect a 5-year frequency (Section 8.5)",
+          "deadline": null,
+          "status": "committed"
+        },
+        {
+          "requirement": "Submit revised CMOM Program Plan and copies of requested reports within 30 days of this correspondence",
+          "deadline": "2017-06-25",
+          "status": "committed"
+        },
+        {
+          "requirement": "Revise Table 10-1 to include a schedule for all action items listed (Section 10.0 – CMOM Program Future Performance Goals)",
+          "deadline": null,
+          "status": "committed"
+        },
+        {
+          "requirement": "Revise CMOM Program Plan to describe how Lima plans to address the reported budget deficiency (Appendix A – Sewer Asset Risk Scoring); plan includes annual rate increases, grants/0% interest loans, and WPCLF borrowing",
+          "deadline": null,
+          "status": "committed"
+        },
+        {
+          "requirement": "Provide copy of Evaluation of Private Property Infiltration and Inflow report (Section 8)",
+          "deadline": null,
+          "status": "committed"
+        },
+        {
+          "requirement": "Provide copy of City of Lima Separate Sanitary Sewer System Pump Station Condition Assessment (August 6, 2012) (Section 9.0)",
+          "deadline": null,
+          "status": "committed"
+        },
+        {
+          "requirement": "SOERP training: all Supervisors, Operators, Assistant Operators, and Sewer System Technicians to read and sign SOERP annually (Section 5.5)",
+          "deadline": null,
+          "status": "committed"
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": null,
+      "summary": "This is a May 26, 2017 correspondence letter from the City of Lima, Ohio (signed by the Director of Utilities) to U.S. EPA Region 5, DOJ, and the Ohio Attorney General, responding line-by-line to USEPA's April 3, 2017 letter conditionally approving Lima's CMOM Program Plan (a Consent Decree requirement under Case 3:14-CV-02551-JZ, entered January 13, 2015). The letter addresses requested modifications across multiple CMOM sections—including hydrogen sulfide monitoring, emergency preparedness, maintenance scheduling, sewer cleaning/CCTV inspection, capacity evaluation, and rehabilitation—and commits to submitting a revised CMOM Program Plan and all requested reports within 30 days.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170424.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170424.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170425.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "OCR text layer was unreliable for several characters; all key fields (case number, date, names) verified against page image.",
+      "Received stamp on image reads JUN 26 2017 (Ohio EPA NWDO); OCR rendered this as 'JL N 2 2(?1' — image read used.",
+      "No penalty, effective date, or permit number referenced in this correspondence."
+    ],
+    "fields": {
+      "agency": "U.S. EPA, Region 5",
+      "instrument": "correspondence",
+      "case_no": "3:14-cv-02551",
+      "respondent": "City of Lima, Ohio",
+      "facility": "City of Lima, Ohio Sanitary Sewer System (separate sanitary sewer)",
+      "permit_no": null,
+      "issued_date": "2017-06-23",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "Submit one (1) copy of the City of Lima, Ohio Sanitary Sewer Capacity, Management, Operation, and Maintenance (CMOM) Program Report for approval, in accordance with Paragraph 18 of the City of Lima Consent Decree, revised to include conditions specified in the US EPA comment letter dated March 24, 2017.",
+          "deadline": null,
+          "status": "submitted"
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": null,
+      "summary": "This is a cover letter dated June 23, 2017 from Lima Utilities Director Michael Caprella to the Chief of the U.S. EPA Region 5 Water Enforcement and Compliance Assurance Branch, submitting one copy of the City of Lima, Ohio CMOM Program Report for approval pursuant to Paragraph 18 of the City of Lima Consent Decree (Civil Action No. 3:14-cv-02551). The report has been revised to incorporate conditions from a US EPA comment letter dated March 24, 2017.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170425.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170425.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3296408.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "The permit number in the OCR reads '2PE00000*MD' — the asterisk may be an OCR artifact for a digit or character; verified against image which appears consistent.",
+      "Two separate letters are embedded on this page; both are captured under a single record.",
+      "The February 24, 2015 letter references 'URS Project No. 14578549' only in the February 27 letter; the CSO letter is a separate notification.",
+      "Volume figure '12.23MG' is from OCR; image appears to confirm this reading."
+    ],
+    "fields": {
+      "agency": "Ohio EPA (OEPA-Northwest District)",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Lima, Ohio",
+      "facility": "City of Lima Sanitary Lift Stations (Hickory Knoll & Cable Road); City of Lima WWTP / McDonald CSO Structure 004",
+      "permit_no": "2PE00000*MD",
+      "issued_date": "2015-02-27",
+      "effective_date": null,
+      "supersedes": "Time extension granted by OEPA on January 29, 2015 (revised completion date of April 1, 2015)",
+      "obligations": [
+        {
+          "requirement": "Complete critical upgrades to two sanitary lift stations (Hickory Knoll and Cable Road) — part of NPDES 2PE00000*MD, Part I, C.b (Schedules)",
+          "deadline": "2015-04-01",
+          "status": "completed — Hickory Knoll returned to full service 2015-01-22; Cable Road returned to full service 2015-02-19"
+        },
+        {
+          "requirement": "Report dry weather by-pass / CSO overflow at McDonald CSO Structure 004 (gate operator failure causing ~12.23 MG discharge to Ottawa River on January 4, 2015); make repairs to gate operator and implement temporary overflow-prevention measures",
+          "deadline": null,
+          "status": "repairs underway; temporary measures in place as of February 24, 2015"
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": "closed",
+      "summary": "This file contains two letters from the City of Lima, Ohio to OEPA-Northwest District. The February 27, 2015 letter (signed by Environmental Compliance Manager David L. Schnipke) is a completion notification under NPDES Permit 2PE00000*MD, Part I, C.b, confirming that upgrades to the Hickory Knoll and Cable Road sanitary lift stations — for which OEPA had granted an extension on January 29, 2015 — are now fully complete ahead of the revised April 1, 2015 deadline. The February 24, 2015 letter (signed by WWTP Supervisor Russell C. Bales) is a correction/notification letter reporting a dry weather by-pass at McDonald CSO Structure 004 on January 4, 2015, where a gate operator failure caused approximately 12.23 MG of sewage to discharge to the Ottawa River, with repairs and temporary preventive measures underway.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3296408.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3296408.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": true
   },
@@ -5691,6 +6660,53 @@
       "verified": true
     },
     "source_doc_rel": "oepa/lima/edoc-4192703.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-453773.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "This is a correspondence/request letter, not a formal enforcement instrument such as a consent decree, DFFO, NOV, or extension letter.",
+      "Secondary ID on the routing slip appears to read 'ALL-00000' but handwriting makes exact value uncertain.",
+      "OCR layer was unreliable; all key fields verified against the page image."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Lima",
+      "facility": "City of Lima Wastewater Treatment Plant",
+      "permit_no": "WWW3-1014947-96",
+      "issued_date": "2016-06-10",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "Formal request for the Director to approve Eric Markley (EPA license # WWW3-1014947-96) as the operator of record for the City of Lima Wastewater Treatment Plant, in accordance with OAC 3745-7-02.",
+          "deadline": null,
+          "status": null
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": "active",
+      "summary": "This is a June 10, 2016 correspondence letter from Mike Caprella, Deputy Director of Utilities for the City of Lima, Ohio, addressed to Ms. Peggy Christie at the OEPA-NW District. The letter formally requests that the Ohio EPA Director approve Eric Markley (EPA license # WWW3-1014947-96, Class IV) as the new operator of record for the City of Lima Wastewater Treatment Plant, per OAC 3745-7-02.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-453773.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-453773.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": true
   },
@@ -9384,6 +10400,52 @@
     "source_doc_published": false
   },
   {
+    "rel": "oepa/lima/edoc-2955962.resolution.yaml",
+    "group": "local-legislation",
+    "title": "City of Lima Ordinance No. 155-13 — an ordinance amending Section 1040.01 of the Codified Ordinances of Lima, Ohio, revising the Definitions used in Chapter 1040 to comply with new USEPA rules, enacted as an emergency measure effective on passage",
+    "confidence": "medium",
+    "warnings": [
+      "THE ROLL CALL IS NOT RECORDED HERE AND MUST NOT BE INFERRED. The ordinance carries the standard Lima vote grid — columns 1ST / 2ND / 3RD each with Y and N, rows NEEPER, McLEAN, LOWE, TEBBEN, ADAMS, GLENN, TOWNSEND, NIXON, TOTAL — but the marks are checkbox glyphs that the text layer does not capture, so the grid reads as an empty template. `vote` is null. Reading the roll call requires the page image, the same remedy as the consent decree's rotated Table A.1 (#2075).",
+      "NO PASSAGE DATE IS LEGIBLE in the text layer: the publication certificate is printed blank (\"I hereby certify that Ord. No. ___ was published in a summary manner according to law in the Lima News on ___, Sally Clemans, Clerk\"). The portal dates this filing 2013-08-15 and the ordinance number carries the year 13; neither is the enactment date, and no enactment date is asserted here.",
+      "The substance summary above counts TERM OCCURRENCES in Exhibit A to characterise what the chapter governs. It is not a transcription of the definitions, and no individual definition is quoted or paraphrased — a 60-page definitions exhibit needs its own reviewed read before any single definition is cited."
+    ],
+    "fields": {
+      "instrument": "City of Lima Ordinance No. 155-13 — an ordinance amending Section 1040.01 of the Codified Ordinances of Lima, Ohio, revising the Definitions used in Chapter 1040 to comply with new USEPA rules, enacted as an emergency measure effective on passage",
+      "body": "Council of the City of Lima, Allen County, Ohio",
+      "body_kind": "city_council",
+      "subject_matter": "sewer-use-and-pretreatment",
+      "ordinance_no": "155-13",
+      "year": 2013,
+      "amends": "Section 1040.01, Codified Ordinances of Lima, Ohio (Chapter 1040 definitions)",
+      "emergency": true,
+      "emergency_basis": "\"it is necessary to immediately enact this amendment in order to comply with USEPA rules, to preserve the public peace, property, health and safety, and to provide for the usual daily operation of the municipal government\" — so the ordinance \"shall take effect forthwith upon its passage\" rather than after the usual interval.",
+      "stated_purpose": "\"this Council desires to amend Section 1040.01 to revise the Definitions used in Chapter 1040 in order to comply with new USEPA rules\"",
+      "substance": "The amended text is carried as Exhibit A (\"See attached Exhibit A for Section 1040.\"), which is the bulk of this 66-page filing. It is a definitions section for the City's sewer use / pretreatment program: 73 occurrences of \"Industrial User\", 12 of \"Significant Industrial User\", 54 of \"Pretreatment\", and 10 citations to 40 CFR. Chapter 1040 is the local pretreatment authority under which an industrial discharger is permitted to send wastewater to the Lima WWTP.",
+      "vote": null,
+      "note": "Relevant to the pretreatment thread rather than the enforcement one. The Bosc data centre's disclosed discharge (2DP00130) is an INDIRECT discharge to the American-Bath POTW, not to the Lima WWTP, so this chapter is not the instrument that governs it — but it is the model for how Lima's pretreatment authority defines an Industrial User, and it establishes that the City revises Chapter 1040 to track federal rule changes. Do not cite it as governing the Bosc discharge."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2955962.resolution.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-2955962.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "aedg/roundabouts.detail.opc.yaml",
     "group": "opc",
     "title": "roundabouts.detail.opc",
@@ -12079,6 +13141,54 @@
       "verified": true
     },
     "source_doc_rel": "oepa/lima/edoc-3170365.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170366.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Lima Wastewater Treatment Plant",
+    "confidence": "medium",
+    "warnings": [
+      "Permit number confirmed as 2PE00000*MD from body text; OCR rendered it as '2PEfl0000*MD' (garbled character). Image header shows '2PE00000' which may be truncated.",
+      "No application number, public notice number, or comment period end date found in this document.",
+      "Date in letter body is July 16, 2015 per image; OCR incorrectly rendered as July 15, 2015.",
+      "This is a Mercury Variance Application submittal, not a standard permit fact sheet or public notice."
+    ],
+    "fields": {
+      "facility_name": "City of Lima Wastewater Treatment Plant",
+      "permit_no": "2PE00000*MD",
+      "permit_action": "renewal",
+      "applicant": "City of Lima, Ohio",
+      "application_no": null,
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "1200 Ft. Amanda Road, Lima, Ohio 45804",
+      "discharge_address": null,
+      "receiving_water": "Ottawa River",
+      "stream_network": null,
+      "outfalls": [],
+      "note": "This is a Mercury Variance Application cover letter and supporting document dated July 16, 2015, submitted by Russell C. Bales, WWTP Supervisor. The permit (2PE00000*MD) was effective January 1, 2013 and expired February 28, 2015. The OCR rendered the permit number inconsistently; the image and body text confirm '2PE00000*MD'. The permit number shown at the top of the first page appears to read '2PE00000' but is partially cut off. No public notice number, application number, or comment period end date are present in this document. Station 604 is referenced as the mercury monitoring point."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170366.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170366.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": true
   },

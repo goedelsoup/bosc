@@ -1,0 +1,122 @@
+doc_id: edoc-3170424-67650f57
+source_path: data/documents/oepa/lima/edoc-3170424.pdf
+kind: order
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "CITY OF LIMA, OHIO Da vid . r. Berger, erger, Mayor \n50 Town\
+  \ Square Lima Ohio 45$01-4900 419122$-5462 Fax 4191221-5214 \nwww.cityhalt.Iima.oh.us\
+  \ . . \nMay 26, 2017 \nChief \nWater Enforcement and Compliance Assurance Branch\
+  \ \nWater Division \nU.S. Environmental Protection Agency, Region 5 \n77 West Jackson\
+  \ Blvd \nChicago, lllinois, 60604 \nChief \nEnvironmental Enforcement Section \n\
+  Environment and Natural Resource Division \n1_J.S. ]3epart:rnent of dustice \nDOJ\
+  \ No. 90-5-1-1-08433 \nPO Box 7611 \nWashington, D.C. 20044-7611 \nChief \nEnvironmental\
+  \ Enforcement Section \nState of Ohio Clffice of Attorney Generai"
+order:
+  confidence: high
+  warnings:
+  - OCR rendered case number as '3:14-C1t-02S51-.IZ'; verified from image as '3:14-CV-02551-JZ'
+  - OCR rendered DOJ No. as '90-5-1-1-08433'; verified from image as '90-5-1-1-08433'
+  - 90-day warning sign deadline calculated from letter date 2017-05-26 yielding approx.
+    2017-08-24
+  - Pages appended to the letter (Hydrostatic Discharge Inspection FAQs – Draft Guidance
+    – August 1, 2017) appear to be a separate OEPA internal guidance document unrelated
+    to this enforcement instrument and were not extracted
+  agency: U.S. EPA / DOJ / Ohio Attorney General
+  instrument: correspondence
+  case_no: 3:14-CV-02551-JZ
+  respondent: City of Lima, Ohio
+  facility: City of Lima Sanitary Sewer System (SSS)
+  permit_no: null
+  issued_date: '2017-05-26'
+  effective_date: null
+  supersedes: Consent Decree entered into on January 13, 2015
+  obligations:
+  - requirement: Inspect and exercise all air release valves associated with the sanitary
+      force mains on an annual basis (Section 5.3 – Hydrogen Sulfide Monitoring and
+      Control)
+    deadline: null
+    status: committed
+  - requirement: Line five manholes in the Bowman Road Area downstream of a force
+      main discharge affected by hydrogen sulfide as part of the 2017 capital improvement
+      budget
+    deadline: '2017-12-31'
+    status: committed
+  - requirement: 'Post permanent warning sign at SSO #337 (Lost Creek) within 90 days
+      of letter date'
+    deadline: '2017-08-24'
+    status: committed
+  - requirement: Revise SOERP to describe how Environmental Compliance Manager determines
+      whether temporary warning signs related to SSO discharges are warranted (Section
+      5.5 – Emergency Preparedness and Response)
+    deadline: null
+    status: committed
+  - requirement: Maintain $250,000 contingency line item in annual budget for emergency
+      sanitary needs (Section 5.1 – Maintenance and Budgeting)
+    deadline: null
+    status: active
+  - requirement: Revise CMOM Program Plan to reflect a cleaning schedule of the entire
+      SSS at least once every 5 years (Section 6.4/6.5)
+    deadline: null
+    status: committed
+  - requirement: Maintain 10-year CCTV inspection schedule (Section 6.4/6.5)
+    deadline: null
+    status: committed
+  - requirement: Revise manhole inspection schedule to reflect a 5-year frequency
+      (Section 8.5)
+    deadline: null
+    status: committed
+  - requirement: Submit revised CMOM Program Plan and copies of requested reports
+      within 30 days of this correspondence
+    deadline: '2017-06-25'
+    status: committed
+  - requirement: Revise Table 10-1 to include a schedule for all action items listed
+      (Section 10.0 – CMOM Program Future Performance Goals)
+    deadline: null
+    status: committed
+  - requirement: Revise CMOM Program Plan to describe how Lima plans to address the
+      reported budget deficiency (Appendix A – Sewer Asset Risk Scoring); plan includes
+      annual rate increases, grants/0% interest loans, and WPCLF borrowing
+    deadline: null
+    status: committed
+  - requirement: Provide copy of Evaluation of Private Property Infiltration and Inflow
+      report (Section 8)
+    deadline: null
+    status: committed
+  - requirement: Provide copy of City of Lima Separate Sanitary Sewer System Pump
+      Station Condition Assessment (August 6, 2012) (Section 9.0)
+    deadline: null
+    status: committed
+  - requirement: 'SOERP training: all Supervisors, Operators, Assistant Operators,
+      and Sewer System Technicians to read and sign SOERP annually (Section 5.5)'
+    deadline: null
+    status: committed
+  penalty_usd: null
+  stipulated_penalties: null
+  status: null
+  summary: This is a May 26, 2017 correspondence letter from the City of Lima, Ohio
+    (signed by the Director of Utilities) to U.S. EPA Region 5, DOJ, and the Ohio
+    Attorney General, responding line-by-line to USEPA's April 3, 2017 letter conditionally
+    approving Lima's CMOM Program Plan (a Consent Decree requirement under Case 3:14-CV-02551-JZ,
+    entered January 13, 2015). The letter addresses requested modifications across
+    multiple CMOM sections—including hydrogen sulfide monitoring, emergency preparedness,
+    maintenance scheduling, sewer cleaning/CCTV inspection, capacity evaluation, and
+    rehabilitation—and commits to submitting a revised CMOM Program Plan and all requested
+    reports within 30 days.
+  note: null

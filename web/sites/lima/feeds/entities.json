@@ -854,7 +854,7 @@
     ],
     "signals": [],
     "roles": {
-      "facility": 7
+      "facility": 8
     },
     "parcels": [],
     "addresses": [],
@@ -865,6 +865,7 @@
       "oepa/lima/edoc-2479810.npdes.yaml",
       "oepa/lima/edoc-2710532.npdes.yaml",
       "oepa/lima/edoc-2710555.npdes.yaml",
+      "oepa/lima/edoc-3170366.npdes.yaml",
       "oepa/lima/edoc-3187291.npdes.yaml"
     ],
     "lei": null,
@@ -1064,11 +1065,12 @@
     "relation_class": null,
     "relation_basis": null,
     "variants": [
-      "City of Lima"
+      "City of Lima",
+      "City of Lima, Ohio"
     ],
     "signals": [],
     "roles": {
-      "applicant": 7
+      "applicant": 8
     },
     "parcels": [],
     "addresses": [],
@@ -1079,6 +1081,7 @@
       "oepa/lima/edoc-2479810.npdes.yaml",
       "oepa/lima/edoc-2710532.npdes.yaml",
       "oepa/lima/edoc-3170365.npdes.yaml",
+      "oepa/lima/edoc-3170366.npdes.yaml",
       "oepa/lima/edoc-3187291.npdes.yaml"
     ],
     "lei": null,
@@ -2201,7 +2204,7 @@
     ],
     "signals": [],
     "roles": {
-      "receiving_water": 10
+      "receiving_water": 11
     },
     "parcels": [],
     "addresses": [],
@@ -2212,6 +2215,7 @@
       "oepa/lima/edoc-2479810.npdes.yaml",
       "oepa/lima/edoc-2710532.npdes.yaml",
       "oepa/lima/edoc-2710555.npdes.yaml",
+      "oepa/lima/edoc-3170366.npdes.yaml",
       "oepa/lima/edoc-3187291.npdes.yaml",
       "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
       "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",

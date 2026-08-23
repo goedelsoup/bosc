@@ -1,0 +1,62 @@
+doc_id: edoc-1520341-50ad9daf
+source_path: data/documents/oepa/lima/edoc-1520341.pdf
+kind: order
+pages_read:
+- 0
+- 1
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Mike DeWine, Governor \nJon Husted, Lt. Governor \nLaurie A.\
+  \ Stevenson, Director \nFebruary 17, 2021 \nJerry Coffey \nPlant Manager \nCity\
+  \ of Lima \n1200 Fort Amanda Road \nLima, Ohio 45801 \n2/5/2021 \nRe: Lima WWTP\
+  \ \nNPDES Permit # 2PE00000 \nStaffing Hour Reduction Request \nDear Mr. Coffey:\
+  \ \nOhio EPA has received and reviewed your request for reduction in the minimum\
+  \ staffing \nrequirements for the Lima WWTP (NPDES # 2PE00000). \nBased upon the\
+  \ review of the operating plan submitted, in accordance with Ohio Administrative\
+  \ \nCode (OAC) Rule 3745-7-04(C)(3)(a)(i) Table A and B. I hereby approve the operatin"
+order:
+  confidence: high
+  warnings:
+  - No formal case number is referenced in this letter.
+  - The OCR shows '2/5/2021' near the address block, which appears to be the date
+    of the City of Lima's original staffing reduction request — not a second instrument
+    date.
+  - NPDES permit number 2PE00000 may be a placeholder or redacted number; recorded
+    exactly as printed.
+  agency: Ohio EPA
+  instrument: correspondence
+  case_no: null
+  respondent: City of Lima (Jerry Coffey, Plant Manager)
+  facility: Lima WWTP
+  permit_no: 2PE00000
+  issued_date: '2021-02-17'
+  effective_date: '2021-02-17'
+  supersedes: null
+  obligations:
+  - requirement: An operator of record with a minimum of a Class IV Wastewater certificate
+      shall be physically present at the system 5 days per week for a minimum of 20
+      hours per week.
+    deadline: null
+    status: active
+  - requirement: The system shall meet the criteria specified in the approved operating
+      plan.
+    deadline: null
+    status: active
+  - requirement: Any change in circumstances under which the staffing reduction was
+      approved (including failure to physically staff the plant with a Class IV operator
+      of record) will require the system to immediately return to compliance with
+      minimum staffing requirements under OAC Rule 3745-7-04(C)(1).
+    deadline: null
+    status: active
+  penalty_usd: null
+  stipulated_penalties: null
+  status: active
+  summary: 'Ohio EPA Director Laurie A. Stevenson approved the City of Lima''s request
+    for a reduction in minimum staffing requirements at the Lima WWTP (NPDES #2PE00000),
+    pursuant to OAC Rule 3745-7-04(C)(3)(a)(i). The approved reduction allows staffing
+    to be reduced to 20 hours per week, provided a Class IV Wastewater operator of
+    record is physically present 5 days per week. If the conditions of the approved
+    operating plan are not met, the facility must immediately return to full minimum
+    staffing requirements.'
+  note: null

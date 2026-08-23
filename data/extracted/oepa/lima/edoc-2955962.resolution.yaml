@@ -1,0 +1,80 @@
+# City of Lima Council, Ordinance No. 155-13 — amending Section 1040.01 of the Codified
+# Ordinances (the SEWER USE ordinance's definitions) "in order to comply with new USEPA rules".
+# Issue #2080.
+#
+# Hand-authored, not extracted. `resolution:` is a whole-document payload with NO extractor in
+# this repo — every committed one (bowling-green/middleton-township, planning-commission) is a
+# reviewed transcription, and this follows that convention rather than inventing a genre for a
+# single document.
+#
+# Why a City ordinance is in a WWTP permit drawer: Chapter 1040 is the pretreatment authority
+# the NPDES permit requires the City to maintain, so the portal files its amendments under
+# 2PE00000. That is a real relationship, not a misfiling like edoc-3063821 or edoc-3296496.
+
+as_of: '2026-08-23'
+site: lima
+strengthens: [record]
+issue: 'watermark-directory/the-watermark-directory#2080'
+
+source:
+  instrument: city-council-ordinance
+  file: data/documents/oepa/lima/edoc-2955962.pdf
+  sha256: e98f8b61d2a556b180e60e585d331cfc8230ea91e700d92428dd6dd3882dfee7
+  content_verified: text-layer
+pages_read: [0, 1, 2, 3, 4, 5]
+
+resolution:
+  instrument: >-
+    City of Lima Ordinance No. 155-13 — an ordinance amending Section 1040.01 of the Codified
+    Ordinances of Lima, Ohio, revising the Definitions used in Chapter 1040 to comply with new
+    USEPA rules, enacted as an emergency measure effective on passage
+  body: Council of the City of Lima, Allen County, Ohio
+  body_kind: city_council
+  subject_matter: sewer-use-and-pretreatment
+  ordinance_no: '155-13'
+  year: 2013
+  amends: Section 1040.01, Codified Ordinances of Lima, Ohio (Chapter 1040 definitions)
+  emergency: true
+  emergency_basis: >-
+    "it is necessary to immediately enact this amendment in order to comply with USEPA rules, to
+    preserve the public peace, property, health and safety, and to provide for the usual daily
+    operation of the municipal government" — so the ordinance "shall take effect forthwith upon
+    its passage" rather than after the usual interval.
+  stated_purpose: >-
+    "this Council desires to amend Section 1040.01 to revise the Definitions used in Chapter 1040
+    in order to comply with new USEPA rules"
+  substance: >-
+    The amended text is carried as Exhibit A ("See attached Exhibit A for Section 1040."), which
+    is the bulk of this 66-page filing. It is a definitions section for the City's sewer use /
+    pretreatment program: 73 occurrences of "Industrial User", 12 of "Significant Industrial
+    User", 54 of "Pretreatment", and 10 citations to 40 CFR. Chapter 1040 is the local
+    pretreatment authority under which an industrial discharger is permitted to send wastewater
+    to the Lima WWTP.
+  vote: null
+  confidence: medium
+  warnings:
+    - >-
+      THE ROLL CALL IS NOT RECORDED HERE AND MUST NOT BE INFERRED. The ordinance carries the
+      standard Lima vote grid — columns 1ST / 2ND / 3RD each with Y and N, rows NEEPER, McLEAN,
+      LOWE, TEBBEN, ADAMS, GLENN, TOWNSEND, NIXON, TOTAL — but the marks are checkbox glyphs that
+      the text layer does not capture, so the grid reads as an empty template. `vote` is null.
+      Reading the roll call requires the page image, the same remedy as the consent decree's
+      rotated Table A.1 (#2075).
+    - >-
+      NO PASSAGE DATE IS LEGIBLE in the text layer: the publication certificate is printed blank
+      ("I hereby certify that Ord. No. ___ was published in a summary manner according to law in
+      the Lima News on ___, Sally Clemans, Clerk"). The portal dates this filing 2013-08-15 and
+      the ordinance number carries the year 13; neither is the enactment date, and no enactment
+      date is asserted here.
+    - >-
+      The substance summary above counts TERM OCCURRENCES in Exhibit A to characterise what the
+      chapter governs. It is not a transcription of the definitions, and no individual definition
+      is quoted or paraphrased — a 60-page definitions exhibit needs its own reviewed read before
+      any single definition is cited.
+  note: >-
+    Relevant to the pretreatment thread rather than the enforcement one. The Bosc data centre's
+    disclosed discharge (2DP00130) is an INDIRECT discharge to the American-Bath POTW, not to the
+    Lima WWTP, so this chapter is not the instrument that governs it — but it is the model for
+    how Lima's pretreatment authority defines an Industrial User, and it establishes that the
+    City revises Chapter 1040 to track federal rule changes. Do not cite it as governing the Bosc
+    discharge.

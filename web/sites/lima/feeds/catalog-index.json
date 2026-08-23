@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "6ca9ca26a9647d9e679ff753d0f8bf47303b81d5483fc067d5e2daef6749ec7b",
+  "catalog_version": "1a7ba3f7d55ce8963dfc5a8959254cdff93c0319e55717b0716fa83b6e16fa20",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -1592,7 +1592,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "oepa-lima-enforcement",
-      "title": "Ohio EPA enforcement, inspection + permit extractions (City of Lima WWTP — permit 2PE00000)",
+      "title": "Ohio EPA record extractions (City of Lima WWTP — permit 2PE00000, complete)",
       "feed": "catalog"
     },
     {
@@ -3716,6 +3716,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-1520341.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1520341.order.yaml",
+      "title": "correspondence",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-1610423.inspection.yaml",
       "kind": "record",
       "site": "lima",
@@ -3748,6 +3756,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-1781552.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1781552.order.yaml",
+      "title": "correspondence",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-1782202.inspection.yaml",
       "kind": "record",
       "site": "lima",
@@ -3777,6 +3793,14 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-1840393.npdes.yaml",
       "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1851184.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1851184.order.yaml",
+      "title": "correspondence",
       "feed": "records"
     },
     {
@@ -3817,6 +3841,14 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-1851476.inspection.yaml",
       "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1879637.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1879637.order.yaml",
+      "title": "correspondence",
       "feed": "records"
     },
     {
@@ -3865,6 +3897,14 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-1952887.inspection.yaml",
       "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1974720.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1974720.order.yaml",
+      "title": "extension letter",
       "feed": "records"
     },
     {
@@ -3948,6 +3988,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-2955962.resolution.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2955962.resolution.yaml",
+      "title": "City of Lima Ordinance No. 155-13 — an ordinance amending Section 1040.01 of the Codified Ordinances of Lima, Ohio, revising the Definitions used in Chapter 1040 to comply with new USEPA rules, enacted as an emergency measure effective on passage",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-2956099.epa.yaml",
       "kind": "record",
       "site": "lima",
@@ -3988,11 +4036,59 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-3170357.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170357.order.yaml",
+      "title": "correspondence",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-3170365.npdes.yaml",
       "kind": "record",
       "site": "lima",
       "local_id": "oepa/lima/edoc-3170365.npdes.yaml",
       "title": "City of Lima (Long Term Control Plan) / City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3170366.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170366.npdes.yaml",
+      "title": "City of Lima Wastewater Treatment Plant",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3170389.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170389.order.yaml",
+      "title": "correspondence",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3170394.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170394.order.yaml",
+      "title": "correspondence",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3170400.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170400.order.yaml",
+      "title": "extension letter",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3170412.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170412.order.yaml",
+      "title": "correspondence",
       "feed": "records"
     },
     {
@@ -4012,6 +4108,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-3170416.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170416.order.yaml",
+      "title": "correspondence",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-3170417.order.yaml",
       "kind": "record",
       "site": "lima",
@@ -4025,6 +4129,22 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-3170422.progress-report.yaml",
       "title": "Lima Consent Decree (CD)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3170424.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170424.order.yaml",
+      "title": "correspondence",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3170425.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170425.order.yaml",
+      "title": "correspondence",
       "feed": "records"
     },
     {
@@ -4057,6 +4177,14 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-3223944.epa.yaml",
       "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3296408.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3296408.order.yaml",
+      "title": "correspondence",
       "feed": "records"
     },
     {
@@ -4129,6 +4257,14 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-4215450.epa.yaml",
       "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-453773.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-453773.order.yaml",
+      "title": "correspondence",
       "feed": "records"
     },
     {
