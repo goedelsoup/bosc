@@ -1,0 +1,42 @@
+id: oepa-lima-enforcement
+title: Ohio EPA enforcement extractions (City of Lima WWTP — permit 2PE00000)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA eDocument portal — the enforcement instruments on NPDES permit 2PE00000 (City
+    of Lima WWTP), fetched 2026-08-22 by `watermark oepa fetch` and shelved under
+    data/documents/oepa/lima/
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:lima
+storage:
+- relpath: extracted/oepa/lima/edoc-412983.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- enforcement
+- consent-decree
+- wastewater
+- cso
+- sso
+- lima
+notes: >-
+  The enforcement half of the Lima WWTP record, kept separate from the permit extractions in
+  `oepa` (which are NPDES permits, fact sheets and public notices) because a consent decree is a
+  different instrument: it imposes obligations rather than authorising a discharge, and it is read
+  by the enforcement timeline, not the permit feed. `edoc-412983.order.yaml` is the federal Clean
+  Water Act consent decree — United States and the State of Ohio v. City of Lima, Case No.
+  3:14 CV 2551 (N.D. Ohio), entered 2015-01-13 — transcribed body-and-appendices, including the
+  Appendix A "Table A.1" integrated control schedule that runs 2014 through 2038 with a final
+  post-construction compliance monitoring report due 2043-12-31. NOT a text-layer-only read: the
+  decree's 39 appendix pages and two substantive body pages carry no text layer and were recovered
+  by rotation-corrected OCR against the page images, so this artifact holds figures that are not
+  reachable from `data/site/passages.ndjson`, which indexes only the 64 body pages. The other 92
+  documents in that tree (9 paragraph-33 progress reports, 30 inspections, 38 permit actions, the
+  1994 DFFO, 3 NOVs, 4 ROV/RTC, 2 city letters) are ingested but NOT yet extracted — add each to
+  this entry, or to a genre-appropriate sibling, as it is worked.

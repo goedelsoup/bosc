@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-21T19:07:41.835536+00:00'
+reconciled_at: '2026-08-22T23:47:59.652796+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -2320,6 +2320,16 @@ entries:
     asof: '2026-07-21'
     stale: false
     site_scope: state:OH
+  oepa-lima-enforcement:
+    exists: true
+    sha256: cf99418cec315de8877980e690e72658e4c0d4ee82e134a869d3562bdd3cea5c
+    size_bytes: 14070
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:lima
   oepa-mansfield:
     exists: true
     sha256: dbd179f352c390df722acf7d37cc1413b4328e4283a80a0eb603f9245eb7b021
