@@ -41,7 +41,7 @@ progress_report:
     quality, never the plant's behaviour — do NOT read a low discharge_events count as a quiet half-year.
   agency: U.S. EPA Region 5 / Ohio EPA
   instrument: Lima Consent Decree (CD)
-  case_no: '3:14-CV-02551-JZ Doc #5 Filed: 01/13/15'
+  case_no: 3:14-CV-02551-JZ
   paragraph: '33'
   respondent: City of Lima, Ohio
   facility: City of Lima Wastewater Treatment Plant (WWTP)
@@ -150,4 +150,6 @@ progress_report:
     of Utilities, City of Lima, Ohio, and David J. Berger, Lima City Mayor. Counsel: Fred P. Andes (Barnes
     & Thornburg LLP) and Stephen P. Samuels (Frost Brown Todd LLC). CMOM Plan submitted to USEPA and Ohio
     EPA on July 10, 2015 but not yet approved as of this report. Attachment C (SSO & CSO Overflow Totals)
-    updated 1/5/17 with Total # of Reports: 17.'
+    updated 1/5/17 with Total # of Reports: 17. case_no normalized for the join: printed as "3:14-CV-02551-JZ
+    Doc #5 Filed: 01/13/15", where the trailing text is one FILING inside the case rather than the case.
+    The field holds the case number alone so this row joins edoc-412983.order.yaml.'

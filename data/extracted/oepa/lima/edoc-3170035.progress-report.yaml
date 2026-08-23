@@ -14,34 +14,33 @@ image_pages_read:
 - 0
 - 1
 dpi: 150
-source_text_excerpt: "PROGRESS REPORT \nDUE: January 31 and July 31 of each year until\
-  \ termination of Consent Decree \nRECIPIENTS: REGION 5 OF USEPA \nChief \nWater\
-  \ Enforcement and Compliance Assurance Branch \nWater Division \nUS Environmental\
-  \ Protection Agency, Region5 \n77 West Jackson Blvd. \nChicago, IL 60604 \nNicole\
-  \ Cantello \nAssociate Regional Counsel \nUS Environmental Protection Agency, Region\
-  \ 5 \n77 West Jackson Blvd. \nChicago, IL 60604 \nCantello.nicole@epa.gov  \nSTATE\
-  \ OF OHIO \nOhio Environmental Protection Agency \nDivision of Surface Water \n\
-  Attn: Manager, Permits and Compliance \nPO Box 1049 \nColumbus, OH 43216-104"
+source_text_excerpt: "PROGRESS REPORT \nDUE: January 31 and July 31 of each year until termination of\
+  \ Consent Decree \nRECIPIENTS: REGION 5 OF USEPA \nChief \nWater Enforcement and Compliance Assurance\
+  \ Branch \nWater Division \nUS Environmental Protection Agency, Region5 \n77 West Jackson Blvd. \nChicago,\
+  \ IL 60604 \nNicole Cantello \nAssociate Regional Counsel \nUS Environmental Protection Agency, Region\
+  \ 5 \n77 West Jackson Blvd. \nChicago, IL 60604 \nCantello.nicole@epa.gov  \nSTATE OF OHIO \nOhio Environmental\
+  \ Protection Agency \nDivision of Surface Water \nAttn: Manager, Permits and Compliance \nPO Box 1049\
+  \ \nColumbus, OH 43216-104"
 progress_report:
   confidence: high
   warnings:
-  - Report date inferred as 2017-07-31 (the filing deadline); actual signature date
-    is not printed but the document was received by Ohio EPA NWD on July 31, 2017
-    per the received stamp.
-  - CSO overflow counts for Annual Report numbers 414, 016, 015, 038, 012, 011, and
-    013 are not legible in the OCR or image scan and have been left null.
-  - 'EPA ID for Annual Report #015 appears as ''2PE0000095'' in the OCR — likely a
-    truncation; recorded as printed.'
-  - 'EPA ID for Annual Report #011 printed as ''2PE000000/1'' — apparent OCR artifact;
-    recorded as printed.'
-  - Discharge event volumes and durations are not provided in the Overflow Totals
-    Report as attached; only event counts (frequency) are recorded per location.
-  - The report_date is set to 2017-07-31 as the due date; the received stamp confirms
-    July 31, 2017.
-  agency: U.S. EPA Region 5 / Ohio EPA (Division of Surface Water, Columbus and Northwest
-    District Office)
+  - ⚠️ THIS ENUMERATION IS PARTIAL. 49 discharge_events are recorded, but the report's own OverflowTotals
+    row states 119 SSO and 13 CSO overflows for the period — 132 in all. The rows below are a SAMPLE of
+    the period, not its total, and must never be counted as one. The remainder sit in the same garbled
+    spreadsheet scan described elsewhere in this series and are recoverable from the page images.
+  - Report date inferred as 2017-07-31 (the filing deadline); actual signature date is not printed but
+    the document was received by Ohio EPA NWD on July 31, 2017 per the received stamp.
+  - CSO overflow counts for Annual Report numbers 414, 016, 015, 038, 012, 011, and 013 are not legible
+    in the OCR or image scan and have been left null.
+  - 'EPA ID for Annual Report #015 appears as ''2PE0000095'' in the OCR — likely a truncation; recorded
+    as printed.'
+  - 'EPA ID for Annual Report #011 printed as ''2PE000000/1'' — apparent OCR artifact; recorded as printed.'
+  - Discharge event volumes and durations are not provided in the Overflow Totals Report as attached;
+    only event counts (frequency) are recorded per location.
+  - The report_date is set to 2017-07-31 as the due date; the received stamp confirms July 31, 2017.
+  agency: U.S. EPA Region 5 / Ohio EPA (Division of Surface Water, Columbus and Northwest District Office)
   instrument: Consent Decree
-  case_no: '3:14-CV-02551-JZ Doc #5 Filed: 01/13/15'
+  case_no: 3:14-CV-02551-JZ
   paragraph: '33'
   respondent: City of Lima, Ohio (Director of Utilities)
   facility: Lima Wastewater Treatment Plant (WWTP)
@@ -49,80 +48,71 @@ progress_report:
   report_date: '2017-07-31'
   period_start: '2017-01-01'
   period_end: '2017-06-30'
-  deadlines_status: (1) June 2, 2017 — USEPA required Lima to submit a revised CMOM
-    plan (modifications requested in letter received March 30, 2017). Lima submitted
-    the revised plan on May 26, 2017 — MET EARLY. (2) July 2, 2017 — USEPA required
-    Lima to submit an updated CSOOP (modifications requested in letter received May
-    3, 2017). Lima submitted a revised CSOOP on June 30, 2017 — MET EARLY.
+  deadlines_status: (1) June 2, 2017 — USEPA required Lima to submit a revised CMOM plan (modifications
+    requested in letter received March 30, 2017). Lima submitted the revised plan on May 26, 2017 — MET
+    EARLY. (2) July 2, 2017 — USEPA required Lima to submit an updated CSOOP (modifications requested
+    in letter received May 3, 2017). Lima submitted a revised CSOOP on June 30, 2017 — MET EARLY.
   noncompliance_reasons: None noted.
   projects:
   - name: Lima Wastewater Treatment Headworks Project
-    status: 'Construction commenced July 1, 2015. Completed: All Bar Screens (4),
-      All Aerated Grit Tanks (4) placed in service; All Primary tanks (7) can be placed
-      in service as needed; All Secondary Effluent pumps placed in service; Disinfection
-      process completed and placed in service 5-1-17; Chlorine Contact Tank Construction
-      completed; Primary Scum Screen placed in service; Drainage Pump Station placed
-      in service; All miscellaneous valves and gates replaced/installed; Site paving
-      completed; Replacement of existing plant PLCs complete, programming partially
-      complete.'
-    next_period: PLC programming and optimizing of control systems; site cleanup punch
-      list and grading/seeding; develop implementation strategy for seeding nitrification
-      towers during dry weather; develop implementation strategy for employing primary
-      tank 5-7, effluent pumping, and towers to treat wet weather flows; develop PLC
-      programming for seeding the nitrification tower and for control of wet weather
-      treatment system; implement dry weather seeding strategy for towers and collect
-      data; begin trials of towers for wet weather treatment after successful seeding.
+    status: 'Construction commenced July 1, 2015. Completed: All Bar Screens (4), All Aerated Grit Tanks
+      (4) placed in service; All Primary tanks (7) can be placed in service as needed; All Secondary Effluent
+      pumps placed in service; Disinfection process completed and placed in service 5-1-17; Chlorine Contact
+      Tank Construction completed; Primary Scum Screen placed in service; Drainage Pump Station placed
+      in service; All miscellaneous valves and gates replaced/installed; Site paving completed; Replacement
+      of existing plant PLCs complete, programming partially complete.'
+    next_period: PLC programming and optimizing of control systems; site cleanup punch list and grading/seeding;
+      develop implementation strategy for seeding nitrification towers during dry weather; develop implementation
+      strategy for employing primary tank 5-7, effluent pumping, and towers to treat wet weather flows;
+      develop PLC programming for seeding the nitrification tower and for control of wet weather treatment
+      system; implement dry weather seeding strategy for towers and collect data; begin trials of towers
+      for wet weather treatment after successful seeding.
   - name: CMOM Plan Development
-    status: Lima received a letter on 3/30/17 from USEPA requesting modification to
-      the plan submitted 7/10/15. Lima submitted the revised plan to USEPA on 5/26/17.
+    status: Lima received a letter on 3/30/17 from USEPA requesting modification to the plan submitted
+      7/10/15. Lima submitted the revised plan to USEPA on 5/26/17.
     next_period: null
   - name: Asset Management
-    status: Final design and contract documents are still being developed for the
-      Phase 1 Rehabilitation of the Segmented Block Sewers.
+    status: Final design and contract documents are still being developed for the Phase 1 Rehabilitation
+      of the Segmented Block Sewers.
     next_period: Completion of final design and public bidding of this project.
   - name: Supplemental Environmental Project (SEP)
-    status: Lima replanted 213 trees in April after the total failure of the trees
-      planted in 2016. A recent inspection by USEPA revealed all re-planted trees
-      appear to have established roots and are doing well.
-    next_period: USEPA requests Lima to submit a Revised SEP Completion Report by
-      January 31, 2018.
+    status: Lima replanted 213 trees in April after the total failure of the trees planted in 2016. A
+      recent inspection by USEPA revealed all re-planted trees appear to have established roots and are
+      doing well.
+    next_period: USEPA requests Lima to submit a Revised SEP Completion Report by January 31, 2018.
   - name: Simmon's Field CSO EQ Basin
-    status: City is under contract with Stantec (formerly MWH) for engineering. Three
-      progress meetings occurred in the reporting period; 60% design drawings submitted
-      May 5, 2017. Early unfavorable boring results led to additional borings as part
-      of a Phase II Environmental Site Assessment, completed June 16, 2017.
-    next_period: Contingent upon soil boring results, completion of final design and
-      public bidding expected in the next six month period.
+    status: City is under contract with Stantec (formerly MWH) for engineering. Three progress meetings
+      occurred in the reporting period; 60% design drawings submitted May 5, 2017. Early unfavorable boring
+      results led to additional borings as part of a Phase II Environmental Site Assessment, completed
+      June 16, 2017.
+    next_period: Contingent upon soil boring results, completion of final design and public bidding expected
+      in the next six month period.
   agency_contacts:
-  - January 6, 2017 — Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning
-    a force main rupture at the West Street Pump Station.
-  - January 12, 2017 — Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning
-    a flooded wet well at the Lost Creek Pump Station.
-  - January 13, 2017 — Lima submitted a comment letter (via Frost Brown Todd) to OEPA
-    in response to the proposed promulgation of WQS for the Maumee river drainage.
-  - February 10, 2017 — Lima submitted a response letter to OEPA in reference to two
-    'AD' values recorded for effluent temperature at Station 604 on the Compliance
-    Review Report.
-  - March 30, 2017 — Lima received a letter from USEPA requesting modifications to
-    the CMOM plan submitted July 10, 2015. Lima was given 60 days to respond.
+  - January 6, 2017 — Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning a force main rupture
+    at the West Street Pump Station.
+  - January 12, 2017 — Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning a flooded wet well
+    at the Lost Creek Pump Station.
+  - January 13, 2017 — Lima submitted a comment letter (via Frost Brown Todd) to OEPA in response to the
+    proposed promulgation of WQS for the Maumee river drainage.
+  - February 10, 2017 — Lima submitted a response letter to OEPA in reference to two 'AD' values recorded
+    for effluent temperature at Station 604 on the Compliance Review Report.
+  - March 30, 2017 — Lima received a letter from USEPA requesting modifications to the CMOM plan submitted
+    July 10, 2015. Lima was given 60 days to respond.
   - April 5, 2017 — OEPA conducted a Reconnaissance Inspection of Lima's WWTP.
-  - April 19, 2017 — Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning
-    the failure of a check valve at the Westgate Pump Station.
-  - April 26, 2017 — Lima submitted notification letter to USEPA that the replanting
-    of 213 trees as part of the Supplemental Environmental Project (SEP) had been
-    completed.
-  - May 1, 2017 — Lima received a letter from USEPA requesting modifications be made
-    to the CSOOP submitted May 13, 2015.
+  - April 19, 2017 — Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning the failure of a check
+    valve at the Westgate Pump Station.
+  - April 26, 2017 — Lima submitted notification letter to USEPA that the replanting of 213 trees as part
+    of the Supplemental Environmental Project (SEP) had been completed.
+  - May 1, 2017 — Lima received a letter from USEPA requesting modifications be made to the CSOOP submitted
+    May 13, 2015.
   - May 26, 2017 — Lima submitted revised CMOM Plan to USEPA.
-  - June 19-21, 2017 — USEPA and OEPA conducted a 3-day reconnaissance inspection
-    focused on the progress Lima has made on improvement projects defined in the consent
-    decree entered into on January 13, 2015.
+  - June 19-21, 2017 — USEPA and OEPA conducted a 3-day reconnaissance inspection focused on the progress
+    Lima has made on improvement projects defined in the consent decree entered into on January 13, 2015.
   - June 30, 2017 — Lima submitted revised CSOOP plan to USEPA.
   permit_exceedances:
-  - January 1-2, 2017 — Lima recorded 'AD' values for effluent temperature at Station
-    604. Construction activity at the plant required manual recording (versus normal
-    automatic SCADA entry) of temperature for a short period. Paper files were misplaced
-    between shifts and the data was lost.
+  - January 1-2, 2017 — Lima recorded 'AD' values for effluent temperature at Station 604. Construction
+    activity at the plant required manual recording (versus normal automatic SCADA entry) of temperature
+    for a short period. Paper files were misplaced between shifts and the data was lost.
   discharge_events:
   - kind: WIB (Water-in-Basement)
     location: City mainline (grease backup)
@@ -131,8 +121,8 @@ progress_report:
     duration: null
     volume: null
     estimated: null
-    note: Occurred as a result of grease that backed up the City's mainline. The line
-      was immediately jetted and returned to normal service.
+    note: Occurred as a result of grease that backed up the City's mainline. The line was immediately
+      jetted and returned to normal service.
   - kind: SSO
     location: MH#14 on Lost Creek Golf Course
     date: null
@@ -412,8 +402,7 @@ progress_report:
     duration: null
     volume: null
     estimated: null
-    note: 'Annual Report #011, EPA ID #2PE000000/1 (as printed). Count not legible
-      in OCR.'
+    note: 'Annual Report #011, EPA ID #2PE000000/1 (as printed). Count not legible in OCR.'
   - kind: CSO
     location: Metcalf St. & O'Connor Ave.
     date: null
@@ -518,13 +507,13 @@ progress_report:
     volume: null
     estimated: null
     note: 'Annual Report #338, EPA ID #2PE00000056.'
-  summary: This is the semiannual compliance progress report filed by the City of
-    Lima, Ohio under Paragraph 33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ)
-    for the period January 1 – June 30, 2017. Lima reports meeting both its deadline
-    obligations for the period (revised CMOM plan submitted May 26, 2017; revised
-    CSOOP submitted June 30, 2017) and documents substantial construction progress
-    on the Headworks Project, CMOM Plan, Asset Management, SEP tree replanting, and
-    Simmon's Field CSO EQ Basin. The attached Overflow Totals Report inventories 119
-    SSO events and 13 CSO events at 47 locations system-wide during the reporting
-    period, with volumes and durations reported monthly to OEPA via DMR.
-  note: null
+  summary: This is the semiannual compliance progress report filed by the City of Lima, Ohio under Paragraph
+    33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ) for the period January 1 – June 30, 2017. Lima
+    reports meeting both its deadline obligations for the period (revised CMOM plan submitted May 26,
+    2017; revised CSOOP submitted June 30, 2017) and documents substantial construction progress on the
+    Headworks Project, CMOM Plan, Asset Management, SEP tree replanting, and Simmon's Field CSO EQ Basin.
+    The attached Overflow Totals Report inventories 119 SSO events and 13 CSO events at 47 locations system-wide
+    during the reporting period, with volumes and durations reported monthly to OEPA via DMR.
+  note: 'case_no normalized for the join: printed as "3:14-CV-02551-JZ Doc #5 Filed: 01/13/15", where
+    the trailing text is one FILING inside the case rather than the case. The field holds the case number
+    alone so this row joins edoc-412983.order.yaml.'

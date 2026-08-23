@@ -13,29 +13,26 @@ image_pages_read:
 - 0
 - 1
 dpi: 150
-source_text_excerpt: "~ \nMailin List: r  ç ~p~~000D \nUnited States DOJ Lima: \n\
-  Chief \nEnvironmental Enforcement Section \nEnvironment and Natural Resources Division\
-  \ \nU.S. Department of Justice \nDp1 No. 90-5-1-1-08433 \nPO E3ox 7611 \nWashington,\
-  \ D.C. 20044-7611 \nRegion 5 USEPA: \nChief \nWater Enforcement and Compliance Assurance\
-  \ Branch \nWater Division \nUS Environmental Protection Agency, Region 5 \n77 West\
-  \ Jackson Blvd. \nChicago, I L 60604 \nNicole Cantello \nAssociate Regional Counsel\
-  \ \nUS Environmental Protection Agency, Region 5 \n77 West Jackson Blvd. \nChicago,\
-  \ Illinois 60604 \nCa nte Ilo. n icoletãer~a.eov \nECE I '' \n~E["
+source_text_excerpt: "~ \nMailin List: r  ç ~p~~000D \nUnited States DOJ Lima: \nChief \nEnvironmental\
+  \ Enforcement Section \nEnvironment and Natural Resources Division \nU.S. Department of Justice \nDp1\
+  \ No. 90-5-1-1-08433 \nPO E3ox 7611 \nWashington, D.C. 20044-7611 \nRegion 5 USEPA: \nChief \nWater\
+  \ Enforcement and Compliance Assurance Branch \nWater Division \nUS Environmental Protection Agency,\
+  \ Region 5 \n77 West Jackson Blvd. \nChicago, I L 60604 \nNicole Cantello \nAssociate Regional Counsel\
+  \ \nUS Environmental Protection Agency, Region 5 \n77 West Jackson Blvd. \nChicago, Illinois 60604 \n\
+  Ca nte Ilo. n icoletãer~a.eov \nECE I '' \n~E["
 progress_report:
   confidence: high
   warnings:
-  - Clause (c) references 'July 22, 2018' for the lightning strike but context and
-    all other references confirm this should be July 22, 2017 — likely a typo in the
-    original document.
-  - Overflow frequency counts in the attachment are event counts per location for
-    the period, not individual dated events; duration and volume are not provided
-    per location in the attachment.
-  - Some Annual Report entries in the attachment have no EPA ID# (marked with asterisks
-    in original); these are noted in discharge event records.
+  - Clause (c) references 'July 22, 2018' for the lightning strike but context and all other references
+    confirm this should be July 22, 2017 — likely a typo in the original document.
+  - Overflow frequency counts in the attachment are event counts per location for the period, not individual
+    dated events; duration and volume are not provided per location in the attachment.
+  - Some Annual Report entries in the attachment have no EPA ID# (marked with asterisks in original);
+    these are noted in discharge event records.
   - OCR layer is unreliable; all figures verified against image scan.
   agency: U.S. EPA Region 5 / Ohio EPA / U.S. DOJ
   instrument: Lima Consent Decree (CD), Case 3:14-CV-02551-JZ
-  case_no: '3:14-CV-02551-JZ Doc #5 Filed: 01/13/15'
+  case_no: 3:14-CV-02551-JZ
   paragraph: '33'
   respondent: City of Lima, Ohio
   facility: City of Lima Wastewater Treatment Plant (WWTP), Lima, Ohio
@@ -44,73 +41,62 @@ progress_report:
   period_start: '2017-07-01'
   period_end: '2017-12-31'
   deadlines_status: None noted.
-  noncompliance_reasons: None noted for deadlines. A direct lightning strike to the
-    main electrical switch gear equipment on July 22, 2017 caused complete loss of
-    power, resulting in substantial flooding throughout the plant and significant
-    equipment loss, which is documented in the discharge/contacts sections.
+  noncompliance_reasons: None noted for deadlines. A direct lightning strike to the main electrical switch
+    gear equipment on July 22, 2017 caused complete loss of power, resulting in substantial flooding throughout
+    the plant and significant equipment loss, which is documented in the discharge/contacts sections.
   projects:
   - name: Lima Wastewater Treatment Headworks Project
-    status: Commenced construction on July 1, 2015. Building and tank construction
-      is complete.
-    next_period: Develop implementation strategy for seeding nitrification towers
-      during dry weather to develop biomass suitable for wet weather treatment; develop
-      implementation strategy for employing primary tank 5-7, effluent pumping, and
-      towers to treat wet weather flows; develop PLC programming for seeding the nitrification
-      tower and for control of wet weather treatment system; implement dry weather
-      seeding strategy for towers and collect data.
+    status: Commenced construction on July 1, 2015. Building and tank construction is complete.
+    next_period: Develop implementation strategy for seeding nitrification towers during dry weather to
+      develop biomass suitable for wet weather treatment; develop implementation strategy for employing
+      primary tank 5-7, effluent pumping, and towers to treat wet weather flows; develop PLC programming
+      for seeding the nitrification tower and for control of wet weather treatment system; implement dry
+      weather seeding strategy for towers and collect data.
   - name: CMOM Plan Development
-    status: Lima submitted the revised plan to USEPA on 5/26/17. Currently awaiting
-      final approval.
+    status: Lima submitted the revised plan to USEPA on 5/26/17. Currently awaiting final approval.
     next_period: null
   - name: Asset Management
-    status: Final design and contract documents were completed for the Phase 1 High
-      Street/Jameson Ave Sewer Rehabilitation Project. A PTI application was submitted
-      to OEPA on October 18, 2017.
+    status: Final design and contract documents were completed for the Phase 1 High Street/Jameson Ave
+      Sewer Rehabilitation Project. A PTI application was submitted to OEPA on October 18, 2017.
     next_period: Bidding and award of this project followed by commencement of construction.
   - name: Supplemental Environmental Project (SEP)
-    status: Project is complete. USEPA requests Lima to submit a Revised SEP Completion
-      Report by January 31, 2018.
+    status: Project is complete. USEPA requests Lima to submit a Revised SEP Completion Report by January
+      31, 2018.
     next_period: Submit Revised SEP Completion Report by January 31, 2018.
   - name: Simmon's Field CSO EQ Basin
-    status: City is under contract with Stantec for engineering. A PTI application
-      was submitted to OEPA on October 16, 2017. Project was bid on November 11-22,
-      2017. Bids were opened on December 15, 2017. Lima received four bids, which
-      are currently under review.
+    status: City is under contract with Stantec for engineering. A PTI application was submitted to OEPA
+      on October 16, 2017. Project was bid on November 11-22, 2017. Bids were opened on December 15, 2017.
+      Lima received four bids, which are currently under review.
     next_period: Bid award and commencement of construction.
   agency_contacts:
-  - July 18, 2017 --- Lima submitted a response letter to OEPA concerning the 'AD'
-    values submitted on the June DMR for overflow volumes at Stations 002 and 003.
-  - July 25, 2017 --- OEPA conducted an inspection at Lima's WWTP to evaluate the
-    facility following a lightning strike and subsequent power outage that occurred
-    on July 22, 2017.
-  - July 26, 2017 --- Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning
-    the loss of power at the WWTP due to the lightning strike on July 22, 2017.
-  - July 31, 2017 --- Lima submitted a letter to USEPA concerning the loss of power
+  - July 18, 2017 --- Lima submitted a response letter to OEPA concerning the 'AD' values submitted on
+    the June DMR for overflow volumes at Stations 002 and 003.
+  - July 25, 2017 --- OEPA conducted an inspection at Lima's WWTP to evaluate the facility following a
+    lightning strike and subsequent power outage that occurred on July 22, 2017.
+  - July 26, 2017 --- Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning the loss of power
     at the WWTP due to the lightning strike on July 22, 2017.
-  - August 16, 2017 --- Lima received a report from OEPA relative to the inspection
-    of the WWTP on July 25, 2017.
-  - August 7, 2017 --- Lima submitted a force majeure event letter to USEPA concerning
-    the loss of power at the WWTP due to the lightning strike on July 22, 2017.
-  - August 28, 2017 --- Lima submitted a letter to OEPA concerning the codes reported
-    on the July DMR for water temperature, dissolved oxygen, overflow volume and E.
-    coli.
-  - November 29, 2017 --- Lima received a letter from USEPA concerning the 3-day Consent
-    Decree Monitoring Inspection conducted on June 19-20-21, 2017.
-  - December 5, 2017 --- OEPA conducted a NPDES compliance evaluation inspection at
-    Lima's WWTP.
-  - December 29, 2017 --- Lima received a letter from OEPA detailing the results of
-    the NPDES compliance inspection conducted on December 5, 2017.
+  - July 31, 2017 --- Lima submitted a letter to USEPA concerning the loss of power at the WWTP due to
+    the lightning strike on July 22, 2017.
+  - August 16, 2017 --- Lima received a report from OEPA relative to the inspection of the WWTP on July
+    25, 2017.
+  - August 7, 2017 --- Lima submitted a force majeure event letter to USEPA concerning the loss of power
+    at the WWTP due to the lightning strike on July 22, 2017.
+  - August 28, 2017 --- Lima submitted a letter to OEPA concerning the codes reported on the July DMR
+    for water temperature, dissolved oxygen, overflow volume and E. coli.
+  - November 29, 2017 --- Lima received a letter from USEPA concerning the 3-day Consent Decree Monitoring
+    Inspection conducted on June 19-20-21, 2017.
+  - December 5, 2017 --- OEPA conducted a NPDES compliance evaluation inspection at Lima's WWTP.
+  - December 29, 2017 --- Lima received a letter from OEPA detailing the results of the NPDES compliance
+    inspection conducted on December 5, 2017.
   permit_exceedances:
-  - July 7, 2017 --- Lima recorded 'AD' values for overflow volume at Stations 002
-    and 003. The sensors were in the process of being replaced and reprogrammed.
-  - July 10, 2017 --- Lima recorded 'AD' values for overflow volume at Stations 004,
-    005 and 006. The sensors were in the process of being replaced and reprogrammed.
-  - July 21, 2017 --- Lima recorded 'AB' values for water temperature and dissolved
-    oxygen. This was directly related to the loss of power due to a lightning strike
-    at the WWTP.
-  - July 24, 2017 --- Lima recorded an 'AB' value for dissolved oxygen and an 'AK'
-    value for E. coli. This was directly related to the loss of power due to a lightning
-    strike at the WWTP.
+  - July 7, 2017 --- Lima recorded 'AD' values for overflow volume at Stations 002 and 003. The sensors
+    were in the process of being replaced and reprogrammed.
+  - July 10, 2017 --- Lima recorded 'AD' values for overflow volume at Stations 004, 005 and 006. The
+    sensors were in the process of being replaced and reprogrammed.
+  - July 21, 2017 --- Lima recorded 'AB' values for water temperature and dissolved oxygen. This was directly
+    related to the loss of power due to a lightning strike at the WWTP.
+  - July 24, 2017 --- Lima recorded an 'AB' value for dissolved oxygen and an 'AK' value for E. coli.
+    This was directly related to the loss of power due to a lightning strike at the WWTP.
   discharge_events:
   - kind: WIB (Water-in-Basement)
     location: Two homes (sanitary mainlines surcharged)
@@ -119,9 +105,8 @@ progress_report:
     duration: null
     volume: null
     estimated: null
-    note: Both occurred during a rain event of nearly 3.5"; sanitary mainlines became
-      surcharged and backed up into two homes. Lima completed 3 WIB projects in this
-      reporting period.
+    note: Both occurred during a rain event of nearly 3.5"; sanitary mainlines became surcharged and backed
+      up into two homes. Lima completed 3 WIB projects in this reporting period.
   - kind: SSO
     location: MH#19 on Lost Creek Golf Course (Plugged)
     date: null
@@ -129,8 +114,7 @@ progress_report:
     duration: null
     volume: null
     estimated: null
-    note: 'Annual Report #301, EPA ID# 2PE00000048; SSO overflow count not specified
-      in attachment'
+    note: 'Annual Report #301, EPA ID# 2PE00000048; SSO overflow count not specified in attachment'
   - kind: SSO
     location: MH#14 on Lost Creek Golf Course
     date: null
@@ -547,19 +531,18 @@ progress_report:
     volume: null
     estimated: null
     note: 'Annual Report #338, EPA ID# 2PE00000056'
-  summary: This is the semiannual Consent Decree Progress Report for the City of Lima,
-    Ohio covering the period July 1, 2017 through December 31, 2017, filed January
-    25, 2018 under Case 3:14-CV-02551-JZ. No consent decree deadlines were missed
-    during the period; however, a lightning strike on July 22, 2017 caused a complete
-    power loss at the WWTP, resulting in four NPDES permit exceedances, one SSO requiring
-    a 5-day follow-up report, and substantial plant damage. The attached overflow
-    totals report documents 142 SSO events and 28 CSO events across 38+ locations
-    during the reporting period, with five named capital/compliance projects in various
-    stages of progress.
-  note: 'Attachment: SSO & CSO Overflow Totals July 1 – December 31, 2017. Total SSO
-    overflow count = 142; total CSO overflow count = 28. Total number of reports =
-    18. Report updated 1/5/2018. Signed by Michel N. Carea, Director of Utilities,
-    City of Lima, Ohio. CMOM section reports 57,662 linear feet (10.92 miles, 11%
-    of SSS) of sewer cleaned; 32,992 linear feet CCTV (6.25 miles, 6% of SSS), 348
-    manholes inspected; 12 manholes rehabilitated; 2 new manholes installed. 1 SSO
-    required a 5-Day Follow-up Report to OEPA in reporting period.'
+  summary: This is the semiannual Consent Decree Progress Report for the City of Lima, Ohio covering the
+    period July 1, 2017 through December 31, 2017, filed January 25, 2018 under Case 3:14-CV-02551-JZ.
+    No consent decree deadlines were missed during the period; however, a lightning strike on July 22,
+    2017 caused a complete power loss at the WWTP, resulting in four NPDES permit exceedances, one SSO
+    requiring a 5-day follow-up report, and substantial plant damage. The attached overflow totals report
+    documents 142 SSO events and 28 CSO events across 38+ locations during the reporting period, with
+    five named capital/compliance projects in various stages of progress.
+  note: 'Attachment: SSO & CSO Overflow Totals July 1 – December 31, 2017. Total SSO overflow count =
+    142; total CSO overflow count = 28. Total number of reports = 18. Report updated 1/5/2018. Signed
+    by Michel N. Carea, Director of Utilities, City of Lima, Ohio. CMOM section reports 57,662 linear
+    feet (10.92 miles, 11% of SSS) of sewer cleaned; 32,992 linear feet CCTV (6.25 miles, 6% of SSS),
+    348 manholes inspected; 12 manholes rehabilitated; 2 new manholes installed. 1 SSO required a 5-Day
+    Follow-up Report to OEPA in reporting period. case_no normalized for the join: printed as "3:14-CV-02551-JZ
+    Doc #5 Filed: 01/13/15", where the trailing text is one FILING inside the case rather than the case.
+    The field holds the case number alone so this row joins edoc-412983.order.yaml.'

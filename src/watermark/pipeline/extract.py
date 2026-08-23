@@ -1040,9 +1040,17 @@ imposes nothing. Record into the tool:
   * permit_exceedances: clause (e) — one entry per exceedance, as printed. An explicit
     "none" is an empty list plus a note, never a fabricated entry.
   * discharge_events: clause (f) — one entry per CSO / SSO / bypass / unpermitted
-    discharge, with kind, location, date, frequency, duration and volume AS PRINTED. Keep
-    the printed units; do NOT convert. Set `estimated` true only where the report itself
-    says the figure is estimated rather than measured.
+    discharge, with kind, date, frequency, duration and volume AS PRINTED. Keep the printed
+    units; do NOT convert. Set `estimated` true only where the report itself says the figure
+    is estimated rather than measured.
+    Put the PERMIT OUTFALL ID (the "2PE00000NNN" form) in `outfall_id` and the street or
+    structure description in `location`, never both in one field — these reports print one
+    or the other in different periods for the same physical point, and an outfall that does
+    not join itself across periods makes the series useless. A bare 3-digit row number from
+    the table is NOT an outfall id; leave `outfall_id` null for it.
+    If the report states a TOTAL for the period that exceeds the rows you can read, say so
+    in a warning and give both numbers. An enumeration that silently covers part of a
+    period reads as the whole of it.
   * summary: 1-3 sentences on what this period reports.
 Rules: dates as ISO; figures and project names exactly as printed; a self-report is the
 filer's assertion, so never upgrade it to a finding; leave a field null rather than

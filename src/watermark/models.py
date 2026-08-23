@@ -626,7 +626,13 @@ class DischargeEvent(ApproxModel):
     model_config = ConfigDict(extra="allow")
 
     kind: str | None = None  # CSO | SSO | bypass | unpermitted discharge, as the report classes it
-    location: str | None = None  # outfall id / street location as printed
+    # The permit outfall id (e.g. "2PE00000037") kept SEPARATE from the prose location, because the
+    # reports are inconsistent about which they print: one half-year names "North Shore Dr. & Cole
+    # St." and another names 2PE00000037 for the same physical point. Folding both into `location`
+    # means an outfall does not join itself across periods, which is the one thing a multi-year
+    # discharge series exists to support.
+    outfall_id: str | None = None
+    location: str | None = None  # the street / structure description as printed
     date: str | None = None  # ISO if a single dated event
     frequency: str | None = None  # e.g. "3 events" — as printed, actual or estimated
     duration: str | None = None
