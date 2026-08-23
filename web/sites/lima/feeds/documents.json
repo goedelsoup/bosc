@@ -44826,10 +44826,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-cr6-progress-2022-06-27",
+        "canonical_document_id": "oepa/lima/edoc-1851184.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-1879637.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1851472.pdf",
@@ -44926,9 +44928,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-cr6-progress-2022-06-27",
+        "canonical_document_id": "oepa/lima/edoc-1851184.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {

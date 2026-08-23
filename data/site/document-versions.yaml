@@ -294,6 +294,43 @@ clusters:
           acknowledges receiving. Both readings are now reconciled to no outstanding obligations,
           which is what a closure letter actually imposes.
 
+  # ── Found by the TIMELINE, not by a document sweep (#2081) ────────────────────────────────────
+  # The two clusters above were declared because two extractions of one letter DISAGREED. This one
+  # was missed by that pass and surfaced only when `pipeline.timeline` began keying enforcement
+  # events on the real-world event (permit + issued date + instrument) rather than on `case_no`:
+  # both captures landed on the same key and collapsed, which is what a twin looks like from the
+  # chronology's side. Confirmed at the source afterwards, not inferred from the collision —
+  # 5 pages each, text-layer similarity 1.000 / 1.000 / 0.999 / 0.997 on pp. 1-4.
+  #
+  # Why the earlier sweep missed it: the pass that found the others looked for READINGS THAT
+  # DISAGREE, and these two agree on everything that matters (agency, respondent, permit, date,
+  # instrument, the whole attached progress report). A twin whose two readings agree is invisible
+  # to a disagreement sweep and visible only to a duplicate sweep — a gap worth remembering the
+  # next time a portal tranche is declared complete.
+  - id: oepa:2PE00000-cr6-progress-2022-06-27
+    canonical: oepa/lima/edoc-1851184.pdf
+    source: >
+      both docids serve the City of Lima's 2022-06-27 annual Hexavalent Chromium Control Strategy
+      update to Ohio EPA NWDO (NPDES 2PE00000*ND, Part I.C Schedule of Compliance B.3) — cover
+      letter over Michael H. Caprella's signature plus the same four-page progress report
+    members:
+      - rel: oepa/lima/edoc-1851184.pdf
+        version: v2
+      - rel: oepa/lima/edoc-1879637.pdf
+        version: v2
+        evidence_note: >
+          The same 2022-06-27 letter as the canonical, and the AGENCY'S OWN FILE COPY: page 1
+          carries an Ohio EPA NWDO "RECEIVED" stamp the canonical does not, so this capture is the
+          only evidence in the corpus of when the submittal reached the district office. Read at
+          400 DPI, the stamp is unambiguous — RECEIVED / JUN 2 3 2022 / OHIO EPA / NWDO — and it
+          therefore PRE-DATES the letter it stamps by four days. That is not an OCR misread (the
+          day digits are struck in the darker wheel font and legible at full resolution) and it is
+          not resolved here: a receipt stamped before the document's own date is an agency
+          anomaly, most plausibly a date wheel left unadvanced, and it is recorded rather than
+          reconciled. The canonical is the copy to cite for the letter's CONTENT — its page 1 is a
+          clean read where this capture's is degraded ("l.ima, Oliio", "Ahone:") — but the receipt
+          date exists only here.
+
   # ── Lima WWTP inspection run, 2026-08-22 portal pull (#2077) ──────────────────────────────────
   # The portal serves most of this WWTP's inspections TWICE — once as a PDF with a text layer and
   # once as a scan of the same letter — at two unrelated docids. NONE of these pairs is
