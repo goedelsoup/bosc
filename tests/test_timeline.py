@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+from itertools import combinations
 from pathlib import Path
+
+import yaml
 
 from watermark.config import Settings
 from watermark.models import (
@@ -385,3 +388,48 @@ def test_a_flagged_artifact_warning_reaches_the_row_it_dates() -> None:
     assert "MISFILED AT THE AGENCY" in event.detail
     # Only the FLAGGED warning; the routine OCR caveat stays on the artifact.
     assert "placeholder" not in event.detail
+
+
+def test_every_twin_the_timeline_collapses_is_a_declared_document_cluster() -> None:
+    """The two dedup mechanisms must agree about what is one document (#2081).
+
+    `pipeline.timeline` collapses on the real-world EVENT (permit + date + instrument/type) and
+    `site.docversions` collapses on the declared DOCUMENT cluster, and they are deliberately
+    independent — the pipeline tier cannot import the site tier. Independent is not free to
+    disagree: the 2022-06-27 hexavalent-chromium letter was served at two portal docids, the
+    timeline collapsed it, and `document-versions.yaml` did not declare it, so the chronology
+    showed one filing while the documents feed showed two.
+
+    A failure here is a REVIEW, not a rename. Either a new twin needs declaring, or two genuinely
+    distinct instruments are colliding on the event key and need a distinguishing field — and the
+    manifest is a curated reading of committed evidence, so which one it is has to be read off
+    the sources, never guessed from the collision.
+    """
+    settings = Settings(data_dir=REPO_ROOT / "data", site="lima")
+    manifest = yaml.safe_load(
+        (REPO_ROOT / "data" / "site" / "document-versions.yaml").read_text(encoding="utf-8")
+    )
+    declared = {
+        frozenset(pair)
+        for cluster in manifest["clusters"]
+        for pair in combinations(sorted(m["rel"] for m in cluster["members"]), 2)
+    }
+
+    def source_of(rel: str) -> str:
+        raw = yaml.safe_load((settings.extracted_dir / rel).read_text(encoding="utf-8"))
+        return str(raw.get("source_path", "")).removeprefix("data/documents/")
+
+    genres = {"enforcement_order", "agency_inspection", "compliance_progress_report"}
+    undeclared = [
+        (event.date, source_of(event.source), source_of(other))
+        for event in build_timeline(settings=settings)
+        if event.category in genres
+        for other in event.also_sources
+        if frozenset((source_of(event.source), source_of(other))) not in declared
+    ]
+    assert not undeclared, (
+        "the timeline collapsed these captures as one event, but "
+        "`data/site/document-versions.yaml` does not declare them as one document — so the "
+        "chronology shows one filing and the documents feed shows two:\n"
+        + "\n".join(f"  {d}  {a}  +  {b}" for d, a, b in undeclared)
+    )

@@ -179,6 +179,13 @@ def test_committed_lima_manifest_loads() -> None:
         # of one letter disagreed, which is precisely what a cluster exists to surface.
         "oepa:2PE00000-prov-2016-07-11",
         "oepa:2PE00000-rov-2016-08-01",
+        # A twin the disagreement sweep above could NOT find, because its two readings AGREE
+        # (#2081). It surfaced from the other side entirely: `pipeline.timeline` keys enforcement
+        # events on the real-world event rather than on `case_no`, and both captures collapsed onto
+        # one. The non-canonical member is the agency's RECEIVED-stamped file copy, so the
+        # superseded version carries evidence the canonical does not — the whole reason a cluster
+        # retains its members instead of dropping them.
+        "oepa:2PE00000-cr6-progress-2022-06-27",
         # The inspection run (#2077). The portal serves most of this plant's inspections TWICE —
         # once with a text layer, once as a scan of the same letter — so 30 captures are 18 distinct
         # inspections. None byte-identical; all `v2`, text-layer capture canonical, because a scan
@@ -204,13 +211,20 @@ def test_committed_lima_manifest_loads() -> None:
     # into the other and silently change what retrieval collapses.
     for cid in ("oepa:2PE00000-OD", "oepa:2PE00000-app256207483-flow-diagram"):
         assert {m.version for m in by_id[cid].members} == {"duplicate"}, cid
-    for cid in ("oepa:2PE00000-prov-2016-07-11", "oepa:2PE00000-rov-2016-08-01"):
+    for cid in (
+        "oepa:2PE00000-prov-2016-07-11",
+        "oepa:2PE00000-rov-2016-08-01",
+        "oepa:2PE00000-cr6-progress-2022-06-27",
+    ):
         assert {m.version for m in by_id[cid].members} == {"v2"}, cid
     # The already-extracted DAM copy is the canonical of the 2023 permit pair, so the portal capture
     # never becomes the cite target for a permit that was read from the other copy.
     assert by_id["oepa:2PE00000-OD"].canonical == "oepa/2PE00000.pdf"
     # The text-layer capture is canonical for each twin pair — never the image-only/poorer scan.
     assert by_id["oepa:2PE00000-prov-2016-07-11"].canonical == "oepa/lima/edoc-1914761.pdf"
+    # Same rule for the 2022 Cr(VI) pair: the clean capture is canonical for the letter's CONTENT.
+    # The stamped copy stays a member because its page 1 is the only record of the receipt date.
+    assert by_id["oepa:2PE00000-cr6-progress-2022-06-27"].canonical == "oepa/lima/edoc-1851184.pdf"
     # Every inspection twin is `v2` with a two-member pair — never `duplicate`, which would make
     # retrieval collapse two genuinely different scans of one letter into one.
     insp = [c for c in versions.clusters if c.id.startswith("oepa:2PE00000-inspection-")]
