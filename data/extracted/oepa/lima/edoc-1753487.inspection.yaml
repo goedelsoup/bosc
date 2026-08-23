@@ -29,9 +29,9 @@ inspection:
   confidence: high
   warnings:
   - TWIN CAPTURE — not the canonical reading. The portal serves this 2022-02-22 compliance evaluation
-    inspection letter at two docids; edoc-1752399 is the same letter and is canonical, and where the two
-    readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two
-    files are NOT byte-identical).
+    inspection at two docids; edoc-1752399 is the same letter and is canonical for FIDELITY (a scan is
+    read by the vision path alone, with nothing to check itself against). Declared in data/site/document-versions.yaml
+    as a `v2` cluster — the two files are NOT byte-identical.
   - 'The permit number ''2PE00000'' appears in the Re: block and on the inspection form as both the permit
     number and a field that may be a placeholder — verify against the actual permit document.'
   - The report form was signed by Mallorey Smith on 03/07/2022 and countersigned by Thomas Poffenbarger

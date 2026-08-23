@@ -17,9 +17,9 @@ inspection:
   confidence: high
   warnings:
   - TWIN CAPTURE — not the canonical reading. The portal serves this 2017-07-25 reconnaissance inspection
-    letter at two docids; edoc-1851474 is the same letter and is canonical, and where the two readings
-    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
-    NOT byte-identical).
+    at two docids; edoc-1851474 is the same letter and is canonical for FIDELITY (a scan is read by the
+    vision path alone, with nothing to check itself against). Declared in data/site/document-versions.yaml
+    as a `v2` cluster — the two files are NOT byte-identical.
   - Document read from page images; text layer appears present and legible throughout all four pages.
   - 'The NPDES permit ID on the letter Re: block reads ''2PE00000'' (permit_no) and the form shows NPDES
     # ''2PE00000'' with Ohio permit OH0026069; both are recorded accordingly.'

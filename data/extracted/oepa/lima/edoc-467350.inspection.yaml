@@ -17,9 +17,12 @@ inspection:
   confidence: high
   warnings:
   - 'TWIN CAPTURE — not the canonical reading. The portal serves this 2016-07-13 reconnaissance inspection
-    letter at two docids; edoc-1914739 is the same letter and is canonical, and where the two readings
-    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
-    NOT byte-identical). They do differ here: 6 observations on the canonical against 11 on this capture.'
+    at two docids; edoc-1914739 is the same letter and is canonical for FIDELITY (a scan is read by the
+    vision path alone, with nothing to check itself against). Declared in data/site/document-versions.yaml
+    as a `v2` cluster — the two files are NOT byte-identical. NOTE this capture records MORE (11 vs 6):
+    it enumerates the report form''s evaluated-areas checklist as observations where the canonical summarises
+    the narrative. A granularity difference, not a conflict — and the checklist has no dedicated field
+    on ComplianceInspection.'
   - Document is a scanned page image; text was read via OCR interpretation — minor transcription errors
     are possible.
   - The compliance data tables on pages 2 and 3 are part of the enclosed inspection report and reflect

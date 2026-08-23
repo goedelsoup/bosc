@@ -12,10 +12,11 @@ source_text_excerpt: ''
 inspection:
   confidence: high
   warnings:
-  - 'TWIN CAPTURE — not the canonical reading. The portal serves this 2019-04-04 biosolids generator inspection
-    letter at two docids; edoc-1797306 is the same letter and is canonical, and where the two readings
-    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
-    NOT byte-identical). They do differ here: 4 observations on the canonical against 3 on this capture.'
+  - TWIN CAPTURE — not the canonical reading. The portal serves this 2019-04-04 biosolids generator inspection
+    at two docids; edoc-1797306 is the same letter and is canonical for FIDELITY (a scan is read by the
+    vision path alone, with nothing to check itself against). Declared in data/site/document-versions.yaml
+    as a `v2` cluster — the two files are NOT byte-identical. The canonical records more (4 vs 3) and
+    governs.
   - No attached EPA inspection form was identified in the document; therefore type_code, entry_time, exit_time,
     units_in_service, and significant_noncompliance could not be populated.
   - 'The permit number ''2PE00000'' appears verbatim in the Re: block; it may be a placeholder rather
