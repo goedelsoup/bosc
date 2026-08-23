@@ -1,0 +1,125 @@
+doc_id: edoc-4192699-d0bf0ff6
+source_path: data/documents/oepa/lima/edoc-4192699.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: " \n \n \n Northwest District Office \n347 N. Dunbridge Road\
+  \ \nBowling Green, Ohio 43402 U.S.A. \n 419 | 352 8461 \nepa.ohio.gov \n    \n The\
+  \ State of Ohio is an Equal Opportunity Employer and Provider of ADA Services \n\
+  \ \nJuly 16, 2026 \n \nTransmitted Electronically \n \nMr. Mike Caprella, Utilities\
+  \ Director \nCity of Lima  \n50 Town Square \nLima, Ohio  45804 \n \n \nRe: Lima\
+  \ WWTP \n Inspection \n NPDES \n Allen County \n 2PE00000 \n \nSubject: Ohio Environmental\
+  \ Protection Agency NPDES Inspection  \n \nDear Mr. Caprella: \nOhio EPA conducted\
+  \ an inspection of the Lima Wastewater Treatment Plant (WWTP) on July 7, \n2026.\
+  \ M"
+inspection:
+  confidence: high
+  warnings:
+  - Page 2 header shows date July 15, 2026, while the transmittal letter on page 1
+    is dated July 16, 2026; report_date recorded as July 16, 2026 (the letter date).
+    The inspection report form signatures are dated 07/14/2026 and 7/15/2026 respectively.
+  - OCR text layer flagged as unreliable; all key fields verified against image.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: compliance evaluation inspection
+  type_code: CEI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Road, Lima, OH
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2026-07-07'
+  report_date: '2026-07-16'
+  entry_time: 8:55 A.M.
+  exit_time: 12:49 P.M.
+  inspectors:
+  - Peggy B. Christie
+  - Tom Poffenbarger
+  facility_representatives:
+  - Shawn Dershem, Plant Supervisor
+  - Joe Welker, Assistant Plant Supervisor
+  - Eric Bontrager, Utilities Operations Manager
+  - Amy Staley, Utilities Industrial Monitoring Chief
+  - Larry Huber, Utility Field Services Supervisor
+  significant_noncompliance: true
+  units_in_service: All treatment units in service other than backup units
+  observations:
+  - kind: finding
+    text: In the past year, the top two layers of media were replaced in the Nitrification
+      towers. Regrowth of the bacteria on the media was slower than expected.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: The City is in significant non-compliance (SNC) due to violations within
+      the time period of January 2026 through July 2026. SNC is a programmatic definition
+      used to prioritize enforcement. In this case, the facility is in SNC due to
+      ammonia exceeding effluent limits by greater than 40% in at least two months
+      out of a six-month period. A separate Notice of Violation will follow.
+    number: '2'
+    deadline: null
+  - kind: finding
+    text: Lima is currently performing a pilot study of NeoWater for settling and
+      phosphorus removal.
+    number: '3'
+    deadline: null
+  - kind: finding
+    text: Lima has an Ohio Administrative Code 3745-7-02(D) exemption, which allows
+      the Class III operator to act as the operator of record for up to 2 years. The
+      exemption expires July 31, 2026.
+    number: '4'
+    deadline: '2026-07-31'
+  - kind: finding
+    text: Lima has approved reduced staffing hours dated July 26, 2021. There have
+      been staffing changes since this was approved.
+    number: '5'
+    deadline: null
+  - kind: finding
+    text: The Stormwater Pollution Prevention Plan (SWPPP) is dated December 12, 2019.
+    number: '6'
+    deadline: null
+  - kind: recommendation
+    text: Because the OAC 3745-7-02(D) exemption will soon expire, we recommend that
+      you apply for an extension. The request should be sent to Anthony Nosko, anthony.nosko@epa.ohio.gov
+      in our Central Office.
+    number: '1'
+    deadline: null
+  - kind: recommendation
+    text: We recommend that the City requests a new approval for reduced staffing
+      hours. The form can be found at our website at MinStaffReductionRequestForm.doc.pdf.
+      Until this is approved, you must meet the 40-hour-per-week staffing requirement.
+    number: '2'
+    deadline: null
+  - kind: recommendation
+    text: 'We recommend that you update the Stormwater Pollution Prevention Plan.
+      Ohio EPA has developed a template that may assist you. The template can be downloaded
+      from our website at OHR000007_Template_SWPPP.docx. Sample recordkeeping templates
+      and the Annual Reporting Form can also be found on our website: Industrial Stormwater
+      - General Permit | Ohio Environmental Protection Agency. Click on the Permit
+      Guidance, Compliance, and Support Tab.'
+    number: '3'
+    deadline: null
+  summary: Ohio EPA conducted a Compliance Evaluation Inspection (CEI) of the Lima
+    WWTP on July 7, 2026, evaluating NPDES permit compliance, operations and maintenance,
+    operator certification, and stormwater controls. The facility was found to be
+    in Significant Non-Compliance (SNC) due to ammonia exceeding effluent limits by
+    greater than 40% in at least two months of the January–July 2026 period, attributable
+    to nitrification tower media replacement and slow bacterial regrowth. Three recommendations
+    were issued regarding operator certification exemption renewal, reduced staffing
+    hours reapproval, and updating the Stormwater Pollution Prevention Plan.
+  note: null

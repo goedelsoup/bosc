@@ -1,0 +1,63 @@
+doc_id: edoc-512329-bea840f6
+source_path: data/documents/oepa/lima/edoc-512329.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+image_pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: ''
+inspection:
+  confidence: high
+  warnings:
+  - 'TWIN CAPTURE — not the canonical reading. The portal serves this 2016-10-18 reconnaissance inspection
+    letter at two docids; edoc-1914740 is the same letter and is canonical, and where the two readings
+    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
+    NOT byte-identical). They do differ here: 3 observations on the canonical against 2 on this capture.'
+  - Document read from page images — no native text layer confirmed.
+  - The enclosed compliance data sheet (7/1/2016–9/1/2016) references 2 E. coli code violations and 28
+    SSO events; these are contextual data attachments, not numbered inspection observations, and have
+    been summarized rather than listed as individual observations.
+  - Permit Effective Date 1/1/2013 and Permit Expiration Date 2/28/2015 noted on form — permit appears
+    expired at time of inspection.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: Reconnaissance Inspection
+  type_code: RI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen County
+  inspection_date: '2016-10-18'
+  report_date: '2016-11-03'
+  entry_time: '10:10'
+  exit_time: '11:35'
+  inspectors:
+  - Peggy B. Christie
+  facility_representatives:
+  - Eric Markley, Supervisor
+  significant_noncompliance: false
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: 'Operations & Maintenance: Air break installed to prevent sludge backflow to chlorine contact
+      tank. Corrective action needed: No.'
+    number: F
+    deadline: null
+  - kind: finding
+    text: 'Effluent / Receiving Water Observations: Effluent observed following de-chlorination was clear,
+      colorless and had no noticeable odor. Corrective action needed: No.'
+    number: M
+    deadline: null
+  summary: On October 18, 2016, Ohio EPA conducted a Reconnaissance Inspection at the City of Lima WWTP
+    to observe the air break constructed to prevent backflow from the sludge thickening tanks to the chlorine
+    contact tank. The effluent observed following dechlorination was clear, colorless, and had no noticeable
+    odor. No significant non-compliance was identified; compliance data for the period 7/1/2016–9/1/2016
+    showed 2 permit effluent code violations (E. coli, August 2016) and 28 reported SSO events.
+  note: null

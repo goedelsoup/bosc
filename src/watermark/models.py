@@ -536,6 +536,73 @@ class EnforcementOrder(_Extracted):
     note: str | None = None
 
 
+class InspectionObservation(ApproxModel):
+    """One numbered item from an inspection letter — and WHICH list it came from.
+
+    The distinction is the whole reason this genre exists. An Ohio EPA inspection letter
+    prints its numbered items under separate headings, and says so in the document's own
+    words: *"The recommendation(s) set out below are not Orders. The recommendations are
+    offered by Ohio EPA in an effort to provide compliance assistance to your facility."*
+    A finding records what the inspector saw; a recommendation is advisory; a violation
+    or deficiency is neither. Flattening them into one list — or into
+    :class:`OrderObligation`, which models a REQUIREMENT — would publish advice as though
+    it were an enforceable term.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    kind: str | None = None  # finding | recommendation | violation | deficiency | requested action
+    text: str | None = None  # the item as printed, or a close paraphrase
+    number: str | None = None  # the item's printed number within its list, if numbered
+    deadline: str | None = None  # only where the item itself states one
+
+
+class ComplianceInspection(_Extracted):
+    """An agency inspection or compliance-review report (#2077).
+
+    The inspection genre: an Ohio EPA Division of Surface Water inspection letter and the
+    EPA-form report it encloses. Distinct from :class:`EnforcementOrder` — an inspection
+    IMPOSES NOTHING. It records a visit, what was observed, and what the agency suggests
+    or requires next; the enforcement instrument, if one follows, is a separate document.
+    Distinct also from :class:`NoticeOfCommencement`, which despite the name is an Ohio
+    R.C. 1311.04 mechanic's-lien filing and unrelated.
+
+    The enclosed report form carries two coded fields worth keeping structured across a
+    run of inspections: the inspection TYPE (``CEI``, ``PCI``, ``PAI``, …) and the
+    ``Sig. Non-Compliance`` box, which is the agency's own SNC determination at the time
+    of the visit rather than a reading of the effluent data.
+    """
+
+    agency: str | None = None  # e.g. "Ohio EPA, Division of Surface Water"
+    district: str | None = None  # e.g. "Northwest District Office"
+    program: str | None = None  # NPDES | NPDES-Biosolids | Pretreatment | CSO, as printed
+    inspection_type: str | None = (
+        None  # compliance evaluation | reconnaissance | pretreatment compliance |
+        # performance audit | minimum controls | sewer overflow, as printed
+    )
+    type_code: str | None = None  # the report form's coded type (e.g. "CEI"), if present
+    facility: str | None = None
+    facility_address: str | None = None
+    permit_no: str | None = None  # Ohio permit id (e.g. 2PE00000)
+    npdes_id: str | None = None  # federal NPDES id (e.g. OH0026069), if printed
+    county: str | None = None
+    inspection_date: str | None = None  # ISO — the date of the VISIT
+    report_date: str | None = None  # ISO — the date of the transmitting letter
+    entry_time: str | None = None  # as printed on the report form
+    exit_time: str | None = None
+    inspectors: StrList = Field(default_factory=list)  # agency personnel conducting it
+    facility_representatives: StrList = Field(
+        default_factory=list
+    )  # who was present for the facility
+    significant_noncompliance: bool | None = (
+        None  # the form's Sig. Non-Compliance box — None when the form is absent or the box unread
+    )
+    units_in_service: str | None = None  # the plant's operating state as recorded, if stated
+    observations: list[InspectionObservation] = Field(default_factory=list)
+    summary: str | None = None  # 1-3 sentences on what the inspection found
+    note: str | None = None
+
+
 class FinanceAward(_Extracted):
     """A public-finance award — a loan, grant, or cooperative agreement (#1746).
 
@@ -1115,6 +1182,10 @@ class EpaExtraction(DocExtraction):
 
 class OrderExtraction(DocExtraction):
     order: EnforcementOrder
+
+
+class InspectionExtraction(DocExtraction):
+    inspection: ComplianceInspection
 
 
 class AwardExtraction(DocExtraction):

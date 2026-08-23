@@ -44530,9 +44530,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2019-04-04-compliance-evaluation-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1797305.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -44545,9 +44545,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2019-04-04-biosolids-generator-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1797306.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -44605,10 +44605,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2021-06-30-pretreatment-desktop-review",
+        "canonical_document_id": "oepa/lima/edoc-1610423.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-1782202.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1611092.pdf",
@@ -44635,10 +44637,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2022-02-22-compliance-evaluation-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1752399.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-1753487.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1753487.pdf",
@@ -44650,9 +44654,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2022-02-22-compliance-evaluation-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1752399.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -44680,9 +44684,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2021-06-30-pretreatment-desktop-review",
+        "canonical_document_id": "oepa/lima/edoc-1610423.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -44695,10 +44699,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2019-04-04-compliance-evaluation-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1797305.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-1048228.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1797306.pdf",
@@ -44710,10 +44716,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2019-04-04-biosolids-generator-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1797306.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-1048235.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1840393.pdf",
@@ -44833,10 +44841,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2017-02-28-pretreatment-audit",
+        "canonical_document_id": "oepa/lima/edoc-1851472.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-591751.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1851473.pdf",
@@ -44848,10 +44858,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2017-04-05-reconnaissance-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1851473.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-605102.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1851474.pdf",
@@ -44863,10 +44875,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2017-07-25-reconnaissance-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1851474.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-678896.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1851475.pdf",
@@ -44878,10 +44892,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2017-12-05-compliance-evaluation-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1851475.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-739814.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1851476.pdf",
@@ -44893,10 +44909,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2017-12-05-biosolids-generator-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1851476.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-747522.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1879637.pdf",
@@ -44923,10 +44941,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2016-07-13-reconnaissance-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1914739.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-467350.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1914740.pdf",
@@ -44938,10 +44958,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2016-10-18-reconnaissance-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1914740.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-512329.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1914742.pdf",
@@ -44953,10 +44975,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-inspection-2016-12-07-reconnaissance-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1914742.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-529544.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1914753.pdf",
@@ -45750,9 +45774,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2016-07-13-reconnaissance-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1914739.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -45812,9 +45836,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2016-10-18-reconnaissance-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1914740.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -45827,9 +45851,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2016-12-07-reconnaissance-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1914742.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -45842,9 +45866,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2017-02-28-pretreatment-audit",
+        "canonical_document_id": "oepa/lima/edoc-1851472.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -45857,9 +45881,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2017-04-05-reconnaissance-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1851473.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -45872,9 +45896,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2017-07-25-reconnaissance-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1851474.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -45887,9 +45911,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2017-12-05-compliance-evaluation-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1851475.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -45902,9 +45926,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-inspection-2017-12-05-biosolids-generator-inspection",
+        "canonical_document_id": "oepa/lima/edoc-1851476.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {

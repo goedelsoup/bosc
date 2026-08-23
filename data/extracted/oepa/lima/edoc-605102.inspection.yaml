@@ -1,0 +1,73 @@
+doc_id: edoc-605102-d906a2e7
+source_path: data/documents/oepa/lima/edoc-605102.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+image_pages_read:
+- 0
+- 1
+- 2
+- 3
+dpi: 150
+source_text_excerpt: ''
+inspection:
+  confidence: high
+  warnings:
+  - TWIN CAPTURE — not the canonical reading. The portal serves this 2017-04-05 reconnaissance inspection
+    letter at two docids; edoc-1851473 is the same letter and is canonical, and where the two readings
+    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
+    NOT byte-identical).
+  - Document read from page images — no machine text layer confirmed.
+  - The attached inspection report form (Pages 2–3) includes compliance data tables (code violations for
+    Water Temperature at Station 604, SSO events, and high flow data) that are tabular/data in nature
+    rather than numbered findings or recommendations; they have been captured in the summary rather than
+    as individual observations.
+  - 'Permit Effective Date: 1/1/2013; Permit Expiration Date: 2/28/2015 — permit appears expired at time
+    of inspection.'
+  - Report signed by Peggy B. Christie (approx. Apr. 7, 2017) and Thomas Poffenbarger, P.E. (4/10/17)
+    on the enclosed form; letter dated April 12, 2017.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: Reconnaissance Inspection
+  type_code: RI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen County
+  inspection_date: '2017-04-05'
+  report_date: '2017-04-12'
+  entry_time: 2:00 PM
+  exit_time: 4:00 PM
+  inspectors:
+  - Peggy B. Christie
+  - Thomas Poffenbarger, P.E.
+  facility_representatives:
+  - Mr. Eric Markley, Supervisor
+  significant_noncompliance: false
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: All new screens, new grit chambers and new primary clarifiers are operational.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: The nitrification towers are not yet in service.
+    number: '2'
+    deadline: null
+  - kind: finding
+    text: The final effluent observed in the de-chlorination tanks was clear, colorless and had no noticeable
+      odor.
+    number: '3'
+    deadline: null
+  summary: A Reconnaissance Inspection was conducted on April 5, 2017 at the City of Lima's wastewater
+    treatment plant to observe the status of plant upgrades. New screens, grit chambers, and primary clarifiers
+    were found operational, while nitrification towers were not yet in service. Final effluent was clear,
+    colorless, and had no noticeable odor; no significant non-compliance was identified. The compliance
+    data for the period 11/1/2016–3/1/2017 showed 23 permit effluent code violations (Water Temperature,
+    Station 604) and 54 reported SSO events.
+  note: null

@@ -1,0 +1,69 @@
+doc_id: edoc-1851473-1469b0ab
+source_path: data/documents/oepa/lima/edoc-1851473.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "® \nOhio Environmental \nProtection Agency \nJohn R. Kasich,\
+  \ Governor \nMary7aylor, Lt. Governor \nCraig W. Butler, Director \nRe: Lima WWTP\
+  \ \nInspection \nNPDES \nAllen County \n2PE00000 \nApril 12, 2017 \nMr. Dave Schnipke,\
+  \ Environmental Manager \nCity of Lima \n50 Town Square \nLima, Ohio 45801-4900\
+  \ \nDear Mr. Schnipke: \nOn April 5, 2017, a Reconnaissance Inspection was conducted\
+  \ at the City of Lima's wastewater \ntreatment plant (WWTP). Mr. Eric Markley, Supervisor,\
+  \ was present and provided operation and \nmaintenance information. \nThe purpose\
+  \ of the inspection was to observe the status of the plant upgrade"
+inspection:
+  confidence: high
+  warnings:
+  - OCR text layer is unreliable per instructions; values verified against page images
+    where possible. Permit number in OCR reads '2PE0000' but image confirms '2PE00000'.
+    Page images were used to resolve OCR ambiguities throughout.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: Reconnaissance Inspection
+  type_code: RI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2017-04-05'
+  report_date: '2017-04-12'
+  entry_time: 2:00 PM
+  exit_time: 4:00 PM
+  inspectors:
+  - Peggy B. Christie
+  - Thomas Poffenbarger, P.E.
+  facility_representatives:
+  - Mr. Eric Markley, Supervisor
+  significant_noncompliance: false
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: All new screens, new grit chambers and new primary clarifiers are operational.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: The nitrification towers are not yet in service.
+    number: '2'
+    deadline: null
+  - kind: finding
+    text: The final effluent observed in the de-chlorination tanks was clear, colorless
+      and had no noticeable odor.
+    number: '3'
+    deadline: null
+  summary: On April 5, 2017, Ohio EPA conducted a Reconnaissance Inspection at the
+    City of Lima's WWTP to observe the status of plant upgrades. New screens, grit
+    chambers, and primary clarifiers are operational, but nitrification towers are
+    not yet in service and SCADA is not yet connected to Collett and Heindel CSO control
+    structures. Final effluent was clear, colorless, and had no noticeable odor; 23
+    permit effluent code violations (water temperature) and 54 reported SSO events
+    were noted in the compliance summary.
+  note: null

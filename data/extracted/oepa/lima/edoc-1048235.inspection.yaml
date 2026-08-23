@@ -1,0 +1,85 @@
+doc_id: edoc-1048235-d2cee74c
+source_path: data/documents/oepa/lima/edoc-1048235.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: ''
+inspection:
+  confidence: high
+  warnings:
+  - 'TWIN CAPTURE — not the canonical reading. The portal serves this 2019-04-04 biosolids generator inspection
+    letter at two docids; edoc-1797306 is the same letter and is canonical, and where the two readings
+    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
+    NOT byte-identical). They do differ here: 4 observations on the canonical against 3 on this capture.'
+  - No attached EPA inspection form was identified in the document; therefore type_code, entry_time, exit_time,
+    units_in_service, and significant_noncompliance could not be populated.
+  - 'The permit number ''2PE00000'' appears verbatim in the Re: block; it may be a placeholder rather
+    than the actual permit number.'
+  - Document read from page images — no embedded text layer confirmed.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES-Biosolids
+  inspection_type: inspection
+  type_code: null
+  facility: City of Lima WWTP
+  facility_address: 50 Town Square, Lima, Ohio 45801-4900
+  permit_no: 2PE00000
+  npdes_id: null
+  county: Allen
+  inspection_date: '2019-04-04'
+  report_date: '2019-05-03'
+  entry_time: null
+  exit_time: null
+  inspectors:
+  - Andrew Gall
+  - Peggy Christie
+  - Lori Komorowski
+  facility_representatives:
+  - Eric Markley
+  - Emily Kerber
+  - Jerry Coffey
+  significant_noncompliance: null
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: Sewage sludge at the Lima WWTP is treated in anaerobic digesters. Methane gas produced during
+      digestion powers two micro-turbines generating electric power and heat. Digested sludge is dewatered
+      with belt filter presses and mixed with lime and fly ash using the N-Viro Process. Temperature and
+      pH of the blended material is monitored over a 72-hour period to ensure EQ biosolids treatment requirements
+      for pathogen reduction and vector attraction reduction are met. Once compliance is documented, biosolids
+      are stored at the WWTP before being released to Lima Compost/Wright Mulch for distribution for beneficial
+      use.
+    number: null
+    deadline: null
+  - kind: finding
+    text: EQ biosolids are no longer being transferred to the Lima Compost Facility (regulated under SMP
+      No. 2MP00014) for storage or blending with compost, wood chips and dirt. Lima Compost is now distributing
+      all EQ biosolids from storage areas at the Lima WWTP directly to farmers for beneficial use on farm
+      fields. The City is providing copies of biosolids monitoring results to Lima Compost/Wright Mulch
+      to meet permittee NANI requirements of OAC 3745-40-05(A). The City is no longer receiving copies
+      of biosolids end user reports from Lima Compost.
+    number: null
+    deadline: null
+  - kind: recommendation
+    text: Ohio EPA requests that the City of Lima review the new record keeping requirements of the sludge
+      rules (OAC 3745-40-09(C)(1)(a)–(f) for permittees and OAC 3745-40-09(C)(2)(a)-(g) for beneficial
+      users) with their distribution contractor Lima Compost and the beneficial users of Lima's EQ biosolids,
+      to ensure that required records will start being maintained and available at the Lima WWTP for review
+      during Ohio EPA compliance inspections. Please submit a written response to Mr. Gall's attention
+      at the NWDO indicating how Lima WWTP and their biosolids contractor and beneficial users will comply
+      with the new record keeping requirements of Ohio's Sewage Sludge rules.
+    number: null
+    deadline: null
+  summary: On April 4, 2019, Ohio EPA inspectors visited the City of Lima WWTP to evaluate compliance
+    with Ohio's Sewage Sludge Rules (OAC Chapter 3745-40). The inspection found that EQ biosolids are
+    no longer transferred to Lima Compost for blending but are now distributed directly to farmers from
+    WWTP storage, and that the City is no longer receiving end-user reports from Lima Compost. Ohio EPA
+    requested that the City review new record-keeping requirements under updated Sewage Sludge rules (effective
+    December 1, 2018) with its distribution contractor and beneficial users, and provide a written response
+    describing how compliance with those requirements will be achieved.
+  note: null

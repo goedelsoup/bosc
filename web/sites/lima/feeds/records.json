@@ -2481,6 +2481,2853 @@
     "source_doc_published": false
   },
   {
+    "rel": "oepa/lima/edoc-1048228.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2019-04-04 compliance evaluation inspection letter at two docids; edoc-1797305 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical).",
+      "Document read from page images; text layer appeared adequate for all key fields. Compliance data tables (limit violations, code events, SSO events, high-flow data) are summarized in the summary field but not individually enumerated in observations as they are not numbered finding/recommendation items in the letter."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "compliance evaluation inspection",
+      "type_code": "CEI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Road, Lima, Ohio 45804",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2019-04-04",
+      "report_date": "2019-04-30",
+      "entry_time": "10:00 AM",
+      "exit_time": "2:15 PM",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Andrew Gall",
+        "Lori Komorowski"
+      ],
+      "facility_representatives": [
+        "Mr. David Schnipke",
+        "Mr. Eric Markley",
+        "Mr. Jerry Coffey",
+        "Ms. Emily Kerber"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": "all major units were in service",
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "At the time of the inspection, all major units were in service.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The final effluent observed at the outfall to the Ottawa River was clear, colorless and had no noticeable odor.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Please consider conducting a survey of the storm water outfalls, catch basins and downspouts located at the wastewater treatment plant to determine the sources of storm water to each outfall.",
+          "number": "1",
+          "deadline": null
+        }
+      ],
+      "summary": "Ohio EPA conducted a compliance evaluation inspection of the City of Lima Wastewater Treatment Plant on April 4, 2019. All major units were in service and final effluent to the Ottawa River was clear, colorless, and odor-free. Compliance data for the period 11/1/2017–3/1/2019 showed 7 permit effluent limit violations, 5 code events, and 359 reported SSO events; one advisory recommendation was issued regarding a storm water outfall survey at the WWTP.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1048228.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1048228.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1048235.inspection.yaml",
+    "group": "inspections",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2019-04-04 biosolids generator inspection letter at two docids; edoc-1797306 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical). They do differ here: 4 observations on the canonical against 3 on this capture.",
+      "No attached EPA inspection form was identified in the document; therefore type_code, entry_time, exit_time, units_in_service, and significant_noncompliance could not be populated.",
+      "The permit number '2PE00000' appears verbatim in the Re: block; it may be a placeholder rather than the actual permit number.",
+      "Document read from page images — no embedded text layer confirmed."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES-Biosolids",
+      "inspection_type": "inspection",
+      "type_code": null,
+      "facility": "City of Lima WWTP",
+      "facility_address": "50 Town Square, Lima, Ohio 45801-4900",
+      "permit_no": "2PE00000",
+      "npdes_id": null,
+      "county": "Allen",
+      "inspection_date": "2019-04-04",
+      "report_date": "2019-05-03",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [
+        "Andrew Gall",
+        "Peggy Christie",
+        "Lori Komorowski"
+      ],
+      "facility_representatives": [
+        "Eric Markley",
+        "Emily Kerber",
+        "Jerry Coffey"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "Sewage sludge at the Lima WWTP is treated in anaerobic digesters. Methane gas produced during digestion powers two micro-turbines generating electric power and heat. Digested sludge is dewatered with belt filter presses and mixed with lime and fly ash using the N-Viro Process. Temperature and pH of the blended material is monitored over a 72-hour period to ensure EQ biosolids treatment requirements for pathogen reduction and vector attraction reduction are met. Once compliance is documented, biosolids are stored at the WWTP before being released to Lima Compost/Wright Mulch for distribution for beneficial use.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "EQ biosolids are no longer being transferred to the Lima Compost Facility (regulated under SMP No. 2MP00014) for storage or blending with compost, wood chips and dirt. Lima Compost is now distributing all EQ biosolids from storage areas at the Lima WWTP directly to farmers for beneficial use on farm fields. The City is providing copies of biosolids monitoring results to Lima Compost/Wright Mulch to meet permittee NANI requirements of OAC 3745-40-05(A). The City is no longer receiving copies of biosolids end user reports from Lima Compost.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Ohio EPA requests that the City of Lima review the new record keeping requirements of the sludge rules (OAC 3745-40-09(C)(1)(a)–(f) for permittees and OAC 3745-40-09(C)(2)(a)-(g) for beneficial users) with their distribution contractor Lima Compost and the beneficial users of Lima's EQ biosolids, to ensure that required records will start being maintained and available at the Lima WWTP for review during Ohio EPA compliance inspections. Please submit a written response to Mr. Gall's attention at the NWDO indicating how Lima WWTP and their biosolids contractor and beneficial users will comply with the new record keeping requirements of Ohio's Sewage Sludge rules.",
+          "number": null,
+          "deadline": null
+        }
+      ],
+      "summary": "On April 4, 2019, Ohio EPA inspectors visited the City of Lima WWTP to evaluate compliance with Ohio's Sewage Sludge Rules (OAC Chapter 3745-40). The inspection found that EQ biosolids are no longer transferred to Lima Compost for blending but are now distributed directly to farmers from WWTP storage, and that the City is no longer receiving end-user reports from Lima Compost. Ohio EPA requested that the City review new record-keeping requirements under updated Sewage Sludge rules (effective December 1, 2018) with its distribution contractor and beneficial users, and provide a written response describing how compliance with those requirements will be achieved.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1048235.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1048235.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1610423.inspection.yaml",
+    "group": "inspections",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "The significant_noncompliance field is left null because no dedicated 'Sig. Non-Compliance' checkbox result was clearly readable on the attached inspection form image; it should be verified against the physical form.",
+      "The attached checklist pages were partially read via OCR; numeric and coded fields were cross-checked against the document images where possible."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES - Pretreatment",
+      "inspection_type": "Comprehensive Desktop Review - Pretreatment",
+      "type_code": "PCI",
+      "facility": "City of Lima WWTP",
+      "facility_address": "1200 Fort Amanda Road, Lima, OH 45804",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2021-06-30",
+      "report_date": "2021-08-02",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [
+        "Peggy B. Christie"
+      ],
+      "facility_representatives": [
+        "Ms. Emily Kerber, Operations Manager, City of Lima",
+        "Ms. Kim Furry, Lima WWTP Supervisor, City of Lima"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "The City of Lima submitted a local limit study in February 2019 to Ohio EPA for approval. The study has not yet been approved.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The City currently has eight industrial users under permits. The pretreatment annual report lists 12 Significant industrial users, 11 categorical industrial users and four significant non-categorical industrial users.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The City is investigating surfactants that are discharged to the City's Wastewater Treatment Plant (WWTP) to determine how they influence plant operations.",
+          "number": "3",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Once the local limit study has been approved, the sewer use ordinance can be modified to include the limits. US EPA has a model of a pretreatment sewer ordinance that is very comprehensive and addresses all the current regulations. It can be found here: https://epa.ohio.gov/portals/35/pretreatment/PretreatmentModelSUO.pdf.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Conduct an inventory of industries that discharge to the City of Lima's WWTP to determine if they are required to be permitted as specified in Ohio Administrative Code (OAC) 3745-3-03(C)(1)(c).",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Identify any industrial users that are non-significant categorical users and are located upstream of a combined sewer overflow (CSO) to determine if these industries are required to be permitted.",
+          "number": "3",
+          "deadline": null
+        }
+      ],
+      "summary": "On June 30, 2021, Ohio EPA conducted a Pretreatment Compliance Inspection (PCI) via comprehensive desktop review of the City of Lima's approved pretreatment program. Key findings include a pending (unapproved) local limit study submitted in February 2019, a discrepancy between the eight industrial users under permits and the 12 significant industrial users listed in the annual report, and an ongoing investigation into surfactants discharged to the WWTP. Three advisory recommendations were issued, including updating the sewer use ordinance once the local limit study is approved, conducting an industrial user inventory, and identifying non-significant categorical users upstream of combined sewer overflows.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1610423.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1610423.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1752399.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "The mailing address on the letter (50 Town Square, Lima, Ohio 45801) differs from the facility address on the inspection form (1200 Fort Amanda Rd., Lima, Ohio); facility_address is recorded from the inspection form as the physical plant location.",
+      "Report date of 2022-03-14 is from the transmittal letter; the inspection form itself is signed/dated 03/07/2022 (Mallorey Smith) and 3/10/22 (Thomas Poffenbarger), which are intermediate dates not used here.",
+      "OCR text layer flagged as unreliable; all key values verified against the document images."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "compliance evaluation inspection",
+      "type_code": "CEI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2022-02-22",
+      "report_date": "2022-03-14",
+      "entry_time": "10:15 AM",
+      "exit_time": "2:17 PM",
+      "inspectors": [
+        "Mallorey Smith",
+        "Peggy Christie"
+      ],
+      "facility_representatives": [
+        "Ms. Kim Furry, Plant Supervisor",
+        "Mr. Larry Huber, Utility Field Services Supervisor",
+        "Ms. Emily Kerber, Utility Operations Manager",
+        "Mr. Eric Bontrager, Environmental Compliance Manager",
+        "Mr. Shawn Dershem, Assistant Supervisor"
+      ],
+      "significant_noncompliance": true,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "At the time of inspection, final effluent was slightly turbid and light brown with no noticeable odor.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The plant was operating in wet weather mode, meaning a side stream of primary clarifier effluent was being sent to the nitrification tower for secondary treatment and blending with the final clarifier effluent.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Wright Mulch/Lima Composting is contracted with the city to manage the land application of Class A biosolids. The City is required to maintain copies of the beneficial use records and has had problems getting these records from Wright Mulch. Wright Mulch is operating without a valid Land Application Management Plan. Their plan expired on February 28, 2022, and no renewal application has been received.",
+          "number": "3",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Please submit documentation validating that the bypass has been eliminated so it can be removed from the permit.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Please develop and implement procedures to ensure that the city complies with the biosolids record keeping requirements found in Ohio Administrative Code 3745-40-09 (C)(1).",
+          "number": "2",
+          "deadline": null
+        }
+      ],
+      "summary": "Ohio EPA conducted a Compliance Evaluation Inspection (CEI) of the Lima WWTP on February 22, 2022. The plant was operating in wet weather mode at the time of the visit, with final effluent slightly turbid but without noticeable odor. A significant finding was that Wright Mulch/Lima Composting, the city's Class A biosolids contractor, was operating without a valid Land Application Management Plan (expired February 28, 2022), and the facility had ongoing difficulty obtaining required beneficial use records; the inspection was marked as Significant Non-Compliance.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1752399.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1752399.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1753487.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2022-02-22 compliance evaluation inspection letter at two docids; edoc-1752399 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical).",
+      "The permit number '2PE00000' appears in the Re: block and on the inspection form as both the permit number and a field that may be a placeholder — verify against the actual permit document.",
+      "The report form was signed by Mallorey Smith on 03/07/2022 and countersigned by Thomas Poffenbarger on 3/10/22; the transmitting letter is dated March 14, 2022 — these are distinct dates preserved as printed.",
+      "Sludge records finding: Section I notes records were not maintained prior to June 7, 2021, and that sludge records were not maintained for a minimum of 5 years (box checked No for item f)."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "compliance evaluation inspection",
+      "type_code": "CEI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2022-02-22",
+      "report_date": "2022-03-14",
+      "entry_time": "10:15 AM",
+      "exit_time": "2:17 PM",
+      "inspectors": [
+        "Mallorey Smith",
+        "Peggy Christie"
+      ],
+      "facility_representatives": [
+        "Ms. Kim Furry, Plant Supervisor",
+        "Mr. Larry Huber, Utility Field Services Supervisor",
+        "Ms. Emily Kerber, Utility Operations Manager",
+        "Mr. Eric Bontrager, Environmental Compliance Manager",
+        "Mr. Shawn Dershem, Assistant Supervisor"
+      ],
+      "significant_noncompliance": true,
+      "units_in_service": "All treatment units in service other than backup units",
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "At the time of inspection, final effluent was slightly turbid and light brown with no noticeable odor.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The plant was operating in wet weather mode, meaning a side stream of primary clarifier effluent was being sent to the nitrification tower for secondary treatment and blending with the final clarifier effluent.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Wright Mulch/Lima Composting is contracted with the city to manage the land application of Class A biosolids. The City is required to maintain copies of the beneficial use records and has had problems getting these records from Wright Mulch. Wright Mulch is operating without a valid Land Application Management Plan. Their plan expired on February 28, 2022, and no renewal application has been received.",
+          "number": "3",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Please submit documentation validating that the bypass has been eliminated so it can be removed from the permit.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Please develop and implement procedures to ensure that the city complies with the biosolids record keeping requirements found in Ohio Administrative Code 3745-40-09 (C)(1).",
+          "number": "2",
+          "deadline": null
+        }
+      ],
+      "summary": "On February 22, 2022, Ohio EPA conducted a Compliance Evaluation Inspection (CEI) of the Lima WWTP, finding the facility operating in wet weather mode with slightly turbid effluent. A significant noncompliance finding was recorded, notably that Wright Mulch/Lima Composting — the city's Class A biosolids contractor — is operating without a valid Land Application Management Plan, which expired February 28, 2022 with no renewal application received. Inspectors also noted ongoing SSO occurrences and prior deficiencies in sludge recordkeeping, and issued two recommendations addressing bypass documentation and biosolids recordkeeping compliance.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1753487.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1753487.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1782202.inspection.yaml",
+    "group": "inspections",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2021-06-30 pretreatment desktop review letter at two docids; edoc-1610423 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical).",
+      "The significant_noncompliance field is set to null because no attached form SNC box determination was clearly readable in the provided pages; the checklist pages reviewed show N/A entries for most SNC-related fields for the one IU file reviewed (US Army Joint Systems Manufacturing Center, which was found in compliance).",
+      "Report form shows inspector signature date as 7/15/2021 and reviewer (Thomas Poffenbarger) date as 7/28/21, distinct from both the inspection date (06/30/2021) and the letter date (08/02/2021)."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "Pretreatment",
+      "inspection_type": "Comprehensive Desktop Review - Pretreatment (Pretreatment Compliance Inspection)",
+      "type_code": "PCI",
+      "facility": "City of Lima WWTP",
+      "facility_address": "1200 Fort Amanda Road, Lima, OH 45804",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2021-06-30",
+      "report_date": "2021-08-02",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [
+        "Peggy B. Christie"
+      ],
+      "facility_representatives": [
+        "Ms. Kim Furry, Lima WWTP Supervisor, City of Lima",
+        "Ms. Emily Kerber, Operations Manager, City of Lima"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "The City of Lima submitted a local limit study in February 2019 to Ohio EPA for approval. The study has not yet been approved.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The City currently has eight industrial users under permits. The pretreatment annual report lists 12 Significant industrial users, 11 categorical industrial users and four significant non-categorical industrial users.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The City is investigating surfactants that are discharged to the City's Wastewater Treatment Plant (WWTP) to determine how they influence plant operations.",
+          "number": "3",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Once the local limit study has been approved, the sewer use ordinance can be modified to include the limits. US EPA has a model of a pretreatment sewer ordinance that is very comprehensive and addresses all the current regulations. It can be found here: https://epa.ohio.gov/portals/35/pretreatment/PretreatmentModelSUO.pdf.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Conduct an inventory of industries that discharge to the City of Lima's WWTP to determine if they are required to be permitted as specified in Ohio Administrative Code (OAC) 3745-3-03(C)(1)(c).",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Identify any industrial users that are non-significant categorical users and are located upstream of a combined sewer overflow (CSO) to determine if these industries are required to be permitted.",
+          "number": "3",
+          "deadline": null
+        }
+      ],
+      "summary": "On June 30, 2021, Ohio EPA conducted a comprehensive desktop review (PCI) of the City of Lima's approved pretreatment program, with facility representatives Ms. Emily Kerber and Ms. Kim Furry present. Key findings included a pending local limit study submitted in February 2019 that had not yet been approved, a discrepancy between the number of industrial users under permits and those listed in the annual report, and an ongoing investigation of surfactants discharged to the WWTP. Three non-binding recommendations were issued regarding the sewer use ordinance, an industrial user inventory, and identification of non-significant categorical users near CSOs.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1782202.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1782202.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1797305.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Document read from page images with an embedded OCR layer; some digits and characters in the OCR may be unreliable and were verified against the image where possible."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "compliance evaluation inspection",
+      "type_code": "CEI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Road, Lima, Ohio 45804",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2019-04-04",
+      "report_date": "2019-04-30",
+      "entry_time": "10:00 AM",
+      "exit_time": "2:15 PM",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Mr. Andrew Gall",
+        "Mrs. Lori Komorowski"
+      ],
+      "facility_representatives": [
+        "Mr. David Schnipke, Environmental Compliance Manager",
+        "Mr. Eric Markley, Supervisor",
+        "Mr. Jerry Coffey, ORC",
+        "Ms. Emily Kerber, Ind. Monitoring Chief and Lab Supervisor"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": "all major units were in service",
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "At the time of the inspection, all major units were in service.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The final effluent observed at the outfall to the Ottawa River was clear, colorless and had no noticeable odor.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Please consider conducting a survey of the storm water outfalls, catch basins and downspouts located at the wastewater treatment plant to determine the sources of storm water to each outfall.",
+          "number": "1",
+          "deadline": null
+        }
+      ],
+      "summary": "On April 4, 2019, Ohio EPA Division of Surface Water conducted a Compliance Evaluation Inspection (CEI) of the City of Lima Wastewater Treatment Plant. All major units were in service and the final effluent to the Ottawa River was clear, colorless, and without noticeable odor. The inspection resulted in no finding of significant noncompliance, with one advisory recommendation to survey storm water outfalls, catch basins, and downspouts to determine storm water sources.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1797305.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1797305.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1797306.inspection.yaml",
+    "group": "inspections",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "No attached inspection form was identified; therefore significant_noncompliance, type_code, entry_time, exit_time, and units_in_service are null.",
+      "The permit number 2PE00000 appears to be a placeholder or generic identifier as printed in the Re: block; recorded exactly as printed.",
+      "No federal NPDES ID (e.g. OH0XXXXX) was printed in the document."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES-Biosolids",
+      "inspection_type": "inspection",
+      "type_code": null,
+      "facility": "City of Lima WWTP",
+      "facility_address": "50 Town Square, Lima, Ohio 45801-4900",
+      "permit_no": "2PE00000",
+      "npdes_id": null,
+      "county": "Allen",
+      "inspection_date": "2019-04-04",
+      "report_date": "2019-05-03",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [
+        "Andrew Gall",
+        "Peggy Christie",
+        "Lori Komorowski"
+      ],
+      "facility_representatives": [
+        "Eric Markley",
+        "Emily Kerber",
+        "Jerry Coffey"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "Sewage sludge at the Lima WWTP is treated in anaerobic digesters. The methane gas produced during the digestion process is used to power two micro-turbines that generate electric power and heat for the plant. The digested sludge is dewatered with belt filter presses and then mixed with lime and fly ash using the N-Viro Process. Temperature and pH of the blended material is monitored over a 72-hour period to ensure that the final treated material meets EQ biosolids treatment requirements for pathogen reduction and vector attraction reduction. Once compliance with EQ treatment requirements is documented, the biosolids are stored at the WWTP before being released to Lima Compost/Wright Mulch for distribution for beneficial use.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "EQ biosolids are no longer being transferred to the Lima Compost Facility for storage or for blending with compost, wood chips and dirt, which is regulated by Ohio EPA under sludge management plan (SMP) No. 2MP00014. Currently, Lima Compost is distributing all the EQ biosolids from the storage areas at the Lima WWTP directly to farmers for beneficial use on farm fields.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The City is providing copies of the biosolids monitoring results to Lima Compost/Wright Mulch to meet the permittee Notice and Necessary Information (NANI) requirements of OAC 3745-40-05(A). The City is no longer receiving copies of biosolids end user reports from Lima Compost.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "The City of Lima should review the new record keeping requirements of the sludge rules (effective December 1, 2018; OAC 3745-40-09(C)(1)(a)-(f) and OAC 3745-40-09(C)(2)(a)-(g)) with their distribution contractor, Lima Compost, and the beneficial users of Lima's EQ biosolids to ensure that the required records will start being maintained and available at the Lima WWTP for review during Ohio EPA compliance inspections. Please submit a written response to Mr. Gall's attention at the NWDO that indicates how Lima WWTP and their biosolids contractor and beneficial users will comply with the new record keeping requirements of Ohio's Sewage Sludge rules.",
+          "number": null,
+          "deadline": null
+        }
+      ],
+      "summary": "On April 4, 2019, Ohio EPA inspectors conducted a NPDES-Biosolids inspection of the City of Lima WWTP, evaluating compliance with Ohio's Sewage Sludge Rules (OAC Chapter 3745-40). The inspection found that EQ biosolids are no longer transferred to the Lima Compost Facility but are instead distributed directly to farmers for beneficial use, and that the City is no longer receiving end user reports from Lima Compost. The inspectors requested that the City review and communicate the new record-keeping requirements (effective December 1, 2018) to its biosolids contractor and beneficial users, and submit a written response describing how compliance will be achieved.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1797306.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1797306.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1851472.inspection.yaml",
+    "group": "inspections",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Document is read from page images with an embedded OCR layer noted as unreliable; key identifiers (permit number 2PE00000, NPDES ID OH0026069, dates) verified against the image.",
+      "The inspection report form's Facility Evaluation boxes (IU Permit Issuance, IU Permit Contents, CA Compliance Monitoring, CA Inspection Activities, CA Enforcement Activities, IU Self-Monitoring) reference ratings (S/M/U) but the actual ratings are not legible in the scanned form — noted as 'See inspection letter'; significant_noncompliance box is absent/unreadable and has been left null.",
+      "Report date taken from the transmitting letter (March 17, 2017); inspection form signed by Peggy B. Christie on March 9, 2017 and reviewed by Thomas Poffenbarger, P.E. on 3/16/17 — these are intermediate dates, not the visit or letter date."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Pretreatment Audit (Pretreatment Compliance Inspection)",
+      "type_code": "Audit",
+      "facility": "City of Lima WWTP",
+      "facility_address": "1200 Fort Amanda Road, Lima, OH 45804",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen County",
+      "inspection_date": "2017-02-28",
+      "report_date": "2017-03-17",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [
+        "Peggy B. Christie"
+      ],
+      "facility_representatives": [
+        "David Schnipke, Environmental Compliance Manager",
+        "James R. Bookman, Industrial Monitoring and Laboratory Chief",
+        "Rob Flinn, Industrial Monitoring Technician"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "Ford Motor Company (1155 Rible Road, Lima, Ohio) — Non-categorical SIU, manufacturer of automotive engines. Average total flow 100,000–120,000 gpd. Sanitary discharged through a separate line. Facility is in compliance.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Dana Holding Corporation (777 Rible Road, Lima, OH 45801-2025) — Non-SIU, manufactures driveshafts for the automotive industry. Average process flow 1,300 gpd. Facility previously held a discharge permit with the City but now hauls all process wastewater off-site to Valicor for recycling; currently only discharges sanitary wastewater to the City. The City inspects this facility once a year and samples them twice a year. Older file reference of notification of SNC and publication in paper, but facility is currently in compliance.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "All industrial user inspections and sampling requirements are being carried out. Implementation of Lima's approved Pretreatment program remains satisfactory.",
+          "number": "3",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "No changes pending or completed to the pretreatment program since the last inspection (legal authority, local limits, multi-jurisdictional agreements, ERP, sewer use ordinance, control mechanism, etc.).",
+          "number": "4",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Contributing jurisdiction: Findlay Road area drains to the City, metered and billed; all domestic wastewater.",
+          "number": "5",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "SIU classification has not changed. New IUs are identified through developer contact; facilities fill out a waste characterization form. New small users can also be caught through new account billing. Changes in wastewater discharges at existing IUs are identified through inspections, industrial monthly billing (changes in flow flagged via spreadsheet), and sampling.",
+          "number": "6",
+          "deadline": null
+        }
+      ],
+      "summary": "On February 28, 2017, Ohio EPA conducted a Pretreatment Audit of the City of Lima WWTP's approved Pretreatment program, including a file review and site visits to two industrial users (Ford Motor Company and Dana Holding Corporation). Both industrial users were found to be in compliance, and all industrial user inspections and sampling requirements are being carried out. The City's implementation of its approved pretreatment program was found to remain satisfactory.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1851472.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1851472.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1851473.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "OCR text layer is unreliable per instructions; values verified against page images where possible. Permit number in OCR reads '2PE0000' but image confirms '2PE00000'. Page images were used to resolve OCR ambiguities throughout."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Reconnaissance Inspection",
+      "type_code": "RI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2017-04-05",
+      "report_date": "2017-04-12",
+      "entry_time": "2:00 PM",
+      "exit_time": "4:00 PM",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Thomas Poffenbarger, P.E."
+      ],
+      "facility_representatives": [
+        "Mr. Eric Markley, Supervisor"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "All new screens, new grit chambers and new primary clarifiers are operational.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The nitrification towers are not yet in service.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The final effluent observed in the de-chlorination tanks was clear, colorless and had no noticeable odor.",
+          "number": "3",
+          "deadline": null
+        }
+      ],
+      "summary": "On April 5, 2017, Ohio EPA conducted a Reconnaissance Inspection at the City of Lima's WWTP to observe the status of plant upgrades. New screens, grit chambers, and primary clarifiers are operational, but nitrification towers are not yet in service and SCADA is not yet connected to Collett and Heindel CSO control structures. Final effluent was clear, colorless, and had no noticeable odor; 23 permit effluent code violations (water temperature) and 54 reported SSO events were noted in the compliance summary.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1851473.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1851473.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1851474.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Document was read from a page image with an embedded OCR layer noted as unreliable; all key fields have been verified against the image. The county name appears as 'Alien County' in the OCR but is clearly 'Allen County' in the image. Exit time on the form reads '12:00' with no AM/PM designation as printed."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "reconnaissance inspection",
+      "type_code": "RI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2017-07-25",
+      "report_date": "2017-08-16",
+      "entry_time": "10:00 AM",
+      "exit_time": "12:00",
+      "inspectors": [
+        "Peggy B. Christie"
+      ],
+      "facility_representatives": [
+        "Mr. Michael Caprella, Director, Utilities Department",
+        "Mr. Dave Schnipke",
+        "Mr. Eric Markley"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": "Power had been restored to most of the plant; temporary generators and pumps were being utilized for all other major treatment units; the Administrative Building did not yet have power.",
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "A lightning strike damaged the main switch gear, which prevented the generators from providing power to the plant when city utility power was lost.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Wastewater and storm water could not be pumped due to the power loss.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The final clarifiers and aeration tanks overflowed, flooding the plant and causing substantial damage.",
+          "number": "3",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "SCADA was inoperable due to power loss to the Administrative Building.",
+          "number": "4",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "At the time of the inspection, power had been restored to most of the plant. Temporary generators and pumps were being utilized for all other major treatment units. The Administrative Building did not yet have power.",
+          "number": "5",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Final effluent discharged to the Ottawa River was clear, colorless and had no noticeable odor.",
+          "number": "6",
+          "deadline": null
+        }
+      ],
+      "summary": "Ohio EPA conducted a reconnaissance inspection of the Lima WWTP on July 25, 2017, to evaluate the facility following a lightning strike and power outage on July 22, 2017. The lightning strike damaged the main switchgear, causing loss of pumping capability, overflow of final clarifiers and aeration tanks, and rendering SCADA inoperable. At the time of inspection, power had been largely restored with temporary generators in use, and final effluent to the Ottawa River was clear with no noticeable odor.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1851474.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1851474.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1851475.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Document read from page images with an embedded OCR text layer noted as unreliable; all key fields verified against the image.",
+      "The letter is dated December 15, 2017, but the visit occurred December 5, 2017 — these are correctly recorded as separate dates.",
+      "The letter states 'Mr. Andrew Gall and I conducted' the inspection; the signatory is Peggy B. Christie, so both are recorded as inspectors."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "compliance evaluation inspection",
+      "type_code": "CEI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2017-12-05",
+      "report_date": "2017-12-15",
+      "entry_time": "10:30 AM",
+      "exit_time": "1:45 PM",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Andrew Gall"
+      ],
+      "facility_representatives": [
+        "Mr. David Schnipke, Environmental Compliance Manager",
+        "Mr. Eric Markley, WWTP Supervisor",
+        "Ms. Ange Layton, Chemist"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": "All treatment units were in service during the inspection.",
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "All treatment units were in service during the inspection.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The nitrification towers have not yet been seeded to treat wet weather flows.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The final effluent discharging to the Ottawa River was clear, colorless and had no noticeable odors.",
+          "number": "3",
+          "deadline": null
+        }
+      ],
+      "summary": "On December 5, 2017, Ohio EPA Division of Surface Water conducted a compliance evaluation inspection (CEI) at the Lima WWTP to evaluate compliance with NPDES permit terms and conditions and the operation and maintenance of the plant. All treatment units were in service, the final effluent was clear and odorless, but the nitrification towers had not yet been seeded to treat wet weather flows. No significant non-compliance was identified.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1851475.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1851475.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1851476.inspection.yaml",
+    "group": "inspections",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "No Sig. Non-Compliance checkbox result was legible on the enclosed inspection form — significant_noncompliance left null.",
+      "OCR layer is unreliable in places (e.g. 'WVVTP', 'aftraction'); values verified against image.",
+      "type_code not printed on the inspection form; left null.",
+      "npdes_id (federal OH-prefixed number) not printed in the document; left null."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES-Biosolids",
+      "inspection_type": "Biosolids Generator Inspection",
+      "type_code": null,
+      "facility": "City of Lima WWTP",
+      "facility_address": "50 Town Square, Lima, Ohio 45801-4900",
+      "permit_no": "2PE00000",
+      "npdes_id": null,
+      "county": "Allen",
+      "inspection_date": "2017-12-05",
+      "report_date": "2017-12-29",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [
+        "Andrew Gall",
+        "Peggy Christie"
+      ],
+      "facility_representatives": [
+        "David Schnipke",
+        "Eric Markley"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "recommendation",
+          "text": "The City should continue to obtain copies of the biosolids end user reports from Lima Compost so that there are accurate records at the WWTP showing where the EQ biosolids are beneficially used.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Wright needs to provide City with records indicating who received the biosolids that were land applied and the amounts that were land applied.",
+          "number": null,
+          "deadline": null
+        }
+      ],
+      "summary": "On December 5, 2017, Ohio EPA representatives Andrew Gall and Peggy Christie conducted a Biosolids Generator Inspection of the City of Lima WWTP, evaluating compliance with Ohio's Sewage Sludge Rules (OAC Chapter 3745-40). Sewage sludge is treated via anaerobic digestion and the N-Viro Process to produce EQ biosolids, which are managed by Lima Compost/Wright Mulch through land application and blending into a topsoil product. Overall, at the time of the inspection, the City was meeting the applicable requirements of Ohio's Sewage Sludge Rules.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1851476.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1851476.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1914739.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "OCR layer is unreliable for tabular data on pages 2–3 (compliance data and SSO tables); numeric values were verified against the page image where possible but some figures (e.g., TSS violation value 25.1142) may contain OCR errors.",
+      "The permit expiration date (2/28/2015) predates the inspection; this is as printed on the form and may indicate an expired/administratively continued permit.",
+      "Page 2 and 3 were read from an embedded OCR layer with significant noise; findings extracted from those pages are best-effort."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Reconnaissance Inspection",
+      "type_code": "RI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2016-07-13",
+      "report_date": "2016-07-20",
+      "entry_time": "10:15 AM",
+      "exit_time": "12:00 PM",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Thomas Poffenbarger, P.E."
+      ],
+      "facility_representatives": [
+        "Eric Markley, Supervisor",
+        "David Schnipke, Environmental Compliance Manager"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "Effluent observed in final clarifiers was clear, colorless, and had no noticeable odor.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Construction nearly complete on all but the two primary clarifiers. Once the other headworks components are operational, the old Detroiter and primary clarifiers will be demolished in order to construct the two additional primary clarifiers.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Permit Effluent Limit Violations: 2 (between 9/1/2015 and 6/1/2016): October 2015 - pH Minimum 1D Conc, limit 6.5, value 5.9 (10/17/2015); February 2016 - Total Suspended Solids 7D Conc, limit 20.0, value 25.1142 (2/22/2016).",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Permit Effluent Code Violations: 15 (between 9/1/2015 and 6/1/2016), including CBOD 5 day and Total Suspended Solids reporting violations (AF/AD) across January–March and May 2016, and Overflow Occurrence/Volume violations in February, March, and May 2016.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Reported SSO Events: 57 (between 9/1/2015 and 6/1/2016). Monthly overflow occurrences ranged from 2 to 23, with the highest in December 2015 (23 events).",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Top 10 high flows recorded between 9/1/2015 and 6/1/2016; highest flow was 34.630 MGD on 12/28/2015. Average flow: 13.784 MGD.",
+          "number": null,
+          "deadline": null
+        }
+      ],
+      "summary": "A Reconnaissance Inspection was conducted on July 13, 2016 at the City of Lima's WWTP to observe progress on the new headworks construction project. All components but two of the four primary clarifiers are nearly complete, and effluent in the final clarifiers was clear, colorless, and odorless. The compliance data review (9/1/2015–6/1/2016) identified 2 effluent limit violations, 15 code violations, and 57 reported SSO events; however, significant non-compliance was not indicated on the form.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1914739.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1914739.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1914740.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "The Significant Non-Compliance box on the form appears blank/unpopulated — recorded as null rather than false.",
+      "The embedded OCR layer is partially corrupted (Section headers garbled); values verified against the page image.",
+      "Document is read from a page image; OCR text layer is noted as unreliable."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Reconnaissance Inspection",
+      "type_code": "RI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2016-10-18",
+      "report_date": "2016-11-03",
+      "entry_time": "10:10",
+      "exit_time": "11:35",
+      "inspectors": [
+        "Peggy B. Christie"
+      ],
+      "facility_representatives": [
+        "Eric Markley, Supervisor"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "Operations & Maintenance — Corrective Action Needed: N. Air break installed to prevent sludge backflow to chlorine contact tank.",
+          "number": "F",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Effluent / Receiving Water Observations — Corrective Action Needed: N. Effluent observed following de-chlorination was clear, colorless and had no noticeable odor.",
+          "number": "M",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Comments: Construction continues on headworks. Checked the temporary sampling location for 001 and 604 which is necessary due to construction.",
+          "number": null,
+          "deadline": null
+        }
+      ],
+      "summary": "On October 18, 2016, Ohio EPA conducted a Reconnaissance Inspection at the City of Lima's WWTP to observe the air break constructed to prevent backflow from the sludge thickening tanks to the chlorine contact tank. The air break was found to be installed and no corrective action was needed for Operations & Maintenance or Effluent/Receiving Water Observations. The effluent following dechlorination was clear, colorless, and had no noticeable odor.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1914740.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1914740.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1914742.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "The Significant Non-Compliance box on the form appears blank/unmarked; recorded as false based on no corrective actions needed across all evaluated areas.",
+      "Page image was read with an embedded OCR layer noted as unreliable; key fields verified against image.",
+      "Permit Expiration Date (2/28/2015) predates the inspection date (12/7/2016) — this may indicate the permit was under renewal at time of inspection."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Reconnaissance Inspection",
+      "type_code": "RI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2016-12-07",
+      "report_date": "2016-12-16",
+      "entry_time": "10:30 AM",
+      "exit_time": "11:40 AM",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Thomas Poffenbarger, P.E."
+      ],
+      "facility_representatives": [
+        "Mr. Eric Markley, Supervisor",
+        "Mr. Jerry Coffey"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "E. NPDES Compliance — Corrective Action Needed: N",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "F. Operations & Maintenance — Corrective Action Needed: N",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "G. Operator Certification — Not Evaluated",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "H. Collection System — Not Evaluated",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "I. Sludge Management — Not Evaluated",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "J. Storm Water — Not Evaluated",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "K. Self-Monitoring Program — Not Evaluated",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "L. Laboratory — Not Evaluated",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "M. Effluent / Receiving Water Observations — Corrective Action Needed: N. Final effluent clear, colorless and had no noticeable odor. New pump station and outfall are operational.",
+          "number": null,
+          "deadline": null
+        }
+      ],
+      "summary": "On December 7, 2016, Ohio EPA conducted a Reconnaissance Inspection at Lima WWTP to observe the new pump station and outfall structure. The final effluent at the new outfall was clear, colorless, and had no noticeable odor. No corrective action was needed for any evaluated area, and no significant non-compliance was identified.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1914742.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1914742.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-1952887.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "The permit number printed in the letter body is '2PE000000*ND' (with an extra zero) while the Re: block and Section A of the form show '2PE00000*ND'; the NPDES ID OH0026069 is taken from the form's Section A. The significant_noncompliance field is left null because the attached form's Sig. Non-Compliance box is not visible/printed in the provided document pages.",
+      "OCR layer notes unreliable digit reads; all key numbers verified against image."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Central Office / Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Nine Minimum Control Implementation/Combined Sewer Overflow Inspection",
+      "type_code": "CSO/NMC",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Road, Lima, Ohio 45804",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2022-06-09",
+      "report_date": "2022-08-01",
+      "entry_time": "11:00 am",
+      "exit_time": "3:30 pm",
+      "inspectors": [
+        "David Brumbaugh, Environmental Specialist III, NPDES, Ohio EPA Central Office, Division of Surface Water",
+        "Ryan Gierhart, P.E., Environmental Specialist III, NPDES, Ohio EPA Northwest District Office, Division of Surface Water",
+        "Peggy Christie, Ohio EPA – DSW/NWDO"
+      ],
+      "facility_representatives": [
+        "Kim Furry, WWTP Manager",
+        "Eric Bontrager, Environmental Compliance Manager",
+        "Shawn Dershem, Assistant Supervisor"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "Proper operation & regular maintenance programs for the sewer system and CSOs. Staff employed by the City operate and maintain the WWTP and collection system. All CSOs are inspected quarterly during dry weather and after rains of ¼\" or more. All 32 pump stations are inspected at least weekly, equipped with alarms, backup power connections, and monitored via SCADA. Per the CD, the City has a schedule to inspect the full collection system every 8-10 years, including jet-cleaning and camera work. Maintenance is tracked through daily log books which are scanned for retention and summarized in monthly reports. The City developed and is implementing a CMOM program and has also developed a CSO Operational Plan.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Maximize use of the collection system for storage. The City has recently installed a 13-MG equalization basin and utilizes approximately 3-MG of interceptor in-line storage prior to activation of the main five CSO structures. The five main CSOs have flapgates and CSO 008 has a check valve to prevent river water intrusion. Many of the overflow weirs have been set to appropriate elevations. The weir wall at CSO 008 (Baxter Street) is tall but appears to have buckled, perhaps allowing discharge below the top of the weir wall.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Review and modification of pretreatment requirements to assure CSO impacts are minimized. The City maintains a pretreatment program for 21 industrial users (IUs). All permits for batch-discharging IUs include conditions for wet weather. Ford is a batch discharger that withholds flow during wet weather. P&G must request permission from the City to contribute flow to the system during a precipitation event.",
+          "number": "3",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Maximize flow at the WWTP for treatment. The Lima WWTP is an activated sludge facility with an average daily design flow of 18.5 MGD. The permittee has recently developed and implemented the Lima WWTP Flow Maximization Plan (FMP), approved by U.S. EPA on March 2, 2022. The WWTP has several wet weather operation modes depending on influent flow rate, up to a maximum peak flow of 70 MGD including partially-treated bypass.",
+          "number": "4",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Prohibition of CSOs during dry weather. All known CSOs and SSOs are inspected quarterly. If a dry weather overflow is observed, a crew is dispatched to investigate and remove debris if necessary. Screens at the five main CSOs and the storage basin are cleaned if debris accumulation threatens to blind the screens.",
+          "number": "5",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Control of solid and floatable materials in CSOs. The City implements a program for regular cleaning of the sewer system, with a CD requirement to camera and jet the full system every 8-10 years with a goal of 15,000 LF per day. The five main CSOs and the storage basin are equipped with screens to minimize the discharge of debris.",
+          "number": "6",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Pollution prevention. The City operates street cleaning and leaf removal operations. Catch basins are inspected regularly and cleaned when needed. The City collaborates with Allen County Health Department for hazardous waste control and proper mercury removal.",
+          "number": "7",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Public Notification to ensure that the public receives adequate notification of CSO occurrences and impacts. The City's CSO Public Notification Plan was approved by Ohio EPA on October 19, 2018. Activation notifications and an annual report are posted to the City's website, and emails are sent to designated individuals. Signs are placed at CSOs, though the signs at a few of the five main CSOs were observed to be missing during the inspection. The City collaborates with the Allen County Soil and Water Conservation District and the Ottawa River Coalition to produce educational materials.",
+          "number": "8",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Monitoring to effectively characterize CSO impacts and the efficacy of CSO controls. Discharge occurrence and volume at the five main CSOs is monitored using level sensors. Occurrences at all other CSOs and SSOs are monitored using a floating block mechanism. TSS and CBOD5 is monitored at the five main CSOs. The City has eight rain gauges. The City is currently implementing a flow metering project to facilitate development and calibration of a hydraulic model of the collection system.",
+          "number": "9",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Investigate the integrity of the weir wall at CSO 008.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Replace the missing signs at CSOs on the Ottawa River.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Develop the hydraulic model such that CSO occurrence and volume may be predicted for all CSOs and SSOs.",
+          "number": "3",
+          "deadline": null
+        }
+      ],
+      "summary": "On June 9, 2022, Ohio EPA Division of Surface Water staff conducted a Nine Minimum Controls/Combined Sewer Overflow inspection of the Lima WWTP and collection system to assess compliance with the NPDES permit and the City's federal Consent Decree obligations. The inspection found that the City is in compliance with permit requirements for implementation of the Nine Minimum Controls. Three advisory recommendations were issued regarding the CSO 008 weir wall integrity, missing public notification signs at Ottawa River CSOs, and development of a hydraulic model to predict CSO and SSO occurrence and volume.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1952887.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1952887.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-2431324.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "The inspection form (pages 4–12) was read from an embedded OCR text layer flagged as unreliable; key coded fields (NPDES ID OH0026069, permit 2PE00000, entry/exit times, Sig. Non-Compliance = No) were verified against the page images and appear correct.",
+      "Permit effective date 8/1/2018 and expiration date 8/31/2022 are noted on the form but not captured in a structured field — the permit appears to have been expired at time of inspection.",
+      "Inspector name in OCR reads 'John Takas' in the letter body but 'John Takas' also appears in the cc list; no discrepancy detected.",
+      "Biosolids checklist pages 4–12 contain extensive operational detail (treatment train, pathogen reduction alternatives P-9 and VAR-6 checked, analytical records reviewed) not individually itemised as observations because they were not printed as numbered findings or recommendations in the letter."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES-Biosolids",
+      "inspection_type": "NPDES Compliance Inspection",
+      "type_code": "Biosolids",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Ft. Amanda Rd, Lima, OH 45804",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2023-06-13",
+      "report_date": "2023-07-03",
+      "entry_time": "9:10 AM",
+      "exit_time": "11:10 AM",
+      "inspectors": [
+        "Catherine Robertson",
+        "John Takas"
+      ],
+      "facility_representatives": [
+        "Kim Furry, Plant Supervisor",
+        "Shawn Dershem, Assistant Supervisor"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "As of January 2023, facility is not generating exceptional quality biosolids; Currently, all biosolids are sent to landfill.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Facility plans to develop a biosolids master plan to prepare for biosolids treatment upgrades. Master plan will consider new biosolids treatment units and return to exceptional quality biosolids.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "When bulk exceptional quality biosolids are applied to the land, it is recommended the following records are retained: (a) Records showing that bulk EQ biosolids were not stored ≥90 days at the beneficial use site. (b) Forecast/actual precipitation data. (c) A description detailing how the agronomic rate is met at each beneficial use site, including how the beneficial use application equipment is calibrated. (d) The date and quantity used.",
+          "number": "1",
+          "deadline": null
+        }
+      ],
+      "summary": "On June 13, 2023, Ohio EPA Northwest District Office staff conducted an NPDES Biosolids compliance inspection of Lima WWTP. The inspection found that as of January 2023 the facility is no longer generating exceptional quality biosolids and is instead sending all biosolids to landfill, with plans to develop a biosolids master plan for future upgrades. The inspection resulted in a finding of no significant non-compliance, and one advisory recommendation regarding recordkeeping requirements for when bulk EQ biosolids are land-applied in the future.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2431324.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-2431324.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-2499760.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "No Sig. Non-Compliance box value was readable in the provided pages; field left null.",
+      "The NPDES federal ID (OH-prefixed number) was not printed in the letter or visible checklist pages; npdes_id left null.",
+      "The audit checklist form code 'PCA' is inferred from the form header 'PCA-1' and the subject line 'Pretreatment Audit Inspection'; no separate type_code box was printed.",
+      "A follow-up TEAMS meeting on July 5, 2023 completed the interview portion; inspection_date reflects the primary site visit date of June 28, 2023."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Pretreatment Audit Inspection",
+      "type_code": "PCA",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Road, Lima, OH 45804",
+      "permit_no": "2PE00000",
+      "npdes_id": null,
+      "county": "Allen County",
+      "inspection_date": "2023-06-28",
+      "report_date": "2023-08-07",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [
+        "Peggy Christie"
+      ],
+      "facility_representatives": [
+        "Kim Furry",
+        "Eric Bontrager",
+        "Amy Straley"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "The City of Lima submitted a local limit study in February 2019 to Ohio EPA for approval. The study was approved on August 10, 2021.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The City contracted with Geosyntec to perform a comprehensive evaluation of the pretreatment program. The consultant presented a report with recommendations to the city on April 5, 2023. The city is working on implementing the recommendations.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "We recommend that the City continues to implement the recommendations presented in the Geosyntec report, including permitting the significant industrial users that were identified in report.",
+          "number": "1",
+          "deadline": null
+        }
+      ],
+      "summary": "On June 28, 2023, Ohio EPA conducted a Pretreatment Audit Inspection of the City of Lima WWTP, with a follow-up TEAMS interview meeting on July 5, 2023; the audit also included site visits to Randall Bearings and Pepsi. The audit reviewed pretreatment reports, records, permits, and a completed checklist, finding that a local limit study was approved in 2021 and that the city is actively implementing recommendations from a Geosyntec pretreatment program evaluation. Ohio EPA recommended that the city continue implementing the Geosyntec report recommendations, including permitting identified significant industrial users.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2499760.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-2499760.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170033.inspection.yaml",
+    "group": "inspections",
+    "title": "City of Lima WWTP",
+    "confidence": "medium",
+    "warnings": [
+      "Document is a facility response letter to a Compliance Review Report, not a standard Ohio EPA inspection letter with an attached form — no SNC box, entry/exit times, inspector list, or numbered findings/recommendations list is present.",
+      "OCR layer is unreliable: permit number read as '2PE00000+hID' and '2PE00000*MD' in the image; image reads '2PE00000*MD' which likely means the full permit number suffix is unclear — recorded as '2PE00000'.",
+      "No NPDES federal ID (OHxxxxxxx) is printed in this document.",
+      "County not stated in the document.",
+      "Inspectors listed are those who attended the site visit per the letter's narrative (Peggy Christie and Ms. Works of OEPA, plus US EPA representatives unnamed); US EPA personnel names not provided.",
+      "The district (Northwest District Office) is inferred from the address '347 North Dunbridge Road, Bowling Green, OH' which is the known NWDO address — not explicitly stated in the document."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Preliminary Compliance Report",
+      "type_code": null,
+      "facility": "City of Lima WWTP",
+      "facility_address": "50 Town Square, Lima, Ohio 45801-4900",
+      "permit_no": "2PE00000",
+      "npdes_id": null,
+      "county": null,
+      "inspection_date": "2017-06-20",
+      "report_date": "2017-07-18",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [
+        "Peggy Christie",
+        "Ms. Works"
+      ],
+      "facility_representatives": [
+        "Eric Markley, Supervisor WWTP"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "The compliance issue identified in the Compliance Review Report pertained to Overflow Volumes at station 002 and 003. The volume of the overflow at these stations is not available due to sensor replacement and computer programming. New Rosemont 5400 sensors were observed in place during the site visit on June 20, 2017. The 'AD' code was determined to be appropriate for this occurrence per email contact with Ohio EPA. Sensor programming was on schedule to be completed by July 20, 2017, and the same code would appear in the July e-DMR.",
+          "number": null,
+          "deadline": "2017-07-20"
+        }
+      ],
+      "summary": "This letter is the City of Lima's response to Ohio EPA's Compliance Review Report dated July 17, 2017, regarding overflow volumes at stations 002 and 003 at Lima's WWTP. Overflow volume data was unavailable due to sensor replacement and computer programming; new Rosemont 5400 sensors were observed in place during a June 20, 2017 site visit attended by Ohio EPA and US EPA. Sensor programming was scheduled for completion by July 20, 2017, with the \"AD\" code to be applied in the July e-DMR.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170033.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170033.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170414.inspection.yaml",
+    "group": "inspections",
+    "title": "City of Lima WWTP",
+    "confidence": "medium",
+    "warnings": [
+      "This document is a facility response letter to a Compliance Review Report, not the inspection/compliance report itself — no attached EPA inspection form is present, so many fields (inspection_date, entry_time, exit_time, inspectors, significant_noncompliance, type_code, units_in_service) cannot be populated.",
+      "The permit number in the Re: block reads '2PE00000*MD' — the '*MD' suffix may be a modifier or OCR artifact; base permit number recorded as 2PE00000.",
+      "No NPDES federal ID (OHxxxxxxx) is printed in this document.",
+      "County (Allen) is inferred from Lima, Ohio — not explicitly stated in the document.",
+      "Document was read from a page image with an unreliable OCR text layer; values verified against the image."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Preliminary Compliance Report",
+      "type_code": null,
+      "facility": "City of Lima WWTP",
+      "facility_address": "50 Town Square, Lima, Ohio 45801-4900",
+      "permit_no": "2PE00000",
+      "npdes_id": null,
+      "county": "Allen",
+      "inspection_date": null,
+      "report_date": "2016-07-20",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [],
+      "facility_representatives": [
+        "Eric Markley, Acting Supervisor WWTP"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "A 0.30 mg/l reading of Total Residual Chlorine was recorded at Station 001. The permitted limit is 0.02 mg/l. The exceedance was attributed to inadequate adjustment of the chlorine feed rate as flows decreased following a rain event.",
+          "number": null,
+          "deadline": null
+        }
+      ],
+      "summary": "This letter is the City of Lima's response to Ohio EPA's Compliance Review Report dated July 20, 2016, concerning the City of Lima WWTP (NPDES Permit No. 2PE00000). The compliance issue identified was a Total Residual Chlorine reading of 0.30 mg/l at Station 001 against a limit of 0.02 mg/l, caused by inadequate chlorine feed rate adjustment following a rain event. As a corrective measure, training was provided to all plant operators on responding to flow changes.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170414.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170414.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-4192699.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Page 2 header shows date July 15, 2026, while the transmittal letter on page 1 is dated July 16, 2026; report_date recorded as July 16, 2026 (the letter date). The inspection report form signatures are dated 07/14/2026 and 7/15/2026 respectively.",
+      "OCR text layer flagged as unreliable; all key fields verified against image."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "compliance evaluation inspection",
+      "type_code": "CEI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Road, Lima, OH",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2026-07-07",
+      "report_date": "2026-07-16",
+      "entry_time": "8:55 A.M.",
+      "exit_time": "12:49 P.M.",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Tom Poffenbarger"
+      ],
+      "facility_representatives": [
+        "Shawn Dershem, Plant Supervisor",
+        "Joe Welker, Assistant Plant Supervisor",
+        "Eric Bontrager, Utilities Operations Manager",
+        "Amy Staley, Utilities Industrial Monitoring Chief",
+        "Larry Huber, Utility Field Services Supervisor"
+      ],
+      "significant_noncompliance": true,
+      "units_in_service": "All treatment units in service other than backup units",
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "In the past year, the top two layers of media were replaced in the Nitrification towers. Regrowth of the bacteria on the media was slower than expected.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The City is in significant non-compliance (SNC) due to violations within the time period of January 2026 through July 2026. SNC is a programmatic definition used to prioritize enforcement. In this case, the facility is in SNC due to ammonia exceeding effluent limits by greater than 40% in at least two months out of a six-month period. A separate Notice of Violation will follow.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Lima is currently performing a pilot study of NeoWater for settling and phosphorus removal.",
+          "number": "3",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Lima has an Ohio Administrative Code 3745-7-02(D) exemption, which allows the Class III operator to act as the operator of record for up to 2 years. The exemption expires July 31, 2026.",
+          "number": "4",
+          "deadline": "2026-07-31"
+        },
+        {
+          "kind": "finding",
+          "text": "Lima has approved reduced staffing hours dated July 26, 2021. There have been staffing changes since this was approved.",
+          "number": "5",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The Stormwater Pollution Prevention Plan (SWPPP) is dated December 12, 2019.",
+          "number": "6",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "Because the OAC 3745-7-02(D) exemption will soon expire, we recommend that you apply for an extension. The request should be sent to Anthony Nosko, anthony.nosko@epa.ohio.gov in our Central Office.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "We recommend that the City requests a new approval for reduced staffing hours. The form can be found at our website at MinStaffReductionRequestForm.doc.pdf. Until this is approved, you must meet the 40-hour-per-week staffing requirement.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "We recommend that you update the Stormwater Pollution Prevention Plan. Ohio EPA has developed a template that may assist you. The template can be downloaded from our website at OHR000007_Template_SWPPP.docx. Sample recordkeeping templates and the Annual Reporting Form can also be found on our website: Industrial Stormwater - General Permit | Ohio Environmental Protection Agency. Click on the Permit Guidance, Compliance, and Support Tab.",
+          "number": "3",
+          "deadline": null
+        }
+      ],
+      "summary": "Ohio EPA conducted a Compliance Evaluation Inspection (CEI) of the Lima WWTP on July 7, 2026, evaluating NPDES permit compliance, operations and maintenance, operator certification, and stormwater controls. The facility was found to be in Significant Non-Compliance (SNC) due to ammonia exceeding effluent limits by greater than 40% in at least two months of the January–July 2026 period, attributable to nitrification tower media replacement and slow bacterial regrowth. Three recommendations were issued regarding operator certification exemption renewal, reduced staffing hours reapproval, and updating the Stormwater Pollution Prevention Plan.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-4192699.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-4192699.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-467350.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2016-07-13 reconnaissance inspection letter at two docids; edoc-1914739 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical). They do differ here: 6 observations on the canonical against 11 on this capture.",
+      "Document is a scanned page image; text was read via OCR interpretation — minor transcription errors are possible.",
+      "The compliance data tables on pages 2 and 3 are part of the enclosed inspection report and reflect historical violations, not new orders or requirements imposed by this inspection."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Reconnaissance Inspection",
+      "type_code": "RI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen County",
+      "inspection_date": "2016-07-13",
+      "report_date": "2016-07-20",
+      "entry_time": "10:15 AM",
+      "exit_time": "12:00 PM",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Thomas Poffenbarger, P.E."
+      ],
+      "facility_representatives": [
+        "Eric Markley, Supervisor",
+        "David Schnipke, Environmental Compliance Manager"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "NPDES Compliance — No corrective action needed.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Operations & Maintenance — No corrective action needed.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Operator Certification — Not evaluated.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Collection System — Not evaluated.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Sludge Management — No corrective action needed.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Storm Water — Not evaluated.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Self-Monitoring Program — No corrective action needed.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Laboratory — Not evaluated.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Effluent / Receiving Water Observations — No corrective action needed. Effluent observed in final clarifiers was clear, colorless and had no noticeable odor.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Construction nearly complete on all but the two primary clarifiers. Once the other headworks components are operational, the old Detroiter and primary clarifiers will be demolished in order to construct the two additional primary clarifiers.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Compliance Data (9/1/2015–6/1/2016): Permit Effluent Limit Violations: 2; Permit Effluent Code Violations: 15; Permit Effluent Frequency Violations: 0; Compliance Schedule Milestones Not Entered: 0; Reported SSO Events: 57. Limit violations include pH Minimum (Station 001, October 2015, reported value 5.9 vs limit 6.5) and Total Suspended Solids 7D Conc (Station 604, February 2016, reported value 25.1142 vs limit 20.0). Code violations span January–May 2016 for CBOD 5 day, Total Suspended Solids, Overflow Volume, and Overflow Occurrence at various stations.",
+          "number": null,
+          "deadline": null
+        }
+      ],
+      "summary": "On July 13, 2016, Ohio EPA conducted a Reconnaissance Inspection at the City of Lima's WWTP to observe progress on the new headworks construction project. All components except two of the four primary clarifiers were nearly complete, and effluent in the final clarifiers was clear, colorless, and odor-free. No significant non-compliance was identified at the time of the inspection, though compliance data for 9/1/2015–6/1/2016 showed 2 limit violations, 15 code violations, and 57 reported SSO events.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-467350.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-467350.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-512329.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2016-10-18 reconnaissance inspection letter at two docids; edoc-1914740 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical). They do differ here: 3 observations on the canonical against 2 on this capture.",
+      "Document read from page images — no native text layer confirmed.",
+      "The enclosed compliance data sheet (7/1/2016–9/1/2016) references 2 E. coli code violations and 28 SSO events; these are contextual data attachments, not numbered inspection observations, and have been summarized rather than listed as individual observations.",
+      "Permit Effective Date 1/1/2013 and Permit Expiration Date 2/28/2015 noted on form — permit appears expired at time of inspection."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Reconnaissance Inspection",
+      "type_code": "RI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen County",
+      "inspection_date": "2016-10-18",
+      "report_date": "2016-11-03",
+      "entry_time": "10:10",
+      "exit_time": "11:35",
+      "inspectors": [
+        "Peggy B. Christie"
+      ],
+      "facility_representatives": [
+        "Eric Markley, Supervisor"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "Operations & Maintenance: Air break installed to prevent sludge backflow to chlorine contact tank. Corrective action needed: No.",
+          "number": "F",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Effluent / Receiving Water Observations: Effluent observed following de-chlorination was clear, colorless and had no noticeable odor. Corrective action needed: No.",
+          "number": "M",
+          "deadline": null
+        }
+      ],
+      "summary": "On October 18, 2016, Ohio EPA conducted a Reconnaissance Inspection at the City of Lima WWTP to observe the air break constructed to prevent backflow from the sludge thickening tanks to the chlorine contact tank. The effluent observed following dechlorination was clear, colorless, and had no noticeable odor. No significant non-compliance was identified; compliance data for the period 7/1/2016–9/1/2016 showed 2 permit effluent code violations (E. coli, August 2016) and 28 reported SSO events.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-512329.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-512329.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-529544.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2016-12-07 reconnaissance inspection letter at two docids; edoc-1914742 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical).",
+      "Document read from page images; no dedicated text layer confirmed.",
+      "The 'Significant Non-Compliance' box on the form is blank/not checked — recorded as false based on absence of any mark and zero violations noted.",
+      "Report date (2016-12-16) is the letter date; form signature dates are 12/12/16 and 12/13/16, which are intermediate dates not separately captured."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Reconnaissance Inspection",
+      "type_code": "RI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2016-12-07",
+      "report_date": "2016-12-16",
+      "entry_time": "10:30 AM",
+      "exit_time": "11:40 AM",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Thomas Poffenbarger, P.E."
+      ],
+      "facility_representatives": [
+        "Mr. Eric Markley, Supervisor",
+        "Mr. Jerry Coffey"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "NPDES Compliance — Corrective Action Needed: N. Compliance data for Lima WWTP between 9/1/2016 and 11/1/2016 shows: Permit Effluent Limit Violations: 0; Permit Effluent Code Violations: 0; Permit Effluent Frequency Violations: 0; Compliance Schedule Milestones Not Entered: 0; Reported SSO Events: 9 (Overflow Occurrence: 6 in 9/1/2016, 3 in 10/1/2016).",
+          "number": "E",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Operations & Maintenance — Corrective Action Needed: N.",
+          "number": "F",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Operator Certification — Not Evaluated.",
+          "number": "G",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Collection System — Not Evaluated.",
+          "number": "H",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Sludge Management — Not Evaluated.",
+          "number": "I",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Storm Water — Not Evaluated.",
+          "number": "J",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Self-Monitoring Program — Not Evaluated.",
+          "number": "K",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Laboratory — Not Evaluated.",
+          "number": "L",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Effluent / Receiving Water Observations — Corrective Action Needed: N. Final effluent clear, colorless and had no noticeable odor. New pump station and outfall are operational.",
+          "number": "M",
+          "deadline": null
+        }
+      ],
+      "summary": "A Reconnaissance Inspection was conducted on December 7, 2016 at the City of Lima's WWTP to observe the new pump station and outfall structure. The final effluent was clear, colorless, and had no noticeable odor, and both the new pump station and outfall structure were found to be operational. No permit effluent violations were recorded for the period 9/1/2016–11/1/2016, though 9 SSO events were reported.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-529544.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-529544.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-591751.inspection.yaml",
+    "group": "inspections",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2017-02-28 pretreatment audit letter at two docids; edoc-1851472 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical). They do differ here: 6 observations on the canonical against 13 on this capture.",
+      "Document is a page-image scan with no embedded text layer; all data extracted by OCR interpretation of scanned images.",
+      "The Pretreatment Inspection Report form does not have a 'Sig. Non-Compliance' checkbox filled in; significant_noncompliance left null.",
+      "report_date taken from the transmitting letter date (March 17, 2017); the inspection report itself was signed by inspector on March 9, 2017 and by reviewer on March 16, 2017.",
+      "Inspectors list deduped to Peggy B. Christie (Peggy Christie) — same person listed under two slightly different name forms.",
+      "Facility number OH0026069 recorded as npdes_id as it appears to be the Ohio EPA facility/NPDES number on the inspection form."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "Pretreatment",
+      "inspection_type": "Pretreatment Audit",
+      "type_code": "Audit",
+      "facility": "City of Lima WWTP",
+      "facility_address": "1200 Fort Amanda Road, Lima, OH 45804",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen County",
+      "inspection_date": "2017-02-28",
+      "report_date": "2017-03-17",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [
+        "Peggy Christie",
+        "Peggy B. Christie"
+      ],
+      "facility_representatives": [
+        "David Schnipke, Environmental Compliance Manager",
+        "James R. Bookman, Industrial Monitoring and Laboratory Chief",
+        "Rob Flinn, Industrial Monitoring Technician"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "Ford Motor Company (1155 Bible Road, Lima, Ohio) — Manufacturer of automotive engines. Non-categorical SIU. Average process flow 100,000–120,000 gpd. Industry visited during PCI. Compliance status: In compliance. Sanitary is discharged through a separate line.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Dana Holding Corporation (777 Bible Road, Lima, OH 45801-2025) — Manufactures driveshafts for the automotive industry. Non-SIU. Average total flow 1,300 gpd. Industry visited during PCI. Compliance status: In compliance. This facility used to have a discharge permit with the City, but they now haul all the process wastewater off-site to Valicor for recycling. Currently they only discharge sanitary wastewater to the City. The City inspects this facility once a year and samples them twice a year.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "IU File Review — Section I, Part A: Dana is not under permit. They no longer discharge process wastewater to the City. All applicable IU control mechanism contents (duration, nontransferability, effluent limits, local limits, most stringent limit, TTO/TOMP, self-monitoring requirements, reporting, compliance schedules, slug notification, etc.) were evaluated as Y (satisfactory) for Ford Lima Engine Plant and N/A for Dana Driveshaft Manufacturing.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "IU File Review — Section I, Part B (CA Compliance Monitoring): Both facilities were inspected and sampled at required frequency. Documentation of inspection activities and slug discharge control plan evaluation confirmed. Sampling activities documented with chain-of-custody/QA/QC; analysis for all regulated parameters and appropriate analytical methods confirmed for both facilities.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "IU File Review — Section I, Part C (CA Enforcement Activities): Both facilities are in compliance. Older file reference in Dana's file of notification of SNC and publication in paper, but the facility is in compliance currently.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Section II Interview — CA Pretreatment Program Modifications: No changes pending or completed since last inspection. No needed changes identified.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Section II Interview — Legal Authority: There are contributing jurisdictions discharging wastewater to the POTW (Findlay Road area; drains to the City, metered and billed; all domestic wastewater). No difficulty in implementing legal authority.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Section II Interview — IU Characterization: SIU classification has not changed. New IUs identified through developer contacts and waste characterization forms; changes in flow flagged through industrial monthly billing spreadsheet. Inspections and sampling also used.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Section II Interview — Control Mechanism Evaluation: 0% of SIUs are not covered by an existing, unexpired permit or control mechanism. 0 control mechanisms were not issued within 180 days of expiration. No UST/CERCLA/RCRA corrective action sites discharge to POTW. Lima accepts trucked waste from Allen County WWTP biosolids, septage, EOLM C&DD Landfill, and Bluffton aeration (septage). Waste is not hazardous. Hauled wastes are sampled; pH of grease traps checked; MSDS reviewed.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Section II Interview — Application of Pretreatment Standards: City keeps abreast of regulations via workshops, OTCO, Government Affairs, attorneys, Federal Register, professional journals, and WEF. No pollutants of concern identified beyond current local limits. No new limits since last inspection.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Section II Interview — Compliance Monitoring (January 2016 to January 2017): 0% of SIUs were not sampled or not inspected at least once; 0% not sampled at least once; 0% not inspected at least once (all parameters); 0% in SNC with self-monitoring and not inspected or sampled. All IUs are inspected and sampled every year. Compliance sampling performed by City; analysis by Alloway (metals, cyanide, organics) and City (conventionals). City and Alloway participate in USEPA DMRQA program; City runs duplicates on every test. No problems in sample location, collection, or analysis. City has not had any issues with slug loads in the last 5 years; all SIUs evaluated for slug control plan need.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Section II Interview — Enforcement: No interference, pass through, fires/explosions, corrosive structural damage, flow obstructions, excessive pollutant concentrations, heat problems, O&G interference, toxic fumes, illicit dumping, or worker health/safety concerns since last inspection. Note on excessive flow rates: City will request (batch) IUs to hold wastewater during storm events. No hazardous waste discharges to POTW. Compliance schedules are used and are appropriate. ERP has had no modifications since last inspection; no problems with implementation; ERP is effective.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Section II Interview — Data Management/Public Participation: Confidentiality requests handled on a case-by-case basis with legal involvement if necessary. Files treated as public records; no requests for confidential status from IUs. Data management includes individual files, spreadsheet of all IUs, and Access database (flow data through billing). No records have been purged.",
+          "number": null,
+          "deadline": null
+        }
+      ],
+      "summary": "On February 28, 2017, Ohio EPA conducted a Pretreatment Audit of the City of Lima WWTP's approved pretreatment program, including file review and inspections of two industrial users (Ford Motor Company and Dana Holding Corporation). Both industrial users were found to be in compliance, and all industrial user inspections and sampling requirements are being carried out. The City's implementation of Lima's approved pretreatment program was found to remain satisfactory.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-591751.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-591751.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-605102.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2017-04-05 reconnaissance inspection letter at two docids; edoc-1851473 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical).",
+      "Document read from page images — no machine text layer confirmed.",
+      "The attached inspection report form (Pages 2–3) includes compliance data tables (code violations for Water Temperature at Station 604, SSO events, and high flow data) that are tabular/data in nature rather than numbered findings or recommendations; they have been captured in the summary rather than as individual observations.",
+      "Permit Effective Date: 1/1/2013; Permit Expiration Date: 2/28/2015 — permit appears expired at time of inspection.",
+      "Report signed by Peggy B. Christie (approx. Apr. 7, 2017) and Thomas Poffenbarger, P.E. (4/10/17) on the enclosed form; letter dated April 12, 2017."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "Reconnaissance Inspection",
+      "type_code": "RI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen County",
+      "inspection_date": "2017-04-05",
+      "report_date": "2017-04-12",
+      "entry_time": "2:00 PM",
+      "exit_time": "4:00 PM",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Thomas Poffenbarger, P.E."
+      ],
+      "facility_representatives": [
+        "Mr. Eric Markley, Supervisor"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "All new screens, new grit chambers and new primary clarifiers are operational.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The nitrification towers are not yet in service.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The final effluent observed in the de-chlorination tanks was clear, colorless and had no noticeable odor.",
+          "number": "3",
+          "deadline": null
+        }
+      ],
+      "summary": "A Reconnaissance Inspection was conducted on April 5, 2017 at the City of Lima's wastewater treatment plant to observe the status of plant upgrades. New screens, grit chambers, and primary clarifiers were found operational, while nitrification towers were not yet in service. Final effluent was clear, colorless, and had no noticeable odor; no significant non-compliance was identified. The compliance data for the period 11/1/2016–3/1/2017 showed 23 permit effluent code violations (Water Temperature, Station 604) and 54 reported SSO events.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-605102.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-605102.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-678896.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2017-07-25 reconnaissance inspection letter at two docids; edoc-1851474 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical).",
+      "Document read from page images; text layer appears present and legible throughout all four pages.",
+      "The NPDES permit ID on the letter Re: block reads '2PE00000' (permit_no) and the form shows NPDES # '2PE00000' with Ohio permit OH0026069; both are recorded accordingly.",
+      "Permit expiration date (2/28/2015) predates the inspection date (7/25/2017), which may indicate a permit renewal was pending — noted but not recorded as a finding per instructions.",
+      "Exit time on form reads '12:00' with no AM/PM indicator; recorded exactly as printed."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "reconnaissance inspection",
+      "type_code": "RI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2017-07-25",
+      "report_date": "2017-08-16",
+      "entry_time": "10:00 AM",
+      "exit_time": "12:00",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Thomas Poffenbarger, P.E."
+      ],
+      "facility_representatives": [
+        "Mr. Michael Caprella, Utilities Director",
+        "Mr. Dave Schnipke",
+        "Mr. Eric Markley, Supervisor",
+        "David Schnipke, Environmental Compliance Manager"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "A lightning strike damaged the main switch gear, which prevented the generators from providing power to the plant when city utility power was lost.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Wastewater and storm water could not be pumped due to the power loss.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The final clarifiers and aeration tanks overflowed, flooding the plant and causing substantial damage.",
+          "number": "3",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "SCADA was inoperable due to power loss to the Administrative Building.",
+          "number": "4",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "At the time of the inspection, power had been restored to most of the plant. Temporary generators and pumps were being utilized for all other major treatment units. The Administrative Building did not yet have power.",
+          "number": "5",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Final effluent discharged to the Ottawa River was clear, colorless and had no noticeable odor.",
+          "number": "6",
+          "deadline": null
+        }
+      ],
+      "summary": "Ohio EPA conducted a reconnaissance inspection of the Lima WWTP on July 25, 2017, following a lightning strike and power outage on July 22, 2017. The strike damaged the main switchgear, causing loss of pumping capacity, overflow of final clarifiers and aeration tanks, and flooding of the plant with substantial damage. At the time of the inspection, power had been partially restored and temporary generators were in use, with final effluent to the Ottawa River appearing clear and odor-free. Compliance data for the period 3/1/2017–7/1/2017 showed zero effluent limit violations but 10 code events and 68 reported SSO events.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-678896.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-678896.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-739814.inspection.yaml",
+    "group": "inspections",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2017-12-05 compliance evaluation inspection letter at two docids; edoc-1851475 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical).",
+      "Document read from page images — no native text layer confirmed; values extracted via OCR interpretation.",
+      "Compliance data covers 7/1/2017–11/1/2017; 9 Code Events and 104 Reported SSO Events noted in the enclosed report but no numbered findings/recommendations/violations were listed beyond the three findings in the cover letter.",
+      "Permit expiration date of 2/28/2015 pre-dates inspection; permit appears to have been administratively continued."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES",
+      "inspection_type": "compliance evaluation inspection",
+      "type_code": "CEI",
+      "facility": "Lima WWTP",
+      "facility_address": "1200 Fort Amanda Rd., Lima, Ohio",
+      "permit_no": "2PE00000",
+      "npdes_id": "OH0026069",
+      "county": "Allen",
+      "inspection_date": "2017-12-05",
+      "report_date": "2017-12-15",
+      "entry_time": "10:30 AM",
+      "exit_time": "1:45 PM",
+      "inspectors": [
+        "Peggy B. Christie",
+        "Andrew Gall"
+      ],
+      "facility_representatives": [
+        "Mr. David Schnipke, Environmental Compliance Manager",
+        "Mr. Eric Markley, WWTP Supervisor",
+        "Ms. Ange Layton, Chemist"
+      ],
+      "significant_noncompliance": false,
+      "units_in_service": "All treatment units were in service during the inspection.",
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "All treatment units were in service during the inspection.",
+          "number": "1",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The nitrification towers have not yet been seeded to treat wet weather flows.",
+          "number": "2",
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The final effluent discharging to the Ottawa River was clear, colorless and had no noticeable odors.",
+          "number": "3",
+          "deadline": null
+        }
+      ],
+      "summary": "On December 5, 2017, Ohio EPA Division of Surface Water conducted a compliance evaluation inspection (CEI) of the Lima WWTP (Permit OH0026069 / 2PE00000) in Allen County. All treatment units were in service; the nitrification towers had not yet been seeded for wet weather flows; and the final effluent discharging to the Ottawa River was clear, colorless, and odor-free. No significant noncompliance was identified at the time of the inspection.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-739814.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-739814.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-747522.inspection.yaml",
+    "group": "inspections",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "TWIN CAPTURE — not the canonical reading. The portal serves this 2017-12-05 biosolids generator inspection letter at two docids; edoc-1851476 is the same letter and is canonical, and where the two readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT byte-identical). They do differ here: 2 observations on the canonical against 10 on this capture.",
+      "No 'Sig. Non-Compliance' checkbox was visible on the enclosed inspection form pages provided — significant_noncompliance left null.",
+      "No entry_time or exit_time printed on any page.",
+      "type_code field left null as no CEI/PCI/PAI code appears on the form; the form header reads 'BIOSOLIDS GENERATOR INSPECTION'.",
+      "Document is a page image with no embedded text layer — values extracted by OCR reading of the image."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "district": "Northwest District Office",
+      "program": "NPDES-Biosolids",
+      "inspection_type": "Biosolids Generator Inspection",
+      "type_code": null,
+      "facility": "City of Lima WWTP",
+      "facility_address": "50 Town Square, Lima, Ohio 45801-4900",
+      "permit_no": "2PE00000",
+      "npdes_id": null,
+      "county": "Allen County",
+      "inspection_date": "2017-12-05",
+      "report_date": "2017-12-29",
+      "entry_time": null,
+      "exit_time": null,
+      "inspectors": [
+        "Andrew Gall",
+        "Peggy Christie"
+      ],
+      "facility_representatives": [
+        "David Schnipke",
+        "Eric Markley"
+      ],
+      "significant_noncompliance": null,
+      "units_in_service": null,
+      "observations": [
+        {
+          "kind": "finding",
+          "text": "Sewage sludge at the Lima WWTP is treated in anaerobic digesters. As part of recent plant upgrades, both primary digesters were taken out of service for cleaning and inspection prior to installation of the new mixing system. The methane gas produced during digestion is used to power two micro-turbines generating electric power and heat. The digested sludge is dewatered with belt filter presses and then mixed with lime and fly ash using the N-Viro Process. Temperature and pH of the blended material is monitored over a 72-hour period.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "The EQ biosolids are stored in both a building and on a concrete storage pad at the WWTP before being released to Lima Compost/Wright Mulch for management and distribution using two different methods: (1) stored at Lima Compost Facility and hauled for beneficial use on agricultural farm fields; (2) blended with finished compost, wood chips and dirt to create a top soil blend sold as topsoil to landscapers and residential customers.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "recommendation",
+          "text": "The City should continue to obtain copies of the biosolids end user reports from Lima Compost so that there are accurate records at the WWTP showing where the EQ biosolids are beneficially used.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "At the time of the inspection, the City was meeting the applicable requirements of Ohio's Sewage Sludge Rules (Chapter 3745-40 of the Ohio Administrative Code).",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Blending operation at Lima Compost is regulated by Ohio EPA under sludge management plan (SMP) No. 2MP00014. The SMP requires Lima Compost to monitor the newly created top soil blend after biosolids, leaves, grass and woodchips are blended to ensure it still meets the EQ biosolids criteria.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Facility information: Average Daily Flow 18.5 MGD; Design Treatment Capacity Max Flow 45 MGD; Biosolids Storage Capacity approx. 5 months at plant; Contracted Alternative/Contingency Disposal: 586 Station and 588 Station in NPDES permit; Headworks Screening: Automatic Bar Screen.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Sewage Sludge Treatment units: 3 Anaerobic Digesters (two primary, one secondary; new linear motion mixers installed); 3 Belt Filter Presses (2 run 5 days/week, 8 hrs/day, rotated in and out of service); 2 Holding Tanks (1 MG capacity each); 2 Gravity Thickeners (1 for Lima WWTP solids, 1 as receiving tank for Allen County Sludge); 1 Storage Pad (building for EQ Lim-a-Soil); 1 NVIRO Process unit (Cementec system to add lime and fly ash).",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Beneficial Use/Disposal: Beneficial Use (Class B and Exceptional Quality), Transfer to Another NPDES Permittee (Lima Compost), and Landfill. EQ Biosolids managed by Wright Mulch — farmers land apply some directly as fertilizer and Wright blends some EQ into their compost operation. Wright needs to provide City with records indicating who received the biosolids that were land applied and the amounts. When digesters were cleaned out for installation of new mixers, solids were dewatered and hauled to landfill for disposal.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Pathogen Reduction Alternative: P-9 (High pH and High Temperature) is utilized. Vector Attraction Reduction: VAR-1 (38% Volatile Solids Reduction) and VAR-6 (Alkaline Treatment). Records of pH maintained ≥12 for 2 hours and ≥11.5 for 24 hours, and records of dry tons of alkaline material added are on file.",
+          "number": null,
+          "deadline": null
+        },
+        {
+          "kind": "finding",
+          "text": "Monitoring: Biosolids samples collected monthly at the Sludge Storage Pad by WWTP Operators and Lab Techs. Chain of custody is utilized. Metals and nutrients samples sent to Alloway Labs (1101 N. Cole St., Lima, OH 45805). Fecal coliform samples run in-house by WWTP lab within eight hours of collection. In-house analyses: Fecal, pH. Contracted analyses: Nutrients, metals (SW-846 for inorganic metals; Standard Methods 2540G for Total, Fixed and Volatile Solids).",
+          "number": null,
+          "deadline": null
+        }
+      ],
+      "summary": "On December 5, 2017, Ohio EPA inspectors Andrew Gall and Peggy Christie conducted a Biosolids Generator Inspection of the City of Lima WWTP (permit 2PE00000, Allen County). The inspection included a plant walk-through and completion of the enclosed checklist evaluating compliance with Ohio's Sewage Sludge Rules (OAC Chapter 3745-40). At the time of the inspection, the City was found to be meeting the applicable requirements; one advisory recommendation was made regarding obtaining copies of biosolids end user reports from Lima Compost for accurate recordkeeping.",
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-747522.inspection.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-747522.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "aedg/seller-land-packets.land.yaml",
     "group": "land-assembly",
     "title": "BOSC/Google data-center land assembly — seller option packets and assignment to Bistrozzi LLC",

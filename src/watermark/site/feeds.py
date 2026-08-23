@@ -708,7 +708,19 @@ from watermark.sites import (
 #   sha/size/count, which move on every re-pull of any site and would have kept the reference
 #   bundle churning. `observed_network` is the membership figure instead (`sites_present` of
 #   `sites_total`), which moves only when the SET of sites holding a dataset changes.
-CONTRACT_VERSION = "2.2.0"
+# 2.3.0: the `records` feed's closed RecordGroup enum gains `inspections` — a `inspection:` payload
+#   block, the agency inspection / compliance-review genre added in #2077 for the 30 Ohio EPA
+#   inspection letters on the Lima WWTP. It is deliberately NOT `enforcement`: an inspection
+#   IMPOSES NOTHING, and these letters say so in their own words — "The recommendation(s) set out
+#   below are not Orders. The recommendations are offered by Ohio EPA in an effort to provide
+#   compliance assistance to your facility." Filing them under `enforcement` would publish
+#   compliance assistance as an enforceable term, which is the same misfiling the `layoff_notice`
+#   and `statutory_notice` keys were named to avoid. The group carries the agency's own
+#   `Sig. Non-Compliance` determination per visit, which is what makes a decade of inspections
+#   readable as a series rather than a pile. Enum growth is additive for feed READERS (a pre-2.3
+#   records.json stays valid) but a pre-2.3 records.schema.json rejects the new value — MINOR,
+#   back-compatible for data, schema refresh required.
+CONTRACT_VERSION = "2.3.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -720,6 +732,7 @@ RecordGroup = Literal[
     "enforcement",
     "finance",
     "incentive-package",
+    "inspections",
     "labor",
     "land-assembly",
     "litigation",

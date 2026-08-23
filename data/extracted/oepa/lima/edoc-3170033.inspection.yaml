@@ -1,0 +1,73 @@
+doc_id: edoc-3170033-287f1390
+source_path: data/documents/oepa/lima/edoc-3170033.pdf
+kind: inspection
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "LIMA, OHIO CITY OF LIMA, OHIO David J. Berger, Mayor \n~ 50\
+  \ Town Square Lima Ohio 45801-4900 419/228-5462 Fax 419/221-5214 \nwww.cityhall.lizna.oh.us\
+  \ \nJuly 18, 2017 \nMs. Peggy Chrlstle \nOhio EPA \n347 North Dunbridge Road \n\
+  Bowling Green, OH 43402-9398 \nRe; NPDES Permit No. 2PE00000+hID \nPrelnninary Corrlpliance\
+  \ Report \nDear Ms. Christy, \nThis letter is in response to the Compliance Review\
+  \ Report for the City of Lima's WWTP, dated \nJuly 17, 2017. The compliance issue\
+  \ identified in the report pertained to Overflow Volumes at \nstation 002 and 003.\
+  \ \nThe volume of thc overflow at thesc stations is not"
+inspection:
+  confidence: medium
+  warnings:
+  - Document is a facility response letter to a Compliance Review Report, not a standard
+    Ohio EPA inspection letter with an attached form — no SNC box, entry/exit times,
+    inspector list, or numbered findings/recommendations list is present.
+  - 'OCR layer is unreliable: permit number read as ''2PE00000+hID'' and ''2PE00000*MD''
+    in the image; image reads ''2PE00000*MD'' which likely means the full permit number
+    suffix is unclear — recorded as ''2PE00000''.'
+  - No NPDES federal ID (OHxxxxxxx) is printed in this document.
+  - County not stated in the document.
+  - Inspectors listed are those who attended the site visit per the letter's narrative
+    (Peggy Christie and Ms. Works of OEPA, plus US EPA representatives unnamed); US
+    EPA personnel names not provided.
+  - The district (Northwest District Office) is inferred from the address '347 North
+    Dunbridge Road, Bowling Green, OH' which is the known NWDO address — not explicitly
+    stated in the document.
+  agency: Ohio EPA
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: Preliminary Compliance Report
+  type_code: null
+  facility: City of Lima WWTP
+  facility_address: 50 Town Square, Lima, Ohio 45801-4900
+  permit_no: 2PE00000
+  npdes_id: null
+  county: null
+  inspection_date: '2017-06-20'
+  report_date: '2017-07-18'
+  entry_time: null
+  exit_time: null
+  inspectors:
+  - Peggy Christie
+  - Ms. Works
+  facility_representatives:
+  - Eric Markley, Supervisor WWTP
+  significant_noncompliance: null
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: The compliance issue identified in the Compliance Review Report pertained
+      to Overflow Volumes at station 002 and 003. The volume of the overflow at these
+      stations is not available due to sensor replacement and computer programming.
+      New Rosemont 5400 sensors were observed in place during the site visit on June
+      20, 2017. The 'AD' code was determined to be appropriate for this occurrence
+      per email contact with Ohio EPA. Sensor programming was on schedule to be completed
+      by July 20, 2017, and the same code would appear in the July e-DMR.
+    number: null
+    deadline: '2017-07-20'
+  summary: This letter is the City of Lima's response to Ohio EPA's Compliance Review
+    Report dated July 17, 2017, regarding overflow volumes at stations 002 and 003
+    at Lima's WWTP. Overflow volume data was unavailable due to sensor replacement
+    and computer programming; new Rosemont 5400 sensors were observed in place during
+    a June 20, 2017 site visit attended by Ohio EPA and US EPA. Sensor programming
+    was scheduled for completion by July 20, 2017, with the "AD" code to be applied
+    in the July e-DMR.
+  note: null

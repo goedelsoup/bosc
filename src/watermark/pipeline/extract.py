@@ -34,6 +34,7 @@ from watermark.logging import get_logger
 from watermark.models import (
     AwardExtraction,
     BusinessFiling,
+    ComplianceInspection,
     Deed,
     DeedExtraction,
     DocExtraction,
@@ -44,6 +45,7 @@ from watermark.models import (
     EpaPermitAction,
     Estimate,
     FinanceAward,
+    InspectionExtraction,
     NoticeExtraction,
     NoticeOfCommencement,
     NpdesExtraction,
@@ -923,6 +925,93 @@ def extract_order(
     )
 
 
+INSPECTION_INSTRUCTIONS = """\
+You are reading an agency INSPECTION or compliance-review report — typically an Ohio
+EPA Division of Surface Water letter about a site visit, often with an EPA-form
+inspection report attached. An inspection IMPOSES NOTHING: it records a visit and what
+was seen. Do not turn its contents into requirements. Record into the tool:
+  * agency (e.g. "Ohio EPA, Division of Surface Water"); district (e.g. "Northwest
+    District Office"); program as printed in the Re: block (NPDES | NPDES-Biosolids |
+    Pretreatment | CSO).
+  * inspection_type in the document's own words ("compliance evaluation inspection",
+    "reconnaissance inspection", "pretreatment compliance inspection", "performance
+    audit inspection", "minimum controls inspection", "sewer overflow inspection");
+    type_code ONLY if the attached form prints a code (e.g. CEI, PCI, PAI) — else null.
+  * facility; facility_address; permit_no (the Ohio id, e.g. 2PE00000); npdes_id (the
+    federal id, e.g. OH0026069) if printed; county.
+  * inspection_date: the date of the VISIT, as ISO. report_date: the date of the
+    transmitting LETTER, as ISO. These are usually DIFFERENT dates — never copy one into
+    the other, and if only one is printed leave the other null.
+  * entry_time / exit_time exactly as printed on the form, if present.
+  * inspectors: the agency personnel who conducted it. facility_representatives: who was
+    present for the facility. Names as printed, one entry each.
+  * significant_noncompliance: the attached form's "Sig. Non-Compliance" box — true for
+    Yes, false for No. Leave NULL when no form is attached or the box is unreadable; do
+    NOT infer it from the narrative, and do not infer False from its absence.
+  * units_in_service: the plant's operating state if the letter states one (e.g. "all
+    major units were in service").
+  * observations: one entry per numbered item, each with its `kind` set to which LIST it
+    was printed under — finding | recommendation | violation | deficiency | requested
+    action — plus `text` and the printed `number`. THIS DISTINCTION IS THE POINT: these
+    letters commonly say "The recommendation(s) set out below are not Orders", so a
+    recommendation must never be recorded as a violation or a requirement. Set `deadline`
+    only where the item itself states one.
+  * summary: 1-3 sentences on what the inspection found.
+Rules: dates as ISO; names, times and codes exactly as printed; leave a field null rather
+than inventing; set confidence and add warnings for strained reads. If the document has no
+text layer and you are reading a page image, say so in a warning.
+"""
+
+
+_INSPECTION_SPEC = DocSpec(
+    kind="inspection",
+    model=ComplianceInspection,
+    extraction_cls=InspectionExtraction,
+    field="inspection",
+    instructions=INSPECTION_INSTRUCTIONS,
+    dpi=_EPA_DPI,
+    text_pages=8,
+    image_pages=2,
+    summary=lambda i: {
+        "inspection_type": i.inspection_type,
+        "inspected": i.inspection_date,
+        "snc": i.significant_noncompliance,
+    },
+)
+
+
+def extract_inspection(
+    doc: SourceDocument,
+    *,
+    extractor: StructuredExtractor | None = None,
+    pdf: PdfDocument | None = None,
+    dpi: int = _EPA_DPI,
+    settings: Settings | None = None,
+    text_pages: int = 8,
+    image_pages: int = 2,
+) -> InspectionExtraction:
+    """Extract an agency inspection / compliance-review report, text-first.
+
+    Unlike the other document extractors this exposes ``image_pages``: a third of the Lima
+    WWTP inspection run has NO text layer at all (10 of 30, one of them 31 pages), so the
+    caller must be able to widen the vision read for a scan rather than silently extracting
+    a whole inspection from page one.
+    """
+    return cast(
+        "InspectionExtraction",
+        _extract_doc(
+            _INSPECTION_SPEC,
+            doc,
+            extractor=extractor,
+            pdf=pdf,
+            dpi=dpi,
+            settings=settings,
+            text_pages=text_pages,
+            image_pages=image_pages,
+        ),
+    )
+
+
 AWARD_INSTRUCTIONS = """\
 You are reading a public-finance AWARD record — a WPCLF / OWDA loan or its
 application, a principal-forgiveness grant authorization, a federal grant (FEMA
@@ -1208,6 +1297,7 @@ DOC_EXTRACTORS: dict[str, DocumentExtractor] = {
     "sos": extract_sos,
     "epa": extract_epa,
     "order": extract_order,
+    "inspection": extract_inspection,
     "award": extract_award,
     "wetland": extract_wetland,
     "plan": extract_plan,

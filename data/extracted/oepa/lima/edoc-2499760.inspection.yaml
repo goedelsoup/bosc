@@ -1,0 +1,89 @@
+doc_id: edoc-2499760-f896bcf4
+source_path: data/documents/oepa/lima/edoc-2499760.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "A\nugust 7, 2023 \nTr\nansmitted Electronically \nM\nr. Michael\
+  \ Caprella, Director \nUtilities Department \nCity of Lima \n50 Town Square \nLima,\
+  \ Ohio  45801-4900 \nRe\n: Lima WWTP \nInspection  \nNPDES \nAllen County \n2PE00000\
+  \ \nSubject: Pretreatment Audit Inspection \nD\near Mr. Caprella: \nO\nn June 28,\
+  \ 2023, I conducted an audit of the City of Lima’s approved pretreatment program.\
+  \ \nA follow up TEAMS meeting was conducted on July 5, 2023, to complete the interview\
+  \ portion \nof the audit.  Ms. Kim Furry, Mr. Eric Bontrager, and Ms. Amy Straley\
+  \ were present to provide \ntechnical information. \nT\nhe purpose of the"
+inspection:
+  confidence: high
+  warnings:
+  - No Sig. Non-Compliance box value was readable in the provided pages; field left
+    null.
+  - The NPDES federal ID (OH-prefixed number) was not printed in the letter or visible
+    checklist pages; npdes_id left null.
+  - The audit checklist form code 'PCA' is inferred from the form header 'PCA-1' and
+    the subject line 'Pretreatment Audit Inspection'; no separate type_code box was
+    printed.
+  - A follow-up TEAMS meeting on July 5, 2023 completed the interview portion; inspection_date
+    reflects the primary site visit date of June 28, 2023.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: Pretreatment Audit Inspection
+  type_code: PCA
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Road, Lima, OH 45804
+  permit_no: 2PE00000
+  npdes_id: null
+  county: Allen County
+  inspection_date: '2023-06-28'
+  report_date: '2023-08-07'
+  entry_time: null
+  exit_time: null
+  inspectors:
+  - Peggy Christie
+  facility_representatives:
+  - Kim Furry
+  - Eric Bontrager
+  - Amy Straley
+  significant_noncompliance: null
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: The City of Lima submitted a local limit study in February 2019 to Ohio
+      EPA for approval. The study was approved on August 10, 2021.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: The City contracted with Geosyntec to perform a comprehensive evaluation
+      of the pretreatment program. The consultant presented a report with recommendations
+      to the city on April 5, 2023. The city is working on implementing the recommendations.
+    number: '2'
+    deadline: null
+  - kind: recommendation
+    text: We recommend that the City continues to implement the recommendations presented
+      in the Geosyntec report, including permitting the significant industrial users
+      that were identified in report.
+    number: '1'
+    deadline: null
+  summary: On June 28, 2023, Ohio EPA conducted a Pretreatment Audit Inspection of
+    the City of Lima WWTP, with a follow-up TEAMS interview meeting on July 5, 2023;
+    the audit also included site visits to Randall Bearings and Pepsi. The audit reviewed
+    pretreatment reports, records, permits, and a completed checklist, finding that
+    a local limit study was approved in 2021 and that the city is actively implementing
+    recommendations from a Geosyntec pretreatment program evaluation. Ohio EPA recommended
+    that the city continue implementing the Geosyntec report recommendations, including
+    permitting identified significant industrial users.
+  note: null

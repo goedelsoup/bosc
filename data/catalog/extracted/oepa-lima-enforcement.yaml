@@ -1,5 +1,5 @@
 id: oepa-lima-enforcement
-title: Ohio EPA enforcement extractions (City of Lima WWTP — permit 2PE00000)
+title: Ohio EPA enforcement + inspection extractions (City of Lima WWTP — permit 2PE00000)
 scope: extracted
 status: reviewed
 producer:
@@ -10,10 +10,67 @@ license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:lima
 storage:
+- relpath: extracted/oepa/lima/edoc-1048228.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1048235.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1610423.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1752399.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1753487.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1782202.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1797305.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1797306.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1851472.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1851473.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1851474.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1851475.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1851476.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1914739.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1914740.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1914742.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-1914753.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-1914761.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1952887.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-2431324.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-2499760.inspection.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-2710530.order.yaml
@@ -22,7 +79,13 @@ storage:
 - relpath: extracted/oepa/lima/edoc-3063821.order.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-3170033.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-3170036.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170414.inspection.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3170415.order.yaml
@@ -46,6 +109,9 @@ storage:
 - relpath: extracted/oepa/lima/edoc-412983.order.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-4192699.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-4192703.order.yaml
   media_type: application/x-yaml
   lfs: false
@@ -55,10 +121,34 @@ storage:
 - relpath: extracted/oepa/lima/edoc-463755.order.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-467350.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-469760.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-470936.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-512329.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-529544.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-591751.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-605102.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-678896.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-739814.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-747522.inspection.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:
@@ -102,15 +192,22 @@ notes: "The enforcement half of the Lima WWTP record, kept separate from the per
   \ were other facilities' records is itself a finding about this source: a\npermit-scoped portal sweep\
   \ is not a permit-scoped result set, and every document one returns must be\nREAD before it is attributed.\
   \ Mansfield is a registered site in this network; raised as a follow-up\nrather than acted on, because\
-  \ moving a source byte is what the chain-of-custody rule forbids.\n\nStill ingested and NOT yet extracted\
-  \ — 76 of the 93:\n  36  permit actions (`Permit - Intermediate`) — heterogeneous: issued NPDES permits\
-  \ 2PE00000*MD /\n      *ND / *PD, draft public notices, a fact sheet, modification approvals, a mercury\
-  \ variance\n      application, a 2013 City ordinance, the 2022 renewal application package APP256207483,\
-  \ and\n      a run of City/agency correspondence. Genre is per-document, not per-drawer.\n   1  `edoc-2363112.pdf`\
-  \ — NEVER to be extracted. Byte-identical (sha256 b140e19c5e26) to\n      `oepa/2PE00000.pdf`, which\
-  \ is already extracted as `oepa/2PE00000.npdes.yaml`. Recorded as a\n      cluster in `data/site/document-versions.yaml`.\n\
-  \  30  inspections / compliance reviews — NO GENRE FITS. An Ohio EPA inspection letter reports\n   \
-  \   observations and findings; it imposes nothing, so `order` is wrong, and `notice` is an\n      R.C.\
-  \ 1311.04 mechanic's-lien filing, not this. Needs a model.\n   9  paragraph-33 semiannual progress reports\
-  \ — NO GENRE FITS. A progress report reports AGAINST\n      obligations rather than imposing them; extracting\
-  \ one as an `order` would publish a\n      near-duplicate of the decree. Needs a model.\n"
+  \ moving a source byte is what the chain-of-custody rule forbids.\n\nThe 30 inspections are now read,\
+  \ under the `inspection` genre added for them (#2077). They are 30\nCAPTURES OF 18 DISTINCT INSPECTIONS:\
+  \ the portal serves most of this plant's inspections twice, once\nas a PDF with a text layer and once\
+  \ as a scan of the same letter, at two unrelated docids. None of\nthe pairs is byte-identical, so all\
+  \ twelve are declared `v2` clusters in\n`data/site/document-versions.yaml` with the TEXT-LAYER capture\
+  \ canonical — a scan is read by the\nvision path alone with nothing to check itself against, and several\
+  \ pairs disagreed.\n\nThe agency's own `Sig. Non-Compliance` box, where a report form is attached:\n\
+  \n  2016-2019   False on every inspection that carries the box\n  2022-02-22  TRUE  — compliance evaluation\
+  \ inspection\n  2026-07-07  TRUE  — compliance evaluation inspection, and the NOV nine days later\n\
+  \              (edoc-4192703) names the parameter: SIGNIFICANT NONCOMPLIANCE FOR AMMONIA\n\nStill ingested\
+  \ and NOT yet extracted — 46 of the 93:\n  36  permit actions (`Permit - Intermediate`) — heterogeneous:\
+  \ issued NPDES permits 2PE00000*MD /\n      *ND / *PD, draft public notices, a fact sheet, modification\
+  \ approvals, a mercury variance\n      application, a 2013 City ordinance, the 2022 renewal application\
+  \ package APP256207483, and\n      a run of City/agency correspondence. Genre is per-document, not per-drawer.\n\
+  \   1  `edoc-2363112.pdf` — NEVER to be extracted. Byte-identical (sha256 b140e19c5e26) to\n      `oepa/2PE00000.pdf`,\
+  \ which is already extracted as `oepa/2PE00000.npdes.yaml`. Recorded as a\n      cluster in `data/site/document-versions.yaml`.\n\
+  \   9  paragraph-33 semiannual progress reports — NO GENRE FITS. A progress report reports AGAINST\n\
+  \      obligations rather than imposing them; extracting one as an `order` would publish a\n      near-duplicate\
+  \ of the decree. Needs a model, like `inspection` did.\n"

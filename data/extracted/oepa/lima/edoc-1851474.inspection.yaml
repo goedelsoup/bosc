@@ -1,0 +1,89 @@
+doc_id: edoc-1851474-3cf25711
+source_path: data/documents/oepa/lima/edoc-1851474.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "John R. Kasich, Governor \nMary Taylor, Lt. Governor \nCraig\
+  \ W. Butler, Director \nRe: Lima WWTP \nInspection \nNPDES \nAlien County \n2PE00000\
+  \ \nAugust 16, 2017 \nMr. Michael Caprella, Director, Utiiities Department \nCity\
+  \ of Lima \n50 Town Square \nLima, Ohio 45801-4900 \nDear Mr. Caprella: \nThank\
+  \ you for accompanying me during Ohio EPA's July 25, 2017, inspection of Lima wastewater\
+  \ treatment plant (WWTP) \nlocated in Lima, Ohio. Mr. Dave Schnipke and Mr. Eric\
+  \ Markley were also present during the inspection. \nThe purpose of the inspection\
+  \ was to evaluate the facility following the lightning strike and pow"
+inspection:
+  confidence: high
+  warnings:
+  - Document was read from a page image with an embedded OCR layer noted as unreliable;
+    all key fields have been verified against the image. The county name appears as
+    'Alien County' in the OCR but is clearly 'Allen County' in the image. Exit time
+    on the form reads '12:00' with no AM/PM designation as printed.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: reconnaissance inspection
+  type_code: RI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2017-07-25'
+  report_date: '2017-08-16'
+  entry_time: 10:00 AM
+  exit_time: '12:00'
+  inspectors:
+  - Peggy B. Christie
+  facility_representatives:
+  - Mr. Michael Caprella, Director, Utilities Department
+  - Mr. Dave Schnipke
+  - Mr. Eric Markley
+  significant_noncompliance: false
+  units_in_service: Power had been restored to most of the plant; temporary generators
+    and pumps were being utilized for all other major treatment units; the Administrative
+    Building did not yet have power.
+  observations:
+  - kind: finding
+    text: A lightning strike damaged the main switch gear, which prevented the generators
+      from providing power to the plant when city utility power was lost.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: Wastewater and storm water could not be pumped due to the power loss.
+    number: '2'
+    deadline: null
+  - kind: finding
+    text: The final clarifiers and aeration tanks overflowed, flooding the plant and
+      causing substantial damage.
+    number: '3'
+    deadline: null
+  - kind: finding
+    text: SCADA was inoperable due to power loss to the Administrative Building.
+    number: '4'
+    deadline: null
+  - kind: finding
+    text: At the time of the inspection, power had been restored to most of the plant.
+      Temporary generators and pumps were being utilized for all other major treatment
+      units. The Administrative Building did not yet have power.
+    number: '5'
+    deadline: null
+  - kind: finding
+    text: Final effluent discharged to the Ottawa River was clear, colorless and had
+      no noticeable odor.
+    number: '6'
+    deadline: null
+  summary: Ohio EPA conducted a reconnaissance inspection of the Lima WWTP on July
+    25, 2017, to evaluate the facility following a lightning strike and power outage
+    on July 22, 2017. The lightning strike damaged the main switchgear, causing loss
+    of pumping capability, overflow of final clarifiers and aeration tanks, and rendering
+    SCADA inoperable. At the time of inspection, power had been largely restored with
+    temporary generators in use, and final effluent to the Ottawa River was clear
+    with no noticeable odor.
+  note: null

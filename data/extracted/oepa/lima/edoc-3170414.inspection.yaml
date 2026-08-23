@@ -1,0 +1,62 @@
+doc_id: edoc-3170414-eb9c5de9
+source_path: data/documents/oepa/lima/edoc-3170414.pdf
+kind: inspection
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "r e \nLr MA, oH 1O CITY OF LIMA, OHIO David J. Berger, Mayor\
+  \ \n50 Town Square Lima Ohio 45801-4900 419/228-5462 Fax 419/221-5214 \nwww.cityhall.lima.ob.us\
+  \ , \nJu1y 20, 2016 \nMs. Peggy Christy \nOhio EPA \n347 North Dunbridge Road \n\
+  Bowling Green, OH 43402-9398 \nRe: NPDES Permit No. 2PE00000*MD \nPreliminary Compliance\
+  \ Report \nDear Ms. Christy, \nThis letter is in response to the Compliance Review\
+  \ Report for the City of Lima's WWTP, dated July \n20, 2016. The compliance issue\
+  \ identified in the report pertained to a 0.30 mg/l reading of Total \nResidual\
+  \ Chlorine at Station 001. The limit is 0.02 mg/1. \nThe"
+inspection:
+  confidence: medium
+  warnings:
+  - This document is a facility response letter to a Compliance Review Report, not
+    the inspection/compliance report itself — no attached EPA inspection form is present,
+    so many fields (inspection_date, entry_time, exit_time, inspectors, significant_noncompliance,
+    type_code, units_in_service) cannot be populated.
+  - 'The permit number in the Re: block reads ''2PE00000*MD'' — the ''*MD'' suffix
+    may be a modifier or OCR artifact; base permit number recorded as 2PE00000.'
+  - No NPDES federal ID (OHxxxxxxx) is printed in this document.
+  - County (Allen) is inferred from Lima, Ohio — not explicitly stated in the document.
+  - Document was read from a page image with an unreliable OCR text layer; values
+    verified against the image.
+  agency: Ohio EPA
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: Preliminary Compliance Report
+  type_code: null
+  facility: City of Lima WWTP
+  facility_address: 50 Town Square, Lima, Ohio 45801-4900
+  permit_no: 2PE00000
+  npdes_id: null
+  county: Allen
+  inspection_date: null
+  report_date: '2016-07-20'
+  entry_time: null
+  exit_time: null
+  inspectors: []
+  facility_representatives:
+  - Eric Markley, Acting Supervisor WWTP
+  significant_noncompliance: null
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: A 0.30 mg/l reading of Total Residual Chlorine was recorded at Station 001.
+      The permitted limit is 0.02 mg/l. The exceedance was attributed to inadequate
+      adjustment of the chlorine feed rate as flows decreased following a rain event.
+    number: null
+    deadline: null
+  summary: This letter is the City of Lima's response to Ohio EPA's Compliance Review
+    Report dated July 20, 2016, concerning the City of Lima WWTP (NPDES Permit No.
+    2PE00000). The compliance issue identified was a Total Residual Chlorine reading
+    of 0.30 mg/l at Station 001 against a limit of 0.02 mg/l, caused by inadequate
+    chlorine feed rate adjustment following a rain event. As a corrective measure,
+    training was provided to all plant operators on responding to flow changes.
+  note: null

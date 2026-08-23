@@ -7,6 +7,7 @@ export const RECORD_GROUP_LABELS: Record<string, string> = {
   agreements: "Agreements — executed instruments",
   deeds: "Deeds",
   enforcement: "Enforcement — orders & decrees",
+  inspections: "Inspections & compliance reviews",
   finance: "Financing — loans & awards",
   "incentive-package": "Incentive packages — per-site instrument registers",
   labor: "Labor — WARN closure & layoff notices",

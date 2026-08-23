@@ -1,0 +1,103 @@
+doc_id: edoc-1753487-ca2297a9
+source_path: data/documents/oepa/lima/edoc-1753487.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "Mike DeWine, Governor \nJon Husted, Lt. Governor \nLaurie A. Stevenson, Director\
+  \ \nMarch 14, 2022 \nTransmitted Electronically \nMr. Michael Caprella, Utilities Director Re: Lima\
+  \ WWTP \nLima WWTP Inspection \n50 Town Square NPDES \nLima, Ohio 45801 Allen County \n2PE00000 \nSubject:\
+  \ Ohio Environmental Protection Agency NPDES Inspection \nDear Mr. Caprella: \nOn February 22, 2022,\
+  \ Ms. Peggy Christie and I conducted an inspection of the Lima Wastewater \nTreatment Plant (WWTP) located\
+  \ in Lima, Ohio. Ms. Kim Furry, Mr. Larry Huber, Ms. Emily \nKerber, Mr. Eric Bontrager, and Mr. Shawn\
+  \ Dershem were present duri"
+inspection:
+  confidence: high
+  warnings:
+  - TWIN CAPTURE — not the canonical reading. The portal serves this 2022-02-22 compliance evaluation
+    inspection letter at two docids; edoc-1752399 is the same letter and is canonical, and where the two
+    readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two
+    files are NOT byte-identical).
+  - 'The permit number ''2PE00000'' appears in the Re: block and on the inspection form as both the permit
+    number and a field that may be a placeholder — verify against the actual permit document.'
+  - The report form was signed by Mallorey Smith on 03/07/2022 and countersigned by Thomas Poffenbarger
+    on 3/10/22; the transmitting letter is dated March 14, 2022 — these are distinct dates preserved as
+    printed.
+  - 'Sludge records finding: Section I notes records were not maintained prior to June 7, 2021, and that
+    sludge records were not maintained for a minimum of 5 years (box checked No for item f).'
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: compliance evaluation inspection
+  type_code: CEI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2022-02-22'
+  report_date: '2022-03-14'
+  entry_time: 10:15 AM
+  exit_time: 2:17 PM
+  inspectors:
+  - Mallorey Smith
+  - Peggy Christie
+  facility_representatives:
+  - Ms. Kim Furry, Plant Supervisor
+  - Mr. Larry Huber, Utility Field Services Supervisor
+  - Ms. Emily Kerber, Utility Operations Manager
+  - Mr. Eric Bontrager, Environmental Compliance Manager
+  - Mr. Shawn Dershem, Assistant Supervisor
+  significant_noncompliance: true
+  units_in_service: All treatment units in service other than backup units
+  observations:
+  - kind: finding
+    text: At the time of inspection, final effluent was slightly turbid and light brown with no noticeable
+      odor.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: The plant was operating in wet weather mode, meaning a side stream of primary clarifier effluent
+      was being sent to the nitrification tower for secondary treatment and blending with the final clarifier
+      effluent.
+    number: '2'
+    deadline: null
+  - kind: finding
+    text: Wright Mulch/Lima Composting is contracted with the city to manage the land application of Class
+      A biosolids. The City is required to maintain copies of the beneficial use records and has had problems
+      getting these records from Wright Mulch. Wright Mulch is operating without a valid Land Application
+      Management Plan. Their plan expired on February 28, 2022, and no renewal application has been received.
+    number: '3'
+    deadline: null
+  - kind: recommendation
+    text: Please submit documentation validating that the bypass has been eliminated so it can be removed
+      from the permit.
+    number: '1'
+    deadline: null
+  - kind: recommendation
+    text: Please develop and implement procedures to ensure that the city complies with the biosolids
+      record keeping requirements found in Ohio Administrative Code 3745-40-09 (C)(1).
+    number: '2'
+    deadline: null
+  summary: On February 22, 2022, Ohio EPA conducted a Compliance Evaluation Inspection (CEI) of the Lima
+    WWTP, finding the facility operating in wet weather mode with slightly turbid effluent. A significant
+    noncompliance finding was recorded, notably that Wright Mulch/Lima Composting — the city's Class A
+    biosolids contractor — is operating without a valid Land Application Management Plan, which expired
+    February 28, 2022 with no renewal application received. Inspectors also noted ongoing SSO occurrences
+    and prior deficiencies in sludge recordkeeping, and issued two recommendations addressing bypass documentation
+    and biosolids recordkeeping compliance.
+  note: null

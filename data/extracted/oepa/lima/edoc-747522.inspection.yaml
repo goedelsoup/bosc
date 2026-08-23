@@ -1,0 +1,137 @@
+doc_id: edoc-747522-422efbd9
+source_path: data/documents/oepa/lima/edoc-747522.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+image_pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+dpi: 150
+source_text_excerpt: ''
+inspection:
+  confidence: high
+  warnings:
+  - 'TWIN CAPTURE — not the canonical reading. The portal serves this 2017-12-05 biosolids generator inspection
+    letter at two docids; edoc-1851476 is the same letter and is canonical, and where the two readings
+    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
+    NOT byte-identical). They do differ here: 2 observations on the canonical against 10 on this capture.'
+  - No 'Sig. Non-Compliance' checkbox was visible on the enclosed inspection form pages provided — significant_noncompliance
+    left null.
+  - No entry_time or exit_time printed on any page.
+  - type_code field left null as no CEI/PCI/PAI code appears on the form; the form header reads 'BIOSOLIDS
+    GENERATOR INSPECTION'.
+  - Document is a page image with no embedded text layer — values extracted by OCR reading of the image.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES-Biosolids
+  inspection_type: Biosolids Generator Inspection
+  type_code: null
+  facility: City of Lima WWTP
+  facility_address: 50 Town Square, Lima, Ohio 45801-4900
+  permit_no: 2PE00000
+  npdes_id: null
+  county: Allen County
+  inspection_date: '2017-12-05'
+  report_date: '2017-12-29'
+  entry_time: null
+  exit_time: null
+  inspectors:
+  - Andrew Gall
+  - Peggy Christie
+  facility_representatives:
+  - David Schnipke
+  - Eric Markley
+  significant_noncompliance: null
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: Sewage sludge at the Lima WWTP is treated in anaerobic digesters. As part of recent plant upgrades,
+      both primary digesters were taken out of service for cleaning and inspection prior to installation
+      of the new mixing system. The methane gas produced during digestion is used to power two micro-turbines
+      generating electric power and heat. The digested sludge is dewatered with belt filter presses and
+      then mixed with lime and fly ash using the N-Viro Process. Temperature and pH of the blended material
+      is monitored over a 72-hour period.
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'The EQ biosolids are stored in both a building and on a concrete storage pad at the WWTP before
+      being released to Lima Compost/Wright Mulch for management and distribution using two different
+      methods: (1) stored at Lima Compost Facility and hauled for beneficial use on agricultural farm
+      fields; (2) blended with finished compost, wood chips and dirt to create a top soil blend sold as
+      topsoil to landscapers and residential customers.'
+    number: null
+    deadline: null
+  - kind: recommendation
+    text: The City should continue to obtain copies of the biosolids end user reports from Lima Compost
+      so that there are accurate records at the WWTP showing where the EQ biosolids are beneficially used.
+    number: null
+    deadline: null
+  - kind: finding
+    text: At the time of the inspection, the City was meeting the applicable requirements of Ohio's Sewage
+      Sludge Rules (Chapter 3745-40 of the Ohio Administrative Code).
+    number: null
+    deadline: null
+  - kind: finding
+    text: Blending operation at Lima Compost is regulated by Ohio EPA under sludge management plan (SMP)
+      No. 2MP00014. The SMP requires Lima Compost to monitor the newly created top soil blend after biosolids,
+      leaves, grass and woodchips are blended to ensure it still meets the EQ biosolids criteria.
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Facility information: Average Daily Flow 18.5 MGD; Design Treatment Capacity Max Flow 45 MGD;
+      Biosolids Storage Capacity approx. 5 months at plant; Contracted Alternative/Contingency Disposal:
+      586 Station and 588 Station in NPDES permit; Headworks Screening: Automatic Bar Screen.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Sewage Sludge Treatment units: 3 Anaerobic Digesters (two primary, one secondary; new linear
+      motion mixers installed); 3 Belt Filter Presses (2 run 5 days/week, 8 hrs/day, rotated in and out
+      of service); 2 Holding Tanks (1 MG capacity each); 2 Gravity Thickeners (1 for Lima WWTP solids,
+      1 as receiving tank for Allen County Sludge); 1 Storage Pad (building for EQ Lim-a-Soil); 1 NVIRO
+      Process unit (Cementec system to add lime and fly ash).'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Beneficial Use/Disposal: Beneficial Use (Class B and Exceptional Quality), Transfer to Another
+      NPDES Permittee (Lima Compost), and Landfill. EQ Biosolids managed by Wright Mulch — farmers land
+      apply some directly as fertilizer and Wright blends some EQ into their compost operation. Wright
+      needs to provide City with records indicating who received the biosolids that were land applied
+      and the amounts. When digesters were cleaned out for installation of new mixers, solids were dewatered
+      and hauled to landfill for disposal.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Pathogen Reduction Alternative: P-9 (High pH and High Temperature) is utilized. Vector Attraction
+      Reduction: VAR-1 (38% Volatile Solids Reduction) and VAR-6 (Alkaline Treatment). Records of pH maintained
+      ≥12 for 2 hours and ≥11.5 for 24 hours, and records of dry tons of alkaline material added are on
+      file.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Monitoring: Biosolids samples collected monthly at the Sludge Storage Pad by WWTP Operators
+      and Lab Techs. Chain of custody is utilized. Metals and nutrients samples sent to Alloway Labs (1101
+      N. Cole St., Lima, OH 45805). Fecal coliform samples run in-house by WWTP lab within eight hours
+      of collection. In-house analyses: Fecal, pH. Contracted analyses: Nutrients, metals (SW-846 for
+      inorganic metals; Standard Methods 2540G for Total, Fixed and Volatile Solids).'
+    number: null
+    deadline: null
+  summary: On December 5, 2017, Ohio EPA inspectors Andrew Gall and Peggy Christie conducted a Biosolids
+    Generator Inspection of the City of Lima WWTP (permit 2PE00000, Allen County). The inspection included
+    a plant walk-through and completion of the enclosed checklist evaluating compliance with Ohio's Sewage
+    Sludge Rules (OAC Chapter 3745-40). At the time of the inspection, the City was found to be meeting
+    the applicable requirements; one advisory recommendation was made regarding obtaining copies of biosolids
+    end user reports from Lima Compost for accurate recordkeeping.
+  note: null
