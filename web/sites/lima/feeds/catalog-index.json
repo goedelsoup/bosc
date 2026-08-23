@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "a1f882456c87380053ea766c0f6c6f8475bc0cb21d7451cea66c2b72d9a9c8ce",
-  "contract_version": "2.3.0",
+  "catalog_version": "6ca9ca26a9647d9e679ff753d0f8bf47303b81d5483fc067d5e2daef6749ec7b",
+  "contract_version": "2.4.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -3700,11 +3700,35 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-1104344.progress-report.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1104344.progress-report.yaml",
+      "title": "Lima Consent Decree (CD), Doc #5 Filed 01/13/15",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1294257.progress-report.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1294257.progress-report.yaml",
+      "title": "Lima Consent Decree (CD)",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-1610423.inspection.yaml",
       "kind": "record",
       "site": "lima",
       "local_id": "oepa/lima/edoc-1610423.inspection.yaml",
       "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1611092.progress-report.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1611092.progress-report.yaml",
+      "title": "Consent Decree",
       "feed": "records"
     },
     {
@@ -3908,6 +3932,22 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-2710557.progress-report.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2710557.progress-report.yaml",
+      "title": "Lima Consent Decree (CD)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-2710558.progress-report.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2710558.progress-report.yaml",
+      "title": "Lima Consent Decree (CD), Case 3:14-CV-02551-JZ",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-2956099.epa.yaml",
       "kind": "record",
       "site": "lima",
@@ -3929,6 +3969,14 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-3170033.inspection.yaml",
       "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3170035.progress-report.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170035.progress-report.yaml",
+      "title": "Consent Decree",
       "feed": "records"
     },
     {
@@ -3969,6 +4017,14 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-3170417.order.yaml",
       "title": "NOV",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3170422.progress-report.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170422.progress-report.yaml",
+      "title": "Lima Consent Decree (CD)",
       "feed": "records"
     },
     {
@@ -4116,6 +4172,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-472902.progress-report.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-472902.progress-report.yaml",
+      "title": "Lima Consent Decree (CD)",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-512329.inspection.yaml",
       "kind": "record",
       "site": "lima",
@@ -4169,6 +4233,14 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-747522.inspection.yaml",
       "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-990795.progress-report.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-990795.progress-report.yaml",
+      "title": "Lima Consent Decree (CD), Doc #5 Filed 01/13/15",
       "feed": "records"
     },
     {

@@ -1,0 +1,125 @@
+doc_id: edoc-990795-3193fc73
+source_path: data/documents/oepa/lima/edoc-990795.pdf
+kind: progress-report
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "PROGRESS REPORT  \nFEB 0  4 2019 DUE: January 31 and July 31 of each year until\
+  \ termination of Consent Decree 'OHI O \n~O.©. \nRECIPIENTS: REGION 5 OF USEPA  \nChief  \"'t: 1 ` \n\
+  Water Enforcement and Compliance Assurance Branch  \nWater Division  \nUS Environmental Protection Agency,\
+  \ Region5  \n77 West Jackson Blvd. \nChicago, IL 60604 \nNicole Cantello \nAssociate Regional Counsel\
+  \ \nUS Environmental Protection Agency, Region 5 \n77 West Jackson Blvd. \nChicago, IL 60604 \nCantello.nicole@epa.gov\
+  \  \nSTATE OF OHIO \nOhio Environmental Protection Agency \nDivision of Surface Water \nAttn: Manager,\
+  \ Permits and Comp"
+progress_report:
+  confidence: high
+  warnings:
+  - 'CLAUSE (f) IS AGGREGATED HERE, NOT ENUMERATED — 2 discharge_events for a period this report totals
+    as 114 SSO overflows and 32 CSO overflows (the table''s own OverflowTotals row, "Total # of Reports....23",
+    sourced to Overflows Monthly 2018.xlsx). That is a property of the DOCUMENT, not a truncated read.
+    The per-outfall table is present but is a scan of an embedded spreadsheet and its text layer is badly
+    garbled ("Da!e Dr." for Dale Dr., "SSQ" for SSO, outfall ids running together with counts). Transcribing
+    those rows would have invented outfall identifiers and event counts, so the aggregate the report states
+    in prose is recorded instead and the rows are not. Prefer omission over invention.'
+  - TO GET THE PER-OUTFALL ROWS, read the page images rather than the text layer — the same hazard and
+    the same remedy as the consent decree's rotated Table A.1 (#2075). Sibling reports in this series
+    (edoc-3170035, 2710558, 1104344, 1294257, 1611092) DO enumerate, at 49-54 events each, because their
+    tables carry a clean text layer. The difference between 3 events and 50 in this genre is the scan
+    quality, never the plant's behaviour — do NOT read a low discharge_events count as a quiet half-year.
+  agency: U.S. EPA Region 5 / Ohio EPA (Division of Surface Water)
+  instrument: 'Lima Consent Decree (CD), Doc #5 Filed 01/13/15'
+  case_no: 3:14-CV-02551-JZ
+  paragraph: '33'
+  respondent: City of Lima, Ohio
+  facility: City of Lima Wastewater Treatment Plant / Sewer System
+  permit_no: null
+  report_date: '2019-02-04'
+  period_start: '2018-07-01'
+  period_end: '2018-12-31'
+  deadlines_status: (1) July 1, 2018 --- Lima was required to submit a WWTP Flow Maximization Plan. Lima
+    submitted the plan on June 28, 2018 (submitted early, in compliance).
+  noncompliance_reasons: None stated. All identified deadlines were met (WWTP Flow Maximization Plan submitted
+    June 28, 2018, before the July 1, 2018 deadline).
+  projects:
+  - name: Lima Wastewater Treatment Headworks Project
+    status: Commenced construction July 1, 2015. Building and tank construction is complete.
+    next_period: Continuation of seeding of the nitrification tower and performance testing of the tower
+      for TSS and BOD removal.
+  - name: CMOM Plan
+    status: Lima submitted a plan revision to USEPA on 7/31/18 that included changes requested by Mr.
+      Todd Brown in an email dated 3/20/18.
+    next_period: null
+  - name: Asset Management — Phase 1 High Street/Jameson Avenue Sewer Rehabilitation Project
+    status: Contract documents signed and Notice-to-Proceed issued 7/17/18. Field activities commenced
+      9/18/18. Progress includes dye-water testing of laterals and installation of the first manhole.
+    next_period: Complete installation of 10-inch PVC sanitary sewer and manholes on High Street between
+      N. Rosedale and N. Jameson; begin HDPE lining of the 78-inch and 54-inch segmented block sewers.
+  - name: Supplemental Environmental Project (SEP)
+    status: Project is complete. Maintenance of the project area will continue with the possibility of
+      a spring burning.
+    next_period: Continued maintenance; possibility of spring burning.
+  - name: Simmon's Field CSO EQ Basin
+    status: Excavation of soil and rock to base elevation complete; diversion structure and partial completion
+      of 96-inch diversion pipe; partial completion of pump station wet well; completion of bridge over
+      Ottawa River for future force main; completion of rock anchor installation; partially completed
+      base slab; initial framing of wall structure.
+    next_period: Completion of base slab; continued construction of walls and interior support structures;
+      continued construction of pump station wet well; continued construction of 96-inch diversion pipe.
+      See attached Gantt chart for more detailed activities.
+  agency_contacts:
+  - July 31, 2018 --- Lima submitted to USEPA and OEPA a revised CMOM Plan and CSOOP that included changes
+    requested in a letter from USEPA on 3/20/18.
+  - September 21, 2018 --- Lima submitted to OEPA a CSO Public Notification Plan.
+  - October 5, 2018 --- Lima submitted a SSO 5-day Follow-up Report to OEPA concerning the failure of
+    a check valve at the Mumaugh Road Lift Station that occurred on 10/4/18.
+  - October 11, 2018 --- Lima submitted a revised CSO Public Notification Plan that addressed changes
+    requested by OEPA in a comment letter dated 9/27/18.
+  - October 19, 2018 --- Lima received a letter of approval from OEPA for the CSO Notification Plan.
+  permit_exceedances:
+  - July 7, 2018 --- Lima recorded 'AD' values for overflow volume at Stations 002 and 003. The sensors
+    were in the process of being replaced and reprogrammed. That work has been completed.
+  - August 23, 2018 --- Lima submitted a response letter to OEPA in reference to an exceedance of mercury
+    and ammonia at Station 604, as identified on the Preliminary Compliance Report dated 8/21/18.
+  discharge_events:
+  - kind: WIB (Water-in-Basement)
+    location: Manhole invert (debris blockage causing basement backup)
+    date: null
+    frequency: 1 occurrence during reporting period
+    duration: null
+    volume: null
+    estimated: null
+    note: Debris collected in a manhole invert causing flow to back up into a basement. Lima completed
+      3 WIB projects this reporting period, bringing total home projects to 144 since program inception.
+  - kind: SSO & CSO
+    location: Multiple locations — see attached Overflow Totals Report
+    date: 2018-07-01 to 2018-12-31
+    frequency: 114 SSO overflows, 32 CSO overflows (Total 146 overflow reports across 53 locations)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Numbers reported monthly to OEPA as part of the monthly Discharge Monitoring Report. See attached
+      Overflow Totals Report for detail. Report updated 1-15-19; Total # of Reports: 23.'
+  summary: This is the semiannual compliance progress report filed by the City of Lima, Ohio under Paragraph
+    33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ) for the reporting period July 1, 2018 through
+    December 31, 2018. Lima reports that all identified deadlines were met, with five named capital and
+    program projects underway, including the Simmon's Field CSO EQ Basin under active construction. The
+    report identifies two NPDES permit exceedances, one WIB event, and 146 total SSO/CSO overflow events
+    during the period, as detailed in the attached Overflow Totals Report.
+  note: 'Report received by Ohio EPA N.W.D.O. on FEB 04 2019. Signed by Michael H. Caprella, Director
+    of Utilities, City of Lima, Ohio. Attachment includes SSO & CSO Overflow Totals for July 1 – December
+    31, 2018 and a Gantt chart (Peterson Construction Company, Lima CSO Classic Schedule Layout). Secondary
+    ID stamped: 2PF00000 (partially legible).'

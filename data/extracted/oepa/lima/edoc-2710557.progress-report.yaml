@@ -1,0 +1,149 @@
+doc_id: edoc-2710557-e63b4c1d
+source_path: data/documents/oepa/lima/edoc-2710557.pdf
+kind: progress-report
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "e \n(~ PROGRESS REPORT \nc \nRECEIVED \nJUL 3 0 2018 \nOHIO E.P.A. \nN.W.D.O. \n\
+  DUE: January 31 and July 31 of each year until termination of Consent Decree \nRECIPIENTS: REGION S\
+  \ OF USEPA \nChief \nWater Enforcement and Compliance Assurance Branch . \nWater Division \nUS Environmental\
+  \ Protection Agency, Region5 \n77 Westiackson Blvd. \nChicago, 1L 60604 \nNicole Cantello \nAssociate\
+  \ Regional Counsel \nUS Environmental Protection Agency, Region 5 \n77 West .lackson Blvd. \nChicago,\
+  \ IL 60604 \nCantello.nicole~ e~agcv \nOhio Environmental Protection Agency \n`t3ivision of Surface\
+  \ Water \nAttn: Manager, Permits and Com"
+progress_report:
+  confidence: high
+  warnings:
+  - CLAUSE (f) IS AGGREGATED HERE, NOT ENUMERATED — 3 discharge_events for a period this report totals
+    as 127 SSO overflows and 11 CSO overflows. That is a property of the DOCUMENT, not a truncated read.
+    The per-outfall table is present but is a scan of an embedded spreadsheet and its text layer is badly
+    garbled ("Da!e Dr." for Dale Dr., "SSQ" for SSO, outfall ids running together with counts). Transcribing
+    those rows would have invented outfall identifiers and event counts, so the aggregate the report states
+    in prose is recorded instead and the rows are not. Prefer omission over invention.
+  - TO GET THE PER-OUTFALL ROWS, read the page images rather than the text layer — the same hazard and
+    the same remedy as the consent decree's rotated Table A.1 (#2075). Sibling reports in this series
+    (edoc-3170035, 2710558, 1104344, 1294257, 1611092) DO enumerate, at 49-54 events each, because their
+    tables carry a clean text layer. The difference between 3 events and 50 in this genre is the scan
+    quality, never the plant's behaviour — do NOT read a low discharge_events count as a quiet half-year.
+  - OCR renders case number inconsistently (3:14-CV-02553-JZ vs. 3:14-CV-02551-JZ); image header clearly
+    shows 3:14-CV-02551-JZ, which is used.
+  - Overflow Totals table OCR is heavily degraded; individual event volumes and durations are not legible
+    from OCR — only aggregate counts (127 SSO, 11 CSO) are recorded.
+  - Gantt chart pages are largely unreadable from OCR; no structured project schedule data extracted.
+  agency: U.S. EPA Region 5 / Ohio EPA (Division of Surface Water, Northwest District Office)
+  instrument: Lima Consent Decree (CD)
+  case_no: 3:14-CV-02551-JZ
+  paragraph: '33'
+  respondent: 'City of Lima, Ohio (Director of Utilities: Michael H. Cappa)'
+  facility: City of Lima Wastewater Treatment / Sewer System, Lima, Ohio
+  permit_no: null
+  report_date: '2018-07-31'
+  period_start: '2018-01-01'
+  period_end: '2018-06-30'
+  deadlines_status: January 31, 2018 --- Lima was required to submit a Revised Supplemental Environmental
+    Project (SEP) Completion Report. Lima submitted the report on 1/30/18 (one day early — met).
+  noncompliance_reasons: None reported. All identified deadlines were met.
+  projects:
+  - name: Lima Wastewater Treatment Headworks Project
+    status: Commenced construction on 7/1/15. Building and tank construction is complete.
+    next_period: Continued development of implementation strategy for seeding nitrification towers during
+      dry weather to develop biomass suitable for wet weather treatment; continued development of implementation
+      strategy for employing primary tank 5-7, effluent pumping, and towers to treat wet weather flows;
+      continued development of PLC programming for seeding the nitrification tower and for control of
+      wet weather treatment system; continued development of dry weather seeding strategy for towers and
+      collection of data.
+  - name: CMOM Plan Development
+    status: Lima submitted the revised plan to USEPA on 5/26/17. Lima received a request from USEPA on
+      3/20/18 to make a revision to the plan and resubmit for approval.
+    next_period: Lima will be submitting the plan with the requested revision to USEPA in conjunction
+      with this Consent Decree report on 7/31/18.
+  - name: Asset Management — Phase I Segmented Block Rehabilitation
+    status: Project was bid in January 2018. Benchmark Construction was awarded the contract on 2/14/18
+      for $3,250,828. Lima received the PTI from OEPA on 2/20/18. Project start has been delayed due to
+      the need to relocate a natural gas line.
+    next_period: Commencement of construction and completion of the project.
+  - name: Supplemental Environmental Project (SEP)
+    status: Project is complete. Lima submitted a Revised SEP Completion Report on 1/31/18. Lima received
+      USEPA approval of the revised plan on 6/12/18. Lima is required to maintain the plantings in good
+      condition through the life of the Consent Decree.
+    next_period: Conduct a controlled burn to control the growth of invasive species of grass and weeds.
+  - name: Simmon's Field CSO EQ Basin
+    status: City is under contract with Stantec for engineering and construction. Project was re-bid on
+      1/31/18 and 2/7/18. Bids opened on 2/22/18. PTI issued on 2/27/18. Project awarded to Peterson Construction;
+      official groundbreaking occurred on 5/4/18. Excavation activities to date include removal of approximately
+      15 feet of soil within the footprint of the storage basin and installation of fencing and shoring.
+    next_period: Continued excavation of soil down to bedrock, then blasting and excavating rock down
+      to maximum tank depth; inspection of three underground control structures and replacement as necessary
+      of gates, gate stems, motors and operators; excavation for construction of the diversion structure.
+      See attached Gantt chart for more detailed activities.
+  agency_contacts:
+  - January 30, 2018 --- Lima submitted a revised SEP Plan to USEPA.
+  - February 20, 2018 --- Lima received PTI from OEPA for construction of a 10-inch sanitary sewer as
+    part of the Segmented Block Sewer Rehabilitation Project.
+  - March 20, 2018 --- Lima received a request from USEPA on 3/20/18 to make revisions to the CMOM and
+    CSO Operations plans and resubmit for approval.
+  - February 27, 2018 --- Lima received PTI from OEPA for construction of the CSO EQ Basin.
+  - March 22, 2018 --- Lima received notification from OEPA that the proposed new NPDES permit was posted
+    for a 30-day public comment period.
+  - June 12, 2018 --- Lima received approval of the Revised SEP plan from USEPA, with conditions to maintain
+    the plantings in good condition through the term of the Consent Decree.
+  - June 14, 2018 --- Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning a force main break
+    near the Cable Road Lift Station.
+  - June 22, 2018 --- Lima met with OEPA officials in Columbus to discuss unresolved issues with the proposed
+    NPDES permit.
+  permit_exceedances: []
+  discharge_events:
+  - kind: Water-in-Basement (WIB)
+    location: Sanitary mainline (surcharged after rainfall event of 0.75")
+    date: 2018-01-01/2018-06-30
+    frequency: 1 occurrence during reporting period
+    duration: null
+    volume: null
+    estimated: null
+    note: Lima completed 1 WIB project in this reporting period. City continues to work with homeowners
+      through WIB Program.
+  - kind: SSO/CSO
+    location: Multiple locations — see attached Overflow Totals Report (SSO & CSO Monthly Reporting)
+    date: 2018-01-01/2018-06-30
+    frequency: 127 SSO overflows, 11 CSO overflows (Total 138 overflow reports; 24 total reports)
+    duration: null
+    volume: null
+    estimated: null
+    note: Numbers reported monthly to OEPA as part of monthly Discharge Monitoring Report. See attached
+      Overflow Totals Report.
+  - kind: SSO
+    location: Force main break near Cable Road Lift Station
+    date: '2018-06-14'
+    frequency: null
+    duration: null
+    volume: null
+    estimated: null
+    note: Lima submitted a SSO 5-Day Follow-up Report to OEPA. Caused by structural/mechanical failure;
+      24-hour emergency response crew dispatched.
+  summary: This is Lima's semiannual Consent Decree progress report for the period January 1 through June
+    30, 2018, filed under Paragraph 33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ). Lima reports
+    it met the one deadline due this period (Revised SEP Completion Report submitted 1/30/18), describes
+    progress on five active projects including the Headworks Project, CMOM Plan, Segmented Block Rehabilitation,
+    SEP, and Simmon's Field CSO EQ Basin, and notes no NPDES permit exceedances. SSO and CSO overflow
+    totals for the period are attached (127 SSO and 11 CSO overflow reports), and one SSO 5-Day Follow-up
+    Report was submitted to OEPA for a force main break near the Cable Road Lift Station.
+  note: Report received by Ohio EPA N.W.D.O. on July 30, 2018. Signed by Michael H. Cappa, Director of
+    Utilities, City of Lima, Ohio. Attachment includes SSO & CSO Overflow Totals (January 1 – June 30,
+    2018) and Gantt chart for Simmon's Field CSO EQ Basin project (Peterson Construction Company). OCR
+    reads case number as 3:14-CV-02553-JZ in one location and 3:14-CV-02551-JZ in the header reference;
+    image shows 3:14-CV-02551-JZ.

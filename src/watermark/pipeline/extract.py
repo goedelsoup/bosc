@@ -35,6 +35,7 @@ from watermark.models import (
     AwardExtraction,
     BusinessFiling,
     ComplianceInspection,
+    ComplianceProgressReport,
     Deed,
     DeedExtraction,
     DocExtraction,
@@ -55,6 +56,7 @@ from watermark.models import (
     OrderExtraction,
     PageExtraction,
     PlanExtraction,
+    ProgressReportExtraction,
     SectionSubtotals,
     SitePlan,
     SosExtraction,
@@ -1012,6 +1014,91 @@ def extract_inspection(
     )
 
 
+PROGRESS_REPORT_INSTRUCTIONS = """\
+You are reading a periodic COMPLIANCE PROGRESS REPORT filed by a respondent UNDER an
+enforcement instrument — typically the semiannual report a consent decree requires. The
+filer is the REGULATED PARTY reporting on itself, not an agency finding anything. It
+imposes nothing. Record into the tool:
+  * agency: the recipients (e.g. "U.S. EPA Region 5 / Ohio EPA"); instrument: what it
+    reports under (e.g. "consent decree"); paragraph: the reporting clause number ("33").
+  * case_no: the CASE NUMBER ALONE and nothing else. These reports cite the decree as
+    "CASE: 3:14-CV-02551-JZ Doc #5 Filed: 01/13/15" — the case number is
+    "3:14-CV-02551-JZ"; "Doc #5 Filed: 01/13/15" identifies one FILING inside it and does
+    not belong in this field. A row carrying the docket entry will not join the order
+    extraction for the same case. Put the filing citation in `note` if it is worth keeping.
+  * respondent (the filing party); facility; permit_no if referenced.
+  * report_date (ISO — filed/received) and period_start / period_end (ISO) for the
+    reporting period. These reports name the period explicitly ("Previous Calendar half
+    year Progress Report Period 7/1/2019 to 12/31/2019"); read it, do not infer it from
+    the filing date.
+  * deadlines_status: clause (a) — the deadlines and terms due this period and whether
+    they were met. If the report says "None", record "None" rather than leaving it null:
+    an explicit nothing-due is evidence. noncompliance_reasons: the reasons it states.
+  * projects: clause (b) — one entry per NAMED project, with `status` for this period and
+    `next_period` for the projected work. Keep the report's own project names.
+  * agency_contacts: clause (d) — each dated deliverable or material contact as printed.
+  * permit_exceedances: clause (e) — one entry per exceedance, as printed. An explicit
+    "none" is an empty list plus a note, never a fabricated entry.
+  * discharge_events: clause (f) — one entry per CSO / SSO / bypass / unpermitted
+    discharge, with kind, location, date, frequency, duration and volume AS PRINTED. Keep
+    the printed units; do NOT convert. Set `estimated` true only where the report itself
+    says the figure is estimated rather than measured.
+  * summary: 1-3 sentences on what this period reports.
+Rules: dates as ISO; figures and project names exactly as printed; a self-report is the
+filer's assertion, so never upgrade it to a finding; leave a field null rather than
+inventing; set confidence and add warnings for strained reads.
+"""
+
+
+_PROGRESS_REPORT_SPEC = DocSpec(
+    kind="progress-report",
+    model=ComplianceProgressReport,
+    extraction_cls=ProgressReportExtraction,
+    field="progress_report",
+    instructions=PROGRESS_REPORT_INSTRUCTIONS,
+    dpi=_EPA_DPI,
+    text_pages=14,
+    image_pages=2,
+    summary=lambda r: {
+        "period": f"{r.period_start or '?'}..{r.period_end or '?'}",
+        "projects": len(r.projects),
+        "discharges": len(r.discharge_events),
+    },
+)
+
+
+def extract_progress_report(
+    doc: SourceDocument,
+    *,
+    extractor: StructuredExtractor | None = None,
+    pdf: PdfDocument | None = None,
+    dpi: int = _EPA_DPI,
+    settings: Settings | None = None,
+    text_pages: int = 14,
+    image_pages: int = 2,
+) -> ProgressReportExtraction:
+    """Extract a periodic compliance progress report, text-first.
+
+    Exposes ``image_pages`` for the same reason :func:`extract_inspection` does: these
+    reports run to a dozen pages and one in this corpus arrives with the whole decree
+    attached, so a fixed budget silently truncates the clause (f) discharge inventory —
+    the part no other genre carries.
+    """
+    return cast(
+        "ProgressReportExtraction",
+        _extract_doc(
+            _PROGRESS_REPORT_SPEC,
+            doc,
+            extractor=extractor,
+            pdf=pdf,
+            dpi=dpi,
+            settings=settings,
+            text_pages=text_pages,
+            image_pages=image_pages,
+        ),
+    )
+
+
 AWARD_INSTRUCTIONS = """\
 You are reading a public-finance AWARD record — a WPCLF / OWDA loan or its
 application, a principal-forgiveness grant authorization, a federal grant (FEMA
@@ -1298,6 +1385,7 @@ DOC_EXTRACTORS: dict[str, DocumentExtractor] = {
     "epa": extract_epa,
     "order": extract_order,
     "inspection": extract_inspection,
+    "progress-report": extract_progress_report,
     "award": extract_award,
     "wetland": extract_wetland,
     "plan": extract_plan,

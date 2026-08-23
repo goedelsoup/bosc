@@ -720,7 +720,19 @@ from watermark.sites import (
 #   readable as a series rather than a pile. Enum growth is additive for feed READERS (a pre-2.3
 #   records.json stays valid) but a pre-2.3 records.schema.json rejects the new value — MINOR,
 #   back-compatible for data, schema refresh required.
-CONTRACT_VERSION = "2.3.0"
+# 2.4.0: the `records` feed's closed RecordGroup enum gains `compliance-reports` — a
+#   `progress_report:` payload block, the periodic self-report genre added in #2079 for the nine
+#   paragraph-33 semiannual reports the Lima consent decree requires "until termination". It is
+#   neither `enforcement` nor `inspections`, and both exclusions are the point: a progress report
+#   reports AGAINST obligations rather than imposing them (reading nine of them as `order` would
+#   publish nine near-duplicates of the decree they answer), and it is the RESPONDENT reporting on
+#   itself rather than the agency visiting the plant, which is what an `inspections` row means. The
+#   group carries the clause-(f) discharge inventory — a self-reported CSO/SSO/bypass series with
+#   frequency, duration and volume that no other feed in this corpus holds; the DMR feed is
+#   permit-limit monitoring, not overflow events. Enum growth is additive for feed READERS (a
+#   pre-2.4 records.json stays valid) but a pre-2.4 records.schema.json rejects the new value —
+#   MINOR, back-compatible for data, schema refresh required.
+CONTRACT_VERSION = "2.4.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -732,6 +744,7 @@ RecordGroup = Literal[
     "enforcement",
     "finance",
     "incentive-package",
+    "compliance-reports",
     "inspections",
     "labor",
     "land-assembly",

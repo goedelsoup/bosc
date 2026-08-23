@@ -16,7 +16,16 @@ storage:
 - relpath: extracted/oepa/lima/edoc-1048235.inspection.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-1104344.progress-report.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1294257.progress-report.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-1610423.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1611092.progress-report.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-1752399.inspection.yaml
@@ -94,6 +103,12 @@ storage:
 - relpath: extracted/oepa/lima/edoc-2710555.npdes.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-2710557.progress-report.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-2710558.progress-report.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-2956099.epa.yaml
   media_type: application/x-yaml
   lfs: false
@@ -101,6 +116,9 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3170033.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170035.progress-report.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3170036.order.yaml
@@ -116,6 +134,9 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3170417.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170422.progress-report.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3187290.epa.yaml
@@ -172,6 +193,9 @@ storage:
 - relpath: extracted/oepa/lima/edoc-470936.order.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-472902.progress-report.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-512329.inspection.yaml
   media_type: application/x-yaml
   lfs: false
@@ -191,6 +215,9 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-747522.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-990795.progress-report.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:
@@ -258,12 +285,18 @@ notes: "The enforcement half of the Lima WWTP record, kept separate from the per
   \ is transcribed faithfully and the storm is uniformly overstated on\nthe four lower-tier basins. Recorded,\
   \ not resolved — lead `SSO-DESIGN-STORM`. That application also\ncarries the plant's full SSO outfall\
   \ inventory with coordinates, which is the geometry the Cole St.\nquestion (#1760) actually needs.\n\
-  \nStill ingested and NOT yet extracted — 32 of the 93:\n  22  City / agency correspondence and submittals\
-  \ in the permit drawer, a 2013 City ordinance\n      (edoc-2955962, 66pp), a mercury variance application\
-  \ (edoc-3170366), and the five remaining\n      parts of the 2022 application package APP256207483 (three\
-  \ byte-identical flow diagrams, a\n      28-page image-only attachment, a diagram).\n   1  `edoc-2363112.pdf`\
+  \nThe nine paragraph-33 progress reports are read (#2079), under the `compliance-report` genre added\n\
+  for them. They are the decree's own measuring instrument: paragraph 33 requires one every January 31\n\
+  and July 31 \"until termination\", and each follows the decree's lettered structure. Together they\n\
+  carry 262 discharge events and 18 permit exceedances, 2016 through 2021.\n\n⚠️ A LOW `discharge_events`\
+  \ COUNT IS A SCAN ARTEFACT, NOT A QUIET HALF-YEAR. Five reports enumerate\nclause (f) per outfall (49-54\
+  \ events each); four state only an aggregate because their per-outfall\ntable is a scan of an embedded\
+  \ spreadsheet whose text layer is garbled (\"Da!e Dr.\", \"SSQ\" for SSO).\nThose four record the prose\
+  \ aggregate instead of inventing outfall ids — and the aggregates are the\nheadline: 2018 H1 reports\
+  \ 127 SSO and 11 CSO overflows, 2018 H2 reports 114 SSO and 32 CSO. The\nper-outfall rows are recoverable\
+  \ from the page images, the same remedy as the decree's rotated\nTable A.1.\n\nStill ingested and NOT\
+  \ yet extracted — 23 of the 93:\n  22  City / agency correspondence and submittals in the permit drawer,\
+  \ a 2013 City ordinance\n      (edoc-2955962, 66pp), a mercury variance application (edoc-3170366),\
+  \ and five remaining parts\n      of the 2022 application package APP256207483.\n   1  `edoc-2363112.pdf`\
   \ — NEVER to be extracted. Byte-identical (sha256 b140e19c5e26) to\n      `oepa/2PE00000.pdf`, already\
-  \ extracted. Recorded as a cluster in document-versions.yaml.\n   9  paragraph-33 semiannual progress\
-  \ reports — NO GENRE FITS. A progress report reports AGAINST\n      obligations rather than imposing\
-  \ them; extracting one as an `order` would publish a\n      near-duplicate of the decree. Needs a model,\
-  \ as `inspection` did.\n"
+  \ extracted. Recorded as a cluster in document-versions.yaml.\n"

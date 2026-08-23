@@ -68,6 +68,11 @@ _BLOCK_TO_GROUP: dict[str, str] = {
     # enforcement heading would present compliance assistance as an enforceable term, the same
     # misclassification `layoff_notice` and `statutory_notice` exist to prevent.
     "inspection": "inspections",
+    # A periodic progress report filed UNDER an enforcement instrument (#2079). Neither
+    # `enforcement` nor `inspections`: it reports AGAINST obligations rather than imposing them,
+    # and it is the respondent reporting on itself rather than the agency inspecting the plant.
+    # Filing it under either would misrepresent who is asserting what.
+    "progress_report": "compliance-reports",
     "award": "finance",
     "permit": "permits-npdes",
     "filing": "permits-sos",
