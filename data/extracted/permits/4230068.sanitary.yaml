@@ -1,0 +1,564 @@
+doc_id: 4230068-15c535d3
+source_path: data/documents/permits/bistrozzi-permits/4230068.pdf
+kind: sanitary
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+- 16
+image_pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+- 16
+dpi: 200
+source_text_excerpt: '
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  '
+record:
+  confidence: high
+  warnings:
+  - No formal drawing index (sheet list) is present in this submission; only sheet
+    1A-C-5000 (testing requirements) is explicitly referenced on-form. Additional
+    plan sheets (e.g. 1A-C-5110) are referenced but not listed.
+  - Total gravity sewer pipe stated as 7,819 LF in project description narrative;
+    summing individual pipe-schedule lengths (2089+694+1034+1087+2426+517 = 7,847
+    LF) yields a ~28 LF discrepancy – flagged for verification.
+  - Force main length stated as 4,034 LF in project description narrative vs. 4,304
+    LF in the pipe schedule table – discrepancy flagged for verification; both values
+    recorded.
+  - No pump schedule or lift-station equipment model/capacity data visible in these
+    pages; pump specifications (capacity, TDH, manufacturer) not extractable.
+  - EPR status is 'Division Review in Progress' – this is a permit application, not
+    a finalized as-built or approved record drawing.
+  project_name: BOSC-1A Private Sanitary Sewer Improvement Plan – Rev. 1
+  facility_name: Bistrozzi LLC
+  record_type: construction plans / permit-to-install application
+  discipline: sanitary sewer
+  record_date: '2026-05-27'
+  project_no: DSW-7312
+  site_address: 'North of W Bluelick Rd and east of N Cole St, Allen County, Ohio
+    (Lat: 40.793917, Long: -84.124600)'
+  prepared_by:
+  - name: Evans, Mechwart, Hambleton, & Tilton, Inc. (EMH&T)
+    discipline: civil/sanitary engineering (PE of record)
+    location: null
+  sheets:
+  - sheet_id: 1A-C-5000
+    title: Testing Requirements (gravity, pressure, and flexible pipe deflection;
+      manhole testing)
+  components:
+  - name: Gravity Sewer Pipe – 24-inch PVC
+    category: pipe
+    quantity: 2089 ft
+    specs:
+    - parameter: type
+      value: Gravity
+      unit: null
+    - parameter: pipe size
+      value: '24'
+      unit: in
+    - parameter: material
+      value: PVC
+      unit: null
+    - parameter: material specification
+      value: ASTM F-679
+      unit: null
+    - parameter: joint specification
+      value: ASTM D-3212
+      unit: null
+    - parameter: bedding classification
+      value: ASTM D2321
+      unit: null
+    - parameter: min slope
+      value: '0.12'
+      unit: '%'
+    - parameter: pipe length
+      value: '2089'
+      unit: ft
+    - parameter: max manhole spacing
+      value: '388'
+      unit: ft
+    note: null
+  - name: Gravity Sewer Pipe – 15-inch PVC
+    category: pipe
+    quantity: 694 ft
+    specs:
+    - parameter: type
+      value: Gravity
+      unit: null
+    - parameter: pipe size
+      value: '15'
+      unit: in
+    - parameter: material
+      value: PVC
+      unit: null
+    - parameter: material specification
+      value: ASTM D-3034
+      unit: null
+    - parameter: joint specification
+      value: ASTM D-3212
+      unit: null
+    - parameter: bedding classification
+      value: ASTM D2321
+      unit: null
+    - parameter: min slope
+      value: '0.25'
+      unit: '%'
+    - parameter: pipe length
+      value: '694'
+      unit: ft
+    - parameter: max manhole spacing
+      value: '232'
+      unit: ft
+    note: null
+  - name: Gravity Sewer Pipe – 12-inch PVC
+    category: pipe
+    quantity: 1034 ft
+    specs:
+    - parameter: type
+      value: Gravity
+      unit: null
+    - parameter: pipe size
+      value: '12'
+      unit: in
+    - parameter: material
+      value: PVC
+      unit: null
+    - parameter: material specification
+      value: ASTM D-3034
+      unit: null
+    - parameter: joint specification
+      value: ASTM D-3212
+      unit: null
+    - parameter: bedding classification
+      value: ASTM D2321
+      unit: null
+    - parameter: min slope
+      value: '0.20'
+      unit: '%'
+    - parameter: pipe length
+      value: '1034'
+      unit: ft
+    - parameter: max manhole spacing
+      value: '305'
+      unit: ft
+    note: null
+  - name: Gravity Sewer Pipe – 10-inch PVC
+    category: pipe
+    quantity: 1087 ft
+    specs:
+    - parameter: type
+      value: Gravity
+      unit: null
+    - parameter: pipe size
+      value: '10'
+      unit: in
+    - parameter: material
+      value: PVC
+      unit: null
+    - parameter: material specification
+      value: ASTM D-3034
+      unit: null
+    - parameter: joint specification
+      value: ASTM D-3212
+      unit: null
+    - parameter: bedding classification
+      value: ASTM D2321
+      unit: null
+    - parameter: min slope
+      value: '0.25'
+      unit: '%'
+    - parameter: pipe length
+      value: '1087'
+      unit: ft
+    - parameter: max manhole spacing
+      value: '377'
+      unit: ft
+    note: null
+  - name: Gravity Sewer Pipe – 8-inch PVC
+    category: pipe
+    quantity: 2426 ft
+    specs:
+    - parameter: type
+      value: Gravity
+      unit: null
+    - parameter: pipe size
+      value: '8'
+      unit: in
+    - parameter: material
+      value: PVC
+      unit: null
+    - parameter: material specification
+      value: ASTM D-3034
+      unit: null
+    - parameter: joint specification
+      value: ASTM D-3212
+      unit: null
+    - parameter: bedding classification
+      value: ASTM D2321
+      unit: null
+    - parameter: min slope
+      value: '0.50'
+      unit: '%'
+    - parameter: pipe length
+      value: '2426'
+      unit: ft
+    - parameter: max manhole spacing
+      value: '261'
+      unit: ft
+    note: null
+  - name: Gravity Sewer Pipe – 6-inch PVC
+    category: pipe
+    quantity: 517 ft
+    specs:
+    - parameter: type
+      value: Gravity
+      unit: null
+    - parameter: pipe size
+      value: '6'
+      unit: in
+    - parameter: material
+      value: PVC
+      unit: null
+    - parameter: material specification
+      value: ASTM D-2729
+      unit: null
+    - parameter: joint specification
+      value: ASTM D-2564
+      unit: null
+    - parameter: bedding classification
+      value: ASTM D2321
+      unit: null
+    - parameter: min slope
+      value: '2.08'
+      unit: '%'
+    - parameter: pipe length
+      value: '517'
+      unit: ft
+    - parameter: max manhole spacing
+      value: '139'
+      unit: ft
+    note: null
+  - name: Force Main – 6-inch PVCO
+    category: pipe
+    quantity: 4304 ft
+    specs:
+    - parameter: type
+      value: Force Main
+      unit: null
+    - parameter: pipe size
+      value: '6'
+      unit: in
+    - parameter: material
+      value: PVCO
+      unit: null
+    - parameter: material specification
+      value: AWWA C900
+      unit: null
+    - parameter: joint specification
+      value: ASTM D3139
+      unit: null
+    - parameter: bedding classification
+      value: ASTM D2321
+      unit: null
+    - parameter: min slope
+      value: '0.00'
+      unit: '%'
+    - parameter: pipe length
+      value: '4304'
+      unit: ft
+    - parameter: max manhole spacing
+      value: '3967'
+      unit: ft
+    note: null
+  - name: Sanitary Sewer Pipe (total gravity)
+    category: pipe
+    quantity: 7819 ft
+    specs:
+    - parameter: total gravity sewer pipe length
+      value: '7819'
+      unit: ft
+    note: null
+  - name: Sanitary Force Main (total)
+    category: pipe
+    quantity: 4034 ft
+    specs:
+    - parameter: total sanitary force main length
+      value: '4034'
+      unit: ft
+    note: null
+  - name: Manholes
+    category: structure
+    quantity: '35'
+    specs:
+    - parameter: type
+      value: Precast Reinforced Concrete
+      unit: null
+    - parameter: material specification
+      value: ASTM C-478
+      unit: null
+    - parameter: joint specification
+      value: ASTM C-443
+      unit: null
+    - parameter: inlet/outlet connections
+      value: gasketed flexible watertight (GLUMRB Section 34.6)
+      unit: null
+    - parameter: manhole testing
+      value: ASTM C1244
+      unit: null
+    - parameter: drop manholes
+      value: Yes, where entrance sewer invert is 24 inches or more above manhole invert
+      unit: null
+    note: null
+  - name: Wet Wells
+    category: structure
+    quantity: '2'
+    specs:
+    - parameter: diameter
+      value: '10'
+      unit: ft
+    - parameter: note
+      value: 10-ft diameter wet wells; temporary lift station included
+      unit: null
+    note: null
+  - name: Flow Split Junction Structure
+    category: structure
+    quantity: '1'
+    specs:
+    - parameter: type
+      value: Flow Split Junction
+      unit: null
+    note: null
+  - name: Lift Station (temporary)
+    category: pump
+    quantity: '1'
+    specs:
+    - parameter: type
+      value: Temporary lift station
+      unit: null
+    - parameter: note
+      value: Downsized as result of design daily flow reduction from 0.333 to 0.10
+        MGD per Rev.1
+      unit: null
+    note: null
+  design_parameters:
+  - parameter: start-up average daily flow
+    value: '0.10'
+    unit: MGD
+  - parameter: start-up peak hourly flow
+    value: '0.36'
+    unit: MGD
+  - parameter: design average daily flow
+    value: '0.10'
+    unit: MGD
+  - parameter: design peak hourly flow
+    value: '0.36'
+    unit: MGD
+  - parameter: hydraulic capacity of sewer
+    value: '0.79'
+    unit: MGD
+  - parameter: non-residential (commercial/industrial) start-up flow
+    value: '0.10'
+    unit: MGD
+  - parameter: non-residential (commercial/industrial) design flow
+    value: '0.36'
+    unit: MGD
+  - parameter: receiving WWTP present ADF
+    value: '0.953'
+    unit: MGD
+  - parameter: receiving WWTP ADF basis month/year
+    value: 01/25
+    unit: null
+  - parameter: receiving WWTP proposed ADF (with new sewer)
+    value: '1.083'
+    unit: MGD
+  - parameter: receiving WWTP design ADF
+    value: '1.500'
+    unit: MGD
+  - parameter: receiving WWTP design year
+    value: '1995'
+    unit: null
+  - parameter: receiving WWTP
+    value: American/Bath WWTP
+    unit: null
+  - parameter: project latitude
+    value: '40.793917'
+    unit: null
+  - parameter: project longitude
+    value: '-84.124600'
+    unit: null
+  - parameter: sewer leakage test type
+    value: Air
+    unit: null
+  - parameter: flexible pipe deflection testing
+    value: Yes (GLUMRB 33.85)
+    unit: null
+  - parameter: manhole testing standard
+    value: ASTM C1244
+    unit: null
+  - parameter: state NPDES permit number
+    value: 2PH00007
+    unit: null
+  - parameter: additional permit number
+    value: 2GC08468*AG
+    unit: null
+  - parameter: secondary ID
+    value: DSWPTI-260597
+    unit: null
+  - parameter: core ID
+    value: '658969'
+    unit: null
+  - parameter: DSW plan type
+    value: Surface Water Permit to Install
+    unit: null
+  - parameter: CDA type
+    value: Surface Water PTI Area
+    unit: null
+  - parameter: EPR status
+    value: Division Review in Progress
+    unit: null
+  - parameter: WF district
+    value: NWDO
+    unit: null
+  - parameter: revenue ID
+    value: '1789126'
+    unit: null
+  - parameter: invoiced amount
+    value: '200.00'
+    unit: USD
+  - parameter: total PTI fee
+    value: '200.00'
+    unit: USD
+  - parameter: payment status
+    value: PAID
+    unit: null
+  - parameter: invoice paid date
+    value: '2026-05-29'
+    unit: null
+  - parameter: begin construction date
+    value: '2025-11-03'
+    unit: null
+  - parameter: end construction date
+    value: '2029-12-31'
+    unit: null
+  - parameter: operations begin date
+    value: '2029-12-31'
+    unit: null
+  - parameter: stormwater NPDES NOI date permit submitted
+    value: '2025-10-08'
+    unit: null
+  - parameter: stormwater NPDES NOI date coverage granted
+    value: '2025-11-10'
+    unit: null
+  - parameter: sewer use ordinance adoption date
+    value: '2017-08-31'
+    unit: null
+  - parameter: sewer use ordinance enforcement authority
+    value: Allen County Sanitary Engineering Department
+    unit: null
+  - parameter: installation inspector name
+    value: Allen County Sanitary Engineering Department
+    unit: null
+  - parameter: installation inspector address
+    value: 3230 N. Cole St., Lima, OH 45801
+    unit: null
+  - parameter: installation inspector phone
+    value: (419)996-4670
+    unit: null
+  - parameter: horizontal separation from water lines
+    value: '10'
+    unit: ft (minimum)
+  - parameter: vertical separation from water mains at crossings
+    value: '18'
+    unit: in (minimum below)
+  - parameter: funding source
+    value: Private
+    unit: null
+  - parameter: ownership
+    value: Privately owned
+    unit: null
+  key_features:
+  - 'Revision (Rev. 1) to DSWPTI-260294: design daily flow reduced from 0.333 to 0.10
+    MGD; force main and temporary lift station downsized accordingly'
+  - Addition of a 6-inch service (1A-SSWR-0050 sheet 1A-C-5110)
+  - System includes 7,819 LF gravity sewer (6"–24" PVC), 4,034 LF sanitary force main
+    (6" PVCO AWWA C900), 35 manholes, 1 Flow Split Junction structure, and 2 ten-foot-diameter
+    wet wells
+  - 'Receiving facility: American/Bath WWTP (present ADF 0.953 MGD; design ADF 1.500
+    MGD – adequate capacity confirmed)'
+  - 'Sewer types: conventional gravity and force main (with pump station)'
+  - No stream crossings; no parallel stream runs; no wetlands disturbed; not within
+    1,000 ft of designated scenic river
+  - Plans prepared by EMH&T; PE stamp required per OAC 3745-42-03(A)(1)
+  - 'Testing: air leakage test for sewer, flexible pipe deflection testing per GLUMRB
+    33.85, manhole testing ASTM C1244 – all referenced to plan sheet 1A-C-5000'
+  - 'Manhole design: Precast Reinforced Concrete per ASTM C-478, joints ASTM C-443'
+  summary: This record documents the Ohio EPA Surface Water Permit-to-Install (PTI)
+    application package for the BOSC-1A Private Sanitary Sewer Improvement Plan –
+    Revision 1, submitted on behalf of Bistrozzi LLC (facility) in Allen County, Ohio
+    (Project DSW-7312, Secondary ID DSWPTI-260597). The project installs approximately
+    7,819 LF of PVC gravity sanitary sewer (6\"–24\"), 4,034 LF of 6-inch PVCO force
+    main, 35 precast concrete manholes, one flow-split junction structure, and two
+    10-ft-diameter wet wells with an associated temporary lift station, all discharging
+    to the American/Bath WWTP. Rev. 1 reduces the design daily flow from 0.333 MGD
+    to 0.10 MGD, downsizing the force main and lift station accordingly, and adds
+    a 6-inch service connection.
+  note: null

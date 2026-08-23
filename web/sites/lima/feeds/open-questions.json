@@ -13,6 +13,32 @@
     "signal": null
   },
   {
+    "id": "BOSC-SANITARY-DESIGN-FLOW",
+    "origin": "lead",
+    "question": "The campus discloses a 0.10 MGD sanitary design flow — cut by two thirds from the permit it replaces",
+    "detail": "Ohio EPA issued PTI DSWPTI-260597 on 2026-08-14 (eDoc 4230060), the Rev. 1 successor to DSWPTI-260294 (4074527, 2026-04-07), for the BOSC-1A Private Sanitary Sewer Improvement Plan at 4110 N Cole St. The approved application (eDoc 4230068, signed 2026-05-27, EMH&T) states the revision in the applicant's own words - \"Revision to DSWPTI-260294. Design daily flow reduced from 0.333 to 0.10 MGD. As a result, force main and temporary lift station downsized accordingly.\" Form B1 section 3 carries the numbers - start-up AND design average daily flow 0.10 MGD, peak hourly 0.36 MGD, sewer hydraulic capacity 0.79 MGD - and the built system is 7,819 LF of 6-24 in PVC gravity, a 6 in PVCO force main, 35 manholes, a flow-split junction and two 10 ft wet wells. All [verified] from the two documents. This matters because 2DP00130 routes the campus's DOMESTIC WASTE PLUS NON-CONTACT COOLING WATER down this same private main, so a disclosed 0.10 MGD design average is a hard, applicant-stated ceiling on that pathway where the A3 cycling reconciliation has only a back-solved bracket. What the record does NOT say is WHY the design fell - whether load was re-estimated, or a cooling stream was moved off this line onto another pathway. That is [open], and the reduction is not by itself evidence of either. Note also that the corpus separately routes a ~2.5 MGD FM-2 industrial stream to the CITY OF LIMA WWTP (network.yaml, bosc-fm2-return); that is a different pipe to a different plant, and nothing here reconciles the two figures with each other.",
+    "source": "data/extracted/permits/4230060.epa.yaml · data/extracted/permits/4230068.sanitary.yaml · data/documents/permits/bistrozzi-permits/filename-map.yaml",
+    "kind": "signal",
+    "status": "review",
+    "issue": 2088,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "AMERICAN-BATH-HEADROOM",
+    "origin": "lead",
+    "question": "The campus's own filing puts American/Bath WWTP at 72% of design once the campus is connected",
+    "detail": "Form B1 section 4 of the Rev. 1 PTI application (eDoc 4230068, 2026-05-27) is the applicant's disclosure of the receiving plant's loading - receiving facility \"American/Bath WWTP\", present average daily flow 0.953 MGD based on 01/25, design average daily flow 1.500 MGD on a 1995 design year, and proposed average daily flow with the new sewer 1.083 MGD. The applicant answers that the plant HAS adequate capacity and that there is NO intent to expand it. The 1.500 MGD design corroborates the figure the corpus already carries from Ohio EPA fact sheet 2PH00007 (used in baseline.scenario.yaml); the 0.953 MGD CURRENT loading is new to the corpus and is the first dated actual-flow figure on this plant from any source. Post-connection utilisation is 1.083 / 1.500 = 72% of a 31-year-old design. [verified] as what the document states. ⚠️ ONE ARITHMETIC GAP, UNRESOLVED - 0.953 present plus the 0.10 MGD design flow of this sewer is 1.053, not the 1.083 stated. The 0.030 MGD difference is not explained anywhere on the form. It may be another committed connection, a rounding or basis difference, or a form error; the record does not say, so it stays [open] rather than being reconciled by assumption.",
+    "source": "data/extracted/permits/4230068.sanitary.yaml (Form B1 section 4) · data/extracted/oepa/oepa-2PH00007-american-bath-fact-sheet.npdes.yaml",
+    "kind": "question",
+    "status": "review",
+    "issue": 2088,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
     "id": "DEWATERING-DRYWELL-NW",
     "origin": "lead",
     "question": "A reportedly dry-and-replaced shallow well sits ~3.7 mi down-gradient of the dewatering field",

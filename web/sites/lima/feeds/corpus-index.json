@@ -55,14 +55,25 @@
     "updated": "2026-08-23"
   },
   {
+    "id": "artifact/barry-lowery",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Barry Lowery",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/bistrozzi",
     "node_class": "artifact",
     "kind": "entity",
     "label": "BISTROZZI LLC",
     "scope": "site",
     "links_out": 1,
-    "links_in": 12,
-    "lines": 39,
+    "links_in": 13,
+    "lines": 40,
     "updated": "2026-07-09"
   },
   {
@@ -600,7 +611,7 @@
     "label": "Lima",
     "scope": "site",
     "links_out": 3,
-    "links_in": 91,
+    "links_in": 94,
     "lines": 13,
     "updated": null
   },
@@ -1562,6 +1573,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-american-bath-headroom",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The campus's own filing puts American/Bath WWTP at 72% of design once the campus is connected",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 26,
+    "updated": null
+  },
+  {
     "id": "question/lead-aswcd-03",
     "node_class": "question",
     "kind": "lead",
@@ -1592,6 +1614,17 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "question/lead-bosc-sanitary-design-flow",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The campus discloses a 0.10 MGD sanitary design flow — cut by two thirds from the permit it replaces",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 25,
     "updated": null
   },
   {
@@ -1855,7 +1888,7 @@
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
-    "lines": 27,
+    "lines": 45,
     "updated": null
   },
   {
@@ -1945,6 +1978,17 @@
     "links_in": 0,
     "lines": 15,
     "updated": "2026-07-09"
+  },
+  {
+    "id": "relation/bistrozzi--represented-by--barry-lowery",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "BISTROZZI represented_by BARRY LOWERY",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
   },
   {
     "id": "relation/bistrozzi--represented-by--jill-tangeman",

@@ -2693,8 +2693,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "919f90b5f9cd90674ac3efef3d1fb45b71cce3c34afb669f02a0929ce4338ac2",
-      "size_bytes": 33483,
+      "sha256": "0679008be9912e9961b2032937e2f97192613b51a56b8fcb16543816cc44b581",
+      "size_bytes": 35660,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -5139,6 +5139,16 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/permits/4230060.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/4230068.sanitary.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/permits/lma1a-npdes-cgp-coverage.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -5166,10 +5176,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4ff8b0ee4ed9f3afb574c71fa95a16ebde34adc18f6a543fb2fd5846949098d7",
-      "size_bytes": 92226,
+      "sha256": "9d264613f08de27d1c66ccab8071cd744ef18432ba93088234fecd7719ce8ce2",
+      "size_bytes": 108421,
       "lfs_materialized": true,
-      "file_count": 29,
+      "file_count": 31,
       "stale": false,
       "asof": null
     },

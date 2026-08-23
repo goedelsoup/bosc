@@ -104,6 +104,32 @@ the_stack:                            # ordered along the records lifecycle
       and sanitary axes turn on.
     note: "Distinct from the County's NDA/CRA/RDA/4582.58 stack — a parallel branch, not the same instruments. Items 6-11 of the SWCD request were answered 'no records' (deferred to OEPA/Sanitary Eng/townships), incl. Commissioner Beth Seibert comms (item 11)."
     source: data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.response-index.yaml
+    observed_2026_08_23: >-
+      A FOURTH agency serves the same class of material openly. On 2026-08-14 Ohio EPA issued PTI
+      DSWPTI-260597 (BOSC-1A Private Sanitary Sewer Improvement Plan — Rev. 1) and published the
+      APPROVED PLAN SETS through its public eDocument portal: eDoc 4230061 (17 pp site plan) and
+      4230062 (13 pp sanitary plan & profile, 24" gravity main at 0.12% with typed manhole
+      stationing and invert elevations). Both were fetched and read on 2026-08-23; neither requires
+      a records request. The approved application (4230068) additionally answers "Does this
+      submission contain Trade Secrets? NO" — the applicant's own answer to Ohio EPA, on the same
+      project whose plan sets the SWCD withheld in part under R.C. 1333.61.
+    observed_significance: >-
+      ⚠️ THIS IS AN OBSERVATION ABOUT CUSTODIAL POSTURE, NOT AN ACCUSATION, and it is not evidence
+      that any withholding was improper. Different agencies applying different exemptions to
+      overlapping records is a routine and lawful outcome: R.C. 149.433 turns on whether the
+      submitter attached the statutory express statement TO THAT CUSTODIAN, and a trade-secret
+      assertion made to one agency creates no duty to make it to another. The County/SWCD plan sets
+      and the Ohio EPA plan sets are also not established to be the same documents — they are the
+      same project at different review stages. What is investigatively useful is narrower and
+      solid: material of this class IS OBTAINABLE from the state custodian without a records
+      request, which bears on the R.C. 149.43 posture in #1536 and on the remedy discussion in
+      docs/legal/mandamus-analysis.md — a requester who can obtain the substance elsewhere has a
+      different practical position than one who cannot.
+    observed_source: >-
+      data/documents/permits/bistrozzi-permits/filename-map.yaml (eDocs 4230060/4230068 committed;
+      4230061/4230062 fetched, content-verified, and deferred on LFS budget with their sha256
+      recorded) · data/extracted/permits/4230060.epa.yaml ·
+      data/extracted/permits/4230068.sanitary.yaml · issue #2088
 
 actors:                               # who built / operates the stack
   origin_county_counsel: "John R. Willamowski, Jr. (Asst. Prosecutor) — originated the NDA; County counsel on the RDA"

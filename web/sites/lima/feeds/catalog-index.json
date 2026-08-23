@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "d9c537f3782c50d09ba38e0ffd200a3dc053acd2e60f12b16d4c5a8eff6272f0",
+  "catalog_version": "2cc0b18fa17a33fc9458b4f3fb594a5245338ec57b59f4baf0a07f090678818d",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -2172,6 +2172,14 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:lima:BARRY LOWERY",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "BARRY LOWERY",
+      "title": "Barry Lowery",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:lima:BISTROZZI",
       "kind": "entity",
       "site": "lima",
@@ -2852,6 +2860,14 @@
       "feed": "leads"
     },
     {
+      "handle": "lead:lima:AMERICAN-BATH-HEADROOM",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "AMERICAN-BATH-HEADROOM",
+      "title": "The campus's own filing puts American/Bath WWTP at 72% of design once the campus is connected",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:lima:ASWCD-03",
       "kind": "lead",
       "site": "lima",
@@ -2873,6 +2889,14 @@
       "site": "lima",
       "local_id": "ASWCD-PLANS",
       "title": "The site plan sets are withheld twice over",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:BOSC-SANITARY-DESIGN-FLOW",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "BOSC-SANITARY-DESIGN-FLOW",
+      "title": "The campus discloses a 0.10 MGD sanitary design flow — cut by two thirds from the permit it replaces",
       "feed": "leads"
     },
     {
@@ -4628,6 +4652,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:permits/4230060.epa.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "permits/4230060.epa.yaml",
+      "title": "BOSC-1A Private Sanitary Sewer Improvement Plan - Rev. 1",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:permits/lma1a-npdes-cgp-coverage.epa.yaml",
       "kind": "record",
       "site": "lima",
@@ -4937,6 +4969,14 @@
       "site": "lima",
       "local_id": "DSWPTI-260294",
       "title": "Surface Water Permit-to-Install DSWPTI-260294 — application (BOSC-1A Private Sanitary Sewer Improvement Plan)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:DSWPTI-260597",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "DSWPTI-260597",
+      "title": "Surface Water Permit-to-Install DSWPTI-260597 — approved (BOSC-1A Private Sanitary Sewer Improvement Plan - Rev. 1)",
       "feed": "timeline"
     },
     {

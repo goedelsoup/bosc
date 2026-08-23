@@ -1,0 +1,109 @@
+meta:
+  subject: >-
+    Canonical filename map for permits/bistrozzi-permits/ — the DSWPTI-260597 (BOSC-1A Rev. 1)
+    acquisition of 2026-08-23 only
+  scope: >-
+    PARTIAL BY DESIGN. This map covers ONLY the four eDocuments of the 2026-08-14 DSWPTI-260597
+    permit action, fetched 2026-08-23 under issue #2088. The other 35 files on this shelf predate
+    it and carry their provenance in the shelf README and in their own extractions; their absence
+    from this map is not a gap in their custody. Do not read a missing row here as "not acquired."
+  policy: >-
+    Non-destructive. The eDocument portal serves these by query string with no Content-Disposition,
+    so the docid IS the as-served identity (see src/watermark/oepa/fetch.py); files keep the shelf's
+    established `<docid>.pdf` naming. Every date below is content-verified from the document itself —
+    the text layer where one exists, and a rendered page read where none does. Portal `doc_date`
+    rows and filenames were NOT used as date evidence.
+  source_sweep: data/research/oepa-portal-bistrozzi-2026-08-22/manifest.yaml
+  fetched_at: '2026-08-23'
+  issue: 2088
+
+documents:
+  - edoc_id: '4230060'
+    filename: 4230060.pdf
+    status: committed
+    canonical: oepa-dswpti-260597-bosc-1a-sanitary-pti-rev1-2026-08-14.pdf
+    type: dsw-permit-to-install
+    permit_id: DSWPTI-260597
+    project_no: DSW-7312
+    applicant: BISTROZZI LLC
+    project: BOSC-1A Private Sanitary Sewer Improvement Plan – Rev. 1
+    pages: 6
+    bytes: 99156
+    sha256: c7f9dbcfce79bc8fa1a1ea6a0ea7d34c719661a2a3ad456f2938d461d5ff6066
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4230060
+    content_verified: text-layer
+    content_verified_date: '2026-08-14'
+    extraction: data/extracted/permits/4230060.epa.yaml
+    notes: >-
+      Issuance AND effective date both 8/14/2026, printed on p1 ("Issuance Date: 8/14/2026",
+      "Effective Date: 8/14/2026"); entered in the Director's Journal, John Logue. Letter dated
+      August 14, 2026, signed Tony Nosko, P.E., Manager, Permit to Install Unit, Division of
+      Surface Water. "Plans Received on 5/29/2026." Rev. 1 successor to DSWPTI-260294 (4074527,
+      2026-04-07). Person to Contact: Barry Lowery, barrylowery@google.com, (650) 254-3045 —
+      see the contact-of-record delta recorded in the extraction and in
+      data/extracted/legal/prr-mandamus/bosc-site-permit-sequence.yaml.
+
+  - edoc_id: '4230068'
+    filename: 4230068.pdf
+    status: committed
+    canonical: oepa-dswpti-260597-bosc-1a-sanitary-pti-application-rev1-2026-05-27.pdf
+    type: dsw-pti-application
+    permit_id: DSWPTI-260597
+    project_no: DSW-7312
+    applicant: BISTROZZI LLC
+    project: BOSC-1A Private Sanitary Sewer Improvement Plan – Rev. 1
+    pages: 17
+    bytes: 2084048
+    sha256: 1536f39ddd2f8274d9eb99de7bd2c84839ed7da3984c3306be63f00a2f7f976b
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4230068
+    content_verified: rendered-page-read
+    content_verified_date: '2026-05-27'
+    extraction: data/extracted/permits/4230068.sanitary.yaml
+    notes: >-
+      ⚠️ This document has NO TEXT LAYER — all 17 pages extract zero characters, so a text grep
+      over it returns a false clean. The date above was read from a 150-DPI render of p16
+      (section 13, "Date: 05/27/2026 · Applicant Name: Bistrozzi LLC · Plans prepared by:
+      Evans, Mechwart, Hambleton, & Tilton, Inc. (EMH&T)"). The ePlan application form for the
+      Rev. 1 permit above. Extracted at kind=sanitary with max_pages raised to 17 — the genre
+      default of 12 would have stopped before the signature block that carries this date.
+      Submitter e-mail on the application is MBEINE@EMHT.COM, i.e. the APPLICATION kept the
+      EMH&T submitter; only the ISSUED permit (4230060) carries the Google contact.
+
+# ── Deferred: fetched and content-verified, deliberately NOT committed ────────────────────────
+# The Git LFS budget is already exceeded, and these two are ~38 MB of approved construction
+# drawings. They were fetched, opened, and read on 2026-08-23; the decision is a storage
+# deferral, not an absence of the record. Each is re-fetchable by docid at the URL below and
+# its bytes are pinned by the sha256 recorded here, so a later commit can be proven identical
+# to what was read. Stating them explicitly so this map is not misread as full coverage.
+deferred:
+  - edoc_id: '4230061'
+    status: deferred_lfs_budget
+    type: dsw-pti-approved-plan-set
+    permit_id: DSWPTI-260597
+    pages: 17
+    bytes: 23954956
+    sha256: ed4a426cf65eb400a04d9ed7878b1e349ad85567e81831f670f73718da4b33ba
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4230061
+    content_verified: text-layer
+    content_verified_date: '2026-08-14'
+    notes: >-
+      Approved site-plan sheet set. Carries security-relevant detail (badge-controlled lanes,
+      two existing guard shacks, fire-access geometry, gate and entrance layout), so PUBLICATION
+      is a separate reviewed decision under docs/legal/document-publication-review.md (#274/#281)
+      and must be a real read, not a regex sweep. Needed by #2090 (Cole St. drainage geometry).
+
+  - edoc_id: '4230062'
+    status: deferred_lfs_budget
+    type: dsw-pti-approved-plan-set
+    permit_id: DSWPTI-260597
+    pages: 13
+    bytes: 14451954
+    sha256: bd35c270fe76a85e4ef44e3356fa84b3a756c6ba6431bf8475a2404ea26c783e
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4230062
+    content_verified: text-layer
+    content_verified_date: '2026-08-14'
+    notes: >-
+      Approved sanitary sewer plan & profile — 24" gravity main at 0.12%, typed manholes with
+      stationing and invert elevations. This is the routed alignment #2090 needs to test the
+      Cole St. drainage question with geometry rather than with a street name. Same publication
+      guardrail as 4230061.

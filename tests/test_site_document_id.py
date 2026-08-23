@@ -100,7 +100,20 @@ def test_no_collision_across_the_committed_corpus() -> None:
     # Reviewed: 3348 rels, 3348 distinct rels, 3348 distinct handles — zero collisions. Checked as a
     # set rather than inferred from the count, because "the number moved by what I expected" is not
     # evidence of anything on a jump this size.
-    assert len(rels) == 3348, "a corpus change belongs in review, not a silent collision"
+    # 3348 → 3350 (#2088): the two Bistrozzi eDocuments of the 2026-08-14 BOSC-1A sanitary PTI
+    # Rev. 1 — `permits/bistrozzi-permits/4230060.pdf` (the issued DSWPTI-260597) and `4230068.pdf`
+    # (its approved ePlan application). They reach the LIMA bundle because `permits/` is one of
+    # Lima's own prefixes.
+    # ⚠️ The same permit action served TWO MORE eDocuments that are deliberately NOT committed:
+    # `4230061` (17 pp site plan, 23.95 MB) and `4230062` (13 pp sanitary plan & profile, 14.45 MB).
+    # Both were fetched, opened and content-verified on 2026-08-23; the Git-LFS budget is exceeded,
+    # so they are deferred with their sha256 recorded in
+    # `data/documents/permits/bistrozzi-permits/filename-map.yaml` and each is re-fetchable by
+    # docid. Committing either moves this number again and SHOULD. Publication of the drawings is a
+    # separate reviewed decision (#274/#281) — they carry security-relevant site detail.
+    # Reviewed: 3350 rels, 3350 distinct rels, 3350 distinct handles — zero collisions, checked as
+    # a set rather than inferred from the delta.
+    assert len(rels) == 3350, "a corpus change belongs in review, not a silent collision"
     assert len({document_id(rel) for rel in rels}) == len(rels)
 
 
