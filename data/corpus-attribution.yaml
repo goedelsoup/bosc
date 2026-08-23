@@ -69,10 +69,15 @@ overrides:
     basis: >-
       An Ohio EPA Emergency Response Section Initial Pollution Incident Report, citizen-reported
       2016-07-13, whose own header reads "County: HENRY / City|Township: NAPOLEAN [sic]". It
-      concerns neither Lima nor Allen County, and — unlike the Mansfield letter — the IPIR NAMES
-      NO PERMIT AT ALL: only the portal's index associates the docid with 2PE00000, and why it
-      does is not established by the document. Henry County is not a registered site, so there is
-      no scope to route it into. It leaves Lima's and is claimed by none; the artifact, its
-      warnings and this row remain its record.
+      concerns neither Lima nor Allen County. The re-attribution rests on that header, not on the
+      permit field: the page DOES bear a "2PE00000" marking, read from a handwritten/stamped field
+      at the top right of the image (the OCR excerpt opens on it, garbled, as "~ r 2p~oa~oo"), and
+      the extraction records it AS PRINTED. What is unverified is that marking's PROVENANCE —
+      whether it is part of the report as filed or an annotation added afterward — and therefore
+      why a 2PE00000 sweep returns this docid at all. The artifact records that as an open
+      question and this row does not answer it; nothing here needs it answered, because Henry
+      County is the finding either way. Henry County is not a registered site, so there is no
+      scope to route it into. It leaves Lima's and is claimed by none; the artifact, its warnings
+      and this row remain its record.
     reviewed: '2026-08-23'
     issue: '2085'

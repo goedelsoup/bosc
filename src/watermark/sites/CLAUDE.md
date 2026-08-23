@@ -124,8 +124,8 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   being the same thing as what the document is about. Sometimes it isn't: Ohio EPA's eDocument
   portal indexes by permit, and a sweep of Lima's permit 2PE00000 returned sixteen documents of
   which two were other facilities' records — a Mansfield WWTP letter carrying Lima's permit number
-  in its own reference block, and a Henry County spill report naming no permit at all. Moving the
-  byte is what the chain-of-custody rule forbids, so the correction happens at the READ layer:
+  in its own reference block, and a Henry County spill report. Moving the byte is what the
+  chain-of-custody rule forbids, so the correction happens at the READ layer:
   `data/corpus-attribution.yaml` declares each such artifact's true subject, and
   `effective_corpus_scope` folds it in as the exact-relpath `reattributed_in`/`reattributed_out`
   pair on `CorpusScope`. Every surface funnelling through `relpath_in_scope` then agrees by
