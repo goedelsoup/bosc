@@ -4953,5 +4953,27 @@
       "note": null,
       "verified": true
     }
+  },
+  {
+    "date": "2026-08-14",
+    "category": "epa_permit_action",
+    "title": "Surface Water Permit-to-Install DSWPTI-260597 — approved (BOSC-1A Private Sanitary Sewer Improvement Plan - Rev. 1)",
+    "ref": "DSWPTI-260597",
+    "parties": [
+      "BISTROZZI LLC",
+      "Barry Lowery"
+    ],
+    "detail": "affected Private Sanitary Sewer",
+    "source": "permits/4230060.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4230060.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
   }
 ]

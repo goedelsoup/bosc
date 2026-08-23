@@ -12499,6 +12499,49 @@
     "source_doc_published": true
   },
   {
+    "rel": "permits/4230060.epa.yaml",
+    "group": "permits-epa",
+    "title": "BOSC-1A Private Sanitary Sewer Improvement Plan - Rev. 1",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Surface Water Permit-to-Install",
+      "permit_no": "DSWPTI-260597",
+      "action": "approved",
+      "action_date": "2026-08-14",
+      "plans_received_date": "2026-05-29",
+      "expiration_date": null,
+      "applicant": "BISTROZZI LLC",
+      "applicant_address": "4110 N Cole St, Lima, OH 45801",
+      "contact_name": "Barry Lowery",
+      "contact_email": "barrylowery@google.com",
+      "contact_firm": null,
+      "project_name": "BOSC-1A Private Sanitary Sewer Improvement Plan - Rev. 1",
+      "site_address": "4110 N Cole St, Lima, OH 45801",
+      "affected_resource": "Private Sanitary Sewer",
+      "parcel_ids": [],
+      "note": "Permit effective date 2026-08-14. Permit expires if construction not initiated within 60 months of effective date. DSW-7312 referenced in subject line. Allen County Combined Health District and Northwest District Office noted. Signed by Tony Nosko, P.E., Manager, Permit to Install Unit, Division of Surface Water."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4230060.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/4230060.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "permits/lma1a-npdes-cgp-coverage.epa.yaml",
     "group": "permits-epa",
     "title": "LMA 1A (BOSC / Bistrozzi data-center campus)",

@@ -535,7 +535,12 @@ def test_the_committed_compliance_genres_all_load() -> None:
     assert len(corpus.orders) == 32
     assert len(corpus.inspections) == 30
     assert len(corpus.progress_reports) == 9
-    assert len(corpus.engineering) == 3
+    # 3 -> 4 (#2088): `permits/4230068.sanitary.yaml`, the Ohio EPA ePlan PTI application for the
+    # BOSC-1A sanitary sewer Rev. 1. `sanitary` is the discipline ALIAS of the engineering read
+    # (extract.extract_sanitary), so it lands in this bucket by design, not by misclassification.
+    # Reviewed by enumerating the bucket, not by trusting the delta: oepa/lima/edoc-1840394,
+    # edoc-1840396, edoc-1840397 (the three pre-existing) plus permits/4230068 (the new one).
+    assert len(corpus.engineering) == 4
     # Every declined file that keys one of these blocks is a declared manual read or a
     # `resolution:` — never a render extraction that quietly fell out of the loader.
     for rel in corpus.declined:
