@@ -223,8 +223,16 @@ def test_committed_lima_manifest_loads() -> None:
     # The text-layer capture is canonical for each twin pair — never the image-only/poorer scan.
     assert by_id["oepa:2PE00000-prov-2016-07-11"].canonical == "oepa/lima/edoc-1914761.pdf"
     # Same rule for the 2022 Cr(VI) pair: the clean capture is canonical for the letter's CONTENT.
-    # The stamped copy stays a member because its page 1 is the only record of the receipt date.
-    assert by_id["oepa:2PE00000-cr6-progress-2022-06-27"].canonical == "oepa/lima/edoc-1851184.pdf"
+    # The stamped copy stays a member because it is the only capture BEARING a receipt stamp —
+    # which is evidence of the stamp, not of when Ohio EPA received the letter (it pre-dates it).
+    cr6 = by_id["oepa:2PE00000-cr6-progress-2022-06-27"]
+    assert cr6.canonical == "oepa/lima/edoc-1851184.pdf"
+    # A cluster IS its members, so assert the pair and not only the canonical: swapping the
+    # non-canonical rel for an unrelated docid would leave every other assertion here passing.
+    assert [m.rel for m in cr6.members] == [
+        "oepa/lima/edoc-1851184.pdf",
+        "oepa/lima/edoc-1879637.pdf",
+    ]
     # Every inspection twin is `v2` with a two-member pair — never `duplicate`, which would make
     # retrieval collapse two genuinely different scans of one letter into one.
     insp = [c for c in versions.clusters if c.id.startswith("oepa:2PE00000-inspection-")]
