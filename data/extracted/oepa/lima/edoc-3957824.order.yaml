@@ -11,53 +11,48 @@ pages_read:
 image_pages_read:
 - 0
 dpi: 150
-source_text_excerpt: "• .~ ~ \ne ao/ ' \n• . \n•State of Ohio Environmental Protection\
-  \ Agency \nP.O. Box 1049, 1800 WaterMark Dr. George V. Voinovich \nColumbus, Ohio\
-  \ 43266-0149 €„h `•,3 i'1p' !'” ~p A Governor \n(614) 644-3020 '\n• \n `~ • ~ •\
-  \ `H y` Donald R. Sch~regardus \nFAX.(614) 644-2329 . • \nDirector \nFebruary 25,•\
-  \ 1994 \nRe: Director's Final Findings and Orders \nOhio EPA Permit No.: 2PE00000\
-  \ \nFacility Name: Mayor and Council \nMayor and Council \nCity of Lima ' • \n50\
-  \ Town Square.\" \nLima, Ohio 45801 \n- Ladies and Gentlemen: \nTransmitted herewith\
-  \ is one copy of the Director's Final Findings and Orders \nin the referenced "
+source_text_excerpt: "• .~ ~ \ne ao/ ' \n• . \n•State of Ohio Environmental Protection Agency \nP.O. Box\
+  \ 1049, 1800 WaterMark Dr. George V. Voinovich \nColumbus, Ohio 43266-0149 €„h `•,3 i'1p' !'” ~p A Governor\
+  \ \n(614) 644-3020 '\n• \n `~ • ~ • `H y` Donald R. Sch~regardus \nFAX.(614) 644-2329 . • \nDirector\
+  \ \nFebruary 25,• 1994 \nRe: Director's Final Findings and Orders \nOhio EPA Permit No.: 2PE00000 \n\
+  Facility Name: Mayor and Council \nMayor and Council \nCity of Lima ' • \n50 Town Square.\" \nLima,\
+  \ Ohio 45801 \n- Ladies and Gentlemen: \nTransmitted herewith is one copy of the Director's Final Findings\
+  \ and Orders \nin the referenced "
 order:
   confidence: high
   warnings:
-  - The waiver section is dated January 25, 1994, while the instrument issued/effective
-    date is February 25, 1994 — the waiver may have been signed in advance.
-  - OCR layer was partially unreliable; permit numbers and dates verified against
-    image.
+  - permit_no held prose ('2PE00000*HD (also references prior permit 2PE00000*GD / OH0026069)'). The field
+    carries the permit alone so it joins; the other two ids are in the note.
+  - The waiver section is dated January 25, 1994, while the instrument issued/effective date is February
+    25, 1994 — the waiver may have been signed in advance.
+  - OCR layer was partially unreliable; permit numbers and dates verified against image.
   - No civil penalty is assessed in this instrument.
   agency: Ohio EPA
   instrument: DFFO
   case_no: null
   respondent: Mayor and Council, City of Lima
-  facility: City of Lima Wastewater Treatment Facility, 1200 Fort Amanda Road, Lima,
-    Allen County, Ohio
-  permit_no: 2PE00000*HD (also references prior permit 2PE00000*GD / OH0026069)
+  facility: City of Lima Wastewater Treatment Facility, 1200 Fort Amanda Road, Lima, Allen County, Ohio
+  permit_no: 2PE00000*HD
   issued_date: '1994-02-25'
   effective_date: '1994-02-25'
   supersedes: null
   obligations:
-  - requirement: 'Submit an approvable General Plan to abate pollution and eliminate
-      all unpermitted separate sanitary sewer overflows (SSOs), whether or not discharges
-      have been documented, within the City of Lima. The General Plan shall include:
-      (a) alternatives for eliminating SSOs, (b) cost estimates for required improvements,
-      (c) financial mechanisms to fund improvements and O&M/replacement costs, and
-      (d) implementation schedule for PTI application, detail plans, bid advertisement,
-      contract execution, construction initiation and completion, and NPDES permit
-      compliance. Three copies to be submitted to Ohio EPA Northwest District Office,
-      Division of Surface Water (Attn. Enforcement Group Leader).'
+  - requirement: 'Submit an approvable General Plan to abate pollution and eliminate all unpermitted separate
+      sanitary sewer overflows (SSOs), whether or not discharges have been documented, within the City
+      of Lima. The General Plan shall include: (a) alternatives for eliminating SSOs, (b) cost estimates
+      for required improvements, (c) financial mechanisms to fund improvements and O&M/replacement costs,
+      and (d) implementation schedule for PTI application, detail plans, bid advertisement, contract execution,
+      construction initiation and completion, and NPDES permit compliance. Three copies to be submitted
+      to Ohio EPA Northwest District Office, Division of Surface Water (Attn. Enforcement Group Leader).'
     deadline: '1995-02-25'
     status: null
   penalty_usd: null
   stipulated_penalties: null
   status: active
-  summary: This Director's Final Findings and Orders (DFFO), issued by the Ohio EPA
-    on February 25, 1994, addresses the City of Lima's noncompliance with ORC Sections
-    6111.04 and 6111.07 arising from documented discharges through at least 27 unpermitted
-    separate sanitary sewer overflow (SSO) points between May 1992 and May 1993 (out
-    of 36 known SSO points in the collection system). Lima is ordered to submit an
-    approvable General Plan to eliminate all unpermitted SSOs within 12 months of
-    the effective date (i.e., by February 25, 1995). Lima waived its right to appeal
-    the Orders.
-  note: null
+  summary: This Director's Final Findings and Orders (DFFO), issued by the Ohio EPA on February 25, 1994,
+    addresses the City of Lima's noncompliance with ORC Sections 6111.04 and 6111.07 arising from documented
+    discharges through at least 27 unpermitted separate sanitary sewer overflow (SSO) points between May
+    1992 and May 1993 (out of 36 known SSO points in the collection system). Lima is ordered to submit
+    an approvable General Plan to eliminate all unpermitted SSOs within 12 months of the effective date
+    (i.e., by February 25, 1995). Lima waived its right to appeal the Orders.
+  note: 'Also references the prior permit 2PE00000*GD and the federal id OH0026069. '

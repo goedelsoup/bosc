@@ -34,7 +34,7 @@ order:
   - No penalty, compliance schedule, or formal order obligations are present in this document.
   agency: Ohio EPA – Emergency Response Section
   instrument: Initial Pollution Incident Report (IPIR)
-  case_no: 1607-35-1349//0
+  case_no: 1607-35-1349110
   respondent: RAILTECH
   facility: RAILTECH – 25 Interstate Drive, Napoleon, OH 43545 (Henry County)
   permit_no: 2PE00000
@@ -55,7 +55,9 @@ order:
     glycol directly into a nearby creek and across railroad tracks into a pond behind a hospital during
     tank-cleaning operations. The product spilled is glycol; affected media include surface water/storm
     water and land. The report was referred to DSW/WW and RRS/SIS for follow-up.
-  note: 'A Henry County spill report reachable only because Ohio EPA''s portal indexes it under Lima''s
-    permit number. Two of the sixteen documents in this tranche turned out to be other facilities'' records
-    — which is itself a finding about the portal as a source: a permit-scoped sweep is not a permit-scoped
-    result set, and every document in one must be read before it is attributed.'
+  note: 'Spill id printed on the IPIR as 1607-35-1349110; the first read rendered it ''1607-35-1349//0'',
+    turning ''11'' into ''//''. Corrected against the source text. A Henry County spill report reachable
+    only because Ohio EPA''s portal indexes it under Lima''s permit number. Two of the sixteen documents
+    in this tranche turned out to be other facilities'' records — which is itself a finding about the
+    portal as a source: a permit-scoped sweep is not a permit-scoped result set, and every document in
+    one must be read before it is attributed.'
