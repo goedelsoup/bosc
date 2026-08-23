@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "1fb1e98fcb85a2bd83e2e362a346e04e679375d959ab661ccfa885b622c7589f",
+  "catalog_version": "a1f882456c87380053ea766c0f6c6f8475bc0cb21d7451cea66c2b72d9a9c8ce",
   "contract_version": "2.3.0",
   "atoms": [
     {
@@ -2228,6 +2228,14 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:lima:CITY OF LIMA LONG TERM CONTROL PLAN CITY OF LIMA WWTP",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "CITY OF LIMA LONG TERM CONTROL PLAN CITY OF LIMA WWTP",
+      "title": "City of Lima (Long Term Control Plan) / City of Lima WWTP",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:lima:CITY OF LIMA OH",
       "kind": "entity",
       "site": "lima",
@@ -2505,14 +2513,6 @@
       "site": "lima",
       "local_id": "MELISSA QUEEN DARBY",
       "title": "Melissa Queen Darby",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:MICHAEL CAPRELLA",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "MICHAEL CAPRELLA",
-      "title": "Michael Caprella",
       "feed": "entities"
     },
     {
@@ -4633,14 +4633,6 @@
       "site": "lima",
       "local_id": "2PE00000",
       "title": "NPDES 2PE00000 — approved (Lima WWTP)",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:2PE00000*1076869",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "2PE00000*1076869",
-      "title": "NPDES 2PE00000*1076869 (City of Lima (Long Term Control Plan) / City of Lima WWTP) — public notice",
       "feed": "timeline"
     },
     {
