@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "a7a8f500221ea35e74037aeea0b0d9beb179edb7a1823075cc4204667776a003",
+  "catalog_version": "6cc6c2907a9100ac3892a18636641cb2a30aa5f993bddce54faed309e78312a1",
   "contract_version": "2.2.0",
   "atoms": [
     {
@@ -1585,6 +1585,14 @@
       "site": "lima",
       "local_id": "oepa-cooling-reconciliation",
       "title": "Cooling-cycling reconciliation — closed-loop cohort water account",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-lima-enforcement",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-lima-enforcement",
+      "title": "Ohio EPA enforcement extractions (City of Lima WWTP — permit 2PE00000)",
       "feed": "catalog"
     },
     {
@@ -3553,6 +3561,14 @@
       "site": "lima",
       "local_id": "oepa/lima-wwtp-OH0026069.dmr.yaml",
       "title": "LIMA WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-412983.order.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-412983.order.yaml",
+      "title": "consent decree",
       "feed": "records"
     },
     {

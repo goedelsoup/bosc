@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "2.2.0",
-  "generated_at": "2026-08-22T22:40:19+00:00",
+  "generated_at": "2026-08-22T23:50:58+00:00",
   "feed_count": 56,
-  "row_total": 4055,
+  "row_total": 4057,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 73
+      "count": 74
     },
     {
       "name": "timeline",
@@ -325,7 +325,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 181
+      "count": 182
     },
     {
       "name": "geo/campus",

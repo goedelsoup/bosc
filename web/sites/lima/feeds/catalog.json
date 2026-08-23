@@ -3961,6 +3961,59 @@
     }
   },
   {
+    "id": "oepa-lima-enforcement",
+    "title": "Ohio EPA enforcement extractions (City of Lima WWTP — permit 2PE00000)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA eDocument portal — the enforcement instruments on NPDES permit 2PE00000 (City of Lima WWTP), fetched 2026-08-22 by `watermark oepa fetch` and shelved under data/documents/oepa/lima/",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:lima",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "enforcement",
+      "consent-decree",
+      "wastewater",
+      "cso",
+      "sso",
+      "lima"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/lima/edoc-412983.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "cf99418cec315de8877980e690e72658e4c0d4ee82e134a869d3562bdd3cea5c",
+      "size_bytes": 14070,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA eDocument portal — the enforcement instruments on NPDES permit 2PE00000 (City of Lima WWTP), fetched 2026-08-22 by `watermark oepa fetch` and shelved under data/documents/oepa/lima/",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "oepa-mansfield",
     "title": "Ohio EPA NPDES Permit Extractions (Mansfield / Richland County)",
     "scope": "extracted",

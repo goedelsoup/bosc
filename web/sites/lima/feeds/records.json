@@ -1200,6 +1200,266 @@
     "source_doc_published": false
   },
   {
+    "rel": "oepa/lima/edoc-412983.order.yaml",
+    "group": "enforcement",
+    "title": "consent decree",
+    "confidence": "high",
+    "warnings": [
+      "penalty_usd is the TOTAL assessed, $49,000, and the decree splits it in two equal halves that sit on facing pages: para 44 assesses $24,500 to the United States (p29, text layer) and para 45 assesses $24,500 to the State of Ohio (p30, IMAGE-ONLY, recovered by OCR). A text-layer-only read of this decree sees half the penalty and reports $24,500 with no indication anything is missing.",
+      "INTERNAL INCONSISTENCY, recorded not resolved. Table A.1 sizes the Lost Creek / Cole St. / Findlay Road / Fifteenth St. control measures to a \"5-yr, 6-hour design storm\", but para 50 excuses an SSO from those same four basins when precipitation is below a \"5-year recurrence interval, 24-hour duration\" storm (3.11 in). Those are different storms. The 25-year tier is self-consistent (6-hour in both places, 3.26 in). Whether the 6/24-hour split is deliberate or a drafting error is an open question - do not silently harmonise them.",
+      "The PDF contains Appendix B twice (pp. 73-79 and pp. 84-90, both stamped Doc #: 4-3, PageID #192-198) and Table A.1 twice (pp. 70-72 and pp. 100-102, the second copy a poorer scan). Transcription is from the cleaner first copy. This is duplication in the as-served document, not in the corpus - do not \"fix\" it.",
+      "Appendix E (CMOM, p92) is reproduced as a table of contents only in this filing; Appendix D (p91) is \"Supplemental Information\". Neither carries an obligation schedule here. Appendix F (pp. 93-99) carries the SEP scope and a planting estimate but its milestone schedule was not legible enough to transcribe dates from - the SEP obligations below cite it without deadlines.",
+      "Read as of 2026-08-22, this instrument's own compliance status is NOT established by this document. The latest para 33 progress report held in the corpus is 2021-07-23 (edoc-1611092) and the 2026-08-22 portal sweep of permit 2PE00000 - complete, untruncated, 261 of 261 - carries no later filing under doc type \"Judicial Order\". `status: active` records the instrument's own terms (para 88 termination conditions are unmet on this record), NOT a verified present-day docket status."
+    ],
+    "fields": {
+      "agency": "U.S. EPA / DOJ and Ohio EPA",
+      "instrument": "consent decree",
+      "case_no": "3:14 CV 2551 (N.D. Ohio, Western Div., Judge Jack Zouhary; Doc #5, filed 01/13/15; DOJ case no. 90-5-1-1-08433)",
+      "respondent": "City of Lima",
+      "facility": "City of Lima WWTP and combined/sanitary sewer collection system, Allen County, Ohio",
+      "permit_no": "2PE00000*MD (issued to the City of Lima by Ohio EPA, effective 2013-01-01, \"and all revisions, modifications, and successors\" - Definitions, para aa, p11)",
+      "issued_date": "2015-01-13",
+      "effective_date": "2015-01-13",
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "Pay civil penalty of $24,500 to the United States, plus 28 U.S.C. 1961 Treasury interest from the Effective Date (para 44, p29)",
+          "deadline": "2015-02-12"
+        },
+        {
+          "requirement": "Pay civil penalty of $24,500 to the State of Ohio, by certified check to \"Treasurer, State of Ohio\" (para 45, p30 - image-only page)",
+          "deadline": "2015-02-12"
+        },
+        {
+          "requirement": "Submit Revised CSO Operational Plan to U.S. EPA; comply with it immediately upon submission",
+          "deadline": "90 days after Effective Date"
+        },
+        {
+          "requirement": "Submit written CMOM Program Plan to U.S. EPA and Ohio EPA for approval (para 18, Appendix E)",
+          "deadline": "6 months after Effective Date"
+        },
+        {
+          "requirement": "Implement the CMOM Program within 30 days of Plan approval",
+          "deadline": "30 days after CMOM Program Plan approval"
+        },
+        {
+          "requirement": "Submit semi-annual Progress Reports to U.S. EPA and Ohio EPA on January 31 and July 31 of each year until termination of the Decree (para 33)",
+          "deadline": "recurring: 01-31 and 07-31 annually until termination"
+        },
+        {
+          "requirement": "Notify Plaintiffs in writing within 10 working days of becoming aware of any Decree or NPDES Permit violation",
+          "deadline": "10 working days from awareness"
+        },
+        {
+          "requirement": "Retain all data, documents, plans, records, studies and reports",
+          "deadline": "5 years after termination of the Decree"
+        },
+        {
+          "requirement": "No Dry Weather Overflows at any time",
+          "deadline": "ongoing"
+        },
+        {
+          "requirement": "Implement the Supplemental Environmental Project - Ottawa River bank revitalization, removal of dead/damaged trees and planting, Lima good-faith cost estimate $218,400.00 (para 27a, p23; scope Appendix F pp. 93-99)",
+          "deadline": "per Appendix F schedule"
+        },
+        {
+          "requirement": "Submit SEP Completion Report",
+          "deadline": "30 days after the Appendix F SEP completion date"
+        },
+        {
+          "requirement": "Sample and operate the WWTP Nitrification Towers per Appendix C approval and implementation procedures (pp. 80-83)",
+          "deadline": "ongoing"
+        },
+        {
+          "requirement": "TABLE A.1 - Baxter Street Interceptor Rehabilitation: line 3,700 ft of sewer with cure-in-place; convey 35 mgd. Achieve Full Operation.",
+          "deadline": "2014-07-01"
+        },
+        {
+          "requirement": "TABLE A.1 - Upstream Regulator Improvements: full or partial sewer separation at 10 CSOs (09, 11, 12, 13, 14, 15, 33, 34, 35A, 35B, 35C, 36 - Figure A-4), DWO modifications at 2. Performance: reduce overflow events to 0 in a typical year. Bid 2015-06-30.",
+          "deadline": "2017-06-30"
+        },
+        {
+          "requirement": "TABLE A.1 - Headworks improvements: expand preliminary screening, replace grit system, replace dry weather primaries. Preliminary treatment ~70 mgd; new dry weather primaries ~40 mgd. Bid 2016-01-31.",
+          "deadline": "2018-07-01"
+        },
+        {
+          "requirement": "TABLE A.1 - Lima WWTP Upgrade: piping and pumping so the existing nitrification towers take peak wet weather flow, plus expanded disinfection. Treat 40-70 mgd; Lima \"must at all times provide the most effective treatment for flows up to 70 mgd\"; single-sample max TSS 65 mg/l, BOD 65 mg/l, pH 6-9; flows under 40 mgd receive better than secondary. Bid 2016-01-31.",
+          "deadline": "2018-07-01"
+        },
+        {
+          "requirement": "TABLE A.1 - Simmons Field CSO Storage Tank (13.0 MG) + dewatering pump station + Real Time Control optimization, capturing CSOs 002-006. Performance: reduce overflow events to 5 or fewer in a Typical Year. Bid 2019-05-31.",
+          "deadline": "2024-08-30"
+        },
+        {
+          "requirement": "Para 15 - by the Achievement of Full Operation date for all CSO Control Measures: no unlisted CSO Outfalls (eliminated or permitted as CSO Discharge points in the NPDES Permit); remaining CSO Outfalls in compliance with the NPDES Permit; all WWTP Bypasses eliminated or brought into compliance (p16)",
+          "deadline": "2024-08-30"
+        },
+        {
+          "requirement": "TABLE A.1 - Allentown SSO basin improvements: pump station upgrades + relief sewer construction, SSOs 17, 18, 20, 21, 22, 50, 51, 61, 62, 63. Sized to convey 25-yr, 6-hour design storm flows. Bid 2027-12-31.",
+          "deadline": "2029-12-31"
+        },
+        {
+          "requirement": "TABLE A.1 - West Street SSO basin improvements: pump station upgrades + relief sewer construction, SSOs 38, 39, 41, 42, 43, 44, 45, 46, 56, 60. Sized to convey 25-yr, 6-hour design storm flows. Bid 2029-12-31.",
+          "deadline": "2031-12-31"
+        },
+        {
+          "requirement": "TABLE A.1 - Koop SSO basin improvements: pump station upgrades + relief sewer construction, SSOs 23, 24, 25, 26, 27, 29, 31, 32, 28. Sized to convey 25-yr, 6-hour design storm flows. Bid 2031-12-31.",
+          "deadline": "2032-12-31"
+        },
+        {
+          "requirement": "TABLE A.1 - Lost Creek SSO basin improvements: pump station upgrades + relief sewer construction, SSO 47. Sized to convey 5-yr, 6-hour design storm flows. Bid 2033-09-30.",
+          "deadline": "2035-04-03"
+        },
+        {
+          "requirement": "TABLE A.1 - COLE ST. BASIN improvements: pump station upgrades + relief sewer construction, SSOs 49 and 10. Sized to convey 5-yr, 6-hour design storm flows. Performance: control SSOs in this basin up to 5-Year, 6-hour design event flow rates. Bid 2034-09-20.",
+          "deadline": "2036-04-01"
+        },
+        {
+          "requirement": "TABLE A.1 - Findlay Road SSO basin improvements: pump station upgrades + relief sewer construction. Sized to convey 5-yr, 6-hour design storm flows. Bid 2035-09-28.",
+          "deadline": "2037-03-31"
+        },
+        {
+          "requirement": "TABLE A.1 - Fifteenth St. SSO basin improvements: pump station upgrades + relief sewer construction. Sized to convey 5-yr, 6-hour design storm flows. Bid 2036-09-30.",
+          "deadline": "2038-04-01"
+        },
+        {
+          "requirement": "Implement the Post Construction Monitoring Program (Appendix B) after completing the CSO and SSO Control Measures; WWTP Control Measures monitored over a two-year period",
+          "deadline": "per Appendix B schedule"
+        },
+        {
+          "requirement": "Submit the FINAL Post Construction Compliance Monitoring Report (Appendix B section 1.10, p78)",
+          "deadline": "2043-12-31"
+        },
+        {
+          "requirement": "If the Post Construction Monitoring Program does not demonstrate compliance, submit a Supplemental Compliance Plan",
+          "deadline": "60 days after the Final Post Construction Monitoring Report"
+        }
+      ],
+      "penalty_usd": 49000,
+      "stipulated_penalties": "Section X, tiered. NPDES permit noncompliance (para 49): $500/day daily concentration or mass limits; $750/day weekly average; $1,000/month monthly average; $500 per any other violation. SSO discharges (para 50): $1,000 per day, accruing only AFTER the Achievement of Full Operation date for that basin's Appendix A control measures, and only where precipitation was below the basin's design event - a 5-year/24-hour storm (3.11 in) for Lost Creek, Cole St., Findlay Road and Fifteenth St., a 25-year/6-hour storm (3.26 in) for Allentown, West St. and Koop, both taken from NOAA's Point Precipitation Frequency Estimates at the 90% confidence interval for the Lima area. SSOs from any other location (para 51): $500-$2,000 per SSO, tiered on whether Lima is in compliance with its CMOM Program schedule. Dry Weather Overflows (para 52): per-day schedule rising with the period of noncompliance. Failure to complete the SEP: $150,000 lump sum. Penalties are split 50/50 between the United States and the State of Ohio where both elect to seek them.",
+      "status": "active",
+      "summary": "The federal Clean Water Act consent decree governing the City of Lima's WWTP and combined/sanitary sewer system, lodged 2014-11-19 and entered 2015-01-13 by the United States and the State of Ohio in N.D. Ohio (Case No. 3:14 CV 2551). It assesses a $49,000 civil penalty split evenly between the two plaintiffs, requires a $218,400 Ottawa River bank revitalization SEP, and binds Lima to the Appendix A \"Table A.1\" integrated control schedule - WWTP headworks and nitrification-tower upgrades to 70 mgd by 2018, the 13.0 MG Simmons Field CSO storage tank and full CSO control by 2024-08-30, then seven SSO basins in sequence from 2029 through 2038, closing with a final post-construction compliance monitoring report due 2043-12-31. The decree protects Lima's basins at two different levels: Allentown, West Street and Koop are engineered to a 25-year, 6-hour storm, while Lost Creek, Cole St., Findlay Road and Fifteenth St. are engineered only to a 5-year storm and are scheduled last.",
+      "note": "The Cole St. basin row matters to this project beyond its place in the schedule. The Bosc campus address is 4110 N Cole St, and Table A.1 schedules the Cole St. basin's pump-station and relief-sewer upgrades to bid 2034-09-20 and achieve full operation 2036-04-01, sized to a 5-year storm - the lower of the decree's two protection tiers, and the second-latest of its twelve control measures. Under para 50 the $1,000/day stipulated penalty for an SSO in that basin does not begin to accrue until that 2036 date. THIS IS NOT YET A FINDING ABOUT THE CAMPUS: a sewer basin named for a street is not evidence that a parcel on that street drains to it. The decree gives the testable handle - the Cole St. basin's control measures address SSO 49 and SSO 10 - and the campus/basin relationship must be established from the sewershed geometry and those two SSO locations, never from the street name. See lead H1 and issue #1760."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-412983.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-412983.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "legal/prr-mandamus/prr-production-2026-07-24/hume-road-wpclf-application-2026.award.yaml",
     "group": "finance",
     "title": "Hume Road Sewer System",
