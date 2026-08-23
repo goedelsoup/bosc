@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "1a7ba3f7d55ce8963dfc5a8959254cdff93c0319e55717b0716fa83b6e16fa20",
+  "catalog_version": "b7202c362e1acc4e3b2801ee5a7d60d379153097ead8fa38bb90e397ecc6d4cb",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -5028,6 +5028,142 @@
       "feed": "timeline"
     },
     {
+      "handle": "timeline:lima:inspection-2PE00000-2016-07-13-ri",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2016-07-13-ri",
+      "title": "NPDES inspection (RI) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2016-10-18-ri",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2016-10-18-ri",
+      "title": "NPDES inspection (RI) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2016-12-07-ri",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2016-12-07-ri",
+      "title": "NPDES inspection (RI) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2017-02-28-audit",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2017-02-28-audit",
+      "title": "Pretreatment inspection (Audit) — City of Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2017-04-05-ri",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2017-04-05-ri",
+      "title": "NPDES inspection (RI) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2017-06-20-preliminary compliance report",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2017-06-20-preliminary compliance report",
+      "title": "NPDES inspection (Preliminary Compliance Report) — City of Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2017-07-25-ri",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2017-07-25-ri",
+      "title": "NPDES inspection (RI) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2017-12-05-biosolids generator inspection",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2017-12-05-biosolids generator inspection",
+      "title": "NPDES-Biosolids inspection (Biosolids Generator Inspection) — City of Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2017-12-05-cei",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2017-12-05-cei",
+      "title": "NPDES inspection (CEI) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2019-04-04-cei",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2019-04-04-cei",
+      "title": "NPDES inspection (CEI) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2019-04-04-inspection",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2019-04-04-inspection",
+      "title": "NPDES-Biosolids inspection (inspection) — City of Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2021-06-30-pci",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2021-06-30-pci",
+      "title": "NPDES - Pretreatment inspection (PCI) — City of Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2022-02-22-cei",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2022-02-22-cei",
+      "title": "NPDES inspection (CEI) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2022-06-09-cso/nmc",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2022-06-09-cso/nmc",
+      "title": "NPDES inspection (CSO/NMC) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2023-06-13-biosolids",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2023-06-13-biosolids",
+      "title": "NPDES-Biosolids inspection (Biosolids) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2023-06-28-pca",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2023-06-28-pca",
+      "title": "NPDES inspection (PCA) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:inspection-2PE00000-2026-07-07-cei",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "inspection-2PE00000-2026-07-07-cei",
+      "title": "NPDES inspection (CEI) — Lima WWTP",
+      "feed": "timeline"
+    },
+    {
       "handle": "timeline:lima:mtg-american-township-2024-11-25-American Township",
       "kind": "timeline",
       "site": "lima",
@@ -5641,6 +5777,310 @@
       "site": "lima",
       "local_id": "mtg-shawnee-township-2026-04-13-Shawnee Township",
       "title": "Shawnee Township — other (corridor: datacenter)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000*HD-1994-02-25-dffo",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000*HD-1994-02-25-dffo",
+      "title": "Ohio EPA DFFO — Mayor and Council, City of Lima",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000*MD-2014-09-15-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000*MD-2014-09-15-correspondence",
+      "title": "Ohio EPA / City of Lima, Ohio correspondence — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000*MD-2014-12-08-extension letter",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000*MD-2014-12-08-extension letter",
+      "title": "Ohio EPA (OEPA-Northwest District) extension letter — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000*MD-2015-01-13-consent decree",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000*MD-2015-01-13-consent decree",
+      "title": "U.S. EPA / DOJ and Ohio EPA consent decree — City of Lima (3:14-CV-02551-JZ)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000*MD-2015-02-27-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000*MD-2015-02-27-correspondence",
+      "title": "Ohio EPA (OEPA-Northwest District) correspondence — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000*MD-2016-05-16-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000*MD-2016-05-16-correspondence",
+      "title": "Ohio EPA correspondence — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000*ND-2016-05-23-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000*ND-2016-05-23-correspondence",
+      "title": "Ohio EPA correspondence — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000*ND-2022-04-07-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000*ND-2022-04-07-correspondence",
+      "title": "Ohio EPA, Division of Surface Water correspondence — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000*ND-2022-06-27-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000*ND-2022-06-27-correspondence",
+      "title": "Ohio EPA correspondence — City of Lima",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000-1995-02-24-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000-1995-02-24-correspondence",
+      "title": "Ohio EPA correspondence — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000-2015-01-29-extension letter",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000-2015-01-29-extension letter",
+      "title": "Ohio EPA extension letter — City of Lima",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000-2015-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000-2015-correspondence",
+      "title": "City of Lima, Ohio / Ohio EPA Division of Surface Water correspondence — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000-2016-06-15-correspondence (response to nov)",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000-2016-06-15-correspondence (response to nov)",
+      "title": "Ohio EPA, Northwest District Office correspondence (response to NOV) — City of Lima",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000-2016-07-11-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000-2016-07-11-correspondence",
+      "title": "Ohio EPA correspondence — City of Lima (Mayor and Council)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000-2016-07-14-initial pollution incident report (ipir)",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000-2016-07-14-initial pollution incident report (ipir)",
+      "title": "Ohio EPA – Emergency Response Section Initial Pollution Incident Report (IPIR) — RAILTECH (1607-35-1349110)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000-2016-08-01-correspondence (resolution of violation letter)",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000-2016-08-01-correspondence (resolution of violation letter)",
+      "title": "Ohio EPA correspondence (Resolution of Violation letter) — City of Lima (Mayor and Council)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000-2020-03-04-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000-2020-03-04-correspondence",
+      "title": "Ohio EPA correspondence — City of Mansfield (Mr. Robert Coker Jr., WWTP Manager)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000-2021-02-17-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000-2021-02-17-correspondence",
+      "title": "Ohio EPA correspondence — City of Lima (Jerry Coffey, Plant Manager)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-2PE00000-2026-07-16-nov",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-2PE00000-2026-07-16-nov",
+      "title": "Ohio EPA, Division of Surface Water (DSW) NOV — City of Lima",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-?-2015-06-19-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-?-2015-06-19-correspondence",
+      "title": "Ohio EPA correspondence — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-?-2016-06-10-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-?-2016-06-10-correspondence",
+      "title": "Ohio EPA correspondence — City of Lima",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-?-2016-07-25-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-?-2016-07-25-correspondence",
+      "title": "Ohio EPA, Northwest District Office correspondence — The City (represented by Stephen P. Samuels, Frost Brown To…",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-?-2016-07-25-nov",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-?-2016-07-25-nov",
+      "title": "Ohio EPA – Division of Environmental Response, Investigation and Enforcement (ER Program) NOV — Lima WWTP (signed by Eric Markley) (1607-02-1456)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-?-2016-07-26-initial pollution incident report (ipir)",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-?-2016-07-26-initial pollution incident report (ipir)",
+      "title": "Ohio EPA – Emergency Response Section Initial Pollution Incident Report (IPIR) — Lima WWTP (1607-02-1456)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-?-2017-05-26-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-?-2017-05-26-correspondence",
+      "title": "U.S. EPA / DOJ / Ohio Attorney General correspondence — City of Lima, Ohio (3:14-CV-02551-JZ)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-?-2017-06-23-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-?-2017-06-23-correspondence",
+      "title": "U.S. EPA, Region 5 correspondence — City of Lima, Ohio (3:14-CV-02551-JZ)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-?-2017-08-07-correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-?-2017-08-07-correspondence",
+      "title": "U.S. EPA, Region 5 correspondence — City of Lima, Ohio (3:14-CV-02551-JZ)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-?-2019-05-30-correspondence (extension request letter)",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-?-2019-05-30-correspondence (extension request letter)",
+      "title": "U.S. EPA Region V / Ohio EPA correspondence (extension request letter) — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:order-OH0026069-2005-02-07-administrative order (findings of violations, order for compliance and request for information) with associated correspondence",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "order-OH0026069-2005-02-07-administrative order (findings of violations, order for compliance and request for information) with associated correspondence",
+      "title": "U.S. EPA, Region 5 Administrative Order (Findings of Violations, Order for Com… — City of Lima, Ohio (V-W-05-AO-08)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:progress-3:14-CV-02551-JZ-2016-01-01",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "progress-3:14-CV-02551-JZ-2016-01-01",
+      "title": "Lima Consent Decree (CD) ¶33 progress report — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:progress-3:14-CV-02551-JZ-2016-07-01",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "progress-3:14-CV-02551-JZ-2016-07-01",
+      "title": "Lima Consent Decree (CD) ¶33 progress report — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:progress-3:14-CV-02551-JZ-2017-01-01",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "progress-3:14-CV-02551-JZ-2017-01-01",
+      "title": "Consent Decree ¶33 progress report — City of Lima, Ohio (Director of Utilities)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:progress-3:14-CV-02551-JZ-2017-07-01",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "progress-3:14-CV-02551-JZ-2017-07-01",
+      "title": "Lima Consent Decree (CD), Case 3:14-CV-02551-JZ ¶33 progress report — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:progress-3:14-CV-02551-JZ-2018-01-01",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "progress-3:14-CV-02551-JZ-2018-01-01",
+      "title": "Lima Consent Decree (CD) ¶33 progress report — City of Lima, Ohio (Director of Utilities: Michael H. Cappa)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:progress-3:14-CV-02551-JZ-2018-07-01",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "progress-3:14-CV-02551-JZ-2018-07-01",
+      "title": "Lima Consent Decree (CD), Doc #5 Filed 01/13/15 ¶33 progress report — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:progress-3:14-CV-02551-JZ-2019-01-01",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "progress-3:14-CV-02551-JZ-2019-01-01",
+      "title": "Lima Consent Decree (CD), Doc #5 Filed 01/13/15 ¶33 progress report — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:progress-3:14-CV-02551-JZ-2019-07-01",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "progress-3:14-CV-02551-JZ-2019-07-01",
+      "title": "Lima Consent Decree (CD) ¶33 progress report — City of Lima, Ohio",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:progress-3:14-CV-02551-JZ-2021-01-01",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "progress-3:14-CV-02551-JZ-2021-01-01",
+      "title": "Consent Decree ¶33 progress report — City of Lima, Ohio (signed by Michael Caprella, Utilities D…",
       "feed": "timeline"
     },
     {

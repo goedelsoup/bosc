@@ -1,5 +1,71 @@
 [
   {
+    "date": "1994-02-25",
+    "category": "enforcement_order",
+    "title": "Ohio EPA DFFO — Mayor and Council, City of Lima",
+    "ref": "order-2PE00000*HD-1994-02-25-dffo",
+    "parties": [
+      "Mayor and Council, City of Lima",
+      "Ohio EPA"
+    ],
+    "detail": "1 obligation(s); status active",
+    "source": "oepa/lima/edoc-3957824.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3957824.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "1995-02-24",
+    "category": "enforcement_order",
+    "title": "Ohio EPA correspondence — City of Lima, Ohio",
+    "ref": "order-2PE00000-1995-02-24-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "Ohio EPA"
+    ],
+    "detail": "1 obligation(s)",
+    "source": "oepa/lima/edoc-3967455.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3967455.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2005-02-07",
+    "category": "enforcement_order",
+    "title": "U.S. EPA, Region 5 Administrative Order (Findings of Violations, Order for Com… — City of Lima, Ohio (V-W-05-AO-08)",
+    "ref": "order-OH0026069-2005-02-07-administrative order (findings of violations, order for compliance and request for information) with associated correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA, Region 5"
+    ],
+    "detail": "6 obligation(s); status active",
+    "source": "oepa/lima/edoc-3957823.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3957823.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2013-01-29",
     "category": "epa_permit_action",
     "title": "Surface Water Permit (NPDES) 2PE00000*MD — correspondence (City of Lima WWTP)",
@@ -44,6 +110,28 @@
     }
   },
   {
+    "date": "2014-09-15",
+    "category": "enforcement_order",
+    "title": "Ohio EPA / City of Lima, Ohio correspondence — City of Lima, Ohio",
+    "ref": "order-2PE00000*MD-2014-09-15-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "Ohio EPA / City of Lima, Ohio"
+    ],
+    "detail": "4 obligation(s); status active",
+    "source": "oepa/lima/edoc-3170412.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170412.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2014-09-29",
     "category": "epa_permit_action",
     "title": "NPDES Pretreatment Program 2PE00000*MD — approved (POTW Pretreatment Program modification)",
@@ -57,6 +145,138 @@
     "also_sources": [],
     "citation": {
       "source": "oepa/lima/edoc-2956099.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2014-12-08",
+    "category": "enforcement_order",
+    "title": "Ohio EPA (OEPA-Northwest District) extension letter — City of Lima, Ohio",
+    "ref": "order-2PE00000*MD-2014-12-08-extension letter",
+    "parties": [
+      "City of Lima, Ohio",
+      "Ohio EPA (OEPA-Northwest District)"
+    ],
+    "detail": "4 obligation(s); supersedes NPDES Permit 2PE00000*MD, Part I, C.b compliance schedule (…; status active",
+    "source": "oepa/lima/edoc-3170400.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170400.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2015",
+    "category": "enforcement_order",
+    "title": "City of Lima, Ohio / Ohio EPA Division of Surface Water correspondence — City of Lima, Ohio",
+    "ref": "order-2PE00000-2015-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "City of Lima, Ohio / Ohio EPA Division of Surface Water"
+    ],
+    "detail": "3 obligation(s)",
+    "source": "oepa/lima/edoc-3170394.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170394.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2015-01-13",
+    "category": "enforcement_order",
+    "title": "U.S. EPA / DOJ and Ohio EPA consent decree — City of Lima (3:14-CV-02551-JZ)",
+    "ref": "order-2PE00000*MD-2015-01-13-consent decree",
+    "parties": [
+      "City of Lima",
+      "U.S. EPA / DOJ and Ohio EPA"
+    ],
+    "detail": "28 obligation(s); civil penalty 49,000; status active; ⚠️ case_no AND permit_no WERE PROSE, AND THAT BROKE EVERY JOIN TO THIS DECREE. They read '3:14 CV 2551 (N.D. Ohio, Western Div., Judge Jack…",
+    "source": "oepa/lima/edoc-412983.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-412983.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2015-01-29",
+    "category": "enforcement_order",
+    "title": "Ohio EPA extension letter — City of Lima",
+    "ref": "order-2PE00000-2015-01-29-extension letter",
+    "parties": [
+      "City of Lima",
+      "Ohio EPA"
+    ],
+    "detail": "1 obligation(s)",
+    "source": "oepa/lima/edoc-1974720.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1974720.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2015-02-27",
+    "category": "enforcement_order",
+    "title": "Ohio EPA (OEPA-Northwest District) correspondence — City of Lima, Ohio",
+    "ref": "order-2PE00000*MD-2015-02-27-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "Ohio EPA (OEPA-Northwest District)"
+    ],
+    "detail": "2 obligation(s); supersedes Time extension granted by OEPA on January 29, 2015 (revised…; status closed",
+    "source": "oepa/lima/edoc-3296408.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3296408.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2015-06-19",
+    "category": "enforcement_order",
+    "title": "Ohio EPA correspondence — City of Lima, Ohio",
+    "ref": "order-?-2015-06-19-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "Ohio EPA"
+    ],
+    "detail": "1 obligation(s)",
+    "source": "oepa/lima/edoc-3170389.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170389.order.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -110,6 +330,598 @@
     }
   },
   {
+    "date": "2016-05-16",
+    "category": "enforcement_order",
+    "title": "Ohio EPA correspondence — City of Lima, Ohio",
+    "ref": "order-2PE00000*MD-2016-05-16-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "Ohio EPA"
+    ],
+    "detail": "",
+    "source": "oepa/lima/edoc-3170416.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170416.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-05-23",
+    "category": "enforcement_order",
+    "title": "Ohio EPA correspondence — City of Lima, Ohio",
+    "ref": "order-2PE00000*ND-2016-05-23-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "Ohio EPA"
+    ],
+    "detail": "21 obligation(s)",
+    "source": "oepa/lima/edoc-3170357.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170357.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-06-10",
+    "category": "enforcement_order",
+    "title": "Ohio EPA correspondence — City of Lima",
+    "ref": "order-?-2016-06-10-correspondence",
+    "parties": [
+      "City of Lima",
+      "Ohio EPA"
+    ],
+    "detail": "1 obligation(s); status active; ⚠️ permit_no NULLED — it held 'WWW3-1014947-96', which is not an NPDES permit number and does not appear in the source in that form. The pa…",
+    "source": "oepa/lima/edoc-453773.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-453773.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-06-15",
+    "category": "enforcement_order",
+    "title": "Ohio EPA, Northwest District Office correspondence (response to NOV) — City of Lima",
+    "ref": "order-2PE00000-2016-06-15-correspondence (response to nov)",
+    "parties": [
+      "City of Lima",
+      "Ohio EPA, Northwest District Office"
+    ],
+    "detail": "5 obligation(s); status active",
+    "source": "oepa/lima/edoc-454946.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-454946.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-07-11",
+    "category": "enforcement_order",
+    "title": "Ohio EPA correspondence — City of Lima (Mayor and Council)",
+    "ref": "order-2PE00000-2016-07-11-correspondence",
+    "parties": [
+      "City of Lima (Mayor and Council)",
+      "Ohio EPA"
+    ],
+    "detail": "1 obligation(s); status active",
+    "source": "oepa/lima/edoc-1914761.order.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-463755.order.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1914761.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-07-13",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (RI) — Lima WWTP",
+    "ref": "inspection-2PE00000-2016-07-13-ri",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "form marks no significant non-compliance; 6 observation(s); reported 2016-07-20",
+    "source": "oepa/lima/edoc-1914739.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-467350.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1914739.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-07-14",
+    "category": "enforcement_order",
+    "title": "Ohio EPA – Emergency Response Section Initial Pollution Incident Report (IPIR) — RAILTECH (1607-35-1349110)",
+    "ref": "order-2PE00000-2016-07-14-initial pollution incident report (ipir)",
+    "parties": [
+      "RAILTECH",
+      "Ohio EPA – Emergency Response Section"
+    ],
+    "detail": "1 obligation(s); status active; ⚠️ NOT LIMA EVIDENCE — the SECOND misfiled document in this tree, after edoc-3063821. This is an Ohio EPA Emergency Response Section Initia…",
+    "source": "oepa/lima/edoc-3296496.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3296496.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-07-25",
+    "category": "enforcement_order",
+    "title": "Ohio EPA – Division of Environmental Response, Investigation and Enforcement (ER Program) NOV — Lima WWTP (signed by Eric Markley) (1607-02-1456)",
+    "ref": "order-?-2016-07-25-nov",
+    "parties": [
+      "Lima WWTP (signed by Eric Markley)",
+      "Ohio EPA – Division of Environmental Response, Investigation and Enforcement (ER Program)"
+    ],
+    "detail": "4 obligation(s); status active",
+    "source": "oepa/lima/edoc-3170417.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170417.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-07-25",
+    "category": "enforcement_order",
+    "title": "Ohio EPA, Northwest District Office correspondence — The City (represented by Stephen P. Samuels, Frost Brown To…",
+    "ref": "order-?-2016-07-25-correspondence",
+    "parties": [
+      "The City (represented by Stephen P. Samuels, Frost Brown Todd LLC)",
+      "Ohio EPA, Northwest District Office"
+    ],
+    "detail": "1 obligation(s); status closed",
+    "source": "oepa/lima/edoc-469760.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-469760.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-07-26",
+    "category": "enforcement_order",
+    "title": "Ohio EPA – Emergency Response Section Initial Pollution Incident Report (IPIR) — Lima WWTP (1607-02-1456)",
+    "ref": "order-?-2016-07-26-initial pollution incident report (ipir)",
+    "parties": [
+      "Lima WWTP",
+      "Ohio EPA – Emergency Response Section"
+    ],
+    "detail": "1 obligation(s); status active",
+    "source": "oepa/lima/edoc-3170415.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170415.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-08-01",
+    "category": "compliance_progress_report",
+    "title": "Lima Consent Decree (CD) ¶33 progress report — City of Lima, Ohio",
+    "ref": "progress-3:14-CV-02551-JZ-2016-01-01",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA (USEPA) / Ohio EPA (OEPA), N.W.D.O."
+    ],
+    "detail": "period 2016-01-01 → 2016-06-30; 6 project(s); 4 discharge event(s); 2 permit exceedance(s)",
+    "source": "oepa/lima/edoc-472902.progress-report.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-472902.progress-report.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-08-01",
+    "category": "enforcement_order",
+    "title": "Ohio EPA correspondence (Resolution of Violation letter) — City of Lima (Mayor and Council)",
+    "ref": "order-2PE00000-2016-08-01-correspondence (resolution of violation letter)",
+    "parties": [
+      "City of Lima (Mayor and Council)",
+      "Ohio EPA"
+    ],
+    "detail": "status closed",
+    "source": "oepa/lima/edoc-1914753.order.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-470936.order.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1914753.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-10-18",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (RI) — Lima WWTP",
+    "ref": "inspection-2PE00000-2016-10-18-ri",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "3 observation(s); reported 2016-11-03",
+    "source": "oepa/lima/edoc-1914740.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-512329.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1914740.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-12-07",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (RI) — Lima WWTP",
+    "ref": "inspection-2PE00000-2016-12-07-ri",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "form marks no significant non-compliance; 9 observation(s); reported 2016-12-16",
+    "source": "oepa/lima/edoc-1914742.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-529544.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1914742.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-01-26",
+    "category": "compliance_progress_report",
+    "title": "Lima Consent Decree (CD) ¶33 progress report — City of Lima, Ohio",
+    "ref": "progress-3:14-CV-02551-JZ-2016-07-01",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA Region 5 / Ohio EPA"
+    ],
+    "detail": "period 2016-07-01 → 2016-12-31; 6 project(s); 2 discharge event(s); 4 permit exceedance(s)",
+    "source": "oepa/lima/edoc-3170422.progress-report.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170422.progress-report.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-02-28",
+    "category": "agency_inspection",
+    "title": "Pretreatment inspection (Audit) — City of Lima WWTP",
+    "ref": "inspection-2PE00000-2017-02-28-audit",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "City of Lima WWTP"
+    ],
+    "detail": "form marks no significant non-compliance; 26 observation(s); reported 2017-03-17",
+    "source": "oepa/lima/edoc-1851472.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-591751.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1851472.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-04-05",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (RI) — Lima WWTP",
+    "ref": "inspection-2PE00000-2017-04-05-ri",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "form marks no significant non-compliance; 3 observation(s); reported 2017-04-12",
+    "source": "oepa/lima/edoc-1851473.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-605102.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1851473.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-05-26",
+    "category": "enforcement_order",
+    "title": "U.S. EPA / DOJ / Ohio Attorney General correspondence — City of Lima, Ohio (3:14-CV-02551-JZ)",
+    "ref": "order-?-2017-05-26-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA / DOJ / Ohio Attorney General"
+    ],
+    "detail": "14 obligation(s); supersedes Consent Decree entered into on January 13, 2015",
+    "source": "oepa/lima/edoc-3170424.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170424.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-06-20",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (Preliminary Compliance Report) — City of Lima WWTP",
+    "ref": "inspection-2PE00000-2017-06-20-preliminary compliance report",
+    "parties": [
+      "Ohio EPA",
+      "City of Lima WWTP"
+    ],
+    "detail": "1 observation(s); reported 2017-07-18",
+    "source": "oepa/lima/edoc-3170033.inspection.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170033.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-06-23",
+    "category": "enforcement_order",
+    "title": "U.S. EPA, Region 5 correspondence — City of Lima, Ohio (3:14-CV-02551-JZ)",
+    "ref": "order-?-2017-06-23-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA, Region 5"
+    ],
+    "detail": "1 obligation(s)",
+    "source": "oepa/lima/edoc-3170425.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170425.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-07-25",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (RI) — Lima WWTP",
+    "ref": "inspection-2PE00000-2017-07-25-ri",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "form marks no significant non-compliance; 6 observation(s); reported 2017-08-16",
+    "source": "oepa/lima/edoc-1851474.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-678896.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1851474.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-07-31",
+    "category": "compliance_progress_report",
+    "title": "Consent Decree ¶33 progress report — City of Lima, Ohio (Director of Utilities)",
+    "ref": "progress-3:14-CV-02551-JZ-2017-01-01",
+    "parties": [
+      "City of Lima, Ohio (Director of Utilities)",
+      "U.S. EPA Region 5 / Ohio EPA (Division of Surface Water, Columbus and Northwest District Office)"
+    ],
+    "detail": "period 2017-01-01 → 2017-06-30; 5 project(s); 49 discharge event(s); 1 permit exceedance(s); ⚠️ THIS ENUMERATION IS PARTIAL. 49 discharge_events are recorded, but the report's own OverflowTotals row states 119 SSO and 13 CSO overflo…",
+    "source": "oepa/lima/edoc-3170035.progress-report.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170035.progress-report.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-08-07",
+    "category": "enforcement_order",
+    "title": "U.S. EPA, Region 5 correspondence — City of Lima, Ohio (3:14-CV-02551-JZ)",
+    "ref": "order-?-2017-08-07-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA, Region 5"
+    ],
+    "detail": "2 obligation(s)",
+    "source": "oepa/lima/edoc-3170036.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170036.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-12-05",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (CEI) — Lima WWTP",
+    "ref": "inspection-2PE00000-2017-12-05-cei",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "form marks no significant non-compliance; 3 observation(s); reported 2017-12-15",
+    "source": "oepa/lima/edoc-1851475.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-739814.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1851475.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2017-12-05",
+    "category": "agency_inspection",
+    "title": "NPDES-Biosolids inspection (Biosolids Generator Inspection) — City of Lima WWTP",
+    "ref": "inspection-2PE00000-2017-12-05-biosolids generator inspection",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "City of Lima WWTP"
+    ],
+    "detail": "6 observation(s); reported 2017-12-29",
+    "source": "oepa/lima/edoc-1851476.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-747522.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1851476.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2018-01-25",
+    "category": "compliance_progress_report",
+    "title": "Lima Consent Decree (CD), Case 3:14-CV-02551-JZ ¶33 progress report — City of Lima, Ohio",
+    "ref": "progress-3:14-CV-02551-JZ-2017-07-01",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA Region 5 / Ohio EPA / U.S. DOJ"
+    ],
+    "detail": "period 2017-07-01 → 2017-12-31; 5 project(s); 54 discharge event(s); 4 permit exceedance(s)",
+    "source": "oepa/lima/edoc-2710558.progress-report.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2710558.progress-report.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2018-03-22",
     "category": "npdes_public_notice",
     "title": "NPDES 2PE00000*ND (City of Lima WWTP) — public notice",
@@ -145,6 +957,346 @@
     "also_sources": [],
     "citation": {
       "source": "oepa/lima/edoc-2710555.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2018-07-31",
+    "category": "compliance_progress_report",
+    "title": "Lima Consent Decree (CD) ¶33 progress report — City of Lima, Ohio (Director of Utilities: Michael H. Cappa)",
+    "ref": "progress-3:14-CV-02551-JZ-2018-01-01",
+    "parties": [
+      "City of Lima, Ohio (Director of Utilities: Michael H. Cappa)",
+      "U.S. EPA Region 5 / Ohio EPA (Division of Surface Water, Northwest District Office)"
+    ],
+    "detail": "period 2018-01-01 → 2018-06-30; 5 project(s); 3 discharge event(s)",
+    "source": "oepa/lima/edoc-2710557.progress-report.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2710557.progress-report.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2019-02-04",
+    "category": "compliance_progress_report",
+    "title": "Lima Consent Decree (CD), Doc #5 Filed 01/13/15 ¶33 progress report — City of Lima, Ohio",
+    "ref": "progress-3:14-CV-02551-JZ-2018-07-01",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA Region 5 / Ohio EPA (Division of Surface Water)"
+    ],
+    "detail": "period 2018-07-01 → 2018-12-31; 5 project(s); 2 discharge event(s); 2 permit exceedance(s)",
+    "source": "oepa/lima/edoc-990795.progress-report.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-990795.progress-report.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2019-04-04",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (CEI) — Lima WWTP",
+    "ref": "inspection-2PE00000-2019-04-04-cei",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "form marks no significant non-compliance; 3 observation(s); reported 2019-04-30",
+    "source": "oepa/lima/edoc-1048228.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-1797305.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1048228.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2019-04-04",
+    "category": "agency_inspection",
+    "title": "NPDES-Biosolids inspection (inspection) — City of Lima WWTP",
+    "ref": "inspection-2PE00000-2019-04-04-inspection",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "City of Lima WWTP"
+    ],
+    "detail": "3 observation(s); reported 2019-05-03",
+    "source": "oepa/lima/edoc-1048235.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-1797306.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1048235.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2019-05-30",
+    "category": "enforcement_order",
+    "title": "U.S. EPA Region V / Ohio EPA correspondence (extension request letter) — City of Lima, Ohio",
+    "ref": "order-?-2019-05-30-correspondence (extension request letter)",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA Region V / Ohio EPA"
+    ],
+    "detail": "2 obligation(s)",
+    "source": "oepa/lima/edoc-2710530.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2710530.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2019-07-31",
+    "category": "compliance_progress_report",
+    "title": "Lima Consent Decree (CD), Doc #5 Filed 01/13/15 ¶33 progress report — City of Lima, Ohio",
+    "ref": "progress-3:14-CV-02551-JZ-2019-01-01",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA Region 5 / Ohio EPA (Division of Surface Water)"
+    ],
+    "detail": "period 2019-01-01 → 2019-06-30; 5 project(s); 49 discharge event(s); 3 permit exceedance(s)",
+    "source": "oepa/lima/edoc-1104344.progress-report.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1104344.progress-report.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2020-01-31",
+    "category": "compliance_progress_report",
+    "title": "Lima Consent Decree (CD) ¶33 progress report — City of Lima, Ohio",
+    "ref": "progress-3:14-CV-02551-JZ-2019-07-01",
+    "parties": [
+      "City of Lima, Ohio",
+      "U.S. EPA Region 5 / Ohio EPA (Division of Surface Water)"
+    ],
+    "detail": "period 2019-07-01 → 2019-12-31; 6 project(s); 50 discharge event(s); 2 permit exceedance(s)",
+    "source": "oepa/lima/edoc-1294257.progress-report.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1294257.progress-report.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2020-03-04",
+    "category": "enforcement_order",
+    "title": "Ohio EPA correspondence — City of Mansfield (Mr. Robert Coker Jr., WWTP Manager)",
+    "ref": "order-2PE00000-2020-03-04-correspondence",
+    "parties": [
+      "City of Mansfield (Mr. Robert Coker Jr., WWTP Manager)",
+      "Ohio EPA"
+    ],
+    "detail": "1 obligation(s); ⚠️ MISFILED AT THE AGENCY, AND SHELVED WITH ITS SOURCE ANYWAY. This document's subject is the MANSFIELD WWTP in RICHLAND County — not Lima,…",
+    "source": "oepa/lima/edoc-3063821.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3063821.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2021-02-17",
+    "category": "enforcement_order",
+    "title": "Ohio EPA correspondence — City of Lima (Jerry Coffey, Plant Manager)",
+    "ref": "order-2PE00000-2021-02-17-correspondence",
+    "parties": [
+      "City of Lima (Jerry Coffey, Plant Manager)",
+      "Ohio EPA"
+    ],
+    "detail": "3 obligation(s); status active",
+    "source": "oepa/lima/edoc-1520341.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1520341.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2021-06-30",
+    "category": "agency_inspection",
+    "title": "NPDES - Pretreatment inspection (PCI) — City of Lima WWTP",
+    "ref": "inspection-2PE00000-2021-06-30-pci",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "City of Lima WWTP"
+    ],
+    "detail": "6 observation(s); reported 2021-08-02",
+    "source": "oepa/lima/edoc-1610423.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-1782202.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1610423.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2021-07-23",
+    "category": "compliance_progress_report",
+    "title": "Consent Decree ¶33 progress report — City of Lima, Ohio (signed by Michael Caprella, Utilities D…",
+    "ref": "progress-3:14-CV-02551-JZ-2021-01-01",
+    "parties": [
+      "City of Lima, Ohio (signed by Michael Caprella, Utilities Director)",
+      "U.S. EPA Region 5 / Ohio EPA (Division of Surface Water, Northwest District Office)"
+    ],
+    "detail": "period 2021-01-01 → 2021-06-30; 6 project(s); 49 discharge event(s)",
+    "source": "oepa/lima/edoc-1611092.progress-report.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1611092.progress-report.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2022-02-22",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (CEI) — Lima WWTP",
+    "ref": "inspection-2PE00000-2022-02-22-cei",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "form marks significant non-compliance; 5 observation(s); reported 2022-03-14",
+    "source": "oepa/lima/edoc-1752399.inspection.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-1753487.inspection.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1752399.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2022-04-07",
+    "category": "enforcement_order",
+    "title": "Ohio EPA, Division of Surface Water correspondence — City of Lima, Ohio",
+    "ref": "order-2PE00000*ND-2022-04-07-correspondence",
+    "parties": [
+      "City of Lima, Ohio",
+      "Ohio EPA, Division of Surface Water"
+    ],
+    "detail": "4 obligation(s); supersedes City of Lima Consent Decree (stations 35a, 35b, 35c referen…; status active",
+    "source": "oepa/lima/edoc-1781552.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1781552.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2022-06-09",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (CSO/NMC) — Lima WWTP",
+    "ref": "inspection-2PE00000-2022-06-09-cso/nmc",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "12 observation(s); reported 2022-08-01",
+    "source": "oepa/lima/edoc-1952887.inspection.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1952887.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2022-06-27",
+    "category": "enforcement_order",
+    "title": "Ohio EPA correspondence — City of Lima",
+    "ref": "order-2PE00000*ND-2022-06-27-correspondence",
+    "parties": [
+      "City of Lima",
+      "Ohio EPA"
+    ],
+    "detail": "2 obligation(s); status active",
+    "source": "oepa/lima/edoc-1851184.order.yaml",
+    "also_sources": [
+      "oepa/lima/edoc-1879637.order.yaml"
+    ],
+    "citation": {
+      "source": "oepa/lima/edoc-1851184.order.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -233,6 +1385,50 @@
     "also_sources": [],
     "citation": {
       "source": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-06-13",
+    "category": "agency_inspection",
+    "title": "NPDES-Biosolids inspection (Biosolids) — Lima WWTP",
+    "ref": "inspection-2PE00000-2023-06-13-biosolids",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "form marks no significant non-compliance; 3 observation(s); reported 2023-07-03",
+    "source": "oepa/lima/edoc-2431324.inspection.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2431324.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-06-28",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (PCA) — Lima WWTP",
+    "ref": "inspection-2PE00000-2023-06-28-pca",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "3 observation(s); reported 2023-08-07",
+    "source": "oepa/lima/edoc-2499760.inspection.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2499760.inspection.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -3658,6 +4854,28 @@
     }
   },
   {
+    "date": "2026-07-07",
+    "category": "agency_inspection",
+    "title": "NPDES inspection (CEI) — Lima WWTP",
+    "ref": "inspection-2PE00000-2026-07-07-cei",
+    "parties": [
+      "Ohio EPA, Division of Surface Water",
+      "Lima WWTP"
+    ],
+    "detail": "form marks significant non-compliance; 9 observation(s); reported 2026-07-16",
+    "source": "oepa/lima/edoc-4192699.inspection.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-4192699.inspection.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2026-07-09",
     "category": "county_event",
     "title": "Allen County Operations Engineer Mark Droll briefed the Board on upcoming construction + road closures. The Board approved a Road Use Maintenance Agreement (RUMA) among the Commissioners, the County Engineer, and BRIGHTSPEED OF OHIO for aerial + buried fiber-optic cable (Brightspeed uses county-road right-of-way, 'foregoing any need to purchase easements from property owners'). Droll also flagged BURIED FIBER-OPTIC LINES 'to facilitate communication between data centers,' a Fort Amanda Rd / Buckeye Rd roundabout rebuild (summer/fall 2027), and a South Thayer Rd repave/expansion (SR-309 → Reservoir Rd).",
@@ -3668,6 +4886,28 @@
     "also_sources": [],
     "citation": {
       "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-07-16",
+    "category": "enforcement_order",
+    "title": "Ohio EPA, Division of Surface Water (DSW) NOV — City of Lima",
+    "ref": "order-2PE00000-2026-07-16-nov",
+    "parties": [
+      "City of Lima",
+      "Ohio EPA, Division of Surface Water (DSW)"
+    ],
+    "detail": "2 obligation(s); status active",
+    "source": "oepa/lima/edoc-4192703.order.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-4192703.order.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,

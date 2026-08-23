@@ -193,6 +193,202 @@ def _plan_events(corpus: Corpus) -> list[TimelineEvent]:
     return events
 
 
+# A prose field clipped for use in a one-line title. The committed enforcement genres put whole
+# sentences in `instrument` ("Administrative Order (Findings of Violations, Order for Compliance
+# and Request for Information) with associated correspondence") and full street addresses in
+# `facility`, and a chronology row is one line.
+_TITLE_CLIP = 60
+
+
+def _flat(text: str | None) -> str:
+    """One-line form of a transcribed field: whitespace collapsed, ends trimmed."""
+    return re.sub(r"\s+", " ", str(text or "")).strip()
+
+
+def _clip(text: str | None, limit: int = _TITLE_CLIP) -> str:
+    """:func:`_flat`, clipped to ``limit`` for use in a one-line title."""
+    flat = _flat(text)
+    return flat if len(flat) <= limit else flat[: limit - 1].rstrip() + "\u2026"
+
+
+# The corpus marks a warning with ⚠️ when it changes what the artifact MEANS, not
+# merely how well it was read. Two committed orders carry one that a chronology row would
+# otherwise contradict outright: `oepa/lima/edoc-3063821` is a MANSFIELD WWTP letter and
+# `oepa/lima/edoc-3296496` a Henry County spill report, both shelved under Lima because Ohio
+# EPA's portal served them on permit 2PE00000 and the extracted tree mirrors its immutable
+# source ("read the shelf as CUSTODY, not attribution"). The catalog raises the attribution as a
+# follow-up rather than moving a source byte, so the honest thing a timeline can do is carry the
+# artifact's own flag onto the row it dates.
+_WARNING_FLAG = "\u26a0"
+
+
+def _flagged_caveat(warnings: list[str]) -> str:
+    """The first warning the artifact itself flagged, clipped for a detail line."""
+    return next((_clip(w, 140) for w in warnings if _WARNING_FLAG in w), "")
+
+
+def _order_events(corpus: Corpus) -> list[TimelineEvent]:
+    """Dated enforcement instruments — consent decrees, DFFOs, NOVs, closure letters (#1746).
+
+    The date is ``issued_date`` (signature / journalization / letter date). An instrument with
+    none contributes nothing, exactly as every builder above skips its undated entries — none of
+    the 32 committed orders is undated today, and inventing one from `effective_date` would
+    assert a signing that the artifact does not record.
+
+    **``ref`` deliberately excludes ``case_no``.** The dedup key is the instrument's real-world
+    identity — the permit it acts on, the day it issued, and what it is — because the corpus
+    holds twin portal captures of single letters whose case numbers DISAGREE:
+    ``data/site/document-versions.yaml`` records that one capture of the 2016-07-11 Partial
+    Resolution of Violation "invented a case_no from the permit number because a vision-only read
+    had nothing to check against". Keying on the identifier the readings dispute would publish
+    one letter twice; keying on what they agree about collapses them, and :func:`_dedup` keeps
+    both artifact paths on the surviving event.
+    """
+    events: list[TimelineEvent] = []
+    for rel, ex in corpus.orders:
+        o = ex.order
+        if not o.issued_date:
+            continue
+        parties = tuple(x for x in (o.respondent, o.agency) if x)
+        instrument = _clip(o.instrument) or "enforcement instrument"
+        title = f"{o.agency or 'Agency'} {instrument} — {_clip(o.respondent) or '?'}"
+        if o.case_no:
+            title = f"{title} ({_clip(o.case_no, 40)})"
+        bits = []
+        if o.obligations:
+            bits.append(f"{len(o.obligations)} obligation(s)")
+        if o.penalty_usd is not None:
+            bits.append(f"civil penalty {o.penalty_usd:,}")
+        if o.supersedes:
+            bits.append(f"supersedes {_clip(o.supersedes)}")
+        if o.status:
+            bits.append(f"status {o.status}")
+        if caveat := _flagged_caveat(o.warnings):
+            bits.append(caveat)
+        events.append(
+            TimelineEvent(
+                date=o.issued_date,
+                category="enforcement_order",
+                title=title,
+                source=rel,
+                # Keyed on the FULL instrument text, not the clipped title form: a key is not
+                # a label, and an ellipsis would join two instruments differing only past 60.
+                ref=(f"order-{o.permit_no or '?'}-{o.issued_date}-{_flat(o.instrument).lower()}"),
+                parties=parties,
+                detail="; ".join(bits),
+            )
+        )
+    return events
+
+
+def _inspection_events(corpus: Corpus) -> list[TimelineEvent]:
+    """Agency inspections — the date of the VISIT, not of the letter that reports it (#2077).
+
+    ``inspection_date`` and ``report_date`` are weeks apart on these letters (2026-07-07 visited,
+    2026-07-16 transmitted) and only one of them is the event: an inspection is a thing that
+    happened at the plant. A capture that records only a ``report_date`` therefore contributes
+    NOTHING rather than being placed on the letter's date — one committed artifact
+    (``oepa/lima/edoc-3170414.inspection.yaml``) is in exactly that state.
+
+    **Twin captures collapse on the visit, and the manifest is not consulted.**
+    ``data/site/document-versions.yaml`` declares 12 ``v2`` clusters over these 30 artifacts —
+    one Ohio EPA letter served at two portal docids, scanned twice — so a naive builder publishes
+    24 events for 12 inspections. The ``ref`` here is the visit itself (permit + date + inspection
+    type), which is what two readings of one letter agree about, and :func:`_dedup` folds the
+    second capture into ``also_sources``. That is deliberately NOT a read of the cluster manifest:
+    ``watermark.pipeline`` does not import ``watermark.site`` (the dependency runs the other way),
+    and the natural key is the stronger test anyway — it caught an UNDECLARED twin the manifest
+    misses, the 2022-06-27 hexavalent-chromium letter at ``edoc-1851184`` and ``edoc-1879637``.
+    Its one cost is that the surviving primary is the first artifact in load order rather than the
+    manifest's canonical member; both paths stay on the event, so nothing is lost, and the
+    inspection TYPE is part of the key because 2017-12-05 and 2019-04-04 each carry two genuinely
+    different inspections of the same plant on the same day.
+    """
+    events: list[TimelineEvent] = []
+    for rel, ex in corpus.inspections:
+        i = ex.inspection
+        if not i.inspection_date:
+            continue
+        kind = i.type_code or _clip(i.inspection_type) or "inspection"
+        kind_ref = i.type_code or _flat(i.inspection_type).lower() or "inspection"
+        # Institutions, not the named inspectors: `parties` feeds the entity-facing surfaces, and
+        # the agency personnel who signed the letter are cited on the artifact itself.
+        parties = tuple(x for x in (i.agency, i.facility) if x)
+        bits = []
+        if i.significant_noncompliance is not None:
+            bits.append(
+                "form marks significant non-compliance"
+                if i.significant_noncompliance
+                else "form marks no significant non-compliance"
+            )
+        if i.observations:
+            bits.append(f"{len(i.observations)} observation(s)")
+        if i.report_date:
+            bits.append(f"reported {i.report_date}")
+        if caveat := _flagged_caveat(i.warnings):
+            bits.append(caveat)
+        events.append(
+            TimelineEvent(
+                date=i.inspection_date,
+                category="agency_inspection",
+                title=(f"{i.program or 'Agency'} inspection ({kind}) — {_clip(i.facility) or '?'}"),
+                source=rel,
+                ref=(
+                    f"inspection-{i.permit_no or i.npdes_id or '?'}-{i.inspection_date}"
+                    f"-{kind_ref.lower()}"
+                ),
+                parties=parties,
+                detail="; ".join(bits),
+            )
+        )
+    return events
+
+
+def _progress_report_events(corpus: Corpus) -> list[TimelineEvent]:
+    """Periodic reports filed UNDER an enforcement instrument (#2079).
+
+    Dated on ``report_date`` — when the respondent filed it — with the reporting period the
+    report COVERS carried in the detail, because the two are different facts and the filing is
+    the dated act. ``ref`` joins on the docket the report answers rather than a permit number:
+    every committed Lima progress report leaves ``permit_no`` null and names the consent decree's
+    ``3:14-CV-02551-JZ``, which is the join that makes nine half-year filings one series.
+    """
+    events: list[TimelineEvent] = []
+    for rel, ex in corpus.progress_reports:
+        pr = ex.progress_report
+        if not pr.report_date:
+            continue
+        parties = tuple(x for x in (pr.respondent, pr.agency) if x)
+        instrument = _clip(pr.instrument) or "enforcement instrument"
+        paragraph = f" \u00b6{pr.paragraph}" if pr.paragraph else ""
+        bits = []
+        if pr.period_start or pr.period_end:
+            bits.append(f"period {pr.period_start or '?'} \u2192 {pr.period_end or '?'}")
+        if pr.projects:
+            bits.append(f"{len(pr.projects)} project(s)")
+        if pr.discharge_events:
+            bits.append(f"{len(pr.discharge_events)} discharge event(s)")
+        if pr.permit_exceedances:
+            bits.append(f"{len(pr.permit_exceedances)} permit exceedance(s)")
+        if caveat := _flagged_caveat(pr.warnings):
+            bits.append(caveat)
+        events.append(
+            TimelineEvent(
+                date=pr.report_date,
+                category="compliance_progress_report",
+                title=(f"{instrument}{paragraph} progress report — {_clip(pr.respondent) or '?'}"),
+                source=rel,
+                ref=(
+                    f"progress-{pr.case_no or pr.permit_no or '?'}"
+                    f"-{pr.period_start or pr.report_date}"
+                ),
+                parties=parties,
+                detail="; ".join(bits),
+            )
+        )
+    return events
+
+
 def _opc_events(corpus: Corpus) -> list[TimelineEvent]:
     events: list[TimelineEvent] = []
     for rel, summary in corpus.summaries:
@@ -438,8 +634,10 @@ def build_timeline(
     """Assemble a single sorted chronology across the whole corpus.
 
     The recognized-genre events come from ``corpus`` (already site-scoped by
-    ``load_corpus``). When ``include_curated`` (the default for production — the CLI and
-    site build), the committed unrecognized-kind extractions — the commissioners ledger,
+    ``load_corpus``) — deeds, NPDES permits, EPA permit actions, site plans, the three
+    wastewater-compliance genres (enforcement orders, agency inspections, progress reports filed
+    under an order) and the OPC estimate. When ``include_curated`` (the default for production —
+    the CLI and site build), the committed unrecognized-kind extractions — the commissioners ledger,
     closed-session log, the zoning resolution, and the subdivision meeting indices — are
     folded in directly. Those read the extracted tree directly, so they are bounded by
     the active site's corpus scope (#762): when ``scope`` is omitted it's derived from the
@@ -458,12 +656,19 @@ def build_timeline(
     ``get_settings()`` — but every programmatic per-site export did, the test suite's shared
     bundle fixtures included.
     """
-    corpus = corpus if corpus is not None else load_corpus()
+    # `settings`/`scope` bind the corpus half too, not just the curated one (#2025). Every
+    # production caller passes `corpus` already built — but a caller that does not, and that
+    # names a site, must not have the fallback silently load the PROCESS-GLOBAL site's corpus
+    # while the curated half reads the site it asked for.
+    corpus = corpus if corpus is not None else load_corpus(settings, scope=scope)
     events = (
         _deed_events(corpus)
         + _npdes_events(corpus)
         + _epa_events(corpus)
         + _plan_events(corpus)
+        + _order_events(corpus)
+        + _inspection_events(corpus)
+        + _progress_report_events(corpus)
         + _opc_events(corpus)
     )
     if include_curated:

@@ -24,17 +24,21 @@ from watermark.models import (
     RENDER_ENVELOPE_KEYS,
     DeedExtraction,
     DmrExtraction,
+    EngineeringExtraction,
     EpaExtraction,
     Estimate,
     EstimateSection,
     GeneralPermitExtraction,
+    InspectionExtraction,
     LineItem,
     MarkupLine,
     NpdesExtraction,
     NpdesTranscription,
     OPCSummary,
+    OrderExtraction,
     PageExtraction,
     PlanExtraction,
+    ProgressReportExtraction,
     SosExtraction,
     WetlandExtraction,
 )
@@ -167,7 +171,7 @@ class Corpus:
     # present while it is absent from every model-driven feed. Recording them lets a test assert
     # the drop set is empty instead of grepping logs.
     rejected: list[CorpusReject] = field(default_factory=list)
-    # Files no arm of `_classify` claimed. Expected and numerous (~81); kept only for counting.
+    # Files no arm of `_classify` claimed. Expected and numerous (~78); kept only for counting.
     declined: list[str] = field(default_factory=list)
     dmr_records: list[tuple[str, DmrExtraction]] = field(default_factory=list)
     filings: list[tuple[str, SosExtraction]] = field(default_factory=list)
@@ -176,6 +180,14 @@ class Corpus:
     plans: list[tuple[str, PlanExtraction]] = field(default_factory=list)
     estimates: list[tuple[str, PageExtraction]] = field(default_factory=list)
     summaries: list[tuple[str, OPCSummary]] = field(default_factory=list)
+    # The wastewater-compliance genres (#1746/#2077/#2079). Three separate buckets, deliberately:
+    # an order IMPOSES, an inspection OBSERVES, and a progress report REPORTS AGAINST an order —
+    # each model's docstring says why it must not share a bucket with the other two, and a reader
+    # weighs them differently. `engineering` is the drawing-set genre (`record:`).
+    orders: list[tuple[str, OrderExtraction]] = field(default_factory=list)
+    inspections: list[tuple[str, InspectionExtraction]] = field(default_factory=list)
+    progress_reports: list[tuple[str, ProgressReportExtraction]] = field(default_factory=list)
+    engineering: list[tuple[str, EngineeringExtraction]] = field(default_factory=list)
 
     def __len__(self) -> int:
         return (
@@ -189,6 +201,10 @@ class Corpus:
             + len(self.estimates)
             + len(self.summaries)
             + len(self.general_permits)
+            + len(self.orders)
+            + len(self.inspections)
+            + len(self.progress_reports)
+            + len(self.engineering)
         )
         # `rejected`/`declined` are deliberately NOT counted — they hold no models.
 
@@ -217,6 +233,10 @@ class Corpus:
                 self.plans,
                 self.estimates,
                 self.summaries,
+                self.orders,
+                self.inspections,
+                self.progress_reports,
+                self.engineering,
             )
             for rel, _ in group
         ]
@@ -258,11 +278,42 @@ def _has_transcription_provenance(data: dict[str, Any]) -> bool:
     )
 
 
+def _is_manual_read(data: dict[str, Any]) -> bool:
+    """Whether ``data`` is a person's read of RENDERED page images, declaring its own method.
+
+    A third committed convention beside the render envelope and the hand transcription, and it is
+    a real one: nine artifacts carry exactly ``doc_id`` + ``source_path`` + ``kind`` +
+    ``pages_read`` + ``method`` and **no** ``dpi`` — the six Allen County DFFO / SSO-closure
+    instruments in the 2026-07-24 PRR production, ``regulatory/west-union/
+    west-union-consent-order-1993.order.yaml``, and two WPCLF/OWDA award artifacts. Their
+    ``method:`` says what happened in prose ("manual transcription from the page images rendered
+    at 600 DPI (pypdfium2), all 10 pages"), which is why they name the pages they read and refuse
+    to name a ``dpi``: no single render receipt describes the read.
+
+    **Neither envelope in `watermark.models` fits them, and this function does not invent one.**
+    :class:`~watermark.models.DocExtraction` requires ``dpi``; :class:`~watermark.models.
+    TranscribedExtraction` refuses ``doc_id``/``pages_read`` outright, on the stated grounds that
+    a partial render receipt is either a dead extractor's output or a false one. These are a third
+    thing that doctrine did not anticipate — an honest, declared, human read — so they stay
+    DECLINED and this predicate is what makes that decline *deliberate* rather than silent:
+    anything keying a genre payload that is neither a render nor one of these still routes to its
+    model and fails loudly, which is the #1994 guarantee. Modelling them is a genre decision
+    (a ``ManualReadExtraction`` envelope), not a loader one.
+    """
+    return (
+        "dpi" not in data
+        and isinstance(data.get("method"), str)
+        and isinstance(data.get("doc_id"), str)
+        and isinstance(data.get("source_path"), str)
+    )
+
+
 def _classify(data: Any) -> str:
     """Identify an extraction by its top-level keys (shape, not filename).
 
     Returns ``deed`` / ``npdes`` / ``npdes_transcribed`` / ``npdes_dmr`` / ``general_permit`` /
-    ``sos`` / ``epa`` / ``wetland`` / ``plan`` / ``opc_page`` / ``opc_detail_legacy`` /
+    ``sos`` / ``epa`` / ``wetland`` / ``plan`` / ``order`` / ``inspection`` /
+    ``progress_report`` / ``engineering`` / ``opc_page`` / ``opc_detail_legacy`` /
     ``opc_summary``, or :data:`DECLINED`.
 
     **Every arm is a positive shape test, and that is the point.** This used to end
@@ -330,12 +381,46 @@ def _classify(data: Any) -> str:
         return "wetland"
     if "plan" in data:
         return "plan"
+    # The wastewater-compliance genres (#1746/#2077/#2079), each keyed by the payload block its
+    # own extractor writes: `order:` (EnforcementOrder), `inspection:` (ComplianceInspection),
+    # `progress_report:` (ComplianceProgressReport), `record:` (EngineeringRecord). Verified
+    # disjoint across the whole committed tree — no artifact keys two of these, or one of these
+    # and an earlier arm's block — so the arm ORDER here carries no discrimination and the
+    # `isinstance(..., dict)` is the shape test, not the position.
+    #
+    # `record:` is the loosest word of the four and is tested as a MAPPING for that reason: it is
+    # exactly the kind of generic wrapper key this function's docstring is about, and a bare
+    # `"record" in data` would claim the first artifact to use it for anything else.
+    for block, kind in (
+        ("order", "order"),
+        ("inspection", "inspection"),
+        ("progress_report", "progress_report"),
+        ("record", "engineering"),
+    ):
+        if isinstance(data.get(block), dict):
+            # Same three-way discipline as the permit arm above. The render envelope is checked
+            # FIRST because it is the only one satisfied by construction for extractor output;
+            # a declared manual read of page images has no envelope that fits and is DECLINED
+            # deliberately (see :func:`_is_manual_read`); anything else is MALFORMED, not a
+            # fourth genre, and routes to its model to fail loudly where `Corpus.rejected` names
+            # it (#1994).
+            if _has_render_envelope(data) or not _is_manual_read(data):
+                return kind
+            return DECLINED
     if "estimate" in data:
         return "opc_page"
     if "estimate_template" in data:
         return "opc_detail_legacy"
     if "sub_estimates" in data:
         return "opc_summary"
+    # `resolution:` is DELIBERATELY unclaimed (#2080). Thirty-two committed artifacts key one —
+    # Sidney's council ordinances, Van Wert's, Bowling Green's township rezonings, West Union's
+    # ACRWD board, Lima's Ordinance 155-13 — and every one is a hand-authored transcription with
+    # NO extractor and NO Pydantic envelope behind it. Their shapes have converged on
+    # `body`/`instrument`/`body_kind`/`subject_matter`/`outcome` but not on a date: 20 carry
+    # `adopted`, 7 carry `meeting_date`, and the rest carry neither. Claiming them would mean
+    # designing the genre AND picking a date convention for five sites' legislative records in a
+    # loader — so they stay declined until that model is written, which is a genre decision.
     return DECLINED
 
 
@@ -479,6 +564,14 @@ def load_corpus(
                 corpus.wetlands.append((rel, WetlandExtraction.model_validate(data)))
             elif kind == "plan":
                 corpus.plans.append((rel, PlanExtraction.model_validate(data)))
+            elif kind == "order":
+                corpus.orders.append((rel, OrderExtraction.model_validate(data)))
+            elif kind == "inspection":
+                corpus.inspections.append((rel, InspectionExtraction.model_validate(data)))
+            elif kind == "progress_report":
+                corpus.progress_reports.append((rel, ProgressReportExtraction.model_validate(data)))
+            elif kind == "engineering":
+                corpus.engineering.append((rel, EngineeringExtraction.model_validate(data)))
             elif kind == "opc_page":
                 corpus.estimates.append((rel, PageExtraction.model_validate(data)))
             elif kind == "opc_detail_legacy":
@@ -487,8 +580,8 @@ def load_corpus(
                 corpus.summaries.append((rel, OPCSummary.model_validate(data)))
             else:  # kind is DECLINED
                 corpus.declined.append(rel)
-                # DEBUG, not WARNING. ~81 files land here on every single load, and two ERRORs
-                # buried in eighty-one WARNINGs is indistinguishable from zero ERRORs — which is
+                # DEBUG, not WARNING. ~78 files land here on every single load, and two ERRORs
+                # buried in seventy-eight WARNINGs is indistinguishable from zero ERRORs — which is
                 # exactly how #1994 survived long enough to be found by a hand sweep.
                 log.debug("corpus.declined", path=rel)
         except Exception as exc:
@@ -520,6 +613,10 @@ def load_corpus(
         estimates=len(corpus.estimates),
         summaries=len(corpus.summaries),
         general_permits=len(corpus.general_permits),
+        orders=len(corpus.orders),
+        inspections=len(corpus.inspections),
+        progress_reports=len(corpus.progress_reports),
+        engineering=len(corpus.engineering),
         declined=len(corpus.declined),
         rejected=len(corpus.rejected),
     )

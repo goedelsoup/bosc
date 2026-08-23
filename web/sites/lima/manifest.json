@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T05:39:57+00:00",
+  "generated_at": "2026-08-23T06:47:58+00:00",
   "feed_count": 56,
-  "row_total": 4233,
+  "row_total": 4288,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -37,7 +37,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 178
+      "count": 233
     },
     {
       "name": "entities",
