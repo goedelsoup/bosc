@@ -103,9 +103,11 @@ order:
   - {requirement: 'TABLE A.1 - Baxter Street Interceptor Rehabilitation: line 3,700 ft of sewer
       with cure-in-place; convey 35 mgd. Achieve Full Operation.', deadline: '2014-07-01'}
   - {requirement: 'TABLE A.1 - Upstream Regulator Improvements: full or partial sewer separation
-      at 10 CSOs (09, 11, 12, 13, 14, 15, 33, 34, 35A, 35B, 35C, 36 - Figure A-4), DWO
-      modifications at 2. Performance: reduce overflow events to 0 in a typical year. Bid
-      2015-06-30.', deadline: '2017-06-30'}
+      at 10 CSOs AND dry-weather-overflow modifications at 2 CSOs — twelve in all, and the row''s
+      own "CSOs/SSOs Controlled" column lists exactly twelve: 09, 11, 12, 13, 14, 15, 33, 34, 35A,
+      35B, 35C, 36 (see Figure A-4). The 10 and the 2 are the two treatments, not a subset of the
+      list; 35A/35B/35C count as three. Performance: reduce overflow events to 0 in a typical year.
+      Bid 2015-06-30.', deadline: '2017-06-30'}
   - {requirement: 'TABLE A.1 - Headworks improvements: expand preliminary screening, replace grit
       system, replace dry weather primaries. Preliminary treatment ~70 mgd; new dry weather
       primaries ~40 mgd. Bid 2016-01-31.', deadline: '2018-07-01'}
