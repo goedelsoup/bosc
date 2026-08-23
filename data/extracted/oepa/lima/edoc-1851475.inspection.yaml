@@ -1,0 +1,81 @@
+doc_id: edoc-1851475-48da34d9
+source_path: data/documents/oepa/lima/edoc-1851475.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "■ \n~. : \nOhio Environmental \nProtection Agency \nJohn R.\
+  \ Kasich, Governor \nMary Taylor, Lt. Governor \nCraig W. Butler, Director \nRe:\
+  \ Lima WWTP \nInspection \nNPDES \nAllen County \n2PE00000 \nDecember 15, 2017 \n\
+  Mr. Michael Caprella, Director, Utilities Department \nCity of Lima \n50 Town Square\
+  \ \nLima, Ohio 45801-4900 \nDear Mr. Caprella: \nOn December 5, 2017, Mr. Andrew\
+  \ Gall and I conducted a compliance evaluation inspection at the \nLima wastewater\
+  \ treatment plant (WWTP). Mr. David Schnipke, Environmental Compliance \nManager,\
+  \ Mr. Eric Markley, WWTP Supervisor, and Ms. Ange Layton, Chemist, were also pr"
+inspection:
+  confidence: high
+  warnings:
+  - Document read from page images with an embedded OCR text layer noted as unreliable;
+    all key fields verified against the image.
+  - The letter is dated December 15, 2017, but the visit occurred December 5, 2017
+    — these are correctly recorded as separate dates.
+  - The letter states 'Mr. Andrew Gall and I conducted' the inspection; the signatory
+    is Peggy B. Christie, so both are recorded as inspectors.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: compliance evaluation inspection
+  type_code: CEI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2017-12-05'
+  report_date: '2017-12-15'
+  entry_time: 10:30 AM
+  exit_time: 1:45 PM
+  inspectors:
+  - Peggy B. Christie
+  - Andrew Gall
+  facility_representatives:
+  - Mr. David Schnipke, Environmental Compliance Manager
+  - Mr. Eric Markley, WWTP Supervisor
+  - Ms. Ange Layton, Chemist
+  significant_noncompliance: false
+  units_in_service: All treatment units were in service during the inspection.
+  observations:
+  - kind: finding
+    text: All treatment units were in service during the inspection.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: The nitrification towers have not yet been seeded to treat wet weather flows.
+    number: '2'
+    deadline: null
+  - kind: finding
+    text: The final effluent discharging to the Ottawa River was clear, colorless
+      and had no noticeable odors.
+    number: '3'
+    deadline: null
+  summary: On December 5, 2017, Ohio EPA Division of Surface Water conducted a compliance
+    evaluation inspection (CEI) at the Lima WWTP to evaluate compliance with NPDES
+    permit terms and conditions and the operation and maintenance of the plant. All
+    treatment units were in service, the final effluent was clear and odorless, but
+    the nitrification towers had not yet been seeded to treat wet weather flows. No
+    significant non-compliance was identified.
+  note: null

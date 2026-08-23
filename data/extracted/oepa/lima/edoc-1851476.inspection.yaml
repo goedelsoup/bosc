@@ -1,0 +1,75 @@
+doc_id: edoc-1851476-398c6421
+source_path: data/documents/oepa/lima/edoc-1851476.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "hio Ohio Environmental \nProtection Agency \nJohn R. Kasich,\
+  \ Governor \nMary Taylor, Lt. Governor \nCraig W. Butler, Director \nRe: City of\
+  \ Lima WVVTP \nInspection \nNPDES-Biosolids \nAllen County \n2PE00000 \nDecember\
+  \ 29, 2017 \nMr. David Schnipke \nEnvironmental Compliance Manager \nLima WWTP \n\
+  50 Town Square \nLima, Ohio 45801-4900 \nDear Mr. Schnipke: \nOn December 5, 2017,\
+  \ Ohio EPA representatives Mr. Andrew Gall and Ms. Peggy Christie, \nconducted an\
+  \ inspection of the City of Lima wastewater treatment plant (WWfP). As part of the\
+  \ \ninspection, Mr. Gall evaluated the City of Lima WWTP's compliance with Ohio"
+inspection:
+  confidence: high
+  warnings:
+  - No Sig. Non-Compliance checkbox result was legible on the enclosed inspection
+    form — significant_noncompliance left null.
+  - OCR layer is unreliable in places (e.g. 'WVVTP', 'aftraction'); values verified
+    against image.
+  - type_code not printed on the inspection form; left null.
+  - npdes_id (federal OH-prefixed number) not printed in the document; left null.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES-Biosolids
+  inspection_type: Biosolids Generator Inspection
+  type_code: null
+  facility: City of Lima WWTP
+  facility_address: 50 Town Square, Lima, Ohio 45801-4900
+  permit_no: 2PE00000
+  npdes_id: null
+  county: Allen
+  inspection_date: '2017-12-05'
+  report_date: '2017-12-29'
+  entry_time: null
+  exit_time: null
+  inspectors:
+  - Andrew Gall
+  - Peggy Christie
+  facility_representatives:
+  - David Schnipke
+  - Eric Markley
+  significant_noncompliance: null
+  units_in_service: null
+  observations:
+  - kind: recommendation
+    text: The City should continue to obtain copies of the biosolids end user reports
+      from Lima Compost so that there are accurate records at the WWTP showing where
+      the EQ biosolids are beneficially used.
+    number: null
+    deadline: null
+  - kind: finding
+    text: Wright needs to provide City with records indicating who received the biosolids
+      that were land applied and the amounts that were land applied.
+    number: null
+    deadline: null
+  summary: On December 5, 2017, Ohio EPA representatives Andrew Gall and Peggy Christie
+    conducted a Biosolids Generator Inspection of the City of Lima WWTP, evaluating
+    compliance with Ohio's Sewage Sludge Rules (OAC Chapter 3745-40). Sewage sludge
+    is treated via anaerobic digestion and the N-Viro Process to produce EQ biosolids,
+    which are managed by Lima Compost/Wright Mulch through land application and blending
+    into a topsoil product. Overall, at the time of the inspection, the City was meeting
+    the applicable requirements of Ohio's Sewage Sludge Rules.
+  note: null

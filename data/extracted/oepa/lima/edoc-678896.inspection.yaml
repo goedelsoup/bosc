@@ -1,0 +1,89 @@
+doc_id: edoc-678896-ebe9dc54
+source_path: data/documents/oepa/lima/edoc-678896.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+image_pages_read:
+- 0
+- 1
+- 2
+- 3
+dpi: 150
+source_text_excerpt: ''
+inspection:
+  confidence: high
+  warnings:
+  - TWIN CAPTURE — not the canonical reading. The portal serves this 2017-07-25 reconnaissance inspection
+    letter at two docids; edoc-1851474 is the same letter and is canonical, and where the two readings
+    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
+    NOT byte-identical).
+  - Document read from page images; text layer appears present and legible throughout all four pages.
+  - 'The NPDES permit ID on the letter Re: block reads ''2PE00000'' (permit_no) and the form shows NPDES
+    # ''2PE00000'' with Ohio permit OH0026069; both are recorded accordingly.'
+  - Permit expiration date (2/28/2015) predates the inspection date (7/25/2017), which may indicate a
+    permit renewal was pending — noted but not recorded as a finding per instructions.
+  - Exit time on form reads '12:00' with no AM/PM indicator; recorded exactly as printed.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: reconnaissance inspection
+  type_code: RI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2017-07-25'
+  report_date: '2017-08-16'
+  entry_time: 10:00 AM
+  exit_time: '12:00'
+  inspectors:
+  - Peggy B. Christie
+  - Thomas Poffenbarger, P.E.
+  facility_representatives:
+  - Mr. Michael Caprella, Utilities Director
+  - Mr. Dave Schnipke
+  - Mr. Eric Markley, Supervisor
+  - David Schnipke, Environmental Compliance Manager
+  significant_noncompliance: false
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: A lightning strike damaged the main switch gear, which prevented the generators from providing
+      power to the plant when city utility power was lost.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: Wastewater and storm water could not be pumped due to the power loss.
+    number: '2'
+    deadline: null
+  - kind: finding
+    text: The final clarifiers and aeration tanks overflowed, flooding the plant and causing substantial
+      damage.
+    number: '3'
+    deadline: null
+  - kind: finding
+    text: SCADA was inoperable due to power loss to the Administrative Building.
+    number: '4'
+    deadline: null
+  - kind: finding
+    text: At the time of the inspection, power had been restored to most of the plant. Temporary generators
+      and pumps were being utilized for all other major treatment units. The Administrative Building did
+      not yet have power.
+    number: '5'
+    deadline: null
+  - kind: finding
+    text: Final effluent discharged to the Ottawa River was clear, colorless and had no noticeable odor.
+    number: '6'
+    deadline: null
+  summary: Ohio EPA conducted a reconnaissance inspection of the Lima WWTP on July 25, 2017, following
+    a lightning strike and power outage on July 22, 2017. The strike damaged the main switchgear, causing
+    loss of pumping capacity, overflow of final clarifiers and aeration tanks, and flooding of the plant
+    with substantial damage. At the time of the inspection, power had been partially restored and temporary
+    generators were in use, with final effluent to the Ottawa River appearing clear and odor-free. Compliance
+    data for the period 3/1/2017–7/1/2017 showed zero effluent limit violations but 10 code events and
+    68 reported SSO events.
+  note: null

@@ -1,0 +1,108 @@
+doc_id: edoc-467350-e6114519
+source_path: data/documents/oepa/lima/edoc-467350.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+image_pages_read:
+- 0
+- 1
+- 2
+- 3
+dpi: 150
+source_text_excerpt: ''
+inspection:
+  confidence: high
+  warnings:
+  - 'TWIN CAPTURE — not the canonical reading. The portal serves this 2016-07-13 reconnaissance inspection
+    letter at two docids; edoc-1914739 is the same letter and is canonical, and where the two readings
+    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
+    NOT byte-identical). They do differ here: 6 observations on the canonical against 11 on this capture.'
+  - Document is a scanned page image; text was read via OCR interpretation — minor transcription errors
+    are possible.
+  - The compliance data tables on pages 2 and 3 are part of the enclosed inspection report and reflect
+    historical violations, not new orders or requirements imposed by this inspection.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: Reconnaissance Inspection
+  type_code: RI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen County
+  inspection_date: '2016-07-13'
+  report_date: '2016-07-20'
+  entry_time: 10:15 AM
+  exit_time: 12:00 PM
+  inspectors:
+  - Peggy B. Christie
+  - Thomas Poffenbarger, P.E.
+  facility_representatives:
+  - Eric Markley, Supervisor
+  - David Schnipke, Environmental Compliance Manager
+  significant_noncompliance: false
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: NPDES Compliance — No corrective action needed.
+    number: null
+    deadline: null
+  - kind: finding
+    text: Operations & Maintenance — No corrective action needed.
+    number: null
+    deadline: null
+  - kind: finding
+    text: Operator Certification — Not evaluated.
+    number: null
+    deadline: null
+  - kind: finding
+    text: Collection System — Not evaluated.
+    number: null
+    deadline: null
+  - kind: finding
+    text: Sludge Management — No corrective action needed.
+    number: null
+    deadline: null
+  - kind: finding
+    text: Storm Water — Not evaluated.
+    number: null
+    deadline: null
+  - kind: finding
+    text: Self-Monitoring Program — No corrective action needed.
+    number: null
+    deadline: null
+  - kind: finding
+    text: Laboratory — Not evaluated.
+    number: null
+    deadline: null
+  - kind: finding
+    text: Effluent / Receiving Water Observations — No corrective action needed. Effluent observed in
+      final clarifiers was clear, colorless and had no noticeable odor.
+    number: null
+    deadline: null
+  - kind: finding
+    text: Construction nearly complete on all but the two primary clarifiers. Once the other headworks
+      components are operational, the old Detroiter and primary clarifiers will be demolished in order
+      to construct the two additional primary clarifiers.
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Compliance Data (9/1/2015–6/1/2016): Permit Effluent Limit Violations: 2; Permit Effluent Code
+      Violations: 15; Permit Effluent Frequency Violations: 0; Compliance Schedule Milestones Not Entered:
+      0; Reported SSO Events: 57. Limit violations include pH Minimum (Station 001, October 2015, reported
+      value 5.9 vs limit 6.5) and Total Suspended Solids 7D Conc (Station 604, February 2016, reported
+      value 25.1142 vs limit 20.0). Code violations span January–May 2016 for CBOD 5 day, Total Suspended
+      Solids, Overflow Volume, and Overflow Occurrence at various stations.'
+    number: null
+    deadline: null
+  summary: On July 13, 2016, Ohio EPA conducted a Reconnaissance Inspection at the City of Lima's WWTP
+    to observe progress on the new headworks construction project. All components except two of the four
+    primary clarifiers were nearly complete, and effluent in the final clarifiers was clear, colorless,
+    and odor-free. No significant non-compliance was identified at the time of the inspection, though
+    compliance data for 9/1/2015–6/1/2016 showed 2 limit violations, 15 code violations, and 57 reported
+    SSO events.
+  note: null

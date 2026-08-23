@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "b1b02d8a59d18aaac96f2f6324e0797ded55ce7b007cbab84497581dc11b4b72",
-  "contract_version": "2.2.0",
+  "catalog_version": "c6720885a23449cf1a52f460ba04f4dc82f5211a6c989e2df70f4b1d3ae3bd4a",
+  "contract_version": "2.3.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -1592,7 +1592,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "oepa-lima-enforcement",
-      "title": "Ohio EPA enforcement extractions (City of Lima WWTP — permit 2PE00000)",
+      "title": "Ohio EPA enforcement + inspection extractions (City of Lima WWTP — permit 2PE00000)",
       "feed": "catalog"
     },
     {
@@ -3564,6 +3564,134 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-1048228.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1048228.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1048235.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1048235.inspection.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1610423.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1610423.inspection.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1752399.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1752399.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1753487.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1753487.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1782202.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1782202.inspection.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1797305.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1797305.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1797306.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1797306.inspection.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1851472.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1851472.inspection.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1851473.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1851473.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1851474.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1851474.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1851475.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1851475.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1851476.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1851476.inspection.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1914739.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1914739.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1914740.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1914740.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1914742.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1914742.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-1914753.order.yaml",
       "kind": "record",
       "site": "lima",
@@ -3577,6 +3705,30 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-1914761.order.yaml",
       "title": "correspondence",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-1952887.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1952887.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-2431324.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2431324.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-2499760.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2499760.inspection.yaml",
+      "title": "Lima WWTP",
       "feed": "records"
     },
     {
@@ -3596,11 +3748,27 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-3170033.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170033.inspection.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-3170036.order.yaml",
       "kind": "record",
       "site": "lima",
       "local_id": "oepa/lima/edoc-3170036.order.yaml",
       "title": "correspondence",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3170414.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170414.inspection.yaml",
+      "title": "City of Lima WWTP",
       "feed": "records"
     },
     {
@@ -3660,6 +3828,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-4192699.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-4192699.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-4192703.order.yaml",
       "kind": "record",
       "site": "lima",
@@ -3684,6 +3860,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-467350.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-467350.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-469760.order.yaml",
       "kind": "record",
       "site": "lima",
@@ -3697,6 +3881,62 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-470936.order.yaml",
       "title": "correspondence (Resolution of Violation letter)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-512329.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-512329.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-529544.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-529544.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-591751.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-591751.inspection.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-605102.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-605102.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-678896.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-678896.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-739814.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-739814.inspection.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-747522.inspection.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-747522.inspection.yaml",
+      "title": "City of Lima WWTP",
       "feed": "records"
     },
     {

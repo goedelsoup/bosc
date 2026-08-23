@@ -1,0 +1,95 @@
+doc_id: edoc-2431324-73d80e8f
+source_path: data/documents/oepa/lima/edoc-2431324.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "Mike DeWine, Governor \nJon Husted, Lt. Governor \nAnne M. Vogel,\
+  \ Director \nNorthwest District Office • 347 North Dunbridge Road • Bowling Green,\
+  \ OH 43402-9398 \nepa.ohio.gov • 419-352-8461 • 419-352-8468 (fax)\nJuly 3, 2023\
+  \ \nTransmitted Electronically \nMr\n. Michael Caprella, Utilities Director \n50\
+  \ Town Square  \nLima, Ohio  45804 \nR\ne: Lima WWTP \nInspection \nNPDES - Biosolids\
+  \ \nAllen County \n2PE00000 \nS\nubject: Ohio Environmental Protection Agency NPDES\
+  \ Inspection \nD\near Mr. Caprella: \nOn\n June 13, 2023, Ohio EPA staff members\
+  \ Ms. Catherine Robertson and Mr. John Takas from the \nOhio EPA's Northwes"
+inspection:
+  confidence: high
+  warnings:
+  - The inspection form (pages 4–12) was read from an embedded OCR text layer flagged
+    as unreliable; key coded fields (NPDES ID OH0026069, permit 2PE00000, entry/exit
+    times, Sig. Non-Compliance = No) were verified against the page images and appear
+    correct.
+  - Permit effective date 8/1/2018 and expiration date 8/31/2022 are noted on the
+    form but not captured in a structured field — the permit appears to have been
+    expired at time of inspection.
+  - Inspector name in OCR reads 'John Takas' in the letter body but 'John Takas' also
+    appears in the cc list; no discrepancy detected.
+  - Biosolids checklist pages 4–12 contain extensive operational detail (treatment
+    train, pathogen reduction alternatives P-9 and VAR-6 checked, analytical records
+    reviewed) not individually itemised as observations because they were not printed
+    as numbered findings or recommendations in the letter.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES-Biosolids
+  inspection_type: NPDES Compliance Inspection
+  type_code: Biosolids
+  facility: Lima WWTP
+  facility_address: 1200 Ft. Amanda Rd, Lima, OH 45804
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2023-06-13'
+  report_date: '2023-07-03'
+  entry_time: 9:10 AM
+  exit_time: 11:10 AM
+  inspectors:
+  - Catherine Robertson
+  - John Takas
+  facility_representatives:
+  - Kim Furry, Plant Supervisor
+  - Shawn Dershem, Assistant Supervisor
+  significant_noncompliance: false
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: As of January 2023, facility is not generating exceptional quality biosolids;
+      Currently, all biosolids are sent to landfill.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: Facility plans to develop a biosolids master plan to prepare for biosolids
+      treatment upgrades. Master plan will consider new biosolids treatment units
+      and return to exceptional quality biosolids.
+    number: '2'
+    deadline: null
+  - kind: recommendation
+    text: 'When bulk exceptional quality biosolids are applied to the land, it is
+      recommended the following records are retained: (a) Records showing that bulk
+      EQ biosolids were not stored ≥90 days at the beneficial use site. (b) Forecast/actual
+      precipitation data. (c) A description detailing how the agronomic rate is met
+      at each beneficial use site, including how the beneficial use application equipment
+      is calibrated. (d) The date and quantity used.'
+    number: '1'
+    deadline: null
+  summary: On June 13, 2023, Ohio EPA Northwest District Office staff conducted an
+    NPDES Biosolids compliance inspection of Lima WWTP. The inspection found that
+    as of January 2023 the facility is no longer generating exceptional quality biosolids
+    and is instead sending all biosolids to landfill, with plans to develop a biosolids
+    master plan for future upgrades. The inspection resulted in a finding of no significant
+    non-compliance, and one advisory recommendation regarding recordkeeping requirements
+    for when bulk EQ biosolids are land-applied in the future.
+  note: null

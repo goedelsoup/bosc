@@ -1,0 +1,95 @@
+doc_id: edoc-1914742-c5484396
+source_path: data/documents/oepa/lima/edoc-1914742.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "® \nOhio Environmental \nProtection Agency \nJohn R. Kasich,\
+  \ Governor \nMary Taylor, Lt. Governor \nCraig W. Butler, Director \nRe: Lima WWTP\
+  \ \nInspection \nNPDES \nAllen County \n2PE00000 \nDecember 16, 2016 \nMr. Dave\
+  \ Schnipke, Environmental Manager \nCity of Lima \n50 Town Square \nLima, Ohio 45801-4900\
+  \ \nDear Mr. Schnipke: \nOn December 7, 2016, a Reconnaissance Inspection was conducted\
+  \ at the City of Lima's wastewater \ntreatment plant (WWTP). Mr. Eric Markley, Supervisor,\
+  \ and Mr. Jerry Coffey were present and \nprovided operation and maintenance information.\
+  \ \nThe purpose of the inspection was to see the ne"
+inspection:
+  confidence: high
+  warnings:
+  - The Significant Non-Compliance box on the form appears blank/unmarked; recorded
+    as false based on no corrective actions needed across all evaluated areas.
+  - Page image was read with an embedded OCR layer noted as unreliable; key fields
+    verified against image.
+  - Permit Expiration Date (2/28/2015) predates the inspection date (12/7/2016) —
+    this may indicate the permit was under renewal at time of inspection.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: Reconnaissance Inspection
+  type_code: RI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2016-12-07'
+  report_date: '2016-12-16'
+  entry_time: 10:30 AM
+  exit_time: 11:40 AM
+  inspectors:
+  - Peggy B. Christie
+  - Thomas Poffenbarger, P.E.
+  facility_representatives:
+  - Mr. Eric Markley, Supervisor
+  - Mr. Jerry Coffey
+  significant_noncompliance: false
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: 'E. NPDES Compliance — Corrective Action Needed: N'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'F. Operations & Maintenance — Corrective Action Needed: N'
+    number: null
+    deadline: null
+  - kind: finding
+    text: G. Operator Certification — Not Evaluated
+    number: null
+    deadline: null
+  - kind: finding
+    text: H. Collection System — Not Evaluated
+    number: null
+    deadline: null
+  - kind: finding
+    text: I. Sludge Management — Not Evaluated
+    number: null
+    deadline: null
+  - kind: finding
+    text: J. Storm Water — Not Evaluated
+    number: null
+    deadline: null
+  - kind: finding
+    text: K. Self-Monitoring Program — Not Evaluated
+    number: null
+    deadline: null
+  - kind: finding
+    text: L. Laboratory — Not Evaluated
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'M. Effluent / Receiving Water Observations — Corrective Action Needed:
+      N. Final effluent clear, colorless and had no noticeable odor. New pump station
+      and outfall are operational.'
+    number: null
+    deadline: null
+  summary: On December 7, 2016, Ohio EPA conducted a Reconnaissance Inspection at
+    Lima WWTP to observe the new pump station and outfall structure. The final effluent
+    at the new outfall was clear, colorless, and had no noticeable odor. No corrective
+    action was needed for any evaluated area, and no significant non-compliance was
+    identified.
+  note: null

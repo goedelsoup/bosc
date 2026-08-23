@@ -1,0 +1,105 @@
+doc_id: edoc-1752399-29dcc48b
+source_path: data/documents/oepa/lima/edoc-1752399.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "Mike DeWine , Governor  \nJon Husted, Lt. Governor  \nLaurie\
+  \ A. Stevenson , Director \nNorthwest District Office • 347 North Dunbridge Road\
+  \ • Bowling Green, OH 43402 -9398 \nepa.ohio.go v • (419) 352 -8461 • (419) 352\
+  \ -8468 (fax)\nMarch 14, 2022 \nTransmitted Electronically \nM\nr. Michael Caprella,\
+  \ Utilities Director \nLima WWTP \n50 Town Square \nLima, Ohio  45801 \nRe\n: Lima\
+  \ WWTP \nInspection \nNPDES \nAllen County \n2PE00000 \nS\nubject: Ohio Environmental\
+  \ Protection Agency NPDES Inspection \nD\near Mr. Caprella: \nOn F\nebruary 22,\
+  \ 2022, Ms. Peggy Christie and I conducted an inspection of the Lima Wastewater\
+  \ \n"
+inspection:
+  confidence: high
+  warnings:
+  - The mailing address on the letter (50 Town Square, Lima, Ohio 45801) differs from
+    the facility address on the inspection form (1200 Fort Amanda Rd., Lima, Ohio);
+    facility_address is recorded from the inspection form as the physical plant location.
+  - Report date of 2022-03-14 is from the transmittal letter; the inspection form
+    itself is signed/dated 03/07/2022 (Mallorey Smith) and 3/10/22 (Thomas Poffenbarger),
+    which are intermediate dates not used here.
+  - OCR text layer flagged as unreliable; all key values verified against the document
+    images.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: compliance evaluation inspection
+  type_code: CEI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2022-02-22'
+  report_date: '2022-03-14'
+  entry_time: 10:15 AM
+  exit_time: 2:17 PM
+  inspectors:
+  - Mallorey Smith
+  - Peggy Christie
+  facility_representatives:
+  - Ms. Kim Furry, Plant Supervisor
+  - Mr. Larry Huber, Utility Field Services Supervisor
+  - Ms. Emily Kerber, Utility Operations Manager
+  - Mr. Eric Bontrager, Environmental Compliance Manager
+  - Mr. Shawn Dershem, Assistant Supervisor
+  significant_noncompliance: true
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: At the time of inspection, final effluent was slightly turbid and light
+      brown with no noticeable odor.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: The plant was operating in wet weather mode, meaning a side stream of primary
+      clarifier effluent was being sent to the nitrification tower for secondary treatment
+      and blending with the final clarifier effluent.
+    number: '2'
+    deadline: null
+  - kind: finding
+    text: Wright Mulch/Lima Composting is contracted with the city to manage the land
+      application of Class A biosolids. The City is required to maintain copies of
+      the beneficial use records and has had problems getting these records from Wright
+      Mulch. Wright Mulch is operating without a valid Land Application Management
+      Plan. Their plan expired on February 28, 2022, and no renewal application has
+      been received.
+    number: '3'
+    deadline: null
+  - kind: recommendation
+    text: Please submit documentation validating that the bypass has been eliminated
+      so it can be removed from the permit.
+    number: '1'
+    deadline: null
+  - kind: recommendation
+    text: Please develop and implement procedures to ensure that the city complies
+      with the biosolids record keeping requirements found in Ohio Administrative
+      Code 3745-40-09 (C)(1).
+    number: '2'
+    deadline: null
+  summary: Ohio EPA conducted a Compliance Evaluation Inspection (CEI) of the Lima
+    WWTP on February 22, 2022. The plant was operating in wet weather mode at the
+    time of the visit, with final effluent slightly turbid but without noticeable
+    odor. A significant finding was that Wright Mulch/Lima Composting, the city's
+    Class A biosolids contractor, was operating without a valid Land Application Management
+    Plan (expired February 28, 2022), and the facility had ongoing difficulty obtaining
+    required beneficial use records; the inspection was marked as Significant Non-Compliance.
+  note: null

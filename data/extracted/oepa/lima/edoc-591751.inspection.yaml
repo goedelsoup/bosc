@@ -1,0 +1,180 @@
+doc_id: edoc-591751-95135b31
+source_path: data/documents/oepa/lima/edoc-591751.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+image_pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+dpi: 150
+source_text_excerpt: ''
+inspection:
+  confidence: high
+  warnings:
+  - 'TWIN CAPTURE — not the canonical reading. The portal serves this 2017-02-28 pretreatment audit letter
+    at two docids; edoc-1851472 is the same letter and is canonical, and where the two readings differ
+    IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT
+    byte-identical). They do differ here: 6 observations on the canonical against 13 on this capture.'
+  - Document is a page-image scan with no embedded text layer; all data extracted by OCR interpretation
+    of scanned images.
+  - The Pretreatment Inspection Report form does not have a 'Sig. Non-Compliance' checkbox filled in;
+    significant_noncompliance left null.
+  - report_date taken from the transmitting letter date (March 17, 2017); the inspection report itself
+    was signed by inspector on March 9, 2017 and by reviewer on March 16, 2017.
+  - Inspectors list deduped to Peggy B. Christie (Peggy Christie) — same person listed under two slightly
+    different name forms.
+  - Facility number OH0026069 recorded as npdes_id as it appears to be the Ohio EPA facility/NPDES number
+    on the inspection form.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: Pretreatment
+  inspection_type: Pretreatment Audit
+  type_code: Audit
+  facility: City of Lima WWTP
+  facility_address: 1200 Fort Amanda Road, Lima, OH 45804
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen County
+  inspection_date: '2017-02-28'
+  report_date: '2017-03-17'
+  entry_time: null
+  exit_time: null
+  inspectors:
+  - Peggy Christie
+  - Peggy B. Christie
+  facility_representatives:
+  - David Schnipke, Environmental Compliance Manager
+  - James R. Bookman, Industrial Monitoring and Laboratory Chief
+  - Rob Flinn, Industrial Monitoring Technician
+  significant_noncompliance: null
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: 'Ford Motor Company (1155 Bible Road, Lima, Ohio) — Manufacturer of automotive engines. Non-categorical
+      SIU. Average process flow 100,000–120,000 gpd. Industry visited during PCI. Compliance status: In
+      compliance. Sanitary is discharged through a separate line.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Dana Holding Corporation (777 Bible Road, Lima, OH 45801-2025) — Manufactures driveshafts for
+      the automotive industry. Non-SIU. Average total flow 1,300 gpd. Industry visited during PCI. Compliance
+      status: In compliance. This facility used to have a discharge permit with the City, but they now
+      haul all the process wastewater off-site to Valicor for recycling. Currently they only discharge
+      sanitary wastewater to the City. The City inspects this facility once a year and samples them twice
+      a year.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'IU File Review — Section I, Part A: Dana is not under permit. They no longer discharge process
+      wastewater to the City. All applicable IU control mechanism contents (duration, nontransferability,
+      effluent limits, local limits, most stringent limit, TTO/TOMP, self-monitoring requirements, reporting,
+      compliance schedules, slug notification, etc.) were evaluated as Y (satisfactory) for Ford Lima
+      Engine Plant and N/A for Dana Driveshaft Manufacturing.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'IU File Review — Section I, Part B (CA Compliance Monitoring): Both facilities were inspected
+      and sampled at required frequency. Documentation of inspection activities and slug discharge control
+      plan evaluation confirmed. Sampling activities documented with chain-of-custody/QA/QC; analysis
+      for all regulated parameters and appropriate analytical methods confirmed for both facilities.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'IU File Review — Section I, Part C (CA Enforcement Activities): Both facilities are in compliance.
+      Older file reference in Dana''s file of notification of SNC and publication in paper, but the facility
+      is in compliance currently.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Section II Interview — CA Pretreatment Program Modifications: No changes pending or completed
+      since last inspection. No needed changes identified.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Section II Interview — Legal Authority: There are contributing jurisdictions discharging wastewater
+      to the POTW (Findlay Road area; drains to the City, metered and billed; all domestic wastewater).
+      No difficulty in implementing legal authority.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Section II Interview — IU Characterization: SIU classification has not changed. New IUs identified
+      through developer contacts and waste characterization forms; changes in flow flagged through industrial
+      monthly billing spreadsheet. Inspections and sampling also used.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Section II Interview — Control Mechanism Evaluation: 0% of SIUs are not covered by an existing,
+      unexpired permit or control mechanism. 0 control mechanisms were not issued within 180 days of expiration.
+      No UST/CERCLA/RCRA corrective action sites discharge to POTW. Lima accepts trucked waste from Allen
+      County WWTP biosolids, septage, EOLM C&DD Landfill, and Bluffton aeration (septage). Waste is not
+      hazardous. Hauled wastes are sampled; pH of grease traps checked; MSDS reviewed.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Section II Interview — Application of Pretreatment Standards: City keeps abreast of regulations
+      via workshops, OTCO, Government Affairs, attorneys, Federal Register, professional journals, and
+      WEF. No pollutants of concern identified beyond current local limits. No new limits since last inspection.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Section II Interview — Compliance Monitoring (January 2016 to January 2017): 0% of SIUs were
+      not sampled or not inspected at least once; 0% not sampled at least once; 0% not inspected at least
+      once (all parameters); 0% in SNC with self-monitoring and not inspected or sampled. All IUs are
+      inspected and sampled every year. Compliance sampling performed by City; analysis by Alloway (metals,
+      cyanide, organics) and City (conventionals). City and Alloway participate in USEPA DMRQA program;
+      City runs duplicates on every test. No problems in sample location, collection, or analysis. City
+      has not had any issues with slug loads in the last 5 years; all SIUs evaluated for slug control
+      plan need.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Section II Interview — Enforcement: No interference, pass through, fires/explosions, corrosive
+      structural damage, flow obstructions, excessive pollutant concentrations, heat problems, O&G interference,
+      toxic fumes, illicit dumping, or worker health/safety concerns since last inspection. Note on excessive
+      flow rates: City will request (batch) IUs to hold wastewater during storm events. No hazardous waste
+      discharges to POTW. Compliance schedules are used and are appropriate. ERP has had no modifications
+      since last inspection; no problems with implementation; ERP is effective.'
+    number: null
+    deadline: null
+  - kind: finding
+    text: 'Section II Interview — Data Management/Public Participation: Confidentiality requests handled
+      on a case-by-case basis with legal involvement if necessary. Files treated as public records; no
+      requests for confidential status from IUs. Data management includes individual files, spreadsheet
+      of all IUs, and Access database (flow data through billing). No records have been purged.'
+    number: null
+    deadline: null
+  summary: On February 28, 2017, Ohio EPA conducted a Pretreatment Audit of the City of Lima WWTP's approved
+    pretreatment program, including file review and inspections of two industrial users (Ford Motor Company
+    and Dana Holding Corporation). Both industrial users were found to be in compliance, and all industrial
+    user inspections and sampling requirements are being carried out. The City's implementation of Lima's
+    approved pretreatment program was found to remain satisfactory.
+  note: null

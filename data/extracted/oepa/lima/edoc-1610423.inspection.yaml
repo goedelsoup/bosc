@@ -1,0 +1,104 @@
+doc_id: edoc-1610423-6f723ebd
+source_path: data/documents/oepa/lima/edoc-1610423.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: " \nMike DeWine, Governor \nJon Husted, Lt. Governor \nLaurie\
+  \ A. Stevenson, Director \n \nAugust 2, 2021 \n \nTransmitted Electronically \n\
+  \ \nMr. Michael Caprella, Director  \nUtilities Department \nCity of Lima \n50 Town\
+  \ Square \nLima, Ohio  45801-4900 \nRe:  Lima WWTP \n Inspection  \n NPDES \n Allen\
+  \ County \n 2PE00000 \n \nSubject: Comprehensive Desktop Review - Pretreatment \
+  \ \n \nDear Mr. Caprella: \n \nOn June 30, 2021, I conducted a comprehensive desktop\
+  \ review of the City of Lima’s \napproved pretreatment program.  Ms. Emily Kerber\
+  \ and Ms. Kim Furry were present to \nprovide technical information. \nThe purpose\
+  \ of"
+inspection:
+  confidence: high
+  warnings:
+  - The significant_noncompliance field is left null because no dedicated 'Sig. Non-Compliance'
+    checkbox result was clearly readable on the attached inspection form image; it
+    should be verified against the physical form.
+  - The attached checklist pages were partially read via OCR; numeric and coded fields
+    were cross-checked against the document images where possible.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES - Pretreatment
+  inspection_type: Comprehensive Desktop Review - Pretreatment
+  type_code: PCI
+  facility: City of Lima WWTP
+  facility_address: 1200 Fort Amanda Road, Lima, OH 45804
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2021-06-30'
+  report_date: '2021-08-02'
+  entry_time: null
+  exit_time: null
+  inspectors:
+  - Peggy B. Christie
+  facility_representatives:
+  - Ms. Emily Kerber, Operations Manager, City of Lima
+  - Ms. Kim Furry, Lima WWTP Supervisor, City of Lima
+  significant_noncompliance: null
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: The City of Lima submitted a local limit study in February 2019 to Ohio
+      EPA for approval. The study has not yet been approved.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: The City currently has eight industrial users under permits. The pretreatment
+      annual report lists 12 Significant industrial users, 11 categorical industrial
+      users and four significant non-categorical industrial users.
+    number: '2'
+    deadline: null
+  - kind: finding
+    text: The City is investigating surfactants that are discharged to the City's
+      Wastewater Treatment Plant (WWTP) to determine how they influence plant operations.
+    number: '3'
+    deadline: null
+  - kind: recommendation
+    text: 'Once the local limit study has been approved, the sewer use ordinance can
+      be modified to include the limits. US EPA has a model of a pretreatment sewer
+      ordinance that is very comprehensive and addresses all the current regulations.
+      It can be found here: https://epa.ohio.gov/portals/35/pretreatment/PretreatmentModelSUO.pdf.'
+    number: '1'
+    deadline: null
+  - kind: recommendation
+    text: Conduct an inventory of industries that discharge to the City of Lima's
+      WWTP to determine if they are required to be permitted as specified in Ohio
+      Administrative Code (OAC) 3745-3-03(C)(1)(c).
+    number: '2'
+    deadline: null
+  - kind: recommendation
+    text: Identify any industrial users that are non-significant categorical users
+      and are located upstream of a combined sewer overflow (CSO) to determine if
+      these industries are required to be permitted.
+    number: '3'
+    deadline: null
+  summary: On June 30, 2021, Ohio EPA conducted a Pretreatment Compliance Inspection
+    (PCI) via comprehensive desktop review of the City of Lima's approved pretreatment
+    program. Key findings include a pending (unapproved) local limit study submitted
+    in February 2019, a discrepancy between the eight industrial users under permits
+    and the 12 significant industrial users listed in the annual report, and an ongoing
+    investigation into surfactants discharged to the WWTP. Three advisory recommendations
+    were issued, including updating the sewer use ordinance once the local limit study
+    is approved, conducting an industrial user inventory, and identifying non-significant
+    categorical users upstream of combined sewer overflows.
+  note: null

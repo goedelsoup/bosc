@@ -1,0 +1,112 @@
+doc_id: edoc-1851472-012cfe8a
+source_path: data/documents/oepa/lima/edoc-1851472.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "® \nOhio Environmental \nProtection Agency \nJohn R. Kasich,\
+  \ Governor \nMaryTaylor, Lt. Governor \nCraig W. Butler, Director \nRe: Lima WWTP\
+  \ \nInspection \nNPDES \nAllen County \n2PE00000 \nMarch 17, 2017 \nMayor and Council\
+  \ \nCity of Lima \n50 Town Square \nLima, Ohio 45801 \nDear Mayor and Council Members:\
+  \ \nOn February 28, 2017, a Pretreatment Audit of the City's approved Pretreatment\
+  \ program was \nconducted. Mr. David Schnipke, Mr. Jim Bookman and Mr. Rob Flinn\
+  \ were present to provide \npretreatment information to Ohio EPA representative,\
+  \ Peggy Christie. \nThe pretreatment compliance inspection followed a che"
+inspection:
+  confidence: high
+  warnings:
+  - Document is read from page images with an embedded OCR layer noted as unreliable;
+    key identifiers (permit number 2PE00000, NPDES ID OH0026069, dates) verified against
+    the image.
+  - The inspection report form's Facility Evaluation boxes (IU Permit Issuance, IU
+    Permit Contents, CA Compliance Monitoring, CA Inspection Activities, CA Enforcement
+    Activities, IU Self-Monitoring) reference ratings (S/M/U) but the actual ratings
+    are not legible in the scanned form — noted as 'See inspection letter'; significant_noncompliance
+    box is absent/unreadable and has been left null.
+  - Report date taken from the transmitting letter (March 17, 2017); inspection form
+    signed by Peggy B. Christie on March 9, 2017 and reviewed by Thomas Poffenbarger,
+    P.E. on 3/16/17 — these are intermediate dates, not the visit or letter date.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: Pretreatment Audit (Pretreatment Compliance Inspection)
+  type_code: Audit
+  facility: City of Lima WWTP
+  facility_address: 1200 Fort Amanda Road, Lima, OH 45804
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen County
+  inspection_date: '2017-02-28'
+  report_date: '2017-03-17'
+  entry_time: null
+  exit_time: null
+  inspectors:
+  - Peggy B. Christie
+  facility_representatives:
+  - David Schnipke, Environmental Compliance Manager
+  - James R. Bookman, Industrial Monitoring and Laboratory Chief
+  - Rob Flinn, Industrial Monitoring Technician
+  significant_noncompliance: null
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: Ford Motor Company (1155 Rible Road, Lima, Ohio) — Non-categorical SIU,
+      manufacturer of automotive engines. Average total flow 100,000–120,000 gpd.
+      Sanitary discharged through a separate line. Facility is in compliance.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: Dana Holding Corporation (777 Rible Road, Lima, OH 45801-2025) — Non-SIU,
+      manufactures driveshafts for the automotive industry. Average process flow 1,300
+      gpd. Facility previously held a discharge permit with the City but now hauls
+      all process wastewater off-site to Valicor for recycling; currently only discharges
+      sanitary wastewater to the City. The City inspects this facility once a year
+      and samples them twice a year. Older file reference of notification of SNC and
+      publication in paper, but facility is currently in compliance.
+    number: '2'
+    deadline: null
+  - kind: finding
+    text: All industrial user inspections and sampling requirements are being carried
+      out. Implementation of Lima's approved Pretreatment program remains satisfactory.
+    number: '3'
+    deadline: null
+  - kind: finding
+    text: No changes pending or completed to the pretreatment program since the last
+      inspection (legal authority, local limits, multi-jurisdictional agreements,
+      ERP, sewer use ordinance, control mechanism, etc.).
+    number: '4'
+    deadline: null
+  - kind: finding
+    text: 'Contributing jurisdiction: Findlay Road area drains to the City, metered
+      and billed; all domestic wastewater.'
+    number: '5'
+    deadline: null
+  - kind: finding
+    text: SIU classification has not changed. New IUs are identified through developer
+      contact; facilities fill out a waste characterization form. New small users
+      can also be caught through new account billing. Changes in wastewater discharges
+      at existing IUs are identified through inspections, industrial monthly billing
+      (changes in flow flagged via spreadsheet), and sampling.
+    number: '6'
+    deadline: null
+  summary: On February 28, 2017, Ohio EPA conducted a Pretreatment Audit of the City
+    of Lima WWTP's approved Pretreatment program, including a file review and site
+    visits to two industrial users (Ford Motor Company and Dana Holding Corporation).
+    Both industrial users were found to be in compliance, and all industrial user
+    inspections and sampling requirements are being carried out. The City's implementation
+    of its approved pretreatment program was found to remain satisfactory.
+  note: null

@@ -1,0 +1,80 @@
+doc_id: edoc-1048228-89dc0c9d
+source_path: data/documents/oepa/lima/edoc-1048228.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+image_pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+dpi: 150
+source_text_excerpt: ''
+inspection:
+  confidence: high
+  warnings:
+  - TWIN CAPTURE — not the canonical reading. The portal serves this 2019-04-04 compliance evaluation
+    inspection letter at two docids; edoc-1797305 is the same letter and is canonical, and where the two
+    readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two
+    files are NOT byte-identical).
+  - Document read from page images; text layer appeared adequate for all key fields. Compliance data tables
+    (limit violations, code events, SSO events, high-flow data) are summarized in the summary field but
+    not individually enumerated in observations as they are not numbered finding/recommendation items
+    in the letter.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: compliance evaluation inspection
+  type_code: CEI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Road, Lima, Ohio 45804
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2019-04-04'
+  report_date: '2019-04-30'
+  entry_time: 10:00 AM
+  exit_time: 2:15 PM
+  inspectors:
+  - Peggy B. Christie
+  - Andrew Gall
+  - Lori Komorowski
+  facility_representatives:
+  - Mr. David Schnipke
+  - Mr. Eric Markley
+  - Mr. Jerry Coffey
+  - Ms. Emily Kerber
+  significant_noncompliance: false
+  units_in_service: all major units were in service
+  observations:
+  - kind: finding
+    text: At the time of the inspection, all major units were in service.
+    number: '1'
+    deadline: null
+  - kind: finding
+    text: The final effluent observed at the outfall to the Ottawa River was clear, colorless and had
+      no noticeable odor.
+    number: '2'
+    deadline: null
+  - kind: recommendation
+    text: Please consider conducting a survey of the storm water outfalls, catch basins and downspouts
+      located at the wastewater treatment plant to determine the sources of storm water to each outfall.
+    number: '1'
+    deadline: null
+  summary: Ohio EPA conducted a compliance evaluation inspection of the City of Lima Wastewater Treatment
+    Plant on April 4, 2019. All major units were in service and final effluent to the Ottawa River was
+    clear, colorless, and odor-free. Compliance data for the period 11/1/2017–3/1/2019 showed 7 permit
+    effluent limit violations, 5 code events, and 359 reported SSO events; one advisory recommendation
+    was issued regarding a storm water outfall survey at the WWTP.
+  note: null

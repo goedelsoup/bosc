@@ -62,6 +62,12 @@ _BLOCK_TO_GROUP: dict[str, str] = {
     "deed": "deeds",
     "action": "permits-epa",
     "order": "enforcement",
+    # An agency inspection / compliance-review report (#2077). NOT `enforcement`: an inspection
+    # records a visit and imposes nothing, and the letters say so themselves — "The
+    # recommendation(s) set out below are not Orders." Filing a recommendation under the
+    # enforcement heading would present compliance assistance as an enforceable term, the same
+    # misclassification `layoff_notice` and `statutory_notice` exist to prevent.
+    "inspection": "inspections",
     "award": "finance",
     "permit": "permits-npdes",
     "filing": "permits-sos",

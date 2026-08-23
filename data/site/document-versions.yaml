@@ -293,3 +293,148 @@ clusters:
           fact the date the City had ALREADY submitted the revised sodium-hypochlorite SOP the letter
           acknowledges receiving. Both readings are now reconciled to no outstanding obligations,
           which is what a closure letter actually imposes.
+
+  # ── Lima WWTP inspection run, 2026-08-22 portal pull (#2077) ──────────────────────────────────
+  # The portal serves most of this WWTP's inspections TWICE — once as a PDF with a text layer and
+  # once as a scan of the same letter — at two unrelated docids. NONE of these pairs is
+  # byte-identical (zero byte-identical groups across the 30 captures), so every one is `v2`: two
+  # genuine captures of one filing, both readable evidence.
+  #
+  # They are declared because the pairs were extracted independently and SEVERAL DISAGREED. The
+  # text-layer capture is canonical in every pair — not because it arrived first, but because a
+  # scan is read by the vision path alone with nothing to check itself against, which is exactly
+  # how edoc-463755 invented a case_no in #2076 and how edoc-591751 returned ZERO observations at
+  # high confidence here. Where the two readings differ, the canonical governs.
+  # 30 captures -> 18 distinct inspections.
+
+  - id: oepa:2PE00000-inspection-2016-07-13-reconnaissance-inspection
+    canonical: oepa/lima/edoc-1914739.pdf
+    source: two portal docids serve the same 2016-07-13 reconnaissance inspection letter
+    members:
+      - rel: oepa/lima/edoc-1914739.pdf
+        version: v2
+      - rel: oepa/lima/edoc-467350.pdf
+        version: v2
+        evidence_note: >
+          The same 2016-07-13 reconnaissance inspection as the canonical, served at a second docid. The two readings differ (6 observations on the canonical vs 11 on this capture); the canonical governs.
+
+  - id: oepa:2PE00000-inspection-2016-10-18-reconnaissance-inspection
+    canonical: oepa/lima/edoc-1914740.pdf
+    source: two portal docids serve the same 2016-10-18 reconnaissance inspection letter
+    members:
+      - rel: oepa/lima/edoc-1914740.pdf
+        version: v2
+      - rel: oepa/lima/edoc-512329.pdf
+        version: v2
+        evidence_note: >
+          The same 2016-10-18 reconnaissance inspection as the canonical, served at a second docid. The two readings differ (3 observations on the canonical vs 2 on this capture); the canonical governs.
+
+  - id: oepa:2PE00000-inspection-2016-12-07-reconnaissance-inspection
+    canonical: oepa/lima/edoc-1914742.pdf
+    source: two portal docids serve the same 2016-12-07 reconnaissance inspection letter
+    members:
+      - rel: oepa/lima/edoc-1914742.pdf
+        version: v2
+      - rel: oepa/lima/edoc-529544.pdf
+        version: v2
+        evidence_note: >
+          The same 2016-12-07 reconnaissance inspection as the canonical, served at a second docid. Both readings agree.
+
+  - id: oepa:2PE00000-inspection-2017-02-28-pretreatment-audit
+    canonical: oepa/lima/edoc-1851472.pdf
+    source: two portal docids serve the same 2017-02-28 pretreatment audit letter
+    members:
+      - rel: oepa/lima/edoc-1851472.pdf
+        version: v2
+      - rel: oepa/lima/edoc-591751.pdf
+        version: v2
+        evidence_note: >
+          The same 2017-02-28 pretreatment audit as the canonical, served at a second docid. The two readings differ (6 observations on the canonical vs 13 on this capture); the canonical governs.
+
+  - id: oepa:2PE00000-inspection-2017-04-05-reconnaissance-inspection
+    canonical: oepa/lima/edoc-1851473.pdf
+    source: two portal docids serve the same 2017-04-05 reconnaissance inspection letter
+    members:
+      - rel: oepa/lima/edoc-1851473.pdf
+        version: v2
+      - rel: oepa/lima/edoc-605102.pdf
+        version: v2
+        evidence_note: >
+          The same 2017-04-05 reconnaissance inspection as the canonical, served at a second docid. Both readings agree.
+
+  - id: oepa:2PE00000-inspection-2017-07-25-reconnaissance-inspection
+    canonical: oepa/lima/edoc-1851474.pdf
+    source: two portal docids serve the same 2017-07-25 reconnaissance inspection letter
+    members:
+      - rel: oepa/lima/edoc-1851474.pdf
+        version: v2
+      - rel: oepa/lima/edoc-678896.pdf
+        version: v2
+        evidence_note: >
+          The same 2017-07-25 reconnaissance inspection as the canonical, served at a second docid. Both readings agree.
+
+  - id: oepa:2PE00000-inspection-2017-12-05-compliance-evaluation-inspection
+    canonical: oepa/lima/edoc-1851475.pdf
+    source: two portal docids serve the same 2017-12-05 compliance evaluation inspection letter
+    members:
+      - rel: oepa/lima/edoc-1851475.pdf
+        version: v2
+      - rel: oepa/lima/edoc-739814.pdf
+        version: v2
+        evidence_note: >
+          The same 2017-12-05 compliance evaluation inspection as the canonical, served at a second docid. Both readings agree.
+
+  - id: oepa:2PE00000-inspection-2017-12-05-biosolids-generator-inspection
+    canonical: oepa/lima/edoc-1851476.pdf
+    source: two portal docids serve the same 2017-12-05 biosolids generator inspection letter
+    members:
+      - rel: oepa/lima/edoc-1851476.pdf
+        version: v2
+      - rel: oepa/lima/edoc-747522.pdf
+        version: v2
+        evidence_note: >
+          The same 2017-12-05 biosolids generator inspection as the canonical, served at a second docid. The two readings differ (2 observations on the canonical vs 10 on this capture); the canonical governs.
+
+  - id: oepa:2PE00000-inspection-2019-04-04-compliance-evaluation-inspection
+    canonical: oepa/lima/edoc-1797305.pdf
+    source: two portal docids serve the same 2019-04-04 compliance evaluation inspection letter
+    members:
+      - rel: oepa/lima/edoc-1797305.pdf
+        version: v2
+      - rel: oepa/lima/edoc-1048228.pdf
+        version: v2
+        evidence_note: >
+          The same 2019-04-04 compliance evaluation inspection as the canonical, served at a second docid. Both readings agree.
+
+  - id: oepa:2PE00000-inspection-2019-04-04-biosolids-generator-inspection
+    canonical: oepa/lima/edoc-1797306.pdf
+    source: two portal docids serve the same 2019-04-04 biosolids generator inspection letter
+    members:
+      - rel: oepa/lima/edoc-1797306.pdf
+        version: v2
+      - rel: oepa/lima/edoc-1048235.pdf
+        version: v2
+        evidence_note: >
+          The same 2019-04-04 biosolids generator inspection as the canonical, served at a second docid. The two readings differ (4 observations on the canonical vs 3 on this capture); the canonical governs.
+
+  - id: oepa:2PE00000-inspection-2021-06-30-pretreatment-desktop-review
+    canonical: oepa/lima/edoc-1610423.pdf
+    source: two portal docids serve the same 2021-06-30 pretreatment desktop review letter
+    members:
+      - rel: oepa/lima/edoc-1610423.pdf
+        version: v2
+      - rel: oepa/lima/edoc-1782202.pdf
+        version: v2
+        evidence_note: >
+          The same 2021-06-30 pretreatment desktop review as the canonical, served at a second docid. Both readings agree.
+
+  - id: oepa:2PE00000-inspection-2022-02-22-compliance-evaluation-inspection
+    canonical: oepa/lima/edoc-1752399.pdf
+    source: two portal docids serve the same 2022-02-22 compliance evaluation inspection letter
+    members:
+      - rel: oepa/lima/edoc-1752399.pdf
+        version: v2
+      - rel: oepa/lima/edoc-1753487.pdf
+        version: v2
+        evidence_note: >
+          The same 2022-02-22 compliance evaluation inspection as the canonical, served at a second docid. Both readings agree.

@@ -1,0 +1,94 @@
+doc_id: edoc-529544-7102581c
+source_path: data/documents/oepa/lima/edoc-529544.pdf
+kind: inspection
+pages_read:
+- 0
+- 1
+- 2
+image_pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: ''
+inspection:
+  confidence: high
+  warnings:
+  - TWIN CAPTURE — not the canonical reading. The portal serves this 2016-12-07 reconnaissance inspection
+    letter at two docids; edoc-1914742 is the same letter and is canonical, and where the two readings
+    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
+    NOT byte-identical).
+  - Document read from page images; no dedicated text layer confirmed.
+  - The 'Significant Non-Compliance' box on the form is blank/not checked — recorded as false based on
+    absence of any mark and zero violations noted.
+  - Report date (2016-12-16) is the letter date; form signature dates are 12/12/16 and 12/13/16, which
+    are intermediate dates not separately captured.
+  agency: Ohio EPA, Division of Surface Water
+  district: Northwest District Office
+  program: NPDES
+  inspection_type: Reconnaissance Inspection
+  type_code: RI
+  facility: Lima WWTP
+  facility_address: 1200 Fort Amanda Rd., Lima, Ohio
+  permit_no: 2PE00000
+  npdes_id: OH0026069
+  county: Allen
+  inspection_date: '2016-12-07'
+  report_date: '2016-12-16'
+  entry_time: 10:30 AM
+  exit_time: 11:40 AM
+  inspectors:
+  - Peggy B. Christie
+  - Thomas Poffenbarger, P.E.
+  facility_representatives:
+  - Mr. Eric Markley, Supervisor
+  - Mr. Jerry Coffey
+  significant_noncompliance: false
+  units_in_service: null
+  observations:
+  - kind: finding
+    text: 'NPDES Compliance — Corrective Action Needed: N. Compliance data for Lima WWTP between 9/1/2016
+      and 11/1/2016 shows: Permit Effluent Limit Violations: 0; Permit Effluent Code Violations: 0; Permit
+      Effluent Frequency Violations: 0; Compliance Schedule Milestones Not Entered: 0; Reported SSO Events:
+      9 (Overflow Occurrence: 6 in 9/1/2016, 3 in 10/1/2016).'
+    number: E
+    deadline: null
+  - kind: finding
+    text: 'Operations & Maintenance — Corrective Action Needed: N.'
+    number: F
+    deadline: null
+  - kind: finding
+    text: Operator Certification — Not Evaluated.
+    number: G
+    deadline: null
+  - kind: finding
+    text: Collection System — Not Evaluated.
+    number: H
+    deadline: null
+  - kind: finding
+    text: Sludge Management — Not Evaluated.
+    number: I
+    deadline: null
+  - kind: finding
+    text: Storm Water — Not Evaluated.
+    number: J
+    deadline: null
+  - kind: finding
+    text: Self-Monitoring Program — Not Evaluated.
+    number: K
+    deadline: null
+  - kind: finding
+    text: Laboratory — Not Evaluated.
+    number: L
+    deadline: null
+  - kind: finding
+    text: 'Effluent / Receiving Water Observations — Corrective Action Needed: N. Final effluent clear,
+      colorless and had no noticeable odor. New pump station and outfall are operational.'
+    number: M
+    deadline: null
+  summary: A Reconnaissance Inspection was conducted on December 7, 2016 at the City of Lima's WWTP to
+    observe the new pump station and outfall structure. The final effluent was clear, colorless, and had
+    no noticeable odor, and both the new pump station and outfall structure were found to be operational.
+    No permit effluent violations were recorded for the period 9/1/2016–11/1/2016, though 9 SSO events
+    were reported.
+  note: null

@@ -179,6 +179,22 @@ def test_committed_lima_manifest_loads() -> None:
         # of one letter disagreed, which is precisely what a cluster exists to surface.
         "oepa:2PE00000-prov-2016-07-11",
         "oepa:2PE00000-rov-2016-08-01",
+        # The inspection run (#2077). The portal serves most of this plant's inspections TWICE —
+        # once with a text layer, once as a scan of the same letter — so 30 captures are 18 distinct
+        # inspections. None byte-identical; all `v2`, text-layer capture canonical, because a scan
+        # is read by the vision path alone with nothing to check itself against.
+        "oepa:2PE00000-inspection-2016-07-13-reconnaissance-inspection",
+        "oepa:2PE00000-inspection-2016-10-18-reconnaissance-inspection",
+        "oepa:2PE00000-inspection-2016-12-07-reconnaissance-inspection",
+        "oepa:2PE00000-inspection-2017-02-28-pretreatment-audit",
+        "oepa:2PE00000-inspection-2017-04-05-reconnaissance-inspection",
+        "oepa:2PE00000-inspection-2017-07-25-reconnaissance-inspection",
+        "oepa:2PE00000-inspection-2017-12-05-compliance-evaluation-inspection",
+        "oepa:2PE00000-inspection-2017-12-05-biosolids-generator-inspection",
+        "oepa:2PE00000-inspection-2019-04-04-compliance-evaluation-inspection",
+        "oepa:2PE00000-inspection-2019-04-04-biosolids-generator-inspection",
+        "oepa:2PE00000-inspection-2021-06-30-pretreatment-desktop-review",
+        "oepa:2PE00000-inspection-2022-02-22-compliance-evaluation-inspection",
     }
     by_id = {c.id: c for c in versions.clusters}
     # The 2026-08-22 Lima pull's two KINDS of multiplicity are distinguished by `version`, and the
@@ -195,6 +211,13 @@ def test_committed_lima_manifest_loads() -> None:
     assert by_id["oepa:2PE00000-OD"].canonical == "oepa/2PE00000.pdf"
     # The text-layer capture is canonical for each twin pair — never the image-only/poorer scan.
     assert by_id["oepa:2PE00000-prov-2016-07-11"].canonical == "oepa/lima/edoc-1914761.pdf"
+    # Every inspection twin is `v2` with a two-member pair — never `duplicate`, which would make
+    # retrieval collapse two genuinely different scans of one letter into one.
+    insp = [c for c in versions.clusters if c.id.startswith("oepa:2PE00000-inspection-")]
+    assert len(insp) == 12
+    for c in insp:
+        assert {m.version for m in c.members} == {"v2"}, c.id
+        assert len(c.members) == 2, c.id
     # Every cluster's canonical is one of its own members (never a dangling ref).
     for c in versions.clusters:
         assert any(m.rel == c.canonical for m in c.members)

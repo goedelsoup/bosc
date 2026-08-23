@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "2.2.0",
-  "generated_at": "2026-08-23T01:52:37+00:00",
+  "contract_version": "2.3.0",
+  "generated_at": "2026-08-23T02:45:45+00:00",
   "feed_count": 56,
-  "row_total": 4073,
+  "row_total": 4103,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 90
+      "count": 120
     },
     {
       "name": "timeline",
