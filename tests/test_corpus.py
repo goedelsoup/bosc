@@ -23,7 +23,13 @@ from watermark.models import (
     SosExtraction,
     SubEstimate,
 )
-from watermark.pipeline.corpus import DECLINED, _classify, load_corpus
+from watermark.pipeline.corpus import (
+    DECLINED,
+    UNPARSED,
+    CorpusValidationError,
+    _classify,
+    load_corpus,
+)
 from watermark.sites import WHOLE_TREE
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -252,9 +258,11 @@ def test_no_committed_extraction_is_claimed_then_dropped() -> None:
     """
     corpus = load_corpus(Settings(data_dir=REPO_ROOT / "data", site="lima"), scope=WHOLE_TREE)
     assert not corpus.rejected, (
-        "the corpus classifier claimed these committed artifacts and their models rejected "
-        "them — they are silently absent from the timeline, entity graph and yidam mirror "
-        "while `records.py` still publishes them:\n"
+        "the corpus loader could not take these committed artifacts in — they are silently "
+        "absent from the timeline, entity graph and yidam mirror while `records.py` still "
+        "publishes them. A `kind` of "
+        f"`{UNPARSED}` means the file never parsed (#2084); anything else means the classifier "
+        "claimed it and its model rejected it:\n"
         + "\n".join(f"  {r.kind:>18}  {r.rel}\n{' ' * 22}{r.error}" for r in corpus.rejected)
         + "\n\nFix the artifact or route the kind to a model that fits. Do NOT invent "
         "`doc_id`/`dpi`/`source_path` to make a transcription validate as a vision render."
@@ -545,10 +553,11 @@ def test_the_committed_compliance_genres_all_load() -> None:
 def test_every_committed_extraction_parses() -> None:
     """An unparseable artifact is a silent drop from EVERY feed, and no other gate sees it.
 
-    `load_corpus` and `site.records.load_records` both answer a `yaml.YAMLError` with a WARNING
-    and a `continue`. The file therefore reaches neither `Corpus.rejected` nor `Corpus.declined`,
-    so `test_no_committed_extraction_is_claimed_then_dropped` cannot see it either: that gate
-    checks files the classifier CLAIMED, and a file that never parsed was never classified.
+    Since #2084 the loader records one as a `CorpusReject` under the `UNPARSED` sentinel, so
+    `test_no_committed_extraction_is_claimed_then_dropped` covers it too. This stays as the
+    narrower, faster backstop that names the file and its YAML error directly, and it is
+    independent of the loader: it would still fail if a future refactor put the parse failure
+    back behind a `continue`.
 
     This is not hypothetical. Editing one prose warning in
     `oepa/lima/edoc-1879637.order.yaml` put a `": "` inside an unquoted multi-line scalar, and
@@ -571,3 +580,100 @@ def test_every_committed_extraction_parses() -> None:
         + "\n".join(unparseable)
         + '\n\nA `": "` or a " #" inside an unquoted multi-line scalar is the usual cause.'
     )
+
+
+def _broken_yaml_artifact(ex: Path) -> None:
+    """One deed extraction with the #2082 defect: a `": "` inside an unquoted multi-line scalar."""
+    _write(
+        ex / "recorder" / "broken.deed.yaml",
+        """
+doc_id: broken
+source_path: data/documents/recorder/broken.pdf
+kind: deed
+dpi: 300
+deed:
+  instrument_no: I2
+  grantees: [Acme LLC]
+warnings:
+  - a wrapped note that quotes a form's own field label,
+    Subsequent Stream Network: Middle Creek, and thereby
+    ends the scalar where no one meant it to end
+""".lstrip(),
+    )
+
+
+def test_an_unparseable_artifact_is_a_reject_not_a_log_line(tmp_path: Path) -> None:
+    """Parsed-never must not be dropped-silently — the half of #1994 one step earlier (#2084).
+
+    A `yaml.YAMLError` used to be a WARNING and a `continue`, so the file reached neither
+    `Corpus.rejected` nor `Corpus.declined`: not counted, not reported, and invisible to
+    `test_no_committed_extraction_is_claimed_then_dropped`, which asserts the reject set is empty
+    but can only see files the classifier CLAIMED. It has happened twice for real (#1402, #2082),
+    and on #2082 `catalog check`, `producer-check` and `export --check --all` all reported clean —
+    a drift gate structurally cannot see a deletion you caused and then re-exported over.
+    """
+    settings = Settings(data_dir=tmp_path)
+    ex = settings.extracted_dir
+    good = DeedExtraction(
+        doc_id="good",
+        source_path="data/documents/recorder/good.pdf",
+        kind="deed",
+        dpi=300,
+        deed=Deed(instrument_no="I1", grantees=["Acme LLC"]),
+    )
+    _write(ex / "recorder" / "good.deed.yaml", good.to_yaml())
+    _broken_yaml_artifact(ex)
+
+    corpus = load_corpus(settings, scope=WHOLE_TREE)
+
+    # The valid neighbour still loads: one malformed artifact must not blind the whole layer.
+    assert [rel for rel, _ in corpus.deeds] == ["recorder/good.deed.yaml"]
+    # And the broken one is REPORTED — named, with its parse error, under the sentinel kind.
+    assert len(corpus.rejected) == 1
+    reject = corpus.rejected[0]
+    assert reject.rel == "recorder/broken.deed.yaml"
+    assert reject.kind == UNPARSED
+    assert reject.unparsed is True
+    assert reject.error
+    # It is a reject, not a decline: the loader never reached a genre decision about it.
+    assert "recorder/broken.deed.yaml" not in corpus.declined
+    # And never a loaded artifact.
+    assert "recorder/broken.deed.yaml" not in corpus.rel_paths()
+
+
+def test_strict_load_raises_on_an_unparseable_artifact(tmp_path: Path) -> None:
+    """`strict=True` is the gate's edge, and #2084 puts a parse failure behind it too."""
+    settings = Settings(data_dir=tmp_path)
+    _broken_yaml_artifact(settings.extracted_dir)
+
+    with pytest.raises(CorpusValidationError) as excinfo:
+        load_corpus(settings, scope=WHOLE_TREE, strict=True)
+
+    message = str(excinfo.value)
+    assert "recorder/broken.deed.yaml" in message
+    assert UNPARSED in message
+    assert "did not parse at all" in message
+    assert [r.rel for r in excinfo.value.rejects] == ["recorder/broken.deed.yaml"]
+
+
+def test_records_loader_and_corpus_loader_answer_a_parse_failure_the_same_way(
+    tmp_path: Path,
+) -> None:
+    """Both read surfaces funnel through one parse (#2084).
+
+    `load_records` has no reject bucket of its own — it yields one `_Record` per file from raw
+    dicts — so the shared `read_artifact_yaml` is what keeps the two loaders from disagreeing
+    about what an unparseable artifact is. On #2082 the same file left the corpus, the timeline
+    and the records feed at once; the ERROR must be raised once, in one place, for all of them.
+    """
+    from watermark.site.records import load_records
+
+    settings = Settings(data_dir=tmp_path)
+    ex = settings.extracted_dir
+    _broken_yaml_artifact(ex)
+
+    corpus = load_corpus(settings, scope=WHOLE_TREE)
+    records = load_records(ex, scope=WHOLE_TREE)
+
+    assert [r.rel for r in corpus.rejected] == ["recorder/broken.deed.yaml"]
+    assert [r.rel for r in records] == []

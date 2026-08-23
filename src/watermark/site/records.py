@@ -44,10 +44,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, cast
 
-import yaml
-
 from watermark.logging import get_logger
-from watermark.pipeline.corpus import relpath_in_scope
+from watermark.pipeline.corpus import read_artifact_yaml, relpath_in_scope
 from watermark.site.feeds import Citation, Confidence, RecordGroup, RecordItem, RenderClass
 from watermark.sites import CorpusScopeArg
 
@@ -386,10 +384,15 @@ def load_records(extracted_dir: Path, *, scope: CorpusScopeArg = None) -> list[_
         rel = str(path.relative_to(extracted_dir))
         if not relpath_in_scope(rel, scope):
             continue
-        try:
-            data = yaml.safe_load(path.read_text(encoding="utf-8"))
-        except yaml.YAMLError as exc:
-            log.warning("site.records.bad_yaml", path=str(path), error=str(exc).splitlines()[0])
+        # The shared read (#2084). This tier has no reject bucket of its own — it publishes from
+        # raw dicts and yields one `_Record` per file — so it does not re-report the failure here;
+        # `read_artifact_yaml` logs the ERROR, and `pipeline.corpus.load_corpus` over the same
+        # tree is where the file is counted, named and (under `strict`) raised on. What matters is
+        # that both loaders answer an unparseable artifact the same way, in one place: the file
+        # left the corpus, the timeline and this feed together on #2082, and only the `row_total`
+        # said so.
+        data, parse_error = read_artifact_yaml(path, rel)
+        if parse_error is not None:
             continue
         hit = _classify(data)
         if hit is None:
