@@ -540,3 +540,34 @@ def test_the_committed_compliance_genres_all_load() -> None:
                     f"{rel} keys `{block}:` and is neither a render extraction nor a declared "
                     "manual read — it fell out of the corpus silently"
                 )
+
+
+def test_every_committed_extraction_parses() -> None:
+    """An unparseable artifact is a silent drop from EVERY feed, and no other gate sees it.
+
+    `load_corpus` and `site.records.load_records` both answer a `yaml.YAMLError` with a WARNING
+    and a `continue`. The file therefore reaches neither `Corpus.rejected` nor `Corpus.declined`,
+    so `test_no_committed_extraction_is_claimed_then_dropped` cannot see it either: that gate
+    checks files the classifier CLAIMED, and a file that never parsed was never classified.
+
+    This is not hypothetical. Editing one prose warning in
+    `oepa/lima/edoc-1879637.order.yaml` put a `": "` inside an unquoted multi-line scalar, and
+    the artifact vanished from `records` (160 -> 159), from the corpus, and from the timeline
+    (233 -> 232) — while `catalog check`, `producer-check` and `export --check --all` all
+    reported clean, because a re-export moves the committed bundle and the fresh one together.
+    Whole-tree, like the #1994 gate: parseability is a property of the FILE.
+    """
+    unparseable: list[str] = []
+    extracted = REPO_ROOT / "data" / "extracted"
+    for path in sorted(extracted.rglob("*.yaml")):
+        try:
+            yaml.safe_load(path.read_text(encoding="utf-8"))
+        except yaml.YAMLError as exc:
+            rel = path.relative_to(extracted)
+            unparseable.append(f"  {rel}\n      {str(exc).splitlines()[0]}")
+    assert not unparseable, (
+        "these committed extractions do not parse, so they are absent from the corpus, the "
+        "timeline, the entity graph and the records feed — with only a WARNING to say so:\n"
+        + "\n".join(unparseable)
+        + '\n\nA `": "` or a " #" inside an unquoted multi-line scalar is the usual cause.'
+    )

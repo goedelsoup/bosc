@@ -320,16 +320,19 @@ clusters:
         version: v2
         evidence_note: >
           The same 2022-06-27 letter as the canonical, and the AGENCY'S OWN FILE COPY: page 1
-          carries an Ohio EPA NWDO "RECEIVED" stamp the canonical does not, so this capture is the
-          only evidence in the corpus of when the submittal reached the district office. Read at
-          400 DPI, the stamp is unambiguous — RECEIVED / JUN 2 3 2022 / OHIO EPA / NWDO — and it
-          therefore PRE-DATES the letter it stamps by four days. That is not an OCR misread (the
-          day digits are struck in the darker wheel font and legible at full resolution) and it is
-          not resolved here: a receipt stamped before the document's own date is an agency
-          anomaly, most plausibly a date wheel left unadvanced, and it is recorded rather than
-          reconciled. The canonical is the copy to cite for the letter's CONTENT — its page 1 is a
-          clean read where this capture's is degraded ("l.ima, Oliio", "Ahone:") — but the receipt
-          date exists only here.
+          carries an Ohio EPA NWDO "RECEIVED" stamp the canonical does not, so this is the only
+          capture in the corpus that BEARS one. Read at 400 DPI the stamp is legible —
+          RECEIVED / JUN 2 3 2022 / OHIO EPA / NWDO — and it pre-dates by four days the letter it
+          stamps. What that establishes is the stamp's existence and wording. It does NOT
+          establish when Ohio EPA received the filing, and this cluster must not be read as
+          supplying a receipt date: a receipt that precedes its own document is internally
+          inconsistent, and an inconsistency this corpus cannot resolve is not a date it can
+          cite. Legibility is not the issue — the day digits are struck in the darker wheel font
+          and are unambiguous at full resolution — the issue is that the stamp and the letter
+          disagree, most plausibly a date wheel left unadvanced [inference], and that is recorded
+          rather than reconciled. Cite the canonical for the letter's CONTENT (its page 1 is a
+          clean read where this capture's is degraded — "l.ima, Oliio", "Ahone:"), and cite this
+          capture for the STAMP, never for a date of receipt.
 
   # ── Lima WWTP inspection run, 2026-08-22 portal pull (#2077) ──────────────────────────────────
   # The portal serves most of this WWTP's inspections TWICE — once as a PDF with a text layer and

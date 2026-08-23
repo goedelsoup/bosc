@@ -31,8 +31,10 @@ order:
     edoc-1851184 (declared `oepa:2PE00000-cr6-progress-2022-06-27` in
     data/site/document-versions.yaml, canonical there). Pages 2-5 are the same progress
     report to 3 decimal places of text similarity; page 1 differs only by this stamp and
-    a poorer scan. Cite the canonical for what the letter SAYS — cite this one for when
-    Ohio EPA received it, which exists nowhere else.
+    a poorer scan. Cite the canonical for what the letter SAYS, and this capture for the
+    STAMP ITSELF — that a receipt stamp exists on the agency's copy, and what it reads.
+    It is NOT a citable receipt date — the stamp precedes the letter, so from these bytes
+    the corpus cannot say when Ohio EPA received this filing [open].
   - Permit number contains an asterisk ('2PE00000*ND') which may be a masking/redaction
     convention or OCR artifact; verified against image as printed.
   - This is a compliance update letter/correspondence, not a primary enforcement instrument
