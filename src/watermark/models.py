@@ -603,6 +603,78 @@ class ComplianceInspection(_Extracted):
     note: str | None = None
 
 
+class ProgressProject(ApproxModel):
+    """One named project a compliance progress report tracks across reporting periods."""
+
+    model_config = ConfigDict(extra="allow")
+
+    name: str | None = None  # the project as the report names it (e.g. "CMOM Plan")
+    status: str | None = None  # what the report says of it this period
+    next_period: str | None = None  # the projection of work for the NEXT period, if given
+
+
+class DischargeEvent(ApproxModel):
+    """One CSO / SSO / bypass / unpermitted discharge a progress report inventories.
+
+    Paragraph 33(f) of the Lima decree requires "a summary of all CSO Discharges, SSOs,
+    Bypasses, and other unpermitted discharges occurring within the reporting period
+    including the actual or estimated frequency, duration and volume of each". That makes
+    a run of these reports a SELF-REPORTED discharge series, which no other genre in this
+    corpus carries — the DMR feed is permit-limit monitoring, not overflow events.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    kind: str | None = None  # CSO | SSO | bypass | unpermitted discharge, as the report classes it
+    location: str | None = None  # outfall id / street location as printed
+    date: str | None = None  # ISO if a single dated event
+    frequency: str | None = None  # e.g. "3 events" — as printed, actual or estimated
+    duration: str | None = None
+    volume: str | None = None  # keep the printed units; do NOT normalize
+    estimated: bool | None = (
+        None  # True where the report itself says estimated rather than measured
+    )
+    note: str | None = None
+
+
+class ComplianceProgressReport(_Extracted):
+    """A periodic progress report filed UNDER an enforcement instrument (#2079).
+
+    The Lima consent decree's paragraph 33 requires a report every January 31 and July 31
+    "until termination", and the filings follow its lettered structure exactly. This genre
+    is deliberately NOT :class:`EnforcementOrder`: a progress report reports *against*
+    obligations rather than imposing them, and reading one as an order would publish a
+    near-duplicate of the decree it answers — nine near-duplicates, in Lima's case.
+
+    It is also not :class:`ComplianceInspection`: that genre is the AGENCY visiting the
+    facility, this is the RESPONDENT reporting on itself. The difference matters to how a
+    reader weighs it, so the two never share a bucket.
+    """
+
+    agency: str | None = None  # the recipients (e.g. "U.S. EPA Region 5 / Ohio EPA")
+    instrument: str | None = None  # the order reported under (e.g. "consent decree")
+    case_no: str | None = None  # the docket of that instrument, so this joins it
+    paragraph: str | None = None  # the reporting clause (e.g. "33")
+    respondent: str | None = None  # the party filing (e.g. "City of Lima")
+    facility: str | None = None
+    permit_no: str | None = None
+    report_date: str | None = None  # ISO — when filed/received
+    period_start: str | None = None  # ISO — the reporting period this covers
+    period_end: str | None = None
+    deadlines_status: str | None = None  # clause (a): terms due this period and whether met
+    noncompliance_reasons: str | None = None  # clause (a): the stated reasons, if any
+    projects: list[ProgressProject] = Field(default_factory=list)  # clause (b)
+    agency_contacts: StrList = Field(
+        default_factory=list
+    )  # clause (d): dated deliverables/contacts
+    permit_exceedances: StrList = Field(
+        default_factory=list
+    )  # clause (e), one entry per exceedance
+    discharge_events: list[DischargeEvent] = Field(default_factory=list)  # clause (f)
+    summary: str | None = None
+    note: str | None = None
+
+
 class FinanceAward(_Extracted):
     """A public-finance award — a loan, grant, or cooperative agreement (#1746).
 
@@ -1186,6 +1258,10 @@ class OrderExtraction(DocExtraction):
 
 class InspectionExtraction(DocExtraction):
     inspection: ComplianceInspection
+
+
+class ProgressReportExtraction(DocExtraction):
+    progress_report: ComplianceProgressReport
 
 
 class AwardExtraction(DocExtraction):

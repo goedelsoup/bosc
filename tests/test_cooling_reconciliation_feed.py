@@ -27,7 +27,7 @@ from watermark.site.cooling_reconciliation import (
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "2.3.0"
+_CV = "2.4.0"
 
 
 def _settings(site: str, data_dir: Path | None = None) -> Settings:

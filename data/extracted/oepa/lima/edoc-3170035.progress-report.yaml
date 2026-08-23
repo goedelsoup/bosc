@@ -1,0 +1,530 @@
+doc_id: edoc-3170035-957fdee4
+source_path: data/documents/oepa/lima/edoc-3170035.pdf
+kind: progress-report
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "PROGRESS REPORT \nDUE: January 31 and July 31 of each year until\
+  \ termination of Consent Decree \nRECIPIENTS: REGION 5 OF USEPA \nChief \nWater\
+  \ Enforcement and Compliance Assurance Branch \nWater Division \nUS Environmental\
+  \ Protection Agency, Region5 \n77 West Jackson Blvd. \nChicago, IL 60604 \nNicole\
+  \ Cantello \nAssociate Regional Counsel \nUS Environmental Protection Agency, Region\
+  \ 5 \n77 West Jackson Blvd. \nChicago, IL 60604 \nCantello.nicole@epa.gov  \nSTATE\
+  \ OF OHIO \nOhio Environmental Protection Agency \nDivision of Surface Water \n\
+  Attn: Manager, Permits and Compliance \nPO Box 1049 \nColumbus, OH 43216-104"
+progress_report:
+  confidence: high
+  warnings:
+  - Report date inferred as 2017-07-31 (the filing deadline); actual signature date
+    is not printed but the document was received by Ohio EPA NWD on July 31, 2017
+    per the received stamp.
+  - CSO overflow counts for Annual Report numbers 414, 016, 015, 038, 012, 011, and
+    013 are not legible in the OCR or image scan and have been left null.
+  - 'EPA ID for Annual Report #015 appears as ''2PE0000095'' in the OCR — likely a
+    truncation; recorded as printed.'
+  - 'EPA ID for Annual Report #011 printed as ''2PE000000/1'' — apparent OCR artifact;
+    recorded as printed.'
+  - Discharge event volumes and durations are not provided in the Overflow Totals
+    Report as attached; only event counts (frequency) are recorded per location.
+  - The report_date is set to 2017-07-31 as the due date; the received stamp confirms
+    July 31, 2017.
+  agency: U.S. EPA Region 5 / Ohio EPA (Division of Surface Water, Columbus and Northwest
+    District Office)
+  instrument: Consent Decree
+  case_no: '3:14-CV-02551-JZ Doc #5 Filed: 01/13/15'
+  paragraph: '33'
+  respondent: City of Lima, Ohio (Director of Utilities)
+  facility: Lima Wastewater Treatment Plant (WWTP)
+  permit_no: null
+  report_date: '2017-07-31'
+  period_start: '2017-01-01'
+  period_end: '2017-06-30'
+  deadlines_status: (1) June 2, 2017 — USEPA required Lima to submit a revised CMOM
+    plan (modifications requested in letter received March 30, 2017). Lima submitted
+    the revised plan on May 26, 2017 — MET EARLY. (2) July 2, 2017 — USEPA required
+    Lima to submit an updated CSOOP (modifications requested in letter received May
+    3, 2017). Lima submitted a revised CSOOP on June 30, 2017 — MET EARLY.
+  noncompliance_reasons: None noted.
+  projects:
+  - name: Lima Wastewater Treatment Headworks Project
+    status: 'Construction commenced July 1, 2015. Completed: All Bar Screens (4),
+      All Aerated Grit Tanks (4) placed in service; All Primary tanks (7) can be placed
+      in service as needed; All Secondary Effluent pumps placed in service; Disinfection
+      process completed and placed in service 5-1-17; Chlorine Contact Tank Construction
+      completed; Primary Scum Screen placed in service; Drainage Pump Station placed
+      in service; All miscellaneous valves and gates replaced/installed; Site paving
+      completed; Replacement of existing plant PLCs complete, programming partially
+      complete.'
+    next_period: PLC programming and optimizing of control systems; site cleanup punch
+      list and grading/seeding; develop implementation strategy for seeding nitrification
+      towers during dry weather; develop implementation strategy for employing primary
+      tank 5-7, effluent pumping, and towers to treat wet weather flows; develop PLC
+      programming for seeding the nitrification tower and for control of wet weather
+      treatment system; implement dry weather seeding strategy for towers and collect
+      data; begin trials of towers for wet weather treatment after successful seeding.
+  - name: CMOM Plan Development
+    status: Lima received a letter on 3/30/17 from USEPA requesting modification to
+      the plan submitted 7/10/15. Lima submitted the revised plan to USEPA on 5/26/17.
+    next_period: null
+  - name: Asset Management
+    status: Final design and contract documents are still being developed for the
+      Phase 1 Rehabilitation of the Segmented Block Sewers.
+    next_period: Completion of final design and public bidding of this project.
+  - name: Supplemental Environmental Project (SEP)
+    status: Lima replanted 213 trees in April after the total failure of the trees
+      planted in 2016. A recent inspection by USEPA revealed all re-planted trees
+      appear to have established roots and are doing well.
+    next_period: USEPA requests Lima to submit a Revised SEP Completion Report by
+      January 31, 2018.
+  - name: Simmon's Field CSO EQ Basin
+    status: City is under contract with Stantec (formerly MWH) for engineering. Three
+      progress meetings occurred in the reporting period; 60% design drawings submitted
+      May 5, 2017. Early unfavorable boring results led to additional borings as part
+      of a Phase II Environmental Site Assessment, completed June 16, 2017.
+    next_period: Contingent upon soil boring results, completion of final design and
+      public bidding expected in the next six month period.
+  agency_contacts:
+  - January 6, 2017 — Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning
+    a force main rupture at the West Street Pump Station.
+  - January 12, 2017 — Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning
+    a flooded wet well at the Lost Creek Pump Station.
+  - January 13, 2017 — Lima submitted a comment letter (via Frost Brown Todd) to OEPA
+    in response to the proposed promulgation of WQS for the Maumee river drainage.
+  - February 10, 2017 — Lima submitted a response letter to OEPA in reference to two
+    'AD' values recorded for effluent temperature at Station 604 on the Compliance
+    Review Report.
+  - March 30, 2017 — Lima received a letter from USEPA requesting modifications to
+    the CMOM plan submitted July 10, 2015. Lima was given 60 days to respond.
+  - April 5, 2017 — OEPA conducted a Reconnaissance Inspection of Lima's WWTP.
+  - April 19, 2017 — Lima submitted a SSO 5-Day Follow-up Report to OEPA concerning
+    the failure of a check valve at the Westgate Pump Station.
+  - April 26, 2017 — Lima submitted notification letter to USEPA that the replanting
+    of 213 trees as part of the Supplemental Environmental Project (SEP) had been
+    completed.
+  - May 1, 2017 — Lima received a letter from USEPA requesting modifications be made
+    to the CSOOP submitted May 13, 2015.
+  - May 26, 2017 — Lima submitted revised CMOM Plan to USEPA.
+  - June 19-21, 2017 — USEPA and OEPA conducted a 3-day reconnaissance inspection
+    focused on the progress Lima has made on improvement projects defined in the consent
+    decree entered into on January 13, 2015.
+  - June 30, 2017 — Lima submitted revised CSOOP plan to USEPA.
+  permit_exceedances:
+  - January 1-2, 2017 — Lima recorded 'AD' values for effluent temperature at Station
+    604. Construction activity at the plant required manual recording (versus normal
+    automatic SCADA entry) of temperature for a short period. Paper files were misplaced
+    between shifts and the data was lost.
+  discharge_events:
+  - kind: WIB (Water-in-Basement)
+    location: City mainline (grease backup)
+    date: null
+    frequency: 1 instance
+    duration: null
+    volume: null
+    estimated: null
+    note: Occurred as a result of grease that backed up the City's mainline. The line
+      was immediately jetted and returned to normal service.
+  - kind: SSO
+    location: MH#14 on Lost Creek Golf Course
+    date: null
+    frequency: 8 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #302, EPA ID #2PE00000047. See attached Overflow Totals Report.'
+  - kind: CSO
+    location: S. Central Ave. & Ottawa River
+    date: null
+    frequency: 6 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #007, EPA ID #2PE00000007.'
+  - kind: CSO
+    location: Timberlake Sewer & Ottawa River
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #008, EPA ID #2PE00000008.'
+  - kind: CSO
+    location: Oxford Ave. & Collett Street
+    date: null
+    frequency: 1 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #009, EPA ID #2PE00000009.'
+  - kind: CSO
+    location: North Shore Dr. & Cole St.
+    date: null
+    frequency: 1 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #037, EPA ID #2PE00000037.'
+  - kind: CSO
+    location: Lakewood Ave & Charles St.
+    date: null
+    frequency: 2 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #035, EPA ID #2PE00000035.'
+  - kind: CSO
+    location: Judkins Ave at Kunneke Ave
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #034, EPA ID #2PE00000034.'
+  - kind: CSO
+    location: Nixon Ave. at Kunneke Ave.
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #033, EPA ID #2PE00000033.'
+  - kind: SSO
+    location: Glenwood Ave. between Lakewood and Wales Ave.
+    date: null
+    frequency: 2 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #303, EPA ID #2PE00000029.'
+  - kind: SSO
+    location: S. Pears Ave. at Kunneke Ave.
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #304, EPA ID #2PE00000028.'
+  - kind: SSO
+    location: Lakewood Ave. & Maplewood Drive
+    date: null
+    frequency: 1 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #305, EPA ID #2PE00000027.'
+  - kind: SSO
+    location: S. Pears Ave. between Wendell Ave & Lakewood Ave.
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #306, EPA ID #2PE00000026.'
+  - kind: SSO
+    location: 418 South Pears (MH 0-10)
+    date: null
+    frequency: 1 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #307.'
+  - kind: SSO
+    location: S. Pears Ave. between Lowell Ave. & Wendell Ave.
+    date: null
+    frequency: 6 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #308, EPA ID #2PE00000025.'
+  - kind: SSO
+    location: S. Pears Ave. between W. Spring & W. Elm St
+    date: null
+    frequency: 4 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #309, EPA ID #2PE00000023.'
+  - kind: SSO
+    location: Between W. Spring & W. Elm, East of Primrose Pl
+    date: null
+    frequency: 6 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #310, EPA ID #2PE00000024.'
+  - kind: SSO
+    location: 1861 Wendell
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #311.'
+  - kind: SSO
+    location: S. Cable Rd. at Lakewood Ave.
+    date: null
+    frequency: 15 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #313, EPA ID #2PE00000031.'
+  - kind: SSO
+    location: S. Cable Rd. at Wendell Ave.
+    date: null
+    frequency: 5 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #314, EPA ID #2PE00000032.'
+  - kind: SSO
+    location: Dale Dr. & Idlewild Dr.
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #316, EPA ID #2PE00000022.'
+  - kind: SSO
+    location: Dale Dr. between W. Wayne & Oakland Pkwy
+    date: null
+    frequency: 6 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #317, EPA ID #2PE00000020.'
+  - kind: SSO
+    location: Dale Dr. & West Wayne St.
+    date: null
+    frequency: 3 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #318, EPA ID #2PE00000021.'
+  - kind: SSO
+    location: University Ave. & Dale Dr.
+    date: null
+    frequency: 2 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #319, EPA ID #2PE00000018.'
+  - kind: SSO
+    location: 'Columbia @ Allentown, MH #92'
+    date: null
+    frequency: 12 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #320.'
+  - kind: SSO
+    location: 1379 N. Cable Road Lift Station (Check Valve)
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #321, EPA ID #2PE00000051.'
+  - kind: SSO
+    location: 1700 Allentown Road Lift Station (Check Valve)
+    date: null
+    frequency: 5 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #322, EPA ID #2PE00000050.'
+  - kind: SSO
+    location: Rosedale @ Ellison Ave.
+    date: null
+    frequency: 5 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #323.'
+  - kind: SSO
+    location: Woodlawn @ Ellison Ave.
+    date: null
+    frequency: 5 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #324.'
+  - kind: SSO
+    location: Woodlawn Ave. & Feeman Ave.
+    date: null
+    frequency: 2 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #325, EPA ID #2PE00000017.'
+  - kind: CSO
+    location: Metcalf St. & Tremont Ave.
+    date: null
+    frequency: null
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #414, EPA ID #2PE00000014. Count not legible in OCR.'
+  - kind: CSO
+    location: Metcalf St. & Ashton Ave.
+    date: null
+    frequency: null
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #016, EPA ID #2PE00000016. Count not legible in OCR.'
+  - kind: CSO
+    location: Metcalf St. & Runyan Ave.
+    date: null
+    frequency: null
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #015, EPA ID #2PE0000095. Count not legible in OCR.'
+  - kind: CSO
+    location: West & O'Connor Ave
+    date: null
+    frequency: null
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #038, EPA ID #2PE00000038. Count not legible in OCR.'
+  - kind: CSO
+    location: McDonel St. & O'Connor Ave.
+    date: null
+    frequency: null
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #012, EPA ID #2PE00000012. Count not legible in OCR.'
+  - kind: CSO
+    location: Burch Ave. & O'Connor Ave.
+    date: null
+    frequency: null
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #011, EPA ID #2PE000000/1 (as printed). Count not legible
+      in OCR.'
+  - kind: CSO
+    location: Metcalf St. & O'Connor Ave.
+    date: null
+    frequency: null
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #013, EPA ID #2PE00000013. Count not legible in OCR.'
+  - kind: SSO
+    location: Northwold St. & O'Connor Ave.
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #326, EPA ID #2PE00000010.'
+  - kind: SSO
+    location: 1330 Melrose Ave.
+    date: null
+    frequency: 1 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #327, EPA ID #2PE00000049.'
+  - kind: SSO
+    location: Metcalf St. & Lane Ave.
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #329, EPA ID #2PE00000042.'
+  - kind: SSO
+    location: Metcalf St. & Ford Ave.
+    date: null
+    frequency: 4 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #330, EPA ID #2PE00000044.'
+  - kind: SSO
+    location: Burch & Ford
+    date: null
+    frequency: 4 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #331.'
+  - kind: SSO
+    location: 2032 Burch Ave.
+    date: null
+    frequency: 1 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #332, EPA ID #2PE00000046.'
+  - kind: SSO
+    location: Burch Ave. & Lewis Ave.
+    date: null
+    frequency: 1 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #333, EPA ID #2PE00000045.'
+  - kind: SSO
+    location: Metcalf St. & Lewis Blvd.
+    date: null
+    frequency: 1 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #334, EPA ID #2PE00000043.'
+  - kind: SSO
+    location: Celia Place & Northern Ave.
+    date: null
+    frequency: 8 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #335, EPA ID #2PE00000041.'
+  - kind: SSO
+    location: Karen St. & Lewis Blvd. (N)
+    date: null
+    frequency: 2 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #336, EPA ID #2PE00000039.'
+  - kind: SSO
+    location: Karen St. & Lane Ave
+    date: null
+    frequency: 9 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #337, EPA ID #2PE00000038.'
+  - kind: SSO
+    location: West St. Lift Station
+    date: null
+    frequency: 0 (YTD)
+    duration: null
+    volume: null
+    estimated: null
+    note: 'Annual Report #338, EPA ID #2PE00000056.'
+  summary: This is the semiannual compliance progress report filed by the City of
+    Lima, Ohio under Paragraph 33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ)
+    for the period January 1 – June 30, 2017. Lima reports meeting both its deadline
+    obligations for the period (revised CMOM plan submitted May 26, 2017; revised
+    CSOOP submitted June 30, 2017) and documents substantial construction progress
+    on the Headworks Project, CMOM Plan, Asset Management, SEP tree replanting, and
+    Simmon's Field CSO EQ Basin. The attached Overflow Totals Report inventories 119
+    SSO events and 13 CSO events at 47 locations system-wide during the reporting
+    period, with volumes and durations reported monthly to OEPA via DMR.
+  note: null

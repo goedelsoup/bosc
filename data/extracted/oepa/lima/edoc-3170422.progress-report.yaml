@@ -1,0 +1,153 @@
+doc_id: edoc-3170422-6cb7f2ce
+source_path: data/documents/oepa/lima/edoc-3170422.pdf
+kind: progress-report
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "PROGRESS REPORT \nDUE: January 31 and July 31 of each year until termination of\
+  \ Consent Decree \nRECIPIENTS: REGION 5 OF USEPA \nChief \nWater Enforcement and Compliance Assurance\
+  \ Branch \nWater Division \nUS Environmental Protection Agency, Region5 \n77 West Jackson Blvd. \nChicago,\
+  \ IL 60604 \nNicole Cantello \nAssociate Regional Counsel \nUS Environmental Protection Agency, Region\
+  \ 5 \n77 West Jackson Blvd. \nChicago, IL 60604 \nC nteilci.nir_rf1ei~+e LF~ \nSTATE OF OHIO \nOhio\
+  \ Environmental Protection Agency \nDivision of Surface Water \nAttn: Manager, Permits and Comptiance\
+  \ \nPO Box 1049 \nColumbus, OH 43216-1"
+progress_report:
+  confidence: high
+  warnings:
+  - CLAUSE (f) IS AGGREGATED HERE, NOT ENUMERATED — 2 discharge_events for a period this report totals
+    as the period's overflow totals. That is a property of the DOCUMENT, not a truncated read. The per-outfall
+    table is present but is a scan of an embedded spreadsheet and its text layer is badly garbled ("Da!e
+    Dr." for Dale Dr., "SSQ" for SSO, outfall ids running together with counts). Transcribing those rows
+    would have invented outfall identifiers and event counts, so the aggregate the report states in prose
+    is recorded instead and the rows are not. Prefer omission over invention.
+  - TO GET THE PER-OUTFALL ROWS, read the page images rather than the text layer — the same hazard and
+    the same remedy as the consent decree's rotated Table A.1 (#2075). Sibling reports in this series
+    (edoc-3170035, 2710558, 1104344, 1294257, 1611092) DO enumerate, at 49-54 events each, because their
+    tables carry a clean text layer. The difference between 3 events and 50 in this genre is the scan
+    quality, never the plant's behaviour — do NOT read a low discharge_events count as a quiet half-year.
+  agency: U.S. EPA Region 5 / Ohio EPA
+  instrument: Lima Consent Decree (CD)
+  case_no: '3:14-CV-02551-JZ Doc #5 Filed: 01/13/15'
+  paragraph: '33'
+  respondent: City of Lima, Ohio
+  facility: City of Lima Wastewater Treatment Plant (WWTP)
+  permit_no: null
+  report_date: '2017-01-26'
+  period_start: '2016-07-01'
+  period_end: '2016-12-31'
+  deadlines_status: July 1, 2016 --- Required Lima to begin construction on the Headworks and Primary
+    Clarification Improvements. Lima actually began construction on May 18, 2015 (ahead of deadline).
+  noncompliance_reasons: No noncompliance with CD deadlines noted; the Headworks construction deadline
+    of July 1, 2016 was met early (construction began May 18, 2015). NPDES permit exceedances occurred
+    but are reported separately under clause (e).
+  projects:
+  - name: Lima Wastewater Treatment Headworks Project
+    status: 'Construction commenced July 1, 2015. Items placed in service: Bar screens #3 & #4; Primary
+      settling tanks #1 and #2; Aerated grit tanks #1 and #2; Primary sludge pump station; Secondary effluent
+      pump station; New Outfall (Station 001) to Ottawa River. Items in progress: Chlorine contact chamber
+      construction; Primary settling tanks #3 and #4 construction; Primary scum screen; Drainage pump
+      station; Chemical Feed building for sodium hypochlorite / sodium bisulfite; Aerated grit tanks #3
+      & #4.'
+    next_period: See Attachment A (Gantt chart) for anticipated progress in next 6 months.
+  - name: Upstream Regulator Project
+    status: In full operation on September 21, 2016. Final punch-out items including as-built drawings
+      completed on November 30, 2016.
+    next_period: null
+  - name: CMOM Plan Development
+    status: CMOM plan submitted to USEPA and OEPA on July 10, 2015. Lima has not received a response from
+      the agency on the submittal.
+    next_period: Lima will implement the plan within 30 days of agency approval.
+  - name: Asset Management
+    status: Final design documents nearing completion; development of bid documents for Phase 1 Rehabilitation
+      of the Segmented Block Sewers is in progress. Survey work completed in November 2016.
+    next_period: Completion of the bid documents expected in the next six months.
+  - name: Supplemental Environmental Project (SEP)
+    status: Lima submitted a final report via Geosyntec Consultants on June 30, 2016. Lima received a
+      response letter from USEPA on December 15, 2016 indicating the SEP cannot be considered successfully
+      completed at this time.
+    next_period: USEPA requests Lima to submit a Revised SEP Completion Report by January 31, 2018. USEPA
+      also requests an interim letter of notification within 30 days of the replanting of 213 trees.
+  - name: Simmon's Field CSO EQ Basin
+    status: City under contract with MWH Engineers for preliminary engineering. Four progress meetings
+      occurred in the reporting period. Basis of Design document submitted on December 22, 2016.
+    next_period: Submittal of 30% and 60% design drawings expected. A Phase II Environmental Site Assessment
+      is also expected to be performed.
+  agency_contacts:
+  - July 20, 2016 --- Lima received a Preliminary Compliance Review letter from OEPA indicating a daily
+    limit violation on June 6th for Total Chlorine Residual at Station 001.
+  - July 20, 2016 --- Lima submitted a response letter to OEPA concerning the June 6th daily limit violation
+    for Total Chlorine Residual at Station 001.
+  - July 25, 2016 --- Lima received a NOV letter from OEPA concerning the discharge of sludge to the Ottawa
+    River at Station 001.
+  - August 1, 2016 -- Lima submitted a letter to OEPA in response to the sludge discharge to the Ottawa
+    River.
+  - August 8, 2016 --- Lima submitted a letter to USEPA concerning the sludge discharge to the Ottawa
+    River.
+  - August 15, 2016 -- Lima submitted a letter to OEPA concerning the exceedance of the weekly limit for
+    E.coli (31648).
+  - August 16, 2016 --- Lima submitted a second letter to OEPA concerning the second exceedance of the
+    weekly limit for E.coli (31648).
+  - August 29, 2016 -- Lima submitted a letter to USEPA concerning the two E.coli exceedances.
+  - October 31, 2016 — Lima received a Resolution of Violation letter from OEPA indicating that all violations
+    related to the sludge discharge on July 25, 2016 had been resolved.
+  - December 14, 2016 --- Lima submitted a response letter to OEPA concerning an effluent temperature
+    violation at Station 604.
+  - 'December 15, 2016 -- USEPA sent a letter notifying Lima that the Supplemental Environmental Project,
+    US and State of Ohio v. City of Lima Case Number: 33:14-cv-02551-JZ, had not been successfully completed.'
+  - December 16, 2016 --- Lima received a letter from OEPA in response to a Reconnaissance Inspection
+    conducted on 12/7/16 at the WWTP to observe the new pump station and outfall structure. There were
+    no issues of concern.
+  permit_exceedances:
+  - July 20, 2016 --- Lima's WWTP had an exceedance of the daily limit for Total Chlorine Residual at
+    Station 001.
+  - August 14, 2016 -- Lima's WWTP had an exceedance of the weekly limit for E.coli (31648). The limit
+    is 284/100ml. Lima's sample was TNTC.
+  - August 15, 2016 --- Lima's WWTP had an exceedance of the weekly limit for E.coli (31648). The limit
+    is 284/100ml. Lima's sample was TNTC.
+  - December 13, 2016 --- Lima failed to record effluent temperature at Station 604.
+  discharge_events:
+  - kind: Water-in-Basement (WIB)
+    location: City mainline (specific location not stated)
+    date: null
+    frequency: 1 instance
+    duration: null
+    volume: null
+    estimated: null
+    note: Occurred as a result of debris that backed up the City's mainline. Line was immediately jetted
+      and returned to normal service. Lima completed one WIB project in the last six month reporting period.
+  - kind: SSO / CSO
+    location: Multiple locations — see Attachment C (SSO & CSO Overflow Totals, July 1 – December 31,
+      2016)
+    date: null
+    frequency: Total 71 Inflow reports, 38 SSO reports, 15 CSO reports across 17 total reports
+    duration: null
+    volume: null
+    estimated: null
+    note: Reported monthly to OEPA as part of the monthly Discharge Monitoring Report. Full detail in
+      Attachment C.
+  summary: This is the semiannual compliance progress report filed by the City of Lima, Ohio under Paragraph
+    33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ) for the period July 1, 2016 through December
+    31, 2016. Lima reports that its one CD construction deadline (Headworks construction, due July 1,
+    2016) was met ahead of schedule, with six active projects in varying stages of completion including
+    the Headworks Project, Upstream Regulator (now complete), and Simmon's Field CSO EQ Basin in preliminary
+    engineering. Four NPDES permit exceedances and multiple SSO/CSO overflow events (detailed in Attachment
+    C) are self-reported for the period.
+  note: 'Report received by Ohio EPA N.W.D.O. on January 26, 2017. Signed by Michael H. Prella, Director
+    of Utilities, City of Lima, Ohio, and David J. Berger, Lima City Mayor. Counsel: Fred P. Andes (Barnes
+    & Thornburg LLP) and Stephen P. Samuels (Frost Brown Todd LLC). CMOM Plan submitted to USEPA and Ohio
+    EPA on July 10, 2015 but not yet approved as of this report. Attachment C (SSO & CSO Overflow Totals)
+    updated 1/5/17 with Total # of Reports: 17.'

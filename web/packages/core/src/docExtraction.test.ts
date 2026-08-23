@@ -167,10 +167,12 @@ describe("the join, against the committed Lima bundle", () => {
   // 115 -> 129 (#2078): the permit lifecycle — 2PE00000*MD/*ND/*OD/*PD across issued permits, draft
   // public notices and the 2023 fact sheet, plus seven permit ACTIONS and the 2022 renewal
   // application. Existing genres (`npdes`, `epa`); no contract change.
-  it("extracts 129 of 3,348 documents — 3.9% of the corpus", () => {
+  // 129 -> 138 (#2079): the nine paragraph-33 semiannual progress reports, under the
+  // `compliance-report` genre added for them. They are the decree's own measuring instrument.
+  it("extracts 138 of 3,348 documents — 4.1% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
     expect(entries.length).toBe(3348);
-    expect(countExtracted(entries, index)).toBe(129);
+    expect(countExtracted(entries, index)).toBe(138);
   });
 
   it("is near-complete on the small instrument collections, and thin across the big holdings", () => {
@@ -197,21 +199,21 @@ describe("the join, against the committed Lima bundle", () => {
     // three H.B. 646 witness submissions, which are held and unread like the rest of `legal`.
     expect(counts.legal).toEqual([15, 1736]);
     expect(counts.commissioners).toEqual([0, 995]);
-    // `oepa` now belongs here: held, and read in good part. 72 of 111 is 64.9% — well above
+    // `oepa` now belongs here: held, and read in good part. 81 of 111 is 73.0% — well above
     // `legal`'s 0.9% and `commissioners`' zero, and well below the instrument collections it used
     // to sit with. The gap is the ingestion backlog this pull created, and it should RISE as
     // extraction proceeds — 11 -> 12 at #2075 (the consent decree), 12 -> 28 at its follow-on
     // (the enforcement tranche, 1994-2026), 28 -> 58 at #2077 (the 30 inspections), 58 -> 72 at
-    // #2078 (the permit lifecycle). The remaining 32 are 22 correspondence/ordinance/application
-    // parts, 9 paragraph-33 progress reports (still no genre fits), and one byte-identical
-    // duplicate that must never be extracted.
+    // #2078 (the permit lifecycle), 72 -> 81 at #2079 (the nine progress reports). The remaining
+    // 23 are 22 correspondence / a City ordinance / a mercury variance / application-package parts,
+    // and one byte-identical duplicate that must never be extracted. Every genre gap is now closed.
     // ⚠️ The remaining 92 do NOT map 22-to-`order` as this comment once said. The portal's
     // "Judicial Order" doc type is a FILING DRAWER, not a genre: of its 12 rows exactly ONE is an
     // order (the decree), NINE are paragraph-33 semiannual progress reports filed under it, and TWO
     // are City of Lima letters. A progress report reports AGAINST obligations rather than imposing
     // them, so `--kind order` would have produced eleven wrong artifacts and ten near-duplicate
     // "decrees". Read a document before assuming its doc type is its genre.
-    expect(counts.oepa).toEqual([72, 111]);
+    expect(counts.oepa).toEqual([81, 111]);
   });
 
   it("counts distinct documents, not records — 3 records name no source file", () => {
@@ -227,7 +229,8 @@ describe("the join, against the committed Lima bundle", () => {
     // 90 -> 120 (#2077): the 30 inspections, publishing into the NEW `inspections` group rather
     // than `enforcement` — an inspection imposes nothing, and contract 2.3.0 gives it its own.
     // 120 -> 134 (#2078): the permit lifecycle, into the existing `permits-npdes`/`permits-epa`.
-    expect(records.length).toBe(134);
+    // 134 -> 143 (#2079): the nine progress reports, into the NEW `compliance-reports` group.
+    expect(records.length).toBe(143);
     // 5 -> 3, and this is the deliberate change the note below predicted. `_source_ref` now
     // resolves three further committed provenance shapes — `provenance.source_path` /
     // `provenance.sources`, the connector read's `meta.sources` (a dict of NAMED lists, so every
@@ -238,6 +241,6 @@ describe("the join, against the committed Lima bundle", () => {
     expect(records.filter((r) => !r.source_doc_rel).length).toBe(3);
     // The joinable side of the same 73 -> 74 -> 90: every one of these names its source document,
     // so the index gains an entry each rather than joining the three that name none.
-    expect(index.size).toBe(129);
+    expect(index.size).toBe(138);
   });
 });

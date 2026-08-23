@@ -1,0 +1,533 @@
+doc_id: edoc-1104344-ddb2bc0e
+source_path: data/documents/oepa/lima/edoc-1104344.pdf
+kind: progress-report
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+image_pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "REC~IVED \niuL 3  1 2019 \nPROGRESS REPORT OHl0 E.P.A. \nN.W.D.O.\
+  \ \nDUE: January 31 and July 31 of each year until termination of Consent Decree\
+  \ \nRECIPIENTS: REGION 5 OF USEPA \nChief  \nWater Enforcement and Compliance Assurancn\
+  \ t'~nch ~'~ \nWater Division y  \nUS Environmental Protection Agency, Region5D0C\
+  \ Type: n * \n77 West Jackson Blvd. Doc Subtype: \nChicago, IL 60604 program:  \n\
+  Nicole Cantello County: \nAssociate Regional Counsel Secondary ID: ~ \nUS Environmental\
+  \ Protection Agency, Region 5 \n77 West Jackson Blvd. \nChicago, IL 60604 \nCantello.nicole@epa.gov\
+  \  \nSTATE OF OHIO \nOhio Environmental Prote"
+progress_report:
+  confidence: high
+  warnings:
+  - Permit number partially illegible in OCR ('2PE00000*ND'); read from document context
+    as a placeholder mask.
+  - Several overflow locations list no EPA ID (marked '**************' in the original).
+  - Overflow event frequency counts are YTD totals for Jan 1–Jun 30, 2019; no individual
+    event dates, durations, or volumes are provided in the attached Overflow Totals
+    Report.
+  - Report page count noted as '1 of 64' suggesting many attachment pages not included
+    in the scanned excerpt provided.
+  agency: U.S. EPA Region 5 / Ohio EPA (Division of Surface Water)
+  instrument: 'Lima Consent Decree (CD), Doc #5 Filed 01/13/15'
+  case_no: 3:14-CV-02551-JZ
+  paragraph: '33'
+  respondent: City of Lima, Ohio
+  facility: City of Lima Wastewater Treatment Plant, Lima, Ohio
+  permit_no: 2PE00000*ND
+  report_date: '2019-07-31'
+  period_start: '2019-01-01'
+  period_end: '2019-06-30'
+  deadlines_status: Lima was required to sample and analyze effluent from its nitrification
+    towers from July 2018 to July 2019 and had until May 31, 2019 to determine if
+    the sampling period was sufficient to determine compliance. Lima determined the
+    sampling period was not sufficient, submitted a letter requesting an extension
+    on May 30, 2019, and received approval from USEPA and OEPA on June 20, 2019.
+  noncompliance_reasons: Lima determined that the nitrification tower sampling period
+    (July 2018–July 2019) was not sufficient to demonstrate compliance with performance
+    criteria. Lima requested and received an approved extension from USEPA and OEPA
+    on June 20, 2019.
+  projects:
+  - name: Lima Wastewater Treatment Headworks Project
+    status: Building and tank construction is complete.
+    next_period: Continued seeding of the nitrification towers and performance testing
+      of TSS and BOD.
+  - name: CMOM Plan
+    status: Lima submitted a plan revision to USEPA on 7/31/18. On 3/1/19 Lima received
+      approval from USEPA/OEPA with a stipulation to implement the plan within 30
+      days. Lima implemented the plan immediately.
+    next_period: null
+  - name: Asset Management — Phase 1 High Street/Jameson Avenue Sewer Rehabilitation
+      Project
+    status: Construction continues. Installation of the 10-inch sanitary sewer is
+      complete. On 2/6/19, Lima entered into an engineering contract with Black &
+      Veatch Inc. to design and bid the Phase 2 Woodward & Grand Avenue Sewer Rehabilitation
+      Project. A project kickoff meeting was conducted on 2/27/19. Flow metering,
+      sewer cleaning and geotechnical investigation is currently underway.
+    next_period: 'HDPE lining of 550 feet of 78-inch and 2,190 feet of 54-inch segmented
+      block sewers (Phase 1). For Phase 2: Completion of final drawings and specifications;
+      prepare and issue bid documents; award bid and move into the construction phase.'
+  - name: Supplemental Environmental Project (SEP)
+    status: Project is complete. Maintenance of the project area will continue. A
+      controlled burn of the river bank grasses to control invasive grass species
+      was conducted the week of 4/8/19.
+    next_period: Maintenance of the project area will continue.
+  - name: Simmon's Field CSO EQ Basin
+    status: Completion of the diversion structure and the 96-inch diversion pipe;
+      completion of the 54-inch force main across the Ottawa River; approximately
+      75% of base complete; approximately 75% of wall structures complete; approximately
+      40% of roof structure complete; approximately 66% of pump station wet well structure
+      complete.
+    next_period: Completion of base slab; continued construction of walls and interior
+      support structures; continued construction of pump station wet well.
+  agency_contacts:
+  - January 31, 2019 — Lima submitted to OEPA a strategic plan for the control of
+    Dissolved Hexavalent Chromium, as required by NPDES 2PE00000*ND, Part I, C — Schedule
+    of Compliance, B, 2.
+  - February 1, 2019 — Lima submitted a Local Limit evaluation and technical justification
+    document, as required by NPDES 2PE00000*ND, Part I, C — Schedule of Compliance,
+    C, 1.
+  - March 1, 2019 — Lima received a letter from USEPA approving the CMOM Program Plan,
+    as last submitted by the City on 7/31/18. Implementation was initiated immediately.
+  - March 1, 2019 — Lima received a letter from USEPA approving the CSO Operations
+    Plan, as last submitted by the City on 7/31/18. Implementation was initiated immediately.
+  - May 30, 2019 — Lima submitted a request to USEPA/OEPA for a one-year extension
+    of the sampling period to determine compliance of the nitrification towers with
+    the performance criteria as defined in Appendix C of the Consent Decree.
+  - June 20, 2019 — Lima received a letter from USEPA approving the request for an
+    extension of the sampling period to determine compliance of the nitrification
+    towers with the performance criteria as defined in Appendix C of the Consent Decree.
+  permit_exceedances:
+  - March 19, 2019 — Lima reported an exceedance of the Daily Maximum pH limit at
+    Station 001. This exceedance was later determined to be a recording error related
+    to the calibration of the pH probe.
+  - May 25, 2019 — Lima reported an exceedance of the residual chlorine limit at Station
+    001. This occurrence was related to the SCADA programming work being done for
+    wet-weather treatment.
+  - June 28, 2019 — Lima reported an exceedance of the geometric mean for e-Coli for
+    the month of June at Station 001. A line supplying sodium hypochlorite to the
+    contact chambers was discovered to be plugged. A new line was installed.
+  discharge_events:
+  - kind: Water-in-Basement (WIB)
+    location: Various locations, City of Lima
+    date: April–June 2019
+    frequency: 18 recorded occurrences during the reporting period
+    duration: null
+    volume: null
+    estimated: false
+    note: 14 events directly attributed to rainfall that surcharged the system; 4
+      events due to blockages (roots, grease, etc.) in City mainlines. 1 WIB project
+      completed this period (total 145 since inception). 3 more projects in progress.
+  - kind: SSO
+    location: 'MH#14 on Lost Creek Golf Course (Annual Report #302, EPA ID 2PE00000047)'
+    date: January 1 – June 30, 2019
+    frequency: '18'
+    duration: null
+    volume: null
+    estimated: null
+    note: YTD overflow count for reporting period
+  - kind: CSO
+    location: 'S. Central Ave. & Ottawa River (Annual Report #007, EPA ID 2PE00000007)'
+    date: January 1 – June 30, 2019
+    frequency: '14'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'Timberlake Sewer & Ottawa River (Annual Report #008, EPA ID 2PE00000008)'
+    date: January 1 – June 30, 2019
+    frequency: '8'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'Oxford Ave. & Collett Street (Annual Report #009, EPA ID 2PE00000009)'
+    date: January 1 – June 30, 2019
+    frequency: '1'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'North Shore Dr. & Cole St. (Annual Report #037, EPA ID 2PE00000037)'
+    date: January 1 – June 30, 2019
+    frequency: '7'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'Lakewood Ave & Charles St. (Annual Report #035, EPA ID 2PE00000035)'
+    date: January 1 – June 30, 2019
+    frequency: '2'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'Judkins Ave at Kunneke Ave (Annual Report #034, EPA ID 2PE00000034)'
+    date: January 1 – June 30, 2019
+    frequency: '3'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'Nixon Ave. at Kunneke Ave. (Annual Report #033, EPA ID 2PE00000033)'
+    date: January 1 – June 30, 2019
+    frequency: '3'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Glenwood Ave. between Lakewood and Wales Ave. (Annual Report #303,
+      EPA ID 2PE00000029)'
+    date: January 1 – June 30, 2019
+    frequency: '8'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'S. Pears Ave. at Kunneke Ave. (Annual Report #304, EPA ID 2PE00000028)'
+    date: January 1 – June 30, 2019
+    frequency: '1'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Lakewood Ave. & Maplewood Drive (Annual Report #305, EPA ID 2PE00000027)'
+    date: January 1 – June 30, 2019
+    frequency: '1'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'S. Pears Ave. between Wendell Ave & Lakewood Ave. (Annual Report #306,
+      EPA ID 2PE00000026)'
+    date: January 1 – June 30, 2019
+    frequency: '5'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: '418 South Pears (MH 0-10) (Annual Report #307)'
+    date: January 1 – June 30, 2019
+    frequency: '2'
+    duration: null
+    volume: null
+    estimated: null
+    note: No EPA ID listed
+  - kind: SSO
+    location: 'S. Pears Ave. between Lowell Ave. & Wendell Ave. (Annual Report #308,
+      EPA ID 2PE00000025)'
+    date: January 1 – June 30, 2019
+    frequency: '14'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'S. Pears Ave. between W. Spring & W. Elm St (Annual Report #309, EPA
+      ID 2PE00000023)'
+    date: January 1 – June 30, 2019
+    frequency: '12'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Between W. Spring & W. Elm, East of Primrose Pl (Annual Report #310,
+      EPA ID 2PE00000024)'
+    date: January 1 – June 30, 2019
+    frequency: '13'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: '1861 Wendell (Annual Report #311)'
+    date: January 1 – June 30, 2019
+    frequency: '1'
+    duration: null
+    volume: null
+    estimated: null
+    note: No EPA ID listed
+  - kind: SSO
+    location: 'S. Cable Rd. at Lakewood Ave. (Annual Report #313, EPA ID 2PE00000031)'
+    date: January 1 – June 30, 2019
+    frequency: '17'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'S. Cable Rd. at Wendell Ave. (Annual Report #314, EPA ID 2PE00000032)'
+    date: January 1 – June 30, 2019
+    frequency: '16'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Dale Dr. & Idlewild Dr. (Annual Report #316, EPA ID 2PE00000022)'
+    date: January 1 – June 30, 2019
+    frequency: '6'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Dale Dr. between W. Wayne & Oakland Pkwy (Annual Report #317, EPA ID
+      2PE00000020)'
+    date: January 1 – June 30, 2019
+    frequency: '14'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Dale Dr. & West Wayne St. (Annual Report #318, EPA ID 2PE00000021)'
+    date: January 1 – June 30, 2019
+    frequency: '11'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'University Ave. & Dale Dr. (Annual Report #319, EPA ID 2PE00000018)'
+    date: January 1 – June 30, 2019
+    frequency: '10'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Columbia @ Allentown, MH#92 (Annual Report #320)'
+    date: January 1 – June 30, 2019
+    frequency: '15'
+    duration: null
+    volume: null
+    estimated: null
+    note: No EPA ID listed
+  - kind: SSO
+    location: '1379 N. Cable Road Lift Station (Check Valve) (Annual Report #321,
+      EPA ID 2PE00000051)'
+    date: January 1 – June 30, 2019
+    frequency: '3'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: '1700 Allentown Road Lift Station (Check Valve) (Annual Report #322,
+      EPA ID 2PE00000050)'
+    date: January 1 – June 30, 2019
+    frequency: '5'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Rosedale @ Ellison Ave. (Annual Report #323)'
+    date: January 1 – June 30, 2019
+    frequency: '6'
+    duration: null
+    volume: null
+    estimated: null
+    note: No EPA ID listed
+  - kind: SSO
+    location: 'Woodlawn @ Ellison Ave. (Annual Report #324)'
+    date: January 1 – June 30, 2019
+    frequency: '9'
+    duration: null
+    volume: null
+    estimated: null
+    note: No EPA ID listed
+  - kind: SSO
+    location: 'Woodlawn Ave. & Feeman Ave. (Annual Report #325, EPA ID 2PE00000017)'
+    date: January 1 – June 30, 2019
+    frequency: '12'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'Metcalf St. & Tremont Ave. (Annual Report #014, EPA ID 2PE00000014)'
+    date: January 1 – June 30, 2019
+    frequency: '0'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'Metcalf St. & Ashton Ave. (Annual Report #016, EPA ID 2PE00000016)'
+    date: January 1 – June 30, 2019
+    frequency: '3'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'Metcalf St. & Runyan Ave. (Annual Report #015, EPA ID 2PE00000015)'
+    date: January 1 – June 30, 2019
+    frequency: '3'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'West & O''Connor Ave (Annual Report #038, EPA ID 2PE00000038)'
+    date: January 1 – June 30, 2019
+    frequency: '4'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'McDonel St. & O''Connor Ave. (Annual Report #012, EPA ID 2PE00000012)'
+    date: January 1 – June 30, 2019
+    frequency: '2'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'Burch Ave. & O''Connor Ave. (Annual Report #011, EPA ID 2PE00000011)'
+    date: January 1 – June 30, 2019
+    frequency: '2'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: CSO
+    location: 'Metcalf St. & O''Connor Ave. (Annual Report #013, EPA ID 2PE00000013)'
+    date: January 1 – June 30, 2019
+    frequency: '3'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Northwold St. & O''Connor Ave. (Annual Report #326, EPA ID 2PE00000010)'
+    date: January 1 – June 30, 2019
+    frequency: '3'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: '1330 Melrose Ave. (Annual Report #327, EPA ID 2PE00000049)'
+    date: January 1 – June 30, 2019
+    frequency: '0'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Metcalf St. & Lane Ave. (Annual Report #329, EPA ID 2PE00000042)'
+    date: January 1 – June 30, 2019
+    frequency: '0'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Metcalf St. & Ford Ave. (Annual Report #330, EPA ID 2PE00000044)'
+    date: January 1 – June 30, 2019
+    frequency: '2'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Burch & Ford (Annual Report #331)'
+    date: January 1 – June 30, 2019
+    frequency: '3'
+    duration: null
+    volume: null
+    estimated: null
+    note: No EPA ID listed
+  - kind: SSO
+    location: '2032 Burch Ave. (Annual Report #332, EPA ID 2PE00000046)'
+    date: January 1 – June 30, 2019
+    frequency: '2'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Burch Ave. & Lewis Ave. (Annual Report #333, EPA ID 2PE00000045)'
+    date: January 1 – June 30, 2019
+    frequency: '2'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Metcalf St. & Lewis Blvd. (Annual Report #334, EPA ID 2PE00000043)'
+    date: January 1 – June 30, 2019
+    frequency: '3'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Celia Place & Northern Ave. (Annual Report #335, EPA ID 2PE00000041)'
+    date: January 1 – June 30, 2019
+    frequency: '1'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Karen St. & Lewis Blvd. (N) (Annual Report #336, EPA ID 2PE00000039)'
+    date: January 1 – June 30, 2019
+    frequency: '17'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'Karen St. & Lane Ave (Annual Report #337, EPA ID 2PE00000038)'
+    date: January 1 – June 30, 2019
+    frequency: '16'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  - kind: SSO
+    location: 'West St. Lift Station (Annual Report #338, EPA ID 2PE00000056)'
+    date: January 1 – June 30, 2019
+    frequency: '3'
+    duration: null
+    volume: null
+    estimated: null
+    note: null
+  summary: This is the semiannual compliance progress report filed by the City of
+    Lima, Ohio under Paragraph 33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ)
+    for the period January 1, 2019 through June 30, 2019, received by Ohio EPA on
+    July 31, 2019. Lima reports that it received approved extensions for nitrification
+    tower sampling compliance determination, continued construction on multiple infrastructure
+    projects including the Headworks Project and Simmon's Field CSO EQ Basin, and
+    reported 251 SSO and 55 CSO overflow events as well as three NPDES permit exceedances
+    at Station 001. The CMOM program report documents 5.65 miles of sewer cleaning
+    and 6.99 miles of CCTV inspection during the period.
+  note: 'Total overflow counts for reporting period: 251 SSO events, 55 CSO events
+    (26 total report locations). Overflow Totals Report updated 7/1/2019. CMOM program
+    report also included per Paragraph 19: 29,847 linear feet (5.65 miles, 5.7% of
+    SSS) cleaned; 36,904 linear feet (6.99 miles, 7% of SSS) CCTV inspected; 430 manholes
+    inspected. No material problems noted for the period (Clause c: None). No cross-connections
+    detected or eliminated (Clause e: None). Signed by Michael H. Caprella, Director
+    of Utilities, City of Lima, Ohio.'
