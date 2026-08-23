@@ -1,0 +1,47 @@
+doc_id: edoc-2479808-52745357
+source_path: data/documents/oepa/lima/edoc-2479808.pdf
+kind: epa
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: " \n \nMike DeWine, Governor \nJon Husted, Lt. Governor \nAnne\
+  \ M. Vogel, Director \n \n50 West Town Street • Suite 700 • P.O. Box 1049 • Columbus,\
+  \ OH 43216-1049 \nepa.ohio.gov • (614) 644-3020 • (614) 644-3184 (fax) \nJuly 28,\
+  \ 2023 \n Re:  Ohio EPA Permit No. 2PE00000*OD \n  Facility Name:  City of Lima\
+  \ WWTP \n \nCity of Lima WWTP \nKimberly Furry \n1200 Fort Amanda Road \nLima, OH\
+  \ 45804 \n \nDear Ladies and Gentlemen: \n \nWe are making the following changes\
+  \ to your permit in our compliance system: \n \nRevision \n \n1)    CSO station\
+  \ 2PE00000034 was inadvertently omitted from Part I,B, Item 2.  This \nstation has\
+  \ be"
+action:
+  confidence: high
+  warnings:
+  - Permit number contains a wildcard/asterisk character ('2PE00000*OD') — copied
+    exactly as printed; the revised permit number will be '2PE00000*PD'.
+  - OCR layer is unreliable for numeric strings; CSO station numbers verified against
+    image.
+  agency: Ohio EPA
+  program: NPDES
+  permit_no: 2PE00000*OD
+  action: correspondence
+  action_date: '2023-07-28'
+  plans_received_date: null
+  expiration_date: null
+  applicant: City of Lima WWTP
+  applicant_address: 1200 Fort Amanda Road, Lima, OH 45804
+  contact_name: Kimberly Furry
+  contact_email: null
+  contact_firm: null
+  project_name: City of Lima WWTP
+  site_address: null
+  affected_resource: CSO stations (2PE00000034, 2PE00000007, 2PE00000002)
+  parcel_ids: []
+  note: 'Letter notifies permit revision: (1) CSO station 2PE00000034 was inadvertently
+    omitted from Part I,B, Item 2 and has been added; (2) typographical error corrected
+    — Part I,B, Item 2 now correctly references CSO station 2PE00000007 instead of
+    2PE00000002. Upon modification becoming effective, permit number will change from
+    2PE00000*OD to 2PE00000*PD. Application number remains OH0026069. Sent via Certified
+    Mail. Signed by Tyler Liston, Environmental Manager, Information Resources and
+    Permits Processing, Division of Surface Water.'

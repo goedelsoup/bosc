@@ -1,0 +1,49 @@
+doc_id: edoc-3187290-7f598de7
+source_path: data/documents/oepa/lima/edoc-3187290.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "r ( \nEPA 40 years and moving forward \nJohn R. lCasich, Governor\
+  \ \nMary Taylor, Lt. Governor \nScott J. Nally, Director \nJanuary 29, 2013 \nMayor\
+  \ and Councif, City of Lima \nAttn: WWTP Superintendent \n50 Town Square \nLima,\
+  \ OH 45801 \nLadies and Gentiemen: \nRe: Ohio EPA Permit No.2PE00000*MD \nApplication\
+  \ No.OH0026069 \nFacility Name: City of Lima WVVTP \nRCE~V~~ \nJAN 3 1 2013 \nOHIO\
+  \ E.. \nN,W.D.C, \nWe propose to make to following minor modification to the above\
+  \ referenced permit. \nPage Correction \n14 Change last paragraph of notes section\
+  \ for Station 581 regarding Fecal Coliform \nMonitoring; \n25 Extend m"
+action:
+  confidence: high
+  warnings:
+  - OCR rendered permit number as '2PE00000*MD' — verified against image; the asterisk
+    may represent a dash or other character but image is consistent with OCR read.
+  - Application No. OH0026069 confirmed from image.
+  - OCR misread 'WWTP' as 'WVVTP' and 'Swindall' as 'Swindali' — corrected per image.
+  agency: Ohio EPA
+  program: Surface Water Permit (NPDES)
+  permit_no: 2PE00000*MD
+  action: correspondence
+  action_date: '2013-01-29'
+  plans_received_date: null
+  expiration_date: null
+  applicant: 'Mayor and Council, City of Lima, Attn: WWTP Superintendent'
+  applicant_address: 50 Town Square, Lima, OH 45801
+  contact_name: Ed Swindall, Supervisor, Permit Processing Unit, Division of Surface
+    Water
+  contact_email: null
+  contact_firm: null
+  project_name: City of Lima WWTP
+  site_address: null
+  affected_resource: Wastewater Treatment Plant (WWTP) — Fecal Coliform Monitoring
+    (Station 581) and Schedule of Compliance (wet weather improvements)
+  parcel_ids: []
+  note: 'Proposed minor modification to Permit No. 2PE00000*MD (Application No. OH0026069).
+    Two corrections: (1) Page 14 — change last paragraph of notes section for Station
+    581 regarding Fecal Coliform Monitoring; (2) Page 25 — extend Schedule of Compliance
+    Item 1.a.i. from 6 to 10 months, Item 1.a.ii. from 9 to 13 months, and Item 1.a.iii.
+    from 14 to 18 months. Modification becomes effective upon receipt of signed consent
+    letter. Sent via Certified Mail.'

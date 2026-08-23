@@ -1,0 +1,45 @@
+doc_id: edoc-3223944-09a511e0
+source_path: data/documents/oepa/lima/edoc-3223944.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Ohio EPA 09/26/2024 \nEntered Director’s Journal J_~ r .~ ~~\
+  \ \n~E ,P~A.Ohio~go~ \n~ _ ~ r~` r~~^-r_.. rrr~nr_..~ri ~ f\"~-----.~ ~ r^  ~r \
+  \ g ~ ,Mike DeWine, Gover~no_rr Jon,~W,usted~ Lt: Goyv,er,,norr  A, nneq,M  V~o\
+  \ ehDire~,ctor \nSeptember 26, 2024 \n \nRe: Lima WWTP \nMr. Shawn Dershem Permit\
+  \ - Intermediate \nPlant Supervisor Approval \nLima WWTP NPDES \n1200 Fort Amanda\
+  \ Rd Allen County \nLima OH 45804 2PE00000 \nRe: Operator of Record (ORC) Minimum\
+  \ Hour Reduction Request \nDear Mr. Dershem: \nOhio EPA has received and reviewed\
+  \ your request for reduction in the minimum staffing requirements \nfor the Lima "
+action:
+  confidence: high
+  warnings:
+  - Permit number '2PE00000' may be a placeholder or generic number — verify against
+    official records.
+  - OCR layer contains garbled text in header; key fields verified against image.
+  agency: Ohio EPA
+  program: NPDES
+  permit_no: 2PE00000
+  action: approved
+  action_date: '2024-09-26'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Lima WWTP
+  applicant_address: 1200 Fort Amanda Rd, Lima OH 45804
+  contact_name: Shawn Dershem
+  contact_email: Peggy.Christie@epa.ohio.gov
+  contact_firm: null
+  project_name: Lima WWTP
+  site_address: null
+  affected_resource: Wastewater Treatment Plant (WWTP)
+  parcel_ids: []
+  note: 'Permit - Intermediate Approval. Ohio EPA approves reduction in minimum staffing
+    (ORC Minimum Hour Reduction Request) at Lima WWTP. Reduction approved for 20 hours
+    based on staffing, per OAC Rule 3745-7-04(C)(3)(a)(i) Table A and B. Operator
+    of record (minimum Class IV, or III under approved 2E Exemption) must be physically
+    present 5 days per week for a minimum of 20 hours per week. Allen County. Contact:
+    Peggy Christie, NWDO, DSW, 419-373-3006.'

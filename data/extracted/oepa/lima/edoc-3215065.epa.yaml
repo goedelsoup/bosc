@@ -1,0 +1,49 @@
+doc_id: edoc-3215065-fb519663
+source_path: data/documents/oepa/lima/edoc-3215065.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Entered Director’s Journal \nOhio EPA 09/20/2024 \nSeptember\
+  \ 20, 2024 \nRe: Lima WWTP \nPermit-Intermediate \nAPPROVAL \nNPDES \nAllen \n2PE00000\
+  \ \nMr. Michael Caprella \nDirector of Utilities \nCity of Lima OH \n50 Town Square\
+  \ \nLima OH 45801 \nRe: Temporary Classification \nDear Mr. Caprella, \nI have received\
+  \ your email dated July 29, 2024 requesting an Ohio Administrative Code \n(OAC)\
+  \ Rule 3745-7-02(E) exemption for the Lima WWTP Permit Number: 2PE00000 \nYour email\
+  \ indicates that the Lima WWTP will designate Shawn Dershem, WW3-\n11101941 as the\
+  \ operator of record of the Lima WWTP. Mr. Dershem was granted \na"
+action:
+  confidence: high
+  warnings:
+  - Permit number '2PE00000' verified against image — OCR consistent.
+  - 'The ''action'' field is mapped as ''approved'' based on the Director granting
+    the OAC Rule 3745-7-02(E) exemption; the Re: block labels this ''Permit-Intermediate
+    APPROVAL''.'
+  - contact_email is for the cc'd agency contact (Peggy Christie, NWDO DSW), not the
+    applicant's email.
+  - No site address distinct from applicant address provided in the letter.
+  agency: Ohio EPA
+  program: NPDES
+  permit_no: 2PE00000
+  action: approved
+  action_date: '2024-09-20'
+  plans_received_date: null
+  expiration_date: '2026-07-31'
+  applicant: City of Lima OH
+  applicant_address: 50 Town Square, Lima OH 45801
+  contact_name: Mr. Michael Caprella
+  contact_email: Peggy.Christie@epa.ohio.gov
+  contact_firm: null
+  project_name: Lima WWTP
+  site_address: null
+  affected_resource: Wastewater treatment facility (Lima WWTP)
+  parcel_ids: []
+  note: 'Letter grants OAC Rule 3745-7-02(E) exemption (Temporary Classification)
+    for Lima WWTP, effective until July 31, 2026. Operator of record designated as
+    Shawn Dershem, WW3-11101941. Exemption allows up to 30 months over a 5-year period.
+    Contact referenced: Peggy Christie, NWDO, DSW (419-373-3006). Letter entered into
+    Director''s Journal 09/20/2024. Re: block lists "Permit-Intermediate APPROVAL"
+    — interpreted as intermediate approval/exemption action under NPDES.'

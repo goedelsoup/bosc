@@ -44,6 +44,17 @@
     "updated": "2026-07-09"
   },
   {
+    "id": "artifact/ashley-ward",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Ashley Ward",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/bistrozzi",
     "node_class": "artifact",
     "kind": "entity",
@@ -84,8 +95,41 @@
     "scope": "site",
     "links_out": 1,
     "links_in": 1,
-    "lines": 12,
+    "lines": 17,
     "updated": "2026-07-14"
+  },
+  {
+    "id": "artifact/city-of-lima-department-of-utilities",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Lima Department of Utilities",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/city-of-lima-oh",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Lima OH",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/city-of-lima-wwtp",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Lima WWTP",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 13,
+    "updated": null
   },
   {
     "id": "artifact/corporation-service",
@@ -99,6 +143,17 @@
     "updated": "2026-07-04"
   },
   {
+    "id": "artifact/david-schnipke",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "David L. Schnipke",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/dug-run",
     "node_class": "artifact",
     "kind": "entity",
@@ -108,6 +163,17 @@
     "links_in": 1,
     "lines": 14,
     "updated": "2026-08-01"
+  },
+  {
+    "id": "artifact/ed-swindall",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Ed Swindall, Supervisor, Permit Processing Unit, Division of Surface Water",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
   },
   {
     "id": "artifact/emh-t",
@@ -176,6 +242,17 @@
     "updated": "2026-07-04"
   },
   {
+    "id": "artifact/kimberly-furry",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Kimberly Furry",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/kristen-brenneman",
     "node_class": "artifact",
     "kind": "entity",
@@ -209,6 +286,17 @@
     "updated": "2026-07-04"
   },
   {
+    "id": "artifact/lima-wwtp",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Lima WWTP",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/magenta-capital-ohio-llc-magenta-capital",
     "node_class": "artifact",
     "kind": "entity",
@@ -218,6 +306,17 @@
     "links_in": 2,
     "lines": 12,
     "updated": "2026-07-04"
+  },
+  {
+    "id": "artifact/mayor-and-council",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Mayor and Council, City of Lima",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 3,
+    "lines": 14,
+    "updated": null
   },
   {
     "id": "artifact/melissa-queen-darby",
@@ -231,6 +330,17 @@
     "updated": "2026-07-04"
   },
   {
+    "id": "artifact/michael-caprella",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Michael Caprella",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/michael-montfort",
     "node_class": "artifact",
     "kind": "entity",
@@ -240,6 +350,28 @@
     "links_in": 4,
     "lines": 18,
     "updated": "2026-07-04"
+  },
+  {
+    "id": "artifact/mike-caprella",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Mike Caprella",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/mr-michael-caprella",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Mr. Michael Caprella",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
   },
   {
     "id": "artifact/neff-farms",
@@ -270,8 +402,8 @@
     "label": "City of Lima WWTP",
     "scope": "site",
     "links_out": 1,
-    "links_in": 2,
-    "lines": 12,
+    "links_in": 5,
+    "lines": 19,
     "updated": "2026-07-14"
   },
   {
@@ -315,8 +447,19 @@
     "scope": "site",
     "links_out": 1,
     "links_in": 2,
-    "lines": 15,
+    "lines": 20,
     "updated": "2026-08-01"
+  },
+  {
+    "id": "artifact/ottawa-river-general-high-quality-water-also-ref",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Ottawa River (General High Quality Water); also referenced: Auglaize River",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
   },
   {
     "id": "artifact/person-cynthia-leis",
@@ -440,13 +583,24 @@
     "updated": "2026-07-04"
   },
   {
+    "id": "artifact/shawn-dershem",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Shawn Dershem",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/site-lima",
     "node_class": "artifact",
     "kind": "site",
     "label": "Lima",
     "scope": "site",
     "links_out": 3,
-    "links_in": 76,
+    "links_in": 91,
     "lines": 13,
     "updated": null
   },
@@ -1694,6 +1848,17 @@
     "updated": null
   },
   {
+    "id": "question/lead-sso-design-storm",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The 2022 permit application tells Ohio EPA that four SSO basins are built to a 25-year storm; the consent decree sizes them to a 5-year storm",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 27,
+    "updated": null
+  },
+  {
     "id": "question/lead-thermal-no-limit",
     "node_class": "question",
     "kind": "lead",
@@ -1870,6 +2035,50 @@
     "updated": "2026-07-14"
   },
   {
+    "id": "relation/city-of-lima-department-of-utilities--represented-by--mike-caprella",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF LIMA DEPARTMENT OF UTILITIES represented_by MIKE CAPRELLA",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-lima-oh--represented-by--mr-michael-caprella",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF LIMA OH represented_by MR MICHAEL CAPRELLA",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-lima-wwtp--operates--npdes-2pe00000",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF LIMA WWTP operates npdes:2PE00000",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-lima-wwtp--represented-by--kimberly-furry",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF LIMA WWTP represented_by KIMBERLY FURRY",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
     "id": "relation/james-neighbors--conveyed-to--bistrozzi",
     "node_class": "relation",
     "kind": "relation",
@@ -1958,6 +2167,17 @@
     "updated": "2026-07-04"
   },
   {
+    "id": "relation/lima-wwtp--represented-by--shawn-dershem",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "LIMA WWTP represented_by SHAWN DERSHEM",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
     "id": "relation/magenta-capital-ohio-llc-magenta-capital--organized-by--michael-montfort",
     "node_class": "relation",
     "kind": "relation",
@@ -1980,6 +2200,39 @@
     "updated": "2026-07-04"
   },
   {
+    "id": "relation/mayor-and-council--represented-by--ashley-ward",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "MAYOR AND COUNCIL represented_by ASHLEY WARD",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
+    "id": "relation/mayor-and-council--represented-by--david-schnipke",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "MAYOR AND COUNCIL represented_by DAVID SCHNIPKE",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
+    "id": "relation/mayor-and-council--represented-by--ed-swindall",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "MAYOR AND COUNCIL represented_by ED SWINDALL",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
+  },
+  {
     "id": "relation/melissa-queen-darby--affiliated-with--emh-t",
     "node_class": "relation",
     "kind": "relation",
@@ -1989,6 +2242,17 @@
     "links_in": 0,
     "lines": 14,
     "updated": "2026-07-04"
+  },
+  {
+    "id": "relation/michael-caprella--operates--npdes-2pe00000",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "MICHAEL CAPRELLA operates npdes:2PE00000",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
   },
   {
     "id": "relation/michael-montfort--affiliated-with--wilson-sonsini-goodrich-rosati-wsgr",
@@ -2033,6 +2297,17 @@
     "links_in": 0,
     "lines": 15,
     "updated": "2026-07-14"
+  },
+  {
+    "id": "relation/npdes-2pe00000--discharges-to--ottawa-river-general-high-quality-water-also-ref",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:2PE00000 discharges_to OTTAWA RIVER GENERAL HIGH QUALITY WATER ALSO REFERENCED AUGLAIZE RIVER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 16,
+    "updated": null
   },
   {
     "id": "relation/npdes-2ph00006--discharges-to--dug-run",

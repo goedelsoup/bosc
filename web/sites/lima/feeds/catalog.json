@@ -3962,7 +3962,7 @@
   },
   {
     "id": "oepa-lima-enforcement",
-    "title": "Ohio EPA enforcement + inspection extractions (City of Lima WWTP — permit 2PE00000)",
+    "title": "Ohio EPA enforcement, inspection + permit extractions (City of Lima WWTP — permit 2PE00000)",
     "scope": "extracted",
     "collection": "oepa",
     "status": "reviewed",
@@ -4028,6 +4028,11 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/oepa/lima/edoc-1840393.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/oepa/lima/edoc-1851472.inspection.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -4083,7 +4088,22 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/oepa/lima/edoc-2363111.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/oepa/lima/edoc-2431324.inspection.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-2479808.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-2479810.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4094,6 +4114,21 @@
       },
       {
         "relpath": "extracted/oepa/lima/edoc-2710530.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-2710532.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-2710555.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-2956099.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4113,6 +4148,11 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/oepa/lima/edoc-3170365.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/oepa/lima/edoc-3170414.inspection.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -4128,7 +4168,32 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/oepa/lima/edoc-3187290.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3187291.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3215065.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3223944.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/oepa/lima/edoc-3296496.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3862689.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4159,6 +4224,11 @@
       },
       {
         "relpath": "extracted/oepa/lima/edoc-4192703.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-4215450.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4225,10 +4295,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "a6ca5667ce5900bf6900b337bdc6c09370565ffa5fc88911a7fd9c1909b769db",
-      "size_bytes": 200889,
+      "sha256": "2c82cc82526e5d4129bd8f701b22028408d532aa54f9fd1face52c16bdf6da29",
+      "size_bytes": 234147,
       "lfs_materialized": true,
-      "file_count": 47,
+      "file_count": 61,
       "stale": false,
       "asof": null
     },

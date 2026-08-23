@@ -1,0 +1,56 @@
+doc_id: edoc-3862689-33de117e
+source_path: data/documents/oepa/lima/edoc-3862689.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "f ,T  ~l  - ~~\" • \nJohn R. Kasich, Governor \nMary Taylor,\
+  \ Lt. Governor \nCraig W. Butler, Director \nMarch 24, 2014 \nMayor and Council\
+  \ \nCity of Lima \n50 Town Square \nLima, OH, 4580149481 \nLadies and Gentlemen:\
+  \ \nRe: NPDES Permit No.: 2PE00000*MD \nPretreatment Program addition - \nPretreatment\
+  \ Modifications — \nStreamlining Modifications \nThis letter is to inform you that\
+  \ the Ohio EPA, pursuant to the requirements of Chapter 6111 of \nthe Ohio Revised\
+  \ Code 3745-3-03, has determined that the application filed by the City of Lima\
+  \ \naddition of its Publicly Owned Treatment Works Pretreatment Program meet"
+action:
+  confidence: high
+  warnings:
+  - 'Permit number in Re: block reads ''2PE00000*MD'' — the asterisk may be a placeholder
+    or OCR artifact; handwritten annotation on image reads ''2PE00000'' confirming
+    base number.'
+  - Applicant ZIP code '458014948I' — trailing 'I' may be OCR misread of '1' (45801-49481
+    or similar); copied exactly as printed.
+  - OCR layer was unreliable in several places; values verified against image.
+  agency: Ohio EPA
+  program: NPDES Pretreatment Program
+  permit_no: 2PE00000*MD
+  action: correspondence
+  action_date: '2014-03-24'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Mayor and Council, City of Lima
+  applicant_address: 50 Town Square, Lima, OH, 458014948I
+  contact_name: Ashley Ward
+  contact_email: ashley.ward@epa.ohio.gov
+  contact_firm: null
+  project_name: City of Lima POTW Pretreatment Program Addition – Streamlining Modifications
+  site_address: 1200 Fort Amanda Rd, Lima, OH, 45804
+  affected_resource: Publicly Owned Treatment Works (POTW) Pretreatment Program /
+    Sewer Use Ordinance
+  parcel_ids: []
+  note: 'Letter notifies City of Lima that Ohio EPA has determined the application
+    for addition of its POTW Pretreatment Program meets requirements of OAC Rule 3745-3-03(C).
+    A public notice (Public Notice No. 14-03-053-PTM) has been issued with a public
+    comment period through May 15, 2014. Official action approving or denying the
+    submission is pending. The modification adds required streamlining rules (including
+    optional rules for Non-Significant Categorical Users) to the city''s Sewer Use
+    Ordinance. Signed by Craig W. Butler, Director. CC: David L. Schnipke (Environmental
+    Compliance Manager), Justin Williams (NWDO/DSW), Allen County Health Department,
+    Pretreatment File. Contact Ashley Ward at (614) 644-2001. Email correspondence
+    also included between Ashley Ward (ashley.ward@epa.ohio.gov) and David L. Schnipke
+    (david.schnipke@cityhall.lima.oh.us) regarding Lima Local Limits Resubmittal dated
+    March 20, 2014.'

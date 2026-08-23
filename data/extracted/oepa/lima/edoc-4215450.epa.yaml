@@ -1,0 +1,51 @@
+doc_id: edoc-4215450-1e914248
+source_path: data/documents/oepa/lima/edoc-4215450.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Ohio EPA 08/04/2026 \nrE PA- Q liiv: or►, Entered Director’s\
+  \ Journal \nMik_e'DeWine;;Gwernor Jim'Tressel,,L't',;Gaver~nar `JohnLogue,,arrector\
+  \ \nAugust 4, 2026 \nRe: City of Lima WWTP \nPermit-Intermediate \nAPPROVAL \nNPDES\
+  \ \nAllen \n2PE00000 \nMike Caprella \nDirector of Utilities \nCity of Lima Department\
+  \ of Utilities \n50 Town Square \nLima, Ohio 45801 \nRe: Temporary Classification.\
+  \ \nDear Mike Caprella, \nI have received your letter on July 23, 2026, requesting\
+  \ an Ohio Administrative Code \n(OAC) Rule 3745-7-04(C)(3)(c) exemption for the\
+  \ City of Lima WWTP. \nYour letter indicates that the City of Lima Depa"
+action:
+  confidence: medium
+  warnings:
+  - Permit number '2PE00000' may be a placeholder or partially obscured; verify against
+    source record.
+  - 'Re: block reads ''Permit-Intermediate APPROVAL'' which is an unusual program
+    descriptor; mapped to NPDES as stated in the header block.'
+  - Contact name recorded is the addressee (Mike Caprella, Director of Utilities);
+    letter's staff contact is Peggy Christie (Peggy.Christie@epa.ohio.gov, 419-373-3006)
+    at NWDO.
+  - No site address distinct from applicant mailing address provided.
+  agency: Ohio EPA
+  program: NPDES
+  permit_no: 2PE00000
+  action: approved
+  action_date: '2026-08-04'
+  plans_received_date: null
+  expiration_date: '2027-01-31'
+  applicant: City of Lima Department of Utilities
+  applicant_address: 50 Town Square, Lima, Ohio 45801
+  contact_name: Mike Caprella
+  contact_email: Peggy.Christie@epa.ohio.gov
+  contact_firm: null
+  project_name: City of Lima WWTP
+  site_address: null
+  affected_resource: Wastewater Treatment Plant (WWTP) — Class IV facility, operator
+    of record exemption under OAC Rule 3745-7-04(C)(3)(c)
+  parcel_ids: []
+  note: 'Letter grants a temporary OAC Rule 3745-7-04(C)(3)(c) exemption allowing
+    a Class III operator (Shawn Dershem, WR3-1101941-06) to serve as operator of record
+    for the Class IV City of Lima WWTP, effective until January 31, 2027. Prior operator
+    of record Kimberly Furry resigned. Contact for questions: Peggy Christie, NWDO,
+    DSW, 419-373-3006. Re: block header reads "Permit-Intermediate APPROVAL." The
+    permit number "2PE00000" may be a placeholder — OCR and image both show this value.'

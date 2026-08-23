@@ -1,0 +1,52 @@
+doc_id: edoc-3187291-072c7bd9
+source_path: data/documents/oepa/lima/edoc-3187291.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Pa~e 1 \n2PE00000*MD \nApplication No. OH0026069 \nIssue Date:\
+  \ December 12, 2012 \nEffective Date: January 1, 2013 \nExpiration Date: February\
+  \ 28, 2015 \nOhao Environmental Protection Agency \nAuthorization to Discharge Under\
+  \ the \n.NationaI PoU.ut.ant Discharge Elimination System \nIn compliance with the\
+  \ provisions of the Federal Water Pollution Control Act, as \namended (33 U.S.C.\
+  \ 1251 et. seq., hereinafter referred to as the \"Act\"), and the Ohio \nWater Pollutìon\
+  \ Control Act (Ohio Revised Code Section 6111), \nCity of Lima \nRECEIVED \nDEC\
+  \ 1 2012\n \n~.,.-.. c.:► ,: ,•.,~, \n.ti..~.,...r:.. \nis authorized b"
+permit:
+  confidence: high
+  warnings:
+  - Permit action not explicitly stated (renewal/new/modification); inferred as 'new'
+    from document context.
+  - No public notice number or comment period end date present in the provided pages.
+  - OCR layer had multiple errors; all key fields verified against page image.
+  - Stream network downstream of Ottawa River not stated in this document.
+  facility_name: City of Lima WWTP
+  permit_no: 2PE00000*MD
+  permit_action: new
+  applicant: City of Lima
+  application_no: OH0026069
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 1200 Fort Amanda Rd, Lima, Ohio, Allen County
+  discharge_address: null
+  receiving_water: Ottawa River
+  stream_network: null
+  outfalls:
+  - 2PE00000001
+  - 2PE00000602
+  - 2PE00000603
+  - 2PE00000604
+  note: 'Issue Date: 2012-12-12. Effective Date: 2013-01-01. Expiration Date: 2015-02-28.
+    No public notice number or comment period end date found in document. Permit action
+    recorded as ''new'' as no explicit renewal/modification language is present on
+    the cover page; this is a final permit issuance. Outfall 2PE00000001 is the final
+    effluent outfall; 2PE00000602 and 2PE00000603 are bypass internal monitoring stations;
+    2PE00000604 is an internal monitoring station with tertiary treatment limits.'
