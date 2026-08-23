@@ -59,13 +59,38 @@ class CorpusScope:
     Either tuple may carry ``"*/<slug>"`` site-attribution nesting terms (:data:`_NEST`) alongside
     plain prefixes; both sides read them the same way, so a peer's ``oepa/<slug>/`` subtree is
     granted to that peer and subtracted from Lima by the same term.
+
+    ``reattributed_in`` / ``reattributed_out`` are the EXACT-relpath override pair the committed
+    attribution overlay supplies (#2085, :mod:`watermark.sites._attribution`) — the one case where
+    the shelf is not the attribution, because the *source* was misfiled and the extracted tree
+    mirrors an immutable source. They are exact paths, never prefixes: a prefix would re-attribute
+    a subtree on the strength of a claim reviewed against one document.
     """
 
     include: tuple[str, ...] | None
     exclude: tuple[str, ...] = ()
+    #: Artifacts shelved elsewhere that this site is the subject of — granted whatever the
+    #: prefixes say, so a peer's narrow ``(slug, */slug)`` inclusion need not widen to reach one.
+    reattributed_in: tuple[str, ...] = ()
+    #: Artifacts shelved under this site that are about somewhere else, or about nowhere
+    #: registered — subtracted whatever the prefixes say, including a whole-tree inclusion.
+    reattributed_out: tuple[str, ...] = ()
 
     def contains(self, rel: str) -> bool:
-        """Whether an extracted artifact's ``rel`` (relative to ``data/extracted``) is in scope."""
+        """Whether an extracted artifact's ``rel`` (relative to ``data/extracted``) is in scope.
+
+        The two exact-relpath overrides are decided FIRST and in this order, because each is a
+        reviewed statement about one named document and the prefixes are only a derivation from a
+        slug: a grant beats a narrow inclusion, a subtraction beats a whole-tree one. They cannot
+        contradict — the overlay refuses a row whose ``attributed_to`` equals its
+        ``shelved_under`` — so the ordering settles nothing the data leaves open; it is stated so
+        that a future row cannot make it accidental.
+        """
+        norm = rel.replace("\\", "/")
+        if norm in self.reattributed_in:
+            return True
+        if norm in self.reattributed_out:
+            return False
         if self.exclude and _matches_segment(rel, self.exclude):
             return False
         if self.include is None:

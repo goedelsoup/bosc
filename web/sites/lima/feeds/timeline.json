@@ -466,28 +466,6 @@
     }
   },
   {
-    "date": "2016-07-14",
-    "category": "enforcement_order",
-    "title": "Ohio EPA – Emergency Response Section Initial Pollution Incident Report (IPIR) — RAILTECH (1607-35-1349110)",
-    "ref": "order-2PE00000-2016-07-14-initial pollution incident report (ipir)",
-    "parties": [
-      "RAILTECH",
-      "Ohio EPA – Emergency Response Section"
-    ],
-    "detail": "1 obligation(s); status active; ⚠️ NOT LIMA EVIDENCE — the SECOND misfiled document in this tree, after edoc-3063821. This is an Ohio EPA Emergency Response Section Initia…",
-    "source": "oepa/lima/edoc-3296496.order.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/lima/edoc-3296496.order.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
     "date": "2016-07-25",
     "category": "enforcement_order",
     "title": "Ohio EPA – Division of Environmental Response, Investigation and Enforcement (ER Program) NOV — Lima WWTP (signed by Eric Markley) (1607-02-1456)",
@@ -1115,28 +1093,6 @@
     "also_sources": [],
     "citation": {
       "source": "oepa/lima/edoc-1294257.progress-report.yaml",
-      "source_kind": "document",
-      "page": null,
-      "pages": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
-    "date": "2020-03-04",
-    "category": "enforcement_order",
-    "title": "Ohio EPA correspondence — City of Mansfield (Mr. Robert Coker Jr., WWTP Manager)",
-    "ref": "order-2PE00000-2020-03-04-correspondence",
-    "parties": [
-      "City of Mansfield (Mr. Robert Coker Jr., WWTP Manager)",
-      "Ohio EPA"
-    ],
-    "detail": "1 obligation(s); ⚠️ MISFILED AT THE AGENCY, AND SHELVED WITH ITS SOURCE ANYWAY. This document's subject is the MANSFIELD WWTP in RICHLAND County — not Lima,…",
-    "source": "oepa/lima/edoc-3063821.order.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "oepa/lima/edoc-3063821.order.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,

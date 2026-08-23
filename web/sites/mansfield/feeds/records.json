@@ -1,5 +1,54 @@
 [
   {
+    "rel": "oepa/lima/edoc-3063821.order.yaml",
+    "group": "enforcement",
+    "title": "correspondence",
+    "confidence": "high",
+    "warnings": [
+      "⚠️ MISFILED AT THE AGENCY, AND SHELVED WITH ITS SOURCE ANYWAY. This document's subject is the MANSFIELD WWTP in RICHLAND County — not Lima, and not Allen County. Its own Ohio EPA reference block reads \"Re: Mansfield WWTP / Correspondence / NPDES / Richland County / 2PE00000\", pairing Mansfield's plant and county with LIMA's permit number. That is why a portal sweep of permit 2PE00000 returned it, and why it sits in data/documents/oepa/lima/.",
+      "The extraction is shelved under oepa/lima/ because the extracted tree MIRRORS its source and the source is immutable — the byte was served under Lima's permit and keeps that identity. Nothing here is Lima evidence: `respondent`, `facility` and every figure describe Mansfield. Read the shelf as custody, not as attribution.",
+      "RE-ATTRIBUTED AT THE READ LAYER, NOT MOVED (#2085). data/corpus-attribution.yaml — a reviewed, document-cited overlay — declares this artifact `attributed_to: mansfield`, and `watermark.sites.effective_corpus_scope` folds that into the scope as an exact-relpath grant. The document therefore leaves Lima's cross-document layer (timeline, entities, the records/documents feeds, retrieval, the agent read tools) and joins Mansfield's, which is a registered site with its own committed record under oepa/mansfield/. Its BYTES do not move and this file does not move: the shelf still records what Ohio EPA served, and the overlay records what the document is about.",
+      "`permit_no: 2PE00000` is AS PRINTED and is the error itself, not a transcription of Mansfield's real permit. Do not 'correct' it to a Mansfield permit number — the printed value is the evidence that the misfiling happened. Mansfield's actual NPDES id is not stated in this document.",
+      "Permit number '2PE00000' may be a placeholder or file-reference identifier rather than the full active NPDES permit number; verify against permit records."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "correspondence",
+      "case_no": null,
+      "respondent": "City of Mansfield (Mr. Robert Coker Jr., WWTP Manager)",
+      "facility": "Mansfield WWTP",
+      "permit_no": "2PE00000",
+      "issued_date": "2020-03-04",
+      "effective_date": null,
+      "supersedes": null,
+      "obligations": [
+        {
+          "requirement": "PMP report must be prepared for all pollutants other than hexavalent chromium and bis(2-ethylhexyl)phthalate (which Ohio EPA agrees may be excluded) and submitted annually as required by NPDES permit Part I, C-A.3.",
+          "deadline": null,
+          "status": null
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": null,
+      "status": null,
+      "summary": "Ohio EPA responds to the Mansfield WWTP's February 24, 2020 letter regarding the Pollutants Control Strategy required under NPDES permit Part I, C-A.2. Ohio EPA concurs with the WWTP's request to exclude hexavalent chromium and bis(2-ethylhexyl)phthalate from the Pollutant Minimization Program (PMP) report requirements, given five years of non-detect data for those parameters. The City is directed to continue submitting the annual PMP report for all other pollutants per Part I, C-A.3.",
+      "note": "Ohio EPA's response to the City of Mansfield's 2020-02-24 submittal of the pollutant Control Strategy required by its NPDES permit Part I, C-A.2 — covering copper, dissolved hexavalent chromium and bis(2-ethylhexyl)phthalate. Mansfield is a registered site in this network (the first documented data-center rejection site), so this is a document Mansfield's own record should know about; it is reachable only because Ohio EPA filed it under Lima's permit number. Acted on in #2085, at the read layer: the attribution overlay routes this artifact into Mansfield's corpus scope while its bytes stay here, because moving or re-shelving the source byte is exactly what the chain-of-custody rule forbids."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3063821.order.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
     "rel": "oepa/mansfield/2PE00001.npdes.yaml",
     "group": "permits-npdes",
     "title": "Mansfield Wastewater Treatment Plant",
