@@ -57,8 +57,18 @@ class AttributionOverride(BaseModel):
 
 
 def _load(path: Path) -> tuple[AttributionOverride, ...]:
-    if not path.exists():  # pragma: no cover - the overlay is committed
-        return ()
+    # A MISSING overlay is a failure, not an empty one — checked before the file is read at all.
+    # Returning `()` here would silently un-do every re-attribution: the Mansfield letter would
+    # slide back onto Lima's chronology and the Henry County IPIR with it, with no error anywhere.
+    # That is the exact silent-revert this module exists to prevent, so it fails loudly instead.
+    # An overlay with an empty (or absent) `overrides:` list is a different thing entirely — a
+    # deliberate statement that nothing is re-attributed — and still loads to `()`.
+    if not path.exists():
+        raise FileNotFoundError(
+            f"attribution overlay missing at {path} — every corpus re-attribution lives there, "
+            "so its absence would silently revert them. Restore the committed file (an empty "
+            "`overrides:` list is how you say 'nothing is re-attributed')."
+        )
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     rows = [AttributionOverride.model_validate(row) for row in data.get("overrides") or ()]
     seen: set[str] = set()

@@ -79,7 +79,7 @@ def test_misfiled_artifacts_leave_lima_and_land_where_declared() -> None:
     # reach nothing under oepa/lima/ on their own.
     assert not CorpusScope(include=mansfield.include).contains(MANSFIELD_LETTER)
 
-    # The tranche's other fifteen documents are untouched — the overlay is exact paths, never a
+    # The sweep's other fourteen documents are untouched — the overlay is exact paths, never a
     # prefix, so it cannot take a subtree with it.
     assert lima.contains("oepa/lima/edoc-4192703.order.yaml")
     assert lima.contains("oepa/lima/edoc-1840393.npdes.yaml")
@@ -112,6 +112,25 @@ def test_overrides_do_not_disturb_a_site_that_declares_none() -> None:
         scope = effective_corpus_scope(SITES[slug])
         assert scope.reattributed_in == ()
         assert scope.reattributed_out == ()
+
+
+def test_a_missing_overlay_fails_rather_than_reverting_every_attribution(tmp_path: Path) -> None:
+    """An absent overlay must raise, not read as "nothing is re-attributed".
+
+    Loading `()` from a missing file would slide the Mansfield letter back onto Lima's chronology
+    with no error anywhere — the silent revert this module exists to prevent. An overlay that is
+    PRESENT and declares no overrides is the opposite: a deliberate statement, and still `()`.
+    """
+    import yaml
+
+    from watermark.sites._attribution import _load
+
+    with pytest.raises(FileNotFoundError, match="attribution overlay missing"):
+        _load(tmp_path / "nope.yaml")
+
+    empty = tmp_path / "corpus-attribution.yaml"
+    empty.write_text(yaml.safe_dump({"overrides": []}), encoding="utf-8")
+    assert _load(empty) == ()
 
 
 @pytest.mark.parametrize(
