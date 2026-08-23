@@ -598,6 +598,34 @@
     "federal_obligations": null
   },
   {
+    "key": "CITY OF LIMA WWTP",
+    "display": "City of Lima WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Lima WWTP",
+      "City of Lima WWTP, 50 Town Square, Lima, OH, 45801"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1,
+      "epa_applicant": 1
+    },
+    "parcels": [],
+    "addresses": [
+      "1200 Fort Amanda Road, Lima, OH 45804"
+    ],
+    "sources": [
+      "oepa/lima/edoc-2479808.epa.yaml",
+      "oepa/lima/edoc-2710555.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "DANA DRIVESHAFT MANUFACTURING",
     "display": "DANA DRIVESHAFT MANUFACTURING LLC",
     "kind": "facility",
@@ -717,6 +745,31 @@
     "federal_obligations": null
   },
   {
+    "key": "LIMA WWTP",
+    "display": "Lima WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Lima WWTP"
+    ],
+    "signals": [],
+    "roles": {
+      "epa_applicant": 1
+    },
+    "parcels": [],
+    "addresses": [
+      "1200 Fort Amanda Rd, Lima OH 45804"
+    ],
+    "sources": [
+      "oepa/lima/edoc-3223944.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "MPLX TERMINALS LLC LIMA OH TERMINAL",
     "display": "MPLX TERMINALS LLC - LIMA OH TERMINAL",
     "kind": "facility",
@@ -772,16 +825,26 @@
     "relation_class": null,
     "relation_basis": null,
     "variants": [
-      "City of Lima WWTP"
+      "City of Lima (Long Term Control Plan) / City of Lima WWTP",
+      "City of Lima WWTP",
+      "City of Lima Wastewater Treatment Plant",
+      "City of Lima Wastewater Treatment Plant (WWTP)"
     ],
     "signals": [],
     "roles": {
-      "facility": 1
+      "facility": 8
     },
     "parcels": [],
     "addresses": [],
     "sources": [
-      "oepa/2PE00000.npdes.yaml"
+      "oepa/2PE00000.npdes.yaml",
+      "oepa/lima/edoc-1840393.npdes.yaml",
+      "oepa/lima/edoc-2363111.npdes.yaml",
+      "oepa/lima/edoc-2479810.npdes.yaml",
+      "oepa/lima/edoc-2710532.npdes.yaml",
+      "oepa/lima/edoc-2710555.npdes.yaml",
+      "oepa/lima/edoc-3170365.npdes.yaml",
+      "oepa/lima/edoc-3187291.npdes.yaml"
     ],
     "lei": null,
     "uei": null,
@@ -984,12 +1047,67 @@
     ],
     "signals": [],
     "roles": {
-      "applicant": 1
+      "applicant": 6
     },
     "parcels": [],
     "addresses": [],
     "sources": [
-      "oepa/2PE00000.npdes.yaml"
+      "oepa/2PE00000.npdes.yaml",
+      "oepa/lima/edoc-2363111.npdes.yaml",
+      "oepa/lima/edoc-2479810.npdes.yaml",
+      "oepa/lima/edoc-2710532.npdes.yaml",
+      "oepa/lima/edoc-3170365.npdes.yaml",
+      "oepa/lima/edoc-3187291.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF LIMA DEPARTMENT OF UTILITIES",
+    "display": "City of Lima Department of Utilities",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Lima Department of Utilities"
+    ],
+    "signals": [],
+    "roles": {
+      "epa_applicant": 1
+    },
+    "parcels": [],
+    "addresses": [
+      "50 Town Square, Lima, Ohio 45801"
+    ],
+    "sources": [
+      "oepa/lima/edoc-4215450.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF LIMA OH",
+    "display": "City of Lima OH",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Lima OH"
+    ],
+    "signals": [],
+    "roles": {
+      "epa_applicant": 1
+    },
+    "parcels": [],
+    "addresses": [
+      "50 Town Square, Lima OH 45801"
+    ],
+    "sources": [
+      "oepa/lima/edoc-3215065.epa.yaml"
     ],
     "lei": null,
     "uei": null,
@@ -1013,6 +1131,36 @@
     "addresses": [],
     "sources": [
       "lacrpc/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MAYOR AND COUNCIL",
+    "display": "Mayor and Council, City of Lima",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Mayor and Council, City of Lima",
+      "Mayor and Council, City of Lima, Attn: WWTP Superintendent"
+    ],
+    "signals": [],
+    "roles": {
+      "epa_applicant": 3
+    },
+    "parcels": [],
+    "addresses": [
+      "50 Town Square, Lima, OH 45801",
+      "50 Town Square, Lima, OH, 458014948I",
+      "50 Town Square, Lima, OH, 45804"
+    ],
+    "sources": [
+      "oepa/lima/edoc-2956099.epa.yaml",
+      "oepa/lima/edoc-3187290.epa.yaml",
+      "oepa/lima/edoc-3862689.epa.yaml"
     ],
     "lei": null,
     "uei": null,
@@ -1135,6 +1283,29 @@
     "federal_obligations": null
   },
   {
+    "key": "ASHLEY WARD",
+    "display": "Ashley Ward",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Ashley Ward"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-3862689.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "CINDY LEIS",
     "display": "Cindy Leis",
     "kind": "individual",
@@ -1156,6 +1327,52 @@
     "sources": [
       "american-township/meetings/meeting-summaries.yaml",
       "perry-township/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "DAVID SCHNIPKE",
+    "display": "David L. Schnipke",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "David L. Schnipke"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-2956099.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "ED SWINDALL",
+    "display": "Ed Swindall, Supervisor, Permit Processing Unit, Division of Surface Water",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Ed Swindall, Supervisor, Permit Processing Unit, Division of Surface Water"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-3187290.epa.yaml"
     ],
     "lei": null,
     "uei": null,
@@ -1351,6 +1568,29 @@
     "federal_obligations": null
   },
   {
+    "key": "KIMBERLY FURRY",
+    "display": "Kimberly Furry",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Kimberly Furry"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-2479808.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "KRISTEN BRENNEMAN",
     "display": "Kristen M. Brenneman",
     "kind": "individual",
@@ -1445,6 +1685,29 @@
     "federal_obligations": null
   },
   {
+    "key": "MICHAEL CAPRELLA",
+    "display": "Michael Caprella",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Michael Caprella"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-1840393.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "MICHAEL MONTFORT",
     "display": "Michael Montfort",
     "kind": "individual",
@@ -1470,6 +1733,52 @@
       "permits/4132514.epa.yaml",
       "permits/sos-magenta-capital-llc-2025-10-17.sos.yaml",
       "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MIKE CAPRELLA",
+    "display": "Mike Caprella",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Mike Caprella"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-4215450.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MR MICHAEL CAPRELLA",
+    "display": "Mr. Michael Caprella",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Mr. Michael Caprella"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-3215065.epa.yaml"
     ],
     "lei": null,
     "uei": null,
@@ -1593,6 +1902,29 @@
       "permits/3789048.epa.yaml",
       "permits/4074527.epa.yaml",
       "permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "SHAWN DERSHEM",
+    "display": "Shawn Dershem",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Shawn Dershem"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-3223944.epa.yaml"
     ],
     "lei": null,
     "uei": null,
@@ -1870,15 +2202,43 @@
     ],
     "signals": [],
     "roles": {
-      "receiving_water": 4
+      "receiving_water": 9
     },
     "parcels": [],
     "addresses": [],
     "sources": [
       "oepa/2PE00000.npdes.yaml",
+      "oepa/lima/edoc-2363111.npdes.yaml",
+      "oepa/lima/edoc-2479810.npdes.yaml",
+      "oepa/lima/edoc-2710532.npdes.yaml",
+      "oepa/lima/edoc-2710555.npdes.yaml",
+      "oepa/lima/edoc-3187291.npdes.yaml",
       "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
       "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
       "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "OTTAWA RIVER GENERAL HIGH QUALITY WATER ALSO REFERENCED AUGLAIZE RIVER",
+    "display": "Ottawa River (General High Quality Water); also referenced: Auglaize River",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Ottawa River (General High Quality Water); also referenced: Auglaize River"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-3170365.npdes.yaml"
     ],
     "lei": null,
     "uei": null,

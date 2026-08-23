@@ -594,3 +594,33 @@ leads:
     asserting a rigor the flow-only data can't support.
   source: src/watermark/hydrology/assimilative.py · src/watermark/hydrology/toxics.py
   note: WS-07 companion — extend the per-chemical criterion screen to the municipal WWTPs once DMR effluent chemistry is ingested (issue 1607)
+- id: SSO-DESIGN-STORM
+  kind: signal
+  status: unanswered
+  tag: open
+  title: The 2022 permit application tells Ohio EPA that four SSO basins are built to a 25-year
+    storm; the consent decree sizes them to a 5-year storm
+  detail: >-
+    Two agency-filed documents describe the same seven SSO basin projects and disagree on exactly one
+    column. Appendix A, Table A.1 of the 2015 federal consent decree (Case 3:14 CV 2551) puts Lima's
+    basins in TWO protection tiers - Allentown, West Street and Koop sized to convey a 25-year, 6-hour
+    design storm, and Lost Creek, COLE ST., Findlay Road and Fifteenth St. sized to a 5-YEAR, 6-hour
+    storm, with performance criteria "Control SSOs in this basin up to 5-Year, 6-hour design event
+    flow rates". The 2022 NPDES renewal application (EPA Form 3510-1, Application ID 256207483, filed
+    2022-06-09, Section II.G.1) lists ALL SEVEN as "upgrades sized to convey 25 year, 6 hour storm".
+    Every DATE in the application matches the decree exactly - Simmons Field 2024-08-30 through
+    Fifteenth St. 2038-04-01 - so the application is transcribing the schedule faithfully and
+    uniformly overstating the design storm on the four lower-tier basins. [verified] on both texts;
+    the decree's Table A.1 was read from the page image at 200 DPI because that table is a rotated
+    scan. What it MEANS is open. Whether the as-built design follows the decree or the application,
+    and whether Ohio EPA relied on the 25-year statement when it issued 2PE00000*OD in 2023, are not
+    answerable from these two documents. A copy-down of the first row's language is the obvious
+    explanation and is [inference], not established.
+  source: data/extracted/oepa/lima/edoc-1840393.npdes.yaml (application, Section II.G.1) ·
+    data/extracted/oepa/lima/edoc-412983.order.yaml (decree, Appendix A Table A.1)
+  note: >-
+    Relevant to #1760 because Cole St. is one of the four. It is NOT evidence about the Bosc campus -
+    a basin named for a street says nothing about which parcels drain to it. The application does
+    supply the geometry handle that question needs: a full SSO outfall inventory with coordinates per
+    point, and CSO outfall 037 "North Sore [sic] @ Cole" at 40.744167, -84.137778. Note the Cole St.
+    BASIN is an SSO basin while 037 is a CSO point; they are not the same thing.

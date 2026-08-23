@@ -170,6 +170,36 @@
     "relation_basis": null
   },
   {
+    "src": "MICHAEL CAPRELLA",
+    "rel": "operates",
+    "dst": "npdes:2PE00000",
+    "date": "",
+    "ref": "2PE00000*ND",
+    "source": "oepa/lima/edoc-1840393.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF LIMA WWTP",
+    "rel": "operates",
+    "dst": "npdes:2PE00000",
+    "date": "",
+    "ref": "2PE00000*ND",
+    "source": "oepa/lima/edoc-2710555.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PE00000",
+    "rel": "discharges_to",
+    "dst": "OTTAWA RIVER GENERAL HIGH QUALITY WATER ALSO REFERENCED AUGLAIZE RIVER",
+    "date": "",
+    "ref": "2PE00000*1076869",
+    "source": "oepa/lima/edoc-3170365.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "ALLEN COUNTY BOARD OF COMMISSIONERS",
     "rel": "operates",
     "dst": "npdes:2PH00006",
@@ -296,6 +326,76 @@
     "date": "2025-09-29",
     "ref": "202527204518",
     "source": "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF LIMA WWTP",
+    "rel": "represented_by",
+    "dst": "KIMBERLY FURRY",
+    "date": "",
+    "ref": "",
+    "source": "oepa/lima/edoc-2479808.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MAYOR AND COUNCIL",
+    "rel": "represented_by",
+    "dst": "DAVID SCHNIPKE",
+    "date": "",
+    "ref": "",
+    "source": "oepa/lima/edoc-2956099.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MAYOR AND COUNCIL",
+    "rel": "represented_by",
+    "dst": "ED SWINDALL",
+    "date": "",
+    "ref": "",
+    "source": "oepa/lima/edoc-3187290.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF LIMA OH",
+    "rel": "represented_by",
+    "dst": "MR MICHAEL CAPRELLA",
+    "date": "",
+    "ref": "",
+    "source": "oepa/lima/edoc-3215065.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "LIMA WWTP",
+    "rel": "represented_by",
+    "dst": "SHAWN DERSHEM",
+    "date": "",
+    "ref": "",
+    "source": "oepa/lima/edoc-3223944.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MAYOR AND COUNCIL",
+    "rel": "represented_by",
+    "dst": "ASHLEY WARD",
+    "date": "",
+    "ref": "",
+    "source": "oepa/lima/edoc-3862689.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF LIMA DEPARTMENT OF UTILITIES",
+    "rel": "represented_by",
+    "dst": "MIKE CAPRELLA",
+    "date": "",
+    "ref": "",
+    "source": "oepa/lima/edoc-4215450.epa.yaml",
     "relation_class": null,
     "relation_basis": null
   },

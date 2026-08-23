@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "2.3.0",
-  "generated_at": "2026-08-23T03:11:12+00:00",
+  "generated_at": "2026-08-23T03:39:09+00:00",
   "feed_count": 56,
-  "row_total": 4103,
+  "row_total": 4207,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 120
+      "count": 134
     },
     {
       "name": "timeline",
@@ -37,7 +37,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 164
+      "count": 178
     },
     {
       "name": "entities",
@@ -45,7 +45,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 72
+      "count": 86
     },
     {
       "name": "relationships",
@@ -53,7 +53,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 70
+      "count": 80
     },
     {
       "name": "people",
@@ -125,7 +125,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 29
+      "count": 30
     },
     {
       "name": "contacts",
@@ -413,7 +413,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 28
+      "count": 29
     },
     {
       "name": "impact-study",
@@ -445,7 +445,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 199
+      "count": 224
     },
     {
       "name": "corpus-nodes",
@@ -453,7 +453,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 199
+      "count": 224
     },
     {
       "name": "ask-embeddings",

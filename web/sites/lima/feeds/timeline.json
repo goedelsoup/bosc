@@ -1,5 +1,181 @@
 [
   {
+    "date": "2013-01-29",
+    "category": "epa_permit_action",
+    "title": "Surface Water Permit (NPDES) 2PE00000*MD — correspondence (City of Lima WWTP)",
+    "ref": "2PE00000*MD",
+    "parties": [
+      "Mayor and Council, City of Lima, Attn: WWTP Superintendent",
+      "Ed Swindall, Supervisor, Permit Processing Unit, Division of Surface Water"
+    ],
+    "detail": "affected Wastewater Treatment Plant (WWTP) — Fecal Coliform Monitoring (Station 581) and Schedule of Compliance (wet weather improvements)",
+    "source": "oepa/lima/edoc-3187290.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3187290.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2014-03-24",
+    "category": "epa_permit_action",
+    "title": "NPDES Pretreatment Program 2PE00000*MD — correspondence (City of Lima POTW Pretreatment Program Addition – Streamlining Modifications)",
+    "ref": "2PE00000*MD",
+    "parties": [
+      "Mayor and Council, City of Lima",
+      "Ashley Ward"
+    ],
+    "detail": "affected Publicly Owned Treatment Works (POTW) Pretreatment Program / Sewer Use Ordinance",
+    "source": "oepa/lima/edoc-3862689.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3862689.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2014-09-29",
+    "category": "epa_permit_action",
+    "title": "NPDES Pretreatment Program 2PE00000*MD — approved (POTW Pretreatment Program modification)",
+    "ref": "2PE00000*MD",
+    "parties": [
+      "Mayor and Council, City of Lima",
+      "David L. Schnipke"
+    ],
+    "detail": "affected Publicly Owned Treatment Works (POTW) Pretreatment Program",
+    "source": "oepa/lima/edoc-2956099.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2956099.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2015-12-31",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PE00000*1076869 (City of Lima (Long Term Control Plan) / City of Lima WWTP) — public notice",
+    "ref": "2PE00000*1076869",
+    "parties": [
+      "City of Lima",
+      "City of Lima (Long Term Control Plan) / City of Lima WWTP"
+    ],
+    "detail": "action new; receiving Ottawa River (General High Quality Water); also referenced: Auglaize River",
+    "source": "oepa/lima/edoc-3170365.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170365.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2016-01-30",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PE00000*1076869 (City of Lima (Long Term Control Plan) / City of Lima WWTP) — comment period ends",
+    "ref": "2PE00000*1076869",
+    "parties": [
+      "City of Lima",
+      "City of Lima (Long Term Control Plan) / City of Lima WWTP"
+    ],
+    "detail": "",
+    "source": "oepa/lima/edoc-3170365.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170365.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2018-03-22",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PE00000*ND (City of Lima WWTP) — public notice",
+    "ref": "2PE00000*ND",
+    "parties": [
+      "City of Lima WWTP, 50 Town Square, Lima, OH, 45801",
+      "City of Lima WWTP"
+    ],
+    "detail": "action renewal; receiving Ottawa River",
+    "source": "oepa/lima/edoc-2710555.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2710555.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2018-04-22",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PE00000*ND (City of Lima WWTP) — comment period ends",
+    "ref": "2PE00000*ND",
+    "parties": [
+      "City of Lima WWTP, 50 Town Square, Lima, OH, 45801",
+      "City of Lima WWTP"
+    ],
+    "detail": "",
+    "source": "oepa/lima/edoc-2710555.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2710555.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-04-28",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PE00000*OD (City of Lima Wastewater Treatment Plant (WWTP)) — public notice",
+    "ref": "2PE00000*OD",
+    "parties": [
+      "City of Lima",
+      "City of Lima Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "action renewal; receiving Ottawa River",
+    "source": "oepa/lima/edoc-2363111.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2363111.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2023-05-12",
     "category": "npdes_public_notice",
     "title": "NPDES 2PK00002*LD (Shawnee II Wastewater Treatment Works (Shawnee II WWTP)) — public notice",
@@ -22,6 +198,28 @@
     }
   },
   {
+    "date": "2023-05-28",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PE00000*OD (City of Lima Wastewater Treatment Plant (WWTP)) — comment period ends",
+    "ref": "2PE00000*OD",
+    "parties": [
+      "City of Lima",
+      "City of Lima Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "",
+    "source": "oepa/lima/edoc-2363111.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2363111.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2023-06-11",
     "category": "npdes_comment_deadline",
     "title": "NPDES 2PK00002*LD (Shawnee II Wastewater Treatment Works (Shawnee II WWTP)) — comment period ends",
@@ -35,6 +233,50 @@
     "also_sources": [],
     "citation": {
       "source": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-07-28",
+    "category": "epa_permit_action",
+    "title": "NPDES 2PE00000*OD — correspondence (City of Lima WWTP)",
+    "ref": "2PE00000*OD",
+    "parties": [
+      "City of Lima WWTP",
+      "Kimberly Furry"
+    ],
+    "detail": "affected CSO stations (2PE00000034, 2PE00000007, 2PE00000002)",
+    "source": "oepa/lima/edoc-2479808.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2479808.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-07-28",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PE00000*PD (City of Lima Wastewater Treatment Plant) — public notice",
+    "ref": "2PE00000*PD",
+    "parties": [
+      "City of Lima",
+      "City of Lima Wastewater Treatment Plant"
+    ],
+    "detail": "action modification; receiving Ottawa River at River Mile 37.6",
+    "source": "oepa/lima/edoc-2479810.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2479810.npdes.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -626,6 +868,28 @@
     }
   },
   {
+    "date": "2024-09-20",
+    "category": "epa_permit_action",
+    "title": "NPDES 2PE00000 — approved (Lima WWTP)",
+    "ref": "2PE00000",
+    "parties": [
+      "City of Lima OH",
+      "Mr. Michael Caprella"
+    ],
+    "detail": "affected Wastewater treatment facility (Lima WWTP)",
+    "source": "oepa/lima/edoc-3215065.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3215065.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2024-09-24",
     "category": "subdivision_meeting",
     "title": "Commissioners — minutes (corridor: datacenter)",
@@ -638,6 +902,28 @@
     "also_sources": [],
     "citation": {
       "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-09-26",
+    "category": "epa_permit_action",
+    "title": "NPDES 2PE00000 — approved (Lima WWTP)",
+    "ref": "2PE00000",
+    "parties": [
+      "Lima WWTP",
+      "Shawn Dershem"
+    ],
+    "detail": "affected Wastewater Treatment Plant (WWTP)",
+    "source": "oepa/lima/edoc-3223944.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3223944.epa.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -3442,6 +3728,28 @@
     "also_sources": [],
     "citation": {
       "source": "oepa/2DP00130.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-08-04",
+    "category": "epa_permit_action",
+    "title": "NPDES 2PE00000 — approved (City of Lima WWTP)",
+    "ref": "2PE00000",
+    "parties": [
+      "City of Lima Department of Utilities",
+      "Mike Caprella"
+    ],
+    "detail": "affected Wastewater Treatment Plant (WWTP) — Class IV facility, operator of record exemption under OAC Rule 3745-7-04(C)(3)(c)",
+    "source": "oepa/lima/edoc-4215450.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/edoc-4215450.epa.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,

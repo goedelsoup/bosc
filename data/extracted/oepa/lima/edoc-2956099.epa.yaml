@@ -1,0 +1,52 @@
+doc_id: edoc-2956099-34df4883
+source_path: data/documents/oepa/lima/edoc-2956099.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "RECEVE~' \nE ~i PA \n)ohn R. Kasich, Governor \nMary Taylor,\
+  \ Lt. Governor \nCraig W. 8utler, Director \nOCT 0 1 2014 \nOHIO E.P.~.. \nN.W D\
+  \ \nSeptember 29, 2014 \nRe: NPDES Permit No.: 2PEOOD00\"`MD \nPretreatment Program\
+  \ modification - \nMayor and Council I \nCity of Lima \n50 Town Square \nLima, OH,\
+  \ 45804 \nLadies and Gentlemen: \nPursuant to the requirements of Section 6111 of\
+  \ the Ohio Revised Code and 40 CFR Part 403, \nthe application submitted by City\
+  \ of Lima for approval of modification addition to its Publicly \nOwned Treatment\
+  \ Works (POTW) Pretreatment Program is hereby approved. \nLocal Industrial Disch"
+action:
+  confidence: medium
+  warnings:
+  - Permit number contains unusual characters ('*MD') — OCR variants include '2PEOOD00*MD'
+    and '2PE00000°°MD'; best read from image is '2PE00000*MD'.
+  - 'Two letters present on page: primary approval letter dated September 29, 2014,
+    and a preliminary public notice letter dated July 24, 2014 (action: correspondence/public
+    notice).'
+  - Applicant address on July 24, 2014 letter shows Lima, OH, 45801 while September
+    29, 2014 letter shows 45804 — extraction uses the approval letter address (45804).
+  agency: Ohio EPA
+  program: NPDES Pretreatment Program
+  permit_no: 2PE00000*MD
+  action: approved
+  action_date: '2014-09-29'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Mayor and Council, City of Lima
+  applicant_address: 50 Town Square, Lima, OH, 45804
+  contact_name: David L. Schnipke
+  contact_email: null
+  contact_firm: null
+  project_name: POTW Pretreatment Program modification
+  site_address: null
+  affected_resource: Publicly Owned Treatment Works (POTW) Pretreatment Program
+  parcel_ids: []
+  note: 'Letter approves City of Lima''s modification addition to its POTW Pretreatment
+    Program per ORC Section 6111 and 40 CFR Part 403. Local Industrial Discharge Limits
+    approved: Chromium 24.0 lb/day, Copper 12.0 lb/day, Lead 5.04 lb/day, Nickel 8.55
+    lb/day, Zinc 19.2 lb/day. City of Lima''s Sewer Use Ordinance (SUO) has been modified
+    accordingly. A second letter dated July 24, 2014 indicates the application met
+    requirements of OAC Rule 3745-3-03(C) and a public notice was issued. Permit number
+    suffix ''*MD'' may indicate ''modification''; OCR reads ''2PEOOD00'' and ''2PE00000°°MD''
+    — image confirms ''2PE00000*MD''. Signed by Craig W. Butler, Director.'

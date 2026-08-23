@@ -1,0 +1,53 @@
+doc_id: edoc-3170365-6a32eaf6
+source_path: data/documents/oepa/lima/edoc-3170365.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "r \nALLEN COUNTY JAN  o 5 1016 ON ~ \nDc_4.. \nThe following\
+  \ matters are the subject of this public notice by the Ohio \nEnvironmental Protection\
+  \ Agency. The complete public notice, including any \nad.ditional instructions for\
+  \ submitting comments, requesting information, a \npublic hearing, or filing an\
+  \ appeal may be obtained at: \nhttp://www.epa.ohio.gov/actions.aspx or Hearing Clerk,\
+  \ Ohio EPA, 50 W. Town \nSt. P.O. Box 1049, Columbus, Ohio 43216. Ph: 614-644-2129\
+  \ email: \nHClerk@epa.ohio.gov \nApplication for Antidegradation Project \nCity\
+  \ of Lima (Long Term Control Plan) \n50 Town Sq, Lima, OH 45801 \nF"
+permit:
+  confidence: medium
+  warnings:
+  - Permit/application number partially obscured in image; OCR reads 'OL~4?f1076869'
+    but image suggests '2PE00000*1076869' or similar — verify exact number.
+  - Comment period end date not explicitly stated; estimated as 30 days from 2015-12-31
+    per document language.
+  - Receiving water listed as both Ottawa River and Auglaize River in the notice header,
+    but Project Specific Facts only cite Ottawa River as receiving water body.
+  - Permit action type is ambiguous — this is an antidegradation/CSO Long Term Control
+    Plan application, not a straightforward NPDES renewal.
+  facility_name: City of Lima (Long Term Control Plan) / City of Lima WWTP
+  permit_no: 2PE00000*1076869
+  permit_action: new
+  applicant: City of Lima
+  application_no: 2PE000001076869
+  public_notice_no: null
+  public_notice_date: '2015-12-31'
+  comment_period_end: '2016-01-30'
+  facility_address: 50 Town Square, Lima, OH 45801
+  discharge_address: 50 Town Square and through city's collection system, Lima, Allen
+    County, Ohio
+  receiving_water: 'Ottawa River (General High Quality Water); also referenced: Auglaize
+    River'
+  stream_network: Ottawa River to Auglaize River
+  outfalls: []
+  note: 'This is an Application for Antidegradation Project (not a standard NPDES
+    permit renewal/modification). The permit number appears as "2PE00000/1076869"
+    in the image — the OCR prefix is partially obscured. The ID field in the notice
+    reads "ID # [2PE00000]/1076869". Date of Action listed as 12/31/2015; received
+    by Ohio EPA N.W.D.O. on JAN 05 2016. Comment period end estimated as 30 days from
+    notice date (2016-01-30). Permit action categorized as ''new'' as this is a Long
+    Term Control Plan antidegradation review for CSO controls. District: Northwest
+    District Office.'

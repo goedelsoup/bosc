@@ -6414,6 +6414,328 @@
     "source_doc_published": false
   },
   {
+    "rel": "oepa/lima/edoc-2479808.epa.yaml",
+    "group": "permits-epa",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Permit number contains a wildcard/asterisk character ('2PE00000*OD') — copied exactly as printed; the revised permit number will be '2PE00000*PD'.",
+      "OCR layer is unreliable for numeric strings; CSO station numbers verified against image."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "NPDES",
+      "permit_no": "2PE00000*OD",
+      "action": "correspondence",
+      "action_date": "2023-07-28",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "City of Lima WWTP",
+      "applicant_address": "1200 Fort Amanda Road, Lima, OH 45804",
+      "contact_name": "Kimberly Furry",
+      "contact_email": null,
+      "contact_firm": null,
+      "project_name": "City of Lima WWTP",
+      "site_address": null,
+      "affected_resource": "CSO stations (2PE00000034, 2PE00000007, 2PE00000002)",
+      "parcel_ids": [],
+      "note": "Letter notifies permit revision: (1) CSO station 2PE00000034 was inadvertently omitted from Part I,B, Item 2 and has been added; (2) typographical error corrected — Part I,B, Item 2 now correctly references CSO station 2PE00000007 instead of 2PE00000002. Upon modification becoming effective, permit number will change from 2PE00000*OD to 2PE00000*PD. Application number remains OH0026069. Sent via Certified Mail. Signed by Tyler Liston, Environmental Manager, Information Resources and Permits Processing, Division of Surface Water."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2479808.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-2479808.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-2956099.epa.yaml",
+    "group": "permits-epa",
+    "title": "POTW Pretreatment Program modification",
+    "confidence": "medium",
+    "warnings": [
+      "Permit number contains unusual characters ('*MD') — OCR variants include '2PEOOD00*MD' and '2PE00000°°MD'; best read from image is '2PE00000*MD'.",
+      "Two letters present on page: primary approval letter dated September 29, 2014, and a preliminary public notice letter dated July 24, 2014 (action: correspondence/public notice).",
+      "Applicant address on July 24, 2014 letter shows Lima, OH, 45801 while September 29, 2014 letter shows 45804 — extraction uses the approval letter address (45804)."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "NPDES Pretreatment Program",
+      "permit_no": "2PE00000*MD",
+      "action": "approved",
+      "action_date": "2014-09-29",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Mayor and Council, City of Lima",
+      "applicant_address": "50 Town Square, Lima, OH, 45804",
+      "contact_name": "David L. Schnipke",
+      "contact_email": null,
+      "contact_firm": null,
+      "project_name": "POTW Pretreatment Program modification",
+      "site_address": null,
+      "affected_resource": "Publicly Owned Treatment Works (POTW) Pretreatment Program",
+      "parcel_ids": [],
+      "note": "Letter approves City of Lima's modification addition to its POTW Pretreatment Program per ORC Section 6111 and 40 CFR Part 403. Local Industrial Discharge Limits approved: Chromium 24.0 lb/day, Copper 12.0 lb/day, Lead 5.04 lb/day, Nickel 8.55 lb/day, Zinc 19.2 lb/day. City of Lima's Sewer Use Ordinance (SUO) has been modified accordingly. A second letter dated July 24, 2014 indicates the application met requirements of OAC Rule 3745-3-03(C) and a public notice was issued. Permit number suffix '*MD' may indicate 'modification'; OCR reads '2PEOOD00' and '2PE00000°°MD' — image confirms '2PE00000*MD'. Signed by Craig W. Butler, Director."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2956099.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-2956099.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3187290.epa.yaml",
+    "group": "permits-epa",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "OCR rendered permit number as '2PE00000*MD' — verified against image; the asterisk may represent a dash or other character but image is consistent with OCR read.",
+      "Application No. OH0026069 confirmed from image.",
+      "OCR misread 'WWTP' as 'WVVTP' and 'Swindall' as 'Swindali' — corrected per image."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Surface Water Permit (NPDES)",
+      "permit_no": "2PE00000*MD",
+      "action": "correspondence",
+      "action_date": "2013-01-29",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Mayor and Council, City of Lima, Attn: WWTP Superintendent",
+      "applicant_address": "50 Town Square, Lima, OH 45801",
+      "contact_name": "Ed Swindall, Supervisor, Permit Processing Unit, Division of Surface Water",
+      "contact_email": null,
+      "contact_firm": null,
+      "project_name": "City of Lima WWTP",
+      "site_address": null,
+      "affected_resource": "Wastewater Treatment Plant (WWTP) — Fecal Coliform Monitoring (Station 581) and Schedule of Compliance (wet weather improvements)",
+      "parcel_ids": [],
+      "note": "Proposed minor modification to Permit No. 2PE00000*MD (Application No. OH0026069). Two corrections: (1) Page 14 — change last paragraph of notes section for Station 581 regarding Fecal Coliform Monitoring; (2) Page 25 — extend Schedule of Compliance Item 1.a.i. from 6 to 10 months, Item 1.a.ii. from 9 to 13 months, and Item 1.a.iii. from 14 to 18 months. Modification becomes effective upon receipt of signed consent letter. Sent via Certified Mail."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3187290.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3187290.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3215065.epa.yaml",
+    "group": "permits-epa",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Permit number '2PE00000' verified against image — OCR consistent.",
+      "The 'action' field is mapped as 'approved' based on the Director granting the OAC Rule 3745-7-02(E) exemption; the Re: block labels this 'Permit-Intermediate APPROVAL'.",
+      "contact_email is for the cc'd agency contact (Peggy Christie, NWDO DSW), not the applicant's email.",
+      "No site address distinct from applicant address provided in the letter."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "NPDES",
+      "permit_no": "2PE00000",
+      "action": "approved",
+      "action_date": "2024-09-20",
+      "plans_received_date": null,
+      "expiration_date": "2026-07-31",
+      "applicant": "City of Lima OH",
+      "applicant_address": "50 Town Square, Lima OH 45801",
+      "contact_name": "Mr. Michael Caprella",
+      "contact_email": "Peggy.Christie@epa.ohio.gov",
+      "contact_firm": null,
+      "project_name": "Lima WWTP",
+      "site_address": null,
+      "affected_resource": "Wastewater treatment facility (Lima WWTP)",
+      "parcel_ids": [],
+      "note": "Letter grants OAC Rule 3745-7-02(E) exemption (Temporary Classification) for Lima WWTP, effective until July 31, 2026. Operator of record designated as Shawn Dershem, WW3-11101941. Exemption allows up to 30 months over a 5-year period. Contact referenced: Peggy Christie, NWDO, DSW (419-373-3006). Letter entered into Director's Journal 09/20/2024. Re: block lists \"Permit-Intermediate APPROVAL\" — interpreted as intermediate approval/exemption action under NPDES."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3215065.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3215065.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3223944.epa.yaml",
+    "group": "permits-epa",
+    "title": "Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Permit number '2PE00000' may be a placeholder or generic number — verify against official records.",
+      "OCR layer contains garbled text in header; key fields verified against image."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "NPDES",
+      "permit_no": "2PE00000",
+      "action": "approved",
+      "action_date": "2024-09-26",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Lima WWTP",
+      "applicant_address": "1200 Fort Amanda Rd, Lima OH 45804",
+      "contact_name": "Shawn Dershem",
+      "contact_email": "Peggy.Christie@epa.ohio.gov",
+      "contact_firm": null,
+      "project_name": "Lima WWTP",
+      "site_address": null,
+      "affected_resource": "Wastewater Treatment Plant (WWTP)",
+      "parcel_ids": [],
+      "note": "Permit - Intermediate Approval. Ohio EPA approves reduction in minimum staffing (ORC Minimum Hour Reduction Request) at Lima WWTP. Reduction approved for 20 hours based on staffing, per OAC Rule 3745-7-04(C)(3)(a)(i) Table A and B. Operator of record (minimum Class IV, or III under approved 2E Exemption) must be physically present 5 days per week for a minimum of 20 hours per week. Allen County. Contact: Peggy Christie, NWDO, DSW, 419-373-3006."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3223944.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3223944.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3862689.epa.yaml",
+    "group": "permits-epa",
+    "title": "City of Lima POTW Pretreatment Program Addition – Streamlining Modifications",
+    "confidence": "high",
+    "warnings": [
+      "Permit number in Re: block reads '2PE00000*MD' — the asterisk may be a placeholder or OCR artifact; handwritten annotation on image reads '2PE00000' confirming base number.",
+      "Applicant ZIP code '458014948I' — trailing 'I' may be OCR misread of '1' (45801-49481 or similar); copied exactly as printed.",
+      "OCR layer was unreliable in several places; values verified against image."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "NPDES Pretreatment Program",
+      "permit_no": "2PE00000*MD",
+      "action": "correspondence",
+      "action_date": "2014-03-24",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Mayor and Council, City of Lima",
+      "applicant_address": "50 Town Square, Lima, OH, 458014948I",
+      "contact_name": "Ashley Ward",
+      "contact_email": "ashley.ward@epa.ohio.gov",
+      "contact_firm": null,
+      "project_name": "City of Lima POTW Pretreatment Program Addition – Streamlining Modifications",
+      "site_address": "1200 Fort Amanda Rd, Lima, OH, 45804",
+      "affected_resource": "Publicly Owned Treatment Works (POTW) Pretreatment Program / Sewer Use Ordinance",
+      "parcel_ids": [],
+      "note": "Letter notifies City of Lima that Ohio EPA has determined the application for addition of its POTW Pretreatment Program meets requirements of OAC Rule 3745-3-03(C). A public notice (Public Notice No. 14-03-053-PTM) has been issued with a public comment period through May 15, 2014. Official action approving or denying the submission is pending. The modification adds required streamlining rules (including optional rules for Non-Significant Categorical Users) to the city's Sewer Use Ordinance. Signed by Craig W. Butler, Director. CC: David L. Schnipke (Environmental Compliance Manager), Justin Williams (NWDO/DSW), Allen County Health Department, Pretreatment File. Contact Ashley Ward at (614) 644-2001. Email correspondence also included between Ashley Ward (ashley.ward@epa.ohio.gov) and David L. Schnipke (david.schnipke@cityhall.lima.oh.us) regarding Lima Local Limits Resubmittal dated March 20, 2014."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3862689.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3862689.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-4215450.epa.yaml",
+    "group": "permits-epa",
+    "title": "City of Lima WWTP",
+    "confidence": "medium",
+    "warnings": [
+      "Permit number '2PE00000' may be a placeholder or partially obscured; verify against source record.",
+      "Re: block reads 'Permit-Intermediate APPROVAL' which is an unusual program descriptor; mapped to NPDES as stated in the header block.",
+      "Contact name recorded is the addressee (Mike Caprella, Director of Utilities); letter's staff contact is Peggy Christie (Peggy.Christie@epa.ohio.gov, 419-373-3006) at NWDO.",
+      "No site address distinct from applicant mailing address provided."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "NPDES",
+      "permit_no": "2PE00000",
+      "action": "approved",
+      "action_date": "2026-08-04",
+      "plans_received_date": null,
+      "expiration_date": "2027-01-31",
+      "applicant": "City of Lima Department of Utilities",
+      "applicant_address": "50 Town Square, Lima, Ohio 45801",
+      "contact_name": "Mike Caprella",
+      "contact_email": "Peggy.Christie@epa.ohio.gov",
+      "contact_firm": null,
+      "project_name": "City of Lima WWTP",
+      "site_address": null,
+      "affected_resource": "Wastewater Treatment Plant (WWTP) — Class IV facility, operator of record exemption under OAC Rule 3745-7-04(C)(3)(c)",
+      "parcel_ids": [],
+      "note": "Letter grants a temporary OAC Rule 3745-7-04(C)(3)(c) exemption allowing a Class III operator (Shawn Dershem, WR3-1101941-06) to serve as operator of record for the Class IV City of Lima WWTP, effective until January 31, 2027. Prior operator of record Kimberly Furry resigned. Contact for questions: Peggy Christie, NWDO, DSW, 419-373-3006. Re: block header reads \"Permit-Intermediate APPROVAL.\" The permit number \"2PE00000\" may be a placeholder — OCR and image both show this value."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-4215450.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-4215450.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "permits/3702676.epa.yaml",
     "group": "permits-epa",
     "title": "Project Bosc",
@@ -7798,6 +8120,365 @@
     "source_doc_rel": null,
     "source_doc_render_class": null,
     "source_doc_published": false
+  },
+  {
+    "rel": "oepa/lima/edoc-1840393.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Lima WWTP",
+    "confidence": "medium",
+    "warnings": [
+      "⚠️ THIS APPLICATION'S SSO SCHEDULE CONTRADICTS THE CONSENT DECREE IT TRANSCRIBES, on the design storm and only on the design storm. Section II.G.1 lists all SEVEN SSO basin improvements as \"upgrades sized to convey 25 year, 6 hour storm\". Appendix A, Table A.1 of the 2015 consent decree (edoc-412983.order.yaml, verified against the page image at 200 DPI) sizes only THREE that way — Allentown, West Street, Koop — and sizes Lost Creek, COLE ST., Findlay Road and Fifteenth St. to a 5-YEAR, 6-hour design storm, with performance criteria \"Control SSOs in this basin up to 5-Year, 6-hour design event flow rates\".",
+      "Every DATE in this table matches the decree exactly (Simmons Field 2024-08-30, Allentown 2029-12-31, West Street 2031-12-31, Koop 2032-12-31, Lost Creek 2035-04-03, Cole St. 2036-04-01, Findlay Rd 2037-03-31, Fifteenth 2038-04-01). The application is therefore transcribing the decree's schedule accurately and uniformly overstating the design storm on the four lower-tier basins — consistent with a copy-down of the first row's language, though this document does not say so. [inference], not [verified].",
+      "NOT RESOLVED HERE, and it should not be resolved from these two documents alone: which figure governs the AS-BUILT design, and whether Ohio EPA relied on the application's 25-year statement when issuing 2PE00000*OD in 2023. Both are open questions. What is established is that the permitting authority was told 25-year for basins the federal decree protects at 5-year.",
+      "Permit number printed as '2PE00000*ND' in the NPDES field (Section XI-A); the OCR layer rendered it as '2PE00000*ND' — verify exact suffix against source document.",
+      "Application ID 256207483 is a form tracking number, not the NPDES permit number; US EPA ID OH0026069 used as application_no.",
+      "No public notice date, public notice number, comment period end, receiving water, stream network, or outfall identifiers are present in this document.",
+      "Document is an EPA Form 3510-1 permit application/renewal submission, not a fact sheet or public notice — some fields are inherently absent."
+    ],
+    "fields": {
+      "facility_name": "City of Lima WWTP",
+      "permit_no": "2PE00000*ND",
+      "permit_action": "renewal",
+      "applicant": "Michael Caprella",
+      "application_no": "OH0026069",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "1200 Fort Amanda Road, Lima, OH 45804",
+      "discharge_address": null,
+      "receiving_water": null,
+      "stream_network": null,
+      "outfalls": [],
+      "note": "EPA Form 3510-1 (Rev. for Ohio EPA use 2/06), Application ID 256207483, filed 2022-06-09 — the renewal application behind permit 2PE00000*OD. Beyond the schedule discrepancy above it carries the plant's full SSO OUTFALL INVENTORY with coordinates and receiving ditch per point (321-338 and others, to Dug Run / Haver / Pike Run ditches and the Ottawa River), and CSO outfall 037 \"North Sore [sic] @ Cole\" at 40.744167, -84.137778 discharging to the Ottawa River. Those coordinates are the geometry handle the Cole St. basin question needs (#1760): the campus/basin relationship has to come from sewershed geometry, never from the street name. Note the Cole St. BASIN is an SSO basin while outfall 037 is a CSO point — they are not the same thing, and this note does not join them."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-1840393.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-1840393.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-2363111.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Lima Wastewater Treatment Plant (WWTP)",
+    "confidence": "high",
+    "warnings": [
+      "The permit number '2PE00000*OD' may be a placeholder or draft number — verify against the actual permit document.",
+      "discharge_address field used for applicant mailing address; facility_address is the discharge location."
+    ],
+    "fields": {
+      "facility_name": "City of Lima Wastewater Treatment Plant (WWTP)",
+      "permit_no": "2PE00000*OD",
+      "permit_action": "renewal",
+      "applicant": "City of Lima",
+      "application_no": "OH0026069",
+      "public_notice_no": "182901",
+      "public_notice_date": "2023-04-28",
+      "comment_period_end": "2023-05-28",
+      "facility_address": "Lima WWTP, 1200 Fort Amanda Road, Lima, OH 45804, Allen County",
+      "discharge_address": "50 Town Square, Lima, OH 45804",
+      "receiving_water": "Ottawa River",
+      "stream_network": "Auglaize River to Maumee River to Lake Erie",
+      "outfalls": [
+        "001",
+        "002",
+        "003",
+        "004",
+        "005",
+        "006",
+        "036",
+        "057",
+        "601",
+        "603",
+        "604",
+        "801",
+        "901"
+      ],
+      "note": "Discharge address listed is the applicant's address (City of Lima, 50 Town Square). The facility where discharge occurs is Lima WWTP at 1200 Fort Amanda Road. Outfalls include main outfall 001, CSOs 002–006, bypass 057, CSO 036, and internal/monitoring stations 601, 603, 604, 801, 901."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2363111.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-2363111.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-2479810.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Lima Wastewater Treatment Plant",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number found in document",
+      "No comment period end date explicitly stated",
+      "Stream network downstream of Ottawa River not stated in available pages"
+    ],
+    "fields": {
+      "facility_name": "City of Lima Wastewater Treatment Plant",
+      "permit_no": "2PE00000*PD",
+      "permit_action": "modification",
+      "applicant": "City of Lima",
+      "application_no": "OH0026069",
+      "public_notice_no": null,
+      "public_notice_date": "2023-07-28",
+      "comment_period_end": null,
+      "facility_address": "1200 Fort Amanda Road, Lima, Ohio, Allen County",
+      "discharge_address": null,
+      "receiving_water": "Ottawa River at River Mile 37.6",
+      "stream_network": null,
+      "outfalls": [
+        "2PE00000001",
+        "2PE00000603",
+        "2PE00000604"
+      ],
+      "note": "Proposed Action Date: 2023-07-28; Proposed Effective Date: 2023-08-01; Modification Expiration Date: 2028-06-30. No public notice number or comment period end date explicitly stated. No downstream stream network chain stated beyond Ottawa River."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2479810.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-2479810.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-2710532.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number, date, or comment period end date found in the document.",
+      "Permit action inferred as 'renewal' based on context (existing facility, expiration/reissuance dates); not explicitly stated.",
+      "OCR rendered permit number as '2PE0000O*ND' (with letter O) but image clearly shows '2PE00000*ND' (with zero); image value used.",
+      "Stream network downstream of Ottawa River not stated in the document."
+    ],
+    "fields": {
+      "facility_name": "City of Lima WWTP",
+      "permit_no": "2PE00000*ND",
+      "permit_action": "renewal",
+      "applicant": "City of Lima",
+      "application_no": "OH0026069",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "1200 Fort Amanda Road, Lima, Ohio, Allen County",
+      "discharge_address": null,
+      "receiving_water": "Ottawa River",
+      "stream_network": null,
+      "outfalls": [
+        "2PE00000001"
+      ],
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2710532.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-2710532.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-2710555.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Permit number '2PE00000*ND' appears unusual — OCR and image both show this value; verify against original document.",
+      "Fact sheet references an additional Station 604 (outfall) which may be a separate outfall identifier not listed in the Outfall Flow and Location List."
+    ],
+    "fields": {
+      "facility_name": "City of Lima WWTP",
+      "permit_no": "2PE00000*ND",
+      "permit_action": "renewal",
+      "applicant": "City of Lima WWTP, 50 Town Square, Lima, OH, 45801",
+      "application_no": "OH0026069",
+      "public_notice_no": "OEPA 18-03-066 DFT",
+      "public_notice_date": "2018-03-22",
+      "comment_period_end": "2018-04-22",
+      "facility_address": "Lima WWTP, 1200 Fort Amanda Road, Lima, OH, 45804, Allen County",
+      "discharge_address": "Lima WWTP, 1200 Fort Amanda Road, Lima, OH, 45804, Allen County",
+      "receiving_water": "Ottawa River",
+      "stream_network": "Ottawa River to Auglaize River to Maumee River to Lake Erie",
+      "outfalls": [
+        "001"
+      ],
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-2710555.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-2710555.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3170365.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Lima (Long Term Control Plan) / City of Lima WWTP",
+    "confidence": "medium",
+    "warnings": [
+      "Permit/application number partially obscured in image; OCR reads 'OL~4?f1076869' but image suggests '2PE00000*1076869' or similar — verify exact number.",
+      "Comment period end date not explicitly stated; estimated as 30 days from 2015-12-31 per document language.",
+      "Receiving water listed as both Ottawa River and Auglaize River in the notice header, but Project Specific Facts only cite Ottawa River as receiving water body.",
+      "Permit action type is ambiguous — this is an antidegradation/CSO Long Term Control Plan application, not a straightforward NPDES renewal."
+    ],
+    "fields": {
+      "facility_name": "City of Lima (Long Term Control Plan) / City of Lima WWTP",
+      "permit_no": "2PE00000*1076869",
+      "permit_action": "new",
+      "applicant": "City of Lima",
+      "application_no": "2PE000001076869",
+      "public_notice_no": null,
+      "public_notice_date": "2015-12-31",
+      "comment_period_end": "2016-01-30",
+      "facility_address": "50 Town Square, Lima, OH 45801",
+      "discharge_address": "50 Town Square and through city's collection system, Lima, Allen County, Ohio",
+      "receiving_water": "Ottawa River (General High Quality Water); also referenced: Auglaize River",
+      "stream_network": "Ottawa River to Auglaize River",
+      "outfalls": [],
+      "note": "This is an Application for Antidegradation Project (not a standard NPDES permit renewal/modification). The permit number appears as \"2PE00000/1076869\" in the image — the OCR prefix is partially obscured. The ID field in the notice reads \"ID # [2PE00000]/1076869\". Date of Action listed as 12/31/2015; received by Ohio EPA N.W.D.O. on JAN 05 2016. Comment period end estimated as 30 days from notice date (2016-01-30). Permit action categorized as 'new' as this is a Long Term Control Plan antidegradation review for CSO controls. District: Northwest District Office."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3170365.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3170365.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima/edoc-3187291.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Permit action not explicitly stated (renewal/new/modification); inferred as 'new' from document context.",
+      "No public notice number or comment period end date present in the provided pages.",
+      "OCR layer had multiple errors; all key fields verified against page image.",
+      "Stream network downstream of Ottawa River not stated in this document."
+    ],
+    "fields": {
+      "facility_name": "City of Lima WWTP",
+      "permit_no": "2PE00000*MD",
+      "permit_action": "new",
+      "applicant": "City of Lima",
+      "application_no": "OH0026069",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "1200 Fort Amanda Rd, Lima, Ohio, Allen County",
+      "discharge_address": null,
+      "receiving_water": "Ottawa River",
+      "stream_network": null,
+      "outfalls": [
+        "2PE00000001",
+        "2PE00000602",
+        "2PE00000603",
+        "2PE00000604"
+      ],
+      "note": "Issue Date: 2012-12-12. Effective Date: 2013-01-01. Expiration Date: 2015-02-28. No public notice number or comment period end date found in document. Permit action recorded as 'new' as no explicit renewal/modification language is present on the cover page; this is a final permit issuance. Outfall 2PE00000001 is the final effluent outfall; 2PE00000602 and 2PE00000603 are bypass internal monitoring stations; 2PE00000604 is an internal monitoring station with tertiary treatment limits."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-3187291.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-3187291.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
   },
   {
     "rel": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",

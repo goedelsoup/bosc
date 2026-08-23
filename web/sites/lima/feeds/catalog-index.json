@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "c6720885a23449cf1a52f460ba04f4dc82f5211a6c989e2df70f4b1d3ae3bd4a",
+  "catalog_version": "1fb1e98fcb85a2bd83e2e362a346e04e679375d959ab661ccfa885b622c7589f",
   "contract_version": "2.3.0",
   "atoms": [
     {
@@ -1592,7 +1592,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "oepa-lima-enforcement",
-      "title": "Ohio EPA enforcement + inspection extractions (City of Lima WWTP — permit 2PE00000)",
+      "title": "Ohio EPA enforcement, inspection + permit extractions (City of Lima WWTP — permit 2PE00000)",
       "feed": "catalog"
     },
     {
@@ -2164,6 +2164,14 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:lima:ASHLEY WARD",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "ASHLEY WARD",
+      "title": "Ashley Ward",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:lima:BISTROZZI",
       "kind": "entity",
       "site": "lima",
@@ -2212,6 +2220,30 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:lima:CITY OF LIMA DEPARTMENT OF UTILITIES",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "CITY OF LIMA DEPARTMENT OF UTILITIES",
+      "title": "City of Lima Department of Utilities",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:CITY OF LIMA OH",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "CITY OF LIMA OH",
+      "title": "City of Lima OH",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:CITY OF LIMA WWTP",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "CITY OF LIMA WWTP",
+      "title": "City of Lima WWTP",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:lima:CORPORATION SERVICE",
       "kind": "entity",
       "site": "lima",
@@ -2236,11 +2268,27 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:lima:DAVID SCHNIPKE",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "DAVID SCHNIPKE",
+      "title": "David L. Schnipke",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:lima:DUG RUN",
       "kind": "entity",
       "site": "lima",
       "local_id": "DUG RUN",
       "title": "Dug Run",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:ED SWINDALL",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "ED SWINDALL",
+      "title": "Ed Swindall, Supervisor, Permit Processing Unit, Division of Surface Water",
       "feed": "entities"
     },
     {
@@ -2364,6 +2412,14 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:lima:KIMBERLY FURRY",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "KIMBERLY FURRY",
+      "title": "Kimberly Furry",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:lima:KRISTEN BRENNEMAN",
       "kind": "entity",
       "site": "lima",
@@ -2412,6 +2468,14 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:lima:LIMA WWTP",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "LIMA WWTP",
+      "title": "Lima WWTP",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:lima:MAGENTA CAPITAL OHIO LLC MAGENTA CAPITAL",
       "kind": "entity",
       "site": "lima",
@@ -2428,11 +2492,27 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:lima:MAYOR AND COUNCIL",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "MAYOR AND COUNCIL",
+      "title": "Mayor and Council, City of Lima",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:lima:MELISSA QUEEN DARBY",
       "kind": "entity",
       "site": "lima",
       "local_id": "MELISSA QUEEN DARBY",
       "title": "Melissa Queen Darby",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:MICHAEL CAPRELLA",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "MICHAEL CAPRELLA",
+      "title": "Michael Caprella",
       "feed": "entities"
     },
     {
@@ -2444,11 +2524,27 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:lima:MIKE CAPRELLA",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "MIKE CAPRELLA",
+      "title": "Mike Caprella",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:lima:MPLX TERMINALS LLC LIMA OH TERMINAL",
       "kind": "entity",
       "site": "lima",
       "local_id": "MPLX TERMINALS LLC LIMA OH TERMINAL",
       "title": "MPLX TERMINALS LLC - LIMA OH TERMINAL",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:MR MICHAEL CAPRELLA",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "MR MICHAEL CAPRELLA",
+      "title": "Mr. Michael Caprella",
       "feed": "entities"
     },
     {
@@ -2465,6 +2561,14 @@
       "site": "lima",
       "local_id": "OTTAWA RIVER",
       "title": "Ottawa River",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:OTTAWA RIVER GENERAL HIGH QUALITY WATER ALSO REFERENCED AUGLAIZE RIVER",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "OTTAWA RIVER GENERAL HIGH QUALITY WATER ALSO REFERENCED AUGLAIZE RIVER",
+      "title": "Ottawa River (General High Quality Water); also referenced: Auglaize River",
       "feed": "entities"
     },
     {
@@ -2553,6 +2657,14 @@
       "site": "lima",
       "local_id": "SCOTT ZIANCE",
       "title": "Scott Ziance",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:SHAWN DERSHEM",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "SHAWN DERSHEM",
+      "title": "Shawn Dershem",
       "feed": "entities"
     },
     {
@@ -2945,6 +3057,14 @@
       "site": "lima",
       "local_id": "PTI-313MW",
       "title": "The per-engine output behind the 313 MW figure is trade-secret-redacted",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:SSO-DESIGN-STORM",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "SSO-DESIGN-STORM",
+      "title": "The 2022 permit application tells Ohio EPA that four SSO basins are built to a 25-year storm; the consent decree sizes them to a 5-year storm",
       "feed": "leads"
     },
     {
@@ -3628,6 +3748,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-1840393.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-1840393.npdes.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-1851472.inspection.yaml",
       "kind": "record",
       "site": "lima",
@@ -3716,11 +3844,35 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-2363111.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2363111.npdes.yaml",
+      "title": "City of Lima Wastewater Treatment Plant (WWTP)",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-2431324.inspection.yaml",
       "kind": "record",
       "site": "lima",
       "local_id": "oepa/lima/edoc-2431324.inspection.yaml",
       "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-2479808.epa.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2479808.epa.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-2479810.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2479810.npdes.yaml",
+      "title": "City of Lima Wastewater Treatment Plant",
       "feed": "records"
     },
     {
@@ -3737,6 +3889,30 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-2710530.order.yaml",
       "title": "correspondence (extension request letter)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-2710532.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2710532.npdes.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-2710555.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2710555.npdes.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-2956099.epa.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-2956099.epa.yaml",
+      "title": "POTW Pretreatment Program modification",
       "feed": "records"
     },
     {
@@ -3764,6 +3940,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-3170365.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3170365.npdes.yaml",
+      "title": "City of Lima (Long Term Control Plan) / City of Lima WWTP",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-3170414.inspection.yaml",
       "kind": "record",
       "site": "lima",
@@ -3788,11 +3972,51 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/lima/edoc-3187290.epa.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3187290.epa.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3187291.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3187291.npdes.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3215065.epa.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3215065.epa.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3223944.epa.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3223944.epa.yaml",
+      "title": "Lima WWTP",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/lima/edoc-3296496.order.yaml",
       "kind": "record",
       "site": "lima",
       "local_id": "oepa/lima/edoc-3296496.order.yaml",
       "title": "Initial Pollution Incident Report (IPIR)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-3862689.epa.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-3862689.epa.yaml",
+      "title": "City of Lima POTW Pretreatment Program Addition – Streamlining Modifications",
       "feed": "records"
     },
     {
@@ -3841,6 +4065,14 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-4192703.order.yaml",
       "title": "NOV",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-4215450.epa.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-4215450.epa.yaml",
+      "title": "City of Lima WWTP",
       "feed": "records"
     },
     {
@@ -4393,6 +4625,54 @@
       "site": "lima",
       "local_id": "2GC08468*AG",
       "title": "NPDES Construction Site Stormwater General Permit (OHC000006) coverage 2GC08468*AG — approved (LMA 1A (BOSC / Bistrozzi data-center campus))",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:2PE00000",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "2PE00000",
+      "title": "NPDES 2PE00000 — approved (Lima WWTP)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:2PE00000*1076869",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "2PE00000*1076869",
+      "title": "NPDES 2PE00000*1076869 (City of Lima (Long Term Control Plan) / City of Lima WWTP) — public notice",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:2PE00000*MD",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "2PE00000*MD",
+      "title": "Surface Water Permit (NPDES) 2PE00000*MD — correspondence (City of Lima WWTP)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:2PE00000*ND",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "2PE00000*ND",
+      "title": "NPDES 2PE00000*ND (City of Lima WWTP) — public notice",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:2PE00000*OD",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "2PE00000*OD",
+      "title": "NPDES 2PE00000*OD (City of Lima Wastewater Treatment Plant (WWTP)) — public notice",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:2PE00000*PD",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "2PE00000*PD",
+      "title": "NPDES 2PE00000*PD (City of Lima Wastewater Treatment Plant) — public notice",
       "feed": "timeline"
     },
     {

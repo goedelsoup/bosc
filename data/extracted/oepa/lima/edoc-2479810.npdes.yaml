@@ -1,0 +1,46 @@
+doc_id: edoc-2479810-2d5f785f
+source_path: data/documents/oepa/lima/edoc-2479810.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Page 1 \n2PE00000*PD \n \nOhio EPA Permit No.: 2PE00000*PD \n\
+  Application No: OH0026069 \n \nProposed Action Date: July 28, 2023   \nProposed\
+  \ Effective Date: August 1, 2023 \nModification Expiration Date: June 30, 2028 \n\
+  \ \n Ohio Environmental Protection Agency \n Authorization to Discharge Under the\
+  \ \n National Pollutant Discharge Elimination System \n \nIn compliance with the\
+  \ provisions of the Federal Water Pollution Control Act, as amended (33 U.S.C. \n\
+  1251 et. seq., hereinafter referred to as the \"Act\"), and the Ohio Water Pollution\
+  \ Control Act (Ohio \nRevised Code Section 6111), \n \nCity of Lima  \n \nis aut"
+permit:
+  confidence: high
+  warnings:
+  - No public notice number found in document
+  - No comment period end date explicitly stated
+  - Stream network downstream of Ottawa River not stated in available pages
+  facility_name: City of Lima Wastewater Treatment Plant
+  permit_no: 2PE00000*PD
+  permit_action: modification
+  applicant: City of Lima
+  application_no: OH0026069
+  public_notice_no: null
+  public_notice_date: '2023-07-28'
+  comment_period_end: null
+  facility_address: 1200 Fort Amanda Road, Lima, Ohio, Allen County
+  discharge_address: null
+  receiving_water: Ottawa River at River Mile 37.6
+  stream_network: null
+  outfalls:
+  - 2PE00000001
+  - 2PE00000603
+  - 2PE00000604
+  note: 'Proposed Action Date: 2023-07-28; Proposed Effective Date: 2023-08-01; Modification
+    Expiration Date: 2028-06-30. No public notice number or comment period end date
+    explicitly stated. No downstream stream network chain stated beyond Ottawa River.'

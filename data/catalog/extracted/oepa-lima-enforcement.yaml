@@ -1,5 +1,5 @@
 id: oepa-lima-enforcement
-title: Ohio EPA enforcement + inspection extractions (City of Lima WWTP — permit 2PE00000)
+title: Ohio EPA enforcement, inspection + permit extractions (City of Lima WWTP — permit 2PE00000)
 scope: extracted
 status: reviewed
 producer:
@@ -32,6 +32,9 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-1797306.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1840393.npdes.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-1851472.inspection.yaml
@@ -67,13 +70,31 @@ storage:
 - relpath: extracted/oepa/lima/edoc-1952887.inspection.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-2363111.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-2431324.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-2479808.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-2479810.npdes.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-2499760.inspection.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-2710530.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-2710532.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-2710555.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-2956099.epa.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3063821.order.yaml
@@ -85,6 +106,9 @@ storage:
 - relpath: extracted/oepa/lima/edoc-3170036.order.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-3170365.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-3170414.inspection.yaml
   media_type: application/x-yaml
   lfs: false
@@ -94,7 +118,22 @@ storage:
 - relpath: extracted/oepa/lima/edoc-3170417.order.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-3187290.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3187291.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3215065.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3223944.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-3296496.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3862689.epa.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3957823.order.yaml
@@ -113,6 +152,9 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-4192703.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-4215450.epa.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-454946.order.yaml
@@ -201,13 +243,27 @@ notes: "The enforcement half of the Lima WWTP record, kept separate from the per
   \ pairs disagreed.\n\nThe agency's own `Sig. Non-Compliance` box, where a report form is attached:\n\
   \n  2016-2019   False on every inspection that carries the box\n  2022-02-22  TRUE  — compliance evaluation\
   \ inspection\n  2026-07-07  TRUE  — compliance evaluation inspection, and the NOV nine days later\n\
-  \              (edoc-4192703) names the parameter: SIGNIFICANT NONCOMPLIANCE FOR AMMONIA\n\nStill ingested\
-  \ and NOT yet extracted — 46 of the 93:\n  36  permit actions (`Permit - Intermediate`) — heterogeneous:\
-  \ issued NPDES permits 2PE00000*MD /\n      *ND / *PD, draft public notices, a fact sheet, modification\
-  \ approvals, a mercury variance\n      application, a 2013 City ordinance, the 2022 renewal application\
-  \ package APP256207483, and\n      a run of City/agency correspondence. Genre is per-document, not per-drawer.\n\
-  \   1  `edoc-2363112.pdf` — NEVER to be extracted. Byte-identical (sha256 b140e19c5e26) to\n      `oepa/2PE00000.pdf`,\
-  \ which is already extracted as `oepa/2PE00000.npdes.yaml`. Recorded as a\n      cluster in `data/site/document-versions.yaml`.\n\
-  \   9  paragraph-33 semiannual progress reports — NO GENRE FITS. A progress report reports AGAINST\n\
-  \      obligations rather than imposing them; extracting one as an `order` would publish a\n      near-duplicate\
-  \ of the decree. Needs a model, like `inspection` did.\n"
+  \              (edoc-4192703) names the parameter: SIGNIFICANT NONCOMPLIANCE FOR AMMONIA\n\nThe permit\
+  \ lifecycle is now read (#2078). One permit, four versions, 2013 to 2023:\n\n  2PE00000*MD  issued 2012-12-12,\
+  \ effective 2013-01-01  (edoc-3187291, 106pp)\n  2PE00000*ND  issued 2018-07-31, effective 2018-08-01\
+  \  (edoc-2710532, 94pp; draft PN edoc-2710555)\n  2PE00000*OD  action  2023-06-02, effective 2023-07-01\
+  \  (fact sheet edoc-2363111; the permit\n               itself is `oepa/2PE00000.npdes.yaml`, already\
+  \ extracted from the DAM copy)\n  2PE00000*PD  proposed 2023-07-28                       (edoc-2479810)\n\
+  \nplus seven permit ACTIONS (modification approvals, \"no permit required\" determinations, the 2026-08-04\n\
+  modification) and the 2022 renewal application behind *OD.\n\n⚠️ THE 2022 APPLICATION CONTRADICTS THE\
+  \ CONSENT DECREE ON THE DESIGN STORM. `edoc-1840393` (EPA Form\n3510-1, Application ID 256207483, Section\
+  \ II.G.1) tells Ohio EPA that all SEVEN SSO basin projects are\n\"sized to convey 25 year, 6 hour storm\"\
+  . The decree's Appendix A Table A.1 sizes only three that way\nand sizes Lost Creek, COLE ST., Findlay\
+  \ Road and Fifteenth St. to a 5-YEAR storm. Every DATE matches\nthe decree exactly, so the schedule\
+  \ is transcribed faithfully and the storm is uniformly overstated on\nthe four lower-tier basins. Recorded,\
+  \ not resolved — lead `SSO-DESIGN-STORM`. That application also\ncarries the plant's full SSO outfall\
+  \ inventory with coordinates, which is the geometry the Cole St.\nquestion (#1760) actually needs.\n\
+  \nStill ingested and NOT yet extracted — 32 of the 93:\n  22  City / agency correspondence and submittals\
+  \ in the permit drawer, a 2013 City ordinance\n      (edoc-2955962, 66pp), a mercury variance application\
+  \ (edoc-3170366), and the five remaining\n      parts of the 2022 application package APP256207483 (three\
+  \ byte-identical flow diagrams, a\n      28-page image-only attachment, a diagram).\n   1  `edoc-2363112.pdf`\
+  \ — NEVER to be extracted. Byte-identical (sha256 b140e19c5e26) to\n      `oepa/2PE00000.pdf`, already\
+  \ extracted. Recorded as a cluster in document-versions.yaml.\n   9  paragraph-33 semiannual progress\
+  \ reports — NO GENRE FITS. A progress report reports AGAINST\n      obligations rather than imposing\
+  \ them; extracting one as an `order` would publish a\n      near-duplicate of the decree. Needs a model,\
+  \ as `inspection` did.\n"

@@ -1,0 +1,43 @@
+doc_id: edoc-2710555-a4f0d449
+source_path: data/documents/oepa/lima/edoc-2710555.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "021NW Application\nVIP' E0 \no: \nOhio EPA Permit 0000'Np \n\
+  National Pollutant Discharge Elimination System (NPDES) Parmi Pr gram \nPUBLIC NOTICE\
+  \ \nNPDES Permit to Discharge to State Waters \nOhio Environmental Protection Agency\
+  \ \nPerm its Section \n50 West Town St., Suite 700 \nP. Q. Box 1049 \nColumbus,\
+  \ Ohio 43216-1049 \n(614) 644-2001 \nOEPA 18-03-066 DFT \nMar-22-2018 \nCity of\
+  \ Lima WWTP, 50 Town Square, Lima, OH, 45801 \nCity of Lima WWTP, 1200 Fort Amanda\
+  \ Road, Lima, OH, 45804, \nAllen County \n001 18,500,000 GPD 40N 43' 24\" 84W 07'\
+  \ 48\" \nOttawa River \nMunicipal WWTP \nE. coli, Total Residual Chlorine, Maxi"
+permit:
+  confidence: high
+  warnings:
+  - Permit number '2PE00000*ND' appears unusual — OCR and image both show this value;
+    verify against original document.
+  - Fact sheet references an additional Station 604 (outfall) which may be a separate
+    outfall identifier not listed in the Outfall Flow and Location List.
+  facility_name: City of Lima WWTP
+  permit_no: 2PE00000*ND
+  permit_action: renewal
+  applicant: City of Lima WWTP, 50 Town Square, Lima, OH, 45801
+  application_no: OH0026069
+  public_notice_no: OEPA 18-03-066 DFT
+  public_notice_date: '2018-03-22'
+  comment_period_end: '2018-04-22'
+  facility_address: Lima WWTP, 1200 Fort Amanda Road, Lima, OH, 45804, Allen County
+  discharge_address: Lima WWTP, 1200 Fort Amanda Road, Lima, OH, 45804, Allen County
+  receiving_water: Ottawa River
+  stream_network: Ottawa River to Auglaize River to Maumee River to Lake Erie
+  outfalls:
+  - '001'
+  note: null

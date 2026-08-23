@@ -1,0 +1,67 @@
+doc_id: edoc-1840393-24ca8a97
+source_path: data/documents/oepa/lima/edoc-1840393.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "EPA Form 3510-1 (Rev. for Ohio EPA use 2/06); Application ID: 256207483\nPlease\
+  \ type. Do not complete by hand.\nFORM\n1GENERAL\n EPA\nU.S. ENVIRONMENTAL PROTECTION AGENCY\nGENERAL\
+  \ INFORMATION\nConsolidated Permits Program\n(Read the \"General Instructions\" before starting)\n I.\
+  \ US EPA I.D. NUMBER \n OH0026069\nLABEL ITEMS\nI. US EPA I.D. NUMBER\nIII. FACILITY NAME\nIII. FACILITY\
+  \ MAILING ADDRESS\nVI. FACILITY LOCATION\nSubmitted Through eBusiness Center\nApplicant Name: Michael\
+  \ Caprella\nTitle: Deputy Director\nElectronically submitted by caprella on 05/18/2022\nRevenue ID:\
+  \ 1479261    Amount Due: $0.00\nIf a preprin"
+permit:
+  confidence: medium
+  warnings:
+  - ⚠️ THIS APPLICATION'S SSO SCHEDULE CONTRADICTS THE CONSENT DECREE IT TRANSCRIBES, on the design storm
+    and only on the design storm. Section II.G.1 lists all SEVEN SSO basin improvements as "upgrades sized
+    to convey 25 year, 6 hour storm". Appendix A, Table A.1 of the 2015 consent decree (edoc-412983.order.yaml,
+    verified against the page image at 200 DPI) sizes only THREE that way — Allentown, West Street, Koop
+    — and sizes Lost Creek, COLE ST., Findlay Road and Fifteenth St. to a 5-YEAR, 6-hour design storm,
+    with performance criteria "Control SSOs in this basin up to 5-Year, 6-hour design event flow rates".
+  - Every DATE in this table matches the decree exactly (Simmons Field 2024-08-30, Allentown 2029-12-31,
+    West Street 2031-12-31, Koop 2032-12-31, Lost Creek 2035-04-03, Cole St. 2036-04-01, Findlay Rd 2037-03-31,
+    Fifteenth 2038-04-01). The application is therefore transcribing the decree's schedule accurately
+    and uniformly overstating the design storm on the four lower-tier basins — consistent with a copy-down
+    of the first row's language, though this document does not say so. [inference], not [verified].
+  - 'NOT RESOLVED HERE, and it should not be resolved from these two documents alone: which figure governs
+    the AS-BUILT design, and whether Ohio EPA relied on the application''s 25-year statement when issuing
+    2PE00000*OD in 2023. Both are open questions. What is established is that the permitting authority
+    was told 25-year for basins the federal decree protects at 5-year.'
+  - Permit number printed as '2PE00000*ND' in the NPDES field (Section XI-A); the OCR layer rendered it
+    as '2PE00000*ND' — verify exact suffix against source document.
+  - Application ID 256207483 is a form tracking number, not the NPDES permit number; US EPA ID OH0026069
+    used as application_no.
+  - No public notice date, public notice number, comment period end, receiving water, stream network,
+    or outfall identifiers are present in this document.
+  - Document is an EPA Form 3510-1 permit application/renewal submission, not a fact sheet or public notice
+    — some fields are inherently absent.
+  facility_name: City of Lima WWTP
+  permit_no: 2PE00000*ND
+  permit_action: renewal
+  applicant: Michael Caprella
+  application_no: OH0026069
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 1200 Fort Amanda Road, Lima, OH 45804
+  discharge_address: null
+  receiving_water: null
+  stream_network: null
+  outfalls: []
+  note: 'EPA Form 3510-1 (Rev. for Ohio EPA use 2/06), Application ID 256207483, filed 2022-06-09 — the
+    renewal application behind permit 2PE00000*OD. Beyond the schedule discrepancy above it carries the
+    plant''s full SSO OUTFALL INVENTORY with coordinates and receiving ditch per point (321-338 and others,
+    to Dug Run / Haver / Pike Run ditches and the Ottawa River), and CSO outfall 037 "North Sore [sic]
+    @ Cole" at 40.744167, -84.137778 discharging to the Ottawa River. Those coordinates are the geometry
+    handle the Cole St. basin question needs (#1760): the campus/basin relationship has to come from sewershed
+    geometry, never from the street name. Note the Cole St. BASIN is an SSO basin while outfall 037 is
+    a CSO point — they are not the same thing, and this note does not join them.'
