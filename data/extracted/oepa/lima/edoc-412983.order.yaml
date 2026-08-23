@@ -27,9 +27,11 @@ method: >-
   `image_pages_read` is every page RASTERIZED, and the reads behind it are not uniform: p0 is the
   only page a VISION MODEL saw (rendered at 150 DPI, the `order` spec's `image_pages=1`); pp. 30,
   33 and 64-102 were rendered at 300 DPI and read by TESSERACT, of which pp. 67-72, 79, 90, 95-97
-  and 99-102 needed rotation correction; p72 was additionally verified by eye against a 200 DPI
-  render. `dpi: 300` records the OCR render, which produced everything transcribed here that the
-  text layer did not.
+  and 99-102 needed rotation correction; pp. 71 AND 72 - the two Table A.1 pages carrying every
+  control-measure row - were additionally verified by eye against a 200 DPI render, because a
+  rotated table is where OCR misaligns rows and every date and outfall list in this artifact comes
+  from those two pages. `dpi: 300` records the OCR render, which produced everything transcribed
+  here that the text layer did not.
 order:
   confidence: high
   warnings:
@@ -130,7 +132,8 @@ order:
       sewer construction, SSOs 38, 39, 41, 42, 43, 44, 45, 46, 56, 60. Sized to convey 25-yr,
       6-hour design storm flows. Bid 2029-12-31.', deadline: '2031-12-31'}
   - {requirement: 'TABLE A.1 - Koop SSO basin improvements: pump station upgrades + relief sewer
-      construction, SSOs 23, 24, 25, 26, 27, 29, 31, 32, 28. Sized to convey 25-yr, 6-hour design
+      construction, SSOs 23, 24, 25, 26, 27, 29, 31, 32, 28 - printed in that order, with 28 LAST
+      and out of sequence; kept as-printed, do not sort. Sized to convey 25-yr, 6-hour design
       storm flows. Bid 2031-12-31.', deadline: '2032-12-31'}
   - {requirement: 'TABLE A.1 - Lost Creek SSO basin improvements: pump station upgrades + relief
       sewer construction, SSO 47. Sized to convey 5-yr, 6-hour design storm flows. Bid
