@@ -23,6 +23,12 @@ order:
   - Shelved under oepa/lima/ because the extracted tree mirrors its immutable source and the portal served
     this docid in the 2PE00000 sweep. Read the shelf as CUSTODY, not attribution — as with edoc-3063821,
     every figure here describes another facility entirely.
+  - 'ATTRIBUTED TO NO REGISTERED SITE (#2085). data/corpus-attribution.yaml declares this artifact `attributed_to:
+    null` — Henry County is not a watershed point in this network, so unlike the Mansfield letter there
+    is nowhere to route it. It leaves Lima''s cross-document layer and is claimed by none. That is an
+    ANSWER, not a gap, and not a deletion: the artifact stays committed, catalogued and citable, and tests/test_corpus_attribution.py
+    holds the overlay row to it so an unattributed document can never become a silent drop. What changed
+    is only the assertion — this was never Lima''s record.'
   - Why a 2PE00000 sweep returns it is NOT established by this document. The IPIR itself names no permit;
     the portal's own index is what associates the docid with 2PE00000. Recorded as an open question rather
     than guessed at.

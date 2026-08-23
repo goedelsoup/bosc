@@ -215,9 +215,17 @@ def _clip(text: str | None, limit: int = _TITLE_CLIP) -> str:
 # otherwise contradict outright: `oepa/lima/edoc-3063821` is a MANSFIELD WWTP letter and
 # `oepa/lima/edoc-3296496` a Henry County spill report, both shelved under Lima because Ohio
 # EPA's portal served them on permit 2PE00000 and the extracted tree mirrors its immutable
-# source ("read the shelf as CUSTODY, not attribution"). The catalog raises the attribution as a
-# follow-up rather than moving a source byte, so the honest thing a timeline can do is carry the
-# artifact's own flag onto the row it dates.
+# source ("read the shelf as CUSTODY, not attribution").
+#
+# THE CAVEAT IS NOT THE FIX, AND IT SURVIVES THE FIX (#2085). Those two rows are no longer on
+# Lima's chronology: the attribution overlay (`data/corpus-attribution.yaml`) routes the
+# Mansfield letter into Mansfield's corpus scope and the Henry County IPIR into no site's, so
+# neither is asserted as Lima's record any more. But the shelf still is not the attribution —
+# the letter's row now dates MANSFIELD's chronology from an artifact that lives under
+# `oepa/lima/`, and its own ⚠️ says exactly that. A misfiling can also be found and flagged
+# before anyone has decided where the document belongs, which is the state those two were in
+# for the whole of #2081. Carrying the artifact's own flag onto the row it dates is what a
+# timeline can honestly do in either state.
 _WARNING_FLAG = "\u26a0"
 
 

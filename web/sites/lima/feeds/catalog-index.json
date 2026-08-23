@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "b7202c362e1acc4e3b2801ee5a7d60d379153097ead8fa38bb90e397ecc6d4cb",
+  "catalog_version": "d9c537f3782c50d09ba38e0ffd200a3dc053acd2e60f12b16d4c5a8eff6272f0",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -4004,14 +4004,6 @@
       "feed": "records"
     },
     {
-      "handle": "record:lima:oepa/lima/edoc-3063821.order.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/lima/edoc-3063821.order.yaml",
-      "title": "correspondence",
-      "feed": "records"
-    },
-    {
       "handle": "record:lima:oepa/lima/edoc-3170033.inspection.yaml",
       "kind": "record",
       "site": "lima",
@@ -4185,14 +4177,6 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-3296408.order.yaml",
       "title": "correspondence",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/lima/edoc-3296496.order.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/lima/edoc-3296496.order.yaml",
-      "title": "Initial Pollution Incident Report (IPIR)",
       "feed": "records"
     },
     {
@@ -5892,27 +5876,11 @@
       "feed": "timeline"
     },
     {
-      "handle": "timeline:lima:order-2PE00000-2016-07-14-initial pollution incident report (ipir)",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "order-2PE00000-2016-07-14-initial pollution incident report (ipir)",
-      "title": "Ohio EPA – Emergency Response Section Initial Pollution Incident Report (IPIR) — RAILTECH (1607-35-1349110)",
-      "feed": "timeline"
-    },
-    {
       "handle": "timeline:lima:order-2PE00000-2016-08-01-correspondence (resolution of violation letter)",
       "kind": "timeline",
       "site": "lima",
       "local_id": "order-2PE00000-2016-08-01-correspondence (resolution of violation letter)",
       "title": "Ohio EPA correspondence (Resolution of Violation letter) — City of Lima (Mayor and Council)",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:order-2PE00000-2020-03-04-correspondence",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "order-2PE00000-2020-03-04-correspondence",
-      "title": "Ohio EPA correspondence — City of Mansfield (Mr. Robert Coker Jr., WWTP Manager)",
       "feed": "timeline"
     },
     {

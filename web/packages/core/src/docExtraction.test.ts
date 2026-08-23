@@ -172,10 +172,19 @@ describe("the join, against the committed Lima bundle", () => {
   // 138 -> 155 (#2080): the tranche completes — 15 correspondence items, a mercury variance
   // application, three engineering drawings/reports, and City Ordinance 155-13 (hand-authored;
   // `resolution` has no extractor). Every Lima WWTP document that CAN be extracted now is.
-  it("extracts 155 of 3,348 documents — 4.6% of the corpus", () => {
+  // ⚠️ 155 -> 153 (#2085), AND THE TWO ARE NOT UNREAD. Both are still committed, still extracted,
+  // still catalogued; they are simply not LIMA's. Ohio EPA's portal indexes by permit, and the
+  // 2PE00000 sweep returned two other facilities' records — a Mansfield WWTP letter carrying
+  // Lima's permit number in its own reference block (`edoc-3063821`) and a Henry County spill
+  // report naming no permit at all (`edoc-3296496`). `data/extracted` mirrors an immutable
+  // `data/documents`, so neither byte moved: `data/corpus-attribution.yaml` re-attributes them at
+  // the read layer, the letter into Mansfield's corpus scope and the IPIR into no registered
+  // site's. This denominator counts what LIMA's bundle publishes, so it falls by two — a
+  // correction, not a regression. The percentage is unchanged at 4.6%.
+  it("extracts 153 of 3,348 documents — 4.6% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
     expect(entries.length).toBe(3348);
-    expect(countExtracted(entries, index)).toBe(155);
+    expect(countExtracted(entries, index)).toBe(153);
   });
 
   it("is near-complete on the small instrument collections, and thin across the big holdings", () => {
@@ -212,13 +221,17 @@ describe("the join, against the committed Lima bundle", () => {
     // the other 3 are byte-identical duplicates declared in document-versions.yaml that must never
     // be extracted. The 13 that keep this off 111 are the pre-existing oepa/ documents outside this
     // pull, not a remainder of it.
+    // 98 -> 96 (#2085): the two misfiled documents leave Lima's scope for the sites they are
+    // actually about (Mansfield) or for none at all (Henry County). The denominator stays 111 —
+    // the DOCUMENTS are still held here, because the shelf still records what the agency served.
+    // That the two numbers now move independently is the whole point: custody is not attribution.
     // ⚠️ The remaining 92 do NOT map 22-to-`order` as this comment once said. The portal's
     // "Judicial Order" doc type is a FILING DRAWER, not a genre: of its 12 rows exactly ONE is an
     // order (the decree), NINE are paragraph-33 semiannual progress reports filed under it, and TWO
     // are City of Lima letters. A progress report reports AGAINST obligations rather than imposing
     // them, so `--kind order` would have produced eleven wrong artifacts and ten near-duplicate
     // "decrees". Read a document before assuming its doc type is its genre.
-    expect(counts.oepa).toEqual([98, 111]);
+    expect(counts.oepa).toEqual([96, 111]);
   });
 
   it("counts distinct documents, not records — 3 records name no source file", () => {
@@ -237,7 +250,9 @@ describe("the join, against the committed Lima bundle", () => {
     // 134 -> 143 (#2079): the nine progress reports, into the NEW `compliance-reports` group.
     // 143 -> 160 (#2080): the tail — correspondence into `enforcement`, the ordinance into
     // `local-legislation`, the drawings into their own groups. No contract change.
-    expect(records.length).toBe(160);
+    // 160 -> 158 (#2085): the two Ohio EPA misfilings re-attributed away from Lima. Mansfield's
+    // own bundle gains one of them, which is where the record was always supposed to be.
+    expect(records.length).toBe(158);
     // 5 -> 3, and this is the deliberate change the note below predicted. `_source_ref` now
     // resolves three further committed provenance shapes — `provenance.source_path` /
     // `provenance.sources`, the connector read's `meta.sources` (a dict of NAMED lists, so every
@@ -248,6 +263,6 @@ describe("the join, against the committed Lima bundle", () => {
     expect(records.filter((r) => !r.source_doc_rel).length).toBe(3);
     // The joinable side of the same 73 -> 74 -> 90: every one of these names its source document,
     // so the index gains an entry each rather than joining the three that name none.
-    expect(index.size).toBe(155);
+    expect(index.size).toBe(153);
   });
 });

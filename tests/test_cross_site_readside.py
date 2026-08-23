@@ -152,11 +152,21 @@ def test_extraction_reaches_the_site_its_source_is_filed_under() -> None:
     not that the whole sub-path mirrors. Non-site nesting under a collection is a curation choice
     the corpus makes freely (``permits/bistrozzi-permits/`` → ``permits/``, ``wpafb/cercla/`` →
     ``wpafb/``) and is none of this guard's business.
+
+    **The attribution overlay is the one licensed way out, and it does not weaken the guard**
+    (#2085). "The shelf is the attribution" is a claim about the AGENCY's filing, and an agency can
+    misfile: Ohio EPA's portal served a Mansfield WWTP letter and a Henry County spill report on
+    Lima's permit, and ``data/extracted`` mirrors an immutable ``data/documents``, so both stay
+    shelved under ``oepa/lima/``. A path named in ``data/corpus-attribution.yaml`` is therefore
+    exempt from the derivation — but only into the destination that reviewed file DECLARES, which
+    is checked here too. An override cannot make an artifact merely vanish: it either lands in the
+    site it names, or it is explicitly attributed to none.
     """
     import yaml
 
-    from watermark.sites import SITES, effective_corpus_scope
+    from watermark.sites import SITES, attribution_overrides, effective_corpus_scope
 
+    overrides = {r.relpath: r for r in attribution_overrides()}
     extracted = REPO_ROOT / "data" / "extracted"
     offenders: list[str] = []
     for path in sorted(extracted.rglob("*.yaml")):
@@ -178,10 +188,24 @@ def test_extraction_reaches_the_site_its_source_is_filed_under() -> None:
             continue  # not a site-attributed source — nothing to preserve
         slug = segments[1]
         rel = str(path.relative_to(extracted))
+        if (override := overrides.get(rel)) is not None:
+            # Re-attributed by review. Hold it to the declaration instead of to the shelf: the
+            # named destination must actually contain it, and `attributed_to: null` (no registered
+            # site owns the document) must reach exactly nobody.
+            landed = [s for s in SITES if effective_corpus_scope(SITES[s]).contains(rel)]
+            expected = [override.attributed_to] if override.attributed_to else []
+            if landed != expected:
+                offenders.append(
+                    f"{path.relative_to(REPO_ROOT)} is re-attributed to "
+                    f"{override.attributed_to or '<no registered site>'} by "
+                    f"data/corpus-attribution.yaml, but reads in scope for {landed or 'nobody'}"
+                )
+            continue
         if not effective_corpus_scope(SITES[slug]).contains(rel):
             offenders.append(
                 f"{path.relative_to(REPO_ROOT)} extracts {source_rel} — filed under "
-                f"{segments[0]}/{slug}/ — but is outside {slug}'s corpus scope"
+                f"{segments[0]}/{slug}/ — but is outside {slug}'s corpus scope (declare it in "
+                "data/corpus-attribution.yaml if the AGENCY misfiled it — #2085)"
             )
     assert not offenders, (
         "extractions orphaned from the site their source is filed under (#1405):\n"

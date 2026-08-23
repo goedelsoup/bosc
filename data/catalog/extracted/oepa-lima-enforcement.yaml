@@ -320,22 +320,39 @@ notes: "The enforcement half of the Lima WWTP record, kept separate from the per
   error — correcting it would destroy the evidence that the misfiling happened.\n\nThat two of sixteen\
   \ were other facilities' records is itself a finding about this source: a\npermit-scoped portal sweep\
   \ is not a permit-scoped result set, and every document one returns must be\nREAD before it is attributed.\
-  \ Mansfield is a registered site in this network; raised as a follow-up\nrather than acted on, because\
-  \ moving a source byte is what the chain-of-custody rule forbids.\n\nThe 30 inspections are now read,\
-  \ under the `inspection` genre added for them (#2077). They are 30\nCAPTURES OF 18 DISTINCT INSPECTIONS:\
-  \ the portal serves most of this plant's inspections twice, once\nas a PDF with a text layer and once\
-  \ as a scan of the same letter, at two unrelated docids. None of\nthe pairs is byte-identical, so all\
-  \ twelve are declared `v2` clusters in\n`data/site/document-versions.yaml` with the TEXT-LAYER capture\
-  \ canonical — a scan is read by the\nvision path alone with nothing to check itself against, and several\
-  \ pairs disagreed.\n\nThe agency's own `Sig. Non-Compliance` box, where a report form is attached:\n\
-  \n  2016-2019   False on every inspection that carries the box\n  2022-02-22  TRUE  — compliance evaluation\
-  \ inspection\n  2026-07-07  TRUE  — compliance evaluation inspection, and the NOV nine days later\n\
-  \              (edoc-4192703) names the parameter: SIGNIFICANT NONCOMPLIANCE FOR AMMONIA\n\nThe permit\
-  \ lifecycle is now read (#2078). One permit, four versions, 2013 to 2023:\n\n  2PE00000*MD  issued 2012-12-12,\
-  \ effective 2013-01-01  (edoc-3187291, 106pp)\n  2PE00000*ND  issued 2018-07-31, effective 2018-08-01\
-  \  (edoc-2710532, 94pp; draft PN edoc-2710555)\n  2PE00000*OD  action  2023-06-02, effective 2023-07-01\
-  \  (fact sheet edoc-2363111; the permit\n               itself is `oepa/2PE00000.npdes.yaml`, already\
-  \ extracted from the DAM copy)\n  2PE00000*PD  proposed 2023-07-28                       (edoc-2479810)\n\
+  \ The next tranche from this portal will have the same property.\n\nTHE ATTRIBUTION IS NOW DECIDED,\
+  \ AT THE READ LAYER, WITHOUT MOVING A BYTE (#2085). Both artifacts\nstay exactly where they are; `data/corpus-attribution.yaml`\
+  \ — a reviewed, document-cited overlay —\ndeclares what each one is about, and `watermark.sites.effective_corpus_scope`\
+  \ folds it into the\nsite's `CorpusScope` as an exact-relpath grant or subtraction. Every surface that\
+  \ funnels through\n`relpath_in_scope` therefore agrees by construction: export, timeline, entities,\
+  \ the\nrecords/documents feeds, retrieval, the agent read tools.\n\n  edoc-3063821  → site:mansfield.\
+  \  Mansfield is a registered site with its own committed record\n                  under oepa/mansfield/,\
+  \ so the letter has a destination. It leaves Lima's\n                  chronology and joins the record\
+  \ of the plant it is actually about.\n  edoc-3296496  → no registered site.  Henry County is not a watershed\
+  \ point in this network, so\n                  there is nowhere to route it. It leaves Lima's scope\
+  \ and is claimed by none.\n\n`attributed_to: null` is an ANSWER, not a gap, and it is not a deletion:\
+  \ the artifact stays\ncommitted, catalogued and citable, and the overlay row is where it stays visible\
+  \ — every row is\nheld to a real committed artifact by `tests/test_corpus_attribution.py`, so an unattributed\n\
+  document can never become the silent drop of #1994. What changed is only the assertion: neither\ndocument\
+  \ is presented as Lima's record, because neither is.\n\nThe signal is STRUCTURED and REVIEWED. Nothing\
+  \ is inferred from a filename, a permit number, or a\n⚠️ in a warning string — filtering on prose is\
+  \ the loose predicate `_classify`'s docstring argues\nagainst, and an attribution is a stronger claim\
+  \ than a classification. Correspondingly, nothing was\nrepaired in the sources: no byte moved, no filename\
+  \ changed, and `permit_no: 2PE00000` on\nedoc-3063821 still reads AS PRINTED.\n\nThe 30 inspections\
+  \ are now read, under the `inspection` genre added for them (#2077). They are 30\nCAPTURES OF 18 DISTINCT\
+  \ INSPECTIONS: the portal serves most of this plant's inspections twice, once\nas a PDF with a text\
+  \ layer and once as a scan of the same letter, at two unrelated docids. None of\nthe pairs is byte-identical,\
+  \ so all twelve are declared `v2` clusters in\n`data/site/document-versions.yaml` with the TEXT-LAYER\
+  \ capture canonical — a scan is read by the\nvision path alone with nothing to check itself against,\
+  \ and several pairs disagreed.\n\nThe agency's own `Sig. Non-Compliance` box, where a report form is\
+  \ attached:\n\n  2016-2019   False on every inspection that carries the box\n  2022-02-22  TRUE  — compliance\
+  \ evaluation inspection\n  2026-07-07  TRUE  — compliance evaluation inspection, and the NOV nine days\
+  \ later\n              (edoc-4192703) names the parameter: SIGNIFICANT NONCOMPLIANCE FOR AMMONIA\n\n\
+  The permit lifecycle is now read (#2078). One permit, four versions, 2013 to 2023:\n\n  2PE00000*MD\
+  \  issued 2012-12-12, effective 2013-01-01  (edoc-3187291, 106pp)\n  2PE00000*ND  issued 2018-07-31,\
+  \ effective 2018-08-01  (edoc-2710532, 94pp; draft PN edoc-2710555)\n  2PE00000*OD  action  2023-06-02,\
+  \ effective 2023-07-01  (fact sheet edoc-2363111; the permit\n               itself is `oepa/2PE00000.npdes.yaml`,\
+  \ already extracted from the DAM copy)\n  2PE00000*PD  proposed 2023-07-28                       (edoc-2479810)\n\
   \nplus seven permit ACTIONS (modification approvals, \"no permit required\" determinations, the 2026-08-04\n\
   modification) and the 2022 renewal application behind *OD.\n\n⚠️ THE 2022 APPLICATION CONTRADICTS THE\
   \ CONSENT DECREE ON THE DESIGN STORM. `edoc-1840393` (EPA Form\n3510-1, Application ID 256207483, Section\

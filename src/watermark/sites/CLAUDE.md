@@ -118,6 +118,24 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   `effective_corpus_scope`. Two sweeps in `tests/test_cross_site_readside.py` hold both halves:
   no `<collection>/<slug>` directory may fall outside its site's scope, and an extraction whose
   source document is filed under one must land in that site's scope.
+- **The shelf is the attribution — except where a reviewed overlay says the AGENCY misfiled**
+  (#2085, `_attribution.py`). `data/extracted` mirrors an immutable `data/documents`, so an
+  artifact is shelved where its source was *served*, and the whole derivation above rests on that
+  being the same thing as what the document is about. Sometimes it isn't: Ohio EPA's eDocument
+  portal indexes by permit, and a sweep of Lima's permit 2PE00000 returned sixteen documents of
+  which two were other facilities' records — a Mansfield WWTP letter carrying Lima's permit number
+  in its own reference block, and a Henry County spill report naming no permit at all. Moving the
+  byte is what the chain-of-custody rule forbids, so the correction happens at the READ layer:
+  `data/corpus-attribution.yaml` declares each such artifact's true subject, and
+  `effective_corpus_scope` folds it in as the exact-relpath `reattributed_in`/`reattributed_out`
+  pair on `CorpusScope`. Every surface funnelling through `relpath_in_scope` then agrees by
+  construction. **Exact paths, never prefixes** — a prefix would re-attribute a subtree on a claim
+  reviewed against one document. **`attributed_to: null` is an ANSWER** (no registered site owns
+  it — Henry County is not a watershed point here), not a gap and not a deletion: the artifact
+  stays committed and citable, and `tests/test_corpus_attribution.py` holds every row to a real
+  artifact so an unattributed one can never become the silent drop of #1994. Reach for this only
+  when the *source's own filing* is wrong and the document says so itself; an extraction merely
+  shelved in the wrong place is a `#1405` bug to fix at ingest, not a row here.
 - **GIS field maps are data, not code (`_gis_schemas.py`).** The schema *models*
   (`GisParcelSchema`/`GisZoningSchema`/`GisFloodSchema`) live in `watermark.connectors.gis_schema`
   (broken out to avoid an import cycle); this file holds the per-jurisdiction *instances*

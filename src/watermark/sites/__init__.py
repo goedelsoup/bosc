@@ -29,6 +29,18 @@ from typing import TYPE_CHECKING, Literal, get_args, get_origin
 
 from pydantic import BaseModel, ConfigDict
 
+from watermark.sites._attribution import (
+    AttributionOverride as AttributionOverride,
+)
+from watermark.sites._attribution import (
+    attribution_overrides as attribution_overrides,
+)
+from watermark.sites._attribution import (
+    reattributed_in as reattributed_in,
+)
+from watermark.sites._attribution import (
+    reattributed_out as reattributed_out,
+)
 from watermark.sites._gis_schemas import (
     ALLEN_IN_PARCEL_SCHEMA as ALLEN_IN_PARCEL_SCHEMA,
 )
@@ -221,6 +233,15 @@ def effective_corpus_scope(profile: SiteProfile) -> CorpusScope:
     default: a freshly registered site reads *its own* corpus or nothing, never silently
     inheriting Lima's record).
 
+    The committed **attribution overlay** (``data/corpus-attribution.yaml``, #2085) is folded in
+    last, as the exact-relpath ``reattributed_in``/``reattributed_out`` pair. It is the one case
+    where the shelf is *not* the attribution: ``data/extracted`` mirrors an immutable
+    ``data/documents``, so a source the AGENCY misfiled stays shelved where it was served, and the
+    correction has to happen at the read layer or not at all. Ohio EPA's portal served a Mansfield
+    WWTP letter and a Henry County spill report on Lima's permit 2PE00000; the first is routed into
+    Mansfield's scope, the second into nobody's, and neither byte moves. Exact paths only — see
+    :mod:`watermark.sites._attribution`.
+
     ``corpus_relpaths`` **adds** to that; it does not replace it. It exists for the prefixes no
     rule can derive, where the corpus is filed by case or project name rather than by site —
     ``permits/highland55``, ``legal/thor-v-urbana``, ``permits/dazzler-permits``. List the
@@ -229,9 +250,18 @@ def effective_corpus_scope(profile: SiteProfile) -> CorpusScope:
     at all.
     """
     if is_reference_site(profile.slug):
-        return CorpusScope(include=None, exclude=_peer_scope_prefixes(profile.slug))
+        return CorpusScope(
+            include=None,
+            exclude=_peer_scope_prefixes(profile.slug),
+            reattributed_in=reattributed_in(profile.slug),
+            reattributed_out=reattributed_out(profile.slug),
+        )
     prefixes = {*_eponymous_prefixes(profile.slug), *(profile.corpus_relpaths or ())}
-    return CorpusScope(include=tuple(sorted(prefixes)))
+    return CorpusScope(
+        include=tuple(sorted(prefixes)),
+        reattributed_in=reattributed_in(profile.slug),
+        reattributed_out=reattributed_out(profile.slug),
+    )
 
 
 def site_reference_path(

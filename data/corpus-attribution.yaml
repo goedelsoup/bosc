@@ -1,0 +1,78 @@
+# Corpus attribution overlay — the sites committed extractions are ABOUT, where that differs
+# from the site whose shelf they sit on (#2085).
+#
+# THE PROBLEM THIS EXISTS FOR. `data/extracted/**` mirrors `data/documents/**`, which is
+# immutable: an artifact is shelved where its source byte was served. Usually the shelf IS the
+# attribution — `watermark.sites._eponymous_prefixes` derives a site's corpus scope from its slug
+# (#1405), so `oepa/van-wert/…` is Van Wert's record for free. But a source's own filing can be
+# WRONG, and when it is, the shelf and the subject part company:
+#
+#   Ohio EPA's eDocument portal indexes documents by permit. A sweep of permit 2PE00000 (City of
+#   Lima WWTP) returned sixteen documents, two of which are other facilities' records — one a
+#   MANSFIELD WWTP letter carrying Lima's permit number in its own reference block, one a HENRY
+#   COUNTY spill report that names no permit at all. A permit-scoped portal sweep is not a
+#   permit-scoped result set, and every document one returns must be READ before it is attributed.
+#
+# READ THE SHELF AS CUSTODY, NOT ATTRIBUTION. Nothing here moves a byte, renames a file, or
+# "corrects" a printed value: `permit_no: 2PE00000` on the Mansfield letter is AS PRINTED and IS
+# the error itself — the evidence that the misfiling happened. This file re-routes the artifact at
+# the READ layer instead, and it is the one reviewed place that says so.
+#
+# HOW IT IS READ. `watermark.sites._attribution` loads this at import time (the same repo-relative
+# idiom as `data/sites.yaml`) and `effective_corpus_scope` folds each row into the site's
+# `CorpusScope` as an EXACT-relpath grant or subtraction. It is therefore honoured by every
+# surface that funnels through `relpath_in_scope` — export, timeline, entities, the
+# records/documents feeds, retrieval, the agent read tools — by construction, not per caller.
+#
+# THE SIGNAL IS STRUCTURED AND REVIEWED, AND MUST STAY THAT WAY. `attributed_to` is a registered
+# slug or an explicit null; nothing here is inferred from prose, from a filename, or from a
+# warning string. A row is an evidentiary claim about a document and carries the `basis` that a
+# reader can check against the artifact itself.
+#
+# `attributed_to: null` MEANS NO REGISTERED SITE OWNS IT, NOT THAT IT IS JUNK. The artifact stays
+# committed, catalogued and citable; it simply appears in no site's cross-document layer, because
+# asserting it into one would be the very error this file corrects. This file is where such an
+# artifact remains visible — `tests/test_corpus_attribution.py` holds every row to a real
+# committed artifact so an unattributed one can never become a silent drop.
+#
+# Fields:
+#   relpath        the committed artifact, relative to data/extracted (exact — not a prefix)
+#   shelved_under  the site whose scope the shelf would otherwise place it in
+#   attributed_to  the registered slug the document is actually about, or null for none
+#   subject        what the document is about, in the words its own text uses
+#   basis          the document-internal evidence for the re-attribution
+#   reviewed       ISO date the claim was reviewed against the artifact
+#   issue          the GitHub issue that decided it
+
+overrides:
+
+  - relpath: oepa/lima/edoc-3063821.order.yaml
+    shelved_under: lima
+    attributed_to: mansfield
+    subject: "Mansfield WWTP, Richland County — Ohio EPA correspondence, 2020-03-04"
+    basis: >-
+      The letter's own Ohio EPA reference block reads "Re: Mansfield WWTP / Correspondence /
+      NPDES / Richland County / 2PE00000" — Mansfield's plant and Mansfield's county paired with
+      LIMA's permit number. It is addressed to Mr. Robert Coker Jr., WWTP Manager, 385 South
+      Illinois Avenue, Mansfield, Ohio 44905, and responds to the City of Mansfield's 2020-02-24
+      submittal of the Pollutants Control Strategy required by its NPDES permit Part I, C-A.2.
+      Every figure in the extraction describes Mansfield. Mansfield is a registered site in this
+      network (data/sites.yaml, #1425) with its own committed record under oepa/mansfield/, so the
+      document has a destination: this row sends it there while its bytes stay in oepa/lima/.
+    reviewed: '2026-08-23'
+    issue: '2085'
+
+  - relpath: oepa/lima/edoc-3296496.order.yaml
+    shelved_under: lima
+    attributed_to: null
+    subject: "RAILTECH, 25 Interstate Drive, Napoleon, Henry County — glycol release, spill id 1607-35-1349110"
+    basis: >-
+      An Ohio EPA Emergency Response Section Initial Pollution Incident Report, citizen-reported
+      2016-07-13, whose own header reads "County: HENRY / City|Township: NAPOLEAN [sic]". It
+      concerns neither Lima nor Allen County, and — unlike the Mansfield letter — the IPIR NAMES
+      NO PERMIT AT ALL: only the portal's index associates the docid with 2PE00000, and why it
+      does is not established by the document. Henry County is not a registered site, so there is
+      no scope to route it into. It leaves Lima's and is claimed by none; the artifact, its
+      warnings and this row remain its record.
+    reviewed: '2026-08-23'
+    issue: '2085'
