@@ -3962,7 +3962,7 @@
   },
   {
     "id": "oepa-lima-enforcement",
-    "title": "Ohio EPA enforcement, inspection + permit extractions (City of Lima WWTP — permit 2PE00000)",
+    "title": "Ohio EPA record extractions (City of Lima WWTP — permit 2PE00000, complete)",
     "scope": "extracted",
     "collection": "oepa",
     "status": "reviewed",
@@ -4008,6 +4008,11 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/oepa/lima/edoc-1520341.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/oepa/lima/edoc-1610423.inspection.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -4028,6 +4033,11 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/oepa/lima/edoc-1781552.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/oepa/lima/edoc-1782202.inspection.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -4044,6 +4054,26 @@
       },
       {
         "relpath": "extracted/oepa/lima/edoc-1840393.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-1840394.engineering.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-1840396.engineering.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-1840397.engineering.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-1851184.order.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4069,6 +4099,11 @@
       },
       {
         "relpath": "extracted/oepa/lima/edoc-1851476.inspection.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-1879637.order.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4099,6 +4134,11 @@
       },
       {
         "relpath": "extracted/oepa/lima/edoc-1952887.inspection.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-1974720.order.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4153,6 +4193,11 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/oepa/lima/edoc-2955962.resolution.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/oepa/lima/edoc-2956099.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -4178,7 +4223,37 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/oepa/lima/edoc-3170357.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/oepa/lima/edoc-3170365.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3170366.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3170389.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3170394.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3170400.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3170412.order.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4193,12 +4268,27 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/oepa/lima/edoc-3170416.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/oepa/lima/edoc-3170417.order.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
         "relpath": "extracted/oepa/lima/edoc-3170422.progress-report.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3170424.order.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3170425.order.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4219,6 +4309,11 @@
       },
       {
         "relpath": "extracted/oepa/lima/edoc-3223944.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-3296408.order.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4264,6 +4359,11 @@
       },
       {
         "relpath": "extracted/oepa/lima/edoc-4215450.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/edoc-453773.order.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -4340,10 +4440,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "3a353661573269bb6b80ea65c662a461c557220756ac140f3faad39e91a8b638",
-      "size_bytes": 364857,
+      "sha256": "45cd2ccfb140bad017dfc0cbf9fbb4122ba7e8babd7c8f506ad0fcbd64fdee43",
+      "size_bytes": 451714,
       "lfs_materialized": true,
-      "file_count": 70,
+      "file_count": 90,
       "stale": false,
       "asof": null
     },

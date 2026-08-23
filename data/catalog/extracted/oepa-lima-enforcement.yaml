@@ -1,5 +1,5 @@
 id: oepa-lima-enforcement
-title: Ohio EPA enforcement, inspection + permit extractions (City of Lima WWTP — permit 2PE00000)
+title: Ohio EPA record extractions (City of Lima WWTP — permit 2PE00000, complete)
 scope: extracted
 status: reviewed
 producer:
@@ -22,6 +22,9 @@ storage:
 - relpath: extracted/oepa/lima/edoc-1294257.progress-report.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-1520341.order.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-1610423.inspection.yaml
   media_type: application/x-yaml
   lfs: false
@@ -34,6 +37,9 @@ storage:
 - relpath: extracted/oepa/lima/edoc-1753487.inspection.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-1781552.order.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-1782202.inspection.yaml
   media_type: application/x-yaml
   lfs: false
@@ -44,6 +50,18 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-1840393.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1840394.engineering.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1840396.engineering.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1840397.engineering.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1851184.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-1851472.inspection.yaml
@@ -59,6 +77,9 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-1851476.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1879637.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-1914739.inspection.yaml
@@ -77,6 +98,9 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-1952887.inspection.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-1974720.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-2363111.npdes.yaml
@@ -109,6 +133,9 @@ storage:
 - relpath: extracted/oepa/lima/edoc-2710558.progress-report.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-2955962.resolution.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-2956099.epa.yaml
   media_type: application/x-yaml
   lfs: false
@@ -124,7 +151,25 @@ storage:
 - relpath: extracted/oepa/lima/edoc-3170036.order.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-3170357.order.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-3170365.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170366.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170389.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170394.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170400.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170412.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3170414.inspection.yaml
@@ -133,10 +178,19 @@ storage:
 - relpath: extracted/oepa/lima/edoc-3170415.order.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/edoc-3170416.order.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/oepa/lima/edoc-3170417.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3170422.progress-report.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170424.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3170425.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3187290.epa.yaml
@@ -149,6 +203,9 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3223944.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-3296408.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-3296496.order.yaml
@@ -176,6 +233,9 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-4215450.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/edoc-453773.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/oepa/lima/edoc-454946.order.yaml
@@ -294,9 +354,21 @@ notes: "The enforcement half of the Lima WWTP record, kept separate from the per
   \ spreadsheet whose text layer is garbled (\"Da!e Dr.\", \"SSQ\" for SSO).\nThose four record the prose\
   \ aggregate instead of inventing outfall ids — and the aggregates are the\nheadline: 2018 H1 reports\
   \ 127 SSO and 11 CSO overflows, 2018 H2 reports 114 SSO and 32 CSO. The\nper-outfall rows are recoverable\
-  \ from the page images, the same remedy as the decree's rotated\nTable A.1.\n\nStill ingested and NOT\
-  \ yet extracted — 23 of the 93:\n  22  City / agency correspondence and submittals in the permit drawer,\
-  \ a 2013 City ordinance\n      (edoc-2955962, 66pp), a mercury variance application (edoc-3170366),\
-  \ and five remaining parts\n      of the 2022 application package APP256207483.\n   1  `edoc-2363112.pdf`\
-  \ — NEVER to be extracted. Byte-identical (sha256 b140e19c5e26) to\n      `oepa/2PE00000.pdf`, already\
-  \ extracted. Recorded as a cluster in document-versions.yaml.\n"
+  \ from the page images, the same remedy as the decree's rotated\nTable A.1.\n\nTHE TRANCHE IS COMPLETE\
+  \ (#2080). All 90 extractable documents of the 93 committed are read:\n\n    32  order             \
+  \ enforcement instruments + City/agency correspondence, 1994-2026\n    30  inspection         30 captures\
+  \ of 18 distinct inspections, 2016-2026\n     9  progress-report    the paragraph-33 semiannual series,\
+  \ 2016-2021\n     8  npdes              the permit lifecycle *MD/*ND/*OD/*PD + applications\n     7\
+  \  epa                permit actions: modifications, approvals, determinations\n     3  engineering\
+  \        the process flow diagram, a schematic, and the 2021 Annual\n                           Mercury\
+  \ Pollutant Minimization Program report\n     1  resolution         City Ordinance 155-13 (hand-authored;\
+  \ `resolution` has no extractor)\n\nThe other 3 are BYTE-IDENTICAL DUPLICATES already declared in data/site/document-versions.yaml\
+  \ and\nmust never be extracted: edoc-1840395 and edoc-1840398 (twins of edoc-1840394, sha256 7ad0ba7bec6d)\n\
+  and edoc-2363112 (the DAM copy's twin, sha256 b140e19c5e26, extracted as oepa/2PE00000.npdes.yaml).\n\
+  \nA MERCURY THREAD RUNS THROUGH THREE GENRES and is visible only now that all of them are read:\n2015-07-16\
+  \ the City applies for a mercury variance (edoc-3170366) · 2021 the Annual Mercury\nPollutant Minimization\
+  \ Program report is filed under 2PE00000*ND with influent, effluent and\nbiosolids monitoring (edoc-1840396,\
+  \ which the portal types as part of an application package and\nwhich is in fact a standalone compliance\
+  \ report) · 2026-07-16 the NOV cites LOW LEVEL MERCURY among\nthe effluent-limit violations (edoc-4192703).\
+  \ Nothing here says the variance failed; the sequence is\nrecorded so the question can be asked of the\
+  \ right documents.\n"

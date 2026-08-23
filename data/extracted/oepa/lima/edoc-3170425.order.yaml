@@ -1,0 +1,50 @@
+doc_id: edoc-3170425-f45ce34e
+source_path: data/documents/oepa/lima/edoc-3170425.pdf
+kind: order
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "r c \nLIMA, OHIO \n~ \n~==ti  \n'~~ • ' {: : \n2 \n7 t?•-j 1\
+  \  nr  ..  ~ ~\" 7R. \ni.== , ►~ \nJL 'N 2 2(?1. \noHiO E.P.A. \nJune 23, 2017 \n\
+  Chief \nWater Enforcement and Compliance Assurance Branch - Water Division \nU.S.\
+  \ Environmental Protection Agency, Region 5 \n77 West Jackson Blvd \nChicago, IU.inois\
+  \ 60604 \nRE: Civil Action No. 3:14-cv 02551 \nCity of Lima, Ohio Sanitary Sewer\
+  \ Capacity, Arianagement, Operation, and Maintenance \n(CMOM) Program Report \n\
+  Dear Chief: \nI hereby subnvt for approval on behalf of the City of Lima, Ohio one\
+  \ (1) copy of the City of Lima, Ohio \nSanitary Sewer Capacity, Management, Op"
+order:
+  confidence: high
+  warnings:
+  - OCR text layer was unreliable for several characters; all key fields (case number,
+    date, names) verified against page image.
+  - Received stamp on image reads JUN 26 2017 (Ohio EPA NWDO); OCR rendered this as
+    'JL N 2 2(?1' — image read used.
+  - No penalty, effective date, or permit number referenced in this correspondence.
+  agency: U.S. EPA, Region 5
+  instrument: correspondence
+  case_no: 3:14-cv-02551
+  respondent: City of Lima, Ohio
+  facility: City of Lima, Ohio Sanitary Sewer System (separate sanitary sewer)
+  permit_no: null
+  issued_date: '2017-06-23'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: Submit one (1) copy of the City of Lima, Ohio Sanitary Sewer Capacity,
+      Management, Operation, and Maintenance (CMOM) Program Report for approval, in
+      accordance with Paragraph 18 of the City of Lima Consent Decree, revised to
+      include conditions specified in the US EPA comment letter dated March 24, 2017.
+    deadline: null
+    status: submitted
+  penalty_usd: null
+  stipulated_penalties: null
+  status: null
+  summary: This is a cover letter dated June 23, 2017 from Lima Utilities Director
+    Michael Caprella to the Chief of the U.S. EPA Region 5 Water Enforcement and Compliance
+    Assurance Branch, submitting one copy of the City of Lima, Ohio CMOM Program Report
+    for approval pursuant to Paragraph 18 of the City of Lima Consent Decree (Civil
+    Action No. 3:14-cv-02551). The report has been revised to incorporate conditions
+    from a US EPA comment letter dated March 24, 2017.
+  note: null

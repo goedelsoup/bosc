@@ -1,0 +1,101 @@
+doc_id: edoc-1840397-9be176f6
+source_path: data/documents/oepa/lima/edoc-1840397.pdf
+kind: engineering
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 200
+source_text_excerpt: "1,c-4.~~~,~ . .~ ~.., \\_:^~ \n \n \nGenerator \nlIIl1lL Final\
+  \ Effluent  , ~.F,, ,. \n~ \nft, \n_ \n~ i ' i _~i~. :~$i_,:'TT—'~.-\" -53~.'- --+L...~!\
+  \   ..1 . . - . i:N  ~~,! m \n~ P ~ i• ° •_ _~._ _ — . JL—_  \n.` - ~ \nMI ~  \n\
+  .', i~ . \\ \n~i  \n_ \n--- ~ ~ \n~—~~ -- ! °\" - \n~r\"\n. ' .\nt\n_ \nr'\n \n\
+  '+~._  \n,. \nr' ~;  I ~ ' \n— K'  \n, 'N -- \n\\ ~  .... . ~ \n] I . i ~: :sa,rr°w\
+  \  \n~ ; -_ ° i _- . ---- \nr\n \n'-- ~ \n, ~,.. ~i ~ ~. \n, -`.~__-' • _ •.  ~\
+  \ \n~ ~ - - , ~ : ~ ~: __,. _ _ . ---- : ,  \n✓ '  ~   . ,. . 1 . . , --_ '  ~'\n\
+  j i\n \n~\", e~ ~. _ ~~.\n~\n \n— . . .. ~ .~  \", , \n~ ,..., ~~ ..  \n~ \"~~~\
+  \ ----- ~  \n_ \n• ~( \n, \n__. "
+record:
+  confidence: low
+  warnings:
+  - This image is an aerial photograph / site overview graphic, not a traditional
+    engineering drawing with a titleblock — no project name, project number, record
+    date, address, or firm information is legible.
+  - Component labels are read from on-image annotation text overlays; no schedules
+    or specification tables are present in this view.
+  - No dimensional, capacity, or material specifications are visible; component specs
+    are left empty rather than invented.
+  - Facility identity (owner/municipality) is not stated on this image.
+  - OCR text layer is largely garbled and was not relied upon; all data read directly
+    from image annotations.
+  project_name: null
+  facility_name: Wastewater Treatment Plant (WWTP)
+  record_type: record drawing
+  discipline: sanitary / wastewater
+  record_date: null
+  project_no: null
+  site_address: null
+  prepared_by: []
+  sheets: []
+  components:
+  - name: Headworks
+    category: structure
+    quantity: null
+    specs: []
+    note: null
+  - name: Primary Treatment Clarifiers
+    category: structure
+    quantity: null
+    specs: []
+    note: Four circular clarifiers visible in aerial
+  - name: Aeration Basins
+    category: structure
+    quantity: null
+    specs: []
+    note: Large rectangular multi-channel aeration basin array, center of facility
+  - name: Final Effluent Clarifiers
+    category: structure
+    quantity: null
+    specs: []
+    note: Multiple large circular clarifiers in upper-center of site
+  - name: Biosolids Treatment Tanks
+    category: structure
+    quantity: null
+    specs: []
+    note: Multiple circular tanks on right-center of site
+  - name: Filter Building
+    category: structure
+    quantity: null
+    specs: []
+    note: Located on far right side of site
+  - name: Generator
+    category: equipment
+    quantity: null
+    specs: []
+    note: Located upper-left area of main process building
+  - name: Switchgear
+    category: electrical
+    quantity: null
+    specs: []
+    note: Located upper-right corner of site
+  - name: Existing Outfall
+    category: structure
+    quantity: null
+    specs: []
+    note: Located at northern boundary of site, indicated by red arrow
+  design_parameters: []
+  key_features:
+  - Existing Outfall located at the northern boundary of the facility, marked with
+    a red arrow
+  - Treatment process flows from Headworks → Primary Treatment → Aeration → Final
+    Effluent → Filter Building → Outfall
+  - Biosolids Treatment cluster of circular tanks on right-center of site
+  - Switchgear building at upper-right corner of property
+  - Generator unit near center-upper area of main process building
+  - Filter Building with associated circular tank(s) on eastern edge of site
+  summary: Aerial overhead photograph / site plan of a municipal wastewater treatment
+    plant showing the spatial layout and labeling of all major process units. Key
+    treatment stages identified include Headworks, Primary Treatment, Aeration, Final
+    Effluent, Biosolids Treatment, and Filter Building, plus supporting infrastructure
+    (Generator, Switchgear, Existing Outfall).
+  note: null

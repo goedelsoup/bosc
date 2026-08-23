@@ -1,0 +1,68 @@
+doc_id: edoc-1879637-ffe6caae
+source_path: data/documents/oepa/lima/edoc-1879637.pdf
+kind: order
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "50 Town Square \nC ity of Lima l.ima, Oliio 45801-4900 ,. Ahone:\
+  \ 419-228-5462 \nAllen County, Ohio Fax: 419-221-5257 \nSharetta Smith, Mayor www.cityhall.lima.oh.us\
+  \  \nRECEIVED \nJune 27, 2022 JUN 2 3 2022 \nMs. Peggy Christie OHIO EPA Ohio EPA\
+  \ Northwest District Office NWDO \nDivision of Surface Water \n347 North Dunbridge\
+  \ Road \nBowling Green, Ohio 43402 \nOhio EPA Division of Surface Water \nNPDES\
+  \ Permit Unit \nP.O. Box 1049 \nColumbus, Ohio 43216 \nMs. Christie, \nAttached\
+  \ please find the City of Lima's update to the Control Strategy for Dissolved Hexavalent\
+  \ \nChromium, as required by NPDES Permit 2PE0000"
+order:
+  confidence: high
+  warnings:
+  - Received stamp date (JUN 23 2022) precedes the letter date (June 27, 2022), which
+    is logically inconsistent — possible stamping error or OCR misread of the received
+    date.
+  - Permit number contains an asterisk ('2PE00000*ND') which may be a masking/redaction
+    convention or OCR artifact; verified against image as printed.
+  - This is a compliance update letter/correspondence, not a primary enforcement instrument
+    (no DFFO, consent decree, or NOV present in this document).
+  agency: Ohio EPA
+  instrument: correspondence
+  case_no: null
+  respondent: City of Lima
+  facility: City of Lima Wastewater Treatment Plant (POTW), Lima, Ohio
+  permit_no: 2PE00000*ND
+  issued_date: '2022-06-27'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: Submit annual update to the Control Strategy for Dissolved Hexavalent
+      Chromium, as required by NPDES Permit 2PE00000*ND, Part I, C – Schedule of Compliance,
+      B,3
+    deadline: null
+    status: met — update submitted June 27, 2022
+  - requirement: Monitor effluent (Outfall 001) and industrial sources for Hexavalent
+      Chromium per pretreatment/NPDES permit requirements
+    deadline: null
+    status: ongoing — all results below detectable limits; no sources required to
+      implement PMP requirements
+  penalty_usd: null
+  stipulated_penalties: null
+  status: active
+  summary: The City of Lima's Director of Utilities, Michael H. Caprella, submitted
+    to Ohio EPA Northwest District Office the annual update to Lima's Control Strategy
+    for Dissolved Hexavalent Chromium, as required by NPDES Permit 2PE00000*ND, Part
+    I, C – Schedule of Compliance, B,3. The attached progress report covers monitoring
+    results from June 2021 through June 2022 for Outfall 001 and numerous industrial
+    pretreatment sources, all of which were below detectable limits for hexavalent
+    chromium. No further control strategy updates were needed as the POTW is meeting
+    its permit limits and no known sources of hexavalent chromium have been identified.
+  note: Document is a compliance correspondence letter (not a DFFO or consent decree)
+    transmitting the annual Hexavalent Chromium Control Strategy progress report to
+    Ohio EPA NWDO, per schedule-of-compliance requirements in NPDES Permit 2PE00000*ND.
+    The permit number "2PE00000*ND" is rendered with an asterisk in the original;
+    OCR confirmed against image. Received stamp reads JUN 23 2022, letter dated June
+    27, 2022 — discrepancy noted (received stamp precedes letter date; likely a stamping
+    error).

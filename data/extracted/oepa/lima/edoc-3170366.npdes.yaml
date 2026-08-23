@@ -1,0 +1,53 @@
+doc_id: edoc-3170366-4dcba003
+source_path: data/documents/oepa/lima/edoc-3170366.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "ftoO I OU \nCITY OF LIMA, OHIO David J. Berger, Mayor \n50 Town\
+  \ Square Lima, Ohio 45 $0 1-4900 4 l 91228-5462 Fax 4191221. -52 I4 \nwww.cityhiali.lim.a.oh..us\
+  \ \nJuly 15, 2015 \nMs. Peggy Cbucistie \nOhio EPA DZvision of Surface Water \n\
+  Northwest District {1fl'ice \n347 N. Dunbridge Rd. \nBowling Greeri, Ohio 43402\
+  \ \nRe: 1V.Cercury Vatzance Appllcatîon \nCity of Lima, Ohio \nUear, Ms. Peggy Christie\
+  \ \nThe a:ttaChinent to tl,•i.is letter Cozitains the Mercury Variance Application\
+  \ submittal, to be included and \nreviewed as part of Lima's most recent NPDES permit\
+  \ renewal application. This submittal iricludes t"
+permit:
+  confidence: medium
+  warnings:
+  - Permit number confirmed as 2PE00000*MD from body text; OCR rendered it as '2PEfl0000*MD'
+    (garbled character). Image header shows '2PE00000' which may be truncated.
+  - No application number, public notice number, or comment period end date found
+    in this document.
+  - Date in letter body is July 16, 2015 per image; OCR incorrectly rendered as July
+    15, 2015.
+  - This is a Mercury Variance Application submittal, not a standard permit fact sheet
+    or public notice.
+  facility_name: City of Lima Wastewater Treatment Plant
+  permit_no: 2PE00000*MD
+  permit_action: renewal
+  applicant: City of Lima, Ohio
+  application_no: null
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 1200 Ft. Amanda Road, Lima, Ohio 45804
+  discharge_address: null
+  receiving_water: Ottawa River
+  stream_network: null
+  outfalls: []
+  note: This is a Mercury Variance Application cover letter and supporting document
+    dated July 16, 2015, submitted by Russell C. Bales, WWTP Supervisor. The permit
+    (2PE00000*MD) was effective January 1, 2013 and expired February 28, 2015. The
+    OCR rendered the permit number inconsistently; the image and body text confirm
+    '2PE00000*MD'. The permit number shown at the top of the first page appears to
+    read '2PE00000' but is partially cut off. No public notice number, application
+    number, or comment period end date are present in this document. Station 604 is
+    referenced as the mercury monitoring point.

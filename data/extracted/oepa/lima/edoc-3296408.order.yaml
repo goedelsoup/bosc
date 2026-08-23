@@ -1,0 +1,65 @@
+doc_id: edoc-3296408-6bf63bff
+source_path: data/documents/oepa/lima/edoc-3296408.pdf
+kind: order
+pages_read:
+- 0
+- 1
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "I' \nDavi d J. Berger, Mayor \n50 Town Square Lizna, Ohio 45801-4900\
+  \ 419/228-5462 Fax 419/221-5214 \nwww.cityhall.lima.oh.us \nFebruary 27, 2015 \n\
+  Ms. Peggy Christie \nOEPA-Northwest District \n347 N. Dunbridge Road \nBowling Green,\
+  \ Ohio 43402 \nRE: City of Lima, NPDES 2PE00000*MD, Part I, C.b (Schedules) \nCompietion\
+  \ Notification \nURS Project No. 14578549 \nDear Ms. Christie: \nThis letter is\
+  \ in reference to the time extension requested by the City of Lima to complete critical\
+  \ upgrades to two \nsanitary lift stations that were part of a larger overall project.\
+  \ Your agency granted Lima an extension on Janu"
+order:
+  confidence: high
+  warnings:
+  - The permit number in the OCR reads '2PE00000*MD' — the asterisk may be an OCR
+    artifact for a digit or character; verified against image which appears consistent.
+  - Two separate letters are embedded on this page; both are captured under a single
+    record.
+  - The February 24, 2015 letter references 'URS Project No. 14578549' only in the
+    February 27 letter; the CSO letter is a separate notification.
+  - Volume figure '12.23MG' is from OCR; image appears to confirm this reading.
+  agency: Ohio EPA (OEPA-Northwest District)
+  instrument: correspondence
+  case_no: null
+  respondent: City of Lima, Ohio
+  facility: City of Lima Sanitary Lift Stations (Hickory Knoll & Cable Road); City
+    of Lima WWTP / McDonald CSO Structure 004
+  permit_no: 2PE00000*MD
+  issued_date: '2015-02-27'
+  effective_date: null
+  supersedes: Time extension granted by OEPA on January 29, 2015 (revised completion
+    date of April 1, 2015)
+  obligations:
+  - requirement: Complete critical upgrades to two sanitary lift stations (Hickory
+      Knoll and Cable Road) — part of NPDES 2PE00000*MD, Part I, C.b (Schedules)
+    deadline: '2015-04-01'
+    status: completed — Hickory Knoll returned to full service 2015-01-22; Cable Road
+      returned to full service 2015-02-19
+  - requirement: Report dry weather by-pass / CSO overflow at McDonald CSO Structure
+      004 (gate operator failure causing ~12.23 MG discharge to Ottawa River on January
+      4, 2015); make repairs to gate operator and implement temporary overflow-prevention
+      measures
+    deadline: null
+    status: repairs underway; temporary measures in place as of February 24, 2015
+  penalty_usd: null
+  stipulated_penalties: null
+  status: closed
+  summary: This file contains two letters from the City of Lima, Ohio to OEPA-Northwest
+    District. The February 27, 2015 letter (signed by Environmental Compliance Manager
+    David L. Schnipke) is a completion notification under NPDES Permit 2PE00000*MD,
+    Part I, C.b, confirming that upgrades to the Hickory Knoll and Cable Road sanitary
+    lift stations — for which OEPA had granted an extension on January 29, 2015 —
+    are now fully complete ahead of the revised April 1, 2015 deadline. The February
+    24, 2015 letter (signed by WWTP Supervisor Russell C. Bales) is a correction/notification
+    letter reporting a dry weather by-pass at McDonald CSO Structure 004 on January
+    4, 2015, where a gate operator failure caused approximately 12.23 MG of sewage
+    to discharge to the Ottawa River, with repairs and temporary preventive measures
+    underway.
+  note: null

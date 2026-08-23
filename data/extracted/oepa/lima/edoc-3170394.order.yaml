@@ -1,0 +1,59 @@
+doc_id: edoc-3170394-fbfa9951
+source_path: data/documents/oepa/lima/edoc-3170394.pdf
+kind: order
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "L Ï Ms. Peggy Cbrisrie \nDivision of Surface Water \nNorthwest\
+  \ District Office \n347 North Dunbridge Road \nBowling Crreen, OH 43402-9398 \n\
+  CITY OF LIMA, OHIO David J. Berger, Mayor \n50 Town Square Lima Ohio 458U1-4900\
+  \ 419/228-5462 Fax419/221-5214 \nwww.citvhall.iima.oh.us . \nb0000 \nRe: Status\
+  \ report on Construction Contracls at Lima WWTP \nMs. Christie, \nThis letter is\
+  \ to inform you of the status of the construction contracts on the Head works, \n\
+  Primary Clarification Improvements at Lima Wastewater Treatinent Plant. Peterson\
+  \ Construction \nCompany/ URS are the Construction Managers at Risk (CMAR). UR"
+order:
+  confidence: medium
+  warnings:
+  - Exact issued date not printed on the letter — no explicit date visible in the
+    letter body or header; estimated from context as sometime before June 2, 2015.
+  - Permit number '2PE00000' read from handwritten notation at top right of page;
+    OCR rendered it as 'b0000' and image shows '2PE00000' — verified against image.
+  - This is a status-report correspondence letter, not a formal enforcement instrument
+    (consent decree, DFFO, NOV, etc.); it is filed under a permit/case but does not
+    itself impose orders or penalties.
+  agency: City of Lima, Ohio / Ohio EPA Division of Surface Water
+  instrument: correspondence
+  case_no: null
+  respondent: City of Lima, Ohio
+  facility: Lima Wastewater Treatment Plant (Lima WWTP)
+  permit_no: 2PE00000
+  issued_date: '2015'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: CMAR (Peterson Construction Company/URS) to submit bids for any work
+      they intend to self-perform to the City of Lima
+    deadline: '2015-06-02T15:00:00'
+    status: null
+  - requirement: All other subcontractors to e-mail bids to Mike Fritchie with Peterson
+      Construction Company/URS
+    deadline: '2015-06-03T10:00:00'
+    status: null
+  - requirement: Notice to proceed with Headworks and Primary Clarification Improvements
+      project anticipated
+    deadline: '2015-06-15'
+    status: null
+  penalty_usd: null
+  stipulated_penalties: null
+  status: null
+  summary: This is a status-report letter from Russell C. Bales, Supervisor of the
+    City of Lima WWTP, to Ms. Peggy Christie at the Ohio EPA Division of Surface Water
+    Northwest District Office. It reports on the construction contracts for the Headworks
+    and Primary Clarification Improvements at Lima WWTP, noting that the guaranteed
+    maximum price has been established, bids are divided into 7 major packages, and
+    notice to proceed is anticipated by June 15, 2015. Peterson Construction Company/URS
+    (now AECOM) are the Construction Managers at Risk (CMAR).
+  note: null

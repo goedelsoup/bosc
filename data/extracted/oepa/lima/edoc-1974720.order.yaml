@@ -1,0 +1,49 @@
+doc_id: edoc-1974720-a854f868
+source_path: data/documents/oepa/lima/edoc-1974720.pdf
+kind: order
+pages_read:
+- 0
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Oq bh I oEPA lohn R. Kasich, Governor \nMary Tayfor, Lt. Governor\
+  \ \nCraig W. Butler, Director \nRe: City of Lima WWTP \nCorrespondence \nNPDES \n\
+  Ailen County \n2PE00000 \nJanuary 29, 2015 \nMr. David L. Schnipke \nEnvironmentai\
+  \ Compliance Manager \nCity of Lima \n50 Town Square \nLima, Ohio 45801-4900 \n\
+  Dear Mr. Schnipke \nWe are in receipt of your letter dated December 8, 2014, requesting\
+  \ a time extension for the completion of the \nCable Road and the Hickory Knoll\
+  \ lift station construction projects listed in Part I. C. b. of your National \n\
+  Poilutant Discharge Elimination System (NPDES) permit. Since this pe"
+order:
+  confidence: high
+  warnings:
+  - OCR rendered permit number as '2PE00000' — confirmed against image as '2PE00000'.
+  - OCR misread 'Allen County' as 'Ailen County' — corrected to Allen County per image.
+  agency: Ohio EPA
+  instrument: extension letter
+  case_no: null
+  respondent: City of Lima
+  facility: City of Lima WWTP
+  permit_no: 2PE00000
+  issued_date: '2015-01-29'
+  effective_date: null
+  supersedes: null
+  obligations:
+  - requirement: Complete Cable Road and Hickory Knoll lift station construction projects
+      (as listed in Part I.C.b. of the NPDES permit); provide Ohio EPA Northwest District
+      Office with written notification upon completion.
+    deadline: '2015-04-01'
+    status: extended
+  penalty_usd: null
+  stipulated_penalties: null
+  status: null
+  summary: Ohio EPA grants a time extension to the City of Lima for completion of
+    the Cable Road and Hickory Knoll lift station construction projects originally
+    listed in the compliance schedule of NPDES permit 2PE00000. Because the permit
+    was set to expire February 28, 2015, a formal permit modification was deemed impractical;
+    instead, Ohio EPA extended the completion deadline to April 1, 2015, and required
+    written notification upon project completion.
+  note: Letter is in response to the City of Lima's request dated December 8, 2014.
+    Signed by Elizabeth A. Wick, P.E., Environmental Engineer/Section Manager, Division
+    of Surface Water, Ohio EPA Northwest District Office. NPDES permit was set to
+    expire February 28, 2015.
