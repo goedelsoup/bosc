@@ -131,23 +131,50 @@ def assert_meeting_layout_depth(rel: str) -> None:
         )
 
 
+# The sentinel `kind` a reject carries when the file never PARSED — so `_classify` never ran and
+# there is no genre to name (#2084). It is deliberately not a real genre and deliberately not the
+# empty string: a reader of `Corpus.rejected` must be able to tell "the classifier claimed this and
+# the model refused it" from "the loader never got as far as a decision".
+UNPARSED = "<unparsed>"
+
+
 @dataclass(frozen=True)
 class CorpusReject:
-    """A file the classifier CLAIMED and the model then REJECTED — a defect, not noise."""
+    """A committed artifact the loader could not take in — a defect, not noise.
+
+    Two shapes, distinguished by :attr:`kind`. Normally the classifier CLAIMED the file and the
+    model then REJECTED it, and ``kind`` is the genre it was routed to. When ``kind`` is
+    :data:`UNPARSED` the file never parsed at all, one step earlier in the pipeline: it reached
+    no genre, so it could not be claimed, rejected or declined (#2084). That case used to be a
+    ``log.warning`` and a ``continue``, which put it outside every bucket and therefore outside
+    the #1994 gate — a file that never parsed was never classified, and the drop set it asserts
+    empty could not see it. Both shapes are the same defect from a reader's point of view: a
+    reviewed, committed artifact that is absent from the timeline, the entity graph and the
+    yidam mirror while :mod:`watermark.site.records` may still be publishing it.
+    """
 
     rel: str
     kind: str
     error: str
 
+    @property
+    def unparsed(self) -> bool:
+        """Whether this reject never parsed, as opposed to failing its model."""
+        return self.kind == UNPARSED
+
 
 class CorpusValidationError(RuntimeError):
-    """Raised by ``load_corpus(strict=True)`` when any claimed artifact failed its model."""
+    """Raised by ``load_corpus(strict=True)`` when any committed artifact could not be taken in.
+
+    Covers both reject shapes — claimed-then-invalid, and :data:`UNPARSED` (#2084).
+    """
 
     def __init__(self, rejects: list[CorpusReject]) -> None:
         self.rejects = rejects
+        unparsed = sum(1 for r in rejects if r.unparsed)
+        tail = f" ({unparsed} of them did not parse at all)" if unparsed else ""
         super().__init__(
-            f"{len(rejects)} committed extraction(s) were claimed by the corpus classifier "
-            "and then rejected by their model:\n"
+            f"{len(rejects)} committed extraction(s) could not be loaded into the corpus{tail}:\n"
             + "\n".join(f"  {r.kind:>18}  {r.rel}\n{' ' * 22}{r.error}" for r in rejects)
         )
 
@@ -165,8 +192,9 @@ class Corpus:
     # `entities._graph`) touches — the union costs them nothing.
     permits: list[tuple[str, NpdesExtraction | NpdesTranscription]] = field(default_factory=list)
     general_permits: list[tuple[str, GeneralPermitExtraction]] = field(default_factory=list)
-    # Files the classifier CLAIMED and the model then REJECTED. They are still dropped from the
-    # typed buckets — deliberately; one malformed artifact must not blind the whole layer — but
+    # Files the loader could not take in: claimed-then-invalid, and (under the `UNPARSED`
+    # sentinel, #2084) never-parsed. They are still dropped from the typed buckets —
+    # deliberately; one malformed artifact must not blind the whole layer — but
     # #1994 showed a WARNING log is not a report: a permit can sit in the `records` feed looking
     # present while it is absent from every model-driven feed. Recording them lets a test assert
     # the drop set is empty instead of grepping logs.
@@ -246,6 +274,38 @@ class Corpus:
 # `None`: "the loader never reached a decision" and "the loader decided this is not an
 # extraction" must not be the same observation (#1994).
 DECLINED = "_declined"
+
+
+def read_artifact_yaml(path: Path, rel: str) -> tuple[Any, str | None]:
+    """Parse one committed artifact, returning ``(data, error)`` — the shared read every loader
+    over ``data/extracted/**`` funnels through (#2084).
+
+    ``error`` is ``None`` on success and the first line of the ``yaml.YAMLError`` otherwise, in
+    which case ``data`` is ``None``. The point of the shared helper is that the *failure* is
+    reported identically wherever the tree is read: an unparseable artifact is a silent drop from
+    every feed at once — it left the corpus, the timeline and the records feed together on #2082
+    — and the three drift gates structurally cannot see it, because a re-export moves the
+    committed bundle and the fresh one together. So this logs at ERROR, not WARNING: there are
+    ~78 expected `corpus.declined` DEBUG lines per load and exactly **zero** expected parse
+    failures, which makes one here signal rather than noise.
+
+    Callers are expected to do something with ``error`` beyond skipping —
+    :func:`load_corpus` records it as a :class:`CorpusReject` with ``kind`` :data:`UNPARSED`, so
+    it is counted, named and (under ``strict``) raised on.
+    """
+    try:
+        return yaml.safe_load(path.read_text(encoding="utf-8")), None
+    except yaml.YAMLError as exc:
+        detail = str(exc).splitlines()[0]
+        log.error(
+            "corpus.unparsed",
+            path=rel,
+            error=detail,
+            hint="this artifact is absent from EVERY feed with nothing but this line to say so; "
+            'a ": " or a " #" inside an unquoted multi-line scalar is the usual cause — quote it '
+            "or use a block scalar (`- >-`)",
+        )
+        return None, detail
 
 
 def _has_render_envelope(data: dict[str, Any]) -> bool:
@@ -532,9 +592,12 @@ def load_corpus(
     a property of the file*: a per-site sweep is blind to any path no registered site's scope
     claims.
 
-    Files that fail to parse or validate are recorded and skipped (the corpus is a best-effort
-    view; one malformed artifact must not blind the whole layer). ``strict=True`` turns a
-    rejection into :class:`CorpusValidationError` instead.
+    Files that fail to parse or validate are recorded in :attr:`Corpus.rejected` and skipped (the
+    corpus is a best-effort view; one malformed artifact must not blind the whole layer).
+    ``strict=True`` turns a rejection into :class:`CorpusValidationError` instead. A file that
+    never *parsed* is a reject too, carrying the :data:`UNPARSED` sentinel as its ``kind``
+    (#2084): it reached no genre, so before that it reached neither ``rejected`` nor ``declined``
+    and was invisible to every gate over them.
     """
     settings = settings or get_settings()
     extracted = settings.extracted_dir
@@ -551,10 +614,14 @@ def load_corpus(
         rel = str(path.relative_to(extracted))
         if not relpath_in_scope(rel, scope):
             continue
-        try:
-            data = yaml.safe_load(path.read_text(encoding="utf-8"))
-        except yaml.YAMLError as exc:
-            log.warning("corpus.bad_yaml", path=rel, error=str(exc).splitlines()[0])
+        data, parse_error = read_artifact_yaml(path, rel)
+        if parse_error is not None:
+            # Parsed-never, and it must not be dropped-silently (#2084). `_classify` never ran,
+            # so there is no genre to name and no bucket this could otherwise land in — which is
+            # exactly why it used to escape the #1994 gate. Recorded as a reject under the
+            # `UNPARSED` sentinel so it is counted in `corpus.loaded`, named in `corpus.rejected`
+            # and raised on under `strict`.
+            corpus.rejected.append(CorpusReject(rel=rel, kind=UNPARSED, error=parse_error))
             continue
         kind = _classify(data)
         try:
@@ -629,12 +696,17 @@ def load_corpus(
         engineering=len(corpus.engineering),
         declined=len(corpus.declined),
         rejected=len(corpus.rejected),
+        # Broken out of `rejected` on purpose (#2084): the two shapes ask for different repairs.
+        # A claimed-then-invalid file needs the artifact or `_classify` fixed; an unparsed one is
+        # almost always a `": "` or " #" in an unquoted multi-line scalar.
+        unparsed=sum(1 for r in corpus.rejected if r.unparsed),
     )
     if corpus.rejected:
         log.error(
             "corpus.rejected",
             count=len(corpus.rejected),
             paths=[r.rel for r in corpus.rejected],
+            unparsed=[r.rel for r in corpus.rejected if r.unparsed],
         )
         if strict:
             raise CorpusValidationError(corpus.rejected)

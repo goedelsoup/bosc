@@ -17,14 +17,13 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 from watermark.pipeline.corpus import (
     Corpus,
     iter_meeting_artifacts,
     load_corpus,
+    read_artifact_yaml,
     relpath_in_scope,
 )
 from watermark.sites import CorpusScope, active_profile, effective_corpus_scope
@@ -410,13 +409,18 @@ def _opc_events(corpus: Corpus) -> list[TimelineEvent]:
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:
-    """Load a committed extraction YAML, or ``{}`` if absent/unreadable."""
+    """Load a committed extraction YAML, or ``{}`` if absent/unreadable.
+
+    Parses through the corpus layer's shared reader (#2084) so an unparseable artifact is an
+    ERROR here too, and reads the same wherever the extracted tree is read. It still degrades to
+    ``{}`` — this is a named-file read, and the timeline is a best-effort view — but the timeline
+    is one of the feeds a broken scalar silently emptied on #2082 (233 events -> 232), so the
+    failure must not look like an absent file.
+    """
     if not path.exists():
         return {}
-    try:
-        data = yaml.safe_load(path.read_text(encoding="utf-8"))
-    except yaml.YAMLError as exc:
-        log.warning("timeline.bad_yaml", path=str(path), error=str(exc).splitlines()[0])
+    data, parse_error = read_artifact_yaml(path, str(path))
+    if parse_error is not None:
         return {}
     return data if isinstance(data, dict) else {}
 
