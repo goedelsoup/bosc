@@ -279,7 +279,7 @@ def _has_transcription_provenance(data: dict[str, Any]) -> bool:
 
 
 def _is_manual_read(data: dict[str, Any]) -> bool:
-    """Whether ``data`` is a person's read of RENDERED page images, declaring its own method.
+    """Whether ``data`` is a person's read of a source, declaring its own method.
 
     A third committed convention beside the render envelope and the hand transcription, and it is
     a real one: nine artifacts carry exactly ``doc_id`` + ``source_path`` + ``kind`` +
@@ -289,6 +289,15 @@ def _is_manual_read(data: dict[str, Any]) -> bool:
     ``method:`` says what happened in prose ("manual transcription from the page images rendered
     at 600 DPI (pypdfium2), all 10 pages"), which is why they name the pages they read and refuse
     to name a ``dpi``: no single render receipt describes the read.
+
+    ``pages_read`` must be DECLARED — a list, and the test is that it is one, not that it is
+    non-empty. Three of the nine (``sso-closure-amer-bath-2010``, ``sso-closure-cam-court-2019``,
+    ``dffo-2011-extension-request``) are ``textutil`` reads of native ``.doc``/``.docx`` letters,
+    where ``pages_read: []`` is the TRUE value because a Word file served over a PRR has no pages
+    to read. An emptiness test would reject those three as malformed and put three reviewed
+    instruments in :attr:`Corpus.rejected`. What the key must not be is ABSENT: a payload that
+    declares a ``method`` and then names nothing it read asserts none of this convention, and
+    silently declining it is the drop this predicate exists to prevent.
 
     **Neither envelope in `watermark.models` fits them, and this function does not invent one.**
     :class:`~watermark.models.DocExtraction` requires ``dpi``; :class:`~watermark.models.
@@ -305,6 +314,7 @@ def _is_manual_read(data: dict[str, Any]) -> bool:
         and isinstance(data.get("method"), str)
         and isinstance(data.get("doc_id"), str)
         and isinstance(data.get("source_path"), str)
+        and isinstance(data.get("pages_read"), list)
     )
 
 

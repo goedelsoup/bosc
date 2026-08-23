@@ -19,6 +19,7 @@ from watermark.models import (
     NpdesTranscription,
     OPCMeta,
     OPCSummary,
+    OrderExtraction,
     SosExtraction,
     SubEstimate,
 )
@@ -492,6 +493,15 @@ def test_a_declared_manual_read_is_declined_and_anything_else_fails_loudly() -> 
     assert _classify(manual) == DECLINED
     # No declared method, no render receipt: malformed, and it must reach OrderExtraction.
     assert _classify({k: v for k, v in manual.items() if k != "method"}) == "order"
+    # Nor is `method` alone enough. A payload that declares how it was read and then names
+    # NOTHING it read asserts none of this convention; declining it would be the silent drop.
+    no_pages = {k: v for k, v in manual.items() if k != "pages_read"}
+    assert _classify(no_pages) == "order"
+    with pytest.raises(ValidationError, match="dpi"):
+        OrderExtraction.model_validate(no_pages)
+    # But an EMPTY `pages_read` is a declaration, and a true one: three of the nine are
+    # `textutil` reads of native .doc/.docx letters, which have no pages to read.
+    assert _classify({**manual, "pages_read": []}) == DECLINED
 
 
 def test_classify_leaves_the_resolution_genre_unclaimed() -> None:
