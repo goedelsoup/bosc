@@ -298,14 +298,23 @@ clusters:
   # The portal serves most of this WWTP's inspections TWICE — once as a PDF with a text layer and
   # once as a scan of the same letter — at two unrelated docids. NONE of these pairs is
   # byte-identical (zero byte-identical groups across the 30 captures), so every one is `v2`: two
-  # genuine captures of one filing, both readable evidence.
+  # genuine captures of one filing, both readable evidence. 30 captures -> 18 distinct inspections.
   #
-  # They are declared because the pairs were extracted independently and SEVERAL DISAGREED. The
-  # text-layer capture is canonical in every pair — not because it arrived first, but because a
-  # scan is read by the vision path alone with nothing to check itself against, which is exactly
-  # how edoc-463755 invented a case_no in #2076 and how edoc-591751 returned ZERO observations at
-  # high confidence here. Where the two readings differ, the canonical governs.
-  # 30 captures -> 18 distinct inspections.
+  # WHY THE TEXT-LAYER CAPTURE IS CANONICAL — and what that does NOT mean. It is canonical for
+  # FIDELITY: a scan is read by the vision path alone with nothing to check itself against, which is
+  # how edoc-463755 invented a case_no from a letterhead (#2076). It is NOT canonical for being
+  # fuller. The opposite was true at first: three scans read MORE than their canonical, because a
+  # scan is read as all-pages-as-images while the text reads were given only two, so the ATTACHED
+  # INSPECTION FORM went unseen. Those three canonicals were re-read at a full image budget
+  # (edoc-1851472 6 -> 26 observations, edoc-1851476 2 -> 6) and the cause was the budget, not the
+  # capture.
+  #
+  # A residual difference is GRANULARITY, not fact. The report form carries an "evaluated areas"
+  # checklist (NPDES Compliance / Operator Certification / Collection System / … each marked "No
+  # corrective action needed" or "Not evaluated"), and some captures enumerate those rows as
+  # observations while others summarise the narrative. ComplianceInspection has no field for that
+  # checklist, so it surfaces as `finding` rows or not at all. Both readings are correct; the
+  # canonical governs, and the genre gap is recorded here rather than papered over.
 
   - id: oepa:2PE00000-inspection-2016-07-13-reconnaissance-inspection
     canonical: oepa/lima/edoc-1914739.pdf
@@ -316,7 +325,8 @@ clusters:
       - rel: oepa/lima/edoc-467350.pdf
         version: v2
         evidence_note: >
-          The same 2016-07-13 reconnaissance inspection as the canonical, served at a second docid. The two readings differ (6 observations on the canonical vs 11 on this capture); the canonical governs.
+          The same 2016-07-13 reconnaissance inspection as the canonical, served at a second docid.
+          This capture records MORE (11 observations against the canonical's 6) — it enumerates the report form's evaluated-areas checklist as observations where the canonical summarises the narrative. A granularity difference, not a conflict.
 
   - id: oepa:2PE00000-inspection-2016-10-18-reconnaissance-inspection
     canonical: oepa/lima/edoc-1914740.pdf
@@ -327,7 +337,8 @@ clusters:
       - rel: oepa/lima/edoc-512329.pdf
         version: v2
         evidence_note: >
-          The same 2016-10-18 reconnaissance inspection as the canonical, served at a second docid. The two readings differ (3 observations on the canonical vs 2 on this capture); the canonical governs.
+          The same 2016-10-18 reconnaissance inspection as the canonical, served at a second docid.
+          The canonical records more (3 observations against 2 here). The canonical governs.
 
   - id: oepa:2PE00000-inspection-2016-12-07-reconnaissance-inspection
     canonical: oepa/lima/edoc-1914742.pdf
@@ -338,7 +349,8 @@ clusters:
       - rel: oepa/lima/edoc-529544.pdf
         version: v2
         evidence_note: >
-          The same 2016-12-07 reconnaissance inspection as the canonical, served at a second docid. Both readings agree.
+          The same 2016-12-07 reconnaissance inspection as the canonical, served at a second docid.
+          Both readings agree.
 
   - id: oepa:2PE00000-inspection-2017-02-28-pretreatment-audit
     canonical: oepa/lima/edoc-1851472.pdf
@@ -349,7 +361,8 @@ clusters:
       - rel: oepa/lima/edoc-591751.pdf
         version: v2
         evidence_note: >
-          The same 2017-02-28 pretreatment audit as the canonical, served at a second docid. The two readings differ (6 observations on the canonical vs 13 on this capture); the canonical governs.
+          The same 2017-02-28 pretreatment audit as the canonical, served at a second docid.
+          The canonical records more (26 observations against 13 here). The canonical governs.
 
   - id: oepa:2PE00000-inspection-2017-04-05-reconnaissance-inspection
     canonical: oepa/lima/edoc-1851473.pdf
@@ -360,7 +373,8 @@ clusters:
       - rel: oepa/lima/edoc-605102.pdf
         version: v2
         evidence_note: >
-          The same 2017-04-05 reconnaissance inspection as the canonical, served at a second docid. Both readings agree.
+          The same 2017-04-05 reconnaissance inspection as the canonical, served at a second docid.
+          Both readings agree.
 
   - id: oepa:2PE00000-inspection-2017-07-25-reconnaissance-inspection
     canonical: oepa/lima/edoc-1851474.pdf
@@ -371,7 +385,8 @@ clusters:
       - rel: oepa/lima/edoc-678896.pdf
         version: v2
         evidence_note: >
-          The same 2017-07-25 reconnaissance inspection as the canonical, served at a second docid. Both readings agree.
+          The same 2017-07-25 reconnaissance inspection as the canonical, served at a second docid.
+          Both readings agree.
 
   - id: oepa:2PE00000-inspection-2017-12-05-compliance-evaluation-inspection
     canonical: oepa/lima/edoc-1851475.pdf
@@ -382,7 +397,8 @@ clusters:
       - rel: oepa/lima/edoc-739814.pdf
         version: v2
         evidence_note: >
-          The same 2017-12-05 compliance evaluation inspection as the canonical, served at a second docid. Both readings agree.
+          The same 2017-12-05 compliance evaluation inspection as the canonical, served at a second docid.
+          Both readings agree.
 
   - id: oepa:2PE00000-inspection-2017-12-05-biosolids-generator-inspection
     canonical: oepa/lima/edoc-1851476.pdf
@@ -393,7 +409,8 @@ clusters:
       - rel: oepa/lima/edoc-747522.pdf
         version: v2
         evidence_note: >
-          The same 2017-12-05 biosolids generator inspection as the canonical, served at a second docid. The two readings differ (2 observations on the canonical vs 10 on this capture); the canonical governs.
+          The same 2017-12-05 biosolids generator inspection as the canonical, served at a second docid.
+          This capture records MORE (10 observations against the canonical's 6) — it enumerates the report form's evaluated-areas checklist as observations where the canonical summarises the narrative. A granularity difference, not a conflict.
 
   - id: oepa:2PE00000-inspection-2019-04-04-compliance-evaluation-inspection
     canonical: oepa/lima/edoc-1797305.pdf
@@ -404,7 +421,8 @@ clusters:
       - rel: oepa/lima/edoc-1048228.pdf
         version: v2
         evidence_note: >
-          The same 2019-04-04 compliance evaluation inspection as the canonical, served at a second docid. Both readings agree.
+          The same 2019-04-04 compliance evaluation inspection as the canonical, served at a second docid.
+          Both readings agree.
 
   - id: oepa:2PE00000-inspection-2019-04-04-biosolids-generator-inspection
     canonical: oepa/lima/edoc-1797306.pdf
@@ -415,7 +433,8 @@ clusters:
       - rel: oepa/lima/edoc-1048235.pdf
         version: v2
         evidence_note: >
-          The same 2019-04-04 biosolids generator inspection as the canonical, served at a second docid. The two readings differ (4 observations on the canonical vs 3 on this capture); the canonical governs.
+          The same 2019-04-04 biosolids generator inspection as the canonical, served at a second docid.
+          The canonical records more (4 observations against 3 here). The canonical governs.
 
   - id: oepa:2PE00000-inspection-2021-06-30-pretreatment-desktop-review
     canonical: oepa/lima/edoc-1610423.pdf
@@ -426,7 +445,8 @@ clusters:
       - rel: oepa/lima/edoc-1782202.pdf
         version: v2
         evidence_note: >
-          The same 2021-06-30 pretreatment desktop review as the canonical, served at a second docid. Both readings agree.
+          The same 2021-06-30 pretreatment desktop review as the canonical, served at a second docid.
+          Both readings agree.
 
   - id: oepa:2PE00000-inspection-2022-02-22-compliance-evaluation-inspection
     canonical: oepa/lima/edoc-1752399.pdf
@@ -437,4 +457,5 @@ clusters:
       - rel: oepa/lima/edoc-1753487.pdf
         version: v2
         evidence_note: >
-          The same 2022-02-22 compliance evaluation inspection as the canonical, served at a second docid. Both readings agree.
+          The same 2022-02-22 compliance evaluation inspection as the canonical, served at a second docid.
+          Both readings agree.

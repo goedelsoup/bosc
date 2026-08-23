@@ -17,9 +17,9 @@ inspection:
   confidence: high
   warnings:
   - TWIN CAPTURE — not the canonical reading. The portal serves this 2017-04-05 reconnaissance inspection
-    letter at two docids; edoc-1851473 is the same letter and is canonical, and where the two readings
-    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
-    NOT byte-identical).
+    at two docids; edoc-1851473 is the same letter and is canonical for FIDELITY (a scan is read by the
+    vision path alone, with nothing to check itself against). Declared in data/site/document-versions.yaml
+    as a `v2` cluster — the two files are NOT byte-identical.
   - Document read from page images — no machine text layer confirmed.
   - The attached inspection report form (Pages 2–3) includes compliance data tables (code violations for
     Water Temperature at Station 604, SSO events, and high flow data) that are tabular/data in nature

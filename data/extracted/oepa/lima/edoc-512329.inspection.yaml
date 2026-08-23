@@ -14,10 +14,11 @@ source_text_excerpt: ''
 inspection:
   confidence: high
   warnings:
-  - 'TWIN CAPTURE — not the canonical reading. The portal serves this 2016-10-18 reconnaissance inspection
-    letter at two docids; edoc-1914740 is the same letter and is canonical, and where the two readings
-    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
-    NOT byte-identical). They do differ here: 3 observations on the canonical against 2 on this capture.'
+  - TWIN CAPTURE — not the canonical reading. The portal serves this 2016-10-18 reconnaissance inspection
+    at two docids; edoc-1914740 is the same letter and is canonical for FIDELITY (a scan is read by the
+    vision path alone, with nothing to check itself against). Declared in data/site/document-versions.yaml
+    as a `v2` cluster — the two files are NOT byte-identical. The canonical records more (3 vs 2) and
+    governs.
   - Document read from page images — no native text layer confirmed.
   - The enclosed compliance data sheet (7/1/2016–9/1/2016) references 2 E. coli code violations and 28
     SSO events; these are contextual data attachments, not numbered inspection observations, and have

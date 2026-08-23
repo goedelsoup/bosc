@@ -29,9 +29,9 @@ inspection:
   confidence: high
   warnings:
   - TWIN CAPTURE — not the canonical reading. The portal serves this 2021-06-30 pretreatment desktop review
-    letter at two docids; edoc-1610423 is the same letter and is canonical, and where the two readings
-    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
-    NOT byte-identical).
+    at two docids; edoc-1610423 is the same letter and is canonical for FIDELITY (a scan is read by the
+    vision path alone, with nothing to check itself against). Declared in data/site/document-versions.yaml
+    as a `v2` cluster — the two files are NOT byte-identical.
   - The significant_noncompliance field is set to null because no attached form SNC box determination
     was clearly readable in the provided pages; the checklist pages reviewed show N/A entries for most
     SNC-related fields for the one IU file reviewed (US Army Joint Systems Manufacturing Center, which

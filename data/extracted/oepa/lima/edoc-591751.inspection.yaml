@@ -40,10 +40,10 @@ source_text_excerpt: ''
 inspection:
   confidence: high
   warnings:
-  - 'TWIN CAPTURE — not the canonical reading. The portal serves this 2017-02-28 pretreatment audit letter
-    at two docids; edoc-1851472 is the same letter and is canonical, and where the two readings differ
-    IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are NOT
-    byte-identical). They do differ here: 6 observations on the canonical against 13 on this capture.'
+  - TWIN CAPTURE — not the canonical reading. The portal serves this 2017-02-28 pretreatment audit at
+    two docids; edoc-1851472 is the same letter and is canonical for FIDELITY (a scan is read by the vision
+    path alone, with nothing to check itself against). Declared in data/site/document-versions.yaml as
+    a `v2` cluster — the two files are NOT byte-identical. The canonical records more (26 vs 13) and governs.
   - Document is a page-image scan with no embedded text layer; all data extracted by OCR interpretation
     of scanned images.
   - The Pretreatment Inspection Report form does not have a 'Sig. Non-Compliance' checkbox filled in;

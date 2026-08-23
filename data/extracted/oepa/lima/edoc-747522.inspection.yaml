@@ -25,9 +25,12 @@ inspection:
   confidence: high
   warnings:
   - 'TWIN CAPTURE — not the canonical reading. The portal serves this 2017-12-05 biosolids generator inspection
-    letter at two docids; edoc-1851476 is the same letter and is canonical, and where the two readings
-    differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two files are
-    NOT byte-identical). They do differ here: 2 observations on the canonical against 10 on this capture.'
+    at two docids; edoc-1851476 is the same letter and is canonical for FIDELITY (a scan is read by the
+    vision path alone, with nothing to check itself against). Declared in data/site/document-versions.yaml
+    as a `v2` cluster — the two files are NOT byte-identical. NOTE this capture records MORE (10 vs 6):
+    it enumerates the report form''s evaluated-areas checklist as observations where the canonical summarises
+    the narrative. A granularity difference, not a conflict — and the checklist has no dedicated field
+    on ComplianceInspection.'
   - No 'Sig. Non-Compliance' checkbox was visible on the enclosed inspection form pages provided — significant_noncompliance
     left null.
   - No entry_time or exit_time printed on any page.

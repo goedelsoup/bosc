@@ -25,9 +25,9 @@ inspection:
   confidence: high
   warnings:
   - TWIN CAPTURE — not the canonical reading. The portal serves this 2019-04-04 compliance evaluation
-    inspection letter at two docids; edoc-1797305 is the same letter and is canonical, and where the two
-    readings differ IT GOVERNS. Declared in data/site/document-versions.yaml as a `v2` cluster (the two
-    files are NOT byte-identical).
+    inspection at two docids; edoc-1797305 is the same letter and is canonical for FIDELITY (a scan is
+    read by the vision path alone, with nothing to check itself against). Declared in data/site/document-versions.yaml
+    as a `v2` cluster — the two files are NOT byte-identical.
   - Document read from page images; text layer appeared adequate for all key fields. Compliance data tables
     (limit violations, code events, SSO events, high-flow data) are summarized in the summary field but
     not individually enumerated in observations as they are not numbered finding/recommendation items
