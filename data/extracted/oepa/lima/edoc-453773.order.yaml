@@ -6,43 +6,46 @@ pages_read:
 image_pages_read:
 - 0
 dpi: 150
-source_text_excerpt: "©oc 5ubtype: \nPrograrf1: _ ,. \t ~'✓ \t une 10, 20~6 \nCC7unt}!:\
-  \ \nSecoridary  \nMs. Peggy Christie \t\nJU~  \nOEPA-NW District OHIO \n347 North\
-  \ Dunbridge Road \t t~.y~ep \nBowling Green, OH 43402-9398 \nRE: Change to Operator\
-  \ of Record \nDear Ms. Christie: \nPlease consider this letter a formal request\
-  \ for the Director to approve Eric Markley, EPA license \n# WWW3-1.014947-96, to\
-  \ be the operator of record for the City of Lima Wastewater Treatment Plant. \n\
-  Eric has been approved to submit his Class IV license. The request is in accordance\
-  \ with. OAC 3745-7-02. \nThank you for your consideration of this request."
+source_text_excerpt: "©oc 5ubtype: \nPrograrf1: _ ,. \t ~'✓ \t une 10, 20~6 \nCC7unt}!: \nSecoridary \
+  \ \nMs. Peggy Christie \t\nJU~  \nOEPA-NW District OHIO \n347 North Dunbridge Road \t t~.y~ep \nBowling\
+  \ Green, OH 43402-9398 \nRE: Change to Operator of Record \nDear Ms. Christie: \nPlease consider this\
+  \ letter a formal request for the Director to approve Eric Markley, EPA license \n# WWW3-1.014947-96,\
+  \ to be the operator of record for the City of Lima Wastewater Treatment Plant. \nEric has been approved\
+  \ to submit his Class IV license. The request is in accordance with. OAC 3745-7-02. \nThank you for\
+  \ your consideration of this request."
 order:
-  confidence: high
+  confidence: low
   warnings:
-  - This is a correspondence/request letter, not a formal enforcement instrument such
-    as a consent decree, DFFO, NOV, or extension letter.
-  - Secondary ID on the routing slip appears to read 'ALL-00000' but handwriting makes
-    exact value uncertain.
+  - '⚠️ permit_no NULLED — it held ''WWW3-1014947-96'', which is not an NPDES permit number and does not
+    appear in the source in that form. The page carries only the fragment ''WWW3-1'' in a badly degraded
+    text layer; the rest was not read from this document. Confidence lowered to low: a one-page letter
+    that produced one invented identifier should not have any field cited without the page image.'
+  - This letter is filed under permit 2PE00000 by the portal, but states no permit number of its own that
+    could be read. `permit_no` is null rather than back-filled from the drawer — custody is not classification.
+  - This is a correspondence/request letter, not a formal enforcement instrument such as a consent decree,
+    DFFO, NOV, or extension letter.
+  - Secondary ID on the routing slip appears to read 'ALL-00000' but handwriting makes exact value uncertain.
   - OCR layer was unreliable; all key fields verified against the page image.
   agency: Ohio EPA
   instrument: correspondence
   case_no: null
   respondent: City of Lima
   facility: City of Lima Wastewater Treatment Plant
-  permit_no: WWW3-1014947-96
+  permit_no: null
   issued_date: '2016-06-10'
   effective_date: null
   supersedes: null
   obligations:
-  - requirement: 'Formal request for the Director to approve Eric Markley (EPA license
-      # WWW3-1014947-96) as the operator of record for the City of Lima Wastewater
-      Treatment Plant, in accordance with OAC 3745-7-02.'
+  - requirement: 'Formal request for the Director to approve Eric Markley (EPA license # WWW3-1014947-96)
+      as the operator of record for the City of Lima Wastewater Treatment Plant, in accordance with OAC
+      3745-7-02.'
     deadline: null
     status: null
   penalty_usd: null
   stipulated_penalties: null
   status: active
-  summary: 'This is a June 10, 2016 correspondence letter from Mike Caprella, Deputy
-    Director of Utilities for the City of Lima, Ohio, addressed to Ms. Peggy Christie
-    at the OEPA-NW District. The letter formally requests that the Ohio EPA Director
-    approve Eric Markley (EPA license # WWW3-1014947-96, Class IV) as the new operator
-    of record for the City of Lima Wastewater Treatment Plant, per OAC 3745-7-02.'
+  summary: 'This is a June 10, 2016 correspondence letter from Mike Caprella, Deputy Director of Utilities
+    for the City of Lima, Ohio, addressed to Ms. Peggy Christie at the OEPA-NW District. The letter formally
+    requests that the Ohio EPA Director approve Eric Markley (EPA license # WWW3-1014947-96, Class IV)
+    as the new operator of record for the City of Lima Wastewater Treatment Plant, per OAC 3745-7-02.'
   note: null

@@ -6,35 +6,34 @@ pages_read:
 image_pages_read:
 - 0
 dpi: 150
-source_text_excerpt: "CITY OF LIMA, 011I0 David J. Berger, Mayor \n50 Town Square\
-  \ Lima, Ohio 45801-4900 419/228-5462 Fax 419/221-5214 \nwww.cityhal1.lima.oh.us\
-  \ \nDecember 8, 2014 \nMs. Peggy Christie \nOEPA-Northwest District \n347 N. Dunbridge\
-  \ Road \nBowling Green, Ohio 43402 \nRE: City of Lima, NPDES 2PE00000*MD, Part I,\
-  \ C.b (Schedules) \nTime Extension Request \nURS Project No. 14578549 \nDear Ms.\
-  \ Christie: \nThis letter is to request a time extension for two (2) lifl stations\
-  \ that are currently under construction. The City of \nLima is currently in construction,\
-  \ implementing improvements to all thirty (30) lift stations. Th"
+source_text_excerpt: "CITY OF LIMA, 011I0 David J. Berger, Mayor \n50 Town Square Lima, Ohio 45801-4900\
+  \ 419/228-5462 Fax 419/221-5214 \nwww.cityhal1.lima.oh.us \nDecember 8, 2014 \nMs. Peggy Christie \n\
+  OEPA-Northwest District \n347 N. Dunbridge Road \nBowling Green, Ohio 43402 \nRE: City of Lima, NPDES\
+  \ 2PE00000*MD, Part I, C.b (Schedules) \nTime Extension Request \nURS Project No. 14578549 \nDear Ms.\
+  \ Christie: \nThis letter is to request a time extension for two (2) lifl stations that are currently\
+  \ under construction. The City of \nLima is currently in construction, implementing improvements to\
+  \ all thirty (30) lift stations. Th"
 order:
   confidence: high
   warnings:
-  - Permit number reads '2PE00000*MD' — the asterisk may represent additional digits
-    not fully legible; verified against image and OCR appears consistent.
-  - OCR renders 'complete' as 'complet' in one instance — confirmed as OCR artifact
-    only.
-  - Overall program completion date given as 'April 14, 2015' in the first paragraph,
-    while the specific extension request deadline is 'April 1, 2015' — both dates
-    captured as stated.
+  - case_no NULLED — it held 'URS Project No. 14578549', the CONSULTANT'S internal project number. It
+    is printed on the letter and is real, but it is not a case or docket number and putting it in a join
+    key would group this letter with nothing. Kept in the note instead.
+  - Permit number reads '2PE00000*MD' — the asterisk may represent additional digits not fully legible;
+    verified against image and OCR appears consistent.
+  - OCR renders 'complete' as 'complet' in one instance — confirmed as OCR artifact only.
+  - Overall program completion date given as 'April 14, 2015' in the first paragraph, while the specific
+    extension request deadline is 'April 1, 2015' — both dates captured as stated.
   agency: Ohio EPA (OEPA-Northwest District)
   instrument: extension letter
-  case_no: URS Project No. 14578549
+  case_no: null
   respondent: City of Lima, Ohio
-  facility: City of Lima Lift Stations (all 30 lift stations, including Cable Road
-    and Hickory Knoll)
+  facility: City of Lima Lift Stations (all 30 lift stations, including Cable Road and Hickory Knoll)
   permit_no: 2PE00000*MD
   issued_date: '2014-12-08'
   effective_date: null
-  supersedes: NPDES Permit 2PE00000*MD, Part I, C.b compliance schedule (original
-    January 1, 2015 deadline for Cable Road and Hickory Knoll lift stations)
+  supersedes: NPDES Permit 2PE00000*MD, Part I, C.b compliance schedule (original January 1, 2015 deadline
+    for Cable Road and Hickory Knoll lift stations)
   obligations:
   - requirement: Complete improvements to Cable Road lift station
     deadline: '2015-04-01'
@@ -45,19 +44,17 @@ order:
   - requirement: Complete improvements to all 30 lift stations (overall program)
     deadline: '2015-04-14'
     status: in progress (11 of 30 completed as of letter date)
-  - requirement: Complete improvements to Allentown Road, Lost Creek, Gloria Road,
-      and Sugar Street lift stations (NPDES Part I, C.b listed stations)
+  - requirement: Complete improvements to Allentown Road, Lost Creek, Gloria Road, and Sugar Street lift
+      stations (NPDES Part I, C.b listed stations)
     deadline: null
     status: completed
   penalty_usd: null
   stipulated_penalties: null
   status: active
-  summary: The City of Lima's Environmental Compliance Manager, David L. Schnipke,
-    writes to OEPA-Northwest District requesting a time extension under NPDES Permit
-    2PE00000*MD, Part I, C.b for two lift stations (Cable Road and Hickory Knoll)
-    that cannot meet the original January 1, 2015 completion deadline due to construction
-    difficulties and an easement acquisition issue. The letter requests a new completion
-    deadline of April 1, 2015 for those two stations, noting that 11 of 30 total lift
-    stations are already complete and all are expected to be finished by April 14,
-    2015.
-  note: null
+  summary: The City of Lima's Environmental Compliance Manager, David L. Schnipke, writes to OEPA-Northwest
+    District requesting a time extension under NPDES Permit 2PE00000*MD, Part I, C.b for two lift stations
+    (Cable Road and Hickory Knoll) that cannot meet the original January 1, 2015 completion deadline due
+    to construction difficulties and an easement acquisition issue. The letter requests a new completion
+    deadline of April 1, 2015 for those two stations, noting that 11 of 30 total lift stations are already
+    complete and all are expected to be finished by April 14, 2015.
+  note: Bears URS Project No. 14578549 (the consulting engineer's own file number) and cites permit 2PE00000*MD.

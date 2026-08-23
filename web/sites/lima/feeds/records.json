@@ -5484,6 +5484,7 @@
     "title": "correspondence",
     "confidence": "medium",
     "warnings": [
+      "case_no NULLED — it held '2PE00000', which is the PERMIT number, not a case or docket number. This letter prints neither. The same substitution appeared on edoc-463755 (#2076); a permit number in a case field silently merges every document under one permit into one apparent proceeding.",
       "Case/reference number '2PE00000' read from top-right of image; OCR rendered it unreliably as 'ooDol~' — verified against image as '2PE00000'.",
       "This is an informational notice letter, not a formal enforcement order; categorized as correspondence.",
       "No penalty, permit number, or effective date stated in the document."
@@ -5491,7 +5492,7 @@
     "fields": {
       "agency": "Ohio EPA",
       "instrument": "correspondence",
-      "case_no": "2PE00000",
+      "case_no": null,
       "respondent": "City of Lima, Ohio",
       "facility": "Lima Wastewater Treatment Plant",
       "permit_no": null,
@@ -5588,6 +5589,7 @@
     "title": "extension letter",
     "confidence": "high",
     "warnings": [
+      "case_no NULLED — it held 'URS Project No. 14578549', the CONSULTANT'S internal project number. It is printed on the letter and is real, but it is not a case or docket number and putting it in a join key would group this letter with nothing. Kept in the note instead.",
       "Permit number reads '2PE00000*MD' — the asterisk may represent additional digits not fully legible; verified against image and OCR appears consistent.",
       "OCR renders 'complete' as 'complet' in one instance — confirmed as OCR artifact only.",
       "Overall program completion date given as 'April 14, 2015' in the first paragraph, while the specific extension request deadline is 'April 1, 2015' — both dates captured as stated."
@@ -5595,7 +5597,7 @@
     "fields": {
       "agency": "Ohio EPA (OEPA-Northwest District)",
       "instrument": "extension letter",
-      "case_no": "URS Project No. 14578549",
+      "case_no": null,
       "respondent": "City of Lima, Ohio",
       "facility": "City of Lima Lift Stations (all 30 lift stations, including Cable Road and Hickory Knoll)",
       "permit_no": "2PE00000*MD",
@@ -5628,7 +5630,7 @@
       "stipulated_penalties": null,
       "status": "active",
       "summary": "The City of Lima's Environmental Compliance Manager, David L. Schnipke, writes to OEPA-Northwest District requesting a time extension under NPDES Permit 2PE00000*MD, Part I, C.b for two lift stations (Cable Road and Hickory Knoll) that cannot meet the original January 1, 2015 completion deadline due to construction difficulties and an easement acquisition issue. The letter requests a new completion deadline of April 1, 2015 for those two stations, noting that 11 of 30 total lift stations are already complete and all are expected to be finished by April 14, 2015.",
-      "note": null
+      "note": "Bears URS Project No. 14578549 (the consulting engineer's own file number) and cites permit 2PE00000*MD."
     },
     "approximate_paths": [],
     "citation": {
@@ -5650,6 +5652,7 @@
     "title": "correspondence",
     "confidence": "medium",
     "warnings": [
+      "permit_no corrected on review: recorded as '2PE00000MD', printed as '2PE00000*MD'. The asterisk is the Ohio version separator, not decoration — without it this row does not join the other *MD documents. (The letter also cites 2PE00000*I1 and the bare 2PE00000; the *MD is the permit this correspondence concerns.)",
       "OCR layer contains multiple transcription errors (e.g., '2PEOOOOOMD', '4191228-5462'); permit number verified from image as '2PE00000MD'.",
       "No formal enforcement order (DFFO, consent decree, NOV) is present — this package consists of compliance correspondence and permit renewal application materials; enforcement instrument classification is 'correspondence'.",
       "Notice of Commencement date in the September 9, 2014 letter states March 28, 2014, but the Notice of Commencement document itself is dated 03/13/2014 per its header — possible discrepancy; both dates noted.",
@@ -5662,7 +5665,7 @@
       "case_no": null,
       "respondent": "City of Lima, Ohio",
       "facility": "City of Lima Wastewater Treatment Plant (WWTP), 1200 Fort Amanda Road, Lima, OH 45804",
-      "permit_no": "2PE00000MD",
+      "permit_no": "2PE00000*MD",
       "issued_date": "2014-09-15",
       "effective_date": null,
       "supersedes": null,
@@ -6021,7 +6024,7 @@
     "fields": {
       "agency": "U.S. EPA, Region 5",
       "instrument": "correspondence",
-      "case_no": "3:14-cv-02551",
+      "case_no": "3:14-CV-02551-JZ",
       "respondent": "City of Lima, Ohio",
       "facility": "City of Lima, Ohio Sanitary Sewer System (separate sanitary sewer)",
       "permit_no": null,
@@ -6039,7 +6042,7 @@
       "stipulated_penalties": null,
       "status": null,
       "summary": "This is a cover letter dated June 23, 2017 from Lima Utilities Director Michael Caprella to the Chief of the U.S. EPA Region 5 Water Enforcement and Compliance Assurance Branch, submitting one copy of the City of Lima, Ohio CMOM Program Report for approval pursuant to Paragraph 18 of the City of Lima Consent Decree (Civil Action No. 3:14-cv-02551). The report has been revised to incorporate conditions from a US EPA comment letter dated March 24, 2017.",
-      "note": null
+      "note": "case_no normalized for the join: this letter prints '3:14-cv-02551' without the '-JZ' judge suffix every other document in the chain carries. Same case; the field holds the canonical form so this row joins edoc-412983.order.yaml."
     },
     "approximate_paths": [],
     "citation": {
@@ -6128,7 +6131,7 @@
     "fields": {
       "agency": "Ohio EPA – Emergency Response Section",
       "instrument": "Initial Pollution Incident Report (IPIR)",
-      "case_no": "1607-35-1349//0",
+      "case_no": "1607-35-1349110",
       "respondent": "RAILTECH",
       "facility": "RAILTECH – 25 Interstate Drive, Napoleon, OH 43545 (Henry County)",
       "permit_no": "2PE00000",
@@ -6146,7 +6149,7 @@
       "stipulated_penalties": null,
       "status": "active",
       "summary": "This Ohio EPA Emergency Response Section Initial Pollution Incident Report (IPIR), dated 7/14/2016 and assigned Spill ID 1607-35-1349//0, documents a citizen complaint received on 07/13/2016 alleging that RAILTECH, located at 25 Interstate Drive in Napoleon (Henry County), OH, is repeatedly dumping glycol directly into a nearby creek and across railroad tracks into a pond behind a hospital during tank-cleaning operations. The product spilled is glycol; affected media include surface water/storm water and land. The report was referred to DSW/WW and RRS/SIS for follow-up.",
-      "note": "A Henry County spill report reachable only because Ohio EPA's portal indexes it under Lima's permit number. Two of the sixteen documents in this tranche turned out to be other facilities' records — which is itself a finding about the portal as a source: a permit-scoped sweep is not a permit-scoped result set, and every document in one must be read before it is attributed."
+      "note": "Spill id printed on the IPIR as 1607-35-1349110; the first read rendered it '1607-35-1349//0', turning '11' into '//'. Corrected against the source text. A Henry County spill report reachable only because Ohio EPA's portal indexes it under Lima's permit number. Two of the sixteen documents in this tranche turned out to be other facilities' records — which is itself a finding about the portal as a source: a permit-scoped sweep is not a permit-scoped result set, and every document in one must be read before it is attributed."
     },
     "approximate_paths": [],
     "citation": {
@@ -6253,6 +6256,7 @@
     "title": "DFFO",
     "confidence": "high",
     "warnings": [
+      "permit_no held prose ('2PE00000*HD (also references prior permit 2PE00000*GD / OH0026069)'). The field carries the permit alone so it joins; the other two ids are in the note.",
       "The waiver section is dated January 25, 1994, while the instrument issued/effective date is February 25, 1994 — the waiver may have been signed in advance.",
       "OCR layer was partially unreliable; permit numbers and dates verified against image.",
       "No civil penalty is assessed in this instrument."
@@ -6263,7 +6267,7 @@
       "case_no": null,
       "respondent": "Mayor and Council, City of Lima",
       "facility": "City of Lima Wastewater Treatment Facility, 1200 Fort Amanda Road, Lima, Allen County, Ohio",
-      "permit_no": "2PE00000*HD (also references prior permit 2PE00000*GD / OH0026069)",
+      "permit_no": "2PE00000*HD",
       "issued_date": "1994-02-25",
       "effective_date": "1994-02-25",
       "supersedes": null,
@@ -6278,7 +6282,7 @@
       "stipulated_penalties": null,
       "status": "active",
       "summary": "This Director's Final Findings and Orders (DFFO), issued by the Ohio EPA on February 25, 1994, addresses the City of Lima's noncompliance with ORC Sections 6111.04 and 6111.07 arising from documented discharges through at least 27 unpermitted separate sanitary sewer overflow (SSO) points between May 1992 and May 1993 (out of 36 known SSO points in the collection system). Lima is ordered to submit an approvable General Plan to eliminate all unpermitted SSOs within 12 months of the effective date (i.e., by February 25, 1995). Lima waived its right to appeal the Orders.",
-      "note": null
+      "note": "Also references the prior permit 2PE00000*GD and the federal id OH0026069. "
     },
     "approximate_paths": [],
     "citation": {
@@ -6354,6 +6358,7 @@
     "title": "consent decree",
     "confidence": "high",
     "warnings": [
+      "⚠️ case_no AND permit_no WERE PROSE, AND THAT BROKE EVERY JOIN TO THIS DECREE. They read '3:14 CV 2551 (N.D. Ohio, Western Div., Judge Jack Zouhary; Doc #5, filed 01/13/15; DOJ case no. 90-5-1-1-08433)' and '2PE00000*MD (issued to the City of Lima ... para aa, p11)'. Nine paragraph-33 progress reports and two City letters were normalized to the canonical '3:14-CV-02551-JZ' across #2076-#2079 — every one of them pointing at an instrument whose own key was a sentence. The detail was worth keeping and belonged in `note`, never in a join key. Found by a TREE-WIDE re-audit rather than a per-PR one; a subset audit would have kept missing it, because this artifact was merged three PRs earlier.",
       "penalty_usd is the TOTAL assessed, $49,000, and the decree splits it in two equal halves that sit on facing pages: para 44 assesses $24,500 to the United States (p29, text layer) and para 45 assesses $24,500 to the State of Ohio (p30, IMAGE-ONLY, recovered by OCR). A text-layer-only read of this decree sees half the penalty and reports $24,500 with no indication anything is missing.",
       "INTERNAL INCONSISTENCY, recorded not resolved. Table A.1 sizes the Lost Creek / Cole St. / Findlay Road / Fifteenth St. control measures to a \"5-yr, 6-hour design storm\", but para 50 excuses an SSO from those same four basins when precipitation is below a \"5-year recurrence interval, 24-hour duration\" storm (3.11 in). Those are different storms. The 25-year tier is self-consistent (6-hour in both places, 3.26 in). Whether the 6/24-hour split is deliberate or a drafting error is an open question - do not silently harmonise them.",
       "The PDF contains Appendix B twice (pp. 73-79 and pp. 84-90, both stamped Doc #: 4-3, PageID #192-198) and Table A.1 twice (pp. 70-72 and pp. 100-102, the second copy a poorer scan). Transcription is from the cleaner first copy. This is duplication in the as-served document, not in the corpus - do not \"fix\" it.",
@@ -6363,10 +6368,10 @@
     "fields": {
       "agency": "U.S. EPA / DOJ and Ohio EPA",
       "instrument": "consent decree",
-      "case_no": "3:14 CV 2551 (N.D. Ohio, Western Div., Judge Jack Zouhary; Doc #5, filed 01/13/15; DOJ case no. 90-5-1-1-08433)",
+      "case_no": "3:14-CV-02551-JZ",
       "respondent": "City of Lima",
       "facility": "City of Lima WWTP and combined/sanitary sewer collection system, Allen County, Ohio",
-      "permit_no": "2PE00000*MD (issued to the City of Lima by Ohio EPA, effective 2013-01-01, \"and all revisions, modifications, and successors\" - Definitions, para aa, p11)",
+      "permit_no": "2PE00000*MD",
       "issued_date": "2015-01-13",
       "effective_date": "2015-01-13",
       "supersedes": null,
@@ -6488,7 +6493,7 @@
       "stipulated_penalties": "Section X, tiered. NPDES permit noncompliance (para 49): $500/day daily concentration or mass limits; $750/day weekly average; $1,000/month monthly average; $500 per any other violation. SSO discharges (para 50): $1,000 per day, accruing only AFTER the Achievement of Full Operation date for that basin's Appendix A control measures, and only where precipitation was below the basin's design event - a 5-year/24-hour storm (3.11 in) for Lost Creek, Cole St., Findlay Road and Fifteenth St., a 25-year/6-hour storm (3.26 in) for Allentown, West St. and Koop, both taken from NOAA's Point Precipitation Frequency Estimates at the 90% confidence interval for the Lima area. SSOs from any other location (para 51): $500-$2,000 per SSO, tiered on whether Lima is in compliance with its CMOM Program schedule. Dry Weather Overflows (para 52): per-day schedule rising with the period of noncompliance. Failure to complete the SEP: $150,000 lump sum. Penalties are split 50/50 between the United States and the State of Ohio where both elect to seek them.",
       "status": "active",
       "summary": "The federal Clean Water Act consent decree governing the City of Lima's WWTP and combined/sanitary sewer system, lodged 2014-11-19 and entered 2015-01-13 by the United States and the State of Ohio in N.D. Ohio (Case No. 3:14 CV 2551). It assesses a $49,000 civil penalty split evenly between the two plaintiffs, requires a $218,400 Ottawa River bank revitalization SEP, and binds Lima to the Appendix A \"Table A.1\" integrated control schedule - WWTP headworks and nitrification-tower upgrades to 70 mgd by 2018, the 13.0 MG Simmons Field CSO storage tank and full CSO control by 2024-08-30, then seven SSO basins in sequence from 2029 through 2038, closing with a final post-construction compliance monitoring report due 2043-12-31. The decree protects Lima's basins at two different levels: Allentown, West Street and Koop are engineered to a 25-year, 6-hour storm, while Lost Creek, Cole St., Findlay Road and Fifteenth St. are engineered only to a 5-year storm and are scheduled last.",
-      "note": "The Cole St. basin row matters to this project beyond its place in the schedule. The Bosc campus address is 4110 N Cole St, and Table A.1 schedules the Cole St. basin's pump-station and relief-sewer upgrades to bid 2034-09-20 and achieve full operation 2036-04-01, sized to a 5-year storm - the lower of the decree's two protection tiers, and tenth of its twelve control measures by completion date (Findlay Road 2037-03-31 and Fifteenth St. 2038-04-01 are later). Under para 50 the $1,000/day stipulated penalty for an SSO in that basin does not begin to accrue until that 2036 date. THIS IS NOT YET A FINDING ABOUT THE CAMPUS: a sewer basin named for a street is not evidence that a parcel on that street drains to it. The decree gives the testable handle - the Cole St. basin's control measures address SSO 49 and SSO 10 - and the campus/basin relationship must be established from the sewershed geometry and those two SSO locations, never from the street name. See lead H1 and issue #1760."
+      "note": "Court and docket detail moved out of the identifier fields: N.D. Ohio, Western Division, Judge Jack Zouhary; entered as Doc #5, filed 01/13/15; DOJ case no. 90-5-1-1-08433. The permit is 2PE00000*MD, issued to the City of Lima by Ohio EPA effective 2013-01-01, and the decree binds \"all revisions, modifications, and successors\" to it (Definitions, para aa, p11) — which is why later documents on *ND / *OD / *PD are still under it. The Cole St. basin row matters to this project beyond its place in the schedule. The Bosc campus address is 4110 N Cole St, and Table A.1 schedules the Cole St. basin's pump-station and relief-sewer upgrades to bid 2034-09-20 and achieve full operation 2036-04-01, sized to a 5-year storm - the lower of the decree's two protection tiers, and tenth of its twelve control measures by completion date (Findlay Road 2037-03-31 and Fifteenth St. 2038-04-01 are later). Under para 50 the $1,000/day stipulated penalty for an SSO in that basin does not begin to accrue until that 2036 date. THIS IS NOT YET A FINDING ABOUT THE CAMPUS: a sewer basin named for a street is not evidence that a parcel on that street drains to it. The decree gives the testable handle - the Cole St. basin's control measures address SSO 49 and SSO 10 - and the campus/basin relationship must be established from the sewershed geometry and those two SSO locations, never from the street name. See lead H1 and issue #1760."
     },
     "approximate_paths": [],
     "citation": {
@@ -6667,8 +6672,10 @@
     "rel": "oepa/lima/edoc-453773.order.yaml",
     "group": "enforcement",
     "title": "correspondence",
-    "confidence": "high",
+    "confidence": "low",
     "warnings": [
+      "⚠️ permit_no NULLED — it held 'WWW3-1014947-96', which is not an NPDES permit number and does not appear in the source in that form. The page carries only the fragment 'WWW3-1' in a badly degraded text layer; the rest was not read from this document. Confidence lowered to low: a one-page letter that produced one invented identifier should not have any field cited without the page image.",
+      "This letter is filed under permit 2PE00000 by the portal, but states no permit number of its own that could be read. `permit_no` is null rather than back-filled from the drawer — custody is not classification.",
       "This is a correspondence/request letter, not a formal enforcement instrument such as a consent decree, DFFO, NOV, or extension letter.",
       "Secondary ID on the routing slip appears to read 'ALL-00000' but handwriting makes exact value uncertain.",
       "OCR layer was unreliable; all key fields verified against the page image."
@@ -6679,7 +6686,7 @@
       "case_no": null,
       "respondent": "City of Lima",
       "facility": "City of Lima Wastewater Treatment Plant",
-      "permit_no": "WWW3-1014947-96",
+      "permit_no": null,
       "issued_date": "2016-06-10",
       "effective_date": null,
       "supersedes": null,
@@ -6702,7 +6709,7 @@
       "source_kind": "document",
       "page": 1,
       "pages": null,
-      "confidence": "high",
+      "confidence": "low",
       "note": null,
       "verified": true
     },
