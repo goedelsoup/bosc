@@ -442,3 +442,91 @@ def test_source_path_does_not_shadow_its_own_digest() -> None:
     assert [(s.path, s.role, s.sha256) for s in ex.sources] == [
         ("data/documents/a.pdf", "permit", "abc")
     ]
+
+
+# --- the wastewater-compliance genres (#1746/#2077/#2079) ------------------------------------
+
+_RENDER = {"doc_id": "edoc-1", "source_path": "data/documents/oepa/lima/edoc-1.pdf", "dpi": 200}
+
+
+def test_classify_routes_each_compliance_genre_by_its_own_payload_block() -> None:
+    assert _classify({**_RENDER, "kind": "order", "order": {"instrument": "DFFO"}}) == "order"
+    assert (
+        _classify({**_RENDER, "kind": "inspection", "inspection": {"type_code": "CEI"}})
+        == "inspection"
+    )
+    assert (
+        _classify({**_RENDER, "kind": "progress-report", "progress_report": {"paragraph": "33"}})
+        == "progress_report"
+    )
+    assert (
+        _classify({**_RENDER, "kind": "engineering", "record": {"discipline": "sanitary"}})
+        == "engineering"
+    )
+
+
+def test_classify_does_not_claim_a_generic_record_or_order_scalar() -> None:
+    """`record:` is the loosest word of the four — it is tested as a MAPPING for that reason."""
+    assert _classify({**_RENDER, "kind": "x", "record": "see the minutes"}) == DECLINED
+    assert _classify({**_RENDER, "kind": "x", "order": ["first", "second"]}) == DECLINED
+
+
+def test_a_declared_manual_read_is_declined_and_anything_else_fails_loudly() -> None:
+    """The third committed convention: a human read of page images, declaring its own method.
+
+    Nine artifacts carry `doc_id`+`source_path`+`kind`+`pages_read`+`method` and NO `dpi` — six
+    Allen County DFFO/SSO-closure instruments, West Union's 1993 consent order, two awards.
+    Neither `DocExtraction` (needs `dpi`) nor `TranscribedExtraction` (refuses `doc_id`/
+    `pages_read`) fits them, so they stay DECLINED *deliberately*. A payload that is neither a
+    render nor one of these is MALFORMED and still routes to its model, so `Corpus.rejected`
+    names it (#1994) — that is the guarantee the decline must not weaken.
+    """
+    manual = {
+        "doc_id": "dffo-2005-journalized",
+        "source_path": "data/documents/legal/prr-mandamus/dffo-2005.pdf",
+        "kind": "order",
+        "pages_read": [0, 1],
+        "method": "manual transcription from the scanned journalized instrument",
+        "order": {"instrument": "DFFO"},
+    }
+    assert _classify(manual) == DECLINED
+    # No declared method, no render receipt: malformed, and it must reach OrderExtraction.
+    assert _classify({k: v for k, v in manual.items() if k != "method"}) == "order"
+
+
+def test_classify_leaves_the_resolution_genre_unclaimed() -> None:
+    """32 hand-authored legislative transcriptions with no extractor and no envelope (#2080).
+
+    Their shapes converged on `body`/`instrument`/`body_kind` but NOT on a date — 20 carry
+    `adopted`, 7 carry `meeting_date`. Claiming them means designing the genre, not wiring it.
+    """
+    assert (
+        _classify(
+            {
+                "resolution": {"body": "Sidney City Council", "adopted": "2025-10-27"},
+                "source": {"file": "data/documents/sidney/council/res-80-25.pdf"},
+            }
+        )
+        == DECLINED
+    )
+
+
+def test_the_committed_compliance_genres_all_load() -> None:
+    """Whole-tree, like the #1994 gate: validity is a property of the FILE."""
+    corpus = load_corpus(Settings(data_dir=REPO_ROOT / "data", site="lima"), scope=WHOLE_TREE)
+    assert len(corpus.orders) == 32
+    assert len(corpus.inspections) == 30
+    assert len(corpus.progress_reports) == 9
+    assert len(corpus.engineering) == 3
+    # Every declined file that keys one of these blocks is a declared manual read or a
+    # `resolution:` — never a render extraction that quietly fell out of the loader.
+    for rel in corpus.declined:
+        raw = yaml.safe_load((REPO_ROOT / "data" / "extracted" / rel).read_text(encoding="utf-8"))
+        if not isinstance(raw, dict):
+            continue
+        for block in ("order", "inspection", "progress_report", "record"):
+            if isinstance(raw.get(block), dict):
+                assert "dpi" not in raw and isinstance(raw.get("method"), str), (
+                    f"{rel} keys `{block}:` and is neither a render extraction nor a declared "
+                    "manual read — it fell out of the corpus silently"
+                )
