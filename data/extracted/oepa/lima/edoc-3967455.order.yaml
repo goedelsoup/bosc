@@ -6,21 +6,19 @@ pages_read:
 image_pages_read:
 - 0
 dpi: 150
-source_text_excerpt: "CITY OF LIMA, OHIO David J. Berger, Mayor \n50Town Square. L-ima,\
-  \ Ohio 45801-4900 419/228-5462 Fax 419/221-5214 \nFebruary 24, 1995 \nRECEIVED \\\
-  \ \nEE8 2 1995 \\ \nu ~+W.DPdA. \n../ \nMs. Elizabeth Wick \nEnforcement Group Leader\
-  \ \nDivision of Surface Water \nNWDO - Ohio EPA \n347 N. Dunbridge Road \nBowling\
-  \ Green, Ohio 43402 \nRe: Director's Final Findings and Orders \nSanitary Sewer\
-  \ Overflows \nDear Ms. Wick: \nEnclosed herewith are three copies of the City of\
-  \ Lima, Ohio \nGeneral Plan for Abatement of Sanitary Sewer Overflows, as \nrequired\
-  \ by Director's Final Findings and Orders, dated February \n25, 1994. \nTh"
+source_text_excerpt: "CITY OF LIMA, OHIO David J. Berger, Mayor \n50Town Square. L-ima, Ohio 45801-4900\
+  \ 419/228-5462 Fax 419/221-5214 \nFebruary 24, 1995 \nRECEIVED \\ \nEE8 2 1995 \\ \nu ~+W.DPdA. \n../\
+  \ \nMs. Elizabeth Wick \nEnforcement Group Leader \nDivision of Surface Water \nNWDO - Ohio EPA \n347\
+  \ N. Dunbridge Road \nBowling Green, Ohio 43402 \nRe: Director's Final Findings and Orders \nSanitary\
+  \ Sewer Overflows \nDear Ms. Wick: \nEnclosed herewith are three copies of the City of Lima, Ohio \n\
+  General Plan for Abatement of Sanitary Sewer Overflows, as \nrequired by Director's Final Findings and\
+  \ Orders, dated February \n25, 1994. \nTh"
 order:
   confidence: medium
   warnings:
-  - Permit number '2PE00000' is handwritten at the top of the page and read from the
-    image; OCR did not reliably capture it.
-  - No case number is explicitly printed on this letter; the reference instrument
-    is the DFFO dated 1994-02-25.
+  - Permit number '2PE00000' is handwritten at the top of the page and read from the image; OCR did not
+    reliably capture it.
+  - No case number is explicitly printed on this letter; the reference instrument is the DFFO dated 1994-02-25.
   - Received stamp date reads FEB 24 1995 in image, consistent with the letter date.
   agency: Ohio EPA
   instrument: correspondence
@@ -30,19 +28,20 @@ order:
   permit_no: 2PE00000
   issued_date: '1995-02-24'
   effective_date: null
-  supersedes: Director's Final Findings and Orders dated 1994-02-25
+  supersedes: null
   obligations:
-  - requirement: Submit General Plan for Abatement of Sanitary Sewer Overflows (three
-      copies enclosed with this letter, prepared by URS Consultants, Columbus)
+  - requirement: Submit General Plan for Abatement of Sanitary Sewer Overflows (three copies enclosed
+      with this letter, prepared by URS Consultants, Columbus)
     deadline: null
     status: met
   penalty_usd: null
   stipulated_penalties: null
   status: null
-  summary: This is a February 24, 1995 transmittal letter from Gary Sheely, Director
-    of Utilities for the City of Lima, Ohio, to Ms. Elizabeth Wick, Enforcement Group
-    Leader at Ohio EPA NWDO, enclosing three copies of the City of Lima General Plan
-    for Abatement of Sanitary Sewer Overflows as required by the Director's Final
-    Findings and Orders dated February 25, 1994. The report was prepared by URS Consultants,
-    Columbus, with input from City of Lima officials and staff.
-  note: null
+  summary: This is a February 24, 1995 transmittal letter from Gary Sheely, Director of Utilities for
+    the City of Lima, Ohio, to Ms. Elizabeth Wick, Enforcement Group Leader at Ohio EPA NWDO, enclosing
+    three copies of the City of Lima General Plan for Abatement of Sanitary Sewer Overflows as required
+    by the Director's Final Findings and Orders dated February 25, 1994. The report was prepared by URS
+    Consultants, Columbus, with input from City of Lima officials and staff.
+  note: The City of Lima's 1995-02-24 letter to Ohio EPA enclosing the General Plan the 1994-02-25 DFFO
+    ordered. A submittal made UNDER an order does not supersede it — the DFFO stayed in force, and the
+    2005 U.S. EPA order found 36 SSO points still discharging a decade later.

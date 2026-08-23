@@ -88,15 +88,25 @@ notes: "The enforcement half of the Lima WWTP record, kept separate from the per
   \ doc_type is a FILING DRAWER, not a genre, and it disagreed with the document in\nfive of these sixteen:\
   \ two rows typed \"NOV\" are the City's replies to one, a row typed\n\"Investigation Report\" is itself\
   \ an NOV, and two typed \"Judicial Order\" are City of Lima letters.\nEvery `instrument` here was read\
-  \ from the document.\n\n⚠️ `edoc-3063821.order.yaml` is NOT LIMA EVIDENCE. Ohio EPA misfiled a MANSFIELD\
-  \ WWTP\n(Richland County) letter under Lima's permit number — the letter's own reference block reads\n\
-  \"Mansfield WWTP / Richland County / 2PE00000\" — so a 2PE00000 sweep returned it. The extraction is\n\
-  shelved here because the extracted tree mirrors its immutable source, not because the subject is\nLima's.\
-  \ Its own warnings say so at length.\n\nStill ingested and NOT yet extracted — 76 of the 93:\n  36 \
-  \ permit actions (`Permit - Intermediate`) — heterogeneous: issued NPDES permits 2PE00000*MD /\n   \
-  \   *ND / *PD, draft public notices, a fact sheet, modification approvals, a mercury variance\n    \
-  \  application, a 2013 City ordinance, the 2022 renewal application package APP256207483, and\n    \
-  \  a run of City/agency correspondence. Genre is per-document, not per-drawer.\n   1  `edoc-2363112.pdf`\
+  \ from the document.\n\n⚠️ TWO OF THESE SIXTEEN ARE NOT LIMA EVIDENCE. Ohio EPA's portal indexes both\
+  \ under permit\n2PE00000, so a permit-scoped sweep returned them, but neither concerns Lima:\n\n  edoc-3063821\
+  \  MANSFIELD WWTP, Richland County — its own reference block reads \"Mansfield WWTP /\n            \
+  \    Correspondence / NPDES / Richland County / 2PE00000\": Mansfield's plant, Mansfield's\n       \
+  \         county, LIMA's permit number.\n  edoc-3296496  RAILTECH, 25 Interstate Drive, NAPOLEAN [sic],\
+  \ HENRY County — an Emergency Response\n                Initial Pollution Incident Report for a glycol\
+  \ release, spill id 1607-35-1349110,\n                citizen-reported 2016-07-13. The IPIR itself names\
+  \ no permit at all.\n\nBoth extractions are shelved here because the extracted tree mirrors its immutable\
+  \ source and the\nportal served these docids under Lima's permit. Read the shelf as CUSTODY, not attribution;\
+  \ each\nartifact's own warnings say so. `permit_no: 2PE00000` on edoc-3063821 is AS PRINTED and IS the\n\
+  error — correcting it would destroy the evidence that the misfiling happened.\n\nThat two of sixteen\
+  \ were other facilities' records is itself a finding about this source: a\npermit-scoped portal sweep\
+  \ is not a permit-scoped result set, and every document one returns must be\nREAD before it is attributed.\
+  \ Mansfield is a registered site in this network; raised as a follow-up\nrather than acted on, because\
+  \ moving a source byte is what the chain-of-custody rule forbids.\n\nStill ingested and NOT yet extracted\
+  \ — 76 of the 93:\n  36  permit actions (`Permit - Intermediate`) — heterogeneous: issued NPDES permits\
+  \ 2PE00000*MD /\n      *ND / *PD, draft public notices, a fact sheet, modification approvals, a mercury\
+  \ variance\n      application, a 2013 City ordinance, the 2022 renewal application package APP256207483,\
+  \ and\n      a run of City/agency correspondence. Genre is per-document, not per-drawer.\n   1  `edoc-2363112.pdf`\
   \ — NEVER to be extracted. Byte-identical (sha256 b140e19c5e26) to\n      `oepa/2PE00000.pdf`, which\
   \ is already extracted as `oepa/2PE00000.npdes.yaml`. Recorded as a\n      cluster in `data/site/document-versions.yaml`.\n\
   \  30  inspections / compliance reviews — NO GENRE FITS. An Ohio EPA inspection letter reports\n   \

@@ -6,20 +6,24 @@ pages_read:
 image_pages_read:
 - 0
 dpi: 150
-source_text_excerpt: "® \nho Ohio EnvironmentaE \nProtection Agency \nJohn R. Kasich,\
-  \ Governor \nMary Taylor, l.t. Governor \nCraig W. Butler, Director \nRe: Lima WWTP\
-  \ \nResolution of Violation \nNPDES \nAllen County \n2PE00000 \nAugust 1, 2016 \n\
-  Mayor and Council \nCity of Lima \n50 Town Square \nLima, Ohio 45801 \nDear Mayor\
-  \ and Council: \nThank you for Mr. Samuels Jufy 25, 2016, response to my July 11,\
-  \ 2016, Partial Resolution of Violation \n(PROV) letter. The documentation you submitted\
-  \ incfuded a revised Standard Operating Practice (SOP) for \nfilling the sodium\
-  \ hypochforite tank. \nI have reviewed the documentation that you prov"
+source_text_excerpt: "® \nho Ohio EnvironmentaE \nProtection Agency \nJohn R. Kasich, Governor \nMary\
+  \ Taylor, l.t. Governor \nCraig W. Butler, Director \nRe: Lima WWTP \nResolution of Violation \nNPDES\
+  \ \nAllen County \n2PE00000 \nAugust 1, 2016 \nMayor and Council \nCity of Lima \n50 Town Square \n\
+  Lima, Ohio 45801 \nDear Mayor and Council: \nThank you for Mr. Samuels Jufy 25, 2016, response to my\
+  \ July 11, 2016, Partial Resolution of Violation \n(PROV) letter. The documentation you submitted incfuded\
+  \ a revised Standard Operating Practice (SOP) for \nfilling the sodium hypochforite tank. \nI have reviewed\
+  \ the documentation that you prov"
 order:
   confidence: high
   warnings:
+  - 'Twin capture: edoc-1914753 and edoc-470936 are the SAME Ohio EPA Resolution of Violation letter of
+    2016-08-01, served at two portal docids as two different scans (NOT byte-identical — four distinct
+    sha256s across the two 2016 letter pairs). The two independent reads disagreed, one finding a 2016-07-25
+    ''deadline'' that is in fact the date the City had ALREADY submitted the SOP. Reconciled to one reading;
+    the cluster is declared in data/site/document-versions.yaml.'
   - OCR rendered permit number as '2PE00000' — confirmed against image as '2PE00000'.
-  - OCR rendered 'July' as 'Jufy' and 'included' as 'incfuded' — text layer unreliable
-    in spots but key dates and numbers verified against image.
+  - OCR rendered 'July' as 'Jufy' and 'included' as 'incfuded' — text layer unreliable in spots but key
+    dates and numbers verified against image.
   agency: Ohio EPA
   instrument: correspondence (Resolution of Violation letter)
   case_no: null
@@ -28,26 +32,21 @@ order:
   permit_no: 2PE00000
   issued_date: '2016-08-01'
   effective_date: null
-  supersedes: Partial Resolution of Violation (PROV) letter dated 2016-07-11; NOV
-    dated 2016-06-01
-  obligations:
-  - requirement: Submit revised Standard Operating Practice (SOP) for filling the
-      sodium hypochlorite tank in response to the July 11, 2016 PROV letter
-    deadline: '2016-07-25'
-    status: met — documentation submitted by Mr. Samuels on July 25, 2016
-  - requirement: Resolve all violations outlined in the NOV dated June 1, 2016
-    deadline: null
-    status: met — Ohio EPA determined all violations resolved as of this letter
+  supersedes: null
+  obligations: []
   penalty_usd: null
-  stipulated_penalties: None assessed at this time; Director retains authority to
-    seek administrative or civil penalties under ORC Section 6111 for violations noted
-    in the June 1, 2016 NOV, contingent on future compliance
+  stipulated_penalties: None assessed at this time; Director retains authority to seek administrative
+    or civil penalties under ORC Section 6111 for violations noted in the June 1, 2016 NOV, contingent
+    on future compliance
   status: closed
-  summary: This August 1, 2016 letter from Ohio EPA's Division of Surface Water (Northwest
-    District Office), signed by Peggy B. Christie, notifies the City of Lima that
-    its Wastewater Treatment Plant has resolved all violations identified in the June
-    1, 2016 NOV, following submission of a revised SOP for filling the sodium hypochlorite
-    tank. The letter closes out the violation for compliance purposes but preserves
-    the Director's right to pursue civil or administrative penalties under ORC Section
-    6111.
-  note: null
+  summary: This August 1, 2016 letter from Ohio EPA's Division of Surface Water (Northwest District Office),
+    signed by Peggy B. Christie, notifies the City of Lima that its Wastewater Treatment Plant has resolved
+    all violations identified in the June 1, 2016 NOV, following submission of a revised SOP for filling
+    the sodium hypochlorite tank. The letter closes out the violation for compliance purposes but preserves
+    the Director's right to pursue civil or administrative penalties under ORC Section 6111.
+  note: 'A Resolution of Violation letter CLOSES a sequence; it imposes nothing. The obligations list
+    is therefore empty by design, not by omission. The chain it closes: Ohio EPA NOV 2016-06-01 -> the
+    City''s 2016-06-15 response -> Ohio EPA Partial Resolution of Violation 2016-07-11 -> the City''s
+    2016-07-25 response through counsel (Frost Brown Todd) enclosing a revised Standard Operating Practice
+    for filling the sodium hypochlorite tank -> this letter. The SOP submission is a COMPLETED act the
+    letter acknowledges receiving, not a future deadline.'

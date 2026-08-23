@@ -44968,9 +44968,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-rov-2016-08-01",
+        "canonical_document_id": "oepa/lima/edoc-470936.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -44983,10 +44983,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-prov-2016-07-11",
+        "canonical_document_id": "oepa/lima/edoc-1914761.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-463755.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-1952887.pdf",
@@ -45733,9 +45735,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PE00000-prov-2016-07-11",
+        "canonical_document_id": "oepa/lima/edoc-1914761.pdf",
+        "version": "v2",
         "supersedes": []
       },
       {
@@ -45778,10 +45780,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PE00000-rov-2016-08-01",
+        "canonical_document_id": "oepa/lima/edoc-470936.pdf",
+        "version": "v2",
+        "supersedes": [
+          "oepa/lima/edoc-1914753.pdf"
+        ]
       },
       {
         "rel": "oepa/lima/edoc-472902.pdf",

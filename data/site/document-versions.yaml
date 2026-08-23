@@ -260,3 +260,36 @@ clusters:
           "is among the deferred set" — that is WRONG. All three are tracked and appear in
           `data/documents/oepa/lima/filename-map.yaml`; only the claim about them was mistaken, not
           the rule it cited, which was applied correctly.
+
+  # Twin captures from the same 2026-08-22 sweep: ONE Ohio EPA letter served at TWO portal docids as
+  # two different scans. NOT byte-identical — all four files have distinct sha256s — so these are
+  # `v2` content twins, not `duplicate`s, and both remain readable evidence. They are declared because
+  # two independent extractions of one letter disagreed, which is the failure a cluster exists to name.
+  - id: oepa:2PE00000-prov-2016-07-11
+    canonical: oepa/lima/edoc-1914761.pdf
+    source: both docids serve the Ohio EPA Partial Resolution of Violation letter of 2016-07-11
+    members:
+      - rel: oepa/lima/edoc-1914761.pdf
+        version: v2
+      - rel: oepa/lima/edoc-463755.pdf
+        version: v2
+        evidence_note: >
+          The same 2016-07-11 Partial Resolution of Violation letter as the canonical, scanned
+          differently — this capture has NO TEXT LAYER at all, and its first reading invented a
+          case_no from the permit number because a vision-only read had nothing to check against.
+          The canonical carries a clean text layer and is the copy to cite.
+
+  - id: oepa:2PE00000-rov-2016-08-01
+    canonical: oepa/lima/edoc-470936.pdf
+    source: both docids serve the Ohio EPA Resolution of Violation letter of 2016-08-01
+    members:
+      - rel: oepa/lima/edoc-470936.pdf
+        version: v2
+      - rel: oepa/lima/edoc-1914753.pdf
+        version: v2
+        evidence_note: >
+          The same 2016-08-01 Resolution of Violation letter as the canonical, scanned differently.
+          The two independent readings disagreed: one recorded a 2016-07-25 "deadline" that is in
+          fact the date the City had ALREADY submitted the revised sodium-hypochlorite SOP the letter
+          acknowledges receiving. Both readings are now reconciled to no outstanding obligations,
+          which is what a closure letter actually imposes.

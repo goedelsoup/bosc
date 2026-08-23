@@ -6,26 +6,23 @@ pages_read:
 image_pages_read:
 - 0
 dpi: 150
-source_text_excerpt: "Emerciency Response Section - Initial Pollution Incident Report\
-  \ (IPIR) \n7/26/2016 \nSpill ld Number: 1607-02-14561I0 District: NW \nReported\
-  \ By: DAVE SCHNIPKE Reported: 07/26/2016 08:48 \nTitle: ENV MANAGER Discovered:\
-  \ 07/25/2016 23:00 \nTelephone: (419) 221-5294 ext: Occurred: 07/25/2016 2300 \n\
-  Affiliation: ANY TWP TRUSTEE, MAYOR_ GOVT OR C Chronic: N \nCounty: ALLEN CitylTownship:\
-  \ LIMA \nDid Spiller Report ? Y Complaint ? N \nReceived By: LAUCK, GREG Priority:\
-  \ 4 \nLocal EPC ? N Did you tell the Spiller to Call the N.R.0 ? N \nBusiness: N\
-  \ SARA Report: N \nSuspected Spi1ler: LIMA WWTP \nMailing Address: N"
+source_text_excerpt: "Emerciency Response Section - Initial Pollution Incident Report (IPIR) \n7/26/2016\
+  \ \nSpill ld Number: 1607-02-14561I0 District: NW \nReported By: DAVE SCHNIPKE Reported: 07/26/2016\
+  \ 08:48 \nTitle: ENV MANAGER Discovered: 07/25/2016 23:00 \nTelephone: (419) 221-5294 ext: Occurred:\
+  \ 07/25/2016 2300 \nAffiliation: ANY TWP TRUSTEE, MAYOR_ GOVT OR C Chronic: N \nCounty: ALLEN CitylTownship:\
+  \ LIMA \nDid Spiller Report ? Y Complaint ? N \nReceived By: LAUCK, GREG Priority: 4 \nLocal EPC ? N\
+  \ Did you tell the Spiller to Call the N.R.0 ? N \nBusiness: N SARA Report: N \nSuspected Spi1ler: LIMA\
+  \ WWTP \nMailing Address: N"
 order:
   confidence: high
   warnings:
-  - This document is an IPIR (pollution incident report), not a formal enforcement
-    order, consent decree, DFFO, NOV, or similar enforcement instrument — it is a
-    precursor/notification record only.
-  - Spill amount recorded as 0.0 UNK, likely a placeholder as actual volume was unknown
-    at time of report.
+  - This document is an IPIR (pollution incident report), not a formal enforcement order, consent decree,
+    DFFO, NOV, or similar enforcement instrument — it is a precursor/notification record only.
+  - Spill amount recorded as 0.0 UNK, likely a placeholder as actual volume was unknown at time of report.
   - Case/Spill ID verified from image as 1607-02-1456//0; OCR rendered ambiguous characters.
   agency: Ohio EPA – Emergency Response Section
   instrument: Initial Pollution Incident Report (IPIR)
-  case_no: 1607-02-1456//0
+  case_no: 1607-02-1456
   respondent: Lima WWTP
   facility: Lima WWTP – 1200 FT Amanda Rd, Lima, Allen County, OH
   permit_no: null
@@ -33,18 +30,19 @@ order:
   effective_date: null
   supersedes: null
   obligations:
-  - requirement: Sewage overflow/bypass at plant due to power failure and ongoing
-      construction; Ottawa River affected. Caller notified NWDO/NSW (Peggy Christy).
-      DSW/WW notified 07/26/2016 at 08:52.
+  - requirement: Sewage overflow/bypass at plant due to power failure and ongoing construction; Ottawa
+      River affected. Caller notified NWDO/NSW (Peggy Christy). DSW/WW notified 07/26/2016 at 08:52.
     deadline: null
     status: reported
   penalty_usd: null
   stipulated_penalties: null
   status: active
-  summary: This is an Initial Pollution Incident Report (IPIR) filed on 07/26/2016
-    documenting a sewage overflow/bypass at the Lima WWTP (Allen County, NW District)
-    that occurred on 07/25/2016 at 23:00. The cause was a power failure during ongoing
-    construction, resulting in sewage discharge to the Ottawa River (surface water/storm
-    media). The incident was reported by the facility's Environmental Manager, Dave
-    Schnipke, and DSW/WW was notified the following morning.
-  note: null
+  summary: This is an Initial Pollution Incident Report (IPIR) filed on 07/26/2016 documenting a sewage
+    overflow/bypass at the Lima WWTP (Allen County, NW District) that occurred on 07/25/2016 at 23:00.
+    The cause was a power failure during ongoing construction, resulting in sewage discharge to the Ottawa
+    River (surface water/storm media). The incident was reported by the facility's Environmental Manager,
+    Dave Schnipke, and DSW/WW was notified the following morning.
+  note: Ohio EPA spill id, printed on this IPIR as '1607-02-1456//0'. `case_no` holds the incident id
+    alone so it joins edoc-3170417 (the NOV on the same 2016-07 Lima WWTP sludge release), which prints
+    it without the suffix. The trailing '//0' is the printed sequence suffix and is recorded here rather
+    than dropped.
