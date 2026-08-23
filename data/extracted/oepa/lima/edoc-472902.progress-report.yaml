@@ -56,7 +56,7 @@ progress_report:
     explicitly stated on the face of the report.
   agency: U.S. EPA (USEPA) / Ohio EPA (OEPA), N.W.D.O.
   instrument: Lima Consent Decree (CD)
-  case_no: '3:14-CV-02551-JZ Doc #5 Filed: 01/13/15'
+  case_no: 3:14-CV-02551-JZ
   paragraph: '33'
   respondent: City of Lima, Ohio
   facility: Lima Wastewater Treatment Plant (WWTP)
@@ -182,4 +182,6 @@ progress_report:
     all attributable to rainfall, 5 Water-in-Basement events, and one accidental Sodium Hypochlorite discharge
     that resulted in an NOV now resolved. CMOM sewer cleaning, CCTV inspection, and rehabilitation activities
     are also reported for the period.
-  note: null
+  note: 'case_no normalized for the join: printed as "3:14-CV-02551-JZ Doc #5 Filed: 01/13/15", where
+    the trailing text is one FILING inside the case rather than the case. The field holds the case number
+    alone so this row joins edoc-412983.order.yaml.'

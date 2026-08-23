@@ -632,123 +632,135 @@
         },
         {
           "kind": "SSO",
-          "location": "MH#14 on Lost Creek Golf Course (Annual Report #302, EPA ID 2PE00000047)",
+          "location": "MH#14 on Lost Creek Golf Course (Annual Report #302, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "18",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": "YTD overflow count for reporting period"
+          "note": "YTD overflow count for reporting period",
+          "outfall_id": "2PE00000047"
         },
         {
           "kind": "CSO",
-          "location": "S. Central Ave. & Ottawa River (Annual Report #007, EPA ID 2PE00000007)",
+          "location": "S. Central Ave. & Ottawa River (Annual Report #007, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "14",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000007"
         },
         {
           "kind": "CSO",
-          "location": "Timberlake Sewer & Ottawa River (Annual Report #008, EPA ID 2PE00000008)",
+          "location": "Timberlake Sewer & Ottawa River (Annual Report #008, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "8",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000008"
         },
         {
           "kind": "CSO",
-          "location": "Oxford Ave. & Collett Street (Annual Report #009, EPA ID 2PE00000009)",
+          "location": "Oxford Ave. & Collett Street (Annual Report #009, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000009"
         },
         {
           "kind": "CSO",
-          "location": "North Shore Dr. & Cole St. (Annual Report #037, EPA ID 2PE00000037)",
+          "location": "North Shore Dr. & Cole St. (Annual Report #037, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "7",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000037"
         },
         {
           "kind": "CSO",
-          "location": "Lakewood Ave & Charles St. (Annual Report #035, EPA ID 2PE00000035)",
+          "location": "Lakewood Ave & Charles St. (Annual Report #035, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "2",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000035"
         },
         {
           "kind": "CSO",
-          "location": "Judkins Ave at Kunneke Ave (Annual Report #034, EPA ID 2PE00000034)",
+          "location": "Judkins Ave at Kunneke Ave (Annual Report #034, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000034"
         },
         {
           "kind": "CSO",
-          "location": "Nixon Ave. at Kunneke Ave. (Annual Report #033, EPA ID 2PE00000033)",
+          "location": "Nixon Ave. at Kunneke Ave. (Annual Report #033, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000033"
         },
         {
           "kind": "SSO",
-          "location": "Glenwood Ave. between Lakewood and Wales Ave. (Annual Report #303, EPA ID 2PE00000029)",
+          "location": "Glenwood Ave. between Lakewood and Wales Ave. (Annual Report #303, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "8",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000029"
         },
         {
           "kind": "SSO",
-          "location": "S. Pears Ave. at Kunneke Ave. (Annual Report #304, EPA ID 2PE00000028)",
+          "location": "S. Pears Ave. at Kunneke Ave. (Annual Report #304, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000028"
         },
         {
           "kind": "SSO",
-          "location": "Lakewood Ave. & Maplewood Drive (Annual Report #305, EPA ID 2PE00000027)",
+          "location": "Lakewood Ave. & Maplewood Drive (Annual Report #305, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000027"
         },
         {
           "kind": "SSO",
-          "location": "S. Pears Ave. between Wendell Ave & Lakewood Ave. (Annual Report #306, EPA ID 2PE00000026)",
+          "location": "S. Pears Ave. between Wendell Ave & Lakewood Ave. (Annual Report #306, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "5",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000026"
         },
         {
           "kind": "SSO",
@@ -762,33 +774,36 @@
         },
         {
           "kind": "SSO",
-          "location": "S. Pears Ave. between Lowell Ave. & Wendell Ave. (Annual Report #308, EPA ID 2PE00000025)",
+          "location": "S. Pears Ave. between Lowell Ave. & Wendell Ave. (Annual Report #308, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "14",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000025"
         },
         {
           "kind": "SSO",
-          "location": "S. Pears Ave. between W. Spring & W. Elm St (Annual Report #309, EPA ID 2PE00000023)",
+          "location": "S. Pears Ave. between W. Spring & W. Elm St (Annual Report #309, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "12",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000023"
         },
         {
           "kind": "SSO",
-          "location": "Between W. Spring & W. Elm, East of Primrose Pl (Annual Report #310, EPA ID 2PE00000024)",
+          "location": "Between W. Spring & W. Elm, East of Primrose Pl (Annual Report #310, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "13",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000024"
         },
         {
           "kind": "SSO",
@@ -802,63 +817,69 @@
         },
         {
           "kind": "SSO",
-          "location": "S. Cable Rd. at Lakewood Ave. (Annual Report #313, EPA ID 2PE00000031)",
+          "location": "S. Cable Rd. at Lakewood Ave. (Annual Report #313, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "17",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000031"
         },
         {
           "kind": "SSO",
-          "location": "S. Cable Rd. at Wendell Ave. (Annual Report #314, EPA ID 2PE00000032)",
+          "location": "S. Cable Rd. at Wendell Ave. (Annual Report #314, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "16",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000032"
         },
         {
           "kind": "SSO",
-          "location": "Dale Dr. & Idlewild Dr. (Annual Report #316, EPA ID 2PE00000022)",
+          "location": "Dale Dr. & Idlewild Dr. (Annual Report #316, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "6",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000022"
         },
         {
           "kind": "SSO",
-          "location": "Dale Dr. between W. Wayne & Oakland Pkwy (Annual Report #317, EPA ID 2PE00000020)",
+          "location": "Dale Dr. between W. Wayne & Oakland Pkwy (Annual Report #317, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "14",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000020"
         },
         {
           "kind": "SSO",
-          "location": "Dale Dr. & West Wayne St. (Annual Report #318, EPA ID 2PE00000021)",
+          "location": "Dale Dr. & West Wayne St. (Annual Report #318, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "11",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000021"
         },
         {
           "kind": "SSO",
-          "location": "University Ave. & Dale Dr. (Annual Report #319, EPA ID 2PE00000018)",
+          "location": "University Ave. & Dale Dr. (Annual Report #319, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "10",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000018"
         },
         {
           "kind": "SSO",
@@ -872,23 +893,25 @@
         },
         {
           "kind": "SSO",
-          "location": "1379 N. Cable Road Lift Station (Check Valve) (Annual Report #321, EPA ID 2PE00000051)",
+          "location": "1379 N. Cable Road Lift Station (Check Valve) (Annual Report #321, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000051"
         },
         {
           "kind": "SSO",
-          "location": "1700 Allentown Road Lift Station (Check Valve) (Annual Report #322, EPA ID 2PE00000050)",
+          "location": "1700 Allentown Road Lift Station (Check Valve) (Annual Report #322, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "5",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000050"
         },
         {
           "kind": "SSO",
@@ -912,123 +935,135 @@
         },
         {
           "kind": "SSO",
-          "location": "Woodlawn Ave. & Feeman Ave. (Annual Report #325, EPA ID 2PE00000017)",
+          "location": "Woodlawn Ave. & Feeman Ave. (Annual Report #325, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "12",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000017"
         },
         {
           "kind": "CSO",
-          "location": "Metcalf St. & Tremont Ave. (Annual Report #014, EPA ID 2PE00000014)",
+          "location": "Metcalf St. & Tremont Ave. (Annual Report #014, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000014"
         },
         {
           "kind": "CSO",
-          "location": "Metcalf St. & Ashton Ave. (Annual Report #016, EPA ID 2PE00000016)",
+          "location": "Metcalf St. & Ashton Ave. (Annual Report #016, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000016"
         },
         {
           "kind": "CSO",
-          "location": "Metcalf St. & Runyan Ave. (Annual Report #015, EPA ID 2PE00000015)",
+          "location": "Metcalf St. & Runyan Ave. (Annual Report #015, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000015"
         },
         {
           "kind": "CSO",
-          "location": "West & O'Connor Ave (Annual Report #038, EPA ID 2PE00000038)",
+          "location": "West & O'Connor Ave (Annual Report #038, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "4",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000038"
         },
         {
           "kind": "CSO",
-          "location": "McDonel St. & O'Connor Ave. (Annual Report #012, EPA ID 2PE00000012)",
+          "location": "McDonel St. & O'Connor Ave. (Annual Report #012, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "2",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000012"
         },
         {
           "kind": "CSO",
-          "location": "Burch Ave. & O'Connor Ave. (Annual Report #011, EPA ID 2PE00000011)",
+          "location": "Burch Ave. & O'Connor Ave. (Annual Report #011, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "2",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000011"
         },
         {
           "kind": "CSO",
-          "location": "Metcalf St. & O'Connor Ave. (Annual Report #013, EPA ID 2PE00000013)",
+          "location": "Metcalf St. & O'Connor Ave. (Annual Report #013, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000013"
         },
         {
           "kind": "SSO",
-          "location": "Northwold St. & O'Connor Ave. (Annual Report #326, EPA ID 2PE00000010)",
+          "location": "Northwold St. & O'Connor Ave. (Annual Report #326, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000010"
         },
         {
           "kind": "SSO",
-          "location": "1330 Melrose Ave. (Annual Report #327, EPA ID 2PE00000049)",
+          "location": "1330 Melrose Ave. (Annual Report #327, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000049"
         },
         {
           "kind": "SSO",
-          "location": "Metcalf St. & Lane Ave. (Annual Report #329, EPA ID 2PE00000042)",
+          "location": "Metcalf St. & Lane Ave. (Annual Report #329, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000042"
         },
         {
           "kind": "SSO",
-          "location": "Metcalf St. & Ford Ave. (Annual Report #330, EPA ID 2PE00000044)",
+          "location": "Metcalf St. & Ford Ave. (Annual Report #330, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "2",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000044"
         },
         {
           "kind": "SSO",
@@ -1042,73 +1077,80 @@
         },
         {
           "kind": "SSO",
-          "location": "2032 Burch Ave. (Annual Report #332, EPA ID 2PE00000046)",
+          "location": "2032 Burch Ave. (Annual Report #332, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "2",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000046"
         },
         {
           "kind": "SSO",
-          "location": "Burch Ave. & Lewis Ave. (Annual Report #333, EPA ID 2PE00000045)",
+          "location": "Burch Ave. & Lewis Ave. (Annual Report #333, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "2",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000045"
         },
         {
           "kind": "SSO",
-          "location": "Metcalf St. & Lewis Blvd. (Annual Report #334, EPA ID 2PE00000043)",
+          "location": "Metcalf St. & Lewis Blvd. (Annual Report #334, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000043"
         },
         {
           "kind": "SSO",
-          "location": "Celia Place & Northern Ave. (Annual Report #335, EPA ID 2PE00000041)",
+          "location": "Celia Place & Northern Ave. (Annual Report #335, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000041"
         },
         {
           "kind": "SSO",
-          "location": "Karen St. & Lewis Blvd. (N) (Annual Report #336, EPA ID 2PE00000039)",
+          "location": "Karen St. & Lewis Blvd. (N) (Annual Report #336, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "17",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000039"
         },
         {
           "kind": "SSO",
-          "location": "Karen St. & Lane Ave (Annual Report #337, EPA ID 2PE00000038)",
+          "location": "Karen St. & Lane Ave (Annual Report #337, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "16",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000038"
         },
         {
           "kind": "SSO",
-          "location": "West St. Lift Station (Annual Report #338, EPA ID 2PE00000056)",
+          "location": "West St. Lift Station (Annual Report #338, EPA ID )",
           "date": "January 1 – June 30, 2019",
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000056"
         }
       ],
       "summary": "This is the semiannual compliance progress report filed by the City of Lima, Ohio under Paragraph 33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ) for the period January 1, 2019 through June 30, 2019, received by Ohio EPA on July 31, 2019. Lima reports that it received approved extensions for nitrification tower sampling compliance determination, continued construction on multiple infrastructure projects including the Headworks Project and Simmon's Field CSO EQ Basin, and reported 251 SSO and 55 CSO overflow events as well as three NPDES permit exceedances at Station 001. The CMOM program report documents 5.65 miles of sewer cleaning and 6.99 miles of CCTV inspection during the period.",
@@ -1215,143 +1257,157 @@
         },
         {
           "kind": "SSO",
-          "location": "MH#14 on Lost Creek Golf Course (Annual Report #302, EPA ID# 2PE00000047)",
+          "location": "MH#14 on Lost Creek Golf Course (Annual Report #302, EPA ID# )",
           "date": null,
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": "Overflow Totals Report 7/1/2019–12/31/2019"
+          "note": "Overflow Totals Report 7/1/2019–12/31/2019",
+          "outfall_id": "2PE00000047"
         },
         {
           "kind": "CSO",
-          "location": "S. Central Ave. & Ottawa River (Annual Report #007, EPA ID# 2PE00000007)",
+          "location": "S. Central Ave. & Ottawa River (Annual Report #007, EPA ID# )",
           "date": null,
           "frequency": "5",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000007"
         },
         {
           "kind": "CSO",
-          "location": "Timberlake Sewer & Ottawa River (Annual Report #008, EPA ID# 2PE00000008)",
+          "location": "Timberlake Sewer & Ottawa River (Annual Report #008, EPA ID# )",
           "date": null,
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000008"
         },
         {
           "kind": "CSO",
-          "location": "Oxford Ave. & Collett Street (Annual Report #009, EPA ID# 2PE00000009)",
+          "location": "Oxford Ave. & Collett Street (Annual Report #009, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000009"
         },
         {
           "kind": "CSO",
-          "location": "North Shore Dr. & Cole St. (Annual Report #037, EPA ID# 2PE00000037)",
+          "location": "North Shore Dr. & Cole St. (Annual Report #037, EPA ID# )",
           "date": null,
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000037"
         },
         {
           "kind": "CSO",
-          "location": "Charles St. & State St. (Plugged w/ concrete) (Annual Report #036, EPA ID# 2PE00000036)",
+          "location": "Charles St. & State St. (Plugged w/ concrete) (Annual Report #036, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000036"
         },
         {
           "kind": "CSO",
-          "location": "Lakewood Ave & Charles St. (Annual Report #035, EPA ID# 2PE00000035)",
+          "location": "Lakewood Ave & Charles St. (Annual Report #035, EPA ID# )",
           "date": null,
           "frequency": "2",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000035"
         },
         {
           "kind": "CSO",
-          "location": "Judkins Ave at Kunneke Ave (Annual Report #034, EPA ID# 2PE00000034)",
+          "location": "Judkins Ave at Kunneke Ave (Annual Report #034, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000034"
         },
         {
           "kind": "CSO",
-          "location": "Nixon Ave. at Kunneke Ave. (Annual Report #033, EPA ID# 2PE00000033)",
+          "location": "Nixon Ave. at Kunneke Ave. (Annual Report #033, EPA ID# )",
           "date": null,
           "frequency": "2",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000033"
         },
         {
           "kind": "CSO",
-          "location": "West & O'Conner Ave (Annual Report #038, EPA ID# 2PE00000038)",
+          "location": "West & O'Conner Ave (Annual Report #038, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000038"
         },
         {
           "kind": "SSO",
-          "location": "Glenwood Ave. between Lakewood and Wales Ave. (Annual Report #303, EPA ID# 2PE00000029)",
+          "location": "Glenwood Ave. between Lakewood and Wales Ave. (Annual Report #303, EPA ID# )",
           "date": null,
           "frequency": "4",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000029"
         },
         {
           "kind": "SSO",
-          "location": "S. Pears Ave. at Kunneke Ave. (Annual Report #304, EPA ID# 2PE00000028)",
+          "location": "S. Pears Ave. at Kunneke Ave. (Annual Report #304, EPA ID# )",
           "date": null,
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000028"
         },
         {
           "kind": "SSO",
-          "location": "Lakewood Ave. & Maplewood Drive (Annual Report #305, EPA ID# 2PE00000027)",
+          "location": "Lakewood Ave. & Maplewood Drive (Annual Report #305, EPA ID# )",
           "date": null,
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000027"
         },
         {
           "kind": "SSO",
-          "location": "S. Pears Ave. between Wendell Ave & Lakewood Ave. (Annual Report #306, EPA ID# 2PE00000026)",
+          "location": "S. Pears Ave. between Wendell Ave & Lakewood Ave. (Annual Report #306, EPA ID# )",
           "date": null,
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000026"
         },
         {
           "kind": "SSO",
@@ -1365,33 +1421,36 @@
         },
         {
           "kind": "SSO",
-          "location": "S. Pears Ave. between Lowell Ave. & Wendell Ave. (Annual Report #308, EPA ID# 2PE00000025)",
+          "location": "S. Pears Ave. between Lowell Ave. & Wendell Ave. (Annual Report #308, EPA ID# )",
           "date": null,
           "frequency": "2",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000025"
         },
         {
           "kind": "SSO",
-          "location": "S. Pears Ave. between W. Spring & W. Elm St (Annual Report #309, EPA ID# 2PE00000023)",
+          "location": "S. Pears Ave. between W. Spring & W. Elm St (Annual Report #309, EPA ID# )",
           "date": null,
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000023"
         },
         {
           "kind": "SSO",
-          "location": "Between W. Spring & W. Elm, East of Primrose Pl (Annual Report #310, EPA ID# 2PE00000024)",
+          "location": "Between W. Spring & W. Elm, East of Primrose Pl (Annual Report #310, EPA ID# )",
           "date": null,
           "frequency": "5",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000024"
         },
         {
           "kind": "SSO",
@@ -1405,63 +1464,69 @@
         },
         {
           "kind": "SSO",
-          "location": "S. Cable Rd. at Lakewood Ave. (Annual Report #313, EPA ID# 2PE00000031)",
+          "location": "S. Cable Rd. at Lakewood Ave. (Annual Report #313, EPA ID# )",
           "date": null,
           "frequency": "10",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000031"
         },
         {
           "kind": "SSO",
-          "location": "S. Cable Rd. at Wendell Ave. (Annual Report #314, EPA ID# 2PE00000032)",
+          "location": "S. Cable Rd. at Wendell Ave. (Annual Report #314, EPA ID# )",
           "date": null,
           "frequency": "4",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000032"
         },
         {
           "kind": "SSO",
-          "location": "Dale Dr. & Idlewild Dr. (Annual Report #316, EPA ID# 2PE00000022)",
+          "location": "Dale Dr. & Idlewild Dr. (Annual Report #316, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000022"
         },
         {
           "kind": "SSO",
-          "location": "Dale Dr. between W. Wayne & Oakland Pkwy (Annual Report #317, EPA ID# 2PE00000020)",
+          "location": "Dale Dr. between W. Wayne & Oakland Pkwy (Annual Report #317, EPA ID# )",
           "date": null,
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000020"
         },
         {
           "kind": "SSO",
-          "location": "Dale Dr. & West Wayne St. (Annual Report #318, EPA ID# 2PE00000021)",
+          "location": "Dale Dr. & West Wayne St. (Annual Report #318, EPA ID# )",
           "date": null,
           "frequency": "4",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000021"
         },
         {
           "kind": "SSO",
-          "location": "University Ave. & Dale Dr. (Annual Report #319, EPA ID# 2PE00000018)",
+          "location": "University Ave. & Dale Dr. (Annual Report #319, EPA ID# )",
           "date": null,
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000018"
         },
         {
           "kind": "SSO",
@@ -1475,23 +1540,25 @@
         },
         {
           "kind": "SSO",
-          "location": "1379 N. Cable Road Lift Station (Check Valve) (Annual Report #321, EPA ID# 2PE00000051)",
+          "location": "1379 N. Cable Road Lift Station (Check Valve) (Annual Report #321, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000051"
         },
         {
           "kind": "SSO",
-          "location": "1700 Allentown Road Lift Station (Check Valve) (Annual Report #322, EPA ID# 2PE00000050)",
+          "location": "1700 Allentown Road Lift Station (Check Valve) (Annual Report #322, EPA ID# )",
           "date": null,
           "frequency": "2",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000050"
         },
         {
           "kind": "SSO",
@@ -1515,113 +1582,124 @@
         },
         {
           "kind": "SSO",
-          "location": "Woodlawn Ave. & Feeman Ave. (Annual Report #325, EPA ID# 2PE00000017)",
+          "location": "Woodlawn Ave. & Feeman Ave. (Annual Report #325, EPA ID# )",
           "date": null,
           "frequency": "3",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000017"
         },
         {
           "kind": "CSO",
-          "location": "Metcalf St. & Tremont Ave. (Annual Report #014, EPA ID# 2PE00000014)",
+          "location": "Metcalf St. & Tremont Ave. (Annual Report #014, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000014"
         },
         {
           "kind": "CSO",
-          "location": "Metcalf St. & Ashton Ave. (Annual Report #016, EPA ID# 2PE00000016)",
+          "location": "Metcalf St. & Ashton Ave. (Annual Report #016, EPA ID# )",
           "date": null,
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000016"
         },
         {
           "kind": "CSO",
-          "location": "Metcalf St. & Runyan Ave. (Annual Report #015, EPA ID# 2PE00000015)",
+          "location": "Metcalf St. & Runyan Ave. (Annual Report #015, EPA ID# )",
           "date": null,
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000015"
         },
         {
           "kind": "CSO",
-          "location": "McDonel St. & O'Connor Ave. (Annual Report #012, EPA ID# 2PE00000012)",
+          "location": "McDonel St. & O'Connor Ave. (Annual Report #012, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000012"
         },
         {
           "kind": "CSO",
-          "location": "Burch Ave. & O'Connor Ave. (Annual Report #011, EPA ID# 2PE00000011)",
+          "location": "Burch Ave. & O'Connor Ave. (Annual Report #011, EPA ID# )",
           "date": null,
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000011"
         },
         {
           "kind": "CSO",
-          "location": "Metcalf St. & O'Connor Ave. (Annual Report #013, EPA ID# 2PE00000013)",
+          "location": "Metcalf St. & O'Connor Ave. (Annual Report #013, EPA ID# )",
           "date": null,
           "frequency": "1",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000013"
         },
         {
           "kind": "SSO",
-          "location": "Northwold St. & O'Connor Ave. (Annual Report #326, EPA ID# 2PE00000010)",
+          "location": "Northwold St. & O'Connor Ave. (Annual Report #326, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000010"
         },
         {
           "kind": "SSO",
-          "location": "1330 Melrose Ave. (Annual Report #327, EPA ID# 2PE00000049)",
+          "location": "1330 Melrose Ave. (Annual Report #327, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000049"
         },
         {
           "kind": "SSO",
-          "location": "Metcalf St. & Lane Ave. (Annual Report #329, EPA ID# 2PE00000042)",
+          "location": "Metcalf St. & Lane Ave. (Annual Report #329, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000042"
         },
         {
           "kind": "SSO",
-          "location": "Metcalf St. & Ford Ave. (Annual Report #330, EPA ID# 2PE00000044)",
+          "location": "Metcalf St. & Ford Ave. (Annual Report #330, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000044"
         },
         {
           "kind": "SSO",
@@ -1635,73 +1713,80 @@
         },
         {
           "kind": "SSO",
-          "location": "2032 Burch Ave. (Annual Report #332, EPA ID# 2PE00000046)",
+          "location": "2032 Burch Ave. (Annual Report #332, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000046"
         },
         {
           "kind": "SSO",
-          "location": "Burch Ave. & Lewis Ave. (Annual Report #333, EPA ID# 2PE00000045)",
+          "location": "Burch Ave. & Lewis Ave. (Annual Report #333, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000045"
         },
         {
           "kind": "SSO",
-          "location": "Metcalf St. & Lewis Blvd. (Annual Report #334, EPA ID# 2PE00000043)",
+          "location": "Metcalf St. & Lewis Blvd. (Annual Report #334, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000043"
         },
         {
           "kind": "SSO",
-          "location": "Celia Place & Northern Ave. (Annual Report #335, EPA ID# 2PE00000041)",
+          "location": "Celia Place & Northern Ave. (Annual Report #335, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000041"
         },
         {
           "kind": "SSO",
-          "location": "Karen St. & Lewis Blvd. (N) (Annual Report #336, EPA ID# 2PE00000039)",
+          "location": "Karen St. & Lewis Blvd. (N) (Annual Report #336, EPA ID# )",
           "date": null,
           "frequency": "13",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000039"
         },
         {
           "kind": "SSO",
-          "location": "Karen St. & Lane Ave (Annual Report #337, EPA ID# 2PE00000038)",
+          "location": "Karen St. & Lane Ave (Annual Report #337, EPA ID# )",
           "date": null,
           "frequency": "8",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000038"
         },
         {
           "kind": "SSO",
-          "location": "West St. Lift Station (Annual Report #338, EPA ID# 2PE00000056)",
+          "location": "West St. Lift Station (Annual Report #338, EPA ID# )",
           "date": null,
           "frequency": "0",
           "duration": null,
           "volume": null,
           "estimated": null,
-          "note": null
+          "note": null,
+          "outfall_id": "2PE00000056"
         }
       ],
       "summary": "This is the semiannual compliance progress report filed by the City of Lima, Ohio under Paragraph 33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ) covering the period July 1 – December 31, 2019. Lima reports no unmet deadlines, two NPDES permit exceedances (chlorine and pH, both attributed to equipment/instrument error), and SSO/CSO overflow totals of 88 SSO and 17 CSO events across monitored locations per the attached Overflow Totals Report. Five named capital/compliance projects are underway or recently completed, including the Simmon's Field CSO EQ Basin and Phase 2 sewer rehabilitation, with contract award issued to SAK Construction.",
@@ -2450,7 +2535,7 @@
     "fields": {
       "agency": "U.S. EPA Region 5 / Ohio EPA / U.S. DOJ",
       "instrument": "Lima Consent Decree (CD), Case 3:14-CV-02551-JZ",
-      "case_no": "3:14-CV-02551-JZ Doc #5 Filed: 01/13/15",
+      "case_no": "3:14-CV-02551-JZ",
       "paragraph": "33",
       "respondent": "City of Lima, Ohio",
       "facility": "City of Lima Wastewater Treatment Plant (WWTP), Lima, Ohio",
@@ -3048,7 +3133,7 @@
         }
       ],
       "summary": "This is the semiannual Consent Decree Progress Report for the City of Lima, Ohio covering the period July 1, 2017 through December 31, 2017, filed January 25, 2018 under Case 3:14-CV-02551-JZ. No consent decree deadlines were missed during the period; however, a lightning strike on July 22, 2017 caused a complete power loss at the WWTP, resulting in four NPDES permit exceedances, one SSO requiring a 5-day follow-up report, and substantial plant damage. The attached overflow totals report documents 142 SSO events and 28 CSO events across 38+ locations during the reporting period, with five named capital/compliance projects in various stages of progress.",
-      "note": "Attachment: SSO & CSO Overflow Totals July 1 – December 31, 2017. Total SSO overflow count = 142; total CSO overflow count = 28. Total number of reports = 18. Report updated 1/5/2018. Signed by Michel N. Carea, Director of Utilities, City of Lima, Ohio. CMOM section reports 57,662 linear feet (10.92 miles, 11% of SSS) of sewer cleaned; 32,992 linear feet CCTV (6.25 miles, 6% of SSS), 348 manholes inspected; 12 manholes rehabilitated; 2 new manholes installed. 1 SSO required a 5-Day Follow-up Report to OEPA in reporting period."
+      "note": "Attachment: SSO & CSO Overflow Totals July 1 – December 31, 2017. Total SSO overflow count = 142; total CSO overflow count = 28. Total number of reports = 18. Report updated 1/5/2018. Signed by Michel N. Carea, Director of Utilities, City of Lima, Ohio. CMOM section reports 57,662 linear feet (10.92 miles, 11% of SSS) of sewer cleaned; 32,992 linear feet CCTV (6.25 miles, 6% of SSS), 348 manholes inspected; 12 manholes rehabilitated; 2 new manholes installed. 1 SSO required a 5-Day Follow-up Report to OEPA in reporting period. case_no normalized for the join: printed as \"3:14-CV-02551-JZ Doc #5 Filed: 01/13/15\", where the trailing text is one FILING inside the case rather than the case. The field holds the case number alone so this row joins edoc-412983.order.yaml."
     },
     "approximate_paths": [],
     "citation": {
@@ -3078,6 +3163,7 @@
     "title": "Consent Decree",
     "confidence": "high",
     "warnings": [
+      "⚠️ THIS ENUMERATION IS PARTIAL. 49 discharge_events are recorded, but the report's own OverflowTotals row states 119 SSO and 13 CSO overflows for the period — 132 in all. The rows below are a SAMPLE of the period, not its total, and must never be counted as one. The remainder sit in the same garbled spreadsheet scan described elsewhere in this series and are recoverable from the page images.",
       "Report date inferred as 2017-07-31 (the filing deadline); actual signature date is not printed but the document was received by Ohio EPA NWD on July 31, 2017 per the received stamp.",
       "CSO overflow counts for Annual Report numbers 414, 016, 015, 038, 012, 011, and 013 are not legible in the OCR or image scan and have been left null.",
       "EPA ID for Annual Report #015 appears as '2PE0000095' in the OCR — likely a truncation; recorded as printed.",
@@ -3088,7 +3174,7 @@
     "fields": {
       "agency": "U.S. EPA Region 5 / Ohio EPA (Division of Surface Water, Columbus and Northwest District Office)",
       "instrument": "Consent Decree",
-      "case_no": "3:14-CV-02551-JZ Doc #5 Filed: 01/13/15",
+      "case_no": "3:14-CV-02551-JZ",
       "paragraph": "33",
       "respondent": "City of Lima, Ohio (Director of Utilities)",
       "facility": "Lima Wastewater Treatment Plant (WWTP)",
@@ -3635,7 +3721,7 @@
         }
       ],
       "summary": "This is the semiannual compliance progress report filed by the City of Lima, Ohio under Paragraph 33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ) for the period January 1 – June 30, 2017. Lima reports meeting both its deadline obligations for the period (revised CMOM plan submitted May 26, 2017; revised CSOOP submitted June 30, 2017) and documents substantial construction progress on the Headworks Project, CMOM Plan, Asset Management, SEP tree replanting, and Simmon's Field CSO EQ Basin. The attached Overflow Totals Report inventories 119 SSO events and 13 CSO events at 47 locations system-wide during the reporting period, with volumes and durations reported monthly to OEPA via DMR.",
-      "note": null
+      "note": "case_no normalized for the join: printed as \"3:14-CV-02551-JZ Doc #5 Filed: 01/13/15\", where the trailing text is one FILING inside the case rather than the case. The field holds the case number alone so this row joins edoc-412983.order.yaml."
     },
     "approximate_paths": [],
     "citation": {
@@ -3672,7 +3758,7 @@
     "fields": {
       "agency": "U.S. EPA Region 5 / Ohio EPA",
       "instrument": "Lima Consent Decree (CD)",
-      "case_no": "3:14-CV-02551-JZ Doc #5 Filed: 01/13/15",
+      "case_no": "3:14-CV-02551-JZ",
       "paragraph": "33",
       "respondent": "City of Lima, Ohio",
       "facility": "City of Lima Wastewater Treatment Plant (WWTP)",
@@ -3757,7 +3843,7 @@
         }
       ],
       "summary": "This is the semiannual compliance progress report filed by the City of Lima, Ohio under Paragraph 33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ) for the period July 1, 2016 through December 31, 2016. Lima reports that its one CD construction deadline (Headworks construction, due July 1, 2016) was met ahead of schedule, with six active projects in varying stages of completion including the Headworks Project, Upstream Regulator (now complete), and Simmon's Field CSO EQ Basin in preliminary engineering. Four NPDES permit exceedances and multiple SSO/CSO overflow events (detailed in Attachment C) are self-reported for the period.",
-      "note": "Report received by Ohio EPA N.W.D.O. on January 26, 2017. Signed by Michael H. Prella, Director of Utilities, City of Lima, Ohio, and David J. Berger, Lima City Mayor. Counsel: Fred P. Andes (Barnes & Thornburg LLP) and Stephen P. Samuels (Frost Brown Todd LLC). CMOM Plan submitted to USEPA and Ohio EPA on July 10, 2015 but not yet approved as of this report. Attachment C (SSO & CSO Overflow Totals) updated 1/5/17 with Total # of Reports: 17."
+      "note": "Report received by Ohio EPA N.W.D.O. on January 26, 2017. Signed by Michael H. Prella, Director of Utilities, City of Lima, Ohio, and David J. Berger, Lima City Mayor. Counsel: Fred P. Andes (Barnes & Thornburg LLP) and Stephen P. Samuels (Frost Brown Todd LLC). CMOM Plan submitted to USEPA and Ohio EPA on July 10, 2015 but not yet approved as of this report. Attachment C (SSO & CSO Overflow Totals) updated 1/5/17 with Total # of Reports: 17. case_no normalized for the join: printed as \"3:14-CV-02551-JZ Doc #5 Filed: 01/13/15\", where the trailing text is one FILING inside the case rather than the case. The field holds the case number alone so this row joins edoc-412983.order.yaml."
     },
     "approximate_paths": [],
     "citation": {
@@ -3801,7 +3887,7 @@
     "fields": {
       "agency": "U.S. EPA (USEPA) / Ohio EPA (OEPA), N.W.D.O.",
       "instrument": "Lima Consent Decree (CD)",
-      "case_no": "3:14-CV-02551-JZ Doc #5 Filed: 01/13/15",
+      "case_no": "3:14-CV-02551-JZ",
       "paragraph": "33",
       "respondent": "City of Lima, Ohio",
       "facility": "Lima Wastewater Treatment Plant (WWTP)",
@@ -3903,7 +3989,7 @@
         }
       ],
       "summary": "This is the semiannual compliance progress report filed by the City of Lima, Ohio under Paragraph 33 of the Lima Consent Decree (Case 3:14-CV-02551-JZ) for the reporting period January 1, 2016 through June 30, 2016, received by Ohio EPA on August 1, 2016. The report documents progress on six ongoing projects including the Headworks Project, Upstream Regulator Project, and the completed SEP, and self-reports two NPDES permit exceedances (TSS and Total Residual Chlorine), 40 SSO and 16 CSO overflow events all attributable to rainfall, 5 Water-in-Basement events, and one accidental Sodium Hypochlorite discharge that resulted in an NOV now resolved. CMOM sewer cleaning, CCTV inspection, and rehabilitation activities are also reported for the period.",
-      "note": null
+      "note": "case_no normalized for the join: printed as \"3:14-CV-02551-JZ Doc #5 Filed: 01/13/15\", where the trailing text is one FILING inside the case rather than the case. The field holds the case number alone so this row joins edoc-412983.order.yaml."
     },
     "approximate_paths": [],
     "citation": {
