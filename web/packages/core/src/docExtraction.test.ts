@@ -181,10 +181,15 @@ describe("the join, against the committed Lima bundle", () => {
   // the read layer, the letter into Mansfield's corpus scope and the IPIR into no registered
   // site's. This denominator counts what LIMA's bundle publishes, so it falls by two — a
   // correction, not a regression. The percentage is unchanged at 4.6%.
+  // 3,348 -> 3,350 and 153 -> 154 (#2088): the two Bistrozzi eDocuments of the BOSC-1A sanitary
+  // PTI Rev. 1. ⚠️ THE DENOMINATOR GAINS TWO AND THE NUMERATOR ONLY ONE, and that asymmetry is
+  // real rather than a missed extraction — see the `counts.permits` note below. Two further eDocs
+  // of the same permit action (`4230061`, `4230062`) are deliberately NOT committed on Git-LFS
+  // budget and are recorded by sha256 in the shelf's `filename-map.yaml`.
   it("extracts 153 of 3,348 documents — 4.6% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
-    expect(entries.length).toBe(3348);
-    expect(countExtracted(entries, index)).toBe(153);
+    expect(entries.length).toBe(3350);
+    expect(countExtracted(entries, index)).toBe(154);
   });
 
   it("is near-complete on the small instrument collections, and thin across the big holdings", () => {
@@ -194,7 +199,15 @@ describe("the join, against the committed Lima bundle", () => {
     // The instrument collections — small, and read.
     // permits +2 (the two USACE wetland determination forms), recorder +1 (the R.C. 1311.04
     // Notice of Commencement), plans +1 (the SWP3, re-keyed `record:` -> `plan:`) — all #1993.
-    expect(counts.permits).toEqual([28, 35]);
+    // permits [28, 35] -> [29, 37] (#2088). ⚠️ +2 DOCUMENTS BUT ONLY +1 EXTRACTED, and BOTH are in
+    // fact extracted — `4230060.epa.yaml` and `4230068.sanitary.yaml` are committed and catalogued.
+    // The join counts what publishes into the RECORDS feed, and the engineering read's payload
+    // block `record:` is UNCLAIMED in `_BLOCK_TO_GROUP` (src/watermark/site/records.py), so a
+    // `kind=sanitary`/`engineering` artifact reaches no record group. This is PRE-EXISTING and
+    // corpus-wide, not introduced here: the three `oepa/lima/edoc-18403xx.engineering.yaml` reads
+    // are invisible to this join for the same reason. Giving `record:` a group is a taxonomy
+    // decision of the kind the comments in that file take deliberately, and it is NOT made here.
+    expect(counts.permits).toEqual([29, 37]);
     expect(counts.recorder).toEqual([7, 7]);
     // plans 4 -> 5 (#2072 follow-on): `4091285.pdf`, the NOI completing the `2GC08747` set.
     expect(counts.plans).toEqual([2, 5]);
@@ -252,7 +265,10 @@ describe("the join, against the committed Lima bundle", () => {
     // `local-legislation`, the drawings into their own groups. No contract change.
     // 160 -> 158 (#2085): the two Ohio EPA misfilings re-attributed away from Lima. Mansfield's
     // own bundle gains one of them, which is where the record was always supposed to be.
-    expect(records.length).toBe(158);
+    // 158 -> 159 (#2088): `permits/4230060.epa.yaml`, which publishes into `permits-epa` as an
+    // agency ACTION. Its companion `4230068.sanitary.yaml` does NOT appear, because `record:`
+    // claims no group — the same gap noted on `counts.permits` above. One document, one record.
+    expect(records.length).toBe(159);
     // 5 -> 3, and this is the deliberate change the note below predicted. `_source_ref` now
     // resolves three further committed provenance shapes — `provenance.source_path` /
     // `provenance.sources`, the connector read's `meta.sources` (a dict of NAMED lists, so every
@@ -263,6 +279,10 @@ describe("the join, against the committed Lima bundle", () => {
     expect(records.filter((r) => !r.source_doc_rel).length).toBe(3);
     // The joinable side of the same 73 -> 74 -> 90: every one of these names its source document,
     // so the index gains an entry each rather than joining the three that name none.
-    expect(index.size).toBe(153);
+    // 153 -> 154 (#2088): `4230060.epa.yaml` names its source document and so gains an index
+    // entry. `4230068.sanitary.yaml` names one too, but never becomes a record at all (`record:`
+    // claims no group), so it cannot reach this index — which is why the join moves by one while
+    // the corpus moves by two.
+    expect(index.size).toBe(154);
   });
 });

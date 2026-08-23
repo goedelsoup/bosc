@@ -92,9 +92,17 @@ describe("isRoutableDoc — measured against the committed Lima corpus", () => {
   // production but land in the LIMA bundle, and correctly so — `legal/` is network-global,
   // while the other 48 files of that production stay peer-scoped under `west-union/` and
   // `usace/west-union/` and are subtracted from the reference build's corpus scope.
+  // 3,348 -> 3,350 (#2088): the two Bistrozzi eDocuments of the 2026-08-14 BOSC-1A sanitary PTI
+  // Rev. 1 — `permits/bistrozzi-permits/4230060.pdf` (the issued DSWPTI-260597) and `4230068.pdf`
+  // (its approved ePlan application). `permits/` is one of Lima's own prefixes, so they land here
+  // directly. The same permit action served two MORE eDocs — `4230061` (23.95 MB site plan) and
+  // `4230062` (14.45 MB sanitary plan & profile) — deliberately NOT committed on Git-LFS budget
+  // and recorded by sha256 in `data/documents/permits/bistrozzi-permits/filename-map.yaml`.
+  // Committing either moves this number again and SHOULD.
+  // The 54 exclusions are unchanged: both new entries are ordinary routable PDFs.
   it("excludes exactly 54 of 3,254 entries (1.7%)", () => {
     const entries = limaEntries();
-    expect(entries.length).toBe(3348);
+    expect(entries.length).toBe(3350);
     expect(entries.filter((e) => !isRoutableDoc(e))).toHaveLength(54);
   });
 

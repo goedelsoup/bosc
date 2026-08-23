@@ -115,6 +115,14 @@ def test_no_collision_across_the_committed_corpus() -> None:
     # a set rather than inferred from the delta.
     assert len(rels) == 3350, "a corpus change belongs in review, not a silent collision"
     assert len({document_id(rel) for rel in rels}) == len(rels)
+    # The count alone is a weak proxy: a delete-one-add-one leaves it at 3350. Name the two
+    # committed BOSC-1A eDocs, and assert the two DEFERRED plan sets are absent — the deferral
+    # is a deliberate, recorded decision (filename-map.yaml), not an accident of the fetch.
+    # Committing either plan set SHOULD fail here: fix it by updating the manifest's `deferred:`
+    # block in the same change, never by deleting the assertion.
+    shelf = "permits/bistrozzi-permits/"
+    assert {f"{shelf}4230060.pdf", f"{shelf}4230068.pdf"} <= set(rels)
+    assert not {f"{shelf}4230061.pdf", f"{shelf}4230062.pdf"} & set(rels)
 
 
 def test_rel_is_taken_verbatim() -> None:
