@@ -541,6 +541,8 @@ def test_the_committed_compliance_genres_all_load() -> None:
     # Reviewed by enumerating the bucket, not by trusting the delta: oepa/lima/edoc-1840394,
     # edoc-1840396, edoc-1840397 (the three pre-existing) plus permits/4230068 (the new one).
     assert len(corpus.engineering) == 4
+    # A count of 4 is satisfied by ANY four, so name the one this bucket gained.
+    assert "permits/4230068.sanitary.yaml" in {rel for rel, _ in corpus.engineering}
     # Every declined file that keys one of these blocks is a declared manual read or a
     # `resolution:` — never a render extraction that quietly fell out of the loader.
     for rel in corpus.declined:
