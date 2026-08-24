@@ -1,0 +1,528 @@
+meta:
+  subject: >-
+    Canonical filename map for the 2DP00130 / APP285104563 indirect-discharge application
+    package — the 2026-08-23 acquisition under issue #2089 only
+  scope: >-
+    PARTIAL BY DESIGN, IN BOTH DIRECTIONS. This map covers ONLY the 23 eDocuments the
+    2026-08-22 portal sweep listed under permit 2DP00130. The other ~93 files on this shelf are
+    the 2PE00000 (City of Lima WWTP) tranche of #2074 and carry their provenance in this
+    directory's filename-map.yaml; their absence from this map is not a gap in their custody.
+    Conversely, of the 23 docids below only 12 are COMMITTED — the rest are exact or
+    text-identical duplicates, recorded here by sha256 rather than held. Do not read a missing
+    row here as "not acquired", and do not read this map as the shelf's whole custody record.
+  policy: >-
+    Non-destructive. The eDocument portal serves these by query string with no
+    Content-Disposition, so the docid IS the as-served identity (see src/watermark/oepa/fetch.py);
+    files keep the fetcher's `edoc-<docid>.pdf` naming, matching the rest of this shelf. Every
+    date below is content-verified from the document's own text layer. Portal `doc_date` rows and
+    portal `description` strings were NOT used as evidence — the sweep manifest describes all 23
+    rows identically as "APPLICATION AND SUPPORT - APP285104563", which is true of the package
+    and tells you nothing about any individual document.
+  source_sweep: data/research/oepa-portal-2dp00130-2026-08-22/manifest.yaml
+  fetched_at: '2026-08-23'
+  issue: 2089
+
+  coverage: >-
+    23 docids listed · 16 distinct byte-streams · 12 committed · 11 deferred (7 exact
+    byte-duplicates, 4 text-identical re-submissions). 4,436,727 bytes committed.
+  duplication_note: >-
+    ⚠️ THE PACKAGE IS THE SAME BUNDLE FILED THREE TIMES. Docids 4116201-07, 4116218-24 and
+    4116232-35 are three parallel submissions of one application: seven documents, then the same
+    seven, then four of them again. Seven of those rows are byte-identical to a row already held
+    (sha256 match). The other four — the application form at 4116218 / 4116232 and the sampling
+    report at 4116221 / 4116235 — differ in their PDF bytes but extract CHARACTER-FOR-CHARACTER
+    IDENTICAL text (sha256 of the extracted text recorded on each deferred row), so the
+    difference is in the PDF container, not the record. A count of the portal's rows therefore
+    overstates the package by 7 and its distinct content by 11; the sweep manifest's
+    `counts.documents: 23` is a row count and was never a document count.
+
+# ── Committed: one representative of each distinct document in the package ────────────────────
+documents:
+  - edoc_id: '4116201'
+    filename: edoc-4116201.pdf
+    status: committed
+    canonical: oepa-2dp00130-idp-application-form-app285104563-2026-05-05.pdf
+    type: idp-application-form
+    permit_id: 2DP00130
+    applicant: BISTROZZI LLC
+    pages: 2
+    bytes: 11534
+    sha256: 25c0f3cd7cf6dd1ec8f30e9693330bf70e77f7db7885544f61ff9fe3c0f98ad3
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116201
+    content_verified: text-layer
+    content_verified_date: '2026-05-05'
+    extraction: data/extracted/oepa/lima/edoc-4116201.npdes.yaml
+    notes: >-
+      EPA Form 4223 (Rev 05/97), Application ID 285104563, electronically submitted 05/05/2026 by
+      Michael Smith (74885851), Facility Manager. THE LOAD-BEARING DOCUMENT OF THE PACKAGE.
+      Non-contact cooling water 52,000 gpd average / 156,000 gpd maximum, batch, "Date Installed
+      Nov 2026"; treatment system "No treatment"; 155 employees across three shifts; SIC "Data
+      Processing And Preparation"; zoning-independent. Its ADDITIONAL INFORMATION block is the
+      finding this ingest turns on — see the surrogate-data note under 4116204 and the reviewed
+      artifact at data/extracted/oepa/lima/2dp00130-surrogate-characterization.yaml.
+      ⚠️ TWO SELF-EVIDENT DEFECTS ON THE FACE OF THE FORM, both recorded and neither corrected here:
+      (1) Latitude/Longitude are given as 40.741894 / -73.989311, which is Manhattan, New York —
+      roughly 500 miles from the facility it locates. The extractor flagged the longitude
+      independently. (2) "If this is a new permit or modification, was a Permit to Install
+      obtained?" is answered NO, while the corpus holds DSWPTI-260294 for this applicant and site
+      issued 2026-04-07 (eDoc 4074527, #2088) — 28 days before this form was signed. Whether the
+      question was read as scoped to some other installation is not stated on the form; the
+      contradiction is [verified] and its explanation is [open].
+
+  - edoc_id: '4116204'
+    filename: edoc-4116204.pdf
+    status: committed
+    canonical: oepa-2dp00130-idp-sampling-report-outfall-001-with-surrogate-summary.pdf
+    type: idp-sampling-report
+    permit_id: 2DP00130*AP
+    pages: 10
+    bytes: 1479160
+    sha256: ae42ad4a75772aa97d2dc74b8eaa754649c7c4c2798d89d895b250ce110cf1f5
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116204
+    content_verified: text-layer
+    content_verified_date: '2026-01-14'
+    extraction: null
+    notes: >-
+      Indirect Discharge Permit Application Sampling Report, permit 2DP00130*AP, facility
+      "Project BOSC", outfall 001, data collection period 1/13/2026 to 1/14/2026. The date above
+      is that period's END — the form carries no other date, and a collection period is not a
+      document date; it is recorded as the only content-verified date available.
+      ⚠️ GROUP A IS ENTIRELY BLANK. The nine parameters the form says "you MUST provide the
+      results of at least one analysis for" — BOD, COD, TOC, TSS, ammonia, maximum and average
+      temperature, pH, total filterable residue — carry no results. So does every Group B and
+      Group C results column. The document's whole payload is the believed-present / believed-
+      absent checklist (present: bromide, fluoride, phosphorus, sulfate, aluminum, barium,
+      copper, zinc; absent: everything else, including all fourteen metals but copper and zinc,
+      all GC/MS fractions, and dioxin) plus the header. The applicant states why on the
+      application form: the facility is under construction and has no blowdown to sample.
+      ⚠️ THIS IS THE ONLY COPY OF THE FORM THAT CARRIES DATA. Page 9 appends a two-column summary
+      table headed "Lima Project", dated 4/10/2026, columns "City Domestic" and "Blowdown from
+      MCU3". THOSE ARE NOT PROJECT BOSC MEASUREMENTS — every value on it reconciles exactly with
+      the Google CLB-1 (Columbus) laboratory reports at 4116202 and 4116205. The 12-page variant
+      at 4116226 has no such page, which is why both variants are committed rather than one.
+      NO EXTRACTION GENRE FITS THIS DOCUMENT and none was forced. See the reviewed artifact at
+      data/extracted/oepa/lima/2dp00130-surrogate-characterization.yaml, which holds the page-9
+      table and the derived ratios with their provenance, and the follow-up issue on designing a
+      sampling-report genre once a POPULATED one exists to design against.
+
+  - edoc_id: '4116226'
+    filename: edoc-4116226.pdf
+    status: committed
+    canonical: oepa-2dp00130-idp-sampling-report-outfall-001-12pp-variant.pdf
+    type: idp-sampling-report
+    permit_id: 2DP00130*AP
+    pages: 12
+    bytes: 1259606
+    sha256: f7cb1c1a7342f1648c883b049b68d46acd69012ef5ddf95a199820f0083807ea
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116226
+    content_verified: text-layer
+    content_verified_date: '2026-01-14'
+    extraction: null
+    notes: >-
+      A SECOND, MATERIALLY DIFFERENT scan of the same workbook — not a duplicate of 4116204 and
+      not deferred as one. Twelve pages: the same three groups, then two pages of overflow text
+      from a wider print, then three BLANK pages. It does NOT carry the page-9 surrogate summary
+      table that 4116204 does. Its own header reads "Project Bosc" (mixed case) against
+      "Project BOSC" on 4116204, and its collection-period field OCRs as "11/13/2026" where the
+      cover page prints 1/13/2026 — a rendering artifact of the same field, not a second date.
+      Group A is blank here too.
+
+  - edoc_id: '4116227'
+    filename: edoc-4116227.pdf
+    status: committed
+    canonical: lma-wastewater-flow-schematic.pdf
+    type: process-flow-diagram
+    permit_id: 2DP00130
+    pages: 1
+    bytes: 9608
+    sha256: cd742c3154361c595823e20621191ad0801b95779c48c81eecc43a084b64b95c
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116227
+    content_verified: text-layer
+    content_verified_date: null
+    extraction: null
+    notes: >-
+      The "Process Diagram Attachment" the application form names as "LMA Wastewater Flow
+      Schematic.pptx". Nine kilobytes and five labels, and it settles the routing question
+      outright: two inflows — NON-CONTACT COOLING TOWER BLOWDOWN and SANITARY FLOW — combine at a
+      single LIFT STATION and leave as one stream TO SANITARY SEWER. There is no separate
+      blowdown pathway, no pre-treatment box, and no bypass on the diagram, which corroborates the
+      form's "Description of wastewater treatment system: No treatment". CARRIES NO DATE and no
+      quantities; verified by reading the rendered page, not only its text layer.
+
+  - edoc_id: '4116228'
+    filename: edoc-4116228.pdf
+    status: committed
+    canonical: allen-county-american-bath-potw-idp-authorization-letter-2025-12-03.pdf
+    type: potw-authorization-letter
+    permit_id: 2DP00130
+    pages: 1
+    bytes: 219361
+    sha256: 954d5e4f2a645c0c86548e9f757a804511d11eb3035033f2e5380fcf398916e2
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116228
+    content_verified: text-layer
+    content_verified_date: '2025-12-03'
+    extraction: null
+    notes: >-
+      The "Letter from the POTW Authorizing Discharge" the application form names. Brad Niemeyer,
+      P.E., Sanitary Engineer, Allen County (3230 N. Cole Street), to Jeremey Eisele, P.E.,
+      Project Manager, EMH&T (5500 New Albany Road, Columbus), 2025-12-03: the Allen County —
+      American-Bath POTW authorizes discharge of "industrial or other non-domestic wastewater"
+      from "Project BOSC – Data Center, located near the intersection of Cole Street and Beery
+      Road" into its sanitary sewer, contingent on compliance and on the applicant holding a
+      valid OEPA Indirect Discharge Permit BEFORE initial discharge.
+      ⚠️ A COUNTY RECORD OBTAINED FROM THE STATE. This is Allen County Sanitary Engineering's own
+      correspondence, reaching the corpus through Ohio EPA's portal rather than through the
+      County — the same custodial pattern already recorded as layer 7 of
+      data/extracted/legal/records-withholding-map.yaml (#1536). An observation about where the
+      record was findable, not an allegation about the County's response to any request.
+      Note the date: the POTW's authorization predates the application it supports by five months
+      and predates the Rev. 1 PTI application by six.
+
+  - edoc_id: '4116229'
+    filename: edoc-4116229.pdf
+    status: committed
+    canonical: emht-bosc-1a-sanitary-exhibit-2025-09-23.pdf
+    type: site-plan-exhibit
+    permit_id: 2DP00130
+    pages: 1
+    bytes: 391227
+    sha256: 660b5450b1d167557c9c3d8d25e557af863431ea78d602cdc32ed1aa8e0c985d
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116229
+    content_verified: rendered-page-read
+    content_verified_date: '2025-09-23'
+    extraction: null
+    notes: >-
+      The "Facility Map/Site Plan Attachment" the application form names as "BOSC 1A SANITARY
+      EXHIBIT.pdf". EMH&T job 2025-0655, dated September 23, 2025, one sheet at 1" = 200'. Carries
+      the parcel identity in a title block on the drawing — BISTROZZI LLC, 4110 N COLE ST, LIMA OH
+      45801, ZONING M-2, PID 36-1200-02-001.001 — plus PROP BLDG 1A and PROP HUB, the temporary
+      lift station and a FUTURE LIFT STATION (BY OTHERS) on Cole St., the TEMP SANITARY FORCE MAIN
+      running west and south toward Blue Lick Rd, a TEMP SANITARY GRAVITY MAIN annotated "REMOVE
+      AFTER LIFT STATION (BY OTHERS) IS OPERATIONAL", and sanitary main sizes of 8", 12", 15" and
+      24".
+      PUBLICATION REVIEWED 2026-08-23 UNDER docs/legal/document-publication-review.md, as a read
+      of the rendered sheet and NOT as a regex over its text layer (a scan-safe review cannot be a
+      grep — see #2031). Finding: the sheet carries two entry-drive circulation labels ("BADGE",
+      "FIRE ACCESS LANE - NO PARKING") at 200-feet-to-the-inch overview scale, and nothing else of
+      security character — no interior layout, no gate or guard-post detail, no security-system
+      information. It is a DIFFERENT and far less detailed document than the approved plan-and-
+      profile sheet sets deferred under #2088 (4230061 / 4230062, 17 and 13 sheets), which remain
+      deferred and whose separate publication decision this does not disturb. Committed.
+
+  - edoc_id: '4116202'
+    filename: edoc-4116202.pdf
+    status: committed
+    canonical: chemtreat-coa-w-260410-016-google-clb1-2026-04-20.pdf
+    type: surrogate-lab-report
+    permit_id: 2DP00130
+    pages: 2
+    bytes: 92859
+    sha256: bbbe254a16943fa471581bd24f93185dcf8b8cbb0ba094f25ab65ed0ef79da4c
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116202
+    content_verified: text-layer
+    content_verified_date: '2026-04-20'
+    extraction: null
+    notes: >-
+      ChemTreat International Certificate of Analysis W-260410-016, signed Joel Phillips, Director
+      of the Analytical Lab, 2026-04-20. ⚠️ THE COMPANY LINE NAMES THE SITE THIS DATA IS FROM, AND
+      IT IS NOT LIMA: "GOOGLE CLB - 1 (C008798), 225 RATHMELL RD, 43137-9324" — Columbus /
+      Lockbourne, Franklin County. Two samples collected 2026-04-09: CLB1-CITY-(L), the municipal
+      makeup water, and CLB1-MCP3-(L), the cooling loop. This is the "sample data from a similar
+      site" the application form says was substituted for Project BOSC's own. Thirty-three
+      analytes across two pages; the paired makeup/loop structure is what makes an observed
+      cycles-of-concentration computable at all. See the reviewed artifact for the ratios.
+
+  - edoc_id: '4116205'
+    filename: edoc-4116205.pdf
+    status: committed
+    canonical: alloway-coa-2612060-google-clb1-lima-project-2026-04-23.pdf
+    type: surrogate-lab-report
+    permit_id: 2DP00130
+    pages: 2
+    bytes: 168378
+    sha256: 9c5830000ec3ccae766778d24e813f484d00024584d98a0f768a05622c740380
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116205
+    content_verified: text-layer
+    content_verified_date: '2026-04-23'
+    extraction: null
+    notes: >-
+      Alloway (Marion) Certificate of Analysis, lab project 2612060, reported 2026-04-23 for
+      ChemTreat, Inc. (Westerville), attn. Brad Eckenrode. The BOD / COD / TOC / TSS / DEHP half
+      of the same two samples — lab sample 2612060-01 is CLB1-City-(L) and 2612060-02 is
+      CLB1-MCP3-(L), sampled 2026-04-09 11:00, grab, matrix "Wastewater", sampled by BE.
+      ⚠️ ITS "Project Name" FIELD READS "Lima Project" WHILE ITS SAMPLE IDs READ CLB1. The project
+      label and the sample identity disagree, and the sample identity is the one that says where
+      the water came from. This is the single most misreadable document in the package: taken on
+      its project-name line alone it would publish Columbus measurements as Lima's.
+      Note the letterhead — Alloway's Lima laboratory is at 1101 N. Cole Street, the same street
+      as the campus. The analysis was reported out of Marion.
+
+  - edoc_id: '4116203'
+    filename: edoc-4116203.pdf
+    status: committed
+    canonical: sds-garratt-callahan-formula-2310-lt-2022-04-14.pdf
+    type: treatment-chemical-sds
+    permit_id: 2DP00130
+    pages: 6
+    bytes: 291819
+    sha256: 5581009a36c016cf40e2506edf2e18b4f9cf52bd0c404ee84b402b1cf3b8dc81
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116203
+    content_verified: text-layer
+    content_verified_date: '2022-04-14'
+    extraction: null
+    notes: >-
+      Garratt-Callahan Company FORMULA 2310-LT, SDS SD2310LT, revision 2022-04-14. PRODUCT USE
+      printed on the sheet: "COOLING WATER TREATMENT". Carries aquatic-toxicity figures
+      (LC50 96 hr 1664.4 ppm, Pimephales promelas; LC50 48 hr 3298.8 ppm, Ceriodaphnia dubia).
+
+  - edoc_id: '4116206'
+    filename: edoc-4116206.pdf
+    status: committed
+    canonical: sds-univar-hydrochloric-acid-15pct-2020-07-21.pdf
+    type: treatment-chemical-sds
+    permit_id: 2DP00130
+    pages: 10
+    bytes: 194569
+    sha256: 814f592da892559698df2e513e2b7eee84c02d6227260167a155f14aa047657b
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116206
+    content_verified: text-layer
+    content_verified_date: '2020-07-21'
+    extraction: null
+    notes: >-
+      Univar Solutions USA HYDROCHLORIC ACID 15% 10B, SDS 100000057230 v1.0, revised 2020-07-21.
+      The pH-control chemical of the cooling programme.
+
+  - edoc_id: '4116207'
+    filename: edoc-4116207.pdf
+    status: committed
+    canonical: sds-aldrich-229881-sodium-bromide-2024-09-08.pdf
+    type: treatment-chemical-sds
+    permit_id: 2DP00130
+    pages: 12
+    bytes: 234600
+    sha256: 97cc1b588018ad50562ea3eedd53d19fe0afdbb04ce38bc4b6c319c7e5124c9f
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116207
+    content_verified: text-layer
+    content_verified_date: '2024-09-08'
+    extraction: null
+    notes: >-
+      Sodium bromide, CAS 7647-15-6 — Aldrich product 229881, MilliporeSigma SDS v6.10, revision
+      2024-09-08. The application form names its attachment "Sodium Bromide.pdf", so this sheet is
+      the applicant's identification of the chemical even though the SDS itself is for a
+      laboratory-grade product supplied under the TSCA R&D exemption and states "Identified uses:
+      Laboratory chemicals, Synthesis of substances" — i.e. the sheet filed does not describe a
+      bulk cooling-water product. Recorded, not resolved.
+      Bromide plus hypochlorite (4116225) is the standard route to a bromine biocide generated in
+      situ, which is consistent with bromide being one of only eight analytes the sampling report
+      marks BELIEVED PRESENT.
+
+  - edoc_id: '4116225'
+    filename: edoc-4116225.pdf
+    status: committed
+    canonical: sds-hydrite-sodium-hypochlorite-12-5pct-2015-06-22.pdf
+    type: treatment-chemical-sds
+    permit_id: 2DP00130
+    pages: 8
+    bytes: 84006
+    sha256: 51ee5db72f5b1657ad23659ccf55fc85e9c617d9c5e9b35562e91c28985be073
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116225
+    content_verified: text-layer
+    content_verified_date: '2015-06-22'
+    extraction: null
+    notes: >-
+      Hydrite Chemical Co. SODIUM HYPOCHLORITE 12.5%, product CL150082, revised 2015-06-22,
+      "Recommended Use: EPA Registered Pesticide". The oxidising biocide. Its ecotoxicity section
+      is the most severe in the package by orders of magnitude — 96-hour LC50 values in the
+      0.02-0.8 mg/L range across nine fish species and an EC50 of 0.006 mg/L for Ceriodaphnia at
+      24 hours. Recorded as what the sheet states about the neat product; it is NOT a statement
+      about the discharge, which reaches surface water only after the POTW.
+      ⚠️ THE ONE DOCUMENT CLASS THE PACKAGE PROMISED AND DID NOT DELIVER. The application form's
+      additional-information block says "See attached SDSs sheets for the anticipated cooling
+      water treatment chemicals AND THEIR DESIGN DOSAGES." All four SDSs were read end to end.
+      None of them carries a dosage, a feed rate, or a design concentration — an SDS is a hazard
+      sheet and does not have that field. The four chemicals are disclosed; the dosages the form
+      says are attached were never filed. [verified negative]
+
+# ── Deferred: fetched and content-verified, deliberately NOT committed ────────────────────────
+# Every row below was fetched on 2026-08-23, hashed, and its text extracted and compared. None is
+# a storage judgement call: seven are byte-identical to a committed file and four are
+# text-identical re-submissions whose PDF bytes differ. Each is re-fetchable by docid and pinned
+# by the sha256 recorded here. Listed in full so this map is not misread as partial coverage of
+# the portal's 23 rows — it is complete coverage of them.
+deferred:
+  - edoc_id: '4116218'
+    status: deferred_text_identical_resubmission
+    permit_id: 2DP00130
+    pages: 2
+    bytes: 11534
+    sha256: 8f3598e5d595ba4486fbbdd83e26f13a7a15dafe75c51c5d234aa5248c196400
+    text_sha256: 1d28510771cf9c1e168b30e4a17f71a012701e5b4e71650defede2d336fd0d7b
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116218
+    duplicate_of: '4116201'
+    content_verified: text-layer
+    notes: >-
+      NOT a byte-identical duplicate — its PDF bytes differ from the committed edoc-4116201.pdf.
+      Its extracted text is character-for-character identical (text_sha256 above matches that
+      file's), so the difference lies in the PDF container and not in the record. Deferred as a
+      re-submission of a document already held rather than removed as a duplicate; the distinction
+      is deliberate, and the text hash is recorded so the claim is checkable without re-fetching.
+  - edoc_id: '4116219'
+    status: deferred_exact_duplicate
+    permit_id: 2DP00130
+    pages: 2
+    bytes: 92859
+    sha256: bbbe254a16943fa471581bd24f93185dcf8b8cbb0ba094f25ab65ed0ef79da4c
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116219
+    duplicate_of: '4116202'
+    content_verified: sha256-match
+    notes: >-
+      Byte-identical to the committed edoc-4116202.pdf — same sha256, same length. Not held, under
+      the corpus rule that a checksum-verified byte-identical duplicate is the one thing a source
+      tree need not carry twice.
+  - edoc_id: '4116220'
+    status: deferred_exact_duplicate
+    permit_id: 2DP00130
+    pages: 6
+    bytes: 291819
+    sha256: 5581009a36c016cf40e2506edf2e18b4f9cf52bd0c404ee84b402b1cf3b8dc81
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116220
+    duplicate_of: '4116203'
+    content_verified: sha256-match
+    notes: >-
+      Byte-identical to the committed edoc-4116203.pdf — same sha256, same length. Not held, under
+      the corpus rule that a checksum-verified byte-identical duplicate is the one thing a source
+      tree need not carry twice.
+  - edoc_id: '4116221'
+    status: deferred_text_identical_resubmission
+    permit_id: 2DP00130
+    pages: 10
+    bytes: 1479174
+    sha256: 1eec2d49b0bef2217acd58bf339fd8cee477bbfb484252579f2abfb52411acc5
+    text_sha256: 027e1011400057b2c8bb280643be378bf8e485e38159fdc606179bfeae8c7469
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116221
+    duplicate_of: '4116204'
+    content_verified: text-layer
+    notes: >-
+      NOT a byte-identical duplicate — its PDF bytes differ from the committed edoc-4116204.pdf.
+      Its extracted text is character-for-character identical (text_sha256 above matches that
+      file's), so the difference lies in the PDF container and not in the record. Deferred as a
+      re-submission of a document already held rather than removed as a duplicate; the distinction
+      is deliberate, and the text hash is recorded so the claim is checkable without re-fetching.
+  - edoc_id: '4116222'
+    status: deferred_exact_duplicate
+    permit_id: 2DP00130
+    pages: 2
+    bytes: 168378
+    sha256: 9c5830000ec3ccae766778d24e813f484d00024584d98a0f768a05622c740380
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116222
+    duplicate_of: '4116205'
+    content_verified: sha256-match
+    notes: >-
+      Byte-identical to the committed edoc-4116205.pdf — same sha256, same length. Not held, under
+      the corpus rule that a checksum-verified byte-identical duplicate is the one thing a source
+      tree need not carry twice.
+  - edoc_id: '4116223'
+    status: deferred_exact_duplicate
+    permit_id: 2DP00130
+    pages: 10
+    bytes: 194569
+    sha256: 814f592da892559698df2e513e2b7eee84c02d6227260167a155f14aa047657b
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116223
+    duplicate_of: '4116206'
+    content_verified: sha256-match
+    notes: >-
+      Byte-identical to the committed edoc-4116206.pdf — same sha256, same length. Not held, under
+      the corpus rule that a checksum-verified byte-identical duplicate is the one thing a source
+      tree need not carry twice.
+  - edoc_id: '4116224'
+    status: deferred_exact_duplicate
+    permit_id: 2DP00130
+    pages: 12
+    bytes: 234600
+    sha256: 97cc1b588018ad50562ea3eedd53d19fe0afdbb04ce38bc4b6c319c7e5124c9f
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116224
+    duplicate_of: '4116207'
+    content_verified: sha256-match
+    notes: >-
+      Byte-identical to the committed edoc-4116207.pdf — same sha256, same length. Not held, under
+      the corpus rule that a checksum-verified byte-identical duplicate is the one thing a source
+      tree need not carry twice.
+  - edoc_id: '4116232'
+    status: deferred_text_identical_resubmission
+    permit_id: 2DP00130
+    pages: 2
+    bytes: 11534
+    sha256: 22775d8fcdac956d2e91b90e48b0889f5300e652c810bec0d90afcb1eadf9884
+    text_sha256: 1d28510771cf9c1e168b30e4a17f71a012701e5b4e71650defede2d336fd0d7b
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116232
+    duplicate_of: '4116201'
+    content_verified: text-layer
+    notes: >-
+      NOT a byte-identical duplicate — its PDF bytes differ from the committed edoc-4116201.pdf.
+      Its extracted text is character-for-character identical (text_sha256 above matches that
+      file's), so the difference lies in the PDF container and not in the record. Deferred as a
+      re-submission of a document already held rather than removed as a duplicate; the distinction
+      is deliberate, and the text hash is recorded so the claim is checkable without re-fetching.
+  - edoc_id: '4116233'
+    status: deferred_exact_duplicate
+    permit_id: 2DP00130
+    pages: 2
+    bytes: 92859
+    sha256: bbbe254a16943fa471581bd24f93185dcf8b8cbb0ba094f25ab65ed0ef79da4c
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116233
+    duplicate_of: '4116202'
+    content_verified: sha256-match
+    notes: >-
+      Byte-identical to the committed edoc-4116202.pdf — same sha256, same length. Not held, under
+      the corpus rule that a checksum-verified byte-identical duplicate is the one thing a source
+      tree need not carry twice.
+  - edoc_id: '4116234'
+    status: deferred_exact_duplicate
+    permit_id: 2DP00130
+    pages: 6
+    bytes: 291819
+    sha256: 5581009a36c016cf40e2506edf2e18b4f9cf52bd0c404ee84b402b1cf3b8dc81
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116234
+    duplicate_of: '4116203'
+    content_verified: sha256-match
+    notes: >-
+      Byte-identical to the committed edoc-4116203.pdf — same sha256, same length. Not held, under
+      the corpus rule that a checksum-verified byte-identical duplicate is the one thing a source
+      tree need not carry twice.
+  - edoc_id: '4116235'
+    status: deferred_text_identical_resubmission
+    permit_id: 2DP00130
+    pages: 10
+    bytes: 1479174
+    sha256: fefce9dd3496fdfe82e51bda8dcb0c4780a0b6725b40d4fa0677fb19fd4d20fd
+    text_sha256: 027e1011400057b2c8bb280643be378bf8e485e38159fdc606179bfeae8c7469
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116235
+    duplicate_of: '4116204'
+    content_verified: text-layer
+    notes: >-
+      NOT a byte-identical duplicate — its PDF bytes differ from the committed edoc-4116204.pdf.
+      Its extracted text is character-for-character identical (text_sha256 above matches that
+      file's), so the difference lies in the PDF container and not in the record. Deferred as a
+      re-submission of a document already held rather than removed as a duplicate; the distinction
+      is deliberate, and the text hash is recorded so the claim is checkable without re-fetching.
+
+# ── Not part of the package, recorded so the gap in the docid run is explained ────────────────
+# The 23 docids run 4116201-07, 4116218-29 and 4116232-35, with gaps at 4116208-17 and
+# 4116230-31. Those gaps are the portal's, not this map's: nothing under 2DP00130 occupies them.
+# One of them is reachable at the URL pattern and answers with nothing at all, which is worth
+# recording because the fetcher's guard does not catch it.
+not_in_package:
+  - edoc_id: '4116210'
+    status: portal_empty_response
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116210
+    observed: '2026-08-23'
+    notes: >-
+      ⚠️ HTTP 200, Content-Type text/html, ZERO bytes — reproduced twice on 2026-08-23 and
+      previously on three attempts when the issue was filed. This is the portal's "no document"
+      answer; it is not a 404 and not an error. NOTHING WAS WRITTEN for it here, because it was
+      never in the fetch list — but `watermark oepa fetch` WOULD have written it: _pdf_is_complete
+      (src/watermark/oepa/fetch.py) early-returns True for any body that does not start with
+      %PDF-, and an empty body takes that branch, so the response would be recorded `downloaded`
+      as a 0-byte .pdf inside data/documents/**. That is issue #2091 and is not fixed here.
+      Every one of the 12 committed bodies above was confirmed to start %PDF- and end %%EOF
+      before it was written.

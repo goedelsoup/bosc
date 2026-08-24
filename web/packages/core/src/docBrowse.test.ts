@@ -109,7 +109,11 @@ describe("summarizeCollections — against the committed Lima corpus", () => {
   // Committing either moves this number again and SHOULD.
   it("summarizes all 21 collections", () => {
     expect(summaries).toHaveLength(21);
-    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3350);
+    // 3,350 -> 3,362 (#2089): the twelve committed eDocuments of the 2DP00130 / APP285104563
+    // indirect-discharge application package under `oepa/lima/`. The portal serves 23 rows; the
+    // other eleven are exact or text-identical duplicates, pinned by sha256 in
+    // `data/documents/oepa/lima/2dp00130-app285104563-manifest.yaml` rather than committed.
+    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3362);
   });
 
   it("finds the one production that is half the catalog", () => {

@@ -200,6 +200,26 @@
     "relation_basis": null
   },
   {
+    "src": "BISTROZZI",
+    "rel": "operates",
+    "dst": "BOSC",
+    "date": "",
+    "ref": "",
+    "source": "oepa/lima/edoc-4116201.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "BOSC",
+    "rel": "discharges_to",
+    "dst": "AMERICAN BATH WASTEWATER TREATMENT PLANT",
+    "date": "",
+    "ref": "",
+    "source": "oepa/lima/edoc-4116201.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "ALLEN COUNTY BOARD OF COMMISSIONERS",
     "rel": "operates",
     "dst": "npdes:2PH00006",

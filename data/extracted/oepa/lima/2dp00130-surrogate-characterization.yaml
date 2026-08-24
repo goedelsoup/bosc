@@ -1,0 +1,376 @@
+# Reviewed analysis artifact — NOT a document extraction and deliberately not shaped like one.
+# It carries no `permit:` / `inspection:` / `order:` block, so `watermark.pipeline.corpus._classify`
+# declines it and it never enters the records feed. Its sources are the committed documents named
+# on every value below; those are the record, this is the reading.
+meta:
+  subject: >-
+    What the 2DP00130 application package actually characterises — and whose water it characterises
+  permit_id: 2DP00130*AP
+  applicant: BISTROZZI LLC
+  facility: Project BOSC (4110 N Cole St, Lima, Allen County, Ohio)
+  application_id: APP285104563
+  reviewed_on: '2026-08-23'
+  issue: 2089
+  provenance: data/documents/oepa/lima/2dp00130-app285104563-manifest.yaml
+  headline: >-
+    The campus's own discharge characterisation contains no measurement of the campus's discharge.
+    The Group A results table of the Indirect Discharge Permit Sampling Report — the nine
+    parameters the form states results MUST be provided for — is blank on both committed copies.
+    In its place the applicant filed laboratory data from a different Google data center, in a
+    different county, on a different watershed, and said so on the application form. Everything
+    numeric below is that other site's water.
+
+# ── The applicant's own statement, verbatim ───────────────────────────────────────────────────
+disclosure:
+  source: data/documents/oepa/lima/edoc-4116201.pdf p2 (ADDITIONAL INFORMATION block)
+  tag: verified
+  quote: >-
+    "Sampling Report Note: site sampling information is not available at this time as the facility
+    is under construction. Our understanding is that the form is intended to reflect process
+    blowdown only. Also, note that we left the Group A table blank since we do not have actual
+    blowdown WQ data. Biocides will be used in the cooling water to control microbiological
+    growth. See attached SDSs sheets for the anticipated cooling water treatment chemicals and
+    their design dosages. Sample data from a similar site has been added for reference until
+    sampling data can be obtained from the Project Bosc site."
+  reading: >-
+    This is a disclosure, not a concealment: the substitution is stated on the face of the filing.
+    It is recorded here because the substitution is easy to lose downstream — the summary table
+    that carries the numbers is headed "Lima Project" (4116204 p9) and one of the two laboratory
+    reports carries "Project Name: Lima Project" on its cover (4116205), while the sample
+    identities on both say CLB1. A reader who takes the project label for the sample identity
+    publishes Columbus measurements as Lima's.
+
+# ── Whose water this is ───────────────────────────────────────────────────────────────────────
+surrogate_site:
+  tag: verified
+  name_on_lab_report: GOOGLE CLB - 1 (C008798)
+  address: 225 Rathmell Rd, Columbus, OH 43137-9324
+  county: Franklin
+  relation_to_lima: >-
+    A different Google data center roughly 90 miles southeast of the Lima campus, in the Scioto
+    basin rather than the Maumee. It is NOT the facility this permit application is for.
+  sampled_on: '2026-04-09'
+  samples:
+    - id: CLB1-CITY-(L)
+      description: municipal makeup water
+      summary_table_column: City Domestic
+    - id: CLB1-MCP3-(L)
+      description: cooling loop / tower water
+      summary_table_column: Blowdown from MCU3
+  label_discrepancy:
+    tag: open
+    detail: >-
+      The loop sample is MCP3 on both laboratory reports (4116202, 4116205) and MCU3 on the
+      summary table (4116204 p9). The analyte values match exactly across all three documents
+      (pH 8.34, TOC 12, COD 49, sulfate 795, fluoride 2.5, total P 1.9, magnesium 133, zinc 0.36,
+      barium 0.04, iron 0.09), so this is the same sample under two spellings, not two samples.
+      Which spelling names the actual unit is not established by the record.
+
+# ── What the sampling report itself carries ───────────────────────────────────────────────────
+sampling_report:
+  documents: [edoc-4116204.pdf, edoc-4116226.pdf]
+  permit_number_on_form: 2DP00130*AP
+  facility_name_on_form: Project BOSC
+  outfall: '001'
+  collection_period: {from: '2026-01-13', to: '2026-01-14'}
+  group_a_results:
+    tag: verified
+    state: blank
+    parameters_left_blank:
+      - Biochemical Oxygen Demand (BOD)
+      - Chemical Oxygen Demand (COD)
+      - Total Organic Carbon (TOC)
+      - Total Suspended Solids (TSS)
+      - Ammonia (as N)
+      - Temperature (Maximum)
+      - Temperature (Average)
+      - pH
+      - Total Filterable Residue
+    detail: >-
+      All nine, on both committed copies, together with every results column in Groups B and C.
+      ⚠️ A declared collection period of 2026-01-13 to 2026-01-14 sits in the header above an
+      empty table. The application form explains it — the facility was under construction and had
+      no blowdown to sample — so the period is a form field that was completed, not evidence that
+      a January 2026 sampling event occurred. Nothing in the package establishes that one did.
+  group_b_c_believed_present:
+    tag: verified
+    detail: >-
+      The report's whole affirmative content. Eight analytes marked BELIEVED PRESENT; everything
+      else on the form — all metals but copper and zinc, all volatile, acid, base/neutral and
+      pesticide GC/MS fractions, cyanide, dioxin, oil and grease, radioactivity, surfactants,
+      phenols, sulfide, sulfite — marked BELIEVED ABSENT.
+    present: [Bromide, Fluoride, Phosphorus (as P) Total, Sulfate (as SO4), Aluminum Total,
+              Barium Total, Copper Total, Zinc Total]
+    reading: >-
+      Consistent with the treatment programme disclosed in the four attached SDSs — bromide from
+      the sodium-bromide/hypochlorite biocide pair, phosphorus from a phosphate-based scale and
+      corrosion inhibitor, copper and zinc from the loop's own metallurgy, sulfate and fluoride
+      concentrated up from the makeup water. Consistency is not corroboration: these are the
+      applicant's beliefs about an unbuilt facility, not observations.
+
+# ── The disclosed treatment chemistry ─────────────────────────────────────────────────────────
+treatment_chemicals:
+  tag: verified
+  detail: The four whose SDSs the application attaches, as the identification of the programme.
+  items:
+    - product: FORMULA 2310-LT
+      manufacturer: Garratt-Callahan Company
+      sds: SD2310LT
+      sds_revision: '2022-04-14'
+      stated_use: COOLING WATER TREATMENT
+      document: edoc-4116203.pdf
+    - product: HYDROCHLORIC ACID 15% 10B
+      manufacturer: Univar Solutions USA
+      sds: '100000057230'
+      sds_revision: '2020-07-21'
+      role_inferred: pH control
+      document: edoc-4116206.pdf
+    - product: Sodium bromide (CAS 7647-15-6)
+      manufacturer: Aldrich / MilliporeSigma (product 229881)
+      sds_revision: '2024-09-08'
+      role_inferred: biocide precursor, with the hypochlorite below
+      document: edoc-4116207.pdf
+      caveat: >-
+        The sheet filed is for a laboratory-grade product supplied under the TSCA R&D exemption
+        ("Identified uses: Laboratory chemicals, Synthesis of substances"). The applicant named
+        its attachment "Sodium Bromide.pdf", so the chemical is identified; the sheet does not
+        describe a bulk cooling-water product. [open]
+    - product: SODIUM HYPOCHLORITE 12.5%
+      manufacturer: Hydrite Chemical Co. (CL150082)
+      sds_revision: '2015-06-22'
+      stated_use: EPA Registered Pesticide
+      role_inferred: oxidising biocide
+      document: edoc-4116225.pdf
+  design_dosages:
+    tag: verified
+    state: absent
+    detail: >-
+      ⚠️ THE FORM SAYS THEY ARE ATTACHED AND THEY ARE NOT. The additional-information block reads
+      "See attached SDSs sheets for the anticipated cooling water treatment chemicals AND THEIR
+      DESIGN DOSAGES." All four SDSs were read end to end on 2026-08-23. None carries a dosage, a
+      feed rate, or a design concentration — a safety data sheet has no such field. The chemicals
+      are disclosed; the dosages the form represents as filed were never filed. A documented
+      negative, and the natural subject of a follow-up request.
+
+# ── The surrogate measurements, as filed ──────────────────────────────────────────────────────
+# ⚠️ EVERY VALUE IN THIS BLOCK IS GOOGLE CLB-1 (COLUMBUS) WATER, SAMPLED 2026-04-09.
+# It is tagged `reference` throughout — a third party's measurement of a different site, offered
+# by the applicant as an analogue. It is not a Lima observation and must never be cited as one.
+surrogate_measurements:
+  tag: reference
+  sampled_on: '2026-04-09'
+  sources:
+    summary_table: edoc-4116204.pdf p9 (headed "Lima Project"; columns City Domestic / Blowdown from MCU3)
+    chemtreat_coa: edoc-4116202.pdf (Certificate of Analysis W-260410-016, 2026-04-20)
+    alloway_coa: edoc-4116205.pdf (lab project 2612060, reported 2026-04-23)
+  units: mg/L unless stated
+  analytes:
+    # name:                        [makeup (city), cooling loop]
+    field_free_chlorine:           [1.03, 0.19]
+    field_total_chlorine:          [1.24, 0.26]
+    bod:                           ['<2.0', 2.5]
+    cod:                           ['<10', 49]
+    toc:                           [1.1, 12]
+    tss:                           ['<8.0', '<8.0']
+    ammonia_as_n:                  [null, '<0.1']
+    dehp_ug_l:                     ['<5.00', '<5.00']
+    temperature_maximum_f:         [null, 85]
+    temperature_average_f:         [null, 65]
+    ph:                            [7.48, 8.34]
+    total_filterable_residue_ppm:  [503, 1931]
+    conductivity_umho:             [709, 2720]
+    p_alkalinity_as_caco3:         ['<1', 4.4]
+    m_alkalinity_as_caco3:         [40, 168]
+    calcium_hardness_as_caco3:     [76, 331]
+    magnesium_hardness_as_caco3:   [30, 133]
+    sodium_as_na:                  [115, 462]
+    potassium_as_k:                [3.6, 14]
+    chloride_as_cl:                [70, 249]
+    sulfate_as_so4:                [195, 795]
+    nitrate_as_no3:                [0.83, 2.2]
+    ortho_phosphate_as_po4:        [1.4, 4.3]
+    total_phosphate_as_po4:        [1.4, 5.8]
+    total_phosphorus_as_p:         [0.46, 1.9]
+    fluoride_as_f:                 [0.68, 2.5]
+    silica_as_sio2:                [3.4, 14]
+    bromide_as_br:                 ['<0.1', '<0.5']
+    aluminum_total:                ['<0.01', 0.01]
+    barium_total:                  ['<0.01', 0.04]
+    iron_total:                    ['<0.01', 0.09]
+    magnesium_total:               [30, 133]
+    manganese_total:               ['<0.01', '<0.01']
+    copper_total:                  ['<0.01', '<0.01']
+    zinc_total:                    [0.17, 0.36]
+    strontium_as_sr:               [0.46, 1.7]
+    mercury_ug_l:                  ['<0.2', '<0.2']
+    turbidity_ntu:                 [0, 5.0]
+  notes:
+    - >-
+      Chlorine falls rather than concentrates (free 1.03 to 0.19, total 1.24 to 0.26): the
+      oxidant is consumed in the loop. It is the one parameter here that behaves that way.
+    - >-
+      Bromide is below the reporting limit in BOTH columns ('<0.1' and '<0.5'), so this data
+      does not corroborate the bromide the Lima sampling report marks BELIEVED PRESENT. The two
+      detection limits also differ by fivefold, which is itself a reason the pair cannot be
+      differenced.
+    - >-
+      The Alloway report gives a DEHP surrogate recovery of 39.8% and 37.1% against a 15.0-314%
+      acceptance window — inside the window, and recorded because a phthalate result at
+      '<5.00 ug/L' rests on it.
+
+# ── The one quantity this data supports, and its limits ───────────────────────────────────────
+derived_cycles_of_concentration:
+  tag: inference
+  basis: >-
+    Ratio of each conservative species in the cooling loop to the same species in the makeup
+    water, from the paired CLB-1 samples above. This is the standard way an operating tower's
+    cycles of concentration is observed, and the paired makeup/loop structure of the filing is
+    what makes it computable at all.
+  conservative_tracers:
+    chloride_as_cl: 3.56
+    total_filterable_residue: 3.84
+    conductivity: 3.84
+    potassium_as_k: 3.89
+    sodium_as_na: 4.02
+    sulfate_as_so4: 4.08
+  conservative_range: {min: 3.56, max: 4.08, median: 3.87, n: 6}
+  wider_range_including_scaling_species:
+    detail: >-
+      Adding species that can precipitate or deposit and are therefore weaker tracers —
+      fluoride 3.68, strontium 3.70, silica 4.12, total phosphorus 4.13, M-alkalinity 4.20,
+      calcium hardness 4.36, magnesium hardness 4.43 — widens the band to 3.56-4.43 with a
+      median of 4.02 over 13 species. The tight clustering across both groups is what makes the
+      figure credible AS AN OBSERVATION OF CLB-1.
+  excluded_and_why:
+    toc: 10.91 — organic loading from treatment product feed and airborne capture; not conservative
+    zinc_total: 2.12 — a corrosion-inhibitor / metallurgy species, consumed and plated out
+    nitrate_as_no3: 2.65 — biologically active
+    ortho_phosphate_as_po4: 3.07 — a fed treatment chemical, partly consumed
+  finding: >-
+    Google's CLB-1 tower was running at roughly 3.9 cycles of concentration on 2026-04-09.
+    [reference] as to CLB-1; it says nothing directly about Lima.
+
+# ── Reconciliation against the corpus's cooling model ─────────────────────────────────────────
+reconciliation:
+  against: src/watermark/hydrology/cooling_models.py (_CYCLES) and docs/HYDROLOGY.md section 4
+  model_assumption:
+    value: 5.0
+    cite: '"cooling-tower cycles of concentration ~5 (typical 4-6)"'
+    nature: >-
+      A literature assumption, not a back-solve from Lima data and not a disclosed figure. Worth
+      stating plainly, because the issue that commissioned this ingest described A3's cycles
+      figure as a back-solved bracket: what the code actually carries is a constant.
+  observed_analogue: {range: [3.56, 4.08], median: 3.87, site: GOOGLE CLB-1, tag: reference}
+  result:
+    tag: inference
+    detail: >-
+      THE DISCLOSED ANALOGUE SITS AT OR JUST BELOW THE BOTTOM OF THE MODEL'S OWN CITED BAND. The
+      model assumes 5.0 and cites 4-6 as typical; the only paired makeup/loop measurement the
+      applicant has put on any public record runs at ~3.9. This is a mild disagreement, in a
+      direction that would REDUCE the bottom-up bound rather than raise it: evaporation is
+      back-solved as blowdown x (CoC-1), so 3.9 gives 2.9 x blowdown where 5.0 gives 4.0 —
+      about 28% less. Applied to the 3.84 MGD bottom-up upper bound in docs/HYDROLOGY.md that
+      would be roughly 2.8 MGD, which still sits inside the 3.14-3.84 MGD bracket's neighbourhood
+      and does not disturb the corridor conclusion (the buildout draw remains an order of
+      magnitude above the Ottawa's 7Q10).
+  model_not_adjusted:
+    tag: verified
+    detail: >-
+      ⚠️ THE MODEL IS NOT CHANGED ON THIS EVIDENCE, AND THE FIGURE IS NOT ADOPTED. Three reasons,
+      each sufficient on its own:
+      (1) It is a self-reported measurement of a DIFFERENT FACILITY. The standing rule across the
+      B-series route-blind issues is that a self-report never upgrades the source; a self-reported
+      analogue is weaker still, and swapping a stated-typical constant for one day's reading at
+      another campus would trade a declared assumption for an undeclared one.
+      (2) Cycles of concentration is limited by the SCALING POTENTIAL OF THE LOCAL MAKEUP WATER,
+      and Columbus city water is not Lima's. CLB-1's makeup runs 709 umho with 76 mg/L calcium
+      hardness; nothing in this corpus establishes Lima's tower makeup chemistry, so the ratio is
+      not transferable on chemistry grounds even setting the provenance aside.
+      (3) It is a SINGLE GRAB PAIR on one date, with no indication of where in the tower's cycle
+      it was taken.
+      What it does do is what a corroborator should: it is the first disclosed, measured
+      cycles-of-concentration figure of any kind connected to this applicant, and it lands close
+      to the assumption the model already uses rather than contradicting it. That is worth
+      recording precisely because it is uncomfortable to overclaim.
+
+# ── Flow, and what it reconciles against ──────────────────────────────────────────────────────
+disclosed_flow:
+  tag: verified
+  source: data/documents/oepa/lima/edoc-4116201.pdf p1 (Manufacturing Process table)
+  stream: Non-contact cooling water
+  average_gpd: 52000
+  maximum_gpd: 156000
+  mode: B (batch), frequency "Variable"
+  date_installed_on_form: Nov 2026
+  reconciliation_with_pti:
+    tag: inference
+    detail: >-
+      COHERENT WITH #2088, WHICH IS WORTH SAYING BECAUSE IT NEED NOT HAVE BEEN. The Rev. 1 PTI
+      application (DSWPTI-260597, eDoc 4230068) gives a design AVERAGE DAILY flow of 0.10 MGD for
+      the combined main and a design PEAK HOURLY flow of 0.36 MGD. This form puts the cooling
+      component of that combined stream at 0.052 MGD average and 0.156 MGD maximum, leaving about
+      0.048 MGD for the domestic half — plausible against 155 staff on three shifts, and below
+      both the peak-hourly figure and the 0.79 MGD sewer hydraulic capacity. The two filings, made
+      three weeks apart by different preparers, describe the same pipe consistently.
+  derived_makeup:
+    tag: inference
+    detail: >-
+      ⚠️ A CHAINED ESTIMATE, STATED ONLY TO BOUND ITS OWN WEAKNESS. Makeup = blowdown x CoC. Taking
+      the Lima-disclosed blowdown (0.052 MGD average) with the CLB-1 observed ratio (~3.9) gives
+      roughly 0.20 MGD of tower makeup on average and about 0.61 MGD at the disclosed maximum.
+      This MULTIPLIES A LIMA FIGURE BY A COLUMBUS RATIO and inherits every objection above; it is
+      recorded as an order-of-magnitude marker, not as a campus water demand, and it is NOT fed to
+      any scenario. Note also that it is more than an order of magnitude below the 3.14-3.84 MGD
+      consumptive bracket, which is a BUILDOUT figure against a phase-1A permit — the two are not
+      the same quantity and must not be differenced.
+
+# ── Temperature ───────────────────────────────────────────────────────────────────────────────
+temperature:
+  tag: reference
+  detail: >-
+    The summary table is the only place in the entire application package where a blowdown
+    temperature appears: maximum 85 degF (29.4 degC) and average 65 degF (18.3 degC), for the
+    CLB-1 loop. It is worth flagging that the draft 2DP00130 permit monitors WATER TEMPERATURE,
+    pH and FLOW RATE — so the one parameter set the permit will require is the one the application
+    characterises entirely by proxy: Group A's own temperature-maximum and temperature-average
+    rows are blank.
+  do_not_overread:
+    tag: open
+    detail: >-
+      ⚠️ 85 degF converts to 29.4 degC, which is numerically the Ottawa River's daily-maximum
+      temperature criterion for this reach (OAC 3745-1-35 Table 35-11, zone G, Jun 16-30) named in
+      the THERMAL-NO-LIMIT lead. THAT COINCIDENCE IS NOT A FINDING and must not be published as
+      one. This is an INDIRECT discharge: the stream reaches the Ottawa only after the American-Bath
+      POTW, and nothing in this corpus establishes what temperature leaves that plant's outfall.
+      It is also CLB-1's water, not Lima's, on one day in April. Recorded so that a later reader
+      who notices the coincidence finds the caveat already attached to it.
+
+# ── What this package does not settle ─────────────────────────────────────────────────────────
+open_questions:
+  - id: BOSC-DISCHARGE-UNCHARACTERISED
+    tag: open
+    detail: >-
+      No measurement of Project BOSC's own discharge exists in any public record this corpus
+      holds. The applicant states one becomes available when the facility operates. This does NOT
+      reopen #1479 / H1-DRAW, which closed as modelled on the correct ground that the facility is
+      pre-operational — it sharpens that closure by dating it: the record now shows the applicant
+      saying so in its own filing, and names the event that would change it.
+  - id: BOSC-DESIGN-DOSAGES-NOT-FILED
+    tag: open
+    detail: >-
+      The four treatment chemicals are disclosed; the design dosages the application says are
+      attached are not in the package. Without them the loading of bromide, phosphate and
+      hypochlorite to the POTW cannot be estimated from the record.
+  - id: BOSC-APPLICATION-COORDINATE-ERROR
+    tag: open
+    detail: >-
+      The application locates the facility at 40.741894 / -73.989311 — Manhattan, New York. A
+      transcription or template defect, not a substantive claim about the site, and it does not
+      affect any figure above. Recorded because it went through the agency uncorrected.
+  - id: BOSC-PTI-QUESTION-ANSWERED-NO
+    tag: open
+    detail: >-
+      The form answers NO to "was a Permit to Install obtained?" on 2026-05-05, 28 days after
+      DSWPTI-260294 issued to this applicant for this site (eDoc 4074527, 2026-04-07). The form
+      does not say what scope it read the question as having. [verified] that the answers differ;
+      [open] as to why.

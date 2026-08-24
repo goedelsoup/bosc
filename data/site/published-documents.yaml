@@ -106,9 +106,59 @@ collections:      # whole data/documents/<slug> trees, e.g.  - aedg
   # ⚠️ FOR THE NEXT OEPA PULL: the warning below still stands, and this pull is now its second
   # instance. The premise has been broken twice. Treat "agency records contain no private PII" as
   # false for this collection and screen every pull — including the image-only pages.
+  # ⚠️ AMENDED 2026-08-23 (#2089) — `oepa/lima/` added **12 documents (4.4 MB)**, the APP285104563
+  # indirect-discharge application package on permit 2DP00130: the Bistrozzi/"Project BOSC" campus
+  # applying to send domestic waste plus non-contact cooling water to the American-Bath POTW. A
+  # different genre again from the two pulls above — an APPLICANT's own filing rather than an
+  # agency's enforcement record — and the first in this collection to carry third-party COMMERCIAL
+  # material (four vendor safety data sheets and two laboratory certificates of analysis).
+  # Screened anyway, because the standing rule cleared all twelve automatically.
+  #
+  # SCREEN (2026-08-23): 67 of 67 pages — **100%**. 64 read from the text layer; 3 were image-thin
+  # and were OCR'd (tesseract, via `site.passages.ocr_page_text`), and all 3 stayed blank because
+  # they ARE blank — the trailing pages of the 12-page sampling-report variant edoc-4116226.
+  # ⚠️ Three pages carry meaning that no regex could see and were READ AS RENDERED IMAGES rather
+  # than counted clean, per the #2031 rule: the one-page wastewater flow schematic (4116227, 112
+  # characters of text layer), the EMH&T sanitary site-plan exhibit (4116229, a drawing), and the
+  # surrogate results table appended at 4116204 p9.
+  #   ZERO SSNs. ZERO dates of birth. ZERO account, routing or card numbers.
+  #   FOUR distinct email addresses, none personal: smithmif@google.com (the applicant's own
+  #     facility manager, the contact of record on its instrument), bniemeyer@allencountyohio.com
+  #     (a county public office), and two vendor SDS support desks (Univar, MilliporeSigma).
+  #   35 phone matches, ALL institutional — the applicant's contact block, CHEMTREC and vendor
+  #     emergency lines, Alloway's three laboratory offices, and the Allen County Sanitary
+  #     Engineer's office and fax. No residential number appears.
+  #   Street matches ALL resolve to facilities or business addresses: the campus (4110 N Cole St),
+  #     Google CLB-1 (225 Rathmell Rd), County Sanitary Engineering (3230 N Cole St), Alloway's
+  #     labs, EMH&T (5500 New Albany Road), and the four chemical manufacturers.
+  #
+  # SIX INDIVIDUALS ARE NAMED and all six are the #2050 shape rather than the 2026-08-22 shape:
+  # each appears in a professional capacity on an instrument they are party to — Michael Smith
+  # (Facility Manager, the signer) and Robert Zizzo (Site Superintendent) for the applicant, Brad
+  # Niemeyer, P.E. (Allen County Sanitary Engineer, a public official), Jeremey Eisele, P.E.
+  # (EMH&T, the consulting engineer of record), and Joel Phillips and Brad Eckenrode (ChemTreat
+  # laboratory staff who signed the certificates). None is a third party incidental to someone
+  # else's permit, and none has a home address or personal telephone printed.
+  #
+  # ⚠️ THE ONE ITEM THIS SCREEN COULD NOT RESOLVE, recorded unresolved rather than glossed. The
+  # Alloway certificate (edoc-4116205) ships to "Chemtreat, Inc. (Westerville), Attn: Brad
+  # Eckenrode, 1008 Egret Ct, Westerville, OH 43082". Egret Ct reads as a residential street, so
+  # this MAY be a sales representative's home office rather than a company address; the document
+  # does not say, and nothing else in the corpus settles it. Published on the operator's decision
+  # with that uncertainty stated: it is the ship-to block of a commercial laboratory report filed
+  # with the agency by the applicant, Ohio EPA serves this exact PDF from its own public portal,
+  # and the certificate is load-bearing — it is half of the only measured water chemistry the
+  # application package contains. If it later proves residential, carve it out with a `withhold:`.
+  #
+  # ⚠️ FOR THE NEXT OEPA PULL: the warning above stands and this is its third instance. The
+  # premise "agency records contain no private PII" remains false for this collection. Note also
+  # that the collection now admits VENDOR and THIRD-PARTY-LABORATORY documents that arrive as
+  # attachments to an applicant's filing — screen those for the ship-to and account blocks a
+  # permit form does not have.
   # review: { by: goedelsoup, date: 2026-07-10, result: publish, basis: public-epa-agency-records }
   # review: { by: goedelsoup, date: 2026-08-17, result: publish, basis: public-epa-agency-records }
   # review: { by: goedelsoup, date: 2026-08-22, result: publish, basis: public-epa-agency-records }
+  # review: { by: goedelsoup, date: 2026-08-23, result: publish, basis: public-epa-agency-records }
   - oepa
   # The whole Findlay collection — 171 files (#1265): the Hancock County Commissioners' and
   # Allen Township trustees' meeting minutes, the township zoning book + map, the WARN

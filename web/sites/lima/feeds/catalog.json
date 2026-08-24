@@ -3961,6 +3961,63 @@
     }
   },
   {
+    "id": "oepa-lima-2dp00130-application",
+    "title": "Ohio EPA record extractions (Project BOSC indirect-discharge application — permit 2DP00130)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA eDocument portal — the APP285104563 application package on indirect-discharge permit 2DP00130 (BISTROZZI LLC / \"Project BOSC\" to the American-Bath POTW), fetched 2026-08-23 by `watermark oepa fetch` and shelved under data/documents/oepa/lima/",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:lima",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "lima",
+      "oepa",
+      "npdes",
+      "permits",
+      "datacenter",
+      "cooling"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/lima/edoc-4116201.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/2dp00130-surrogate-characterization.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "c78608e9a895a911670a991b05584dadf30586f60be74f4e850275055a5062c1",
+      "size_bytes": 24728,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA eDocument portal — the APP285104563 application package on indirect-discharge permit 2DP00130 (BISTROZZI LLC / \"Project BOSC\" to the American-Bath POTW), fetched 2026-08-23 by `watermark oepa fetch` and shelved under data/documents/oepa/lima/",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "oepa-lima-enforcement",
     "title": "Ohio EPA record extractions (City of Lima WWTP — permit 2PE00000, complete)",
     "scope": "extracted",

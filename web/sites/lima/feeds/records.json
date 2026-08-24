@@ -13198,6 +13198,54 @@
     "source_doc_published": true
   },
   {
+    "rel": "oepa/lima/edoc-4116201.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Bosc",
+    "confidence": "high",
+    "warnings": [
+      "This is an Indirect Discharge Permit application form, not a standard NPDES direct-discharge permit or fact sheet.",
+      "No permit number has been assigned — this is a new application.",
+      "The application_no field is populated with the EPA Form Application ID (285104563), not a standard OH-prefixed NPDES number.",
+      "No public notice number, public notice date, or comment period end date are present in this document.",
+      "Receiving water is a POTW (American – Bath Wastewater Treatment Plant), not a named surface water body.",
+      "Longitude (-73.989311) appears inconsistent with Lima, OH (expected ~-84°); may be a data entry error on the form."
+    ],
+    "fields": {
+      "facility_name": "Bosc",
+      "permit_no": null,
+      "permit_action": "new",
+      "applicant": "BISTROZZI LLC",
+      "application_no": "285104563",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "4110 N COLE ST, Lima, OH 45801",
+      "discharge_address": null,
+      "receiving_water": "American – Bath Wastewater Treatment Plant",
+      "stream_network": null,
+      "outfalls": [
+        "001"
+      ],
+      "note": "This is an Indirect Discharge Permit application (not a direct NPDES discharge to a surface water). The receiving entity is the American – Bath Wastewater Treatment Plant (POTW), not a named stream. No permit number has been assigned yet (new application). Application ID 285104563 is used as the application_no. Submission date is 05/05/2026. Wastewater source is proposed. No sludge/residuals generated. No Permit to Install obtained."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/edoc-4116201.npdes.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        2
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-4116201.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
     "group": "permits-npdes",
     "title": "American II Wastewater Treatment Plant",

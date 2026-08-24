@@ -1,15 +1,22 @@
 meta:
   subject: OEPA/DAM permit download manifest
   policy: non-destructive — originals keep as-received names
-  generated_at: '2026-08-22'
-  note: Rows are the fetch records for the documents this tree COMMITS. The 2026-08-22
-    portal pull resolved 261 documents on permit 2PE00000 and 93 are committed here
-    — the enforcement, inspection and permit-action tranche. The other 168 (routine
-    reports, monitoring/sampling, plan sets and the 16 large permit-application packages,
-    ~1.35 GB) were deliberately not committed; every one of their docids, dates and
-    doc types is recorded in data/research/oepa-portal-2pe00000-2026-08-22/manifest.yaml
-    and each is re-fetchable by docid, so the record of what exists is complete even
-    though the bytes are not held.
+  generated_at: '2026-08-23'
+  note: 'Rows are the fetch records for the documents this tree COMMITS, across TWO acquisitions.
+
+    (1) The 2026-08-22 portal pull on permit 2PE00000 (City of Lima WWTP) resolved 261 documents and 93
+    are committed here — the enforcement, inspection and permit-action tranche. The other 168 (routine
+    reports, monitoring/sampling, plan sets and the 16 large permit-application packages, ~1.35 GB) were
+    deliberately not committed; every one of their docids, dates and doc types is recorded in data/research/oepa-portal-2pe00000-2026-08-22/manifest.yaml
+    and each is re-fetchable by docid, so the record of what exists is complete even though the bytes
+    are not held.
+
+    (2) The 2026-08-23 pull on permit 2DP00130 (the Bistrozzi/Project BOSC indirect-discharge application,
+    APP285104563) resolved 23 rows that proved to be 16 distinct documents — the same bundle filed three
+    times — of which 12 are committed here. The 11 not committed are exact or text-identical duplicates,
+    each recorded by sha256 (and by the hash of its extracted text where the PDF bytes differ), NOT a
+    storage deferral. That tranche has its own scoped provenance map, 2dp00130-app285104563-manifest.yaml,
+    which accounts for all 23 docids; the rows below carry only the fetch record.'
 documents:
 - filename: edoc-4215450.pdf
   permit_id: 2PE00000
@@ -848,3 +855,159 @@ documents:
   fetched_at: '2026-08-22T20:19:55.899479+00:00'
   status: skipped_existing
   note: null
+- filename: edoc-4116201.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116201
+  sha256: 25c0f3cd7cf6dd1ec8f30e9693330bf70e77f7db7885544f61ff9fe3c0f98ad3
+  bytes: 11534
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:46.386558+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: oepa-2dp00130-idp-application-form-app285104563-2026-05-05.pdf
+  content_verified_date: '2026-05-05'
+- filename: edoc-4116202.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116202
+  sha256: bbbe254a16943fa471581bd24f93185dcf8b8cbb0ba094f25ab65ed0ef79da4c
+  bytes: 92859
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:47.253000+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: chemtreat-coa-w-260410-016-google-clb1-2026-04-20.pdf
+  content_verified_date: '2026-04-20'
+- filename: edoc-4116203.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116203
+  sha256: 5581009a36c016cf40e2506edf2e18b4f9cf52bd0c404ee84b402b1cf3b8dc81
+  bytes: 291819
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:47.960098+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: sds-garratt-callahan-formula-2310-lt-2022-04-14.pdf
+  content_verified_date: '2022-04-14'
+- filename: edoc-4116204.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116204
+  sha256: ae42ad4a75772aa97d2dc74b8eaa754649c7c4c2798d89d895b250ce110cf1f5
+  bytes: 1479160
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:49.281030+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: oepa-2dp00130-idp-sampling-report-outfall-001-with-surrogate-summary.pdf
+  content_verified_date: '2026-01-14'
+- filename: edoc-4116205.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116205
+  sha256: 9c5830000ec3ccae766778d24e813f484d00024584d98a0f768a05622c740380
+  bytes: 168378
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:49.856544+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: alloway-coa-2612060-google-clb1-lima-project-2026-04-23.pdf
+  content_verified_date: '2026-04-23'
+- filename: edoc-4116206.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116206
+  sha256: 814f592da892559698df2e513e2b7eee84c02d6227260167a155f14aa047657b
+  bytes: 194569
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:50.349652+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: sds-univar-hydrochloric-acid-15pct-2020-07-21.pdf
+  content_verified_date: '2020-07-21'
+- filename: edoc-4116207.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116207
+  sha256: 97cc1b588018ad50562ea3eedd53d19fe0afdbb04ce38bc4b6c319c7e5124c9f
+  bytes: 234600
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:51.287753+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: sds-aldrich-229881-sodium-bromide-2024-09-08.pdf
+  content_verified_date: '2024-09-08'
+- filename: edoc-4116225.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116225
+  sha256: 51ee5db72f5b1657ad23659ccf55fc85e9c617d9c5e9b35562e91c28985be073
+  bytes: 84006
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:51.751374+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: sds-hydrite-sodium-hypochlorite-12-5pct-2015-06-22.pdf
+  content_verified_date: '2015-06-22'
+- filename: edoc-4116226.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116226
+  sha256: f7cb1c1a7342f1648c883b049b68d46acd69012ef5ddf95a199820f0083807ea
+  bytes: 1259606
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:52.845791+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: oepa-2dp00130-idp-sampling-report-outfall-001-12pp-variant.pdf
+  content_verified_date: '2026-01-14'
+- filename: edoc-4116227.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116227
+  sha256: cd742c3154361c595823e20621191ad0801b95779c48c81eecc43a084b64b95c
+  bytes: 9608
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:53.307889+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: lma-wastewater-flow-schematic.pdf
+  content_verified_date: null
+- filename: edoc-4116228.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116228
+  sha256: 954d5e4f2a645c0c86548e9f757a804511d11eb3035033f2e5380fcf398916e2
+  bytes: 219361
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:54.073147+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: allen-county-american-bath-potw-idp-authorization-letter-2025-12-03.pdf
+  content_verified_date: '2025-12-03'
+- filename: edoc-4116229.pdf
+  permit_id: 2DP00130
+  source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116229
+  sha256: 660b5450b1d167557c9c3d8d25e557af863431ea78d602cdc32ed1aa8e0c985d
+  bytes: 391227
+  content_type: application/pdf
+  fetched_at: '2026-08-23T23:40:54.683028+00:00'
+  status: downloaded
+  note: 2DP00130 / APP285104563 tranche (#2089). Full provenance, the reviewed read of this document,
+    and the deferral record for the other 11 docids of the package are in 2dp00130-app285104563-manifest.yaml
+    on this shelf.
+  canonical_name: emht-bosc-1a-sanitary-exhibit-2025-09-23.pdf
+  content_verified_date: '2025-09-23'

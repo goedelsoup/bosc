@@ -102,7 +102,11 @@ describe("isRoutableDoc — measured against the committed Lima corpus", () => {
   // The 54 exclusions are unchanged: both new entries are ordinary routable PDFs.
   it("excludes exactly 54 of 3,254 entries (1.7%)", () => {
     const entries = limaEntries();
-    expect(entries.length).toBe(3350);
+    // 3,350 -> 3,362 (#2089): the twelve committed eDocuments of the 2DP00130 / APP285104563
+    // indirect-discharge application package under `oepa/lima/`. The portal serves 23 rows; the
+    // other eleven are exact or text-identical duplicates, pinned by sha256 in
+    // `data/documents/oepa/lima/2dp00130-app285104563-manifest.yaml` rather than committed.
+    expect(entries.length).toBe(3362);
     expect(entries.filter((e) => !isRoutableDoc(e))).toHaveLength(54);
   });
 

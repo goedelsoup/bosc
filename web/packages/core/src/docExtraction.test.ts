@@ -186,10 +186,26 @@ describe("the join, against the committed Lima bundle", () => {
   // real rather than a missed extraction — see the `counts.permits` note below. Two further eDocs
   // of the same permit action (`4230061`, `4230062`) are deliberately NOT committed on Git-LFS
   // budget and are recorded by sha256 in the shelf's `filename-map.yaml`.
+  // 3,350 -> 3,362 and 154 -> 155 (#2089): the twelve eDocuments of the 2DP00130 / APP285104563
+  // indirect-discharge application package (BISTROZZI LLC / "Project BOSC" to the American-Bath
+  // POTW), shelved under `oepa/lima/`. ⚠️ THE PORTAL SERVES 23 ROWS AND THE DENOMINATOR MOVES BY
+  // TWELVE: the package is the same bundle filed three times and resolves to 16 distinct
+  // documents, of which eleven are exact byte-duplicates (7) or text-identical re-submissions
+  // whose PDF bytes differ (4). All 23 docids are accounted for by sha256 in
+  // `data/documents/oepa/lima/2dp00130-app285104563-manifest.yaml` — complete coverage, not a
+  // deferral. ⚠️ THE NUMERATOR MOVES BY ONE, AND THAT IS A DECISION RATHER THAN A GAP: only the
+  // application form has a fitting genre (`npdes`). The two sampling reports were read and left
+  // UNEXTRACTED because no genre fits an Indirect Discharge Permit Sampling Report and their
+  // Group A results table is blank, so a model fitted to them would bake in the wrong shape; the
+  // four vendor SDSs, two lab certificates, flow schematic and site-plan exhibit are not agency
+  // instruments and have no genre either. Their content lives in the reviewed artifact
+  // `data/extracted/oepa/lima/2dp00130-surrogate-characterization.yaml`, which is deliberately
+  // shaped so `corpus._classify` DECLINES it — it is a reading, not a record, and must never
+  // count here.
   it("extracts 153 of 3,348 documents — 4.6% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
-    expect(entries.length).toBe(3350);
-    expect(countExtracted(entries, index)).toBe(154);
+    expect(entries.length).toBe(3362);
+    expect(countExtracted(entries, index)).toBe(155);
   });
 
   it("is near-complete on the small instrument collections, and thin across the big holdings", () => {
@@ -244,7 +260,10 @@ describe("the join, against the committed Lima bundle", () => {
     // are City of Lima letters. A progress report reports AGAINST obligations rather than imposing
     // them, so `--kind order` would have produced eleven wrong artifacts and ten near-duplicate
     // "decrees". Read a document before assuming its doc type is its genre.
-    expect(counts.oepa).toEqual([96, 111]);
+    // oepa 96 -> 97 extracted of 111 -> 123 (#2089): the 2DP00130 application package. The gap
+    // widens on purpose — see the note above the previous test for why eleven of these twelve
+    // documents have no extraction and should not.
+    expect(counts.oepa).toEqual([97, 123]);
   });
 
   it("counts distinct documents, not records — 3 records name no source file", () => {
@@ -268,7 +287,10 @@ describe("the join, against the committed Lima bundle", () => {
     // 158 -> 159 (#2088): `permits/4230060.epa.yaml`, which publishes into `permits-epa` as an
     // agency ACTION. Its companion `4230068.sanitary.yaml` does NOT appear, because `record:`
     // claims no group — the same gap noted on `counts.permits` above. One document, one record.
-    expect(records.length).toBe(159);
+    // 159 -> 160 (#2089): `oepa/lima/edoc-4116201.npdes.yaml`, the indirect-discharge
+    // application form, which publishes into `permits-npdes`. One record from twelve committed
+    // documents, for the reason given above.
+    expect(records.length).toBe(160);
     // 5 -> 3, and this is the deliberate change the note below predicted. `_source_ref` now
     // resolves three further committed provenance shapes — `provenance.source_path` /
     // `provenance.sources`, the connector read's `meta.sources` (a dict of NAMED lists, so every
@@ -283,6 +305,10 @@ describe("the join, against the committed Lima bundle", () => {
     // entry. `4230068.sanitary.yaml` names one too, but never becomes a record at all (`record:`
     // claims no group), so it cannot reach this index — which is why the join moves by one while
     // the corpus moves by two.
-    expect(index.size).toBe(154);
+    // 154 -> 155 (#2089): `oepa/lima/edoc-4116201.npdes.yaml` names its source document and so
+    // gains an index entry. Here the join and the record move together — unlike #2088, this
+    // extraction both becomes a record and names its source. The other eleven committed
+    // documents of the package have no extraction at all and so reach neither side.
+    expect(index.size).toBe(155);
   });
 });
