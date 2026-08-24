@@ -95,6 +95,10 @@ _PDF_EOF = b"%%EOF"
 # is still committed — the bytes decide what a document is, not the header.
 _HTML_TYPES = frozenset({"text/html", "application/xhtml+xml"})
 _HTML_SNIFF = (b"<!doctype html", b"<html", b"<!--")
+# A UTF-8 BOM ahead of the markup is invisible to ``bytes.lstrip()``, which strips ASCII
+# whitespace only — so a BOM'd error page mislabelled ``application/pdf`` would sniff clean and
+# be written under a .pdf name. ASP.NET emits one whenever the response encoding says to.
+_UTF8_BOM = b"\xef\xbb\xbf"
 
 
 class FetchedPermit(BaseModel):
@@ -137,7 +141,7 @@ def _looks_like_html(content: bytes, content_type: str | None) -> bool:
     """Whether a non-PDF body is an HTML page — by declared type, else by sniffing it."""
     if content_type and content_type.split(";", 1)[0].strip().lower() in _HTML_TYPES:
         return True
-    head = content[:512].lstrip().lower()
+    head = content[:512].lstrip().removeprefix(_UTF8_BOM).lstrip().lower()
     return head.startswith(_HTML_SNIFF)
 
 

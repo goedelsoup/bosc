@@ -421,6 +421,19 @@ def test_an_html_body_with_no_content_type_is_still_refused() -> None:
     assert _refusal(b"  \n<!doctype html>\n<html></html>", "application/pdf") is not None
 
 
+def test_a_bom_prefixed_html_body_is_still_refused() -> None:
+    """A UTF-8 BOM is invisible to ``bytes.lstrip()``, which strips ASCII whitespace only.
+
+    ASP.NET emits one whenever the response encoding calls for it, so a BOM'd error page
+    mislabelled ``application/pdf`` would otherwise sniff clean and be written under a
+    ``.pdf`` name — the same defect the content-type rule exists to stop.
+    """
+    assert _refusal(b"\xef\xbb\xbf<html><body>nope</body></html>", "application/pdf") is not None
+    assert _refusal(b"\xef\xbb\xbf\r\n<!DOCTYPE html>\n<html></html>", None) is not None
+    # The BOM alone is not markup, and a BOM'd non-HTML body is not this rule's business.
+    assert _refusal(b"\xef\xbb\xbfpermit id,county\n1PD00011,ALLEN\n", "text/csv") is None
+
+
 def test_a_real_pdf_under_a_wrong_content_type_is_still_committed(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
