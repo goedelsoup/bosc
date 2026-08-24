@@ -1,0 +1,117 @@
+# Agreement between the City of Lima and the Allen County Board of Commissioners to process
+# wastewater biosolids. Produced in PRR batch 2 (2026-08-24), responsive to Part F item 11
+# (intergovernmental wastewater-treatment agreements between the City and the County).
+#
+# TRANSCRIPTION. ⚠️ Konica Minolta scan, NO text layer; read by OCR (tesseract, 300 DPI) and
+# reviewed against the images. Printed body text is clean and high confidence. The signature page
+# (p7) is HANDWRITTEN and OCR'd badly — dates and signatures there are recorded only where the
+# handwriting was legible on the image, and the County resolution number was NOT legible.
+meta:
+  subject: City of Lima <-> Allen County biosolids processing agreement
+  parties:
+    city: City of Lima, 50 Town Square, Lima OH 45801
+    county: Allen County Board of Commissioners, 204 N Main Street, Suite 301, Lima OH 45801
+  source_file: data/documents/legal/prr-mandamus/prr-production-2026-08-24-lima/Allen_County_Biosolids_Contract_6_3_24.pdf
+  custody: ../bosc-prr-production-2026-08-lima.custody-manifest.yaml
+  prr_item: 'Part F, item 11'
+  pages: 8
+  date_note: >
+    ⚠️ The as-received filename says 6_3_24 and the PDF was scanned 2024-06-03, but that is the
+    SCAN date. On the document: the County executed 2023-12-05 (three commissioner signatures, all
+    dated 12-5-23), the City Law Director approved as to form 2023-04-26, and the recitals state
+    the County approved the agreement by resolution "Adopted Dec 5 2023". The Mayor's signature
+    date on the image reads as 2023 but the day/month are not confidently legible.
+    Per the corpus filename rule the as-received name is kept; the document date is 2023-12-05.
+  county_resolution_no: null
+  county_resolution_note: >
+    The recitals carry a handwritten resolution number that did not resolve from the scan
+    (OCR returned "FEA) -2'3"). Left null rather than guessed. Recoverable from the County's
+    2023-12-05 resolution series, already a corpus collection (data/documents/commissioners/).
+  authority: R.C. 6117.41, 6117.42, 6117.43 (County); City charter + constitutional home rule (City)
+  no_ordinance_required: true
+
+terms:
+  county_obligations:
+    delivering_plants:
+    - {name: American Bath WWTP, address: 3226 N Cole Street, Lima, OH 45801}
+    - {name: American II WWTP, address: 4140 Diller Rd., Lima, OH 45807}
+    - {name: Shawnee II WWTP, address: 3640 Spencerville Rd., Lima, OH 45805}
+    delivery_point: City WWTP, 1200 Ft. Amanda Road
+    volume_cap_gallons_per_year: 3000000
+    volume_approx_gallons_per_week: 58000
+    max_solids_pct: 7
+    sampling: grab sample from each day's hauling analysed for percent solids, as the City deems
+      necessary; metals sampling per Exhibit A; results reported to the City's WWTP Superintendent
+    schedule: weekly, Monday-Friday excluding holidays, during City business hours; after-hours
+      emergency hauling on the WWTP Superintendent's approval
+    measurement: the City's truck scale; gallons derived by dividing net weight by 8.34
+    recordkeeping: sequential load-receipt tickets (typically 50 per book) supplied by the City;
+      County keeps the original, City the carbon copy; monthly spreadsheet to the City
+    payment_terms_days: 30
+  city_obligations:
+    processing_fee_usd_per_gallon: 0.08
+    fee_review: annual; City notifies the County by December 1 of any increase effective January 1;
+      increases must be demonstrated from materials/operational cost or biosolids-facility
+      construction cost; County may object in writing by December 15 and the parties negotiate
+    suspension_right: up to 30 days for force-majeure events outside the City's control, with 24 hr
+      notice and an agreed make-up schedule
+    scale_maintenance: City maintains the truck scale and provides semi-annual calibration documentation
+  non_conforming_biosolids:
+    threshold_solids_pct: 7
+    surcharge_usd_per_gallon: 0.03
+  term: effective from the last date of execution, continuing year to year until terminated
+  termination:
+    county: >
+      may terminate on determining it will purchase treatment elsewhere or build its own, subject to
+      a notice-and-statement procedure (City responds within 120 days on capacity, willingness and
+      estimated cost); effective 120 days from the County's notice of determination. ⚠️ In the first
+      TEN years, if the City has constructed anything to treat or store the County's biosolids and a
+      payback period results, the County is precluded from terminating through that payback period.
+    city: 180 days' notice.
+  dispute: non-binding mediation first, unless the parties mutually agree otherwise
+  default_cure_days: 90
+  exhibit_a_metals_limits:
+    basis: >
+      "County biosolids shall not exceed the METALS limits set forth in the City's current NPDES
+      permit or as to cause the City to have treatment problems or violate its current NPDES permit"
+    unit: mg/kg
+    limits: {arsenic: 41, cadmium: 39, copper: 1500, lead: 300, mercury: 17, molybdenum: 75,
+      nickel: 420, selenium: 100, zinc: 2800}
+
+findings:
+- claim: '[verified] The City treats the biosolids of all three County WWTPs, including American Bath.'
+  basis: Section 1.1 names American Bath, American II and Shawnee II as the delivering plants.
+  why_it_matters: >
+    American Bath (3226 N Cole Street) is the plant the County's BOSC pump station and forcemain is
+    designed to feed — 2.5 MGD firm capacity at full build-out, with a 10-inch forcemain to American
+    Bath (data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12.response-index.yaml).
+    So the campus's sanitary route terminates at a County plant whose SOLIDS come back to the City's
+    plant under this agreement. It establishes a documented City-side exposure to County-side load
+    growth that the City's own capacity letters never address.
+  caveat: >
+    ⚠️ This is a solids pathway, not a hydraulic one. Campus wastewater treated at American Bath
+    would not arrive at the Lima WWTP as flow; only the resulting biosolids would, and only in
+    proportion to the solids the campus stream actually generates — which for cooling-tower blowdown
+    is not the same as for domestic sewage. Nothing here quantifies that. The 3,000,000 gal/yr cap
+    binds regardless of source, so growth in County load is capped at the City's gate unless the
+    agreement is amended.
+- claim: '[verified] The agreement predates the BOSC project record and names no data center.'
+  basis: >
+    Executed by the County 2023-12-05; City law-director approval 2023-04-26. The County's
+    "WWTP Data Center Flows Treatment Evaluation" (Task Order #5, Res #679-24) is 2024-08-22.
+  why_it_matters: >
+    The cap, the fee and the ten-year termination bar were all set before the campus was a
+    documented County project. Whether they have been revisited since is not answerable from this
+    production — Part F item 11 asked for correspondence and negotiation records relating to such
+    agreements and none was produced.
+- claim: '[open] The Exhibit A metals ceilings are not reconciled against the City''s own sludge data.'
+  basis: >
+    Exhibit A sets ceilings the County's biosolids must not exceed. The 2022 renewal application
+    (./lima-wwtp-npdes-renewal-application-2022.application.yaml) reports the City's OWN sludge
+    concentrations over 11 analyses — e.g. copper avg 155 / max monthly avg 327 mg/kg against a
+    1,500 ceiling; zinc 348 / 557 against 2,800; mercury 0.305 / 0.5 against 17.
+  caveat: >
+    These are different populations — Exhibit A limits the COUNTY's incoming material, the
+    application reports the CITY's blended outgoing product — so the comparison shows headroom in
+    the blend, not compliance of any County load. It is recorded as a starting point, not a result.
+    The County's Exhibit A sampling results were not produced.

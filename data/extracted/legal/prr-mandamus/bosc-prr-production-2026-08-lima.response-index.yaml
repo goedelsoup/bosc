@@ -1,0 +1,275 @@
+# City of Lima — FIRST production against the BOSC public-records request served on the City.
+# The #1536 municipal-utility track, opened in the corpus-completeness audit on 2026-07-14 as
+# "the un-requested municipal water & wastewater custodian", is now a SERVED request with a
+# partial response. This file maps the request item by item to what arrived.
+#
+# The request is scoped to the City's OWN operational records: it states on its face that the
+# requester already holds the issued permit and the DMRs from Ohio EPA. Two of the twenty-two
+# files delivered are therefore records the request expressly did not ask for — and both are
+# byte-identical to documents the corpus already held from Ohio EPA (see the custody manifest's
+# `cross_corpus_duplicates`).
+meta:
+  subject: BOSC PRR — City of Lima production batches 1-2, item-by-item response index
+  request_served_to: Mike Caprella, Director of Utilities, City of Lima
+  request_authority: R.C. 149.43
+  request_scope: >
+    The City of Lima WWTP (1200 Fort Amanda Road; NPDES 2PE00000*OD / OH0026069; final Outfall 001
+    to the Ottawa River at River Mile 37.6). Eleven items in six severable parts A-F.
+  production_dates: ['2026-08-22', '2026-08-24']
+  custodian: City of Lima, Department of Utilities / WWTP
+  custody: ./bosc-prr-production-2026-08-lima.custody-manifest.yaml
+  extractions: ./prr-production-2026-08-lima/
+  tracker: 'https://github.com/watermark-directory/the-watermark-directory/issues/1536'
+  posture: >
+    Two rolling partial responses two days apart, delivered electronically with NO cover letter, NO
+    itemised response, NO privilege log and NO withholding statement of any kind. Nothing in either
+    batch identifies which request item a document answers, asserts an exemption, states that a
+    responsive record does not exist, or gives a date for the balance. The mapping below is the
+    requester's reconstruction from document content, not the City's own accounting.
+  headline: >
+    Four of eleven items drew responsive records; SEVEN drew nothing and no explanation. The
+    production is strongest exactly where the record was already public (Part B — the ammonia
+    exceedances Ohio EPA had already noticed) and empty exactly where the City is the sole
+    custodian (Part C item 4 capacity analysis, Part C item 6 data-center service, Part D
+    pretreatment, Part E the CSO long-term control plan). The single most probative thing produced
+    is the ammonia BENCH data, which the corpus has never held for any facility.
+  counts:
+    request_items: 11
+    items_with_responsive_records: 4
+    items_partially_answered: 3
+    items_with_nothing_produced: 7
+    files_delivered: 22
+    files_committed: 20
+    files_byte_identical_to_records_already_held: 2
+
+items:
+- item: 'A.1'
+  asked: >
+    The City's complete application and renewal file for NPDES permit 2PE00000*OD (the 2023 renewal,
+    effective 2023-07-01), including the permit application, engineering or technical support
+    documents, and any antidegradation or capacity submittals.
+  status: partial
+  produced:
+  - file: City_of_Lima_NPDES_Permit_Renewal_Application_03012022.pdf
+    what: EPA Forms 1 / 2A / 2S + the Ohio EPA antidegradation addendum, Application ID 256207483,
+      dated 2022-03-01. 17 pp, born-digital STREAMS render.
+    extraction: prr-production-2026-08-lima/lima-wwtp-npdes-renewal-application-2022.application.yaml
+  - file: 2PE00000.pdf
+    what: The ISSUED permit — expressly outside the request's stated scope, and byte-identical to
+      two copies the corpus already held. Not re-committed.
+  not_produced:
+  - >
+    The attachments the application itself names on its face as uploaded: "Lima WWTP Storm Drainage
+    Plan.pdf", "Process Flow Diagram.pdf" (referenced twice — Form 2A II.E.6 line drawing and Form
+    2S I.B.2 sludge line drawing) and "Labeled Plant Map.jpg" (the Form 1 XII topographical map).
+    These are named in the produced document, so their existence is established on its face.
+  - Engineering or technical support documents beyond the forms.
+  - Any capacity submittal.
+  note: >
+    The antidegradation addendum WAS produced and is responsive to the "antidegradation submittal"
+    clause. The application is the core of the item; the file around it is missing.
+- item: 'A.2'
+  asked: All correspondence between the City (Utilities / WWTP) and Ohio EPA regarding permit
+    2PE00000 from 2026-01-01... (request reads "from January 1, 2023 to the present").
+  status: nothing-produced-as-correspondence
+  produced_incidentally:
+  - >
+    The 2026-07-16 NOV — Ohio EPA to the City, not City to Ohio EPA, and already held by the corpus.
+  - >
+    The two 2026 noncompliance notification forms — City to Ohio EPA, but produced under Part B.
+  - >
+    Two acceptance letters (2024-01-24, 2025-01-31) happen to be addressed to Ohio EPA DSW NWDO.
+  not_produced: >
+    No correspondence file. Over a 3.5-year window covering a permit renewal, a plant inspection,
+    an NOV and an SNC determination, the City produced no letters, no emails, and no transmittals.
+    No exemption was asserted and no statement was made that none exists.
+- item: 'B.3'
+  asked: >
+    All records concerning the total-ammonia-N effluent-limit exceedances at Outfall 001 for January
+    and February 2026 — underlying lab/bench data, root-cause or corrective-action analysis, and any
+    NOV, finding or compliance-schedule correspondence; and any amended or corrected DMR submission
+    or data-correction correspondence for the January through March 2026 reporting periods.
+  status: substantially-produced
+  produced:
+  - file: 'Ammonium_Results_Week_of_{01_18,01_25,02_01,02_08,02_15,02_22}_26.xlsx'
+    what: Six weekly lab benchsheets — the underlying bench data, daily duplicate analyses of the
+      final effluent. The most probative records in the production.
+    extraction: prr-production-2026-08-lima/lima-wwtp-ammonia-benchsheets-2026.lab.yaml
+  - file: 'January_2026_Noncompliance_Report_Ammonia.pdf, February_2026_Noncompliance_Report_Ammonia.pdf'
+    what: The City's own Ohio EPA noncompliance notification forms, carrying the root-cause and
+      corrective-action narrative in the form's own fields.
+    extraction: prr-production-2026-08-lima/lima-wwtp-noncompliance-notifications-2026.notification.yaml
+  - file: 2026.July_Lima_NOV.pdf
+    what: The 2026-07-16 NOV. Byte-identical to a record the corpus already held; not re-committed.
+  not_produced:
+  - >
+    ⚠️ MARCH 2026 bench data. The request covers "the January through March 2026 reporting periods"
+    for the DMR-correction clause, and EPA ECHO reports a March 2026 TSS exceedance. The benchsheets
+    stop at the week of 02-22.
+  - >
+    ⚠️ The January weeks of 01/04 and 01/11 — without which January's reported 30-day average of
+    2.2413 mg/l cannot be independently recomputed.
+  - >
+    ⚠️ The 2026-01-29 bench result. The row exists in the produced workbook with the analyst's
+    initials and a BLANK concentration cell. It is the single datum needed to reproduce January's
+    reported 7.117 mg/l weekly maximum, which the four produced days of that week do not reproduce.
+  - >
+    Any amended or corrected DMR submission, or data-correction correspondence, for Jan-Mar 2026 —
+    the second half of the item. Nothing produced and nothing said.
+  - >
+    Any root-cause or corrective-action analysis as a distinct record. The forms' narrative fields
+    are the only root-cause content, and they describe operational adjustments (distributor orifice
+    settings, purchased cold-weather microorganisms), not an analysis.
+  - >
+    The City's response to the NOV. The NOV required documentation within 30 days of receipt; it
+    issued 2026-07-16, so a response was due around 2026-08-15 — before both production dates.
+    Not produced.
+- item: 'C.4'
+  asked: >
+    Any wastewater treatment or collection-system capacity, reserve-capacity, headroom, or
+    hydraulic/loading analysis, study or model prepared for or by the City from 2023-01-01 to the
+    present, including any analysis referencing the 18.5 MGD average design flow or the 30/40/70 MGD
+    wet-weather flow-split thresholds.
+  status: nothing-produced
+  not_produced: >
+    ⚠️ Nothing. This is the item that would answer whether the plant has headroom for a large new
+    user, and it is the item the City is the sole custodian of. The 2022 renewal application
+    (produced under A.1) reports flows but is not an analysis and predates the window. No exemption
+    asserted, no statement that no such record exists.
+  bearing: >
+    The corpus's own reading of headroom currently rests on EPA ECHO's 13.068 MGD mean against the
+    18.5 MGD design (70.6%). The produced application reports an undated annual average of
+    16.65 MGD — 90% of design. Which figure describes the plant today is unresolved, and this item
+    is where the answer would be.
+- item: 'C.5'
+  asked: >
+    Any wastewater- or sewer-service agreement, "will-serve" or capacity-commitment letter, or
+    reserved-capacity determination executed, offered, or requested for any new or expanded user
+    from 2023-01-01 to the present.
+  status: produced
+  produced:
+  - file: 'Acceptance_Letter_*.pdf (10 files)'
+    what: The City's sanitary-capacity acceptance-letter series, 2023-08-31 to 2026-06-04 — the
+      instrument the City uses for capacity commitment.
+    extraction: prr-production-2026-08-lima/lima-sewer-capacity-acceptance-letters.letters.yaml
+  open_question: >
+    [open] Is ten letters over thirty-four months the complete series? The production contains no
+    index, log or certification of completeness, and the letters are not sequentially numbered, so
+    completeness cannot be tested from the face of the production. The request's "offered, or
+    requested" language also reaches inquiries that did not result in a letter; none was produced.
+- item: 'C.6'
+  asked: >
+    All records — applications, inquiries, correspondence, engineering submittals, and capacity or
+    allocation determinations — concerning wastewater or sewer service, or prospective service, to
+    any data center, hyperscale computing facility, or large water-cooling industrial user, inside
+    or outside City limits, from 2023-01-01 to the present; including any identified with 4110 North
+    Cole Street, Bistrozzi LLC, "Project BOSC", or naming Google LLC.
+  status: nothing-produced
+  not_produced: >
+    ⚠️ Nothing responsive. No record in either batch names 4110 N. Cole Street, Bistrozzi LLC,
+    Google LLC, Project BOSC, a data center, or a large water-cooling user. All ten acceptance
+    letters were read; none concerns the campus.
+  reading: >
+    ⚠️ This is a negative result about the PRODUCTION, not a verified negative about the world.
+    Three readings are open and the production does not distinguish them: (a) the campus never
+    sought CITY sanitary service — consistent with the County's own 2.5 MGD "Project Bosc Pump
+    Station and Forcemain" routing to the American Bath plant, advertised 2025-06-12; (b) responsive
+    records exist under an instrument other than an acceptance letter; (c) the production is
+    incomplete. Because the City asserted no exemption and made no no-records statement, (a) is NOT
+    established. Note that the County's parallel productions have already produced BOSC-named
+    wastewater records, so the project's existence in a wastewater file is documented elsewhere.
+- item: 'D.7'
+  asked: The City's current inventory or list of Significant Industrial Users and Categorical
+    Industrial Users under its State-Approved Pretreatment Program.
+  status: nothing-produced
+  nearest_thing_produced: >
+    The 2022 renewal application's COUNTS — 18 industrial users, 17 categorical, 1 non-categorical
+    SIU, 1.122 MGD combined — but no names, no permits, no allocations. Four years stale and not
+    an inventory.
+- item: 'D.8'
+  asked: Any Industrial User wastewater-discharge permit — and any application for one — issued,
+    modified, renewed, or applied for from 2023-01-01 to the present.
+  status: nothing-produced
+  bearing: >
+    A data center discharging cooling-tower blowdown to a POTW is the archetypal candidate for an
+    IU permit. This item and C.6 approach the same question from opposite ends; both are empty.
+- item: 'D.9'
+  asked: The City's Pretreatment Program annual reports submitted to Ohio EPA for calendar years
+    2023, 2024 and 2025.
+  status: nothing-produced
+  note: >
+    A discrete, named, non-voluminous set of three documents that the City is required to prepare
+    and submit. Nothing produced and nothing said.
+- item: 'E.10'
+  asked: The City's current Combined Sewer Overflow Long-Term Control Plan and the most recent
+    annual CSO report(s).
+  status: nothing-produced
+  nearest_thing_produced: >
+    The 2022 renewal application confirms the LTCP EXISTS and is being followed ("the city also
+    continues to follow it's Long Term Control Plan"), lists 20 CSO outfalls and 34 constructed
+    sanitary-relief points with coordinates, and gives the public CSO notification URL
+    (https://www.cityhall.lima.oh.us/410/CSO-Activity-Report). Form 2A III.B, which asks for CSO
+    system evaluation studies since the last application, answers "No records found".
+  bearing: >
+    Seven CSO outfalls and ten sanitary-relief points discharge to Pike Run — the receiving water
+    of the BOSC campus's 60-inch storm outfall. The annual CSO reports are where activation
+    frequency at those points lives, and they were not produced.
+- item: 'F.11'
+  asked: >
+    Any sewer-service, interceptor, capacity, or wastewater-treatment agreement — and any
+    correspondence, negotiation records, or engineering submittals relating to any such agreement,
+    whether executed, proposed, or under negotiation — between the City and Allen County, the Allen
+    County Sanitary Engineer, the Allen County Board of Commissioners, The Ohio State University,
+    Dr. Vinayak Shedekar, or any township or regional water/sewer district, from 2023-01-01.
+  status: partial
+  produced:
+  - file: Allen_County_Biosolids_Contract_6_3_24.pdf
+    what: The City <-> Allen County biosolids processing agreement, executed by the County
+      2023-12-05 — $0.08/gal, 3,000,000 gal/yr cap, 7% solids limit, Exhibit A metals ceilings,
+      covering the American Bath, American II and Shawnee II plants.
+    extraction: prr-production-2026-08-lima/lima-allen-county-biosolids-agreement.agreement.yaml
+  not_produced:
+  - >
+    Any correspondence, negotiation record, or engineering submittal relating to any agreement —
+    the larger half of the item.
+  - >
+    ⚠️ Anything concerning the County's "Project Bosc Pump Station and Forcemain": a 2.5 MGD firm-
+    capacity station with dual forcemains to the American Bath plant, publicly advertised by the
+    County 2025-06-12 at a $20.25M construction estimate and re-scoped 2026-02-26 at $29.8M. The
+    City treats American Bath's biosolids under the very agreement produced here, so a City-side
+    record touching that project is plausible; none was produced.
+  - >
+    Anything naming The Ohio State University or Dr. Vinayak Shedekar.
+  - >
+    Any township or regional water/sewer district agreement.
+
+# ── What the production establishes, and what it does not ────────────────────────────────────
+assessment:
+  strongest_gain: >
+    The bench data. It is the corpus's first primary analytical record for any facility, and it
+    closes the effluent chain to its source: the February 2026 monthly average and worst-week
+    maximum both recompute from the City's own duplicate analyses to four significant figures
+    against EPA ECHO. It also surfaces two things the reported record does not carry — a second
+    distinct weekly exceedance event that ECHO's monthly rollup drops, and three QC-failed matrix
+    spikes inside the reported February average.
+  structural_gain: >
+    The 2022 renewal application supplies a collection-system inventory that exists nowhere else in
+    the corpus: 20 CSO outfalls and 34 constructed sanitary-relief points with coordinates and
+    receiving waters, of which seventeen discharge to Pike Run. It also corrects a corpus reading —
+    the permit's "five" is an events-per-year cap, not an outfall count.
+  the_shape_of_the_gap: >
+    The seven unanswered items are not a random subset. Every item the City answered concerns a
+    record that Ohio EPA also holds, or a routine instrument the City issues to third parties. Every
+    item that would require the City to characterise its own capacity, its own industrial users, or
+    its own dealings about the campus drew nothing — C.4, C.6, D.7, D.8, D.9, E.10, and the
+    correspondence halves of A.2 and F.11. That is an observation about the distribution of what
+    arrived, not a finding of intent, and it is testable: it predicts that a follow-up narrowed to
+    those items either produces them or forces an explicit exemption claim.
+  procedural_note: >
+    ⚠️ Neither batch carried a cover letter, an itemised response, an exemption claim, a privilege
+    log, or a statement that any responsive record does not exist. Under R.C. 149.43 the requester's
+    remedies turn on how a non-response is characterised, and that characterisation is a legal
+    judgment for counsel — recorded here as the factual state of the production, not as a legal
+    conclusion. The withholding architecture the corpus already tracks for the County is at
+    ./records-withholding-map.yaml; nothing in this production adds a NEW withholding mechanism,
+    because nothing in it asserts one.

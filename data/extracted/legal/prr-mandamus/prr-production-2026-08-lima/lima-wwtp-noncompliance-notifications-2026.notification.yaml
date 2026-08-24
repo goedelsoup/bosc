@@ -1,0 +1,98 @@
+# Lima WWTP — the City's own Ohio EPA "Non-compliance Notification for Exceedance of a Daily
+# Maximum Discharge Limit" forms for the January and February 2026 ammonia exceedances.
+# Produced in PRR batch 2 (2026-08-24) against Part B item 3. Both are STREAMS-generated e-forms
+# with a full text layer; figures below are transcribed from that layer verbatim (high confidence).
+meta:
+  subject: Lima WWTP — total ammonia-N noncompliance notifications, January and February 2026
+  facility: Lima WWTP, 1200 Ft. Amanda Rd, Lima OH 45804, Allen County
+  permit_no: 2PE00000*PD
+  us_epa_application_no: OH0026069
+  source_dir: data/documents/legal/prr-mandamus/prr-production-2026-08-24-lima/
+  custody: data/extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.custody-manifest.yaml
+  prr_item: 'Part B, item 3'
+  bench_data: ./lima-wwtp-ammonia-benchsheets-2026.lab.yaml
+  reported_record: ../../../oepa/lima-wwtp-OH0026069.dmr.yaml
+  personnel_note: >
+    Both forms give the primary contact as "Shawn Dershem, Supervisor"
+    (shawn.dershem@limaohio.gov). The 2026-07-16 Ohio EPA NOV copies "Shawn Dersham, Plant
+    Supervisor". Two spellings of the same person across two agencies — neither is corrected here
+    (each is quoted as its own document has it). The 2022 renewal application names Kimberly Furry
+    as the operator of record, so the responsible-charge role changed between 2022 and 2026.
+
+notifications:
+- period: 2026-01
+  form_date: '2026-02-20'
+  application_id: '23595882'
+  source_file: January_2026_Noncompliance_Report_Ammonia.pdf
+  reporting_a_limit_exceedance: true
+  reporting_permit_condition_noncompliance: false
+  exceeded_limits:
+  - {parameter_code: '00610', parameter: Nitrogen, Ammonia (NH3-N), limit_type: 30 day concentration average,
+     limit: 1.7, measured: 2.2, unit: mg/l}
+  - {parameter_code: '00610', parameter: Nitrogen, Ammonia (NH3-N), limit_type: 7 day concentration maximum,
+     limit: 2.6, measured: 7.1, unit: mg/l}
+  period_of_exceedance: {hours: 120.0, start: '2026-01-21'}
+  description: >
+    "Poor performance of nitrifying bacteria due to cold weather, combined with limited growth on
+    nitrification tower media due to recent media replacement, led to exceedances of the 30-day and
+    7-day concentration limits. On several occasions in January 2026, the distributor arms on the
+    north and south towers would be found frozen in place, limiting contact with nitrifying bacteria."
+  cause: >
+    "Extremely low January temperatures inhibited the performance of nitrifying bacteria in the
+    nitrification towers."
+  corrective_action: >
+    "Plant staff will adjust the orifice openings at the end of the distributor arms on both towers
+    to reduce the creation of ice dams in extreme weather. The plant has also purchased a supply of
+    supplemental cold weather microorganisms to help improve treatment performance."
+- period: 2026-02
+  form_date: '2026-04-02'
+  application_id: '25835636'
+  source_file: February_2026_Noncompliance_Report_Ammonia.pdf
+  reporting_a_limit_exceedance: true
+  reporting_permit_condition_noncompliance: false
+  exceeded_limits:
+  - {parameter_code: '00610', parameter: Nitrogen, Ammonia (NH3-N), limit_type: 7 day quantity maximum,
+     limit: 182, measured: 283, unit: kg/day}
+  - {parameter_code: '00610', parameter: Nitrogen, Ammonia (NH3-N), limit_type: 7 day concentration maximum,
+     limit: 2.6, measured: 7.5, unit: mg/l}
+  - {parameter_code: '00610', parameter: Nitrogen, Ammonia (NH3-N), limit_type: 30 day quantity average,
+     limit: 119, measured: 181, unit: kg/day}
+  - {parameter_code: '00610', parameter: Nitrogen, Ammonia (NH3-N), limit_type: 30 day concentration average,
+     limit: 1.7, measured: 4, unit: mg/l}
+  - {parameter_code: '00610', parameter: Nitrogen, Ammonia (NH3-N), limit_type: 7 day quantity maximum,
+     limit: 182, measured: 270, unit: kg/day}
+  - {parameter_code: '00610', parameter: Nitrogen, Ammonia (NH3-N), limit_type: 7 day concentration maximum,
+     limit: 2.6, measured: 5.2, unit: mg/l}
+  period_of_exceedance: {hours: 336.0, start: '2026-02-01'}
+  description: >
+    "Poor performance of nitrifying bacteria due to very cold weather conditions, combined with
+    limited growth of nitrifying bacteria on the tower media due to recent media replacement, led to
+    exceedances of the 30-day and 7-day concentration limits. On several occasions, plant operators
+    found the distributor arms on the nitrification towers frozen in place creating limited contact
+    with nitrifiers."
+  cause: >
+    "Extremely low winter temperatures inhibited the performance of nitrifying bacteria in the
+    nitrification towers."
+  corrective_action: >
+    "Plant staff have adjusted the orifice openings on the distributor arms to help prevent ice
+    buildup that stops the rotation of the distributor. Additionally, the plant purchased several
+    batches of cold weather microorganisms to aid in treatment."
+  note: >
+    Six rows, covering TWO distinct weekly events — the 283 kg/day + 7.5 mg/l week and the
+    270 kg/day + 5.2 mg/l week. EPA ECHO carries only the first pair. See the bench file's
+    `reconciliation.february_2026.second_weekly_event`.
+
+findings:
+- '[verified] The permit limits the forms cite (30-day 1.7 mg/l, 7-day 2.6 mg/l) are the WINTER
+  ammonia-N limits of permit 2PE00000, independently recorded at data/extracted/oepa/2PE00000.npdes.yaml
+  ("ammonia-N summer 2.4 / 1.6 mg/l, winter 2.6 / 1.7 mg/l").'
+- '[verified] Every figure on both forms matches EPA ECHO''s DMR record for the same periods
+  (Jan 2.2 / 7.1 vs 2.2413 / 7.117; Feb 283 / 7.5 / 181 / 4 vs 283.1 / 7.521 / 180.6 / 4.007).
+  The City reported to Ohio EPA what Ohio EPA''s federal record holds.'
+- '[verified] The February form was filed 2026-04-02, sixty days after the exceedance period it
+  reports began (2026-02-01) and about five weeks after that period closed.'
+- '[inference] The corrective action is operational, not capital: orifice adjustment on the
+  distributor arms plus purchased cold-weather microorganisms. Neither form proposes a capacity,
+  process or capital remedy for the nitrification stage — which is what the 2026-07-16 NOV then
+  demanded ("a plan and timeline to return to compliance"). Whether such a plan was filed is not
+  in this production.'

@@ -1,0 +1,43 @@
+id: legal-prr-mandamus-prr-production-2026-08-lima
+title: City of Lima PRR Production — Per-Record Extractions (2026-08)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: City of Lima, Department of Utilities / WWTP — records produced 2026-08-22 and 2026-08-24
+    under R.C. 149.43
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: lima-legacy
+storage:
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-08-lima/lima-allen-county-biosolids-agreement.agreement.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-08-lima/lima-sewer-capacity-acceptance-letters.letters.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-08-lima/lima-wwtp-ammonia-benchsheets-2026.lab.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-08-lima/lima-wwtp-noncompliance-notifications-2026.notification.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-08-lima/lima-wwtp-npdes-renewal-application-2022.application.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+  last_refreshed: '2026-08-24'
+provenance: document
+tags:
+- public-records
+- lima-wwtp
+- npdes
+- laboratory
+- pretreatment
+notes: Per-record extractions from the City of Lima production. Includes the corpus's FIRST primary
+  lab record — six weeks of Outfall 001 ammonia benchsheets whose duplicate analyses recompute the
+  February 2026 reported monthly average and weekly maximum to four significant figures against EPA
+  ECHO — plus the 2022 NPDES renewal application (20 CSO outfalls and 34 constructed sanitary-relief
+  points with coordinates), the two 2026 noncompliance notifications, ten sanitary-capacity
+  acceptance letters, and the City–Allen County biosolids agreement.

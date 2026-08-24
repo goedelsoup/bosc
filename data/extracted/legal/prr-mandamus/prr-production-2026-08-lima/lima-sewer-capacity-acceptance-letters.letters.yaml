@@ -1,0 +1,132 @@
+# City of Lima — sanitary-capacity "acceptance letters", 2023-08-31 .. 2026-06-04.
+# Produced in PRR batch 2 (2026-08-24), responsive to Part C item 5 ("any wastewater- or
+# sewer-service agreement, 'will-serve' or capacity-commitment letter ... for any new or expanded
+# user from January 1, 2023 to the present").
+#
+# WHAT THEY ARE. Short single-page letters on City of Lima Department of Utilities letterhead in
+# which the City acknowledges it will accept the sanitary waste from a named project and states
+# that the WWTP "is capable of handling the additional flow." They are the City's routine
+# capacity-acknowledgement instrument — the artifact a developer's engineer files with Ohio EPA to
+# show downstream acceptance. Nine of the ten are signed by Eric Bontrager, P.E.; the tenth
+# (2023-08-31) is on the older Mayor Sharetta Smith letterhead, also Bontrager.
+#
+# TRANSCRIPTION. ⚠️ All ten are Konica Minolta bizhub C360i scans with NO text layer. Contents
+# below were read by OCR (tesseract, 300 DPI render) and reviewed against the images. Street names,
+# pipe diameters and dates are legible and high confidence; the SIGNATURES are handwritten and were
+# NOT read from the script — the signer is identified from the typed name block beneath each.
+meta:
+  subject: City of Lima sanitary-capacity acceptance letters, 2023-2026
+  custodian: City of Lima, Department of Utilities
+  source_dir: data/documents/legal/prr-mandamus/prr-production-2026-08-24-lima/
+  custody: ../bosc-prr-production-2026-08-lima.custody-manifest.yaml
+  prr_item: 'Part C, item 5'
+  signer: Eric Bontrager, P.E. (title given as "Utility Operation Manager" through 2025-01-31 and
+    "Operations Manager" on the 2024-01-24, 2024-08-05 and 2026-06-04 letters)
+  ocr_note: >
+    No text layer; OCR-read. Where a letter's addressee block did not resolve cleanly it is recorded
+    as null rather than guessed — see the 2024-08-05 letter, whose salutation reads "Dear Mr.
+    McDaniel:" but whose address block did not OCR.
+
+letters:
+- date: '2023-08-31'
+  file: Acceptance_Letter_8-31-23.pdf
+  addressee: {name: Josh Stephens, E.I., org: Core Consulting, address: 201 N. Broadway St., Spencerville, OH 45887}
+  project: 2-inch low-pressure force main along Ada Road
+  connection: 'existing low-pressure force main at the intersection of Thayer Road and Ada Road'
+  letterhead: City of Lima / Allen County, Ohio / Sharetta Smith, Mayor (50 Town Square)
+- date: '2024-01-24'
+  file: Acceptance_Letter_1-24-24.pdf
+  addressee: {name: Peggy Christie, org: Ohio EPA, Division of Surface Water, NWDO, address: 347 N. Dunbridge Rd., Bowling Green, OH 43402}
+  project: 8-inch sewer along Houx Parkway
+  connection: existing sanitary manhole near the north end of Houx Parkway
+  note: >
+    The only letter addressed to the REGULATOR rather than to a developer's engineer — and to the
+    same Ohio EPA district representative who signed the 2026-07-16 NOV.
+- date: '2024-04-02'
+  file: Acceptance_Letter_4-2-24.pdf
+  addressee: {name: Josh Stephens, P.S., E.I., org: Core Consulting}
+  project: 2-inch low-pressure force main along Stewart Road and Bible Road
+- date: '2024-05-29'
+  file: Acceptance_Letter_5-29-24.pdf
+  addressee: {name: Josh Stephens, P.S., E.I., org: Core Consulting}
+  project: 2-inch low-pressure force main along Bluelick Road and Slabtown Road
+- date: '2024-06-04'
+  file: Acceptance_Letter_6-4-24.pdf
+  addressee: {name: Aaron Despenas, org: The Weitz Company, address: 2801 Sixth Street SW, Cedar Rapids, IA 52404}
+  project: Procter and Gamble expansion on Reservoir Road, Lima
+- date: '2024-07-15'
+  file: Acceptance_Letter_7-15-24.pdf
+  addressee: {name: Ryan Tucker, EI, org: BL Companies, address: 3755 Boettler Oaks Dr., Uniontown, OH 44685}
+  project: site development at 721 Flanders Avenue, Lima
+  scope: >
+    WATER and sanitary sewer — the only letter of the ten covering both utilities. States that
+    "The current Wastewater Treatment Plant and Water Treatment plant are capable of handling the
+    additional demands of the proposed site", conditioned on plan approval and permits.
+- date: '2024-08-05'
+  file: Acceptance_Letter_8-5-24.pdf
+  addressee: {name: null, salutation: 'Dear Mr. McDaniel:', org: null}
+  project: property at 2640 Harding Highway
+  connection: existing 8-inch sewer near the northwest corner of the property
+  conditions: >
+    The only letter imposing an express condition: "All waste discharged to the sewer must comply
+    with the provisions of section 1040.13 of the sewer ordinance and the appropriate permits must
+    be obtained before connecting to the sewer."
+- date: '2024-09-18'
+  file: Acceptance_Letter_9-18-24.pdf
+  addressee: {name: Logan Kreinbrink, org: Core Consulting}
+  project: 2-inch low-pressure force main on Thayer Road, north of Harding Highway
+- date: '2025-01-31'
+  file: Acceptance_Letter_1-31-25.pdf
+  addressee: {name: null, salutation: 'Dear Sir/Madam:', org: OEPA Division of Surface Waters, Northwest District Office}
+  project: Autumn Lake Condominium Development
+  routing: >
+    "The sanitary waste will be collected and transmitted to the City's sewer system by the Allen
+    County sanitary sewer system" — the one letter documenting a County-collected, City-treated route.
+- date: '2026-06-04'
+  file: Acceptance_Letter_6-4-26.pdf
+  addressee: {name: Cody Wischmeyer, E.I., S.I., org: Core Consulting}
+  project: 8-inch sewer adjacent to 2550 Harding Highway, Lima
+  connection: existing sanitary manhole approximately 400 feet west of the proposed development
+
+findings:
+- claim: '[verified] No acceptance letter in this production concerns the BOSC campus.'
+  basis: >
+    All ten letters were read. None names 4110 N. Cole Street, Bistrozzi LLC, Google, Project BOSC,
+    a data center, or any large water-cooling user. Nine are residential/small-commercial force
+    mains and sewer stubs; the largest identified user is the Procter and Gamble Reservoir Road
+    expansion (2024-06-04).
+  why_it_matters: >
+    This is the production's answer to Part C item 6, which asked specifically for data-center
+    service records. The City produced its capacity-letter series and that series does not contain
+    one. ⚠️ Read carefully: this is a negative result about THIS PRODUCTION, not a verified negative
+    about the world. Three readings remain open and the production does not distinguish them —
+    (a) the campus never sought CITY sanitary service, which is consistent with the County's own
+    2.5 MGD BOSC pump station and forcemain routing to the American Bath plant; (b) any such record
+    exists under a different instrument than an acceptance letter; or (c) the production is
+    incomplete. No cover letter, privilege log or withholding statement accompanied either batch,
+    so the City has not asserted that nothing exists.
+- claim: '[open] Two letters concern Harding Highway parcels; neither is connected to the campus.'
+  basis: 2024-08-05 (2640 Harding Highway) and 2026-06-04 (2550 Harding Highway, 8-inch sewer).
+  caveat: >
+    Recorded because Harding Highway (US 30) is a corridor the investigation watches and because
+    the 2026-06-04 letter is the most recent instrument in the production. Neither letter names a
+    user, a load, or a use. An 8-inch gravity sewer is ordinary commercial service. Do NOT read
+    proximity as connection.
+- claim: '[open] One letter is on the Cole St / Bluelick corridor the campus sits on.'
+  basis: 2024-05-29 — 2-inch low-pressure force main along Bluelick Road and Slabtown Road.
+  caveat: >
+    ⚠️ A 2-inch low-pressure force main is residential-grinder-pump scale — orders of magnitude
+    below campus service, and below the County's 2.5 MGD BOSC forcemain. The road name matches the
+    corridor in the Lima SiteProfile; the infrastructure does not match a data center. Recorded so
+    that the match is on the record as EXCLUDED, not so that it can be cited as a link.
+- claim: '[verified] The City routinely tells Ohio EPA the plant has capacity for new load.'
+  basis: >
+    Every one of the ten letters asserts the WWTP "is capable of handling the additional flow."
+    The series runs 2023-08-31 to 2026-06-04.
+  why_it_matters: >
+    The last such assertion (2026-06-04) is six weeks before Ohio EPA issued the 2026-07-16 NOV
+    finding the same plant in significant noncompliance for ammonia. These are different questions —
+    hydraulic capacity for added flow versus treatment performance against an effluent limit — and
+    the letters make no treatment-performance claim. Recorded as a documented juxtaposition, not as
+    a contradiction. What would make it one is a capacity analysis reconciling the two; Part C item 4
+    asked for exactly that and none was produced.

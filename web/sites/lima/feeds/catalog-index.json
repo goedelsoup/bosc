@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "ee4fd48400583d2b68f05269b9ec9538ca7d539240dea2bd92d144a72aca5217",
+  "catalog_version": "a23fd6f6ec87cfb5b7cfe95b0355ac8b794899cb1c32a6f4b753b097e69fac2b",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -1380,6 +1380,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:legal-prr-mandamus-bosc-prr-production-2026-08-lima",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "legal-prr-mandamus-bosc-prr-production-2026-08-lima",
+      "title": "City of Lima PRR Production — Batches 1–2 (2026-08-22 / 2026-08-24)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:legal-prr-mandamus-bosc-site-permit-sequence",
       "kind": "dataset",
       "site": "lima",
@@ -1393,6 +1401,14 @@
       "site": "lima",
       "local_id": "legal-prr-mandamus-prr-production-2026-07-24-records",
       "title": "Batch-3 Sanitary Production — Extracted Record Envelopes (DFFO chain, WPCLF, SSO reports)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:legal-prr-mandamus-prr-production-2026-08-lima",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "legal-prr-mandamus-prr-production-2026-08-lima",
+      "title": "City of Lima PRR Production — Per-Record Extractions (2026-08)",
       "feed": "catalog"
     },
     {

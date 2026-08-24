@@ -1,0 +1,34 @@
+id: legal-prr-mandamus-bosc-prr-production-2026-08-lima
+title: City of Lima PRR Production — Batches 1–2 (2026-08-22 / 2026-08-24)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: City of Lima, Department of Utilities (Director Mike Caprella) — two rolling partial
+    responses delivered electronically, with no cover letter, privilege log or exemption claim
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: lima-legacy
+storage:
+- relpath: extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.analysis.md
+  media_type: text/markdown
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.custody-manifest.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.response-index.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+  last_refreshed: '2026-08-24'
+provenance: document
+tags:
+- public-records
+- production
+- lima-wwtp
+- npdes
+notes: The campaign's first MUNICIPAL-utility production (#1536), covering the Lima WWTP. Item-by-item
+  response index, byte-level custody manifest and analysis for a request whose eleven items in six
+  parts drew responsive records on four and nothing on seven. Two delivered files were byte-identical
+  to records the corpus already held from Ohio EPA and were not re-committed.
