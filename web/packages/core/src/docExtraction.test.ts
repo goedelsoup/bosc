@@ -202,7 +202,7 @@ describe("the join, against the committed Lima bundle", () => {
   // `data/extracted/oepa/lima/2dp00130-surrogate-characterization.yaml`, which is deliberately
   // shaped so `corpus._classify` DECLINES it — it is a reading, not a record, and must never
   // count here.
-  it("extracts 153 of 3,348 documents — 4.6% of the corpus", () => {
+  it("extracts 155 of 3,362 documents — 4.6% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
     expect(entries.length).toBe(3362);
     expect(countExtracted(entries, index)).toBe(155);
