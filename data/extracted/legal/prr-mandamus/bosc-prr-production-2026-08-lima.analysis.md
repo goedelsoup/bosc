@@ -49,6 +49,26 @@ Against permit limits of 1.7 mg/l (30-day average) and 2.6 mg/l (7-day maximum).
 through Thursday; the tie-out over exactly those twenty days is itself evidence that no produced
 week is missing days.
 
+**Where each figure comes from.** No value in that table is transcribed — each is recomputed from
+the daily rows in
+[`lima-wwtp-ammonia-benchsheets-2026.lab.yaml`](prr-production-2026-08-lima/lima-wwtp-ammonia-benchsheets-2026.lab.yaml),
+whose `daily_mg_l` block carries one row per sample date with both replicate analyses verbatim and
+the **workbook each row was read from**. The workbooks have no page numbering — they are
+spreadsheets — so the row address is the sample date within the `Ammonia Benchseet` tab of the
+named file, and that is what the extraction records:
+
+| Table row | Source rows | Workbook(s) |
+|---|---|---|
+| February monthly average (n = 20) | all 20 February sample dates | `Ammonium_Results_Week_of_{02_01,02_08,02_15,02_22}_26.xlsx` |
+| Week 2026-02-01 – 02-07 (5 days) | 02-01 … 02-05 | `Ammonium_Results_Week_of_02_01_26.xlsx` |
+| Week 2026-02-08 – 02-14 (5 days) | 02-08 … 02-12 | `Ammonium_Results_Week_of_02_08_26.xlsx` |
+
+The ECHO column is the committed
+[`lima-wwtp-OH0026069.dmr.yaml`](../oepa/lima-wwtp-OH0026069.dmr.yaml) (EPA ECHO effluent chart,
+2023-01 – 2026-06). The permit limits are the **winter** ammonia-N limits recorded independently at
+[`2PE00000.npdes.yaml`](../oepa/2PE00000.npdes.yaml) — *"ammonia-N summer 2.4 / 1.6 mg/l, winter
+2.6 / 1.7 mg/l"* — and they are the same numbers the City printed on its own noncompliance forms.
+
 Two things fall out that the reported record does not carry:
 
 - **ECHO drops a distinct exceedance event.** The City's February form lists *six* exceeded limits
@@ -62,13 +82,23 @@ Two things fall out that the reported record does not carry:
   point is not that the number is wrong, but that a qualifier in the City's lab record does not
   survive into the record everyone downstream reads.
 
-**January does not reconcile, and the gap is specific.** The week of 2026-01-25 holds only four
-results: the 2026-01-29 row is present with the analyst's initials and a **blank concentration
-cell**, and no 01-30 sample row exists. Those four days average 8.1772 mg/l and do not reproduce
-ECHO's reported 7.117. The weeks of 01/04 and 01/11 were not produced at all, so January's reported
-2.2413 mg/l monthly average cannot be recomputed either. If 7.117 is a five-day mean, the missing
-01-29 value would have to be about 2.88 mg/l — arithmetic, not evidence, recorded to make the gap
-precise.
+**January does not reconcile, and the gap is specific.** The week of 2026-01-25 has **five**
+scheduled sample days under the Sunday–Thursday regime, and four of them carry a numeric result:
+
+| Sample date | Replicates (mg/l) | Mean |
+|---|---|---|
+| 2026-01-25 (Sun) | 1.169, 1.175 | 1.172 |
+| 2026-01-26 (Mon) | 9.379, 9.486 | 9.4325 |
+| 2026-01-27 (Tue) | 10.034, 9.894 | 9.964 |
+| 2026-01-28 (Wed) | 12.119, 12.162 | 12.1405 |
+| 2026-01-29 (Thu) | — row present, analyst initialled, **concentration cell blank** | — |
+
+The blank day is excluded from the denominator, so the week's four numeric rows mean **8.1772 mg/l**
+— which does not reproduce ECHO's reported 7.117. 01-30 and 01-31 are a **Friday and a Saturday**:
+their absence is the sampling schedule, not a gap in the production. The weeks of 01/04 and 01/11
+were not produced at all, so January's reported 2.2413 mg/l monthly average cannot be recomputed
+either. If 7.117 is the mean of all five scheduled days, the blank 01-29 result would have to be
+2.876 mg/l — arithmetic, not evidence, recorded to make the gap precise.
 
 ### The renewal application is a collection-system inventory
 
