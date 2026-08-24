@@ -2568,8 +2568,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "6d03e55b58b7feb966be1f5fbf1fc190aebfec9db4b25f5a1f4cae08c6610b89",
-      "size_bytes": 53208,
+      "sha256": "44420193c6d3a66f6ddea19a5e9247811cbb831eb83d3b1bdb8760d5d6427294",
+      "size_bytes": 57018,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -2934,6 +2934,66 @@
     }
   },
   {
+    "id": "legal-prr-mandamus-bosc-prr-production-2026-08-lima",
+    "title": "City of Lima PRR Production — Batches 1–2 (2026-08-22 / 2026-08-24)",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "City of Lima, Department of Utilities (Director Mike Caprella) — two rolling partial responses delivered electronically, with no cover letter, privilege log or exemption claim",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "lima-legacy",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-24",
+    "tags": [
+      "public-records",
+      "production",
+      "lima-wwtp",
+      "npdes"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.analysis.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.custody-manifest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.response-index.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4620fbd93d9fe46a4bf2c6c1b15298abe41f61c0ee26be5b88b6b4cf84120470",
+      "size_bytes": 42339,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "City of Lima, Department of Utilities (Director Mike Caprella) — two rolling partial responses delivered electronically, with no cover letter, privilege log or exemption claim",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "legal-prr-mandamus-bosc-site-permit-sequence",
     "title": "Project BOSC Site — Permit/Approval vs Earth-Disturbance Sequence (4110 N. Cole St.)",
     "scope": "extracted",
@@ -3085,6 +3145,77 @@
     "observed_network": null,
     "citation": {
       "source": "manual/scripted transcription from the batch-3 per-item trees (items 9/11/15) — born-digital text layers, scanned-instrument visual reads, textutil (.doc/.docx), and openpyxl (.xlsx); figures copied as printed, negative meter readings preserved",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "legal-prr-mandamus-prr-production-2026-08-lima",
+    "title": "City of Lima PRR Production — Per-Record Extractions (2026-08)",
+    "scope": "extracted",
+    "collection": "legal",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "City of Lima, Department of Utilities / WWTP — records produced 2026-08-22 and 2026-08-24 under R.C. 149.43",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "lima-legacy",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": "2026-08-24",
+    "tags": [
+      "public-records",
+      "lima-wwtp",
+      "npdes",
+      "laboratory",
+      "pretreatment"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-08-lima/lima-allen-county-biosolids-agreement.agreement.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-08-lima/lima-sewer-capacity-acceptance-letters.letters.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-08-lima/lima-wwtp-ammonia-benchsheets-2026.lab.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-08-lima/lima-wwtp-noncompliance-notifications-2026.notification.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/legal/prr-mandamus/prr-production-2026-08-lima/lima-wwtp-npdes-renewal-application-2022.application.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "2c70ad488ff9bf2e88a61f53947b060fb9948efbd8dfde8130381d51246fa59f",
+      "size_bytes": 58338,
+      "lfs_materialized": true,
+      "file_count": 5,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "City of Lima, Department of Utilities / WWTP — records produced 2026-08-22 and 2026-08-24 under R.C. 149.43",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -3999,8 +4130,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "c78608e9a895a911670a991b05584dadf30586f60be74f4e850275055a5062c1",
-      "size_bytes": 24728,
+      "sha256": "03c4c78c2b8c86630e1b80750965af81363578c24daa61bc9b24ff3c3a800e2c",
+      "size_bytes": 25106,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,

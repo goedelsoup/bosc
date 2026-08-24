@@ -124,7 +124,24 @@ def test_no_collision_across_the_committed_corpus() -> None:
     # docids. This is COMPLETE coverage of the package, not an LFS deferral.
     # Reviewed: 3362 rels, 3362 distinct rels, 3362 distinct handles — zero collisions, checked as
     # a set rather than inferred from the delta.
-    assert len(rels) == 3362, "a corpus change belongs in review, not a silent collision"
+    # 3362 → 3382 (City of Lima PRR, #1536): the twenty committed files of the City of Lima's first
+    # public-records production, delivered in two rolling partial responses (2026-08-22 batch 1,
+    # Part A; 2026-08-24 batch 2, Parts B/C/F) and shelved under
+    # `legal/prr-mandamus/prr-production-2026-08-{22,24}-lima/`. They reach the LIMA bundle because
+    # `legal/` is network-global, the same route the H.B. 646 witness submissions took above.
+    # ⚠️ TWENTY-TWO FILES WERE DELIVERED AND THIS NUMBER MOVES BY TWENTY, WHICH IS THE POINT: the
+    # City produced `2PE00000.pdf` (the issued permit) and `2026.July_Lima_NOV.pdf`, both
+    # byte-identical to documents the corpus already held from Ohio EPA — the permit to BOTH
+    # `oepa/2PE00000.pdf` and `oepa/lima/edoc-2363112.pdf` (a pre-existing internal duplicate this
+    # checksum pass surfaced), the NOV to `oepa/lima/edoc-4192703.pdf`. Per the CLAUDE.md rule that
+    # removal is permitted only for a checksum-verified byte-identical duplicate, neither was
+    # re-committed; both are recorded with their verifying sha256 under `cross_corpus_duplicates`
+    # in `data/extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.custody-manifest.yaml`,
+    # which accounts for all 22 delivered files. This is COMPLETE coverage of the production, not
+    # an LFS deferral.
+    # Reviewed: 3382 rels, 3382 distinct rels, 3382 distinct handles — zero collisions, checked as
+    # a set rather than inferred from the delta.
+    assert len(rels) == 3382, "a corpus change belongs in review, not a silent collision"
     assert len({document_id(rel) for rel in rels}) == len(rels)
     # The count alone is a weak proxy: a delete-one-add-one leaves it at 3362. Name the two
     # committed BOSC-1A eDocs, and assert the two DEFERRED plan sets are absent — the deferral
@@ -174,6 +191,57 @@ def test_no_collision_across_the_committed_corpus() -> None:
     assert committed_2dp <= set(rels)
     assert not duplicates_2dp & set(rels)
     assert len(committed_2dp) + len(duplicates_2dp) == 23, "the portal serves 23 rows on 2DP00130"
+    # Same discipline for the City of Lima production. The absent set is again load-bearing: the
+    # City handed back two records the corpus already holds byte-for-byte, and committing either
+    # would inflate the corpus with bytes the custody manifest says it already has. Fix a failure
+    # by updating that manifest in the same change, never by editing this.
+    lima_prr_batch1 = {
+        "legal/prr-mandamus/prr-production-2026-08-22-lima/"
+        "City_of_Lima_NPDES_Permit_Renewal_Application_03012022.pdf"
+    }
+    shelf2 = "legal/prr-mandamus/prr-production-2026-08-24-lima/"
+    lima_prr_batch2 = (
+        {
+            f"{shelf2}Acceptance_Letter_{d}.pdf"
+            for d in (
+                "8-31-23",
+                "1-24-24",
+                "4-2-24",
+                "5-29-24",
+                "6-4-24",
+                "7-15-24",
+                "8-5-24",
+                "9-18-24",
+                "1-31-25",
+                "6-4-26",
+            )
+        }
+        | {
+            f"{shelf2}Ammonium_Results_Week_of_{w}_26.xlsx"
+            for w in ("01_18", "01_25", "02_01", "02_08", "02_15", "02_22")
+        }
+        | {
+            f"{shelf2}Allen_County_Biosolids_Contract_6_3_24.pdf",
+            f"{shelf2}January_2026_Noncompliance_Report_Ammonia.pdf",
+            f"{shelf2}February_2026_Noncompliance_Report_Ammonia.pdf",
+        }
+    )
+    lima_prr_duplicates = {
+        f"{shelf2}2026.July_Lima_NOV.pdf",
+        "legal/prr-mandamus/prr-production-2026-08-22-lima/2PE00000.pdf",
+    }
+    assert lima_prr_batch1 | lima_prr_batch2 <= set(rels)
+    assert not lima_prr_duplicates & set(rels)
+    assert len(lima_prr_batch1) + len(lima_prr_batch2) + len(lima_prr_duplicates) == 22, (
+        "the City delivered 22 files across the two batches"
+    )
+    # The bytes the two duplicates carry ARE in the corpus, at their Ohio EPA shelf — assert that,
+    # so "not committed here" can never quietly become "not held at all".
+    assert {
+        "oepa/2PE00000.pdf",
+        "oepa/lima/edoc-2363112.pdf",
+        "oepa/lima/edoc-4192703.pdf",
+    } <= set(rels)
 
 
 def test_rel_is_taken_verbatim() -> None:

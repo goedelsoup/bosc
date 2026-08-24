@@ -1,0 +1,352 @@
+# City of Lima WWTP — the NPDES permit renewal APPLICATION behind permit 2PE00000*OD.
+# Produced in PRR batch 1 (2026-08-22) against Part A item 1. EPA Forms 1 / 2A / 2S plus the
+# Ohio EPA antidegradation addendum, submitted through STREAMS, Application ID 256207483,
+# 17 pp, dated 2022-03-01 — the application whose grant became the permit effective 2023-07-01.
+#
+# The permit itself has been in the corpus since 2026-07-14 (data/extracted/oepa/2PE00000.npdes.yaml).
+# This is the other side of it: what the CITY told Ohio EPA about its own system. The permit
+# states obligations; the application states the applicant's description of the works — including
+# a collection-system inventory that appears in no other document the corpus holds.
+#
+# TRANSCRIPTION. The source is a born-digital STREAMS render with a clean text layer (not a scan,
+# no OCR). Narrative fields are quoted verbatim; the outfall/relief-point tables below were parsed
+# programmatically from that text layer rather than re-keyed.
+meta:
+  subject: City of Lima WWTP — 2022 NPDES renewal application (EPA Forms 1 / 2A / 2S)
+  application_id: '256207483'
+  form_date: '2022-03-01'
+  permit_granted: 2PE00000*OD, effective 2023-07-01 (see ../../../oepa/2PE00000.npdes.yaml)
+  permit_at_time_of_filing: 2PE00000*ND
+  facility: City of Lima WWTP, 1200 Fort Amanda Road, Lima OH 45804, Allen County
+  source_file: data/documents/legal/prr-mandamus/prr-production-2026-08-22-lima/City_of_Lima_NPDES_Permit_Renewal_Application_03012022.pdf
+  custody: ../bosc-prr-production-2026-08-lima.custody-manifest.yaml
+  prr_item: 'Part A, item 1'
+  antidegradation: >
+    Section B checked "Renewal NPDES application or PTI application with no requested increase in
+    loading of currently permitted pollutants" — i.e. the City sought NO loading increase at renewal.
+    Sections C and D were therefore not completed.
+  unsigned: >
+    Both certification blocks (Form 1 item XIV, Form 2A item IX) are blank in the produced render —
+    no printed applicant name, title, signature or date. Consistent with a STREAMS electronic
+    submission, where the certification is captured in the system rather than on the form face.
+    Recorded, not read as a defect.
+
+personnel:
+  facility_contact:
+    name: Kimberly Furry
+    title: Supervisor
+    phone: (419) 221-5198
+    email: kim.furry@cityhall.lima.oh.us
+  applicant_email: mike.caprella@cityhall.lima.oh.us
+  operator_of_record: {name: Kimberly Furry, certification: WW4-1018520-08}
+  collection_system_responsible_charge: {name: Larry Huber, certification: '1013482'}
+  contract_laboratory:
+    name: Alloway Testing
+    address: 1101 N. Cole Street, Lima, OH 45801
+    phone: (419) 223-1362
+    pollutants: >
+      "Nitrate/Nitrite, TKN, metals, mercury, VOCs, priority pollutants, cyanide and free cyanide,
+      Bis-2, Oil and Grease and bioassay. Other parameters are added if we are unable to perform
+      them in-house." (from the applicant's ADDITIONAL INFORMATION note — the City records that
+      STREAMS would not accept contract-lab detail on Form 2A.)
+
+plant:
+  outfall_001: {lat: 40.723333, lon: -84.129444, description: Final Effluent, receiving_water: Ottawa River}
+  design_daily_influent_flow_mgd: 18.5
+  peak_flow_capacity_mgd: 70
+  secondary_capacity_mgd: 45
+  tertiary_capacity_mgd: 30
+  annual_average_daily_flow_mgd: {two_years_ago: 13.04, last_year: 13.02, this_year: 16.65}
+  flow_measurement: {method: Electromagnetic, location: Secondary Effluent}
+  year_constructed: 1931
+  year_last_major_modification: 2016
+  expansion_planned_during_permit_life: false
+  employees: {collection_system: 28, treatment_plant: 17}
+  treatment_units: [Bar screen, Grit removal, Scum removal, Primary sedimentation,
+    Activated sludge-conventional, Biological nitrification-separate stage, Ferric-chloride
+    addition-primary, Polymer addition, Secondary clarification, Dechlorination, Chlorination]
+  bypasses:
+  - {location: plant bypass, station: '057', type: external, times_used_last_year: 0}
+  - {location: secondary bypass, station: '602', type: internal, times_used_last_year: 0}
+  - {location: tertiary bypass, station: '603', type: internal, times_used_last_year: 85}
+  backup_power: true
+  nature_of_business: >
+    "The Lima Wastewater Plant consists of screening, aerated grit removal, primary sedimentation,
+    activated sludge, secondary settling, tertiary treatment, chlorination, and de-chlorination.
+    The sludge is anaerobically digested and alkaline stabilized using the N-Viro process. The
+    plant has a total peak flow capacity of 70 MGD, secondary capacity of 45 MGD and a tertiary
+    treatment capacity of 30 MGD. The average design flow capacity of 18.5 MGD for normal daily
+    average flow."
+
+collection_system:
+  population_served: {Lima Ohio: 47000}
+  population_served_total_as_filed: 0
+  population_note: >
+    The form's "Total Population Served" totals to 0 against a listed 47,000 — a STREAMS rollup
+    artifact, not a claim. Use the 47,000 line.
+  separate_sanitary_pct_by_miles: 40
+  combined_pct_by_miles: 60
+  maintenance_responsibility: [City of Lima, Allen County]
+  lift_stations:
+    separate_sanitary: 31
+    combined_as_filed: 60
+    combined_actual_per_applicant: 1
+    note: >
+      The City flagged its own form: "There is only 1 lift station in the combined sewerage area
+      (Baxter Street Lift Station). The form keeps reverting back to '60'; however, there is only 1."
+      ⚠️ Anyone reading the filed 2A at face value would count 60. Use 1.
+  inflow_and_infiltration_gpd: 200000
+  i_and_i_program: >
+    "The city recently completed a large sewer camera project in the Lost Creek sewer area. A plan
+    is currently being developed to determine the most appropriate way to handle the various issues
+    that were found. It is anticipated that those repairs will include partial replacements, repairs
+    and lining of sewers in those areas. The city also continues to follow it's Long Term Control
+    Plan..."
+  water_supply_sources:
+  - {type: Municipal Water Supply, location: Bressler Pump St, coords_as_filed: "40 43' 47\" N, 84 13' 42\" W", owner: City of Lima}
+  - {type: Municipal Water Supply, location: Auglaize Pump St., coords_as_filed: "40 43' 45\" N, 84 18' 01\" W", owner: City of Lima}
+  - {type: Municipal Water Supply, location: Lost Creek Pump Station, coords_as_filed: "40 44' 41\" N, 84 03' 56\" W", owner: City of Lima}
+  - {type: Municipal Water Supply, location: Metzger Pump Station, coords_as_filed: "40 45' 06\" N, 84 02' 58\" W", owner: City of Lima}
+  - {type: Municipal Water Supply, location: Ferguson Inlet, coords_as_filed: "40 44' 39\" N, 84 02' 32\" W", owner: City of Lima}
+  - {type: Municipal Water Supply, location: 'Auglaize River St #2', coords_as_filed: "40 43' 46\" N, 84 18' 01\" W", owner: City of Lima}
+  sso_relief_points_eliminated:
+    note: >
+      From the applicant's ADDITIONAL INFORMATION note — "The following SSOs were not included in
+      the application as they have been eliminated". Reported by the City; not independently confirmed.
+    stations:
+    - {station: '301', description: 'MH #19 at Lost Creek Golf Course'}
+    - {station: '312', description: Wales Ave. at Primrose Place}
+    - {station: '328', description: 1327 Northwold}
+    - {station: '339', description: 1640 Harding Hwy (Lost Creek Lift Station)}
+    - {station: '340', description: 550 Northern Ave (Northland Lift Station)}
+    - {station: '341', description: 255 N Mumaugh Road Lift Station}
+    - {station: '342', description: University Ave. & Cornell Dr.}
+
+industrial_users:
+  total: 18
+  non_categorical_significant: 1
+  categorical: 17
+  average_daily_flow_mgd: {all: 1.122, non_categorical_siu: 0.412, categorical: 0.71}
+  approved_pretreatment_program: true
+  note: >
+    The 0.412 and 0.71 MGD splits already appear in the corpus from the PERMIT side
+    (data/extracted/oepa/2PE00000.npdes.yaml). The USER COUNTS — 18 total, 17 categorical, 1
+    non-categorical SIU — are new, and are the closest thing the production supplies to the
+    Part D item 7 inventory, which was not produced.
+
+biosolids:
+  process_design_capacity_dry_tons_yr: 5000
+  generated_on_site_dry_tons: 2071
+  received_from_other_generators_dry_tons: 620
+  domestic_septage_received_gallons: 1486259
+  land_applied_dry_tons: 1328.26
+  land_application_counties: [Allen]
+  pathogen_reduction: {class_a_pct: 100, class_b_pct: 0, alternative: Biosolids Treated in a High pH - Temp}
+  treatment_units: [Anaerobic digestion, Mechanical dewatering-filter press (Ashbrook),
+    Gravity thickening, Landfill/Trenching, Land spreading, Lime stabilization (N-Viro Process)]
+  year_last_major_modification: 2010
+  transport_organization_email: KNeefus@republicservices.com
+  receiving_organization_email: AWright@wrightconsolidated.com
+  sludge_pollutant_concentrations:
+    laboratory: Alloway
+    n_analyses: 11
+    unit: mg/kg
+    rows:
+    - {pollutant: Arsenic, cas: 7440-38-2, avg: 10.78, max_monthly_avg: 15.5, mdl: 0.776}
+    - {pollutant: Cadmium, cas: 7440-43-9, avg: 1.86, max_monthly_avg: 3.19, mdl: 0.466}
+    - {pollutant: Copper, cas: 7440-50-8, avg: 155, max_monthly_avg: 327, mdl: 1.24}
+    - {pollutant: Lead, cas: 7439-92-1, avg: 32.4, max_monthly_avg: 37.9, mdl: 1.55}
+    - {pollutant: Mercury, cas: 7439-97-6, avg: 0.305, max_monthly_avg: 0.5, mdl: 0.162}
+    - {pollutant: Molybdenum, cas: 7439-98-7, avg: 22.8, max_monthly_avg: 30.7, mdl: 3.1}
+    - {pollutant: Nickel, cas: 7440-02-0, avg: 34.7, max_monthly_avg: 42.2, mdl: 1.24}
+    - {pollutant: Selenium, cas: 7782-49-2, avg: 5.8, max_monthly_avg: 8.58, mdl: 0.621}
+    - {pollutant: Zinc, cas: 7440-66-6, avg: 348, max_monthly_avg: 557, mdl: 0.78}
+
+cso_system:
+  in_lake_erie_basin: true
+  public_notification_plan_url: https://www.cityhall.lima.oh.us/410/CSO-Activity-Report
+  system_evaluation_studies_listed: none ("No records found")
+  form_duplicate_row: >
+    Outfall 003 (Heindel Street) is printed TWICE with identical coordinates. Counted once below;
+    the form as filed lists 21 rows for 20 distinct outfalls.
+  outfalls:
+  - {outfall: '002', description: Collett Street, lat: 40.732222, lon: -84.118333, receiving_water: Ottawa
+      River}
+  - {outfall: '003', description: Heindel Street, lat: 40.732778, lon: -84.116944, receiving_water: Ottawa
+      River}
+  - {outfall: '004', description: McDonel Avenue, lat: 40.733889, lon: -84.110278, receiving_water: Ottawa
+      River}
+  - {outfall: '005', description: Central Avenue, lat: 40.736111, lon: -84.1025, receiving_water: Ottawa
+      River}
+  - {outfall: '006', description: Lover's Lane, lat: 40.740278, lon: -84.093333, receiving_water: Ottawa
+      River}
+  - {outfall: '007', description: S. Central/Ottawa River, lat: 40.736111, lon: -84.102222, receiving_water: Ottawa
+      River}
+  - {outfall: 008, description: Timberlake Sewer, lat: 40.736111, lon: -84.1025, receiving_water: Ottawa
+      River}
+  - {outfall: 009, description: Oxford and Collett, lat: 40.728056, lon: -84.122778, receiving_water: Ottawa
+      River}
+  - {outfall: '011', description: Burch & O'Conner Ave, lat: 40.757222, lon: -84.111667, receiving_water: Pike
+      Run}
+  - {outfall: '012', description: McDonel @ O'conner, lat: 40.757222, lon: -84.110278, receiving_water: Pike
+      Run}
+  - {outfall: '013', description: Metcalf @ O'Conner, lat: 40.757222, lon: -84.113333, receiving_water: Pike
+      Run}
+  - {outfall: '014', description: Metcalf & Tremont, lat: 40.754167, lon: -84.113333, receiving_water: Pike
+      Run}
+  - {outfall: '015', description: Metcalf @ Runyan, lat: 40.756111, lon: -84.113333, receiving_water: Pike
+      Run}
+  - {outfall: '016', description: Metcalf @ Ashton, lat: 40.755278, lon: -84.113333, receiving_water: Pike
+      Run}
+  - {outfall: '033', description: Nixon @ Kunneke, lat: 40.732778, lon: -84.135556, receiving_water: Ottawa
+      River}
+  - {outfall: '034', description: Judkins @ Kunneke, lat: 40.732778, lon: -84.134167, receiving_water: Ottawa
+      River}
+  - {outfall: '035', description: Lakewood @ Charles, lat: 40.733889, lon: -84.122778, receiving_water: Ottawa
+      River}
+  - {outfall: '036', description: Charles @ State, lat: 40.735556, lon: -84.122778, receiving_water: Ottawa
+      River}
+  - {outfall: '037', description: North Sore @ Cole, lat: 40.744167, lon: -84.137778, receiving_water: Ottawa
+      River}
+  - {outfall: 038, description: West Street @ O'Connor, lat: 40.757222, lon: -84.108611, receiving_water: Pike
+      Run}
+
+# Constructed sanitary-relief points — Form 2A II.B.4, the overflows the City reports as
+# "specifically constructed to provide hydraulic relief to the collection system".
+# Treatment description is "n/a" on every row. Station 315 is absent from the form (314 -> 316);
+# stations 301/312/328/339/340/341/342 are the seven the City reports as eliminated, above.
+sso_relief_points:
+- {station: '302', description: MH#14 at Lost Creek Golf Course, lat: 40.736389, lon: -84.071389,
+  receiving_water: Lost Creek}
+- {station: '303', description: 700 S Glenwood, lat: 40.732778, lon: -84.137222, receiving_water: SS
+    to Ottawa River}
+- {station: '304', description: West side of Pears Ave. at Kennuke Ave., lat: 40.7325, lon: -84.138889,
+  receiving_water: SS to Ottawa River}
+- {station: '305', description: Lakewood Ave & Maplewood Drive, lat: 40.733889, lon: -84.140833,
+  receiving_water: SS to Dug Run Ditch}
+- {station: '306', description: 516 S Pears, lat: 40.734444, lon: -84.138889, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '307', description: 418 S Pears (MH 0-10), lat: 40.735278, lon: -84.138889, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '308', description: 418 S Pears (MH 0-9), lat: 40.735556, lon: -84.138889, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '309', description: 235 S Pears, lat: 40.7375, lon: -84.138611, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '310', description: 1938 W Elm, lat: 40.7375, lon: -84.141389, receiving_water: SS to
+    Dug Run Ditch}
+- {station: '311', description: 1861 Wendell, lat: 40.73461, lon: -84.14235, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '313', description: S. Cable Rd. at Lakewood Ave, lat: 40.733889, lon: -84.146944, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '314', description: S. Cable Rd. at Wendell Ave., lat: 40.734722, lon: -84.146944, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '316', description: Dale Dr. & Idlewild Dr., lat: 40.741944, lon: -84.144722, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '317', description: 380 N Dale Dr, lat: 40.743333, lon: -84.142778, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '318', description: Dale Dr. & West Wayne St., lat: 40.743889, lon: -84.142222, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '319', description: Dale Dr. & University Ave., lat: 40.745, lon: -84.142222, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '320', description: Columbia at Allentown (SE of intersection), lat: 40.758333, lon: -84.1475,
+  receiving_water: SS to Dug Run Ditch}
+- {station: '321', description: 1379 N Cable Road Lift Station, lat: 40.748056, lon: -84.145278,
+  receiving_water: Dug Run Ditch}
+- {station: '322', description: 1700 Allentown Road Lift Station, lat: 40.746944, lon: -84.138056,
+  receiving_water: SS to Dug Run Ditch}
+- {station: '323', description: Rosedale at Ellison, lat: 40.745, lon: -84.131111, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '324', description: Woodlawn at Ellison, lat: 40.745556, lon: -84.1325, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '325', description: Woodlawn at Feeman Ave., lat: 40.751111, lon: -84.1325, receiving_water: SS
+    to Dug Run Ditch}
+- {station: '326', description: Northwold St. at O'Connor Ave., lat: 40.756944, lon: -84.121111,
+  receiving_water: SS to Haver Ditch}
+- {station: '327', description: 1330 Melrose Ave, lat: 40.758333, lon: -84.1225, receiving_water: SS
+    to Haver Ditch}
+- {station: '329', description: Metcalf St. at Lane Ave, lat: 40.762778, lon: -84.113611, receiving_water: SS
+    to Pike Run Ditch}
+- {station: '330', description: Metcalf St. at Ford Ave., lat: 40.763611, lon: -84.113611, receiving_water: SS
+    to Pike Run Ditch}
+- {station: '331', description: Burch & Ford, lat: 40.763889, lon: -84.111944, receiving_water: SS
+    to Pike Run Ditch}
+- {station: '332', description: 2032 Burch Ave, lat: 40.767778, lon: -84.114722, receiving_water: SS
+    to Pike Run Ditch}
+- {station: '333', description: Lewis Ave. & Burch Ave., lat: 40.774167, lon: -84.129167, receiving_water: SS
+    to Pike Run Ditch}
+- {station: '334', description: Lewis Blvd. & Metcalf St., lat: 40.766111, lon: -84.114722, receiving_water: SS
+    to Pike Run Ditch}
+- {station: '335', description: Celia Place & Northern Ave., lat: 40.765556, lon: -84.111944, receiving_water: SS
+    to Pike Run Ditch}
+- {station: '336', description: Karen St. & Lewis Blvd. (N Intersection), lat: 40.7675, lon: -84.111667,
+  receiving_water: SS to Pike Run Ditch}
+- {station: '337', description: Karen St. and Lane Ave., lat: 40.763333, lon: -84.110278, receiving_water: Pike
+    Run Ditch}
+- {station: '338', description: West Street Lift Station, lat: 40.762778, lon: -84.108333, receiving_water: Pike
+    Run Ditch}
+
+# ── Findings ──────────────────────────────────────────────────────────────────────────────────
+findings:
+- claim: '[verified] The City''s collection system discharges to Pike Run at seventeen points.'
+  basis: >
+    Form 2A III.A lists 7 CSO outfalls on Pike Run (011, 012, 013, 014, 015, 016, 038) and II.B.4
+    lists 10 constructed sanitary-relief points on Pike Run Ditch (329-338), each with coordinates.
+    Counted from the tables above.
+  why_it_matters: >
+    Pike Run is the receiving water of the BOSC campus's 60-inch storm outfall
+    (data/extracted/plans/bosc-site-footprint.yaml; SWP3 at data/extracted/plans/4091286.engineering.yaml).
+    The corpus has modelled Pike Run as the campus's stormwater receiving reach; this establishes
+    that the same reach is already the relief point for a seventh of the City's combined system.
+    ⚠️ This is a shared-receiving-water finding, NOT a claim that the campus discharges sanitary
+    flow to Pike Run, and NOT a claim about how often these points activate — the form reports
+    their existence, not their frequency. Activation frequency is in the CSO annual reports, which
+    were NOT produced (Part E item 10).
+- claim: '[verified] The corpus previously understood "five" as a CSO count; it is an event cap.'
+  basis: >
+    data/extracted/oepa/2PE00000.npdes.yaml records "CSOs reduced to five events per year (p84)"
+    from the permit, and the ECHO DMR summary carries 5 overflow outfalls. The application lists
+    20 distinct CSO outfalls and 34 sanitary-relief points. The permit's five is a performance
+    condition; ECHO's five is the subset that reports monitoring data. Neither is the inventory.
+- claim: '[verified] The City sought no loading increase at renewal.'
+  basis: >
+    The antidegradation addendum, section B, is checked "Renewal NPDES application ... with no
+    requested increase in loading of currently permitted pollutants", and Form 2A II.D.5 answers
+    "No" to planned expansion of treatment capacity during the life of the permit.
+  why_it_matters: >
+    Filed 2022-03-01. The 2.5 MGD BOSC pump station and forcemain the County advertised in June 2025
+    (data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12.response-index.yaml) postdates
+    it, and routes to the County's American Bath plant rather than the City's. Recorded as the
+    City's stated position at renewal — not as evidence about the campus, which did not yet exist
+    as a project on this record.
+- claim: '[open] The most recent year in the application ran at 90% of design flow.'
+  basis: >
+    Form 2A II.D.2 gives annual average daily flow of 13.04, 13.02 and 16.65 MGD against an 18.5 MGD
+    design. EPA ECHO's 2023-01..2026-06 record gives a 13.068 MGD mean (70.6% of design).
+  caveat: >
+    The application does not label its three years. Filed 2022-03-01, "This Year" most plausibly
+    means calendar 2021, but the form does not say so and the City's fiscal convention is unknown.
+    The 16.65 figure is therefore an UNDATED high-water mark, not a 2021 datum. It matters because
+    headroom against 18.5 MGD is the quantity Part C item 4 asked for and no capacity analysis was
+    produced — 16.65 would leave ~1.85 MGD, 13.07 would leave ~5.4 MGD, and the difference decides
+    whether the plant has room for a large new user. Resolving the year is a follow-up item.
+- claim: '[verified] The City documented an error in its own filed form.'
+  basis: >
+    Form 2A II.B.3 reports 60 combined-system lift stations; the applicant's ADDITIONAL INFORMATION
+    note states there is one (Baxter Street) and that "the form keeps reverting back to 60".
+  why_it_matters: >
+    A caution about STREAMS-rendered filings generally: a figure on the form face may be a
+    system artifact the applicant could not correct. Read the free-text notes before citing a field.
+- claim: '[verified] The tertiary bypass was used 85 times in the year before filing.'
+  basis: Form 2A II.E.4 — station 603, internal, 85 uses; plant bypass (057) and secondary bypass (602) zero.
+  why_it_matters: >
+    Tertiary treatment is the 30 MGD stage; bypassing it sends secondary effluent forward. 85 uses
+    in one year is a routine-operation number, not an upset number, and it bears on how much of the
+    18.5 MGD design flow is actually treated to tertiary standard. The form gives no volumes.
+- claim: '[reference] The contract laboratory and the biosolids-hauling chain are both named.'
+  basis: >
+    Alloway Testing, 1101 N. Cole Street — the same Cole Street corridor as the campus (4110 N.
+    Cole St.) and the County's American Bath WWTP (3226 N Cole Street). Biosolids transport is
+    Republic Services, receiving is Wright Consolidated.
+  caveat: >
+    Shared street address range is proximity, not a relationship. Recorded because the corpus tracks
+    the Cole Street corridor, not because any connection is established.

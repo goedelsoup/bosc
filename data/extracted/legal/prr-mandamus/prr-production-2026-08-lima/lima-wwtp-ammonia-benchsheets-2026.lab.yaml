@@ -1,0 +1,257 @@
+# Lima WWTP — Outfall 001 total-ammonia-nitrogen BENCH data, weeks of 2026-01-18 .. 2026-02-22.
+# Produced by the City of Lima in PRR batch 2 (2026-08-24) against Part B item 3 ("the underlying
+# lab/bench data"). Six weekly Excel workbooks, one per week, tab "Ammonia Benchseet" (sic).
+#
+# WHAT THIS IS. The raw analytical record beneath the reported discharge-monitoring numbers: each
+# day's duplicate analyses of the final effluent, as run by plant staff. The corpus has never held
+# a primary lab record before — every effluent figure in it until now was a REPORTED value (the
+# permittee's DMR submission, read back out of EPA ECHO). This closes the chain to its source and
+# lets the reported statistics be independently recomputed rather than taken on the permittee's word.
+#
+# TRANSCRIPTION. Values are read programmatically from the committed .xlsx (sample ID "001",
+# the final-effluent point), not re-keyed. `replicates` are the two duplicate analyses exactly as
+# recorded; `mean_mg_l` is their arithmetic mean, computed here. Rounded to 4 dp — the workbooks
+# carry 3-4 significant figures.
+meta:
+  subject: Lima WWTP Outfall 001 — total ammonia-N (as N) bench analyses, Jan-Feb 2026
+  facility: City of Lima WWTP, 1200 Ft. Amanda Rd (NPDES 2PE00000*PD / OH0026069)
+  parameter: Nitrogen, ammonia (NH3-N), storet 00610
+  unit: mg/l
+  matrix: final effluent (bench sample ID "001")
+  analyst: 'BG (initials as recorded on every result row in this range)'
+  source_dir: data/documents/legal/prr-mandamus/prr-production-2026-08-24-lima/
+  custody: data/extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.custody-manifest.yaml
+  prr_item: 'Part B, item 3'
+  sampling_regime: >
+    Sunday through Thursday, five days per week. Every workbook covers Sun-Thu and none records a
+    Friday or Saturday effluent result. This is the plant's regime, not a production gap: the
+    February monthly average recomputed over the 20 Sun-Thu days reproduces the reported DMR value
+    (see `reconciliation`), which it could not do if Friday/Saturday results existed and were withheld.
+  qualifiers:
+    '*': 'ND - Non-detect (benchsheet legend; not used in this range)'
+    '**': 'Estimate; Over Curve (benchsheet legend; used on two non-001 rows in this range)'
+    '***': >
+      "Estimate; matrix spike failed" (benchsheet legend, week of 02/22 workbook). The same
+      workbook's Comments column records the cause per day: the matrix spike for 001 sampled
+      2/22/26 was low, 2/23/26 was low, and 2/24/26 was high. ⚠️ These three QC-failed estimates
+      are INSIDE the February monthly average the City reported to Ohio EPA, and EPA ECHO carries
+      that reported value with no qualifier attached.
+
+# Daily record. One row per sample date; `replicates` verbatim from the workbook.
+daily_mg_l:
+- date: '2026-01-18'
+  replicates: [0.232, 0.226]
+  mean_mg_l: 0.229
+  workbook: Ammonium_Results_Week_of_01_18_26.xlsx
+- date: '2026-01-19'
+  replicates: [0.237, 0.253]
+  mean_mg_l: 0.245
+  workbook: Ammonium_Results_Week_of_01_18_26.xlsx
+- date: '2026-01-20'
+  replicates: [1.071, 1.075]
+  mean_mg_l: 1.073
+  workbook: Ammonium_Results_Week_of_01_18_26.xlsx
+- date: '2026-01-21'
+  replicates: [1.79, 1.757]
+  mean_mg_l: 1.7735
+  workbook: Ammonium_Results_Week_of_01_18_26.xlsx
+- date: '2026-01-22'
+  replicates: [2.875, 2.874]
+  mean_mg_l: 2.8745
+  workbook: Ammonium_Results_Week_of_01_18_26.xlsx
+- date: '2026-01-25'
+  replicates: [1.169, 1.175]
+  mean_mg_l: 1.172
+  workbook: Ammonium_Results_Week_of_01_25_26.xlsx
+- date: '2026-01-26'
+  replicates: [9.379, 9.486]
+  mean_mg_l: 9.4325
+  workbook: Ammonium_Results_Week_of_01_25_26.xlsx
+- date: '2026-01-27'
+  replicates: [10.034, 9.894]
+  mean_mg_l: 9.964
+  workbook: Ammonium_Results_Week_of_01_25_26.xlsx
+- date: '2026-01-28'
+  replicates: [12.119, 12.162]
+  mean_mg_l: 12.1405
+  workbook: Ammonium_Results_Week_of_01_25_26.xlsx
+- date: '2026-02-01'
+  replicates: [7.87, 7.881]
+  mean_mg_l: 7.8755
+  workbook: Ammonium_Results_Week_of_02_01_26.xlsx
+- date: '2026-02-02'
+  replicates: [6.889, 6.9]
+  mean_mg_l: 6.8945
+  workbook: Ammonium_Results_Week_of_02_01_26.xlsx
+- date: '2026-02-03'
+  replicates: [8.665, 8.811]
+  mean_mg_l: 8.738
+  workbook: Ammonium_Results_Week_of_02_01_26.xlsx
+- date: '2026-02-04'
+  replicates: [5.603, 5.622]
+  mean_mg_l: 5.6125
+  workbook: Ammonium_Results_Week_of_02_01_26.xlsx
+- date: '2026-02-05'
+  replicates: [8.502, 8.466]
+  mean_mg_l: 8.484
+  workbook: Ammonium_Results_Week_of_02_01_26.xlsx
+- date: '2026-02-08'
+  replicates: [2.303, 2.282]
+  mean_mg_l: 2.2925
+  workbook: Ammonium_Results_Week_of_02_08_26.xlsx
+- date: '2026-02-09'
+  replicates: [3.24, 3.274]
+  mean_mg_l: 3.257
+  workbook: Ammonium_Results_Week_of_02_08_26.xlsx
+- date: '2026-02-10'
+  replicates: [8.735, 8.664]
+  mean_mg_l: 8.6995
+  workbook: Ammonium_Results_Week_of_02_08_26.xlsx
+- date: '2026-02-11'
+  replicates: [6.546, 6.506]
+  mean_mg_l: 6.526
+  workbook: Ammonium_Results_Week_of_02_08_26.xlsx
+- date: '2026-02-12'
+  replicates: [5.38, 5.438]
+  mean_mg_l: 5.409
+  workbook: Ammonium_Results_Week_of_02_08_26.xlsx
+- date: '2026-02-15'
+  replicates: [1.474, 1.644]
+  mean_mg_l: 1.559
+  workbook: Ammonium_Results_Week_of_02_15_26.xlsx
+- date: '2026-02-16'
+  replicates: [2.19, 2.237]
+  mean_mg_l: 2.2135
+  workbook: Ammonium_Results_Week_of_02_15_26.xlsx
+- date: '2026-02-17'
+  replicates: [1.704, 1.67]
+  mean_mg_l: 1.687
+  workbook: Ammonium_Results_Week_of_02_15_26.xlsx
+- date: '2026-02-18'
+  replicates: [1.522, 1.478]
+  mean_mg_l: 1.5
+  workbook: Ammonium_Results_Week_of_02_15_26.xlsx
+- date: '2026-02-19'
+  replicates: [1.425, 1.405]
+  mean_mg_l: 1.415
+  workbook: Ammonium_Results_Week_of_02_15_26.xlsx
+- date: '2026-02-22'
+  replicates: [0.454, 0.445]
+  mean_mg_l: 0.4495
+  qualifier: '***'
+  workbook: Ammonium_Results_Week_of_02_22_26.xlsx
+- date: '2026-02-23'
+  replicates: [0.533, 0.547]
+  mean_mg_l: 0.54
+  qualifier: '***'
+  workbook: Ammonium_Results_Week_of_02_22_26.xlsx
+- date: '2026-02-24'
+  replicates: [1.604, 1.611]
+  mean_mg_l: 1.6075
+  qualifier: '***'
+  workbook: Ammonium_Results_Week_of_02_22_26.xlsx
+- date: '2026-02-25'
+  replicates: [3.805, 3.802]
+  mean_mg_l: 3.8035
+  workbook: Ammonium_Results_Week_of_02_22_26.xlsx
+- date: '2026-02-26'
+  replicates: [1.511, 1.607]
+  mean_mg_l: 1.559
+  workbook: Ammonium_Results_Week_of_02_22_26.xlsx
+
+# Weekly (Sunday-Saturday) averages recomputed from `daily_mg_l`. Ohio's '7 day
+# concentration maximum' limit is the highest such weekly average in the reporting month.
+weekly_mean_mg_l:
+- {week_start: '2026-01-18', week_end: '2026-01-24', n_sample_days: 5, mean_mg_l: 1.239}
+- {week_start: '2026-01-25', week_end: '2026-01-31', n_sample_days: 4, mean_mg_l: 8.1772}
+- {week_start: '2026-02-01', week_end: '2026-02-07', n_sample_days: 5, mean_mg_l: 7.5209}
+- {week_start: '2026-02-08', week_end: '2026-02-14', n_sample_days: 5, mean_mg_l: 5.2368}
+- {week_start: '2026-02-15', week_end: '2026-02-21', n_sample_days: 5, mean_mg_l: 1.6749}
+- {week_start: '2026-02-22', week_end: '2026-02-28', n_sample_days: 5, mean_mg_l: 1.5919}
+
+# ── The three-layer reconciliation ────────────────────────────────────────────────────────────
+# bench (this file) -> the City's self-reported noncompliance notification -> EPA ECHO's DMR record
+# (data/extracted/oepa/lima-wwtp-OH0026069.dmr.yaml, pulled 2023-01..2026-06). Independent layers:
+# the bench numbers are the City's own lab, the ECHO numbers are what EPA holds. February ties out.
+reconciliation:
+  february_2026:
+    verdict: reconciled
+    monthly_average:
+      recomputed_from_bench: 4.0061
+      n_sample_days: 20
+      reported_echo_mo_avg: 4.007
+      permit_limit: 1.7
+      note: agrees to four significant figures.
+    weekly_maximum:
+      recomputed_from_bench: 7.5209
+      week: 2026-02-01..2026-02-07
+      reported_echo_wkly_max: 7.521
+      permit_limit: 2.6
+      note: agrees to four significant figures; the worst week is the first week of February.
+    second_weekly_event:
+      recomputed_from_bench: 5.2368
+      week: 2026-02-08..2026-02-14
+      reported_on_city_form: 5.2
+      permit_limit: 2.6
+      note: >
+        ⚠️ ECHO does NOT carry this as a separate row. The City's own February notification lists
+        SIX exceeded limits — two distinct weekly events (283 kg/day + 7.5 mg/l, and 270 kg/day +
+        5.2 mg/l) — while ECHO's monthly rollup reports only the worse of the two weeks. On this
+        parameter the permittee's self-report is FINER-GRAINED than the federal record, so an
+        exceedance count taken from ECHO alone undercounts the discrete events.
+  january_2026:
+    verdict: not-reconcilable-from-the-produced-record
+    reported_echo_mo_avg: 2.2413
+    reported_echo_wkly_max: 7.117
+    permit_limits: {thirty_day_concentration_average: 1.7, seven_day_concentration_maximum: 2.6}
+    why:
+    - >
+      The weeks of 2026-01-04 and 2026-01-11 were not produced. January's 30-day average therefore
+      cannot be recomputed: the production begins 2026-01-18, and the nine produced January days
+      average 4.32 mg/l against a reported month of 2.2413 — consistent with a low first half of
+      the month, but not verifiable from what is in hand.
+    - >
+      The week of 2026-01-25 holds only FOUR results. The 2026-01-29 row is present with the
+      analyst's initials but the Conc cell is BLANK, and no 2026-01-30 sample row exists. The four
+      produced days average 8.1772 mg/l, which does not reproduce the reported 7.117.
+    open_question: >
+      [open] If the reported 7.117 mg/l is the mean of five days for the week of 2026-01-25, the
+      missing 2026-01-29 result would have to be ~2.88 mg/l. That is ARITHMETIC, not evidence —
+      recorded to make the gap precise, and it is exactly the one datum that would let January's
+      worst week be independently verified. Sought in the follow-up request.
+  parameters_cited_by_the_nov_but_absent_from_echo:
+    cbod5: >
+      [open] The 2026-07-16 NOV (data/extracted/oepa/lima/edoc-4192703.order.yaml) cites effluent
+      limit violations for low level mercury, E. coli, TSS, dissolved oxygen, pH-minimum, CBOD5 and
+      ammonia. Six of the seven appear in the ECHO exceedance record for 2023-01..2026-06; CBOD5
+      appears nowhere in it. Either the violation predates the pulled window, ECHO is incomplete, or
+      the NOV's parameter list is over-inclusive. Not resolvable from this production.
+
+# ── What the bench data shows that the reported record does not ───────────────────────────────
+observations:
+- finding: The failure is a nitrification failure, and the bench data dates its onset to the day.
+  detail: >
+    Effluent ammonia sits at 0.229 and 0.245 mg/l on 2026-01-18 and 01-19, then climbs through
+    1.073 (01-20), 1.773 (01-21) and 2.875 (01-22) to 9.433 (01-26), 9.964 (01-27) and a peak of
+    12.140 mg/l on 2026-01-28 — roughly a 50-fold rise inside eleven days. Recovery is equally
+    legible: below the 2.6 mg/l weekly limit from the week of 02-15 onward.
+  corroborates: >
+    The City's stated cause on both notification forms — cold-weather loss of nitrifying bacteria,
+    compounded by recent nitrification-tower media replacement, with distributor arms found frozen
+    in place. [verified] as the City's own contemporaneous account; the freeze mechanism itself is
+    the City's characterisation, not independently confirmed here.
+- finding: The tower influent and 601 series bracket where in the process the failure sits.
+  detail: >
+    The same benchsheets carry Tower Influent, Primary Effluent and point "601". Through the failure
+    the 601 series holds ~11-13 mg/l while effluent 001 rises from 0.2 to 12 mg/l — i.e. the loading
+    reaching the nitrification stage was not anomalous; what changed is how much of it the towers
+    removed. Recorded as a [reference] reading of the produced columns; this file transcribes only
+    the 001 series, and the identity of point 601 is not established by the production.
+- finding: '[open] Three of the twenty February days carry a failed matrix spike.'
+  detail: >
+    2026-02-22, 02-23 and 02-24 are flagged "***" — "Estimate; matrix spike failed" — with the
+    workbook comments recording the spikes as low, low and high respectively. They are low-value
+    days (0.4495, 0.540, 1.6075) inside a month whose reported average is driven by the first two
+    weeks, so excluding them would RAISE the monthly average, not lower it. The point is not that
+    the reported number is wrong; it is that a QC qualifier present in the City's lab record does
+    not survive into the federal record that everyone downstream reads.

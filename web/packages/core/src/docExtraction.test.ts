@@ -202,9 +202,19 @@ describe("the join, against the committed Lima bundle", () => {
   // `data/extracted/oepa/lima/2dp00130-surrogate-characterization.yaml`, which is deliberately
   // shaped so `corpus._classify` DECLINES it — it is a reading, not a record, and must never
   // count here.
-  it("extracts 155 of 3,362 documents — 4.6% of the corpus", () => {
+  it("extracts 155 of 3,382 documents — 4.6% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
-    expect(entries.length).toBe(3362);
+    // 3,362 -> 3,382 (City of Lima PRR, #1536): the twenty committed files of the City's first
+    // public-records production, under `legal/prr-mandamus/prr-production-2026-08-{22,24}-lima/`.
+    // Twenty-two were DELIVERED; the issued permit and the July 2026 NOV are byte-identical to
+    // records already held from Ohio EPA and were not re-committed (pinned by sha256 in the
+    // production's custody manifest).
+    // The extracted count is UNCHANGED at 155, and honestly so: the join is per-`rel`, and the
+    // City-of-Lima production's five extractions are production-level (a bench series, a
+    // notification pair, an application, a letter series, an agreement) rather than one artifact
+    // per source file. Those twenty documents are read and analysed; they are not per-document
+    // joined, so they raise the denominator only.
+    expect(entries.length).toBe(3382);
     expect(countExtracted(entries, index)).toBe(155);
   });
 
@@ -238,7 +248,7 @@ describe("the join, against the committed Lima bundle", () => {
     // rose 8 -> 15 at #1993 (the CRA agreement, the NDA, the treatment agreement, the school-
     // district notice letters, both statewide bills). Denominator 1,733 -> 1,736 at #2048: the
     // three H.B. 646 witness submissions, which are held and unread like the rest of `legal`.
-    expect(counts.legal).toEqual([15, 1736]);
+    expect(counts.legal).toEqual([15, 1756]);
     expect(counts.commissioners).toEqual([0, 995]);
     // `oepa` now belongs here: held, and largely READ. 98 of 111 is 88.3% — well above
     // `legal`'s 0.9% and `commissioners`' zero, and well below the instrument collections it used

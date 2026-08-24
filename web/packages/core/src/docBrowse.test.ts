@@ -113,7 +113,12 @@ describe("summarizeCollections — against the committed Lima corpus", () => {
     // indirect-discharge application package under `oepa/lima/`. The portal serves 23 rows; the
     // other eleven are exact or text-identical duplicates, pinned by sha256 in
     // `data/documents/oepa/lima/2dp00130-app285104563-manifest.yaml` rather than committed.
-    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3362);
+    // 3,362 -> 3,382 (City of Lima PRR, #1536): the twenty committed files of the City's first
+    // public-records production, under `legal/prr-mandamus/prr-production-2026-08-{22,24}-lima/`.
+    // Twenty-two were DELIVERED; the issued permit and the July 2026 NOV are byte-identical to
+    // records already held from Ohio EPA and were not re-committed (pinned by sha256 in the
+    // production's custody manifest).
+    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3382);
   });
 
   it("finds the one production that is half the catalog", () => {
@@ -121,7 +126,8 @@ describe("summarizeCollections — against the committed Lima corpus", () => {
     if (!legal) throw new Error("legal collection missing");
     const prr = legal.containers[0];
     expect(prr.slug).toBe("prr-mandamus");
-    expect(prr.count).toBe(1619);
+    // 1,619 -> 1,639: all twenty land under `prr-mandamus`, in two new production folders.
+    expect(prr.count).toBe(1639);
     // The reason the container level exists at all: 238 folders, 10 levels below the container.
     expect(prr.folders).toBeGreaterThan(200);
     expect(prr.maxDepth).toBeGreaterThan(5);

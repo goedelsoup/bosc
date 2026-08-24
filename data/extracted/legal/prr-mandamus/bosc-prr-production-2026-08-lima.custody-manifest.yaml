@@ -1,0 +1,217 @@
+# City of Lima — FIRST production in response to the BOSC public-records request served on the
+# City (R.C. 149.43, Parts A-F; the #1536 municipal-utility track). Delivered in two rolling
+# partial responses, 2026-08-22 (Part A) and 2026-08-24 (Parts B / C / F). One manifest covers
+# both batches because a single request is answered across them; `batch` carries the split.
+meta:
+  subject: BOSC PRR — City of Lima production batches 1-2 (WWTP operational records) — custody manifest
+  production_dates: ['2026-08-22', '2026-08-24']
+  received: 2026-08-22 and 2026-08-24, by electronic delivery from the City of Lima Utilities
+    Department (Director Mike Caprella) — no cover letter, no privilege log, no withholding
+    statement accompanied either batch.
+  custodian: City of Lima, Department of Utilities / Wastewater Treatment Plant
+  collection: legal
+  source_dirs:
+  - data/documents/legal/prr-mandamus/prr-production-2026-08-22-lima/
+  - data/documents/legal/prr-mandamus/prr-production-2026-08-24-lima/
+  policy: 'non-destructive: as-received filenames kept verbatim (chain of custody); no renames,
+    no dedup deletions inside the production. Two files that are byte-identical to documents the
+    corpus already holds from Ohio EPA were NOT re-committed — they are recorded below under
+    `cross_corpus_duplicates` with the verifying sha256, per the CLAUDE.md rule that removal is
+    permitted only for a checksum-verified byte-identical duplicate.'
+  mtime_note: >
+    ⚠️ mtime is NOT evidence in this production. Unlike the 2026-07-24 Sanitary Engineer batch
+    (a file-server tree copied off a USB drive, where mtime was the county's last-write time),
+    these arrived as electronic-delivery downloads: every file in a batch carries the identical
+    download timestamp (2026-08-22T15:18:56Z / 2026-08-24T14:40:04Z) and nothing about the City's
+    own filing. mtime is therefore omitted from the file rows. Each row instead carries a
+    `document_date` verified from the document's own printed content (or, for the scanned letters,
+    from the letterhead date read off the image) with the basis recorded — never from the filename.
+  filename_note: >
+    The as-received filenames encode dates (`Acceptance_Letter_6-4-26.pdf`) and are kept verbatim,
+    but they are the CITY's labels, not a verified date. Each was checked against the printed
+    document; all ten acceptance letters agree with their filenames. `Allen_County_Biosolids_
+    Contract_6_3_24.pdf` does NOT: 2024-06-03 is the Konica scan date, while the instrument was
+    executed by the Board 2023-12-05 (and approved by the City Law Director 2023-04-26).
+  generated_at: '2026-08-24T00:00:00Z'
+  generated_by: scripted sha256/stat walk of the committed copy
+  counts:
+    files: 20
+    bytes: 2289542
+    by_batch:
+      '2026-08-22': 1
+      '2026-08-24': 19
+    dup_groups_within_production: 0
+    cross_corpus_duplicates: 2
+
+# Produced by the City, already held by the corpus from Ohio EPA, byte-identical, NOT re-committed.
+# Their production is itself a fact worth keeping: the City's answer to Parts A and B overlaps
+# the public Ohio EPA record exactly, which corroborates both copies' integrity.
+cross_corpus_duplicates:
+- as_received_name: 2PE00000.pdf
+  batch: '2026-08-22'
+  sha256: b140e19c5e26d40af055656d02832451621d2cabef1ef6d67fe9c5bd34183c88
+  bytes: 1618036
+  what: The issued 2023 renewal permit, 2PE00000*OD (119 pp).
+  already_held_at:
+  - data/documents/oepa/2PE00000.pdf
+  - data/documents/oepa/lima/edoc-2363112.pdf
+  note: >
+    The corpus already carries this byte sequence TWICE (a direct Ohio EPA DAM pull and the
+    portal-sweep eDoc 2363112) — a pre-existing internal duplicate, surfaced by this checksum
+    pass and left in place; both are cited by existing extractions.
+- as_received_name: 2026.July_Lima_NOV.pdf
+  batch: '2026-08-24'
+  sha256: b42a8015531af35cba2a27a2741c02c07eba39076b3e5fa2a6b3fc1d1ded1b7e
+  bytes: 242848
+  what: Ohio EPA DSW Notice of Violation to the City, 2026-07-16 (SNC for ammonia).
+  already_held_at:
+  - data/documents/oepa/lima/edoc-4192703.pdf
+  note: >
+    Extracted at data/extracted/oepa/lima/edoc-4192703.order.yaml. The request asked for the
+    City's copy; the City produced the identical bytes it received from Ohio EPA.
+
+files:
+- path: prr-production-2026-08-22-lima/City_of_Lima_NPDES_Permit_Renewal_Application_03012022.pdf
+  batch: '2026-08-22'
+  sha256: 58c4aaf906855609b3ee66683b4bcb0193d936ae290a575cdbcda2035584a2ac
+  bytes: 666071
+  doc_kind: permit-application
+  document_date: '2022-03-01'
+  date_basis: STREAMS-generated EPA Forms 1 / 2A / 2S + antidegradation addendum; Application ID 256207483
+- path: prr-production-2026-08-24-lima/Acceptance_Letter_1-24-24.pdf
+  batch: '2026-08-24'
+  sha256: 2c26c4092bb6c41cf2c3f2b6b94d6d781dffeca413d202493740f8be0da37178
+  bytes: 143564
+  doc_kind: capacity-acceptance-letter
+  document_date: '2024-01-24'
+  date_basis: date printed in the letterhead block, read from the scan image (the PDF has no text layer)
+  subject: 8" sewer along Houx Parkway (tie to existing MH at north end)
+- path: prr-production-2026-08-24-lima/Acceptance_Letter_1-31-25.pdf
+  batch: '2026-08-24'
+  sha256: a978703a0ff48fc399ab9ec8c72da3bf7ed579887eb50b9a5e85cc64673c9ad5
+  bytes: 142278
+  doc_kind: capacity-acceptance-letter
+  document_date: '2025-01-31'
+  date_basis: date printed in the letterhead block, read from the scan image (the PDF has no text layer)
+  subject: Autumn Lake Condominium Development, collected via the Allen County sanitary system
+- path: prr-production-2026-08-24-lima/Acceptance_Letter_4-2-24.pdf
+  batch: '2026-08-24'
+  sha256: f1d90cc163de43a92506afe604479714578c37a10444a05338cd35ebcdca8efb
+  bytes: 30756
+  doc_kind: capacity-acceptance-letter
+  document_date: '2024-04-02'
+  date_basis: date printed in the letterhead block, read from the scan image (the PDF has no text layer)
+  subject: 2" low-pressure force main along Stewart Road and Bible Road — Core Consulting
+- path: prr-production-2026-08-24-lima/Acceptance_Letter_5-29-24.pdf
+  batch: '2026-08-24'
+  sha256: 4fa958888f62b2012d6082e1d8e258c5b341086e93e3600c2376aab507ab8742
+  bytes: 32067
+  doc_kind: capacity-acceptance-letter
+  document_date: '2024-05-29'
+  date_basis: date printed in the letterhead block, read from the scan image (the PDF has no text layer)
+  subject: 2" low-pressure force main along Bluelick Road and Slabtown Road — Core Consulting
+- path: prr-production-2026-08-24-lima/Acceptance_Letter_6-4-24.pdf
+  batch: '2026-08-24'
+  sha256: e88764e9754b7ccb4c7acdfd17da58314851f08177f158b5967ae97ab747803d
+  bytes: 124392
+  doc_kind: capacity-acceptance-letter
+  document_date: '2024-06-04'
+  date_basis: date printed in the letterhead block, read from the scan image (the PDF has no text layer)
+  subject: Procter and Gamble expansion, Reservoir Road — The Weitz Company
+- path: prr-production-2026-08-24-lima/Acceptance_Letter_6-4-26.pdf
+  batch: '2026-08-24'
+  sha256: 039c8131e2e1fe88d229a4b506d6a66a08fa7f867be9c912c8f125783ea23f60
+  bytes: 36126
+  doc_kind: capacity-acceptance-letter
+  document_date: '2026-06-04'
+  date_basis: date printed in the letterhead block, read from the scan image (the PDF has no text layer)
+  subject: 8" sewer adjacent to 2550 Harding Highway (tie ~400 ft west) — Core Consulting
+- path: prr-production-2026-08-24-lima/Acceptance_Letter_7-15-24.pdf
+  batch: '2026-08-24'
+  sha256: 8cdb376d8cd3606066f3ddcdaa51ee74e0eef621e35304998126012c4962ac25
+  bytes: 129277
+  doc_kind: capacity-acceptance-letter
+  document_date: '2024-07-15'
+  date_basis: date printed in the letterhead block, read from the scan image (the PDF has no text layer)
+  subject: water AND sanitary availability, 721 Flanders Avenue — BL Companies
+- path: prr-production-2026-08-24-lima/Acceptance_Letter_8-31-23.pdf
+  batch: '2026-08-24'
+  sha256: 3464799e1b5b38daac04639e98921c4793793d7e5faeb1be084b3af343e92e47
+  bytes: 40226
+  doc_kind: capacity-acceptance-letter
+  document_date: '2023-08-31'
+  date_basis: date printed in the letterhead block, read from the scan image (the PDF has no text layer)
+  subject: 2" low-pressure force main along Ada Road (to Thayer Rd/Ada Rd tie-in) — Core Consulting
+- path: prr-production-2026-08-24-lima/Acceptance_Letter_8-5-24.pdf
+  batch: '2026-08-24'
+  sha256: e39a3ac153d71580104627b272555a9041a15d3d5f82f37376334be65000c0c8
+  bytes: 124023
+  doc_kind: capacity-acceptance-letter
+  document_date: '2024-08-05'
+  date_basis: date printed in the letterhead block, read from the scan image (the PDF has no text layer)
+  subject: 2640 Harding Highway (existing 8" sewer at NW corner); cites sewer-ordinance §1040.13
+- path: prr-production-2026-08-24-lima/Acceptance_Letter_9-18-24.pdf
+  batch: '2026-08-24'
+  sha256: 480d078285f342dc018cac1f4319744d3000099474cb8235072af02ef0b06812
+  bytes: 127987
+  doc_kind: capacity-acceptance-letter
+  document_date: '2024-09-18'
+  date_basis: date printed in the letterhead block, read from the scan image (the PDF has no text layer)
+  subject: 2" low-pressure force main, Thayer Road north of Harding Highway — Core Consulting
+- path: prr-production-2026-08-24-lima/Allen_County_Biosolids_Contract_6_3_24.pdf
+  batch: '2026-08-24'
+  sha256: 9d9a02a166d09cceab4af0195ab0e3a03c86530ac0bc5fd651309facc98e14fc
+  bytes: 516222
+  doc_kind: agreement
+  document_date: '2023-12-05'
+  date_basis: executed by the County 2023-12-05; City law-director approval 2023-04-26; scan produced 2024-06-03
+- path: prr-production-2026-08-24-lima/Ammonium_Results_Week_of_01_18_26.xlsx
+  batch: '2026-08-24'
+  sha256: d4929da3cb21044145698490b2cc068efadd83f8fea64d17abe468fa58a68ea2
+  bytes: 26136
+  doc_kind: lab-benchsheet
+  date_basis: workbook filename week; sample dates read from the 'Ammonia Benchseet' tab
+- path: prr-production-2026-08-24-lima/Ammonium_Results_Week_of_01_25_26.xlsx
+  batch: '2026-08-24'
+  sha256: 34a56558cc494b269dfc342ae56bcb7f3a9ef547d33088190b6ff1039ffc3426
+  bytes: 26031
+  doc_kind: lab-benchsheet
+  date_basis: workbook filename week; sample dates read from the 'Ammonia Benchseet' tab
+- path: prr-production-2026-08-24-lima/Ammonium_Results_Week_of_02_01_26.xlsx
+  batch: '2026-08-24'
+  sha256: 757a4152b6fa86da79f6fdfb27c41584dc33740d67d1d3ba79b7a3169977be93
+  bytes: 26083
+  doc_kind: lab-benchsheet
+  date_basis: workbook filename week; sample dates read from the 'Ammonia Benchseet' tab
+- path: prr-production-2026-08-24-lima/Ammonium_Results_Week_of_02_08_26.xlsx
+  batch: '2026-08-24'
+  sha256: b0fb2ba13d700c366db896160d14f70a477e52170034fbf7e71cff5b864d1f26
+  bytes: 26232
+  doc_kind: lab-benchsheet
+  date_basis: workbook filename week; sample dates read from the 'Ammonia Benchseet' tab
+- path: prr-production-2026-08-24-lima/Ammonium_Results_Week_of_02_15_26.xlsx
+  batch: '2026-08-24'
+  sha256: dd7848695836e4f58f84ac3104981b83f4dbcadd598b754ebb021c49bc3377d1
+  bytes: 26161
+  doc_kind: lab-benchsheet
+  date_basis: workbook filename week; sample dates read from the 'Ammonia Benchseet' tab
+- path: prr-production-2026-08-24-lima/Ammonium_Results_Week_of_02_22_26.xlsx
+  batch: '2026-08-24'
+  sha256: dadcf9cc0608bf44348b6d928969bc8a18669af4a02d6290fc5f5968580bedf6
+  bytes: 26190
+  doc_kind: lab-benchsheet
+  date_basis: workbook filename week; sample dates read from the 'Ammonia Benchseet' tab
+- path: prr-production-2026-08-24-lima/February_2026_Noncompliance_Report_Ammonia.pdf
+  batch: '2026-08-24'
+  sha256: 6afd365e0cc221120dfe586714a05b0b913281bf71b0aa0dd9fdc465edda5422
+  bytes: 9979
+  doc_kind: noncompliance-notification
+  document_date: '2026-04-02'
+  date_basis: Ohio EPA DSW e-form; Application ID 25835636
+- path: prr-production-2026-08-24-lima/January_2026_Noncompliance_Report_Ammonia.pdf
+  batch: '2026-08-24'
+  sha256: e261a5b80f0b39cafa6c05ff7dc242ef36ed1b84500900ad8bc854ce4c18ec10
+  bytes: 9741
+  doc_kind: noncompliance-notification
+  document_date: '2026-02-20'
+  date_basis: Ohio EPA DSW e-form; Application ID 23595882
