@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T23:05:24+00:00",
+  "generated_at": "2026-08-24T00:24:45+00:00",
   "feed_count": 56,
-  "row_total": 4300,
+  "row_total": 4386,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 159
+      "count": 160
     },
     {
       "name": "timeline",
@@ -45,7 +45,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 87
+      "count": 89
     },
     {
       "name": "relationships",
@@ -53,7 +53,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 81
+      "count": 83
     },
     {
       "name": "people",
@@ -125,7 +125,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 32
+      "count": 34
     },
     {
       "name": "contacts",
@@ -325,7 +325,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 182
+      "count": 183
     },
     {
       "name": "geo/campus",
@@ -413,7 +413,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 31
+      "count": 33
     },
     {
       "name": "impact-study",
@@ -429,7 +429,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/passages.schema.json",
       "kind": "collection",
-      "count": 2494
+      "count": 2558
     },
     {
       "name": "catalog-index",
@@ -445,7 +445,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 228
+      "count": 234
     },
     {
       "name": "corpus-nodes",
@@ -453,7 +453,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 228
+      "count": 234
     },
     {
       "name": "ask-embeddings",

@@ -1,0 +1,71 @@
+id: oepa-lima-2dp00130-application
+title: Ohio EPA record extractions (Project BOSC indirect-discharge application — permit 2DP00130)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA eDocument portal — the APP285104563 application package on indirect-discharge permit
+    2DP00130 (BISTROZZI LLC / "Project BOSC" to the American-Bath POTW), fetched 2026-08-23 by
+    `watermark oepa fetch` and shelved under data/documents/oepa/lima/
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:lima
+provenance: document
+tags:
+- lima
+- oepa
+- npdes
+- permits
+- datacenter
+- cooling
+storage:
+- relpath: extracted/oepa/lima/edoc-4116201.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/lima/2dp00130-surrogate-characterization.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+notes: |
+  A SEPARATE DATASET FROM `oepa-lima-enforcement`, on purpose. That entry is the City of Lima
+  WWTP's own enforcement record on permit 2PE00000; this is the Bistrozzi/Project BOSC campus's
+  APPLICATION to discharge indirectly to a different plant (American-Bath) under permit 2DP00130.
+  They share a shelf because Ohio EPA files both under Allen County and `watermark oepa fetch`
+  writes per site, not per permit — the shelf is not the attribution.
+
+  TWO ARTIFACTS FROM TWELVE COMMITTED DOCUMENTS, and the asymmetry is deliberate.
+
+  `edoc-4116201.npdes.yaml` is the genre extraction of the Indirect Discharge Permit application
+  form (EPA Form 4223, Application ID 285104563, submitted 2026-05-05). The `npdes` genre fits it:
+  it is the application for permit 2DP00130*AP, and the model's permit block holds its applicant,
+  facility, outfall and receiving entity. The extractor independently flagged the form's longitude
+  as inconsistent with Lima, which it is — the coordinates on the filing are Manhattan's.
+
+  `2dp00130-surrogate-characterization.yaml` is a REVIEWED ANALYSIS ARTIFACT, not an extraction,
+  and is deliberately not shaped like one: it carries no `permit:`/`inspection:`/`order:` block,
+  so `watermark.pipeline.corpus._classify` declines it and it never enters the records feed. It
+  holds what no genre could — the package's laboratory data, the derived cycles-of-concentration
+  ratios, the treatment-chemical roster, and the provenance chain establishing that the data is
+  Google CLB-1's (Columbus) and not this campus's.
+
+  ⚠️ THE SAMPLING REPORTS (edoc-4116204, edoc-4116226) ARE COMMITTED AND UNEXTRACTED, AND THAT IS
+  A DECISION, NOT AN OMISSION. No document genre fits an Indirect Discharge Permit Sampling Report
+  and none was forced onto one. Designing a genre against these two would have baked in the wrong
+  shape, because their Group A results table — the nine parameters the form says results MUST be
+  provided for — is BLANK on both copies; a model fitted to a blank form has no results structure
+  to fit. The right time to design that genre is when a POPULATED one exists, which the permit
+  itself will compel once it issues and the facility reports. Their content is read and recorded
+  in the surrogate-characterization artifact and in the shelf's scoped provenance map,
+  data/documents/oepa/lima/2dp00130-app285104563-manifest.yaml.
+
+  The other eight committed documents — four vendor safety data sheets, two laboratory certificates
+  of analysis, the one-page wastewater flow schematic and the EMH&T sanitary site-plan exhibit — are
+  likewise committed and unextracted. None is an agency instrument and none has a fitting genre;
+  each is read, dated and summarised in that same provenance map.
+
+  COVERAGE. The portal serves 23 rows under 2DP00130 and they are 16 distinct documents: the same
+  application bundle filed three times. Twelve are committed; the eleven that are not are seven
+  exact byte-duplicates and four text-identical re-submissions whose PDF bytes differ, each pinned
+  by sha256 (and by the hash of its extracted text where the bytes differ). That is complete
+  coverage of the package, not a storage deferral, and the map states every docid either way.

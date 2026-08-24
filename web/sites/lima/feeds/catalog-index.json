@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "2cc0b18fa17a33fc9458b4f3fb594a5245338ec57b59f4baf0a07f090678818d",
+  "catalog_version": "ee4fd48400583d2b68f05269b9ec9538ca7d539240dea2bd92d144a72aca5217",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -1588,6 +1588,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:oepa-lima-2dp00130-application",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-lima-2dp00130-application",
+      "title": "Ohio EPA record extractions (Project BOSC indirect-discharge application — permit 2DP00130)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:oepa-lima-enforcement",
       "kind": "dataset",
       "site": "lima",
@@ -2148,6 +2156,14 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:lima:AMERICAN BATH WASTEWATER TREATMENT PLANT",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "AMERICAN BATH WASTEWATER TREATMENT PLANT",
+      "title": "American – Bath Wastewater Treatment Plant",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:lima:AMERICAN BATH WASTEWATER TREATMENT PLANT POTW",
       "kind": "entity",
       "site": "lima",
@@ -2193,6 +2209,14 @@
       "site": "lima",
       "local_id": "BISTROZZI ADDITION",
       "title": "Bistrozzi Addition LLC",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:BOSC",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "BOSC",
+      "title": "Bosc",
       "feed": "entities"
     },
     {
@@ -2889,6 +2913,22 @@
       "site": "lima",
       "local_id": "ASWCD-PLANS",
       "title": "The site plan sets are withheld twice over",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:BOSC-COOLING-DOSAGES-NOT-FILED",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "BOSC-COOLING-DOSAGES-NOT-FILED",
+      "title": "The application says the cooling chemicals' design dosages are attached; they are not in the package",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:BOSC-DISCHARGE-SURROGATE",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "BOSC-DISCHARGE-SURROGATE",
+      "title": "The campus's own discharge characterisation measures a different data center, 90 miles away",
       "feed": "leads"
     },
     {
@@ -4233,6 +4273,14 @@
       "site": "lima",
       "local_id": "oepa/lima/edoc-3967455.order.yaml",
       "title": "correspondence",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima/edoc-4116201.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima/edoc-4116201.npdes.yaml",
+      "title": "Bosc",
       "feed": "records"
     },
     {

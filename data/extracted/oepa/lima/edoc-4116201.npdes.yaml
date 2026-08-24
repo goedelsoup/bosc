@@ -1,0 +1,74 @@
+doc_id: edoc-4116201-7a31546e
+source_path: data/documents/oepa/lima/edoc-4116201.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: 'INDIRECT DISCHARGE PERMIT
+
+  APPLICATION FORM
+
+  PLEASE DO NOT ATTEMPT TO COMPLETE THIS FORM WITHOUT READING THE INSTRUCTIONS
+
+  General Application Information
+
+  Permit Action Applying for: X New Renewal Modification
+
+  If renewal, current permit number:
+
+  Wastewater Source is: X Proposed Existing
+
+  Applicant Information
+
+  Company (Applicant) Name: BISTROZZI LLC
+
+  Contact Name/Title: Michael Smith / Facility Manager
+
+  Phone Number: (650) 582-7541
+
+  Contact E-mail Address: smithmif@google.com
+
+  Company Mailing Address: 4110 N COLE ST
+
+  City: Lima State: OH Zip Code: 45801
+
+  Billing Information
+
+  Company Billing Address: 4110 N'
+permit:
+  confidence: high
+  warnings:
+  - This is an Indirect Discharge Permit application form, not a standard NPDES direct-discharge
+    permit or fact sheet.
+  - No permit number has been assigned — this is a new application.
+  - The application_no field is populated with the EPA Form Application ID (285104563),
+    not a standard OH-prefixed NPDES number.
+  - No public notice number, public notice date, or comment period end date are present
+    in this document.
+  - Receiving water is a POTW (American – Bath Wastewater Treatment Plant), not a
+    named surface water body.
+  - Longitude (-73.989311) appears inconsistent with Lima, OH (expected ~-84°); may
+    be a data entry error on the form.
+  facility_name: Bosc
+  permit_no: null
+  permit_action: new
+  applicant: BISTROZZI LLC
+  application_no: '285104563'
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 4110 N COLE ST, Lima, OH 45801
+  discharge_address: null
+  receiving_water: American – Bath Wastewater Treatment Plant
+  stream_network: null
+  outfalls:
+  - '001'
+  note: This is an Indirect Discharge Permit application (not a direct NPDES discharge
+    to a surface water). The receiving entity is the American – Bath Wastewater Treatment
+    Plant (POTW), not a named stream. No permit number has been assigned yet (new
+    application). Application ID 285104563 is used as the application_no. Submission
+    date is 05/05/2026. Wastewater source is proposed. No sludge/residuals generated.
+    No Permit to Install obtained.

@@ -50,7 +50,7 @@
       "grantee": 4,
       "firm": 4,
       "meeting_participant": 3,
-      "applicant": 1
+      "applicant": 2
     },
     "parcels": [
       "36-0100-03-002.000",
@@ -83,6 +83,7 @@
     ],
     "sources": [
       "oepa/2DP00130.npdes.yaml",
+      "oepa/lima/edoc-4116201.npdes.yaml",
       "permits/3702676.epa.yaml",
       "permits/3727059.epa.yaml",
       "permits/3727544.epa.yaml",
@@ -570,6 +571,29 @@
     "addresses": [],
     "sources": [
       "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "AMERICAN BATH WASTEWATER TREATMENT PLANT",
+    "display": "American – Bath Wastewater Treatment Plant",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "American – Bath Wastewater Treatment Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-4116201.npdes.yaml"
     ],
     "lei": null,
     "uei": null,
@@ -1349,6 +1373,29 @@
     "addresses": [],
     "sources": [
       "permits/4230060.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "BOSC",
+    "display": "Bosc",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Bosc"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/lima/edoc-4116201.npdes.yaml"
     ],
     "lei": null,
     "uei": null,

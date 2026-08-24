@@ -113,9 +113,20 @@ def test_no_collision_across_the_committed_corpus() -> None:
     # separate reviewed decision (#274/#281) — they carry security-relevant site detail.
     # Reviewed: 3350 rels, 3350 distinct rels, 3350 distinct handles — zero collisions, checked as
     # a set rather than inferred from the delta.
-    assert len(rels) == 3350, "a corpus change belongs in review, not a silent collision"
+    # 3350 → 3362 (#2089): the twelve eDocuments of the 2DP00130 / APP285104563 indirect-discharge
+    # application package, shelved under `oepa/lima/` because that is where `watermark oepa fetch`
+    # writes an Ohio EPA pull for this site. ⚠️ THE PORTAL SERVES 23 ROWS AND THIS NUMBER MOVES BY
+    # TWELVE, WHICH IS THE POINT: the package is the same bundle filed three times and resolves to
+    # 16 distinct documents, of which eleven are exact byte-duplicates (7) or text-identical
+    # re-submissions whose PDF bytes differ (4). Those eleven are recorded by sha256 — and, where
+    # the bytes differ, by the hash of their extracted text — in
+    # `data/documents/oepa/lima/2dp00130-app285104563-manifest.yaml`, which accounts for all 23
+    # docids. This is COMPLETE coverage of the package, not an LFS deferral.
+    # Reviewed: 3362 rels, 3362 distinct rels, 3362 distinct handles — zero collisions, checked as
+    # a set rather than inferred from the delta.
+    assert len(rels) == 3362, "a corpus change belongs in review, not a silent collision"
     assert len({document_id(rel) for rel in rels}) == len(rels)
-    # The count alone is a weak proxy: a delete-one-add-one leaves it at 3350. Name the two
+    # The count alone is a weak proxy: a delete-one-add-one leaves it at 3362. Name the two
     # committed BOSC-1A eDocs, and assert the two DEFERRED plan sets are absent — the deferral
     # is a deliberate, recorded decision (filename-map.yaml), not an accident of the fetch.
     # Committing either plan set SHOULD fail here: fix it by updating the manifest's `deferred:`
@@ -123,6 +134,46 @@ def test_no_collision_across_the_committed_corpus() -> None:
     shelf = "permits/bistrozzi-permits/"
     assert {f"{shelf}4230060.pdf", f"{shelf}4230068.pdf"} <= set(rels)
     assert not {f"{shelf}4230061.pdf", f"{shelf}4230062.pdf"} & set(rels)
+    # Same discipline for the 2DP00130 package, and here the absent set is the load-bearing half:
+    # committing a duplicate would inflate the corpus with bytes the manifest says it already
+    # holds. Fix a failure by updating that manifest in the same change, never by editing this.
+    oepa_lima = "oepa/lima/edoc-{}.pdf"
+    committed_2dp = {
+        oepa_lima.format(d)
+        for d in (
+            "4116201",
+            "4116202",
+            "4116203",
+            "4116204",
+            "4116205",
+            "4116206",
+            "4116207",
+            "4116225",
+            "4116226",
+            "4116227",
+            "4116228",
+            "4116229",
+        )
+    }
+    duplicates_2dp = {
+        oepa_lima.format(d)
+        for d in (
+            "4116218",
+            "4116219",
+            "4116220",
+            "4116221",
+            "4116222",
+            "4116223",
+            "4116224",
+            "4116232",
+            "4116233",
+            "4116234",
+            "4116235",
+        )
+    }
+    assert committed_2dp <= set(rels)
+    assert not duplicates_2dp & set(rels)
+    assert len(committed_2dp) + len(duplicates_2dp) == 23, "the portal serves 23 rows on 2DP00130"
 
 
 def test_rel_is_taken_verbatim() -> None:

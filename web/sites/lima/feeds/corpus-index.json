@@ -33,6 +33,17 @@
     "updated": "2026-07-04"
   },
   {
+    "id": "artifact/american-bath-wastewater-treatment-plant",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "American – Bath Wastewater Treatment Plant",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/american-bath-wastewater-treatment-plant-potw",
     "node_class": "artifact",
     "kind": "entity",
@@ -72,8 +83,8 @@
     "label": "BISTROZZI LLC",
     "scope": "site",
     "links_out": 1,
-    "links_in": 13,
-    "lines": 40,
+    "links_in": 14,
+    "lines": 41,
     "updated": "2026-08-23"
   },
   {
@@ -86,6 +97,17 @@
     "links_in": 4,
     "lines": 13,
     "updated": "2026-07-04"
+  },
+  {
+    "id": "artifact/bosc",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Bosc",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
   },
   {
     "id": "artifact/c-t",
@@ -611,7 +633,7 @@
     "label": "Lima",
     "scope": "site",
     "links_out": 3,
-    "links_in": 94,
+    "links_in": 98,
     "lines": 13,
     "updated": null
   },
@@ -1617,6 +1639,28 @@
     "updated": null
   },
   {
+    "id": "question/lead-bosc-cooling-dosages-not-filed",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The application says the cooling chemicals' design dosages are attached; they are not in the package",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 26,
+    "updated": null
+  },
+  {
+    "id": "question/lead-bosc-discharge-surrogate",
+    "node_class": "question",
+    "kind": "lead",
+    "label": "The campus's own discharge characterisation measures a different data center, 90 miles away",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 0,
+    "lines": 31,
+    "updated": null
+  },
+  {
     "id": "question/lead-bosc-sanitary-design-flow",
     "node_class": "question",
     "kind": "lead",
@@ -1811,7 +1855,7 @@
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
-    "lines": 24,
+    "lines": 28,
     "updated": null
   },
   {
@@ -1910,7 +1954,7 @@
     "scope": "site",
     "links_out": 1,
     "links_in": 0,
-    "lines": 22,
+    "lines": 26,
     "updated": null
   },
   {
@@ -1967,6 +2011,17 @@
     "links_in": 0,
     "lines": 15,
     "updated": "2026-07-04"
+  },
+  {
+    "id": "relation/bistrozzi--operates--bosc",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "BISTROZZI operates BOSC",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
   },
   {
     "id": "relation/bistrozzi--operates--npdes-2dp00130",
@@ -2066,6 +2121,17 @@
     "links_in": 0,
     "lines": 16,
     "updated": "2026-07-04"
+  },
+  {
+    "id": "relation/bosc--discharges-to--american-bath-wastewater-treatment-plant",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "BOSC discharges_to AMERICAN BATH WASTEWATER TREATMENT PLANT",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 14,
+    "updated": null
   },
   {
     "id": "relation/city-of-lima--operates--city-of-lima-long-term-control-plan-city-of-lima",
