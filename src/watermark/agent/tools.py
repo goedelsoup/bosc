@@ -733,7 +733,10 @@ async def fetch_oepa_permit(args: dict[str, Any]) -> dict[str, Any]:
         )
     if result.status == "skipped_existing":
         return _text(f"[fetch_oepa_permit] {result.filename} already on disk — not re-downloaded.")
-    return _text(f"[fetch_oepa_permit] {result.status}: {result.filename or permit_id}")
+    # A refused fetch (empty / not_a_document / truncated) explains itself only in `note` —
+    # without it the agent sees a bare status and cannot tell a bad docid from a bad network.
+    detail = f" — {result.note}" if result.note else ""
+    return _text(f"[fetch_oepa_permit] {result.status}: {result.filename or permit_id}{detail}")
 
 
 _GH_REPO = "watermark-directory/the-watermark-directory"

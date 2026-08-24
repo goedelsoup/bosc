@@ -182,7 +182,7 @@ def fetch(
     ``data/documents/oepa/<site>/`` with as-received names; provenance is recorded in
     ``filename-map.yaml``.  Run ``watermark ingest`` + ``watermark extract`` afterward.
     """
-    from watermark.oepa.fetch import dam_url, fetch_one, update_filename_map
+    from watermark.oepa.fetch import FetchedPermit, dam_url, fetch_one, update_filename_map
 
     settings = get_settings()
 
@@ -225,7 +225,7 @@ def fetch(
         return
 
     table = Table("permit_id", "filename", "status", "bytes")
-    fetched: list[object] = []
+    fetched: list[FetchedPermit] = []
     for doc_url, doc_id in urls:
         r = fetch_one(doc_url, dest, permit_id=doc_id, settings=settings)
         fetched.append(r)
@@ -234,6 +234,8 @@ def fetch(
             "skipped_existing": "dim",
             "conflict": "yellow",
             "truncated": "red",
+            "empty": "red",
+            "not_a_document": "red",
             "error": "red",
         }.get(r.status, "")
         table.add_row(
@@ -244,7 +246,13 @@ def fetch(
         )
     console.print(table)
 
-    update_filename_map(fetched, map_path)  # type: ignore[arg-type]
+    # A refusal is the point of the run, not a footnote: the status column names it but only
+    # the note says why, and a refused row is the one outcome a reader must act on (#2091).
+    for r in fetched:
+        if r.status in ("truncated", "empty", "not_a_document") and r.note:
+            console.print(f"[red]✗ {r.permit_id or r.source_url}[/] — {r.note}")
+
+    update_filename_map(fetched, map_path)
     wrote(map_path)
     console.print(
         "\n[dim]Run 'watermark ingest' then 'watermark extract' to process the new files.[/]"

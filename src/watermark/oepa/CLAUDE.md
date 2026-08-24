@@ -19,8 +19,12 @@ facility name against `PortalDoc.entity`, read `PortalDoc.permit_id`, hand it to
 
 ## Portal mechanics that cost real time to learn
 
-`edocpub.epa.ohio.gov` is ASP.NET WebForms — no auth, no rate limit observed — but four of
-its behaviours fail *silently*, returning a 200 with plausible-looking rows:
+`edocpub.epa.ohio.gov` is ASP.NET WebForms — no auth, no rate limit observed — but **five**
+of its behaviours fail *silently*, returning a 200 with plausible-looking content. Four are
+search-form mechanics and are listed here; the fifth answers a **document** request with an
+empty 200 and lives under "Two fetch routes" below. That fifth one is the worst of the family:
+the other four produce a wrong *result*, which a reader can notice, while it produces a *file*
+that exists and is empty — which reads as successful acquisition.
 
 - **A criterion row's connector must stay `Or` unless that row has a value.** Setting
   `And` on an *empty* row makes the portal discard the whole criteria set and return an
@@ -56,8 +60,9 @@ at all**: `1IN00274` (the WPAFB bioslurper NPDES) 404s there while the portal se
 fine at `ViewDocument.aspx?docid=2090290`. So a 404 from the DAM is *not* evidence the
 permit doesn't exist — fall back to `PortalDoc.url`.
 
-Both of that route's hazards are now enforced in `fetch.py` rather than left to the caller
-— they were warnings here for a while, and a warning does not survive a 261-document fetch:
+All three of that route's hazards are now enforced in `fetch.py` rather than left to the
+caller — they were warnings here for a while, and a warning does not survive a 261-document
+fetch:
 
 - Portal documents have **no `Content-Disposition`** and no filename in the URL *path* (the
   docid is a query parameter), so the as-received basename was `ViewDocument.aspx` for
@@ -71,6 +76,28 @@ Both of that route's hazards are now enforced in `fetch.py` rather than left to 
   **instead of written** — `data/documents/**` is litigation evidence, and a silently
   half-copied PDF is the one outcome it cannot tolerate. A `truncated` row means re-fetch
   and compare, never retry-and-commit.
+- **A docid the portal cannot serve is answered with an EMPTY 200, never a 404.** Verified
+  2026-08-23 against `docid=4116210`: `HTTP 200`, `Content-Type: text/html`,
+  `Content-Length: 0`, no body at all. `_pdf_is_complete` waved that through — its carve-out
+  reads "a non-PDF response is left to the callers that already handle it", and
+  `b"".startswith(b"%PDF-")` is `False`, so an *empty* body was a non-PDF and no caller
+  handled it. The write path then hashed it to the empty-string digest `e3b0c442…`, named it
+  `edoc-4116210.pdf` and recorded `downloaded` (#2091). `_refusal` is now the single gate in
+  front of the write, with three distinct statuses because the manifest note has to say the
+  right thing: **`empty`** (nothing was served — a negative result about the docid, *not* a
+  transport failure to retry), **`not_a_document`** (an HTML page under a `.pdf` name), and
+  **`truncated`** (a real PDF, cut short). None is hashed or written, and all log at WARNING —
+  a bulk fetch reports per-document outcomes only in the manifest, which is read after the
+  fact. The PDF magic is tested *before* the content type on purpose: a genuine PDF served
+  under a wrong `Content-Type` is still committed, because the bytes decide what a document
+  is, not the header.
+  A **sweep of the whole corpus on 2026-08-23 came back clean** — 0 zero-byte files among
+  4,583 under `data/documents/**`, and all 2,500 `.pdf` files start with `%PDF-`. The defect
+  never reached the record; the fix is a guard, not a cleanup. Re-run it after any bulk fetch:
+  `find data/documents -type f -size 0` and a `%PDF-` magic check over `*.pdf`.
+- Gap-probing a docid range is exactly the workflow that hits this (#2074's "each is
+  re-fetchable by docid"), so read an `empty` row as **this docid serves nothing**, and only
+  re-fetch after confirming the docid against a portal sweep.
 
 ## The results table is variable-shape, and two fields lied about it
 
@@ -94,3 +121,8 @@ Positional reads of a portal row are the recurring defect in this module, twice 
 (identical bytes → `skipped_existing`), a differing file kept *alongside* under a
 `.<sha8>` suffix rather than overwritten, and provenance in `filename-map.yaml`. The
 `_REVIEWED_KEYS` on a map entry are human-added and a re-fetch must not erase them.
+
+A refused row (`empty` / `not_a_document` / `truncated`) has **no hash**, so it keys as
+`(url, None)` and is retired by a later capture of the same URL under the same rule as an
+`error` row — the docid a gap-probe eventually resolves must not leave a permanent row
+behind describing a document the corpus does hold.
