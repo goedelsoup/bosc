@@ -12,8 +12,8 @@ Chain-of-custody rules (mirrors :mod:`watermark.civic.downloader`):
 * A differing file under the same name is kept alongside the original
   (``<name>.<sha8>.ext``, status ``conflict``).
 
-Two eDocument-portal behaviours break those rules and are handled explicitly, because both
-corrupt a bulk fetch while every individual response looks fine:
+Three eDocument-portal behaviours break those rules and are handled explicitly, because each
+corrupts a bulk fetch while every individual response looks fine:
 
 * **A portal document has no ``Content-Disposition`` and no filename in its URL path.** The
   document is addressed by query string (``ViewDocument.aspx?docid=4192703``), so the
@@ -27,6 +27,14 @@ corrupt a bulk fetch while every individual response looks fine:
   :func:`_pdf_is_complete` checks for the trailing ``%%EOF`` marker and the fetch is recorded
   ``truncated`` rather than written — a silently half-copied PDF is the one outcome this
   corpus cannot tolerate, since ``data/documents/**`` is litigation evidence.
+* **A docid the portal cannot serve is answered with an EMPTY 200, not a 404** — verified
+  2026-08-23 against ``docid=4116210``: ``HTTP 200``, ``Content-Type: text/html``,
+  ``Content-Length: 0``, no body at all. Written naively that is a 0-byte ``.pdf`` in the
+  corpus, hashed to the empty-string digest and recorded ``downloaded`` — a file that exists,
+  is empty, and reads as a successful acquisition, which is worse than the truncation case
+  because nothing about the row looks wrong (#2091). :func:`_refusal` classifies the body
+  BEFORE anything is hashed or written: a zero-length body is ``empty`` and an HTML body is
+  ``not_a_document``.
 """
 
 from __future__ import annotations
@@ -53,7 +61,15 @@ _DAM_PERMIT_BASE = (
     "https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/{id}.pdf"
 )
 
-FetchStatus = Literal["downloaded", "skipped_existing", "conflict", "error", "truncated"]
+FetchStatus = Literal[
+    "downloaded",
+    "skipped_existing",
+    "conflict",
+    "error",
+    "truncated",
+    "empty",
+    "not_a_document",
+]
 
 # The portal addresses a document by query string, not by path, so its URL carries no
 # filename at all. The docid IS the as-served identity.
@@ -70,6 +86,15 @@ _PORTAL_DOC_RE = re.compile(r"ViewDocument\.aspx\?docid=(\d+)", re.I)
 # costs nothing on real agency PDFs.
 _PDF_MAGIC = b"%PDF-"
 _PDF_EOF = b"%%EOF"
+
+# An HTML body under a ``.pdf`` name is the same defect class as a truncated one: a file that
+# exists and is not the document. The declared type is the primary signal (the portal answers
+# ``text/html`` for a docid it will not serve), and the body is sniffed as well because a
+# missing or mislabelled ``Content-Type`` must not be the thing that lets an error page in.
+# Both are checked only AFTER the PDF magic, so a real PDF served under a wrong content type
+# is still committed — the bytes decide what a document is, not the header.
+_HTML_TYPES = frozenset({"text/html", "application/xhtml+xml"})
+_HTML_SNIFF = (b"<!doctype html", b"<html", b"<!--")
 
 
 class FetchedPermit(BaseModel):
@@ -96,13 +121,71 @@ def dam_url(permit_id: str) -> str:
 def _pdf_is_complete(content: bytes) -> bool:
     """Whether a PDF response carries its terminating ``%%EOF`` marker.
 
-    Only applied to bodies that actually announce themselves as PDFs — a non-PDF response
-    (an HTML error page, say) is not judged by this rule and is left to the callers that
-    already handle it.
+    Judges ONLY bodies that announce themselves as PDFs; anything else is waved through here
+    and classified by :func:`_refusal` instead. That division used to read "left to the callers
+    that already handle it", and no caller did: ``b"".startswith(b"%PDF-")`` is ``False``, so an
+    *empty* body took the non-PDF branch and was written to the corpus as a 0-byte ``.pdf``
+    marked ``downloaded`` (#2091). :func:`_refusal` is now the single gate — never call this
+    one on its own to decide whether a response may be committed.
     """
     if not content.startswith(_PDF_MAGIC):
         return True
     return content.rstrip().endswith(_PDF_EOF)
+
+
+def _looks_like_html(content: bytes, content_type: str | None) -> bool:
+    """Whether a non-PDF body is an HTML page — by declared type, else by sniffing it."""
+    if content_type and content_type.split(";", 1)[0].strip().lower() in _HTML_TYPES:
+        return True
+    head = content[:512].lstrip().lower()
+    return head.startswith(_HTML_SNIFF)
+
+
+def _refusal(content: bytes, content_type: str | None) -> tuple[FetchStatus, str] | None:
+    """Classify a response body that must not enter the corpus; ``None`` means write it.
+
+    The single gate in front of the write path, and the order is the point — emptiness is
+    tested first because a zero-length body answers no other question correctly, and the PDF
+    magic is tested before the content type because the bytes decide what a document is.
+
+    Three distinct outcomes, not one, because the manifest note has to say the right thing:
+
+    * ``empty`` — nothing was served at all. For the eDocument portal this is a *negative
+      result* about a docid, not a transport failure to retry: the portal answers a docid it
+      cannot serve with ``HTTP 200`` / ``Content-Type: text/html`` / ``Content-Length: 0``
+      rather than a 404 (verified against ``docid=4116210``, 2026-08-23).
+    * ``truncated`` — a real PDF, cut short. Re-fetch and compare; the bytes we hold are a
+      prefix of a document that exists.
+    * ``not_a_document`` — an HTML page under a URL fetched for a PDF, i.e. an error, session
+      or landing page. Read it in a browser before re-fetching; the URL is likely wrong.
+    """
+    if not content:
+        return (
+            "empty",
+            "refused: the server answered 200 with a ZERO-LENGTH body — nothing was served, so "
+            "there is no document to commit. The Ohio EPA eDocument portal answers a docid it "
+            "cannot serve this way (200, Content-Type: text/html, Content-Length: 0) instead of "
+            "404ing, so an empty body is a negative result about the docid, not a short read to "
+            "retry blindly. Confirm the docid before re-fetching.",
+        )
+    if content.startswith(_PDF_MAGIC):
+        if not _pdf_is_complete(content):
+            return (
+                "truncated",
+                f"refused: PDF body of {len(content)} bytes has no trailing %%EOF — the portal "
+                "serves some documents truncated with a Content-Length that agrees, so this is "
+                "not a short read to retry blindly. Re-fetch and compare before committing.",
+            )
+        return None
+    if _looks_like_html(content, content_type):
+        return (
+            "not_a_document",
+            f"refused: the response is an HTML page ({content_type or 'no Content-Type'}, "
+            f"{len(content)} bytes), not the PDF this URL was fetched for — an error, session "
+            "or landing page. Written under the derived .pdf name it would read as a committed "
+            "document. Open the URL in a browser and confirm it before re-fetching.",
+        )
+    return None
 
 
 def _basename(url: str, content_disposition: str | None) -> str:
@@ -148,14 +231,15 @@ def fetch_one(
         log.warning("oepa.fetch.error", url=url, error=str(exc))
         return base
 
-    if not _pdf_is_complete(content):
-        base.note = (
-            f"refused: PDF body of {len(content)} bytes has no trailing %%EOF — the portal "
-            "serves some documents truncated with a Content-Length that agrees, so this is "
-            "not a short read to retry blindly. Re-fetch and compare before committing."
+    refusal = _refusal(content, ctype)
+    if refusal is not None:
+        status_refused, base.note = refusal[0], refusal[1]
+        # WARNING, never DEBUG: two errors buried in seventy-eight debug lines are
+        # indistinguishable from zero errors (#1994).
+        log.warning(f"oepa.fetch.{status_refused}", url=url, bytes=len(content), content_type=ctype)
+        return base.model_copy(
+            update={"status": status_refused, "bytes": len(content), "content_type": ctype}
         )
-        log.warning("oepa.fetch.truncated", url=url, bytes=len(content))
-        return base.model_copy(update={"status": "truncated", "bytes": len(content)})
 
     digest = hashlib.sha256(content).hexdigest()
     filename = _basename(url, disposition)
@@ -218,8 +302,9 @@ def update_filename_map(records: list[FetchedPermit], map_path: Path) -> None:
       are not derivable from an HTTP response; they are carried forward onto the matching entry.
       A hand-authored ``meta`` is likewise preserved (only ``generated_at`` is refreshed).
 
-    A **failed** fetch has no hash, so it cannot be keyed the same way and would otherwise be
-    unreachable forever: the retry that succeeds carries a digest, lands under a different key,
+    A fetch that produced no file — an HTTP **error**, or a body :func:`_refusal` rejected as
+    ``empty`` / ``not_a_document`` / ``truncated`` — has no hash, so it cannot be keyed the same
+    way and would otherwise be unreachable forever: the retry that succeeds carries a digest, lands under a different key,
     and leaves the failure behind as a permanent row with an empty ``filename`` describing no
     document. The Lima WWTP pull hit that immediately — the portal 500'd on 22 of 261 documents
     and served every one of them on retry, leaving a manifest of 283 rows against 261 files.

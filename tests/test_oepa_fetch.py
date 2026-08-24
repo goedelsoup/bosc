@@ -13,14 +13,20 @@ of the same bytes.
 
 from __future__ import annotations
 
+from collections.abc import Iterator
+from contextlib import contextmanager
 from pathlib import Path
 
+import pytest
+import structlog
 import yaml
 
 from watermark.oepa.fetch import (
     FetchedPermit,
     _basename,
     _pdf_is_complete,
+    _refusal,
+    fetch_one,
     update_filename_map,
 )
 
@@ -313,3 +319,173 @@ def test_two_successful_captures_of_one_url_still_coexist(tmp_path: Path) -> Non
     rows = _documents(path)
     assert len(rows) == 2
     assert {e["sha256"] for e in rows} == {"dd" * 32, "ee" * 32}
+
+
+# ---------------------------------------------------------------------------
+# refused bodies: nothing that is not a document reaches data/documents/** (#2091)
+# ---------------------------------------------------------------------------
+
+
+class _StubResponse:
+    """The two fields ``fetch_one`` reads off a streamed response."""
+
+    def __init__(self, content: bytes, headers: dict[str, str]) -> None:
+        self._content = content
+        self.headers = headers
+
+    def read(self) -> bytes:
+        return self._content
+
+
+def _stub_request(content: bytes, headers: dict[str, str]) -> object:
+    @contextmanager
+    def _fake(
+        method: str, url: str, settings: object, *, stream: bool = False
+    ) -> Iterator[_StubResponse]:
+        yield _StubResponse(content, headers)
+
+    return _fake
+
+
+_PORTAL_URL = "https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4116210"
+
+# Verbatim response headers for ``docid=4116210``, re-verified live 2026-08-23. The portal
+# does not 404 a docid it cannot serve: it returns 200 with an empty body typed text/html.
+_EMPTY_200_HEADERS = {"content-type": "text/html", "content-length": "0"}
+
+
+def test_an_empty_200_is_refused_and_never_written(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Regression (#2091): the portal's empty 200 was committed as a 0-byte PDF.
+
+    ``b"".startswith(b"%PDF-")`` is ``False``, so an empty body took ``_pdf_is_complete``'s
+    non-PDF carve-out, fell through to the write path, and landed on disk as
+    ``edoc-4116210.pdf`` — zero bytes, hashed to the empty-string digest ``e3b0c442…``, with a
+    manifest row reading ``downloaded``. Every other silent-200 portal failure produces a
+    *wrong result* a reader can notice; this one produced a file that exists and is empty,
+    which reads as a successful acquisition.
+    """
+    monkeypatch.setattr(
+        "watermark.oepa.fetch._browser_request", _stub_request(b"", _EMPTY_200_HEADERS)
+    )
+    result = fetch_one(_PORTAL_URL, tmp_path, permit_id="2DP00130")
+
+    assert result.status == "empty"
+    assert result.sha256 is None, "an empty body must not be hashed into the manifest"
+    assert result.bytes == 0
+    assert result.filename == ""
+    assert result.note and "ZERO-LENGTH" in result.note
+    assert list(tmp_path.iterdir()) == [], "nothing may be written for a body that never arrived"
+
+
+def test_an_empty_body_is_not_reported_as_truncated(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """``empty`` and ``truncated`` are different findings and must stay distinct.
+
+    ``truncated`` means a document exists and we hold a prefix of it — re-fetch and compare.
+    ``empty`` means nothing was served at all, which for the portal is a negative result about
+    the docid. Collapsing them would send a reader chasing bytes that were never offered.
+    """
+    monkeypatch.setattr(
+        "watermark.oepa.fetch._browser_request", _stub_request(b"", _EMPTY_200_HEADERS)
+    )
+    assert fetch_one(_PORTAL_URL, tmp_path).status != "truncated"
+
+
+def test_an_html_body_is_refused_under_a_pdf_name(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """An error page written as ``.pdf`` is the same defect class as a 0-byte one.
+
+    The old carve-out assumed "callers already handle it"; ``fetch_one`` did not — it hashed
+    the page, derived ``edoc-<docid>.pdf`` from the URL and recorded ``downloaded``.
+    """
+    body = b"<!DOCTYPE html>\n<html><head><title>Error</title></head><body>error</body></html>"
+    monkeypatch.setattr(
+        "watermark.oepa.fetch._browser_request",
+        _stub_request(body, {"content-type": "text/html; charset=utf-8"}),
+    )
+    result = fetch_one(_PORTAL_URL, tmp_path, permit_id="2DP00130")
+
+    assert result.status == "not_a_document"
+    assert result.sha256 is None
+    assert result.content_type == "text/html; charset=utf-8"
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_an_html_body_with_no_content_type_is_still_refused() -> None:
+    """A missing or mislabelled header must not be the thing that lets an error page in."""
+    assert _refusal(b"<html><body>nope</body></html>", None) is not None
+    assert _refusal(b"  \n<!doctype html>\n<html></html>", "application/pdf") is not None
+
+
+def test_a_real_pdf_under_a_wrong_content_type_is_still_committed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The bytes decide what a document is, not the header.
+
+    The magic + ``%%EOF`` check runs BEFORE the content-type rule, so a server that mislabels
+    a genuine PDF as ``text/html`` does not cost us the document.
+    """
+    body = b"%PDF-1.7\n" + b"x" * 512 + b"\n%%EOF\n"
+    monkeypatch.setattr(
+        "watermark.oepa.fetch._browser_request",
+        _stub_request(body, {"content-type": "text/html"}),
+    )
+    result = fetch_one(_PORTAL_URL, tmp_path, permit_id="2DP00130")
+
+    assert result.status == "downloaded"
+    assert result.filename == "edoc-4116210.pdf"
+    assert (tmp_path / "edoc-4116210.pdf").read_bytes() == body
+
+
+def test_a_refused_fetch_logs_at_warning(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Per the #1994 lesson: two errors buried in seventy-eight debug lines read as zero.
+
+    A bulk fetch reports per-document outcomes only in the manifest, which is read after the
+    fact; the run itself has to say something a human notices while it is happening.
+    """
+    monkeypatch.setattr(
+        "watermark.oepa.fetch._browser_request", _stub_request(b"", _EMPTY_200_HEADERS)
+    )
+    with structlog.testing.capture_logs() as logs:
+        fetch_one(_PORTAL_URL, tmp_path)
+
+    events = [e for e in logs if e.get("event") == "oepa.fetch.empty"]
+    assert len(events) == 1, f"expected one oepa.fetch.empty event, got {logs}"
+    assert events[0]["log_level"] == "warning"
+    assert events[0]["bytes"] == 0
+    assert events[0]["content_type"] == "text/html"
+
+
+def test_refusal_passes_a_complete_pdf() -> None:
+    assert _refusal(b"%PDF-1.7\n" + b"x" * 64 + b"\n%%EOF\n", "application/pdf") is None
+
+
+def test_a_refused_row_is_retired_by_a_later_success(tmp_path: Path) -> None:
+    """A refusal has no hash, so it must follow the same retirement rule as an error row.
+
+    Otherwise the docid a gap-probing workflow eventually resolves leaves a permanent
+    ``empty`` row behind, describing a document the corpus does hold.
+    """
+    path = tmp_path / "filename-map.yaml"
+    refused = FetchedPermit(
+        filename="",
+        permit_id="2PD00006",
+        source_url=_URL,
+        sha256=None,
+        bytes=0,
+        content_type="text/html",
+        fetched_at=None,
+        status="empty",
+        note="refused: the server answered 200 with a ZERO-LENGTH body",
+    )
+    update_filename_map([refused], path)
+    assert [e["status"] for e in _documents(path)] == ["empty"]
+
+    update_filename_map([_record("ff" * 32)], path)
+    rows = _documents(path)
+    assert [e["status"] for e in rows] == ["downloaded"]
+    assert rows[0]["filename"] == "2PD00006.pdf"
