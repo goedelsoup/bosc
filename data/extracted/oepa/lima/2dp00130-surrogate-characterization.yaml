@@ -233,7 +233,7 @@ derived_cycles_of_concentration:
     potassium_as_k: 3.89
     sodium_as_na: 4.02
     sulfate_as_so4: 4.08
-  conservative_range: {min: 3.56, max: 4.08, median: 3.87, n: 6}
+  conservative_range: {min: 3.56, max: 4.08, median: 3.86, n: 6}
   wider_range_including_scaling_species:
     detail: >-
       Adding species that can precipitate or deposit and are therefore weaker tracers —
@@ -260,7 +260,7 @@ reconciliation:
       A literature assumption, not a back-solve from Lima data and not a disclosed figure. Worth
       stating plainly, because the issue that commissioned this ingest described A3's cycles
       figure as a back-solved bracket: what the code actually carries is a constant.
-  observed_analogue: {range: [3.56, 4.08], median: 3.87, site: GOOGLE CLB-1, tag: reference}
+  observed_analogue: {range: [3.56, 4.08], median: 3.86, site: GOOGLE CLB-1, tag: reference}
   result:
     tag: inference
     detail: >-
