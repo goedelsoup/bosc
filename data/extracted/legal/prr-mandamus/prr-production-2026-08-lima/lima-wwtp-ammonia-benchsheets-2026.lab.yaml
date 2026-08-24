@@ -163,6 +163,8 @@ daily_mg_l:
 # concentration maximum' limit is the highest such weekly average in the reporting month.
 weekly_mean_mg_l:
 - {week_start: '2026-01-18', week_end: '2026-01-24', n_sample_days: 5, mean_mg_l: 1.239}
+# ⚠️ The week of 01-25 is the one week whose n_sample_days (numeric rows) is below the five days
+# the Sun-Thu regime schedules: 2026-01-29 is a blank Conc cell, excluded from the mean below.
 - {week_start: '2026-01-25', week_end: '2026-01-31', n_sample_days: 4, mean_mg_l: 8.1772}
 - {week_start: '2026-02-01', week_end: '2026-02-07', n_sample_days: 5, mean_mg_l: 7.5209}
 - {week_start: '2026-02-08', week_end: '2026-02-14', n_sample_days: 5, mean_mg_l: 5.2368}
@@ -211,12 +213,17 @@ reconciliation:
       average 4.32 mg/l against a reported month of 2.2413 — consistent with a low first half of
       the month, but not verifiable from what is in hand.
     - >
-      The week of 2026-01-25 holds only FOUR results. The 2026-01-29 row is present with the
-      analyst's initials but the Conc cell is BLANK, and no 2026-01-30 sample row exists. The four
-      produced days average 8.1772 mg/l, which does not reproduce the reported 7.117.
+      The week of 2026-01-25 has FIVE scheduled sample days under the Sunday-Thursday regime
+      (01-25 Sun through 01-29 Thu) and only FOUR carry a numeric result — 1.172, 9.4325, 9.964 and
+      12.1405 mg/l on 01-25, 01-26, 01-27 and 01-28. The 2026-01-29 row is present with the
+      analyst's initials but the Conc cell is BLANK, so it is excluded from the denominator; the
+      four numeric rows mean 8.1772 mg/l, which does not reproduce the reported 7.117. 01-30 and
+      01-31 are a Friday and a Saturday — their absence is the sampling regime, not a gap in the
+      production.
     open_question: >
-      [open] If the reported 7.117 mg/l is the mean of five days for the week of 2026-01-25, the
-      missing 2026-01-29 result would have to be ~2.88 mg/l. That is ARITHMETIC, not evidence —
+      [open] If the reported 7.117 mg/l is the mean of all FIVE scheduled days for the week of
+      2026-01-25, the blank 2026-01-29 result would have to be 2.876 mg/l. That is ARITHMETIC,
+      not evidence —
       recorded to make the gap precise, and it is exactly the one datum that would let January's
       worst week be independently verified. Sought in the follow-up request.
   parameters_cited_by_the_nov_but_absent_from_echo:

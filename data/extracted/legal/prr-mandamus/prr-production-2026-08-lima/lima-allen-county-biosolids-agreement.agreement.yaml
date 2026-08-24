@@ -38,7 +38,7 @@ terms:
     - {name: Shawnee II WWTP, address: 3640 Spencerville Rd., Lima, OH 45805}
     delivery_point: City WWTP, 1200 Ft. Amanda Road
     volume_cap_gallons_per_year: 3000000
-    volume_approx_gallons_per_week: 58000
+    volume_approx_gallons_per_week: '~58000'  # source: "approximately 58,000 gallons per week"
     max_solids_pct: 7
     sampling: grab sample from each day's hauling analysed for percent solids, as the City deems
       necessary; metals sampling per Exhibit A; results reported to the City's WWTP Superintendent
