@@ -1,5 +1,25 @@
 [
   {
+    "src": "CITY OF BRYAN",
+    "rel": "operates",
+    "dst": "npdes:2PD00018",
+    "date": "",
+    "ref": "2PD00018*RD",
+    "source": "oepa/bryan/2PD00018.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PD00018",
+    "rel": "discharges_to",
+    "dst": "PIGEON RUN PRAIRIE CREEK",
+    "date": "",
+    "ref": "2PD00018*RD",
+    "source": "oepa/bryan/2PD00018.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

@@ -1,5 +1,15 @@
 [
   {
+    "src": "CITY OF TOLEDO",
+    "rel": "operates",
+    "dst": "npdes:2PF00000",
+    "date": "",
+    "ref": "2PF00000*OD",
+    "source": "oepa/toledo/2PF00000.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

@@ -1,0 +1,64 @@
+id: oepa-columbus
+title: Ohio EPA NPDES Permit Extractions (Columbus — Jackson Pike and Southerly WWTPs)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permits 4PF00000*QD (application OH0024732, Jackson Pike WWTP)
+    and 4PF00001*SD (application OH0024741, Southerly WWTP), City of Columbus, Franklin County;
+    retrieved from the Ohio EPA DAM permit slots
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:columbus
+storage:
+- relpath: extracted/oepa/columbus/4PF00000.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/columbus/4PF00001.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- combined-sewer-overflow
+- biosolids
+- columbus
+- franklin-county
+- scioto
+notes: >-
+  TWO PLANTS, TWO INSTRUMENTS, DELIBERATELY NOT MERGED. Both hand-read from digitally generated
+  text layers, so neither carries a render receipt.
+  **4PF00000*QD — Jackson Pike WWTP**, 2104 Jackson Pike, discharging to the Scioto River; action
+  2021-11-16, effective 2022-01-01, expiring 2026-12-31, signed Laurie A. Stevenson. 54 printed
+  sheets == 54 PDF pages, no bound fact sheet. One lifetime table for outfall 001, 36 parameters,
+  68.0 MGD design flow (all twelve kg/day loadings re-derived and matching). Whole-effluent
+  toxicity (61425-61428) is monitor-only for the entire term with NO Toxicity Reduction Evaluation
+  anywhere. 28 CSO points on a non-consecutive printed range 004-052, seven of them discharging to
+  the OLENTANGY rather than the Scioto named in the authorization sentence. The chlorine maximum
+  (0.019 mg/l) is printed BELOW the permit's own PQL (0.050 mg/L), so compliance runs through the
+  below-QL rule at Part II Item M. The TSS/ammonia/CBOD sub-tables use a three-way May /
+  June-Oct / Nov-April split that does not match Part III's own two-way Summer/Winter definitions.
+  A note header on sheet 20 misprints the station as "4PF00001001" — the SIBLING plant's prefix;
+  review confirmed this is the document's own defect and not cross-contamination between the two
+  artifacts. `permit_action` is deliberately UNSET: the document never labels the action.
+  **4PF00001*SD — Southerly WWTP**, 6977 South High Street, Lockbourne, also to the Scioto; a
+  modification of prior revision *RD, issued 2025-08-06, effective 2025-10-01, expiring
+  2026-12-31. 59 PDF pages = a 1-page transmittal + the 52-sheet permit + a 6-page Fact Sheet.
+  Three Part I.A tables (outfalls 001 / 090 / 603), ~45 parameters, 114 MGD design flow. The
+  system has 31 CSOs of which only CSO 006 is authorized here, the other 30 sitting under
+  4PF00000. Five biosolids stations across eleven Part I.B groups: 581/583/584 carry the full
+  9-metal ceiling table, while 586 and 588 carry a single weight row each. Station 584 is the
+  permit's own "exceptional quality" biosolids (footnote k) — that term is the document's, not an
+  inference; "Class A" genuinely never appears. Document defects recorded: station 001's footnotes
+  cite Item V for mercury and Item W for orthophosphate where the lettering gives W and X (proved
+  by station 601's correctly-cited footnote), Part II Item D's paragraph is duplicated verbatim
+  inside Item U on sheet 35, a nine-digit station id on sheet 5, and the facility address printed
+  under two ZIPs. TWO GENUINE COVERAGE GAPS are declared rather than hidden: Fact Sheet Figures 1
+  and 2 (a Black & Veatch location map and plant process-flow diagram) exist only as images.
+  Both artifacts' 2026-12-31 expirations put the renewal application ~2026-07-04 by the permits'
+  own 180-day rule; whether either was filed is `[open]`.

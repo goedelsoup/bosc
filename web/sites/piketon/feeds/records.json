@@ -1,1 +1,500 @@
-[]
+[
+  {
+    "rel": "oepa/piketon/0PB00031.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Piketon Wastewater Treatment Works",
+    "confidence": "high",
+    "warnings": [
+      "⚠️ THE DIRECTOR MADE AN AFFIRMATIVE OAC 3745-1-05 ANTIDEGRADATION DETERMINATION IN THIS PERMIT — a finding that a LOWERING of water quality in the Scioto River is NECESSARY. See antidegradation_finding below for the verbatim text (sheet 1). This is not boilerplate: it is a Director's finding that Ohio EPA examined technical alternatives, social and economic issues, and public/intergovernmental comment, and concluded the degradation is justified by \"important social or economic development in the area.\" The permit does NOT name what that development is anywhere in its 26 pages — see antidegradation_finding.what_development_is_not_named below. That is `[open]` and is exactly the question a records request to Ohio EPA (or to the Village of Piketon) would ask: what social or economic development justified lowering water quality in the Scioto River at this facility.",
+      "THE PERMIT TERM IS ONLY ~3 YEARS, NOT THE USUAL 5. Effective 2025-12-01, expiring 2028-12-31 — 1,126 days, about 3 years and 1 month. The permit does not explain why the term is shortened. Nothing in this corpus establishes the reason; it is `[open]`.",
+      "THE INTERIM/FINAL PHASE-IN IS SHORT AND ASYMMETRIC: only 8 months of interim limits (2025-12-01 through on or about 2026-07-31, [inference]) against roughly 2 years 5 months of final limits (on or about 2026-08-01 through 2028-12-31, [inference]) for the remainder of an already-short 3-year term. See effluent_limits_001.changeover_date_note.",
+      "THE PART I,A SECTION HEADING AND ITS OWN TABLE TITLE DISAGREE ON WHAT TO CALL THE FIRST PHASE. The heading on sheet 2 reads \"PART I, A. INTERIM EFFLUENT LIMITATIONS AND MONITORING REQUIREMENTS\", but the table immediately under it is titled \"Table - Final Outfall - 001 – Initial\". \"Interim\" (heading) and \"Initial\" (table title) are used for the same table. Transcribed below as printed in both places; not harmonized.",
+      "THE COVER SHEET NEVER SAYS THIS IS A MODIFICATION, BUT THE BODY TWICE CALLS THE EFFECTIVE DATE \"the modification effective date of this permit\" (Part I.A, sheets 2 and 4, verbatim). Unlike the Mansfield precedent (2PE00001*PD), whose cover explicitly labels the action a modification and whose meta.subject records it, sheet 1 here prints no permit-action label at all — only \"Action Date\", \"Effective Date\", \"Expiration Date\". No prior revision number is named anywhere in this document. Whether this is in fact a modification of an earlier 0PB00031 revision is `[inference]` from the \"modification effective date\" phrasing alone; this file makes no claim about what a prior revision contained, because none is committed to this corpus.",
+      "TWO DISINFECTION PARAMETERS ARE MONITORED ONLY DURING THE INTERIM PERIOD AND DISAPPEAR FROM THE FINAL TABLE ENTIRELY: Total Residual Chlorine (50060, max 0.019 mg/l) and Peracetic Acid (51674, max 330 ug/l) both appear in the Initial/Interim outfall 001 table (sheet 2) and are simply absent from the Final table (sheets 4-5) — not zeroed, not carried as monitor-only, just gone, and their corresponding table notes (Item J for chlorine, Item S for peracetic acid) are dropped from the Final table's note list too. Part II Items J, R and S (sheet 12-14) remain in the permit and still describe chlorine QLs and peracetic-acid test methods in general terms, so the requirements aren't repealed from Part II — only the outfall 001 numeric limit and its monitoring frequency disappear at the 9th month. What replaces chemical disinfection monitoring in the final phase, if anything, is not stated in this document. `[open]`.",
+      "PART II ITEM B'S STATION-LOCATION TABLE (sheet 10) OMITS STATION 300. It lists only 0PB00031001, 586, 588 and 601 with location descriptions — 001 additionally gets DMS coordinates, the other three do not. Station 300 (the SSO reporting station, given its own monitoring table in Part I.B on sheet 6) is never assigned a location description anywhere in this permit. See sampling_stations.station_300_not_located below.",
+      "UNLIKE THE MANSFIELD PRECEDENT, THIS PERMIT HAS NO PART I.C SCHEDULE OF COMPLIANCE, NO WET/biomonitoring program, NO pretreatment-program schedule, and NO engineered bypass station with a numeric flow trigger. Confirmed absent by full-text search of all 26 pages (no hit for \"Schedule of Compliance\", \"biomonitoring\", \"pretreatment\", \"CSO\", or \"River Mile\"). The only overflow/bypass provisions here are the generic Part III, Paragraph 11 \"Unauthorized Discharges\" boilerplate and the Part I.B SSO table at station 300 — there is no facility-specific engineered bypass point (no analog to Mansfield's 602 equalization-basin bypass with its 19 MGD trigger)."
+    ],
+    "fields": {
+      "tag": "[verified]",
+      "facility_name": "Piketon Wastewater Treatment Works",
+      "permit_no": "0PB00031*KD",
+      "application_no": "OH0027031",
+      "permittee": "Village of Piketon",
+      "facility_address": "\"the wastewater treatment works located on Old Jasper Road, approximately 2800 feet East of the Scioto River, Piketon, Ohio, Pike County\" — the permit's own descriptive location, verbatim. No street number or mailing address is printed; this is the only location text the instrument gives.",
+      "county": "Pike County",
+      "receiving_water": "Scioto River",
+      "receiving_water_source": "Sheet 1 authorization sentence — \"...and discharging to the Scioto River in accordance with the conditions specified in Parts I, II, and III of this permit.\" No river mile is printed anywhere in this document (checked by full-text search; contrast the Mansfield precedent, which prints River Mile 11.18 on the same sentence).",
+      "action_date": "2025-11-03",
+      "effective_date": "2025-12-01",
+      "expiration_date": "2028-12-31",
+      "permit_term_note": "2025-12-01 to 2028-12-31 is 1,126 days — about 3 years and 1 month. NPDES permits are typically issued for up to 5 years; this term is markedly shorter, and the permit gives no stated reason. See warnings[1]. [verified] the dates as printed; the \"shorter than usual\" characterization is [inference] against the standard 5-year NPDES term, not a claim this document makes about itself.",
+      "signed_by": "John Logue, Director",
+      "total_pages": 26,
+      "renewal_application_due": "The permit's own text requires the renewal submission \"no later than 180 days prior to the above date of expiration\" — i.e. on or about 2028-07-04 for the 2028-12-31 expiration. [inference] from the permit's stated rule; the permit prints no calendar date for it.",
+      "antidegradation_finding": {
+        "citation": "Permit 0PB00031*KD, sheet 1",
+        "tag": "[verified]",
+        "text": "\"I have determined that a lowering of water quality in the Scioto River is necessary. In accordance with OAC 3745-1-05, this decision was reached only after examining a series of technical alternatives, reviewing social and economic issues related to the degradation, and considering all public and appropriate intergovernmental comments. The lowering of water quality is necessary to accommodate important social or economic development in the area in which the water body is located.\"",
+        "what_development_is_not_named": "The permit states only that a lowering of water quality is necessary to accommodate \"important social or economic development in the area\" — it never names the development, the applicant's economic justification, or the technical alternatives supposedly examined. Ohio EPA's own antidegradation review record (a §401/antidegradation analysis or fact sheet, typically) would document that; it is not bound into or committed alongside this permit. `[open]` — this is the question a public-records request to Ohio EPA (or to the Village of Piketon, as applicant) would ask.",
+        "significance": "This is an affirmative regulatory finding, not routine permit language — Ohio EPA permits ordinarily do NOT authorize a lowering of water quality without this specific OAC 3745-1-05 determination. Its presence here means Ohio EPA concluded, on some record not in this corpus, that this small village facility's discharge degrades the Scioto River's water quality and that the degradation is justified. Given the facility's modest 0.45-0.5 MGD design flow (see effluent_limits_001), what growth or development is driving this is a live, unanswered question."
+      },
+      "treatment_works_classification": {
+        "citation": "Permit 0PB00031*KD, sheet 9, Part II Item A.1",
+        "tag": "[verified]",
+        "treatment_works": "\"In accordance with Ohio Administrative Code 3745-7-04, the sewage treatment facility shall be classified as a Class II treatment works.\" The permittee must designate a professional operator of record certified class II or greater.",
+        "collection_systems": "\"All sewerage (collection) systems that are tributary to this treatment works are Class II sewerage systems in accordance with paragraph (B)(1)(b) of rule 3745-7-04.\""
+      },
+      "sampling_stations": {
+        "citation": "Permit 0PB00031*KD, sheet 10, Part II Item B",
+        "tag": "[verified]",
+        "0PB00031001": {
+          "description": "Final effluent",
+          "latitude_dms": "39 N 03 ' 37 \"",
+          "longitude_dms": "83 W 02 ' 40 \"",
+          "latitude_dd": 39.060278,
+          "longitude_dd": -83.044444,
+          "coordinate_note": "Decimal degrees are a conversion of the permit's own printed DMS, shown for use — NOT a second source. Not corrected against ICIS-NPDES or FRS (neither is committed in this corpus for this facility)."
+        },
+        "0PB00031586": {
+          "description": "Sludge disposal to landfill."
+        },
+        "0PB00031588": {
+          "description": "Sludge hauled to NPDES permitted facility (emergency)"
+        },
+        "0PB00031601": {
+          "description": "Raw Sewage influent at the wet well"
+        },
+        "station_300_not_located": "Station 300 (SSO — see monitoring_stations.sso_300 below) is never given a location description in this table or anywhere else in the permit, even though it has its own monitoring table in Part I.B (sheet 6) and appears in Part II Item B's implicit scope (\"Description of the location of the required sampling stations are as follows\"). Only four stations are listed — 001, 586, 588, 601 — and 300 is not among them. Transcribed as printed; the omission is the document's, not a transcription gap.",
+        "only_001_has_coordinates": "001 is the only station carrying DMS coordinates. 586, 588 and 601 get a text description only. This is the document's own choice, not an extraction limit."
+      },
+      "effluent_limits_001": {
+        "citation": "Permit 0PB00031*KD, sheets 2-3 (\"PART I, A. INTERIM EFFLUENT LIMITATIONS AND MONITORING REQUIREMENTS\", table titled \"Table - Final Outfall - 001 – Initial\") and sheets 4-5 (\"PART I, A. FINAL EFFLUENT LIMITATIONS AND MONITORING REQUIREMENTS\", table titled \"Table - Final Outfall - 001 – Final\"). See warnings[3] on the heading/table-title naming disagreement.",
+        "tag": "[verified]",
+        "outfall": "0PB00031001",
+        "interim_period": "\"During the period beginning on the modification effective date of this permit and lasting until the end of the 8th month\" — 2025-12-01 through on or about 2026-07-31.",
+        "final_period": "\"During the period beginning on the 9th month after the modification effective date of this permit and lasting until the expiration date\" — on or about 2026-08-01 through 2028-12-31.",
+        "changeover_date_note": "The permit never prints a calendar date for the changeover — only \"the end of the 8th month\" and \"the 9th month after the modification effective date.\" Resolved against the 2025-12-01 effective date, using the same month-counting convention as the Mansfield precedent (month N after the effective date begins at effective_date + (N-1) months), those become 2026-07-31 and 2026-08-01. That arithmetic is `[inference]`; no second captured source (ICIS-NPDES is not committed for this facility) independently confirms the interim limit-set end date.",
+        "design_flow_basis": {
+          "interim": "\"Effluent loadings based on average design flow of 0.45 MGD.\" (sheet 3 note)",
+          "final": "\"Effluent loadings based on average design flow of 0.5 MGD.\" (sheet 5 note)",
+          "note": "The design flow itself increases between phases — 0.45 to 0.5 MGD — even though the Final table's concentration limits for TSS and CBOD are tighter than Interim's (see changes_at_the_9th_month). The loads below are each table's own printed kg/day figure; they are not independently recomputed here."
+        },
+        "interim": {
+          "note": "Transcribed from the Interim/Initial table (sheets 2-3). Field names follow the Mansfield precedent's convention: `maximum`/`minimum` are single-value (usually daily) limits, `weekly`/`monthly` are average concentration limits, and `load_daily_kg` / `load_weekly_kg` / `load_monthly_kg` are that table's own printed loading figures (kg/day) paired with the maximum/weekly/monthly concentration limit respectively.",
+          "water_temperature": {
+            "units": "C",
+            "limit": null,
+            "monitoring": "1/Day Grab",
+            "months": "All"
+          },
+          "dissolved_oxygen": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Day Grab",
+            "months": "All"
+          },
+          "ph": {
+            "units": "S.U.",
+            "maximum": 9.0,
+            "minimum": 6.5,
+            "monitoring": "1/Day Grab",
+            "months": "All"
+          },
+          "total_suspended_solids": {
+            "units": "mg/l",
+            "weekly": 45,
+            "monthly": 30,
+            "load_weekly_kg": 76.7,
+            "load_monthly_kg": 51.1,
+            "monitoring": "2/Week 24hr Composite",
+            "months": "All"
+          },
+          "oil_and_grease": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Quarter Grab",
+            "months": "Quarterly - Alt."
+          },
+          "ammonia_nh3": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1 / 2 Weeks 24hr Composite",
+            "months": "All",
+            "note": "MONITOR ONLY, no summer/winter split at Interim."
+          },
+          "nitrogen_kjeldahl_total": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "nitrite_plus_nitrate_total": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "phosphorus_total": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "cadmium_total": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "2/Year 24hr Composite",
+            "months": "Semi-annual"
+          },
+          "chromium_total": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "2/Year 24hr Composite",
+            "months": "Semi-annual"
+          },
+          "copper_total": {
+            "units": "ug/l",
+            "maximum": 72,
+            "load_daily_kg": 0.123,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "lead_total": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "2/Year 24hr Composite",
+            "months": "Semi-annual"
+          },
+          "nickel_total": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "2/Year 24hr Composite",
+            "months": "Semi-annual"
+          },
+          "zinc_total": {
+            "units": "ug/l",
+            "maximum": 560,
+            "load_daily_kg": 0.954,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "chromium_dissolved_hexavalent": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter Grab",
+            "months": "Quarterly - Alt."
+          },
+          "e_coli": {
+            "units": "#/100 ml",
+            "weekly": 284,
+            "monthly": 126,
+            "monitoring": "1/Week Grab",
+            "months": "Summer"
+          },
+          "flow_rate": {
+            "units": "MGD",
+            "limit": null,
+            "monitoring": "1/Day Continuous",
+            "months": "All"
+          },
+          "chlorine_total_residual": {
+            "units": "mg/l",
+            "maximum": 0.019,
+            "monitoring": "1/Day Grab",
+            "months": "Summer",
+            "note": "See Part II Item J. ABSENT from the Final table — see warnings[5]."
+          },
+          "mercury_total_low_level": {
+            "units": "ng/l",
+            "limit": null,
+            "monitoring": "2/Year Grab",
+            "months": "Semi-annual"
+          },
+          "peracetic_acid": {
+            "units": "ug/l",
+            "maximum": 330,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "Summer",
+            "note": "See Part II Item S. ABSENT from the Final table — see warnings[5]."
+          },
+          "residue_total_filterable": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "cbod_5_day": {
+            "units": "mg/l",
+            "weekly": 40,
+            "monthly": 25,
+            "load_weekly_kg": 68.1,
+            "load_monthly_kg": 42.6,
+            "monitoring": "2/Week 24hr Composite",
+            "months": "All"
+          },
+          "table_notes": "Printed notes a-e for this table (sheet 3): a. Total residual chlorine — See Part II, Item J. b. Mercury — See Part II, Item R. c. Quarterly-Alt Months are March, June, September and December. d. If the facility only has an influent flow meter, flow can be measured at that meter and reported at this outfall. e. Peracetic Acid — See Part II, Item S."
+        },
+        "final": {
+          "note": "Transcribed from the Final table (sheets 4-5). Same field-name convention as interim.",
+          "water_temperature": {
+            "units": "C",
+            "limit": null,
+            "monitoring": "1/Day Grab",
+            "months": "All"
+          },
+          "dissolved_oxygen": {
+            "units": "mg/l",
+            "minimum": 6.0,
+            "monitoring": "1/Day Grab",
+            "months": "All",
+            "note": "NEW at Final — Interim carried no DO limit at all."
+          },
+          "ph": {
+            "units": "S.U.",
+            "maximum": 9.0,
+            "minimum": 6.5,
+            "monitoring": "1/Day Grab",
+            "months": "All"
+          },
+          "total_suspended_solids": {
+            "units": "mg/l",
+            "weekly": 18,
+            "monthly": 12,
+            "load_weekly_kg": 34,
+            "load_monthly_kg": 23,
+            "monitoring": "2/Week 24hr Composite",
+            "months": "All"
+          },
+          "oil_and_grease": {
+            "units": "mg/l",
+            "maximum": 10,
+            "monitoring": "1/Month Grab",
+            "months": "All",
+            "note": "NEW numeric limit at Final; Interim was monitor-only, Quarterly-Alt."
+          },
+          "ammonia_nh3_summer": {
+            "units": "mg/l",
+            "weekly": 1.5,
+            "monthly": 1.0,
+            "load_weekly_kg": 2.8,
+            "load_monthly_kg": 1.9,
+            "monitoring": "2/Week 24hr Composite",
+            "months": "Summer"
+          },
+          "ammonia_nh3_winter": {
+            "units": "mg/l",
+            "weekly": 4.5,
+            "monthly": 3.0,
+            "load_weekly_kg": 8.5,
+            "load_monthly_kg": 5.7,
+            "monitoring": "2/Week 24hr Composite",
+            "months": "Winter"
+          },
+          "nitrogen_kjeldahl_total": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Month 24hr Composite",
+            "months": "All"
+          },
+          "nitrite_plus_nitrate_total": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Month 24hr Composite",
+            "months": "All"
+          },
+          "phosphorus_total": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1 / 2 Weeks 24hr Composite",
+            "months": "All"
+          },
+          "cadmium_total": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "2/Year 24hr Composite",
+            "months": "Semi-annual"
+          },
+          "chromium_total": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "2/Year 24hr Composite",
+            "months": "Semi-annual"
+          },
+          "copper_total": {
+            "units": "ug/l",
+            "maximum": 72,
+            "load_daily_kg": 0.14,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "lead_total": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "2/Year 24hr Composite",
+            "months": "Semi-annual"
+          },
+          "nickel_total": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "2/Year 24hr Composite",
+            "months": "Semi-annual"
+          },
+          "zinc_total": {
+            "units": "ug/l",
+            "maximum": 560,
+            "load_daily_kg": 1.1,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "chromium_dissolved_hexavalent": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter Grab",
+            "months": "Quarterly - Alt."
+          },
+          "e_coli": {
+            "units": "#/100 ml",
+            "weekly": 284,
+            "monthly": 126,
+            "monitoring": "2/Week Grab",
+            "months": "Summer"
+          },
+          "flow_rate": {
+            "units": "MGD",
+            "limit": null,
+            "monitoring": "1/Day Continuous",
+            "months": "All"
+          },
+          "mercury_total_low_level": {
+            "units": "ng/l",
+            "limit": null,
+            "monitoring": "2/Year Grab",
+            "months": "Semi-annual"
+          },
+          "residue_total_filterable": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Month 24hr Composite",
+            "months": "All"
+          },
+          "cbod_5_day": {
+            "units": "mg/l",
+            "weekly": 15,
+            "monthly": 10,
+            "load_weekly_kg": 28,
+            "load_monthly_kg": 19,
+            "monitoring": "2/Week 24hr Composite",
+            "months": "All"
+          },
+          "table_notes": "Printed notes a-b for this table (sheet 5): a. Quarterly-Alt Months are March, June, September and December. b. If the facility only has an influent flow meter, flow can be measured at that meter and reported at this outfall. Notes referencing chlorine (Item J) and Peracetic Acid (Item S) are NOT reprinted here — consistent with those parameters' absence from this table."
+        },
+        "changes_at_the_9th_month": {
+          "tag": "[verified]",
+          "new_numeric_limits": {
+            "dissolved_oxygen": "Interim: monitor only, no limit. Final: minimum 6.0 mg/l.",
+            "oil_and_grease": "Interim: monitor only (1/Quarter). Final: maximum 10 mg/l (1/Month).",
+            "ammonia_nh3": "Interim: monitor only, no season split, 1/2 Weeks. Final: numerically limited and split into Summer (weekly 1.5 / monthly 1.0 mg/l) and Winter (weekly 4.5 / monthly 3.0 mg/l), 2/Week."
+          },
+          "tightened_concentration_limits": {
+            "total_suspended_solids": "Interim weekly/monthly 45/30 mg/l -> Final 18/12 mg/l.",
+            "cbod_5_day": "Interim weekly/monthly 40/25 mg/l -> Final 15/10 mg/l."
+          },
+          "dropped_parameters": {
+            "note": "These two disappear from the Final table entirely rather than becoming monitor-only — see warnings[5].",
+            "chlorine_total_residual": "Interim: maximum 0.019 mg/l, Summer. Final: not present.",
+            "peracetic_acid": "Interim: maximum 330 ug/l, Summer. Final: not present."
+          },
+          "monitoring_frequency_increases": {
+            "e_coli": "1/Week Grab (Interim) -> 2/Week Grab (Final).",
+            "nitrogen_kjeldahl_total": "Quarterly-Alt (Interim) -> Monthly (Final).",
+            "nitrite_plus_nitrate_total": "Quarterly-Alt (Interim) -> Monthly (Final).",
+            "phosphorus_total": "Quarterly-Alt (Interim) -> 1/2 Weeks (Final).",
+            "residue_total_filterable": "Quarterly-Alt (Interim) -> Monthly (Final)."
+          },
+          "unchanged": {
+            "note": "Same limit AND same frequency in both tables (concentration limits identical; copper/zinc loads shift only because the design-flow basis changed from 0.45 to 0.5 MGD, see design_flow_basis.note above).",
+            "parameters": "pH (9.0/6.5), water temperature (monitor only), cadmium, chromium total, lead, nickel, chromium dissolved hexavalent, mercury low-level, flow rate (all monitor only, unchanged frequency); copper (72 ug/l max, same frequency, load shifts with design flow); zinc (560 ug/l max, same frequency, load shifts with design flow)."
+          }
+        }
+      },
+      "monitoring_stations": {
+        "citation": "Permit 0PB00031*KD, sheets 6-8, Part I.B",
+        "tag": "[verified]",
+        "sso_300": {
+          "citation": "Permit 0PB00031*KD, sheet 6",
+          "parameter": "Overflow Occurrence (74062), No./Month, 1/Month Total, all months",
+          "note": "The permit is explicit that the 1/Month figure is a REPORTING frequency, not a monitoring one: \"the intent of that provision is to specify a reporting frequency for Overflow Occurrence, not a monitoring frequency. The monitoring requirement under this permit is that these overflows shall be monitored on each day when they discharge.\" Only SSOs entering waters of the state (directly or via storm sewer/other conveyance) are reported at this station.",
+          "counting_rule": "Each location overflowing on a given day counts as one occurrence — a two-location day is two occurrences, continuing daily if both persist. \"All sanitary sewer overflows are prohibited.\" (Item c.)",
+          "annual_report": "A system-wide annual SSO report (including SSOs that never reach waters of the state) is due no later than March 31 for the prior calendar year — see other_requirements_of_note.d for the full reporting mechanics.",
+          "not_located": "See sampling_stations.station_300_not_located above."
+        },
+        "sludge_586": {
+          "citation": "Permit 0PB00031*KD, sheet 7",
+          "parameter": "Sludge Fee Weight (51129), dry tons, 1/Year Total, December",
+          "applies_to": "disposal in a solid waste landfill",
+          "note": "\"If no sewage sludge is removed from the permittee's facility for disposal in a solid waste landfill during the year, select the 'No Discharge' check box on the data entry form and PIN the eDMR.\" Sludge fee weight excludes admixtures (liming material, bulking agents) per the permit's own definition."
+        },
+        "influent_601": {
+          "citation": "Permit 0PB00031*KD, sheet 8",
+          "description": "Raw sewage influent at the wet well — both parameters monitor-only, no limits",
+          "parameters": {
+            "total_suspended_solids": {
+              "units": "mg/l",
+              "limit": null,
+              "monitoring": "1/Week 24hr Composite",
+              "months": "All"
+            },
+            "cbod_5_day": {
+              "units": "mg/l",
+              "limit": null,
+              "monitoring": "1/Week 24hr Composite",
+              "months": "All"
+            }
+          },
+          "note": "\"Sampling for the parameters common to stations 001 and 601 shall occur the same day.\" (Item a., and repeated as Part II Item L.)"
+        },
+        "sludge_588_no_table": "Station 588 (sludge hauled to another NPDES permitted facility, emergency only) is listed in Part II Item B's location table but is given NO effluent/monitoring table in Part I.B. The permit says so explicitly (Part II Item P, sheet 13-14): \"Station 588 for transfer of sludge to another permit holder is included in the authorized list of station(s) in Part II, Item B of this permit, however, effluent tables are not included in Part 1.B. If this station must be used in an emergency situation, the permittee must report the total amount of sludge taken to another facility on the permittee's Annual Sludge Report. The Discharge Monitoring Report (DMR) should not be used to report under this paragraph.\""
+      },
+      "other_requirements_of_note": {
+        "citation": "Permit 0PB00031*KD, Part II, sheets 9-14",
+        "tag": "[verified]",
+        "a_operator_certification": "See treatment_works_classification above (Item A.1); Items A.2-A.4 cover professional-operator-of-record notification, backup-operator provisions, and minimum staffing — indexed here, not transcribed in full.",
+        "c_weekend_holiday_exemption": "\"All parameters, except flow, need not be monitored on days when the plant is not normally staffed (Saturdays, Sundays, and Holidays). On those days, report 'AN' on the monthly report form.\"",
+        "d_sso_reporting": {
+          "summary": "Full SSO reporting regime (sheets 10-12): immediate 24-hour notification to Ohio EPA and the Board of Health for SSOs that \"may imminently and substantially endanger human health,\" a 5-day written follow-up report, DMR reporting of SSOs reaching waters of the state (station 300), and an annual report of ALL SSOs (including ones that never reach waters of the state) due not later than March 31, listing every SSO location numbered consecutively from 301, with volumes in millions of gallons and a narrative analysis of water-in-basement patterns by location, frequency and cause. Public notice of the annual report's availability is required (posted notices, newspaper, or sewer-bill insert).",
+          "southeast_district_office_named_for_hardcopy_submission": "\"you may submit one hardcopy of the report to Ohio EPA Southeast District Office and one copy to: Ohio EPA; Division of Surface Water; NPDES Permit Unit; P.O. Box 1049; Columbus, OH, 43216-1049.\" This is the one place in this permit that names Piketon's assigned Ohio EPA district office: Southeast."
+        },
+        "j_limits_below_quantification": {
+          "citation": "sheet 12-13",
+          "quantification_levels_table": {
+            "chlorine_total_residual": {
+              "pql_mg_l": 0.05,
+              "ml": null
+            }
+          },
+          "compliance_rule": "For maximum limits, any value reported below the OEPA QL is in compliance. For average limits, compliance uses the arithmetic mean with values below the QL counted as zero. All results, even below-QL ones, must still be reported; below-MDL results are reported \"AA\" (below detection)."
+        },
+        "k_wqbel_revision": "\"Water quality based permit limitations in this permit may be revised based on updated wasteload allocations or use designation rules\" — the permit may be modified to reflect a revised WLA or an approved TMDL under CWA Section 303(d).",
+        "m_through_p_sludge": "M. Sludge disposal/use/storage/treatment must comply with ORC 6111 and OAC 3745-40. N. An annual sludge-activity summary report is due no later than March 1. O. Percent-solids sampling on each removal day; conversion formula given: dry tons = gallons x 8.34 (lbs/gallon) x 0.0005 (tons/lb) x decimal fraction total solids. P. Station 588 emergency transfer — see monitoring_stations.sludge_588_no_table above.",
+        "q_outfall_signage": "A permanent stream-bank marker is required at each regulated outfall (final outfalls, bypasses, and CSOs) naming the permittee, the Ohio EPA permit number, the outfall number and a contact phone number, in letters at least 2 inches tall, on a sign at least 2 feet by 2 feet, at least 3 feet above ground, unobstructed and kept visible. (The CSO-signage language is boilerplate — this permit has no CSO; see warnings[7].)",
+        "r_mercury_test_method": "\"The permittee shall use either EPA Method 1631 or EPA Method 245.7 promulgated under 40 CFR 136 to comply with the influent and effluent mercury monitoring requirements of this permit.\"",
+        "s_peracetic_acid": "\"Peracetic acid shall be monitored by measuring for total residual oxidants (TRO) in samples,\" using the lowest-available-detection TRO method under 40 CFR Part 136 (identical methods to total residual chlorine).",
+        "quarterly_vs_quarterly_alt": "Not a document defect — Part III's general DEFINITIONS section (sheet 15) defines \"Quarterly (1/Quarter)\" as March/June/August/December \"unless specifically identified otherwise in the Effluent Limitations and Monitoring Requirements table\"; the Part I.A tables' own notes then specifically identify \"Quarterly-Alt\" as March/June/September/ December. The two month-sets are for two differently-named terms and the general definition explicitly permits the table-level override — recorded here only so a later reader isn't confused by August vs. September."
+      },
+      "part_iii_general_conditions": "Sheets 15-26 (Part III, Items 1-32) carry the standard NPDES boilerplate general conditions: definitions (Item 1), general effluent limitation (2), facility operation and quality control (3), reporting/DMR mechanics and signatory requirements (4, 28), sampling/analytical methods (5), recording and records retention (6-7), availability of reports (8), duty to provide information and right of entry (9-10), unauthorized discharges / bypass and upset provisions (11, 26), noncompliance notification including 24-hour and 30-minute emergency reporting by district office (12), duty to mitigate (14), authorized discharges (15), discharge-change notification (16), toxic pollutants (17), permit modification or revocation (18), transfer of ownership (19), oil/hazardous substance liability (20), solids disposal (21), construction affecting navigable waters (22), civil/criminal liability and state-law savings clauses (23-24), property rights (25), severability (27), other-information penalty provisions under ORC 6111.99 (29), duty to halt or reduce activity (30), applicable federal rules (31), and availability of public sewers (32). Item 13 is printed \"RESERVED\" with no content. Indexed here per the brief's instruction to record what a part contains without re-walking generic boilerplate in full; nothing in Part III is facility-specific to Piketon."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/piketon/0PB00031.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/piketon/0PB00031.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  }
+]

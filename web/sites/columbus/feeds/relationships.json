@@ -1,5 +1,45 @@
 [
   {
+    "src": "CITY OF COLUMBUS",
+    "rel": "operates",
+    "dst": "npdes:4PF00000",
+    "date": "",
+    "ref": "4PF00000*QD",
+    "source": "oepa/columbus/4PF00000.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:4PF00000",
+    "rel": "discharges_to",
+    "dst": "SCIOTO RIVER",
+    "date": "",
+    "ref": "4PF00000*QD",
+    "source": "oepa/columbus/4PF00000.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF COLUMBUS",
+    "rel": "operates",
+    "dst": "npdes:4PF00001",
+    "date": "",
+    "ref": "4PF00001*SD",
+    "source": "oepa/columbus/4PF00001.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:4PF00001",
+    "rel": "discharges_to",
+    "dst": "SCIOTO RIVER",
+    "date": "",
+    "ref": "4PF00001*SD",
+    "source": "oepa/columbus/4PF00001.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

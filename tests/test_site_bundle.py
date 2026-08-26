@@ -837,6 +837,10 @@ def test_west_union_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> 
         # environmental authorization — reached via `oepa/west-union`, the site's derived
         # `*/<slug>` agency-nesting prefix rather than its own `west-union/` collection.
         "oepa/west-union/252171W.iwp.yaml",
+        # A1: the Village's OWN NPDES permit 0PC00019*KD — a different instrument from the Buck
+        # Canyon wetland permit above and unrelated to the data-center project, which its text
+        # never mentions. It reaches the site by the same `oepa/west-union` agency-nesting prefix.
+        "oepa/west-union/0PC00019.npdes.yaml",
     }, f"committed west-union records feed drifted, got {sorted(rels)}"
 
 

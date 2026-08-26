@@ -1,0 +1,718 @@
+# City of Portsmouth — Lawson Run WWTP — NPDES permit 0PD00013*PD (application
+# OH0027197), renewal action-dated 2025-12-12, effective 2026-01-01.
+#
+# Hand-read from the committed PDF's embedded text layer, not machine-extracted. This
+# document is digitally generated (no scan, no OCR; producer "Adobe Acrobat (64-bit)
+# 25.1.20813"), so the text layer is the instrument's own bytes; every figure below is
+# transcribed with its printed sheet cited on the block. Nothing is derived, rounded or
+# inferred unless the block says so.
+#
+# NO page was rendered or read visually. One transcribed figure (the E. coli summer limit)
+# looked internally inconsistent between two tables in this same PDF; that was resolved by
+# re-extracting the relevant page in `extraction_mode="layout"` — a second pass over the
+# SAME text layer, not a visual check — and both values held up as printed. See
+# permit.warnings below. This file carries no render receipt (no doc_id / dpi /
+# pages_read). See watermark.models.TranscribedExtraction — a receipt is all-or-nothing,
+# and no page of this document was ever rasterized or shown to a vision model.
+#
+# The record -> document join (watermark.site.records._source_ref) reads a TOP-LEVEL
+# `source_path`, so the primary instrument is named there as well as in meta.sources.
+source_path: data/documents/oepa/portsmouth/0PD00013.pdf
+meta:
+  subject: City of Portsmouth (Lawson Run WWTP) — issued NPDES permit (2025 renewal)
+  site: portsmouth
+  captured_for: 'task A1 — network-site WWTP NPDES permit ingest (record domain)'
+  extracted_at: '2026-08-26'
+  method: >-
+    pypdf text-layer read over the committed source PDF (default mode; one page
+    re-extracted in extraction_mode="layout" to disambiguate a wide table — see the
+    header note and permit.warnings). Values transcribed and page-cited. No render, no
+    OCR, no vision extraction.
+  sources:
+    permit:
+      path: data/documents/oepa/portsmouth/0PD00013.pdf
+      sha256: caddc2116beb160b8481a422af9d7871fd83ae113d9be63095076710fc8c3e57
+      url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/0PD00013.pdf
+  page_accounting: >-
+    The PDF holds 63 pages. The permit itself prints "Total Pages: 37" on sheet 1, and its
+    own page numbering runs "Page 2" through "Page 37" across PDF pages 1-36 (PDF page 0 is
+    the unnumbered sheet 1) — 37 pages, matching the printed count exactly. PDF pages 37-62
+    (26 pages) are NOT part of the permit's own pagination; they are the Ohio EPA "Fact
+    Sheet for NPDES Permit Renewal, Lawson Run WWTP, 2025", independently paginated "Page 1
+    of 26" through "Page 26 of 26", bound into the SAME PDF after the permit. 37 + 26 = 63.
+    This is NOT a discrepancy — the printed "Total Pages: 37" refers only to the permit
+    proper, and the Fact Sheet is a second, separately-authored document Ohio EPA chose to
+    staple to it in this download. Contrast the mansfield precedent (2PE00001.pdf), whose
+    Fact Sheet is NOT bound into that committed PDF at all. Both the permit (sheets 1-37)
+    and the bound Fact Sheet (pages 1-26) are transcribed below, under separate top-level
+    blocks, because both are this instrument's own bytes.
+  not_in_this_corpus:
+    prior_revisions: >-
+      No earlier revision of 0PD00013 is committed in this corpus. No claim is made here
+      about what changed from any prior permit term; the Fact Sheet's "SUMMARY OF PERMIT
+      CONDITIONS" section (page 2 of 26) describes changes from "the current permit" in its
+      own words and those are transcribed as Ohio EPA's assertion, not independently
+      verified against the prior document.
+    icis_npdes_echo: >-
+      No ECHO/ICIS-NPDES extract for facility 0PD00013 is committed in this corpus. The
+      compliance-history figures below (violations, SSO counts, CSO volumes) are Ohio EPA's
+      own tabulation as printed in the bound Fact Sheet, not cross-checked against ECHO.
+
+permit:
+  tag: '[verified]'
+  confidence: high
+  warnings:
+  - >-
+    FIVE OF THE TEN CSO OUTFALLS DISCHARGE TO THE SCIOTO RIVER, NOT THE OHIO RIVER — the
+    authorization sentence on sheet 1 names only "Ohio River at Mile Point 353.9" as the
+    receiving water, and that is correct for outfall 001 (final effluent) and CSOs
+    002/003/004/010/011. But Part II Item C.1 (sheet 18-19) prints CSOs 005, 006, 007, 008
+    and 009 as discharging to "Scioto River", not the Ohio River — see
+    cso_outfalls below. A reader who takes the sheet-1 sentence as the whole
+    story misses that half this permit's overflow points are on a different named
+    waterbody. Portsmouth sits at the Scioto/Ohio confluence and the permit's own station
+    table is where that geography actually surfaces.
+  - >-
+    THE PERMIT'S OWN E. COLI SUMMER LIMIT DISAGREES WITH THE FACT SHEET'S SUMMARY OF IT.
+    Part I.A.1 (sheet 3) prints reporting code 31648 (E. coli, summer) with a WEEKLY limit
+    of 284 #/100 mL and a MONTHLY limit of 126 #/100 mL — confirmed by re-extracting sheet 3
+    in layout mode to rule out a column-alignment artifact; the digits are unambiguous.
+    The bound Fact Sheet's Table 15 ("Final Effluent Limits for Outfall 001", page 24 of 26)
+    prints E. coli (summer) with a "Daily Maximum" of 240 (footnoted "d = 7 day average
+    limit") and a "30 Day Average" of 126. The monthly/30-day figure agrees (126); the
+    weekly/"daily-maximum" figure does not (284 vs 240). Every other parameter's Table 15
+    figures I checked against the operative Part I.A.1 table agree, once Table 15's load
+    column is read as a ROUNDED restatement of Part I.A.1's own more precise figure: TSS
+    concentration 45/30 vs Table 15's 45d/30, and TSS load 1107.1/738.1 vs Table 15's
+    1107d/738; CBOD5 concentration 40/25 vs Table 15's 40d/25, and CBOD5 load 984.1/615.1 vs
+    Table 15's 984d/615; fecal coliform winter 2000/1000 vs Table 15's 2000d/1000 (neither
+    table prints a fecal-coliform load). Table 15 prints its loads truncated to whole kg/day
+    (1107/738/984/615) against Part I.A.1's 1107.1/738.1/984.1/615.1 — the two tables differ
+    only by rounding, not by disagreement. The Fact Sheet is Ohio EPA's own explanatory
+    document, not the enforceable instrument — the
+    OPERATIVE limit is the one printed in Part I.A.1: 284 weekly / 126 monthly. This is the
+    document disagreeing with itself, transcribed as printed rather than silently reconciled.
+  - >-
+    THIS PERMIT HAS NO PHASE-IN AND NO SPLIT OUTFALL, UNLIKE THE MANSFIELD PRECEDENT. There
+    is exactly one outfall (001) and exactly one effluent-limit table, titled "Table - Final
+    Outfall - 001 – Final", covering the whole term 2026-01-01 through 2030-12-31 with no
+    Initial/Final split. There is also no bypass station (602-style) at all — the Fact
+    Sheet states plainly "Lawson Run WWTP has no wet weather bypass, though CSO 002 is near
+    the headworks of the facility" (page 7 of 26). Wet-weather relief here is handled
+    entirely through the ten numbered CSOs, not a permitted bypass.
+  - >-
+    ONLY SEVEN PARAMETERS AT OUTFALL 001 CARRY A NUMERIC LIMIT; EVERYTHING ELSE IS MONITOR
+    ONLY. TSS, oil & grease, total residual chlorine, fecal coliform (winter), E. coli
+    (summer), pH (max/min) and CBOD5 are the only limited parameters in Part I.A.1 (sheet
+    2-3). Ammonia, TKN, nitrite+nitrate, total phosphorus, dissolved orthophosphate,
+    nickel, silver, zinc, cadmium, lead, total chromium, copper, dissolved hexavalent
+    chromium, low-level mercury, total filterable residue, flow rate, water temperature,
+    dissolved oxygen, and BOTH whole-effluent-toxicity species carry monitoring frequencies
+    and NO numeric limit. Mercury's limit was specifically REMOVED by this action (Fact
+    Sheet, page 2 of 26: "Limits for mercury are proposed to be removed due to lack of
+    reasonable potential") and silver's monitoring is NEW (same page). Do not assume this
+    plant carries Mansfield-style seasonal ammonia/phosphorus WQBELs — the Ohio River's
+    assimilative capacity at this point (Table 12: 7Q10 10,600 cfs vs. the plant's 10.057
+    cfs design flow — a ~1000:1 ratio) is why almost nothing here is numerically limited.
+  - >-
+    STATION 001 AND CSO 002 SHARE THE IDENTICAL PRINTED COORDINATE, WITH INCONSISTENT SIGN
+    NOTATION. Part II Item B (sheet 18) gives station 0PD00013001 as "38.7308 N, 82.9744 W"
+    (no minus sign on the W value). Part II Item C.1 (sheet 18) gives CSO 0PD00013002 as
+    "38.7308 N, -82.9744 W" (same digits, but with a minus sign in addition to the W
+    letter). Same physical point — consistent with the Fact Sheet's statement that CSO 002
+    sits near the plant headworks — printed two different ways in the same document.
+  - >-
+    NONE OF THE CSO LTCP SCHEDULE DATES HAVE PASSED AS OF 2026-08-26 (unlike the mansfield
+    precedent, where 3 of 5 milestones had already lapsed). The three Part I.C milestones
+    below are due 2026-12-01, 2027-09-01 and 2028-03-01 — all still in the future. This is a
+    genuine finding, not an omission: this permit's compliance clock has not yet produced a
+    single overdue deliverable to chase with a records request.
+  - >-
+    THE FACT SHEET SAYS PART III, ITEM 2 IS PROPOSED FOR REMOVAL; THE ISSUED PERMIT STILL HAS
+    IT. The bound Fact Sheet's "SUMMARY OF PERMIT CONDITIONS" states plainly (page 2 of 26):
+    "Part III, Item 2 ('General Effluent Limitations') is proposed to be removed" — and this
+    file's fact_sheet.summary_of_changes_from_current_permit records that stated intent
+    faithfully. But the issued instrument still prints "2. GENERAL EFFLUENT LIMITATION" in
+    full, unchanged, at sheet 28 (see part_iii_general_conditions above) — and Part I.B's own
+    CSO monitoring notes for station 002 (sheet 5) and stations 003-011 (sheet 7)
+    affirmatively INVOKE it: "Subject to the terms and conditions of this permit, including
+    the General Effluent Limitations in Part III, Item 2, the permittee is authorized to
+    discharge from this station..." This file's own monitoring_stations.cso_002 and
+    .cso_003_through_011 notes paraphrase that authorization without that clause — an
+    omission on this file's part, not the permit's. Whatever Ohio EPA intended when drafting
+    the Fact Sheet, the permit it actually issued neither removed Item 2 nor stopped relying
+    on it.
+
+  facility_name: Lawson Run WWTP
+  permittee: City of Portsmouth
+  permit_no: 0PD00013*PD
+  application_no: OH0027197
+  permit_action: >-
+    [verified] "renewal" — not stated in those words on sheet 1 itself (which carries no
+    action-type label, only permit no / application no / action date / effective date /
+    expiration date). The bound Fact Sheet is titled "Fact Sheet for NPDES Permit Renewal,
+    Lawson Run WWTP, 2025" (page 1 of 26) and its Public Notice (No. 216010, dated
+    11/10/2025) is captioned the same way. Sourced from the Fact Sheet, not the permit
+    authorization page.
+  facility_address: 2040 Charles St, Portsmouth, Ohio, Scioto County
+  applicant_mailing_address: >-
+    [verified, from the Fact Sheet header, page 1 of 26, not printed on the permit itself]
+    728 Second Street, Portsmouth, OH 45662.
+  county: Scioto County
+  receiving_water: Ohio River
+  river_mile: 353.9
+  receiving_water_source: >-
+    Sheet 1 authorization sentence: "...to Ohio River at Mile Point 353.9 in accordance
+    with the conditions specified in Part I, II, and III, of this permit." Unlike the
+    mansfield precedent, the receiving water is NOT blank here — it is named directly on
+    the face of the permit. See warnings[0]: the full CSO picture requires Part II Item C.1
+    as well, because five of the ten CSOs name the Scioto River instead.
+  action_date: '2025-12-12'
+  effective_date: '2026-01-01'
+  expiration_date: '2030-12-31'
+  signed_by: John Logue, Director
+  total_pages: 37
+  renewal_application_due: >-
+    [inference] The permit's own text requires submission "no later than 180 days prior to
+    the above date of expiration" — 180 days before 2030-12-31 is 2030-07-04. The permit
+    prints no calendar date for this itself.
+  treatment_works_classification:
+    citation: 'Permit 0PD00013*PD, sheet 17, Part II Item A.1'
+    tag: '[verified]'
+    treatment_works: >-
+      Class III under OAC 3745-7-04, requiring a designated professional operator of record
+      certified at class III or greater.
+    collection_systems: >-
+      "All sewerage (collection) systems that are tributary to this treatment works are
+      Class II sewerage systems in accordance with paragraph (B)(1)(b) of rule 3745-7-04."
+
+  # ── Part II, Item B — sampling stations (sheet 18) ──────────────────────────────────────
+  # Coordinates are printed directly as decimal degrees on the FACE of this permit — no DMS
+  # conversion required or performed, unlike the mansfield precedent.
+  sampling_stations:
+    citation: 'Permit 0PD00013*PD, sheet 18, Part II Item B'
+    tag: '[verified]'
+    '0PD00013001':
+      description: Final effluent, prior to discharge to Ohio River
+      latitude_dd: 38.7308
+      longitude_dd: -82.9744
+      coordinate_note: >-
+        Printed "82.9744 W" (no minus sign on the printed value itself, sign supplied here
+        for the decimal-degree convention). See warnings[4] on the duplicate with CSO 002.
+    '0PD00013002-011': {description: 'Combined Sewer Overflows — see cso_outfalls below (Part II Item C)'}
+    '0PD00013300': {description: Collection system sanitary sewer overflows}
+    '0PD00013581': {description: Beneficial use of Class B biosolids}
+    '0PD00013586': {description: Disposal of sewage sludge or biosolids in an authorized landfill}
+    '0PD00013588': {description: Transfer of sewage sludge or biosolids to another NPDES permittee}
+    '0PD00013601': {description: Influent monitoring}
+
+  # ── Part II, Item C.1 — CSO outfalls (sheets 18-19) ─────────────────────────────────────
+  cso_outfalls:
+    citation: 'Permit 0PD00013*PD, sheets 18-19, Part II Item C.1'
+    tag: '[verified]'
+    authorization: >-
+      "The permittee is authorized to discharge from the following combined sewer overflows
+      (CSOs) only during wet weather periods when the flow in the sewer system exceeds the
+      capacity of the sewer system."
+    stations:
+    '0PD00013002':
+      description: Lawson Run CSO overflow to Ohio River
+      receiving_water: Ohio River
+      latitude_dd: 38.7308
+      longitude_dd: -82.9744
+    '0PD00013003':
+      description: Mill Street Lift Station overflow to Ohio River
+      receiving_water: Ohio River
+      latitude_dd: 38.7292
+      longitude_dd: -82.995
+    '0PD00013004':
+      description: Front Street & Court Street overflow to Ohio River
+      receiving_water: Ohio River
+      latitude_dd: 38.73
+      longitude_dd: -83.0011
+    '0PD00013005':
+      description: 3rd Street and Madison lift station overflow to Scioto River
+      receiving_water: Scioto River
+      latitude_dd: 38.7342
+      longitude_dd: -83.0094
+    '0PD00013006':
+      description: 11th Street lift station overflow to Scioto River
+      receiving_water: Scioto River
+      latitude_dd: 38.74
+      longitude_dd: -82.9997
+    '0PD00013007':
+      description: 17th Street lift station overflow to Scioto River
+      receiving_water: Scioto River
+      latitude_dd: 38.7447
+      longitude_dd: -82.995
+    '0PD00013008':
+      description: Ohio Power overflow to Scioto River
+      receiving_water: Scioto River
+      latitude_dd: 38.7622
+      longitude_dd: -82.9919
+    '0PD00013009':
+      description: 29th Street overflow to Scioto River
+      receiving_water: Scioto River
+      latitude_dd: 38.7572
+      longitude_dd: -82.9944
+    '0PD00013010':
+      description: Martha Alley lift station overflow to Ohio River
+      receiving_water: Ohio River
+      latitude_dd: 38.7364
+      longitude_dd: -82.9567
+    '0PD00013011':
+      description: Martha Alley and Buch Street overflow to Ohio River
+      receiving_water: Ohio River
+      latitude_dd: 38.7422
+      longitude_dd: -82.9489
+    nine_minimum_controls:
+      citation: 'Permit 0PD00013*PD, sheet 19, Part II Item C.2'
+      note: >-
+        Nine numbered technology/operational commitments (proper O&M, max use of the
+        collection system for wet-weather storage, review of nondomestic CSO discharges,
+        maximizing plant treatment of wet-weather flow, prohibiting dry-weather overflows,
+        floatables control, inspection/monitoring/reporting, pollution prevention, and
+        public notification) — indexed here, not reproduced verbatim; boilerplate common to
+        Ohio CSO permits.
+    reopener:
+      citation: 'Permit 0PD00013*PD, sheet 19, Part II Item C.3'
+      note: >-
+        This permit may be modified or revoked/reissued if new/revised CSO regulation is
+        promulgated, or if new information shows the CSO level of control imposed here is
+        not being met or has failed to ensure attainment of water quality standards.
+
+  # ── Part I.A.1 — outfall 001, whole term, single table (sheets 2-4) ────────────────────
+  effluent_limits_001:
+    citation: 'Permit 0PD00013*PD, sheets 2-4, Part I.A.1'
+    tag: '[verified]'
+    period: 2026-01-01 through 2030-12-31 — ONE table, no Initial/Final phase-in (see warnings[2])
+    outfall: '0PD00013001'
+    design_flow_basis: '"Effluent loadings based on average design flow of 6.5 MGD."'
+    limits:
+      total_suspended_solids: {units: mg/l, weekly: 45.0, monthly: 30.0, load_weekly_kg: 1107.1, load_monthly_kg: 738.1, monitoring: 3/Week 24hr Composite, months: All}
+      oil_and_grease: {units: mg/l, maximum: 10.0, monitoring: 1 / 2 Weeks Grab, months: All, footnote: null}
+      chlorine_total_residual:
+        units: mg/l
+        maximum: 0.038
+        monitoring: 1/Day Multiple Grab
+        months: All
+        footnote: 'a. Total residual chlorine - See Part II, Item K.'
+        origin_note: >-
+          0.038 mg/l matches the Fact Sheet's Table 11 ("Water Quality Criteria in the Study
+          Area", page 20 of 26) Inside Mixing Zone Maximum criterion for chlorine exactly. The
+          Fact Sheet's own text (page 10 of 26) confirms the tie: "The existing daily effluent
+          limit for total residual chlorine is proposed to continue as a plant design value
+          which is based on protection of the inside mixing zone maximum (IMZM) and outside
+          mixing zone maximum (OMZM) PELs" — Table 11 is the printed origin of this limit.
+      fecal_coliform_winter: {units: '#/100 ml', weekly: 2000, monthly: 1000, monitoring: 3/Week Grab, months: Winter}
+      e_coli_summer:
+        units: '#/100 ml'
+        weekly: 284
+        monthly: 126
+        monitoring: 3/Week Grab
+        months: Summer
+        see_warning: warnings[1] — the bound Fact Sheet's Table 15 disagrees on the weekly figure (240)
+      ph: {units: S.U., maximum: 9.0, minimum: 6.5, monitoring: 1/Day Multiple Grab, months: All}
+      cbod_5_day: {units: mg/l, weekly: 40.0, monthly: 25.0, load_weekly_kg: 984.1, load_monthly_kg: 615.1, monitoring: 3/Week 24hr Composite, months: All}
+    monitor_only_parameters:
+      water_temperature: {units: C, monitoring: 1/Day Maximum, months: All}
+      dissolved_oxygen: {units: mg/l, monitoring: 1/Day Multiple Grab, months: All}
+      ammonia_nh3: {units: mg/l, monitoring: 3/Week 24hr Composite, months: All}
+      tkn: {units: mg/l, monitoring: 1/Month 24hr Composite, months: All}
+      nitrite_plus_nitrate: {units: mg/l, monitoring: 1/Month 24hr Composite, months: All}
+      phosphorus_total: {units: mg/l, monitoring: 1/Month 24hr Composite, months: All}
+      orthophosphate_dissolved: {units: mg/l, monitoring: 1/Month Grab, months: All, footnote: 'c. Orthophosphate - See Part II, Item R.'}
+      nickel_total_recoverable: {units: ug/l, monitoring: 1/Quarter 24hr Composite, months: Quarterly}
+      silver_total_recoverable: {units: ug/l, monitoring: 1/Month 24hr Composite, months: All, note: NEW monitoring per the Fact Sheet's summary of changes}
+      zinc_total_recoverable: {units: ug/l, monitoring: 1/Quarter 24hr Composite, months: Quarterly}
+      cadmium_total_recoverable: {units: ug/l, monitoring: 1/Quarter 24hr Composite, months: Quarterly}
+      lead_total_recoverable: {units: ug/l, monitoring: 1/Quarter 24hr Composite, months: Quarterly}
+      chromium_total_recoverable: {units: ug/l, monitoring: 1/Quarter 24hr Composite, months: Quarterly}
+      copper_total_recoverable: {units: ug/l, monitoring: 1/Month 24hr Composite, months: All}
+      chromium_dissolved_hexavalent: {units: ug/l, monitoring: 1/Quarter Grab, months: Quarterly}
+      mercury_total_low_level:
+        units: ng/l
+        monitoring: 1/Month Grab
+        months: All
+        footnote: 'b. Mercury - See Part II, Item Q.'
+        note: Limit REMOVED by this action per the Fact Sheet (lack of reasonable potential); monitoring continues.
+      total_filterable_residue: {units: mg/l, monitoring: 1/Month 24hr Composite, months: All}
+      flow_rate: {units: MGD, monitoring: 1/Day Continuous, months: All}
+      acute_toxicity_ceriodaphnia_dubia: {units: TUa, monitoring: 1/Year 24hr Composite, months: May, footnote: 'e. Toxicity Biomonitoring - See Part II, Item V.'}
+      acute_toxicity_pimephales_promelas: {units: TUa, monitoring: 1/Year 24hr Composite, months: May, footnote: 'e. Toxicity Biomonitoring - See Part II, Item V.'}
+    supplemental_data_footnote: 'd. NPDES application supplemental effluent data - See Part II, Item T.'
+
+  # ── Part I.B — non-outfall monitoring stations (sheets 5-14) ────────────────────────────
+  monitoring_stations:
+    citation: 'Permit 0PD00013*PD, sheets 5-14, Part I.B'
+    tag: '[verified]'
+    cso_002:
+      description: CSO monitoring — Lawson Run CSO (see cso_outfalls for location/receiving water)
+      limits: {total_suspended_solids: {units: mg/l, frequency: 1/Quarter Grab}, fecal_coliform: {units: '#/100 ml', frequency: '1/Quarter Grab, Winter-Qtrly'}, e_coli: {units: '#/100 ml', frequency: '1/Quarter Grab, Summer-Qtrly'}, cbod_5_day: {units: mg/l, frequency: 1/Quarter Grab}}
+      overflow_reporting: {occurrence: {code: '74062', units: No./Month, frequency: 1/Month Total}, volume: {code: '74063', units: Million Gallons, frequency: 1/Month Total}}
+      note: >-
+        All monitored parameters here are quality-monitoring only (no numeric limits printed
+        in this table); occurrence/volume reporting is required. Authorized only during wet
+        weather when sewer capacity is exceeded. DMR required every month regardless of
+        discharge; occurrence/volume may be estimated if no measuring device is available.
+    cso_003_through_011:
+      description: >-
+        The permit states verbatim: "The monitoring tables for CSO Stations 003 through 011
+        are identical to this one" — reproduced once, applying to all nine.
+      overflow_reporting: {occurrence: {code: '74062', units: No./Month, frequency: 1/Month Total}, volume: {code: '74063', units: Million Gallons, frequency: 1/Month Total}}
+      note: No pollutant sampling (TSS/coliform/CBOD) at these nine — only 002 carries it.
+    sso_300:
+      parameter: Overflow Occurrence (74062), No./Month, 1/Month Total
+      note: >-
+        The permit is explicit that the 1/Month frequency is a REPORTING frequency, not a
+        monitoring one: "these overflows shall be monitored on each day when they
+        discharge." Only SSOs reaching waters of the state (directly or through a storm
+        sewer) are reported at this station. A given day with overflows at two locations
+        counts as two occurrences.
+      annual_report: >-
+        Due March 31 for the previous calendar year, covering ALL SSOs including those that
+        never reach waters of the state; new locations numbered consecutively from 301;
+        includes a water-in-basement (WIB) narrative by location, frequency and cause.
+    biosolids_581:
+      class: B
+      frequency: 1/Quarter Composite, Quarterly
+      ceilings_mg_per_kg: {arsenic: 75, cadmium: 85, copper: 4300, lead: 840, nickel: 420, zinc: 7500, selenium: 100, mercury: 57, molybdenum: 75}
+      fecal_coliform_max: {units: CFU/gram, maximum: 2000000}
+      also_monitored: ammonia, total Kjeldahl nitrogen, nitrite+nitrate, total phosphorus, potassium (nutrient suite, no limits), plus sludge fee weight and sludge weight
+      note: >-
+        The metal ceilings are numerically IDENTICAL to the mansfield precedent's biosolids
+        table (arsenic 75, cadmium 85, copper 4300, lead 840, nickel 420, mercury 57,
+        molybdenum 75) — the statewide OAC 3745-40 land-application ceiling, not a
+        Portsmouth-specific value. Portsmouth's table additionally prints zinc (7500) and
+        selenium (100) ceilings that Mansfield's transcription did not carry.
+    sludge_586: {parameter: Sludge Fee Weight (51129), units: dry tons, frequency: 1/Year Total, month: December, applies_to: disposal in a municipal solid waste landfill}
+    sludge_588: {parameter: Sludge Weight (70316), units: Dry Tons, frequency: 1/Year Total, month: December, applies_to: transfer to another NPDES permit holder}
+    influent_601:
+      description: Influent monitoring — all monitor-only, no limits
+      parameters: Total precipitation, TSS, pH (max/min), CBOD 5-day.
+      note: >-
+        "Samples of influent used for determination of net values or percent removal must be
+        taken the same day as those samples of effluent used for that determination"; sampling
+        for common parameters occurs the same day as outfall 001. Unlike Mansfield, mercury
+        was REMOVED from this station's parameter list ("lack of reasonable potential to
+        exceed the water quality standard at outfall 001" — Fact Sheet, page 12 of 26).
+    no_bypass_station: >-
+      This permit has no 602-style equalization-basin bypass or 603-style stormwater
+      outfall station. See warnings[2].
+
+  # ── Part I.C — SCHEDULE OF COMPLIANCE (sheets 15-16) ─────────────────────────────────────
+  # A single schedule: develop and submit a CSO Long Term Control Plan. See warnings[5] —
+  # none of its three dates have passed as of 2026-08-26.
+  schedule_of_compliance:
+    citation: 'Permit 0PD00013*PD, sheets 15-16, Part I.C'
+    tag: '[verified]'
+    reporting_mechanism: 'Electronically via STREAMS, through the eBusiness Center.'
+    milestone_summary_report:
+      milestones:
+      - {section: CSO LTCP, report_event: Submit Hydraulic Model Report, event_code: '11099', due: '2026-12-01'}
+      - {section: CSO LTCP, report_event: Submit Preliminary Alternatives Report, event_code: '21599', due: '2027-09-01'}
+      - {section: CSO LTCP, report_event: Submit LTCP, event_code: '15099', due: '2028-03-01'}
+    cso_long_term_control_plan:
+      preamble: >-
+        "The permittee shall submit for review and approval a Long Term Control Plan (LTCP)
+        consistent with the Combined Sewer Overflow Control Policy (Federal Register, Volume
+        59, Number 75, April 19, 1994)."
+      steps:
+      - step: 1
+        due: '2026-12-01'
+        event_code: '11099'
+        requirement: >-
+          Submit a report on the development of a collection system hydraulic model,
+          including calibration/validation and an assessment of modeled versus observed CSO
+          occurrence and volume.
+      - step: 2
+        due: '2027-09-01'
+        event_code: '21599'
+        requirement: >-
+          Submit a report presenting control alternatives to be reviewed for LTCP
+          development, including technologies/operations to be evaluated and preliminary
+          cost estimates.
+      - step: 3
+        due: '2028-03-01'
+        event_code: '15099'
+        requirement: >-
+          Submit an LTCP including: (i) description of the existing collection/treatment
+          systems; (ii) analysis of local precipitation data, a typical year, and current
+          CSO occurrence/volume characterization; (iii) an alternatives evaluation with a
+          "knee-of-the-curve" cost/benefit analysis; (iv) recommended projects consistent
+          with the Presumption or Demonstration approach, with an implementation schedule;
+          (v) a Financial Capability Assessment; (vi) optionally, an integrated plan under
+          the 2019 Water Infrastructure and Improvement Act.
+      post_approval: >-
+        "Upon review and approval of the LTCP by Ohio EPA, this permit may be modified to
+        incorporate the implementation schedule of the plan."
+    status_of_these_milestones:
+      tag: '[verified]'
+      as_of: '2026-08-26'
+      lapsed: 'None. All three dates (2026-12-01, 2027-09-01, 2028-03-01) are still in the future.'
+
+  # ── Part II — other requirements of note (sheets 17-25) ──────────────────────────────────
+  other_requirements_of_note:
+    citation: 'Permit 0PD00013*PD, Part II, sheets 17-25'
+    tag: '[verified]'
+    limits_below_quantification:
+      item: 'K. Limits Below Quantification (sheet 22)'
+      qls_table: {chlorine_total_residual: {pql_mg_l: 0.05}}
+      text: >-
+        "For maximum effluent limits, any value reported below the QL shall be considered in
+        compliance with the effluent limit. For average effluent limits, compliance shall be
+        determined by taking the arithmetic mean ... using zero (0) for any value reported at
+        a concentration less than the QL." Chlorine's printed permit limit (0.038 mg/l) is
+        itself below this 0.050 mg/l quantification level.
+    stormwater_no_exposure_certification:
+      item: 'U. Stormwater No Exposure Certification (sheet 24)'
+      certification_number: 0GRN00379*BG
+      certified_date: '2024-12-26'
+      recertification_due: '2029-12-25'
+      text: >-
+        "No later than December 25, 2029, the permittee must submit a new form for 'No
+        Exposure Certification' or make other provisions to comply with the industrial
+        stormwater regulations."
+    biomonitoring_program:
+      item: 'V. Biomonitoring Program Requirements (sheets 24-25)'
+      text: >-
+        "The permittee shall continue to implement an effluent biomonitoring program to
+        determine the toxicity of the effluent from outfall 0PD00013001."
+      testing: >-
+        Definitive acute toxicity tests on Ceriodaphnia dubia and Pimephales promelas, per
+        Ohio EPA's "Reporting and Testing Guidance for Biomonitoring", July 1998 (or current
+        revision). SOP or verification of SOP submittal due no later than three months after
+        the effective date — on or about 2026-04-01 [inference]. "Acute toxicity tests need
+        not be performed for months in which chronic toxicity tests are conducted."
+      definition: 'TUa = Acute Toxicity Units = 100/LC50 (sheet 25)'
+    other_items_present:
+      note: >-
+        Transcribed as an index of what Part II contains, so a later reader knows what is in
+        the instrument without re-walking it. Not summarized in detail here.
+      items: >-
+        A. Operator Certification, Professional Operator of Record, Minimum Staffing and
+        Additional Staffing Requirements · D. Sanitary Sewer Overflow (SSO) Reporting
+        Requirements (immediate/5-day/annual) · E. Duty to maintain the treatment
+        works/sewerage system · F. Reduced monitoring on unstaffed days · G-I. Composite/
+        grab/multiple-grab sample definitions · J. 85 percent removal requirement (CBOD5,
+        TSS) · K. Limits Below Quantification · L. WQBELs subject to revision on updated
+        WLA/TMDL · M-P. Sewage sludge/biosolids handling, annual reporting, pathogen/vector
+        reduction, sampling plan · Q. Mercury (low-level) monitoring method · R. Dissolved
+        orthophosphate monitoring method · S. Outfall signage · T. NPDES application
+        supplemental data (101-parameter list, Appendix J to 40 CFR 122) · U. Stormwater No
+        Exposure Certification · V. Biomonitoring Program Requirements.
+
+  # ── Part III — General Conditions (sheets 26-37, 12 of the permit's 37 sheets) ──────────
+  # Indexed here by number and title, the same treatment Part II gets in
+  # other_requirements_of_note above, so this 32%-of-the-permit block is not silently
+  # unwalked. Item 2 gets a fuller note because of the contradiction recorded at warnings[6].
+  part_iii_general_conditions:
+    citation: 'Permit 0PD00013*PD, sheets 26-37, Part III'
+    tag: '[verified]'
+    definitions_bearing_on_seasonal_limits:
+      citation: 'sheet 27'
+      note: >-
+        Directly governs how to read the seasonal/quarterly parameters above (fecal_coliform_
+        winter, e_coli_summer, and the several Quarterly monitor-only parameters in
+        effluent_limits_001 and monitoring_stations).
+      winter: '"Winter" shall be considered to be the period from November 1 through April 30.'
+      summer: '"Summer" shall be considered to be the period from May 1 through October 31.'
+      quarterly: >-
+        "Quarterly (1/Quarter) sampling frequency" means the sampling shall be done in the
+        months of March, June, August, and December, unless specifically identified otherwise
+        in the Effluent Limitations and Monitoring Requirements table.
+    items_index:
+      note: >-
+        Indexed by number and title only, so a later reader knows what this part contains;
+        not summarized in detail (Item 2 is the one exception — see warnings[6]).
+      items: >-
+        1. Definitions · 2. General Effluent Limitation · 3. Facility Operation and Quality
+        Control · 4. Reporting · 5. Sampling and Analytical Method · 6. Recording of Results
+        · 7. Records Retention · 8. Availability of Reports · 9. Duty to Provide Information
+        · 10. Right of Entry · 11. Unauthorized Discharges · 12. Noncompliance Notification ·
+        13. Reserved · 14. Duty to Mitigate · 15. Authorized Discharges · 16. Discharge
+        Changes · 17. Toxic Pollutants · 18. Permit Modification or Revocation · 19. Transfer
+        of Ownership or Control · 20. Oil and Hazardous Substance Liability · 21. Solids
+        Disposal · 22. Construction Affecting Navigable Waters · 23. Civil and Criminal
+        Liability · 24. State Laws and Regulations · 25. Property Rights · 26. Upset · 27.
+        Severability · 28. Signatory Requirements · 29. Other Information · 30. Need to Halt
+        or Reduce Activity · 31. Applicable Federal Rules · 32. Availability of Public
+        Sewers.
+
+  # ── Bound "Fact Sheet for NPDES Permit Renewal" (PDF pages 37-62 = its own pages 1-26) ──
+  # This document is BOUND INTO THE SAME PDF as the permit (unlike the mansfield precedent's
+  # unbound fact sheet), so it is this instrument's own bytes and is transcribed here as a
+  # distinct sub-document — descriptive/explanatory material from Ohio EPA, not itself an
+  # enforceable permit condition. Citations below use its own "page N of 26" numbering.
+  fact_sheet:
+    tag: '[verified]'
+    citation: 'Bound Fact Sheet, "Fact Sheet for NPDES Permit Renewal, Lawson Run WWTP, 2025"'
+    header:
+      public_notice_no: '216010'
+      public_notice_date: '2025-11-10'
+      comment_period_ends: '2025-12-10'
+      applicant: City of Portsmouth (728 Second Street, Portsmouth, OH 45662)
+      facility: Lawson Run WWTP (2040 Charles Street, Portsmouth, OH 45662, Scioto County)
+      receiving_water_as_printed_here: Ohio River
+      contact: David Brumbaugh, (614) 644-2138 (page 4 of 26)
+    location_and_use_classification:
+      page: 6 of 26
+      ohio_epa_river_code: '25-250'
+      county: Scioto
+      ecoregion: Western Allegheny Plateau
+      designated_uses: Warmwater Habitat, Agricultural Water Supply, Industrial Water Supply, Bathing Waters, Public Water Supply
+    facility_description:
+      page: 6 of 26
+      constructed: 1956
+      last_upgraded: 2011
+      average_daily_design_flow_mgd: 6.5
+      peak_hydraulic_capacity_mgd: 10
+      population_served_approx: 24000
+      service_area: City of Portsmouth, Village of New Boston, Eden Park & North Moreland, Clay Township
+      treatment_processes: [Screening, Grit and scum removal, Primary sedimentation, Trickling filters, Secondary clarification, Chlorination/dechlorination]
+      sludge_processes: [Aerobic digestion, 'Mechanical dewatering – filter press']
+      pretreatment: 'The City of Portsmouth does not have an approved pretreatment program and has no industrial users.'
+      collection_system: '49% separate sewers and 51% combined sewers; ten CSOs; no wet weather bypass at the plant (CSO 002 sits near the headworks).'
+      infiltration_inflow_rate_mgd:
+        page: 7 of 26
+        value: 2.4
+        note: >-
+          "Lawson Run WWTP estimates there is an infiltration/inflow (I/I) rate to the
+          collection system of 2.4 MGD. The City is implementing I/I removal projects with
+          New Boston and has implemented an extensive sewer lining program."
+      enforcement_history: >-
+        "The City was subject to an U.S. EPA Administrative Order on Consent due to wet
+        weather issues until recently, when the City was released from the orders on
+        September 28, 2022." A Long Term Control Plan is required to continue progress
+        toward Clean Water Act compliance (see schedule_of_compliance above).
+    assessment_of_impact_on_receiving_waters:
+      page: 8 of 26
+      basis: ORSANCO's 2024 biennial "Assessment of Ohio River Water Quality Conditions (305b) Report" and pool reports; Lawson Run discharges in the Meldahl dam pool.
+      attainment: >-
+        "...in full attainment for the aquatic life and public water supply uses, as well as
+        human health (fish consumption) use for mercury." 2017 biological surveys: fish
+        communities "good", macroinvertebrate communities "fair".
+      impairment: >-
+        "Only partially supporting the human health (fish consumption) use due to
+        polychlorinated biphenyls (PCBs) and dioxin, and only partially supporting
+        recreation use due to high bacteria levels. Lawson Run WWTP is likely contributing
+        to the recreation use impairment due to the high frequency and volume of CSO
+        discharges from the City's collection system." This is Ohio EPA's own attribution,
+        printed in the document that also sets this permit's CSO LTCP schedule.
+    whole_effluent_toxicity_wla:
+      page: 9-10 of 26
+      wqc: {acute_tua: 0.3, chronic_tuc: 1.0}
+      wla_for_outfall_001: {acute_tua: 1.0, chronic_tuc: 107}
+      dilution_ratio_basis: >-
+        The general formula printed just above the worked figure: "Chronic Dilution Ratio =
+        ([7Q10 * % as applicable per OAC 3745-2-05] + [ADDF]) / [ADDF]". The worked figure
+        itself, transcribed exactly as printed rather than normalized — the source's own
+        expression is unbalanced (no closing parenthesis before the division, and the "="
+        appears mid-expression rather than at the end), a document typo, not corrected here:
+        "Chronic Dilution Ratio = ([10600 cfs * 10%] + 10.0 cfs / 10.0cfs = 107".
+      monitoring_basis: >-
+        "Lawson Run WWTP is not required to monitor for TUc because the available
+        downstream dilution is more than twenty to one" per OAC 3745-33-07(B)(11)(c) — the
+        computed ratio here is ~107:1.
+      hazard_category: >-
+        Attachment 1 (page 25 of 26): both Ceriodaphnia dubia and Pimephales promelas placed
+        in Hazard Category 4 ("No toxicity"); 5 acute tests each, all non-detect except one
+        Pimephales promelas result of 0.4 TUa on 2024-05-15 (Table 10, page 20 of 26). Table
+        10's five dated rows are 5/6/2020, 5/5/2021, 5/5/2022, 5/18/2023 and 5/15/2024 — the
+        0.4 result is the last (most recent) row; the table prints no 2025 row at all.
+    reasonable_potential_groupings:
+      page: 23 of 26
+      table: 'Table 14. Parameter Assessment'
+      group_2_no_limit_monitoring_optional: [Arsenic, Cadmium, Chloroform, Chromium, 'Cyanide, free', Lead, Nickel]
+      group_3_no_limit_monitoring_optional: ['Bis(2-ethylhexyl) phthalate', 'Chromium, Dissolved Hexavalent', 'Nitrate + Nitrite', Phenol, Selenium, 'Total Filterable Residue', Zinc]
+      group_4_monitoring_appropriate: [Chlorine, Copper, Mercury, Silver]
+      group_1_and_5: 'No parameter placed in either.'
+    summary_of_changes_from_current_permit:
+      page: 2 of 26
+      changes:
+      - New monitoring proposed for silver (group 4 reasonable-potential assignment).
+      - Mercury numeric limit proposed for removal (lack of reasonable potential); monitoring continues.
+      - Annual acute toxicity monitoring proposed for the life of the permit.
+      - 'CSO 002: continued TSS/CBOD5 sampling plus NEW quarterly E. coli (summer) / fecal coliform (winter) sampling.'
+      - 'CSOs 003-011: pollutant sampling proposed for REMOVAL (occurrence/volume reporting continues).'
+      - Monthly DMR required for every CSO station (all now electronically metered).
+      - Mercury monitoring proposed for removal from influent station 601.
+      - CSO LTCP schedule of compliance proposed.
+      - 'Part III, Item 2 ("General Effluent Limitations") proposed for removal.'
+    compliance_history_tables:
+      note: >-
+        Transcribed from the bound Fact Sheet's own tables. These are Ohio EPA's tabulation
+        of the permittee's self-reported (DMR) history, not independently verified against
+        ECHO/ICIS-NPDES (not committed in this corpus — see meta.not_in_this_corpus).
+      table_2_effluent_violations_outfall_001:
+        page: 16 of 26
+        by_year: {'2020': {e_coli: 0, oil_and_grease: 0}, '2021': {e_coli: 5, oil_and_grease: 0}, '2022': {e_coli: 0, oil_and_grease: 0}, '2023': {e_coli: 1, oil_and_grease: 1}, '2024': {e_coli: 0, oil_and_grease: 0}, '2025_partial_jan_feb': {e_coli: 0, oil_and_grease: 0}}
+        total: {e_coli: 6, oil_and_grease: 1, all: 7}
+        coverage_note: '2020 column is March-December only; 2025 column is January-February only, as printed.'
+      table_3_effluent_flow_rates:
+        page: 16 of 26
+        note: >-
+          Indexed only (not transcribed in full) in tables_indexed_not_transcribed below; one
+          figure worth pulling out here. 2025's printed Maximum column (January-February
+          partial) is 16.84 MGD — well above the 10 MGD peak hydraulic capacity printed in
+          fact_sheet.facility_description.peak_hydraulic_capacity_mgd above. 2025's 50th/95th
+          percentiles are 5.91/9.29 MGD; every other year's (2020-2024) printed Maximum stays
+          under 10.40 MGD.
+      table_4_sso_occurrences:
+        page: 16 of 26
+        by_year: {'2020_mar_dec': 70, '2021': 82, '2022': 230, '2023': 57, '2024': 66, '2025_jan_feb': 4}
+        note: >-
+          "A very high number of SSOs occurred at Munn's Run pump station; a project to
+          increase the pumping capacity of the station and eliminate the SSO was completed
+          in early 2025." Not attributed to a specific year count above; printed as a
+          narrative note beneath the table.
+      table_5_cso_discharges:
+        page: 17 of 26
+        note: >-
+          Full grid (10 CSOs × 6 years, occurrences and volume in MG) is in the source at
+          the cited page; summarized here by CSO with total occurrences 2020-2025(partial),
+          computed here as [inference] (sum of that CSO's printed per-year figures — the
+          source prints no per-CSO total), and peak single-year volume as printed. "--" in
+          the source means no data reported/no discharge; treated as 0 when summing, not
+          distinguished from a true zero. CSO 006's 2023 OCCURRENCE cell is genuinely BLANK
+          in the source (no "--", just empty) — a different, third way the table marks a
+          missing value. Its 2023 VOLUME cell, by contrast, prints the table's ordinary "--"
+          marker like every other missing volume value — the blank convention appears only on
+          the occurrence side of this row, not the volume side. Both are treated as 0 when
+          summing.
+        by_cso:
+          '002': {total_occurrences: 460, peak_year_volume_mg: 1882, peak_year: '2021'}
+          '003': {total_occurrences: 62, peak_year_volume_mg: 2.91, peak_year: '2022'}
+          '004': {total_occurrences: 117, peak_year_volume_mg: 3.46, peak_year: '2022'}
+          '005': {total_occurrences: 234, peak_year_volume_mg: 8.97, peak_year: '2024'}
+          '006': {total_occurrences: 114, peak_year_volume_mg: 8.34, peak_year: '2024'}
+          '007': {total_occurrences: 362, peak_year_volume_mg: 139, peak_year: '2021'}
+          '008': {total_occurrences: 29, peak_year_volume_mg: 9.65, peak_year: '2024'}
+          '009': {total_occurrences: 17, peak_year_volume_mg: 1.49, peak_year: '2024'}
+          '010': {total_occurrences: 115, peak_year_volume_mg: 8.4, peak_year: '2025 (Jan-Feb partial)'}
+          '011': {total_occurrences: 62, peak_year_volume_mg: 8.19, peak_year: '2025 (Jan-Feb partial)'}
+        source_printed_summary_row:
+          tag: '[verified]'
+          note: >-
+            The table's OWN bottom row, transcribed exactly as printed. "Max" under
+            Occurrences is the single largest per-CSO occurrence count that year (NOT a
+            sum across CSOs); "Total" under Volume IS the sum of all ten CSOs' volumes that
+            year. These are two different kinds of statistic sharing one row — do not read
+            "Max" as a system-wide occurrence total. (An earlier draft of this file summed
+            the occurrence columns itself and mislabeled the result "annual totals"; that
+            computation contained arithmetic errors for 2023-2025 and has been replaced
+            with the source's own row.)
+          max_occurrences_any_single_cso: {'2020_mar_dec': 87, '2021': 124, '2022': 113, '2023': 120, '2024': 72, '2025_jan_feb': 23}
+          total_volume_mg_all_csos: {'2020_mar_dec': 1224, '2021': 2028, '2022': 1403, '2023': 918, '2024': 820, '2025_jan_feb': 483}
+    tables_indexed_not_transcribed:
+      note: >-
+        Present in the bound Fact Sheet at the cited pages but not exhaustively re-typed
+        here — an index only, so a later reader knows they exist: Table 1 (sewage sludge
+        removal, dry tons, page 16), Table 3 (average annual effluent flow rates, page 16),
+        Table 6 (calculated seasonal total phosphorus loadings, page 17), Table 7-9
+        (supplemental/self-monitoring effluent characterization and Projected Effluent
+        Quality for outfall 001, pages 17-19), Table 11-13 (water quality criteria, instream
+        conditions/discharger flow, and WLA-derived effluent limits, pages 20-22), Table 15
+        (final effluent limits basis codes, page 24 — see warnings[1] for the one figure
+        checked against it), Attachment 1 (WET reasonable-potential detail, page 25),
+        Attachment 2 (acronym glossary, page 26).

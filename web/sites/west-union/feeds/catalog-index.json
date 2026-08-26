@@ -1,6 +1,6 @@
 {
   "site": "west-union",
-  "catalog_version": "e19dbf8aa73806a02ee3c54f06b788feec676f0bf9e3ed8e99d40b88b311a677",
+  "catalog_version": "cc2e17bf991dcab0d51f8bc215394def1dbe6df67db89e8978b6653faeb7eeca",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -1068,6 +1068,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:west-union:BEASLEY CREEK",
+      "kind": "entity",
+      "site": "west-union",
+      "local_id": "BEASLEY CREEK",
+      "title": "Beasley Creek",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:west-union:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "west-union",
@@ -1081,6 +1089,22 @@
       "site": "west-union",
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:west-union:VILLAGE OF WEST UNION",
+      "kind": "entity",
+      "site": "west-union",
+      "local_id": "VILLAGE OF WEST UNION",
+      "title": "Village of West Union",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:west-union:npdes:0PC00019",
+      "kind": "entity",
+      "site": "west-union",
+      "local_id": "npdes:0PC00019",
+      "title": "West Union Wastewater Treatment Plant",
       "feed": "entities"
     },
     {
@@ -1170,6 +1194,14 @@
       "local_id": "USACE-LRH-2025-00457-ATTACHMENTS",
       "title": "Every attachment to the federal §404 file is named in the emails and none was produced",
       "feed": "leads"
+    },
+    {
+      "handle": "record:west-union:oepa/west-union/0PC00019.npdes.yaml",
+      "kind": "record",
+      "site": "west-union",
+      "local_id": "oepa/west-union/0PC00019.npdes.yaml",
+      "title": "West Union Wastewater Treatment Plant",
+      "feed": "records"
     },
     {
       "handle": "record:west-union:oepa/west-union/252171W.iwp.yaml",

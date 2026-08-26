@@ -1,0 +1,58 @@
+id: oepa-piketon
+title: Ohio EPA NPDES Permit Extractions (Village of Piketon WWTP)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 0PB00031*KD (application OH0027031) for the Village of
+    Piketon wastewater treatment works, Old Jasper Road, Pike County; retrieved from the Ohio EPA
+    DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:piketon
+storage:
+- relpath: extracted/oepa/piketon/0PB00031.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- antidegradation
+- piketon
+- pike-county
+- scioto
+notes: >-
+  Village of Piketon permit 0PB00031*KD, action 2025-11-03, effective 2025-12-01, expiring
+  2028-12-31, signed John Logue; works on Old Jasper Road approximately 2800 feet east of the
+  Scioto River, discharging to the Scioto. Hand-read from the digitally generated text layer; no
+  render receipt. 26 printed sheets == 26 PDF pages, no bound fact sheet — the only permit in this
+  batch whose page count needs no reconciliation.
+  ⚠️ THE HEADLINE IS AN ANTIDEGRADATION FINDING ON THE FACE OF THE PERMIT. Sheet 1 carries the
+  Director's affirmative OAC 3745-1-05 determination, transcribed verbatim: "I have determined
+  that a lowering of water quality in the Scioto River is necessary … The lowering of water
+  quality is necessary to accommodate important social or economic development in the area in
+  which the water body is located." THE PERMIT NEVER NAMES WHAT DEVELOPMENT — that is `[open]`,
+  and it is exactly the question a records request would ask. A shortened term reinforces the
+  point: 1,126 days (~3 years 1 month) against the standard five-year NPDES term, unexplained.
+  23 parameters in the Interim table, 22 in the Final. ⚠️ TOTAL RESIDUAL CHLORINE (50060) AND
+  PERACETIC ACID (51674) ARE MONITORED IN THE INTERIM TABLE AND VANISH ENTIRELY FROM THE FINAL —
+  not carried as monitor-only, simply gone — leaving what governs chemical disinfection after the
+  changeover `[open]` (E. coli limits do survive, at doubled frequency). The design-flow basis
+  itself rises 0.45 → 0.5 MGD across the phase-in even as concentration limits tighten; every
+  kg/day figure in both tables reproduces at its own table's flow.
+  Confirmed ABSENT by full-text search and recorded as such: any Part I.C Schedule of Compliance,
+  any WET or biomonitoring program, any pretreatment schedule, any CSO part, any river mile, and
+  any engineered bypass station with a numeric trigger. ⚠️ DO NOT CONFLATE WITH WAVERLY — permit
+  0PC00011 is a different village in the same county; neither "Waverly" nor "0PC00011" appears
+  anywhere in this instrument.
+  Document defects recorded rather than normalized: Part I.A's section heading calls the first
+  phase "INTERIM" while its own table title calls it "Initial"; the cover sheet never labels the
+  action a modification yet Part I.A's body twice calls the effective date "the modification
+  effective date", with no prior revision named anywhere; Part II Item B's station table omits
+  station 300 though it has its own Part I.B table; and two of the 26 sheets carry no printed page
+  header at all.

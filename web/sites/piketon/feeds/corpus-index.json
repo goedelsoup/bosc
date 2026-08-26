@@ -1,13 +1,46 @@
 [
   {
+    "id": "artifact/npdes-0pb00031",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Piketon Wastewater Treatment Works",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/scioto-river",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Scioto River",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/site-piketon",
     "node_class": "artifact",
     "kind": "site",
     "label": "Piketon",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 6,
     "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/village-of-piketon",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Village of Piketon",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
     "updated": null
   },
   {
@@ -866,6 +899,28 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 10,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-0pb00031--discharges-to--scioto-river",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:0PB00031 discharges_to SCIOTO RIVER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/village-of-piketon--operates--npdes-0pb00031",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "VILLAGE OF PIKETON operates npdes:0PB00031",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
     "updated": null
   }
 ]

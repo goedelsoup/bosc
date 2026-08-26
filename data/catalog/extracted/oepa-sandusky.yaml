@@ -1,0 +1,56 @@
+id: oepa-sandusky
+title: Ohio EPA NPDES Permit Extractions (Sandusky Water Pollution Control)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 2PF00001*SD (application OH0027332) for the City of
+    Sandusky Water Pollution Control, Erie County; retrieved from the Ohio EPA DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:sandusky
+storage:
+- relpath: extracted/oepa/sandusky/2PF00001.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- combined-sewer-overflow
+- long-term-control-plan
+- sandusky
+- erie-county
+- lake-erie
+notes: >-
+  Sandusky Water Pollution Control permit 2PF00001*SD, action 2026-03-25, effective 2026-05-01,
+  expiring 2031-04-30 — the newest instrument in this batch. Hand-read from the digitally
+  generated text layer; no render receipt. ⚠️ NAME TRAP: this is the CITY of Sandusky in ERIE
+  County discharging to Sandusky Bay / Lake Erie — not the Sandusky River, and not Sandusky County
+  (whose seat is Fremont). The entity is "SANDUSKY WPC"; there is no WWTP or WPCF in the name.
+  ⚠️ THE STRUCTURE IS INVERTED relative to most sibling permits: outfall 001 — the actual point of
+  discharge to the bay — carries NO numeric TSS, CBOD5, ammonia, DO or temperature limit. Those
+  attach instead to pre-blend internal station 602. Six numeric-limit parameters at 001, three at
+  602, TSS at bypass 603, nine biosolids ceilings, twelve pretreatment WLA pollutants.
+  ⚠️ THE PERMIT'S OWN LOADINGS BASIS IS 15.7 MGD (printed on sheets 3, 5 and 24), with 48 MGD
+  secondary-treatment capacity and a 16 MGD HRT (sheet 15). The string "3.8" appears nowhere in
+  the 49-page instrument — note that `watermark.sites._profiles`'s `_SANDUSKY` carries an inline
+  comment reading "Sandusky WWTP (3.8 MGD)", a ~4x divergence from the permit. That comment is NOT
+  changed by this extraction and the reconciliation is left open for the water-balance work.
+  One of 14 CSOs (2PF00001019, Perkins Street) discharges to Pipe Creek rather than the bay, and
+  the CSO numbering has four unexplained gaps (010, 012, 018, 020). Document defects recorded: the
+  milestone table and the narrative disagree on an EVENT CODE ITSELF, not merely its zero-padding
+  — 82299 in the table, 15099 in the narrative, for the same LTCP Programmatic Review Report; four
+  further milestones (Mills St HRT completion and all three East Side 6.0-MG Storage steps) carry
+  no event code anywhere and no table row at all; and sludge station 588's parameter code (80991,
+  volume) does not match its own weight-based footnotes.
+  A text-extraction note, not a document defect: the expiration date truncates to "April 30, 20"
+  in both pypdf modes because the sheet-1 font is a Type0 CID font with no /ToUnicode map. The
+  page prints "April 30, 2031"; this was confirmed and is recorded as an extraction artifact.
+  No Schedule-of-Compliance date had passed as of 2026-08-26 (earliest 2027-01-01); the Part II
+  Item U biomonitoring SOP submittal (~2026-08-01, `[inference]`) had, and whether it was filed
+  is `[open]`.

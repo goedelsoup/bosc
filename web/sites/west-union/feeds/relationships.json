@@ -1,5 +1,25 @@
 [
   {
+    "src": "VILLAGE OF WEST UNION",
+    "rel": "operates",
+    "dst": "npdes:0PC00019",
+    "date": "",
+    "ref": "0PC00019*KD",
+    "source": "oepa/west-union/0PC00019.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:0PC00019",
+    "rel": "discharges_to",
+    "dst": "BEASLEY CREEK",
+    "date": "",
+    "ref": "0PC00019*KD",
+    "source": "oepa/west-union/0PC00019.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

@@ -14,6 +14,9 @@ storage:
 - relpath: extracted/oepa/west-union/252171W.iwp.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/west-union/0PC00019.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: on-demand
 provenance: document
@@ -55,3 +58,22 @@ notes: >-
   the Kimley-Horn site map printing DISTURBED AREA = 535.00 AC — are shelved and unread
   (lead OEPA-BUCK-CANYON-UNREAD). One document, edoc-3940059, is served TRUNCATED by Ohio EPA at
   exactly 2 MiB and is retained as a locator only (lead OEPA-EDOC-3940059-TRUNCATED).
+
+  ---
+  ALSO IN STORAGE, and a different instrument entirely: **NPDES permit 0PC00019*KD** (application
+  OH0028088), the Village of West Union's own WWTP at 6875 State Route 247 — a renewal issued
+  2023-02-07, effective 2023-03-01, expiring 2028-02-29. It predates the Buck Canyon file and says
+  NOTHING about the data-center project: "data center", "Amazon", "AWS" and "Buck" return no hits,
+  and no such context was imported into the extraction. The permittee is the VILLAGE, not the
+  Adams County Regional Water District, which appears nowhere in the instrument. A short, simple
+  permit — Class II works, one outfall, 23 parameters on a 0.7 MGD design flow, no WET limits and
+  NO Part I.C Schedule of Compliance at all — every figure cross-verified against Attachment II's
+  independent second table.
+  Its own defects are recorded rather than normalized: the receiving water is named two ways in
+  one document, "Beasley Creek" on the authorization sentence, in the Fact Sheet and in Attachment
+  I, against "Beasley Fork Creek" in the Part II.B station table for stations 001/801/901; free
+  cyanide's units disagree between the two tables (ug/l in Part I.A, mg/l in Attachment II, a
+  1000x divergence in a permit whose Item I sets the free-cyanide PQL at 0.025 mg/L); station 801's
+  own footnote points at the Item L sampling rule that omits 801; Item Q requires influent mercury
+  monitoring the influent table does not carry; and Attachment II's footnotes skip "b" while the
+  same design-flow note is marked "*" in Part I.A and "a" in Attachment II.

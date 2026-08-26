@@ -1,5 +1,25 @@
 [
   {
+    "src": "VILLAGE OF PIKETON",
+    "rel": "operates",
+    "dst": "npdes:0PB00031",
+    "date": "",
+    "ref": "0PB00031*KD",
+    "source": "oepa/piketon/0PB00031.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:0PB00031",
+    "rel": "discharges_to",
+    "dst": "SCIOTO RIVER",
+    "date": "",
+    "ref": "0PB00031*KD",
+    "source": "oepa/piketon/0PB00031.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

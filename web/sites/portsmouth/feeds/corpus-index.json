@@ -1,5 +1,16 @@
 [
   {
+    "id": "artifact/city-of-portsmouth",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Portsmouth",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/emh-t",
     "node_class": "artifact",
     "kind": "entity",
@@ -44,6 +55,28 @@
     "updated": "2026-07-14"
   },
   {
+    "id": "artifact/npdes-0pd00013",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Lawson Run WWTP",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/ohio-river",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Ohio River",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/randy-barrera",
     "node_class": "artifact",
     "kind": "entity",
@@ -72,7 +105,7 @@
     "label": "Portsmouth · Green Twp",
     "scope": "site",
     "links_out": 3,
-    "links_in": 12,
+    "links_in": 15,
     "lines": 13,
     "updated": null
   },
@@ -968,6 +1001,17 @@
     "updated": null
   },
   {
+    "id": "relation/city-of-portsmouth--operates--npdes-0pd00013",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF PORTSMOUTH operates npdes:0PD00013",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
     "id": "relation/heather-dardinger--affiliated-with--emh-t",
     "node_class": "relation",
     "kind": "relation",
@@ -999,6 +1043,17 @@
     "links_in": 0,
     "lines": 14,
     "updated": "2026-07-14"
+  },
+  {
+    "id": "relation/npdes-0pd00013--discharges-to--ohio-river",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:0PD00013 discharges_to OHIO RIVER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
   },
   {
     "id": "relation/randy-barrera--principal-of--tilted-gate",

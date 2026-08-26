@@ -1,12 +1,34 @@
 [
   {
+    "id": "artifact/city-of-toledo",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Toledo",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-2pf00000",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Toledo Bay View Water Reclamation Facility",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/site-toledo",
     "node_class": "artifact",
     "kind": "site",
     "label": "Toledo",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 5,
     "lines": 13,
     "updated": null
   },
@@ -866,6 +888,17 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 10,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-toledo--operates--npdes-2pf00000",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF TOLEDO operates npdes:2PF00000",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
     "updated": null
   }
 ]

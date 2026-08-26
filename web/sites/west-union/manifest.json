@@ -2,9 +2,9 @@
   "site": "west-union",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T04:35:50+00:00",
+  "generated_at": "2026-08-26T20:52:25+00:00",
   "feed_count": 32,
-  "row_total": 456,
+  "row_total": 472,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 6
+      "count": 7
     },
     {
       "name": "timeline",
@@ -45,7 +45,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 5
     },
     {
       "name": "relationships",
@@ -53,7 +53,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 3
     },
     {
       "name": "people",
@@ -261,7 +261,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 90
+      "count": 95
     },
     {
       "name": "corpus-nodes",
@@ -269,7 +269,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 90
+      "count": 95
     },
     {
       "name": "ask-embeddings",

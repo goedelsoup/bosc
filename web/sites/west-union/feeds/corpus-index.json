@@ -1,13 +1,46 @@
 [
   {
+    "id": "artifact/beasley-creek",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Beasley Creek",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-0pc00019",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "West Union Wastewater Treatment Plant",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/site-west-union",
     "node_class": "artifact",
     "kind": "site",
     "label": "West Union · Adams Co",
     "scope": "site",
     "links_out": 3,
-    "links_in": 14,
+    "links_in": 17,
     "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/village-of-west-union",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Village of West Union",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
     "updated": null
   },
   {
@@ -987,6 +1020,28 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 21,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-0pc00019--discharges-to--beasley-creek",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:0PC00019 discharges_to BEASLEY CREEK",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/village-of-west-union--operates--npdes-0pc00019",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "VILLAGE OF WEST UNION operates npdes:0PC00019",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
     "updated": null
   }
 ]
