@@ -1,0 +1,64 @@
+id: oepa-hamilton-middletown
+title: Ohio EPA NPDES Permit Extractions (Hamilton and Middletown WWTPs)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permits 1PE00002*OD (application OH0025445, City of Hamilton)
+    and 1PE00003*RD (application OH0026522, City of Middletown), Butler County; retrieved from
+    the Ohio EPA DAM permit slots
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:hamilton-middletown
+storage:
+- relpath: extracted/oepa/hamilton-middletown/1PE00002.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/oepa/hamilton-middletown/1PE00003.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- hamilton-middletown
+- butler-county
+- great-miami
+notes: >-
+  A DUAL-CITY SITE: one permit per city, deliberately not merged, each city established from its
+  own authorization sentence rather than from the site slug. Both hand-read from digitally
+  generated text layers, so neither carries a render receipt.
+  **1PE00002*OD — City of Hamilton**, Hamilton Water Reclamation Facility, 2451 River Road,
+  Butler County, to the Great Miami River; effective 2021-11-01, expiring 2026-10-31. One outfall
+  (001) carrying both technology- and water-quality-based limits on a 32.0 MGD design flow. The
+  Initial/Final tables were diffed parameter by parameter and the ONLY substantive change is
+  bis(2-ethylhexyl) phthalate going monitor-only to limited (max 2100 ug/l, monthly 7.7 ug/l).
+  ⚠️ SHEET 1 PRINTS "Total Pages: 48" BUT THE PDF HAS 47, numbered contiguously 1-47 with the
+  last page a complete end of Part III — unlike seven sibling sites in this batch, this is NOT a
+  bound fact sheet, and whether a 48th page exists in the signed original is left unresolved
+  because nothing in the corpus can settle it. The B2EHP compliance deadline and the Final table's
+  enforceability date both resolve to 2024-11-01, i.e. zero compliance margin — both `[inference]`,
+  neither printed. No CSO and no Parts IV-VI; bypass 603 is monitor-only with discharge prohibited
+  and no numeric trigger. No river mile is printed anywhere. `*OD` is left `[open]`.
+  **1PE00003*RD — City of Middletown**, 300 Oxford State Road, Butler County, also to the Great
+  Miami; effective 2022-01-01, expiring 2026-12-31, signed Laurie A. Stevenson. 26 MGD design
+  flow; sixteen loadings were re-derived at that flow, which independently proved the Part I.A
+  column mapping after pypdf's default mode interleaved the columns. The Initial→Final phase-in
+  changes exactly SEVEN things — winter DO minimum 2.0→4.0 mg/l plus selenium and five
+  PAH/phthalate compounds moving from monitor-only to limited — and those seven exactly match the
+  seven pollutants named in Part I.C.B's own compliance-schedule title. WET is monitor-only in
+  both periods with no TRE. Three of eight CSO stations (008/009/010) discharge to a "Hydraulic
+  Canal" the permit never defines or traces — `[open]`.
+  ⚠️ MIDDLETOWN'S PAGE ACCOUNTING IS THE ODDEST IN THE NETWORK: sheet 1 prints "Total Pages: 81"
+  against 80 physical pages, and the resolution is that the document's own printed numbering SKIPS
+  "Page 20" — running 1-19 then 21-81, giving 80 printed numbers for 80 pages — with the page
+  printed "21" byte-identical in body text to the page printed "19". Correlated with two further
+  gaps: Part I.B's item numbering skips "7", and station 1PE00003601 (Influent) has NO monitoring
+  table anywhere despite being named in Item C and referenced in Q/R/S. That the dropped page held
+  the missing item is offered as `[inference]` and explicitly not asserted.
+  Both permits' compliance milestones and both renewal deadlines had passed as of 2026-08-26;
+  whether anything was filed is `[open]` throughout.

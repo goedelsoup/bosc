@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "2439f6a660380f351e2c26c36de87de2168e96614b5e67f3f3b53022f32eac3d",
+  "catalog_version": "e39af8046571ca6da20a1cfd9a382cb67226e258600aefd9f9c323c8f8186470",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -1620,6 +1620,30 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:oepa-coshocton",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-coshocton",
+      "title": "Ohio EPA NPDES Permit Extractions (Coshocton WWTP)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-greenville",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-greenville",
+      "title": "Ohio EPA NPDES Permit Extractions (Greenville WWTP)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-hamilton-middletown",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-hamilton-middletown",
+      "title": "Ohio EPA NPDES Permit Extractions (Hamilton and Middletown WWTPs)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:oepa-lima-2dp00130-application",
       "kind": "dataset",
       "site": "lima",
@@ -1641,6 +1665,14 @@
       "site": "lima",
       "local_id": "oepa-mansfield",
       "title": "Ohio EPA NPDES Permit Extractions (Mansfield / Richland County)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-new-albany",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-new-albany",
+      "title": "Ohio EPA NPDES Permit Extractions (Johnstown WWTP — shelved under new-albany)",
       "feed": "catalog"
     },
     {
@@ -1692,6 +1724,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:oepa-springfield",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-springfield",
+      "title": "Ohio EPA NPDES Permit Extractions (Springfield WWTP)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:oepa-toledo",
       "kind": "dataset",
       "site": "lima",
@@ -1705,6 +1745,14 @@
       "site": "lima",
       "local_id": "oepa-troy-piqua",
       "title": "Ohio EPA NPDES Permit Extractions (Piqua WWTP)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-urbana",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-urbana",
+      "title": "Ohio EPA NPDES Permit Extractions (Urbana Water Reclamation Facility)",
       "feed": "catalog"
     },
     {
@@ -1729,6 +1777,22 @@
       "site": "lima",
       "local_id": "oepa-wilmington",
       "title": "Ohio EPA NPDES Permit Extractions (Wilmington / Clinton County)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-wpafb",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-wpafb",
+      "title": "Ohio EPA NPDES Correspondence Extractions (WPAFB — 1IN00274 revocation request)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-xenia",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-xenia",
+      "title": "Ohio EPA NPDES Permit Extractions (Xenia Ford Road WWTP)",
       "feed": "catalog"
     },
     {

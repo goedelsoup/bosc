@@ -1,6 +1,6 @@
 {
   "site": "springfield",
-  "catalog_version": "f138cf31c4de9095202b11034dd6bb631db24a69ed31b6771fa3165dc39413a9",
+  "catalog_version": "6ed983b2e65f97a2eac830d074d8ec8086271058eb28389b68a394be872a6410",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -924,6 +924,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:springfield:oepa-springfield",
+      "kind": "dataset",
+      "site": "springfield",
+      "local_id": "oepa-springfield",
+      "title": "Ohio EPA NPDES Permit Extractions (Springfield WWTP)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:springfield:onboard-bundle",
       "kind": "dataset",
       "site": "springfield",
@@ -1036,6 +1044,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:springfield:CITY OF SPRINGFIELD",
+      "kind": "entity",
+      "site": "springfield",
+      "local_id": "CITY OF SPRINGFIELD",
+      "title": "City of Springfield",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:springfield:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "springfield",
@@ -1052,12 +1068,36 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:springfield:MAD RIVER",
+      "kind": "entity",
+      "site": "springfield",
+      "local_id": "MAD RIVER",
+      "title": "Mad River",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:springfield:npdes:1PE00007",
+      "kind": "entity",
+      "site": "springfield",
+      "local_id": "npdes:1PE00007",
+      "title": "Springfield Wastewater Treatment Plant",
+      "feed": "entities"
+    },
+    {
       "handle": "lead:springfield:GH-523",
       "kind": "lead",
       "site": "springfield",
       "local_id": "GH-523",
       "title": "Records request: Clark County rezoning Z-2026-05 (5232 Peacock Rd / Springfield-Beckley airport JEDD) — name the end use",
       "feed": "leads"
+    },
+    {
+      "handle": "record:springfield:oepa/springfield/1PE00007.npdes.yaml",
+      "kind": "record",
+      "site": "springfield",
+      "local_id": "oepa/springfield/1PE00007.npdes.yaml",
+      "title": "Springfield Wastewater Treatment Plant",
+      "feed": "records"
     }
   ]
 }

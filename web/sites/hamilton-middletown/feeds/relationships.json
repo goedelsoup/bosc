@@ -1,5 +1,45 @@
 [
   {
+    "src": "CITY OF HAMILTON",
+    "rel": "operates",
+    "dst": "npdes:1PE00002",
+    "date": "",
+    "ref": "1PE00002*OD",
+    "source": "oepa/hamilton-middletown/1PE00002.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PE00002",
+    "rel": "discharges_to",
+    "dst": "GREAT MIAMI RIVER",
+    "date": "",
+    "ref": "1PE00002*OD",
+    "source": "oepa/hamilton-middletown/1PE00002.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF MIDDLETOWN",
+    "rel": "operates",
+    "dst": "npdes:1PE00003",
+    "date": "",
+    "ref": "1PE00003*RD",
+    "source": "oepa/hamilton-middletown/1PE00003.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PE00003",
+    "rel": "discharges_to",
+    "dst": "GREAT MIAMI RIVER",
+    "date": "",
+    "ref": "1PE00003*RD",
+    "source": "oepa/hamilton-middletown/1PE00003.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

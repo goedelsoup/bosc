@@ -1,0 +1,54 @@
+id: oepa-wpafb
+title: Ohio EPA NPDES Correspondence Extractions (WPAFB — 1IN00274 revocation request)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), docid 2090290 —
+    a one-page letter from 88 ABW/CEVO, Wright-Patterson AFB, to the Ohio EPA Southwest District
+    Office, Division of Surface Water
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:wpafb
+storage:
+- relpath: extracted/oepa/wpafb/edoc-2090290.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- correspondence
+- federal-installation
+- bioslurper
+- wpafb
+- greene-county
+- mad-river
+notes: >-
+  ⚠️ THIS DOCUMENT IS NOT A PERMIT, AND THE CROSSWALK THAT CALLED IT ONE IS ONE STEP OFF. It is a
+  one-page letter dated 9 August 2006 from 88 ABW/CEVO (Bldg 89, 5490 Pearson Road,
+  Wright-Patterson AFB) to Ms. Sandra Leibfritz at the Ohio EPA Southwest District Office,
+  **requesting that NPDES permit 1IN00274*AD be revoked** because the Bioslurper unit "has not be
+  in use for a couple of years" and the base wished to cease monthly Form 4500 reporting. The
+  corpus holds the revocation REQUEST; it holds no copy of permit 1IN00274 itself — no face sheet,
+  no fact sheet, no effluent-limit table, and nothing from Ohio EPA's side of the correspondence.
+  Every field in the extraction describes what the LETTER says about that permit, not what the
+  permit says.
+  What it establishes: `[verified]` that 1IN00274 was an INDUSTRIAL groundwater-remediation permit
+  for a bioslurper unit — not a POTW and not a municipal sewage plant; `[verified]` that the base
+  asked for revocation on the stated date for the stated reason; and `[open]` whether Ohio EPA
+  ever acted on the request. Do not write "revoked" as fact. The letter's own stated expiry
+  (31 December 2006) is twenty years past regardless.
+  ⚠️ A FEDERAL ENCLAVE HAS NO CITY SEWAGE-PLANT NPDES PERMIT. WPAFB does not appear in this
+  network's WWTP permit batch with a POTW permit because it is not a municipality. Do NOT
+  substitute a Dayton-area municipal plant for it; whether and where the base's sanitary flow is
+  treated is `[open]` and no captured source here answers it.
+  METHOD: this is the ONE scanned, OCR'd document in the batch (producer "Data Capture Server",
+  creator "OmniPage CSDK 20"), so unlike its 16 siblings it went through a genuine 300 DPI render
+  and visual read and CARRIES A TRUE RENDER RECEIPT. The OCR text layer was badly garbled and its
+  digits were not trusted: "2d06" for 2006, "Dlstrlct" for District, "HEA04l1AIiTERS" for
+  HEADQUARTERS, "Sherrn" for Sherm. Two of the document's own quirks were confirmed at high DPI
+  rather than corrected: it really does print "National **Pollution** Discharge Elimination
+  System" (not the standard "Pollutant"), and it really does read "has not **be** in use".

@@ -1,12 +1,67 @@
 [
   {
+    "id": "artifact/city-of-hamilton",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Hamilton",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/city-of-middletown",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Middletown",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/great-miami-river",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Great Miami River",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-1pe00002",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Hamilton Water Reclamation Facility",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-1pe00003",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Middletown Wastewater Treatment Works",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/site-hamilton-middletown",
     "node_class": "artifact",
     "kind": "site",
     "label": "Hamilton · Middletown",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 8,
     "lines": 13,
     "updated": null
   },
@@ -877,6 +932,50 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 16,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-hamilton--operates--npdes-1pe00002",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF HAMILTON operates npdes:1PE00002",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-middletown--operates--npdes-1pe00003",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF MIDDLETOWN operates npdes:1PE00003",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-1pe00002--discharges-to--great-miami-river",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:1PE00002 discharges_to GREAT MIAMI RIVER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-1pe00003--discharges-to--great-miami-river",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:1PE00003 discharges_to GREAT MIAMI RIVER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
     "updated": null
   }
 ]

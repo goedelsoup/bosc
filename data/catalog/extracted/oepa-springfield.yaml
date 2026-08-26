@@ -1,0 +1,54 @@
+id: oepa-springfield
+title: Ohio EPA NPDES Permit Extractions (Springfield WWTP)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 1PE00007*VD (application OH0027481) for the City of
+    Springfield WWTP, 965 Dayton Avenue, Clark County; retrieved from the Ohio EPA DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:springfield
+storage:
+- relpath: extracted/oepa/springfield/1PE00007.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- combined-sewer-overflow
+- long-term-control-plan
+- springfield
+- clark-county
+- mad-river
+notes: >-
+  Springfield WWTP permit 1PE00007*VD, action 2025-01-17, effective 2025-03-01, expiring
+  2030-02-28, signed Anne M. Vogel, discharging to the Mad River at RM 25.35 on a 25 MGD average
+  design flow. Hand-read from the digitally generated text layer; no render receipt. The source
+  PDF binds the 54-sheet permit (PDF pages 0-53) and a 36-page 2024 Fact Sheet (pages 54-89),
+  54+36=90 — the longest artifact in this batch. Two outfall limit tables (001 and 099) plus three
+  canonical CSO monitoring tables and a 54-row CSO geographic roster.
+  ⚠️ NOTE THE SUFFIX. The bound Fact Sheet's COVER PRINTS THE DRAFT PERMIT NUMBER `1PE00007*TD`,
+  not the issued `*VD`. The extraction records the issued suffix in `permit_no` and the draft on
+  the fact-sheet block; anyone joining to ECHO/ICIS off the fact sheet will key the wrong revision.
+  ⚠️ THE PERMIT CANNOT COUNT ITS OWN CSOs. Part I,B Item 3 says "the 46 CSO stations" in one
+  sentence and "the other 48 CSO stations" in the next; the actual roster is 54 rows, of which 10
+  are named in Items 1-2, leaving 44 — a figure only the Fact Sheet gets right. And the Schedule of
+  Compliance's milestone table is MATERIALLY INCOMPLETE: the narrative adds two entire Long Term
+  Control Plan projects absent from the table — Sunset Avenue, and a Programmatic Review running to
+  2036-01-01 — neither with an event code, alongside several duplicate codes across different due
+  dates. A records request built from the table alone would miss a decade of obligations.
+  Further document defects recorded rather than normalized: CSO station 022's printed latitude
+  reads "93.9293N", geographically impossible and almost certainly a transposition for 39.9293N;
+  bypass station 066 has no location description anywhere in Part II Item B (every other station
+  does) and its notes header carries the instrument's only seven-digit station id; the
+  downstream-farfield station is numbered 900 throughout Part I,B Item 13 but 901 in Part II Item
+  B, never reconciled; bypass 602's notes reuse the letter "g." and skip "i."; the Fact Sheet
+  contradicts itself on whether CSO 003 was eliminated in 2020 or 2023; and the E. coli station-099
+  blending equation is stated twice with different variable semantics (Q/flow rate in the permit,
+  V/volume in the Fact Sheet). Where bypass 066 physically sits is `[open]`.

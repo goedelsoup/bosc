@@ -1,6 +1,6 @@
 {
   "site": "xenia",
-  "catalog_version": "a721833813388397c2a3496f89410e1738f2856dd13564ef1e6a22d0e740a54b",
+  "catalog_version": "7f3b7dc64018c3e1fcaa6c187ba290898fd0acca1a28b75557ad22d9eb4c0b93",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -932,6 +932,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:xenia:oepa-xenia",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "oepa-xenia",
+      "title": "Ohio EPA NPDES Permit Extractions (Xenia Ford Road WWTP)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:xenia:onboard-bundle",
       "kind": "dataset",
       "site": "xenia",
@@ -1044,6 +1052,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:xenia:CITY OF XENIA",
+      "kind": "entity",
+      "site": "xenia",
+      "local_id": "CITY OF XENIA",
+      "title": "City of Xenia",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:xenia:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "xenia",
@@ -1058,6 +1074,30 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:xenia:LITTLE MIAMI RIVER",
+      "kind": "entity",
+      "site": "xenia",
+      "local_id": "LITTLE MIAMI RIVER",
+      "title": "Little Miami River",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:xenia:npdes:1PD00015",
+      "kind": "entity",
+      "site": "xenia",
+      "local_id": "npdes:1PD00015",
+      "title": "City of Xenia - Ford Road WWTP",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:xenia:oepa/xenia/1PD00015.npdes.yaml",
+      "kind": "record",
+      "site": "xenia",
+      "local_id": "oepa/xenia/1PD00015.npdes.yaml",
+      "title": "City of Xenia - Ford Road WWTP",
+      "feed": "records"
     }
   ]
 }

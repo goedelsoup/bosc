@@ -1,0 +1,56 @@
+id: oepa-greenville
+title: Ohio EPA NPDES Permit Extractions (Greenville WWTP)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 1PD00005*OD (application OH0025429) for the City of
+    Greenville Wastewater Treatment Plant, 209 N Ohio Street, Darke County; retrieved from the
+    Ohio EPA DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:greenville
+storage:
+- relpath: extracted/oepa/greenville/1PD00005.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- tmdl
+- greenville
+- darke-county
+- great-miami
+notes: >-
+  Greenville WWTP permit 1PD00005*OD, issued 2023-08-29, effective 2023-10-01, expiring
+  2028-09-30, signed Anne M. Vogel, discharging to Greenville Creek. Hand-read from the digitally
+  generated text layer; no render receipt. The source PDF binds the 47-sheet issued permit (PDF
+  pages 0-46) and a 34-page Fact Sheet (pages 47-80), 47+34=81. 38 parameter rows across the
+  Initial and Final tables on a 3.5 MGD design flow; five parameters gain numeric limits at the
+  35th/36th-month phase-in — Summer Ammonia, Selenium, Benzo(a)pyrene, Dibenz(a,h)anthracene and
+  Indeno(1,2,3-c,d)pyrene — the same five the Fact Sheet's own summary and Part I.C.A's title
+  name, with two further non-limit changes (a sampling-type cell and a measuring frequency).
+  ⚠️ EVENT CODE 1799 IS DOUBLE-BOOKED across two milestones with different due dates — a 24-month
+  PTI application and a 6-month pretreatment local-limits report — and the milestone summary table
+  carries only the 24-month one, so THE 6-MONTH PRETREATMENT DEADLINE IS ABSENT FROM THE TABLE
+  ENTIRELY. A records request citing an event code for that submittal has only 1799 to work with
+  and will collide with the PTI milestone.
+  NO RIVER MILE is printed anywhere in the permit itself; "River Mile 19.35" exists only in the
+  bound Fact Sheet and is therefore not an enforceable term. Only station 001 carries a printed
+  DMS coordinate; the ambient stations are located by bridge name alone. Further document defects
+  recorded: the Final table's footnotes misnumber (b. appears twice, shifting every later letter
+  one earlier than the Initial table's for identical content); Part I.C.C.1's lettering skips "a.";
+  the Fact Sheet twice prints a typo'd station number "3PD00002801"; its table-of-contents
+  numbering runs one behind the body from Table 8 on; and its dilution arithmetic prints 1.39
+  where the printed inputs give 1.339.
+  ⚠️ THE MOST CONSEQUENTIAL CONFLICT IS BETWEEN THE TWO BOUND DOCUMENTS: the Fact Sheet says "The
+  source of this degradation was the Greenville WWTP according to the report," while the permit's
+  own Part I.C.C attributes the downstream impairments to "natural causes and sources" and states
+  "the Greenville WWTP is not contributing" — and Fact Sheet Table 11 lists that station's cause
+  as Natural Conditions. Both are transcribed; the extraction resolves neither. Six of nine dated
+  milestones had passed as of 2026-08-26; whether any was filed is `[open]`.

@@ -1,0 +1,912 @@
+# City of Springfield WWTP — NPDES permit 1PE00007*VD (application OH0027481), issued
+# 2025-01-17, effective 2025-03-01, expiring 2030-02-28. Renewal action per the bound Fact
+# Sheet's own title.
+#
+# Hand-read from the committed PDF's embedded text layer, not machine-extracted. This
+# document is digitally generated (producer "Microsoft: Print To PDF", no scan, no OCR), so
+# the text layer is the instrument's own bytes; every figure below is transcribed with its
+# printed sheet/page cited on the block. Nothing is derived, rounded or inferred unless the
+# block says so.
+#
+# ONE page was additionally rendered at 300 DPI and read visually — PDF page index 29
+# (printed sheet 30), to verify that CSO station 022's printed latitude really reads
+# "93.9293N" on the face of the permit and is not a text-extraction artifact (see
+# permit.warnings — cso_stations.transcription_note). That is a VERIFICATION of one
+# transcribed line, not the extraction method: no page was rasterized and sent to a vision
+# model, so this file carries no render receipt (no doc_id / dpi / pages_read). See
+# watermark.models.TranscribedExtraction — a receipt is all-or-nothing.
+#
+# The record -> document join (watermark.site.records._source_ref) reads a TOP-LEVEL
+# `source_path`, so the primary instrument is named there as well as in meta.sources.
+source_path: data/documents/oepa/springfield/1PE00007.pdf
+meta:
+  subject: City of Springfield WWTP — issued NPDES permit (2025 renewal)
+  site: springfield
+  captured_for: 'task A1 — network-site WWTP NPDES permit ingest (record domain)'
+  extracted_at: '2026-08-26'
+  method: >-
+    pypdf text-layer read over the committed source PDF (extraction_mode='layout' used for
+    dense tables); values transcribed and page-cited. PDF page index 29 additionally rendered
+    at 300 DPI (pypdfium2) and read visually to verify one line — see the header note.
+  sources:
+    permit:
+      path: data/documents/oepa/springfield/1PE00007.pdf
+      sha256: 6f25f93b1cdfd561abc5761a3fb768ca2871ec84c27bfe0634e27494adba2a46
+      url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PE00007.pdf
+  not_in_this_corpus:
+    application: >-
+      The NPDES renewal application (Form 2A) is not bound into this PDF and is not
+      committed. It is referenced by the Fact Sheet (e.g. "Springfield WWTP flow ... NPDES
+      Application Form 2A") but not itself held here.
+    prior_permit: >-
+      No earlier revision of 1PE00007 is committed in this corpus, so no claim is made here
+      about what changed at this renewal beyond what the bound Fact Sheet itself states under
+      "SUMMARY OF PERMIT CONDITIONS".
+    ltcp_documents: >-
+      The Integrated Long Term Control Plan Update referenced throughout Part I.C and the
+      Fact Sheet (submitted for review February 2024) is not bound into this PDF and is not
+      committed. Only the Fact Sheet's summary of it is transcribed below.
+
+permit:
+  tag: '[verified]'
+  confidence: high
+  warnings:
+  - >-
+    THE PDF HAS 90 PAGES; THE PERMIT'S OWN "TOTAL PAGES" LINE ON SHEET 1 READS 54. This is
+    NOT a mismatch to paper over — it resolves cleanly. PDF page index 0 through 53 (54
+    pages) is the issued permit itself (Parts I, II and III, sheets 1-54, each printed
+    "Page N / 1PE00007*VD"). PDF page index 54 through 89 (36 pages) is a SEPARATE document —
+    "Fact Sheet for NPDES Permit Renewal, Springfield WWTP, 2024" — bound into the same PDF
+    immediately after the permit, with its own independent pagination ("Page 1 of 36" through
+    "Page 36 of 36"). 54 + 36 = 90, exactly the PDF's page count. Unlike the mansfield
+    precedent (2PE00001*PD), where the Fact Sheet was NOT bound in at all, here it IS — see
+    the fact_sheet block below. The Fact Sheet is a distinct sub-document: it explains and
+    supports the Director's decisions but is not itself an operative permit term, and it is
+    cited separately from `permit.*` throughout this file.
+  - >-
+    PART I,B ITEM 3'S OWN CSO COUNT DISAGREES WITH ITSELF, AND WITH THE FACT SHEET. Sheet 9's
+    heading reads "***The monitoring tables for the 46 CSO stations other than those listed
+    in Part I,B, Items 1 and 2 are identical to this monitoring table.***" and its very next
+    sentence reads "the permittee shall monitor at Station Number 1PE00007013 and the other
+    48 CSO stations" (i.e. 49 total under Item 3). Neither number is right: counting Part II
+    Item C's own 54-station roster (see cso_stations below) and subtracting the 5 stations
+    named in Item 1 and the 5 named in Item 2 leaves 44 — which is exactly what the bound
+    Fact Sheet says in its own words ("Overflow occurrences and volume for the remaining 44
+    CSOs are estimated by the City's hydraulic model of the collection system"). So the
+    permit's own operative text is wrong twice (46, then 48) in the same paragraph, and only
+    the non-operative Fact Sheet states the figure that the station roster actually supports.
+  - >-
+    CSO STATION 022'S PRINTED LATITUDE IS "93.9293N" — GEOGRAPHICALLY IMPOSSIBLE (there is no
+    93rd parallel), almost certainly a transposed-digit typo for "39.9293N" given every
+    neighboring station on Buck Creek reads ~39.92-39.94 N. This was checked against a 300 DPI
+    render of the page (PDF index 29) — the source PDF itself prints "93.9293N", not a
+    text-extraction artifact. Transcribed as printed in cso_stations below, not corrected.
+    Two further stations (041, 083) print a doubled decimal point in their longitude
+    ("83.83.7951 W", "83.83.7993 W") — also transcribed as printed, not corrected. Three CSO
+    entries (014, 026) are also missing their opening coordinate parenthesis on the face of
+    the document (confirmed on the same 300 DPI render for 014) — a minor, harmless
+    formatting defect, noted but not treated as a data error.
+  - >-
+    BYPASS STATION 066 HAS NO LOCATION DESCRIPTION ANYWHERE IN THIS PERMIT. Part II Item B's
+    sampling-station location table (sheet 29) lists every other numbered station used in
+    this permit — 001, 002-083 (CSOs, by reference to Item C), 099, 300, 581, 586, 588, 601,
+    602, 800, 801, 901 — but has no row for 066, even though Part I,B Item 4 (sheet 10)
+    requires monitoring at it. Station 066's own notes header additionally prints
+    "1PE0007066" — seven digits, one short, the ONLY such typo among the 60+ station-ID
+    references checked in this document (see the grep in the self-check). Where 066
+    physically is, and why it alone has no Item B entry, is `[open]` — nothing else in this
+    corpus establishes it.
+  - >-
+    THE DOWNSTREAM-FARFIELD STATION HAS TWO DIFFERENT NUMBERS ON DIFFERENT PAGES. Part I,B
+    Item 13 (sheet 23) is titled "Table - Downstream-Farfield Monitoring - 900 - Final" for
+    "Station Number 1PE00007900" and its own notes are headed "Notes for Station Number
+    1PE00007900" — the number 900 appears three times on that one sheet. Part II Item B's
+    location table (sheet 29) instead lists "1PE00007901 Downstream monitoring in Mad River
+    at Old Mill Road" — no 900 appears anywhere in Item B. Both plainly describe the same
+    single downstream station (there is only one downstream-farfield monitoring requirement
+    in this permit); the document simply never reconciles which digit is correct. Recorded
+    as 900/901 throughout this file rather than silently picking one.
+  - >-
+    BYPASS 602'S OWN NOTE LETTERING SKIPS BACKWARDS. Sheet 20's notes for station
+    1PE00007602 run a, b, c, d, e (sheet 19) then f, g, h (sheet 20) — but the note AFTER
+    "h. Chlorine - see Part II, Item M." is again lettered "g.", not "i." ("g. Discharge
+    through this station under any condition except those specified in Part II, Item E is
+    prohibited..."). Two different notes on the same station share the letter "g." Both are
+    transcribed under bypass_602.notes_602 below, in print order, with their printed letters
+    preserved as printed.
+  - >-
+    THE SCHEDULE-OF-COMPLIANCE MILESTONE TABLE IS NOT A COMPLETE INDEX OF THE SCHEDULE, AND
+    ITS EVENT CODES DISAGREE WITH THE NARRATIVE THAT FOLLOWS IT. The one-page "Milestone
+    Summary Report" (sheet 24) stops at February 1, 2030 / April 1, 2030. The narrative in
+    Part I,C.2 (sheets 26-27) runs the CSO LTCP through TWO MORE named projects the table
+    never mentions at all — "Sunset Avenue Separation and Detention" (four milestones,
+    2032-2035) and "Programmatic Review" (due 2036-01-01) — neither with an event code
+    printed anywhere. Within what the table DOES cover: (1) event codes are zero-padded in
+    the narrative but not in the table for the same milestone, exactly the mansfield pattern
+    (table `4599` / narrative `(Event Code 04599)`; table `1499` / narrative `(Event Code
+    01499)`; table `3099` / narrative `(Event Code 03099)`); (2) the Weir Optimization
+    narrative's step iii (due 2028-02-01) is printed with "(Event Code 30199)" — IDENTICAL to
+    step ii's code for a different date (2027-02-01) — while the table gives step iii its own
+    distinct code, `30299`; (3) the Fountain Avenue Tunnel narrative reuses "(Event Code
+    30399)" for BOTH its step iii (2030-02-01, which the table also shows as `30399`, so
+    that one agrees) AND its step iv (2031-02-01, which is not in the table at all) — the
+    same code covering two different due dates; (4) "Initiate Design" is coded `1499`/`01499`
+    for the Fountain Avenue Tunnel project (2028-02-01) and coded IDENTICALLY for the John
+    Street Enhancement project's own, unrelated, "Initiate Design" milestone (2030-04-01) —
+    which may simply mean these are generic milestone-TYPE codes rather than per-project
+    codes, but the document never says so, and it means an event code alone cannot identify
+    which project's design-initiation report was filed. See schedule_of_compliance below for
+    the full narrative, transcribed with every code as printed.
+  - >-
+    THE BOUND FACT SHEET CONTRADICTS ITSELF ON WHEN CSO 003 WAS ELIMINATED. Its own
+    "DESCRIPTION OF EXISTING DISCHARGE" narrative (Fact Sheet p.7) states "CSO 003 was
+    eliminated in 2023 via separation," while Table 5's own footnote on the very data table
+    it is introducing (Fact Sheet p.20) reads "CSO 003 was eliminated in 2020 via sewer
+    separation." Two different years for the same fact, within the same 36-page sub-document.
+    Neither is corrected against the other here.
+  - >-
+    THE FACT SHEET COVER PRINTS A DIFFERENT PERMIT NUMBER THAN THE ISSUED PERMIT. The bound
+    Fact Sheet's own header reads "Ohio EPA Permit No.: 1PE00007*TD" — the draft/proposed
+    action code — while the issued permit that precedes it in this same PDF is "1PE00007*VD"
+    throughout. The Fact Sheet was evidently written for the proposed action (Public Notice
+    No. 208345, noticed 2024-12-16, comment period ending 2025-01-15) and bound in unchanged
+    after the permit was finalized two days after that comment period closed
+    (action_date 2025-01-17) with a different action-code suffix. Both are transcribed as
+    printed; no claim is made about what, if anything, changed in the interim.
+  - >-
+    THE E. COLI BLENDING EQUATION FOR STATION 099 IS STATED TWICE WITH DIFFERENT VARIABLE
+    NAMES. The operative permit (sheet 5, Part I,A.2, Note a) defines it with Q = "flow rate
+    (MGD)": "Combined Result = [(Q001 x C001) + (Q602 x C602)] / (Q001 + Q602)". The Fact
+    Sheet's own restatement of "the same" equation (p.14) instead uses V = "volume (MG)":
+    "Combined Result = [(V001 x C001) + (V602 x C602)] / (V001 + V602)". A rate and a volume
+    are not the same quantity; the permit's own version (Q, MGD) is the operative one.
+    Transcribed both ways, in place, below.
+
+  facility_name: Springfield Wastewater Treatment Plant
+  permit_no: 1PE00007*VD
+  application_no: OH0027481
+  permit_action: renewal
+  permit_action_source: >-
+    The authorization sentence on sheet 1 states no action type. "Renewal" is read from the
+    bound Fact Sheet's own title, "Fact Sheet for NPDES Permit Renewal, Springfield WWTP,
+    2024" — [verified], since the Fact Sheet is part of this same instrument, but note it is
+    the Fact Sheet's language, not the permit's own.
+  permittee: City of Springfield
+  facility_address: 965 Dayton Avenue, Springfield, Ohio, Clark County
+  receiving_water: Mad River
+  receiving_water_source: >-
+    Sheet 1 authorization sentence: "...discharge from the Springfield Wastewater Treatment
+    Plant, located at 965 Dayton Avenue, Springfield, Ohio, Clark County, (and associated
+    combined sewer overflows) to Mad River at River Mile 25.35 (and associated tributaries)
+    ...". Unlike mansfield, the receiving water IS named on the face of the authorization
+    sentence here.
+  river_mile: 25.35
+  cso_tributary_receiving_waters: >-
+    The authorization sentence's "(and associated tributaries)" covers the fact that most of
+    the 54 individually-numbered CSOs (Part II Item C) do not discharge to the Mad River
+    directly — the large majority discharge to Buck Creek or a named ditch to Buck Creek, a
+    smaller group to Mill Run or a ditch to Mill Run, and one (station 062) to a ditch
+    straight to the Mad River. See cso_stations below for the per-station receiving stream as
+    printed.
+  stream_network: >-
+    "Receiving Water: Mad River / Subsequent Stream Network: Great Miami River, Ohio River" —
+    printed on the Fact Sheet's own cover sheet (p.1). [verified] as part of this instrument
+    (unlike mansfield, where the equivalent chain came from the SiteProfile, not the permit).
+  action_date: '2025-01-17'
+  effective_date: '2025-03-01'
+  expiration_date: '2030-02-28'
+  signed_by: Anne M. Vogel, Director
+  signature_note: >-
+    The signature line on sheet 1 prints as a blank underscore ("_____________") above the
+    typed name and title in the extracted text layer — consistent with a digital signature
+    image that does not carry through as extractable text on a "Print To PDF" document, not
+    necessarily an unsigned copy. Not investigated further.
+  total_pages: 54
+  total_pages_note: 'The permit''s own count of ITSELF, sheets 1-54. See warnings[0] for the bound 36-page Fact Sheet that follows it in the same PDF.'
+  pdf_page_count: 90
+  renewal_application_due: >-
+    The permit's own text requires renewal submission "no later than 180 days prior to the
+    above date of expiration" — i.e. on or about 2029-09-01 for the 2030-02-28 expiration.
+    [inference] from the permit's stated rule; the permit prints no calendar date for it.
+
+  treatment_works_classification:
+    citation: 'Permit 1PE00007*VD, sheet 28, Part II Item A.1'
+    tag: '[verified]'
+    treatment_works: >-
+      Class IV under OAC 3745-7-04 — the highest class, requiring a designated professional
+      operator of record certified at class IV or greater.
+    collection_systems: >-
+      "All sewerage (collection) systems that are tributary to this treatment works are Class
+      II sewerage systems in accordance with paragraph (B)(1)(b) of rule 3745-7-04."
+
+  # ── Part II, Item B — sampling stations (sheet 29) ──────────────────────────────────────
+  sampling_stations:
+    citation: 'Permit 1PE00007*VD, sheet 29, Part II Item B'
+    tag: '[verified]'
+    '1PE00007001':
+      description: Final effluent, prior to blending with bypass flows
+      latitude_dms: 39 N 54' 56"
+      longitude_dms: 83 W 51' 03"
+      role: compliance point, outfall 001 (technology-based)
+    '1PE00007002-083':
+      description: 'Combined sewer overflows - see Part II, Item C (cso_stations below)'
+    '1PE00007066':
+      description: NOT LISTED — see permit.warnings; no location description printed anywhere for this station
+    '1PE00007099':
+      description: '"Fictitious" station, representative of blended flow of 1PE00007001 and 1PE00007602'
+      role: compliance point (E. coli), blended end-of-pipe
+    '1PE00007300': {description: System-wide sanitary sewer overflows}
+    '1PE00007581': {description: Beneficial use of Class B biosolids}
+    '1PE00007586': {description: Disposal of sewage sludge or biosolids in an authorized landfill}
+    '1PE00007588': {description: Transfer of sewage sludge or biosolids to another NPDES permittee}
+    '1PE00007601': {description: Influent monitoring}
+    '1PE00007602': {description: CSO-related bypass monitoring, prior to blending with secondary treatment effluent}
+    '1PE00007800': {description: Upstream monitoring in Mad River, upstream of confluence with Buck Creek}
+    '1PE00007801': {description: Upstream monitoring in Buck Creek, upstream of confluence with Mad River}
+    '1PE00007900_or_901':
+      description: Downstream monitoring in Mad River at Old Mill Road
+      id_note: 'Printed 901 here, 900 in Part I,B Item 13 (sheet 23). See permit.warnings.'
+
+  # ── Part II, Item C — combined sewer overflow roster (sheets 29-31) ─────────────────────
+  cso_stations:
+    citation: 'Permit 1PE00007*VD, sheets 29-31, Part II Item C'
+    tag: '[verified]'
+    preamble: >-
+      "The permittee is authorized to discharge from the following combined sewer overflows
+      (CSOs) only during wet weather periods when the flow in the sewer system exceeds the
+      capacity of the sewer system. See Part I,B for applicable monitoring and reporting
+      requirements. Also see Part III, Item 11."
+    count: 54
+    count_source: >-
+      Counted directly from the 54 rows below; independently confirmed by the Fact Sheet's
+      "Springfield WWTP has 54 combined sewer overflows (CSOs)." Historic numbers 003 and 018
+      are absent from this roster because both were eliminated before this permit issued
+      (see fact_sheet.description_of_existing_discharge.cso_elimination_note) and are not
+      carried forward — their absence is not a gap.
+    transcription_note: >-
+      Coordinates transcribed exactly as printed, including the defects in permit.warnings —
+      station 022's "93.9293N" (visually confirmed on a 300 DPI render, not corrected here),
+      stations 041/083's doubled-decimal longitudes ("83.83.7951 W", "83.83.7993 W", not
+      corrected here), and stations 014/026's missing opening parenthesis (a formatting
+      artifact of the source, visually confirmed for 014).
+    stations:
+      '1PE00007002': {description: 'Sigler & Pleasant', coordinate: '39.9208 N, 83.8421 W', receiving_stream: Buck Creek}
+      '1PE00007004': {description: 'Avenue B & Harshman Blvd', coordinate: '39.9305 N, 83.8467 W', receiving_stream: Buck Creek}
+      '1PE00007005': {description: 'Snyder St & Overlook Dr', coordinate: '39.9322 N, 83.8410 W', receiving_stream: Buck Creek}
+      '1PE00007006': {description: 'Bechtle Ave & Kinsman Ave', coordinate: '39.9332 N, 83.8329 W', receiving_stream: Buck Creek}
+      '1PE00007007': {description: Klobdenz Ave, coordinate: '39.9341 N, 83.8334 W', receiving_stream: Buck Creek}
+      '1PE00007008': {description: 'Main St & Bell Ave', coordinate: '39.9328 N, 83.8297 W', receiving_stream: Buck Creek}
+      '1PE00007010': {description: Shaffer St in Snyder Park, coordinate: '39.9327 N, 83.8244 W', receiving_stream: Buck Creek}
+      '1PE00007011': {description: West of Shaffer Street extension to Snyder Park, coordinate: '39.9329N, 83.8240 W', receiving_stream: Buck Creek}
+      '1PE00007012': {description: 'McCreight Ave & Yellow Springs St', coordinate: '39.9354 N, 83.8187 W', receiving_stream: Ditch to Buck Creek}
+      '1PE00007013': {description: 'East of Plum St, south bank', coordinate: '39.9314N, 83.8164 W', receiving_stream: Buck Creek}
+      '1PE00007014': {description: 'East of Plum St, north bank', coordinate: '39.9322N, 83.8167 W', coordinate_note: 'printed without an opening parenthesis; visually confirmed on the source (see permit.warnings)', receiving_stream: Buck Creek}
+      '1PE00007015': {description: 'Ward St, east of Plum St', coordinate: '39.9319N, 83.8165 W', receiving_stream: Buck Creek}
+      '1PE00007017': {description: Rockway St, coordinate: '39.9284N, 83.8113 W', receiving_stream: Buck Creek}
+      '1PE00007019': {description: 'Fountain Ave & Ferncliff Place', coordinate: '39.9295N, 83.8101 W', receiving_stream: Buck Creek}
+      '1PE00007020': {description: 'Fountain Ave & Warder St', coordinate: '39.9295N, 83.8101 W', receiving_stream: Buck Creek}
+      '1PE00007022': {description: 'Limestone St & Warder St', coordinate: '93.9293N, 83.8081 W', coordinate_note: 'printed exactly as shown, a document defect — see permit.warnings', receiving_stream: Buck Creek}
+      '1PE00007023': {description: 'West of Water St, south bank', coordinate: '39.9278N, 83.8028 W', receiving_stream: Buck Creek}
+      '1PE00007024': {description: 'Water St bridge, south bank', coordinate: '39.9278N, 83.8018 W', receiving_stream: Buck Creek}
+      '1PE00007025': {description: 'East of Water St at Spencer', coordinate: '39.9279N, 83.8008 W', receiving_stream: Buck Creek}
+      '1PE00007026': {description: 'Warder St, west of Power St', coordinate: '39.9281 N, 83.7980 W', coordinate_note: 'printed without an opening parenthesis', receiving_stream: Buck Creek}
+      '1PE00007027': {description: 'Front St & Chestnut St', coordinate: '39.9284 N, 83.7983 W', receiving_stream: Buck Creek}
+      '1PE00007028': {description: 'Front St & Sherman Ave', coordinate: '39.9302 N, 83.7962 W', receiving_stream: Buck Creek}
+      '1PE00007029': {description: 'Sherman Ave bridge, east of Buck Creek', coordinate: '39.9304 N, 83.7956 W', receiving_stream: Buck Creek}
+      '1PE00007030': {description: 'Northern Ave & Cedarview Dr', coordinate: '39.9364N, 83.7943 W', receiving_stream: Ditch to Buck Creek}
+      '1PE00007031': {description: 'Northern Ave, east of Cedarview Dr', coordinate: '39.9364 N, 83.7942 W', receiving_stream: Ditch to Buck Creek}
+      '1PE00007032': {description: 'Park Ave at James St. levee', coordinate: '39.9371 N, 83.7868 W', receiving_stream: Buck Creek}
+      '1PE00007033': {description: 'East of Park Ave at James St. levee', coordinate: '39.9376 N, 83.7853 W', receiving_stream: Buck Creek}
+      '1PE00007034': {description: 'West of Belmont St at Henry St levee', coordinate: '39.9390 N, 83.7822 W', receiving_stream: Buck Creek}
+      '1PE00007035': {description: West of Belmont St bridge, coordinate: '39.9387N, 83.7783 W', receiving_stream: Buck Creek}
+      '1PE00007036': {description: 'Lagonda Ave, north of Buck Creek', coordinate: '39.9389 N, 83.7766 W', receiving_stream: Buck Creek}
+      '1PE00007037': {description: 'CCC & St Louis Railroad', coordinate: '39.974N, 83.7703 W', receiving_stream: Ditch to Buck Creek}
+      '1PE00007038': {description: 'Burnett Rd at DT&I Railroad', coordinate: '39.9360N, 83.7689 W', receiving_stream: Ditch to Buck Creek}
+      '1PE00007039': {description: 'Main St at DT&I Railroad', coordinate: '39.9254N, 83.7617 W', receiving_stream: Ditch to Buck Creek}
+      '1PE00007040': {description: 'Penn St and Section St', coordinate: '39.9269 N, 83.8014 W', receiving_stream: Mill Run}
+      '1PE00007041': {description: 'East St at DT&I Railroad', coordinate: '39.9178N, 83.83.7951 W', coordinate_note: 'doubled decimal point printed in longitude — see permit.warnings', receiving_stream: Mill Run}
+      '1PE00007042': {description: 'East St at CCC and St Louis RR', coordinate: '39.9178N, 83.7951 W', receiving_stream: Mill Run}
+      '1PE00007043': {description: 'East St and Harrison St', coordinate: '39.9179N, 83.7944 W', receiving_stream: Mill Run}
+      '1PE00007044': {description: 'East of East St & south of Harrison St', coordinate: '39.9174N, 83.7930 W', coordinate_note: 'printed without a closing parenthesis', receiving_stream: Mill Run}
+      '1PE00007045': {description: 'Pine St and CCC & St Louis RR', coordinate: '39.9152N, 83.7897 W', receiving_stream: Mill Run}
+      '1PE00007046': {description: 'Lafayette St and CCC & St Louis RR', coordinate: '39.9146 N, 83.7880 W', receiving_stream: Mill Run}
+      '1PE00007047': {description: 'Burt St and Railroad, south bank', coordinate: '39.9142N, 83.7864 W', receiving_stream: Mill Run}
+      '1PE00007050': {description: 'Sheridan and Ludlow', coordinate: '39.9143 N, 83.7864 W', receiving_stream: Mill Run}
+      '1PE00007053': {description: 'Belmont Ave and Kenton St', coordinate: '39.9118N, 83.7809 W', receiving_stream: Mill Run}
+      '1PE00007055': {description: 'Sheridan Ave and Belmont Ave', coordinate: '39.9122 N, 83.7810 W', receiving_stream: Mill Run}
+      '1PE00007056': {description: Douglas Ave extension, coordinate: '39.9117N, 83.7795 W', receiving_stream: Ditch to Mill Run}
+      '1PE00007057A': {description: Douglas Ave extension at Mill Run, coordinate: '39.9116 N, 83.7794 W', receiving_stream: Mill Run}
+      '1PE00007057B': {description: Douglas Ave extension at Mill Run, coordinate: '39.9116 N, 83.7794 W', receiving_stream: Mill Run}
+      '1PE00007059': {description: 'West of Sturgeon St, south of city limits', coordinate: '39.8982N, 83.8208 W', receiving_stream: Ditch to Mill Run}
+      '1PE00007062': {description: '1623 Shelby Dr behind garage', coordinate: '39.9443N, 83.8369 W', receiving_stream: Ditch to Mad River}
+      '1PE00007068': {description: 'Levee Rd and Wayne Ave', coordinate: '39.9373 N, 83.7863 W', receiving_stream: Buck Creek}
+      '1PE00007069': {description: 'Water Front and Warder St', coordinate: '39.9282 N, 83.8018 W', receiving_stream: Buck Creek}
+      '1PE00007070': {description: Rockway St at regulator pit, coordinate: '39.9286 N, 83.8107 W', receiving_stream: Buck Creek}
+      '1PE00007082': {description: 'Behind 232 W. Auburn Ave', coordinate: '39.8982N, 83.8207 W', receiving_stream: Mill Run}
+      '1PE00007083': {description: York St at Mill Run, coordinate: '39.9201N, 83.83.7993 W', coordinate_note: 'doubled decimal point printed in longitude — see permit.warnings', receiving_stream: Mill Run}
+
+  # ── Part I,A.1 — outfall 001, whole term (sheets 2-4) ────────────────────────────────────
+  effluent_limits_001:
+    citation: 'Permit 1PE00007*VD, sheets 2-4, Part I,A.1'
+    tag: '[verified]'
+    period: 'effective date (2025-03-01) through expiration (2030-02-28) — one table, no phase-in'
+    outfall: '1PE00007001'
+    design_flow_basis: '"Effluent loadings based on average design flow of 25 MGD." (the permit''s own note)'
+    limits:
+      dissolved_oxygen: {units: mg/l, minimum: 5.0, monitoring: 1/Day Continuous, months: All}
+      total_suspended_solids_summer: {units: mg/l, weekly: 30, monthly: 20, load_weekly_kg: 2840, load_monthly_kg: 1900, monitoring: 3/Week 24hr Composite}
+      total_suspended_solids_winter: {units: mg/l, weekly: 45, monthly: 30, load_weekly_kg: 4260, load_monthly_kg: 2840, monitoring: 3/Week 24hr Composite}
+      oil_and_grease: {units: mg/l, maximum: 10, monitoring: 1 / 2 Weeks Grab, months: All}
+      ammonia_nh3_summer: {units: mg/l, weekly: 4.5, monthly: 3.0, load_weekly_kg: 426, load_monthly_kg: 284, monitoring: 5/Week 24hr Composite}
+      ammonia_nh3_winter: {units: mg/l, weekly: 15, monthly: 9.54, load_weekly_kg: 1420, load_monthly_kg: 903, monitoring: 5/Week 24hr Composite}
+      chlorine_total_residual_summer: {units: mg/l, maximum: 0.038, monitoring: 1/Day Multiple Grab, months: Summer}
+      chlorine_total_residual_winter: {units: mg/l, maximum: 0.038, monitoring: When Disch. Multiple Grab, months: Winter}
+      ph: {units: S.U., maximum: 9.0, minimum: 6.5, monitoring: 1/Day Continuous, months: All}
+      cbod_5_day_summer: {units: mg/l, weekly: 23, monthly: 15, load_weekly_kg: 2180, load_monthly_kg: 1420, monitoring: 3/Week 24hr Composite}
+      cbod_5_day_winter: {units: mg/l, weekly: 33, monthly: 22, load_weekly_kg: 3130, load_monthly_kg: 2090, monitoring: 3/Week 24hr Composite}
+      monitor_only_parameters: >-
+        Water temperature (1/Day Maximum Indicating Thermometer, All); total Kjeldahl
+        nitrogen and nitrite-plus-nitrate (1/2 Weeks 24hr Composite, All); total phosphorus
+        (2/Week 24hr Composite, All); dissolved orthophosphate (1/Month Grab, All); the metals
+        suite — nickel, zinc, cadmium, lead, chromium total, copper (1/Month 24hr Composite,
+        All) and dissolved hexavalent chromium (1/Month Grab, All); low-level mercury and
+        free cyanide (1/Month Grab, All); flow rate (1/Day Continuous, All); total filterable
+        residue (1/Month 24hr Composite, All); the full WET battery — acute and chronic
+        toxicity on both Ceriodaphnia dubia and Pimephales promelas (1/Year 24hr Composite,
+        September). E. coli is ALSO printed as all-dashes (monitor only) at this station — its
+        limits attach at the fictitious blended station 099 instead (see below).
+    notes:
+      citation: 'Permit 1PE00007*VD, sheet 4'
+      a: 'Total residual chlorine - See Part II, Item M. "When discharging" in winter means the permittee shall report a value for each day that chlorine is used for disinfection; the critical (maximum) multiple-grab value is reported for each day.'
+      b: 'Free cyanide - See Part II, Item S.'
+      c: 'Mercury - See Part II, Item T.'
+      d: 'Orthophosphate - See Part II, Item U.'
+      e: 'Toxicity Biomonitoring - See Part II, Item X.'
+      f: >-
+        E. coli - "Effluent limits are applied at 'fictitious' station 1PE00007099. The
+        disinfection system shall be operated to achieve a performance standard of 284
+        #/100 mL (7-day geometric mean) and 126 #/100 mL (30-day geometric mean). Results
+        from this station shall be mathematically combined with the results from
+        1PE00007602 and reported under 1PE00007099."
+
+  # ── Part I,A.2 — fictitious blended station 099, whole term (sheet 5) ───────────────────
+  effluent_limits_099:
+    citation: 'Permit 1PE00007*VD, sheet 5, Part I,A.2'
+    tag: '[verified]'
+    period: 'effective date (2025-03-01) through expiration (2030-02-28)'
+    outfall: '1PE00007099 ("Fictitious" outfall)'
+    limits:
+      e_coli: {units: '#/100 ml', weekly: 284, monthly: 126, monitoring: 1/Day Grab, months: Summer}
+    note_a: >-
+      "E. coli monitoring results from 1PE00007001 and 1PE00007602 shall be mathematically
+      combined and reported under this station. The following flow-weighted equation shall be
+      used to calculate E. coli results: Combined Result = [(Q001 x C001) + (Q602 x C602)] /
+      (Q001 + Q602) Where: Q = flow rate (MGD), C = E. coli count (#/100 mL)." Compare the
+      Fact Sheet's restatement of this equation using V (volume, MG) instead of Q — see
+      permit.warnings.
+
+  # ── Part I,B — CSO, bypass, SSO, sludge, influent, upstream/downstream stations ─────────
+  cso_monitoring:
+    citation: 'Permit 1PE00007*VD, sheets 6-9, Part I,B Items 1-3'
+    tag: '[verified]'
+    item_1_table_005:
+      citation: 'Permit 1PE00007*VD, sheets 6-7, Part I,B Item 1'
+      stations: ['1PE00007005', '1PE00007006', '1PE00007035', '1PE00007039', '1PE00007041']
+      limits:
+        total_suspended_solids: {units: mg/l, monitoring: 1/Quarter Grab, months: Quarterly - Alt.}
+        total_kjeldahl_nitrogen: {units: mg/l, monitoring: 1/Quarter Grab, months: Quarterly - Alt.}
+        phosphorus_total: {units: mg/l, monitoring: 1/Quarter Grab, months: Quarterly - Alt.}
+        overflow_occurrence: {units: No./Month, monitoring: 1/Month Total, months: All}
+        overflow_volume: {units: Million Gallons, monitoring: 1/Month 24hr Total, months: All}
+      notes: >-
+        a: authorized only during wet weather periods when flow exceeds sewer capacity (see
+        Part III Item 11). b: DMR required every month even if no discharge (select "No
+        Discharge"). c: occurrence/volume by electronic meter, may be estimated if
+        unavailable. d: intermittent same-day discharges count as one occurrence; a
+        continuing precipitation event spanning days is also one occurrence, reported on Day
+        1. e: overflow volume reported each day of discharge. f: TSS/phosphorus/TKN sampled
+        once per quarter on a discharge day, during normal working hours. g: "Quarterly-Alt"
+        means March, June, September, December. h: 'Combined Sewer Overflows - See Part II, Items C and D.'
+    item_2_table_010:
+      citation: 'Permit 1PE00007*VD, sheet 8, Part I,B Item 2'
+      stations: ['1PE00007010', '1PE00007012', '1PE00007025', '1PE00007036', '1PE00007059']
+      limits:
+        overflow_occurrence: {units: No./Month, monitoring: 1/Month Total, months: All}
+        overflow_volume: {units: Million Gallons, monitoring: When Disch. Estimate, months: December}
+      notes: >-
+        a-b, d: same wet-weather/DMR/counting rules as Item 1. c: occurrence by electronic
+        meter, may be estimated if unavailable. e: volume may be estimated by modeling if a
+        device is unavailable or unrepresentative; December DMR submission may be delayed for
+        modeling but not later than April 20. f: volume reported as the calendar-year
+        summation. g: 'Combined Sewer Overflows - See Part II, Items C and D.'
+    item_3_table_013:
+      citation: 'Permit 1PE00007*VD, sheet 9, Part I,B Item 3'
+      named_station: '1PE00007013'
+      other_stations_count_as_printed: 'see permit.warnings — the permit prints "46" in one sentence and implies 49 (013 + "other 48") in the next; neither matches the Fact Sheet''s 44 or the Item C roster count'
+      other_stations_count_actual: 44
+      limits:
+        overflow_occurrence_per_year: {units: No./Year, monitoring: When Disch. Estimate, months: December}
+        overflow_volume: {units: Million Gallons, monitoring: When Disch. Estimate, months: December}
+      notes: >-
+        a: wet-weather-only, same as Items 1-2. b: occurrence-per-year and volume reported
+        for the calendar year on Day 1 of the December DMR; "No Discharge" box if none all
+        year. c: may be estimated by modeling if a device is unavailable/unrepresentative;
+        December DMR may be delayed for modeling but not later than April 20. d: intermittent
+        same-day / continuing-event counting rule, same as Item 1. e: volume reported as the
+        calendar-year summation. f: 'Combined Sewer Overflows - See Part II, Items C and D.'
+
+  monitoring_stations:
+    citation: 'Permit 1PE00007*VD, sheets 10-23, Part I,B Items 4-13'
+    tag: '[verified]'
+    bypass_066:
+      citation: 'Permit 1PE00007*VD, sheet 10, Part I,B Item 4'
+      description: "Treatment plant's bypass, monitored when discharging"
+      limits:
+        bypass_occurrence: {units: No./Day, monitoring: When Disch. 24hr Total, months: All}
+        bypass_total_hours_per_day: {units: Hrs/Day, monitoring: When Disch. 24hr Total, months: All}
+        bypass_volume: {units: MGAL, monitoring: When Disch. 24hr Total, months: All}
+      notes_header_typo: >-
+        The notes for this station are headed "Notes for Station Number 1PE0007066" — seven
+        digits, one short of the correct eight-digit "1PE00007066" used as the station number
+        one line above. The only such typo found in this document — see permit.warnings.
+      notes: >-
+        a: occurrence/volume/duration may be estimated if no measuring device. b: DMR
+        required every month. c: monitored/reported each day of discharge. d: "No Discharge"
+        box if none all month. e: intermittent same-day / continuing-event counting rule, one
+        "1" on the first day. f: 'Discharge through this station is prohibited. The Director may take enforcement action for violations of this prohibition unless the three conditions specified at 40 CFR 122.41(m) and in Part III, Item 11.C.1 of this permit are met.'
+    sso_300:
+      citation: 'Permit 1PE00007*VD, sheet 11, Part I,B Item 5'
+      parameter: {code: '74062', name: Overflow Occurrence, units: No./Month, monitoring: 1/Month Total, months: All}
+      note_a: >-
+        The 1/Month frequency is a REPORTING frequency, not a monitoring one — "these
+        overflows shall be monitored on each day when they discharge." Only SSOs that enter
+        waters of the state (directly or via storm sewer) are reported at this station.
+      note_b: >-
+        Each location overflowing on a given day counts as one occurrence; if two locations
+        overflow the same day, that is two occurrences; continuing overflows are counted
+        each day they continue. Total occurrences reported on Day 1 of the DMR; "zero" if none.
+      note_c: 'All sanitary sewer overflows are prohibited.'
+      note_d: 'See Part II, Items F and G.'
+    biosolids_581:
+      citation: 'Permit 1PE00007*VD, sheets 12-14, Part I,B Item 6'
+      description: "Treatment works' Class B Biosolids"
+      frequency: 1/Quarter Composite (Quarterly - Alt.)
+      monitor_only: {ammonia_nh3: mg/kg, tkn: mg/kg, phosphorus_total: mg/kg, potassium: mg/kg}
+      ceilings_mg_per_kg: {arsenic: 75, cadmium: 85, copper: 4300, lead: 840, nickel: 420, zinc: 7500, selenium: 100, mercury: 57, molybdenum: 75}
+      fecal_coliform_max: {units: CFU/gram, maximum: 2000000, monitoring: 1/Quarter Multiple Grab}
+      sludge_fee_weight: {units: dry tons, monitoring: 1/Quarter Total}
+      notes_summary: >-
+        Detailed sampling/reporting rules (notes a-j) mirror the mansfield pattern: monitored
+        prior to removal for beneficial use; fecal coliform via geometric mean of up to seven
+        two-week grab samples per 40 CFR 136/Standard Methods; metal/nutrient analysis waived
+        when biosolids are not disposed by hauling/transfer; percent-total-solids conversion
+        (dry tons = gallons x 8.34 x 0.0005 x fraction solids); see Part II Items O, P, Q, R.
+    sludge_586:
+      citation: 'Permit 1PE00007*VD, sheet 15, Part I,B Item 7'
+      description: "Treatment works' final sludge — disposal in a municipal solid waste landfill"
+      parameter: {code: '51129', name: Sludge Fee Weight, units: dry tons, monitoring: 1/Year Total, month: December}
+    sludge_588:
+      citation: 'Permit 1PE00007*VD, sheet 16, Part I,B Item 8'
+      description: "Treatment works' final sludge — transfer to another NPDES permit holder"
+      parameter: {code: '70316', name: Sludge Weight, units: Dry Tons, monitoring: 1/Year Total, month: December}
+    influent_601:
+      citation: 'Permit 1PE00007*VD, sheets 17-18, Part I,B Item 9'
+      description: "Influent wastewater downstream of the bar screen — all monitor-only, no limits"
+      parameters: >-
+        Total suspended solids (3/Week 24hr Composite); total cyanide (1/Month Grab); the
+        metals suite — nickel, zinc, cadmium, lead, total chromium, copper (1/Month 24hr
+        Composite) and dissolved hexavalent chromium (1/Month Grab); low-level mercury
+        (1/Month Grab); pH maximum and minimum (1/Day Continuous); CBOD 5-day (3/Week 24hr
+        Composite) — all months, all "All".
+      note_a: 'Sampling for the respective/common parameters shall occur on the same day as Outfall 1PE00007001.'
+      note_b: 'Mercury - See Part II, Item T.'
+    bypass_602:
+      citation: 'Permit 1PE00007*VD, sheets 19-20, Part I,B Item 10'
+      description: "Treatment plant's bypass, monitored when discharging — CSO-related, carries real limits"
+      limits:
+        total_suspended_solids: {units: mg/l, maximum: 30, monitoring: 1/Quarter Composite, months: Quarterly - Alt.}
+        chlorine_total_residual: {units: mg/l, maximum: 0.038, monitoring: When Disch. Multiple Grab, months: Summer}
+      monitor_only: {bypass_occurrence: 'No./Day (00051)', bypass_total_hours_per_day: 'Hrs/Day (00052)', bypass_volume: 'MGAL (51428)', e_coli: '#/100 ml, When Disch. Grab, Summer — combined into 099'}
+      notes_602:
+        citation: 'Permit 1PE00007*VD, sheets 19-20 — see permit.warnings on the duplicate letter "g."'
+        a: 'Discharges through this station are approved as a CSO-related bypass under certain conditions. See Part II, Item E.'
+        b: 'Data for bypass occurrence, bypass duration, and bypass volume may be estimated if a measuring device is not available.'
+        c: 'A DMR for this station must be submitted every month; "No Discharge" box if none.'
+        d: 'Monitoring and sampling shall be conducted and reported on each day that there is a discharge.'
+        e: 'Bypass Occurrence: intermittent same-day / continuing-event counting rule, one "1" on the first day.'
+        f: >-
+          Total Suspended Solids - the "Maximum" limit applies to a calculated QUARTERLY
+          AVERAGE (arithmetic mean of all events in the quarter), reported as a "Maximum" on
+          the March/June/September/December DMRs; individual-event results retained.
+        g_1_ecoli: >-
+          E. coli - "Effluent limits are applied at 'fictitious' station 1PE00007099. The
+          disinfection system shall be operated to achieve a performance standard of 126
+          #/100 mL (30-day geometric mean). Results from this station shall be mathematically
+          combined with the results from 1PE00007001 and reported under 1PE00007099."
+        h: 'Chlorine - see Part II, Item M.'
+        g_2_discharge_prohibition: >-
+          "Discharge through this station under any condition except those specified in Part
+          II, Item E is prohibited. The Director may take enforcement action for violations of
+          this prohibition unless the three conditions specified at 40 CFR 122.41(m) and in
+          Part III, Item 11.C.1 of this permit are met." Printed with the SAME letter "g." as
+          the E. coli note above it, after "h." — see permit.warnings.
+    upstream_800:
+      citation: 'Permit 1PE00007*VD, sheet 21, Part I,B Item 11'
+      description: 'Receiving stream, upstream of the point of discharge'
+      chemistry: 'Ammonia, TKN, nitrite plus nitrate, total phosphorus — 1/Month Grab, All'
+      bacteria: 'E. coli, 1 / 2 Weeks Grab, June - Aug'
+      ambient_toxicity: >-
+        48-Hr Acute Ceriodaphnia dubia and 96-Hr Acute Pimephales promelas, 7-Day Chronic
+        Ceriodaphnia dubia and 7-Day Chronic Pimephales promelas — all "% Affected", 1/Year
+        Grab, September. No limits — monitor only, same as station 001's toxicity battery.
+      note_a: 'Sampling for the respective/common parameters shall occur on the same day as Outfall 1PE00007001.'
+      note_b: 'Toxicity Biomonitoring - see Part II, Item X.'
+    upstream_801:
+      citation: 'Permit 1PE00007*VD, sheet 22, Part I,B Item 12'
+      description: 'Receiving stream, upstream of the point of discharge (second upstream station)'
+      chemistry: 'Ammonia, TKN, nitrite plus nitrate, total phosphorus — 1/Month Grab, All'
+      bacteria: 'E. coli, 1 / 2 Weeks Grab, June - Aug'
+      note_a: 'Sampling for the respective/common parameters shall occur on the same day as Outfall 1PE00007001.'
+      asymmetry_note: >-
+        801 carries NO toxicity battery, unlike 800 (see sampling_stations: 800 = "upstream of
+        confluence with Buck Creek" on the Mad River itself, 801 = "upstream of confluence
+        with Mad River" on Buck Creek — the WET tests run only at the Mad River station).
+    downstream_900_or_901:
+      citation: 'Permit 1PE00007*VD, sheet 23, Part I,B Item 13 — station number printed both 900 (here) and 901 (Item B); see permit.warnings'
+      description: 'Receiving stream, downstream of the point of discharge'
+      parameters: >-
+        Water temperature, pH, ammonia, TKN, nitrite plus nitrate, total phosphorus, total
+        hardness (as CaCO3) — 1/Month Grab, All; E. coli — 1 / 2 Weeks Grab, June - Aug.
+      note_a: 'Sampling for the respective/common parameters shall occur on the same day as Outfall 1PE00007001.'
+
+  # ── Part I,C — SCHEDULE OF COMPLIANCE (sheets 24-27) ────────────────────────────────────
+  schedule_of_compliance:
+    citation: 'Permit 1PE00007*VD, sheets 24-27, Part I,C'
+    tag: '[verified]'
+    finding: >-
+      This plant is under a CSO Long Term Control Plan compliance schedule that runs, on the
+      face of the narrative (not the summary table — see permit.warnings), from 2026-02-01
+      through 2036-01-01 — six years past this permit's own 2030-02-28 expiration. Part I,C.2
+      item f says so explicitly: "This Schedule of Compliance includes items that extend
+      beyond the expiration date of this NPDES permit ... The requirements of Schedule of
+      Compliance will be included in permit number 1PE00007 when it is renewed."
+    milestone_summary_report:
+      citation: 'Permit 1PE00007*VD, sheet 24 — INCOMPLETE, see permit.warnings; transcribed verbatim including its unpadded event codes'
+      milestones:
+      - {section: 'CSO LTCP — Weir Optimization', report_event: 'Initiate Project, Submit Progress Report 1', event_code: '30099', due: '2026-02-01'}
+      - {section: 'CSO LTCP — Weir Optimization', report_event: Submit Progress Report 2, event_code: '30199', due: '2027-02-01'}
+      - {section: 'CSO LTCP — Weir Optimization', report_event: Submit Progress Report 3, event_code: '30299', due: '2028-02-01'}
+      - {section: 'CSO LTCP — Weir Optimization', report_event: End Construction, event_code: '4599', due: '2029-02-01'}
+      - {section: 'CSO LTCP — Fountain Avenue Tunnel', report_event: Initiate Design, event_code: '1499', due: '2028-02-01'}
+      - {section: 'CSO LTCP — Fountain Avenue Tunnel', report_event: Begin Construction, event_code: '3099', due: '2029-02-01'}
+      - {section: 'CSO LTCP — Fountain Avenue Tunnel', report_event: Submit Progress Report 4, event_code: '30399', due: '2030-02-01'}
+      - {section: 'CSO LTCP — John Street Enhancement', report_event: Initiate Design, event_code: '1499', due: '2030-04-01'}
+      - {section: Municipal Pretreatment Schedule, report_event: Effluent Limits For Pollutants, event_code: '52599', due: '6 months after the permit effective date'}
+    municipal_pretreatment_schedule:
+      part: I,C.1
+      due: '2025-09-01'
+      due_basis: '[inference] — the permit says "no later than 6 months after the permit effective date"; 2025-03-01 + 6 months.'
+      event_code: '52599'
+      submit_to: 'Ohio EPA, Central Office Pretreatment Unit and to Ohio EPA, Southwest District Office'
+      requirement: >-
+        Evaluate the adequacy of local industrial user limitations to prevent pollutants
+        entering the POTW that would interfere with its operation, pass through in amounts
+        exceeding water quality standard-based limits, be incompatible with the POTW, or
+        limit wastewater/sludge use options. Submit either a technical justification for
+        REVISING local limits (with a pretreatment program modification request) or a
+        technical justification for RETAINING the existing ones, addressing 9 required
+        elements (i-ix: pollutants of concern, plant/industrial flow including hauled waste,
+        domestic/background concentrations via a 3-location/5-day or 2-location/7-day
+        sampling design, plant removal efficiencies, headworks loading comparison, allocation
+        method if limits are revised, narrative/BMP local limits if proposed, supporting
+        data/methodology, and a licensed Ohio PE's stamp if limits are revised).
+      pollutants_requiring_justification: >-
+        Arsenic, cadmium, total chromium, dissolved hexavalent chromium, copper, free
+        cyanide, lead, mercury, molybdenum, nickel, selenium, silver and zinc — "unless
+        screening of wastewater and sludge indicate these pollutants are not present in
+        significant amounts" — plus any other pollutant where a local limit may be necessary.
+      revisions: >-
+        A revised report is due within 90 days of Ohio EPA notifying the permittee of
+        deficiencies; revised limits must be incorporated into all industrial user control
+        documents no later than 4 months after Ohio EPA's approval.
+      sampling_methods: >-
+        Mercury (EPA 245.1/245.2, or 1631/245.7 if below detection) and free cyanide (ASTM
+        D7237, OIA-1677-09, or ASTM D4282-02 with sufficiently-sensitive documentation) methods
+        specified for domestic-background sampling.
+    cso_long_term_control_plan:
+      part: I,C.2
+      preamble: >-
+        "The permittee's Integrated Long Term Control Plan Update (LTCP) is approved by Ohio
+        EPA as an interim phase. The approved projects are proposed to attain an interim
+        level of control of 85% capture of wet weather flows, to be implemented over a 20-year
+        schedule. The permittee shall implement the LTCP as expeditiously as possible but no
+        later than the dates in the following schedule."
+      weir_optimizations:
+        letter: a
+        steps:
+        - {step: i, due: '2026-02-01', event_code: '30099', requirement: 'Initiate implementation of the weir optimization projects; notify Ohio EPA within 14 days of initiating.'}
+        - {step: ii, due: '2027-02-01', event_code: '30199', requirement: 'Submit a progress report on weir optimization implementation (may combine with the CSO Annual Report, Part II Item D.2).'}
+        - {step: iii, due: '2028-02-01', event_code: '30199', event_code_note: 'IDENTICAL to step ii''s code for a different date; the table gives this step its own code, 30299 — see permit.warnings.', requirement: 'Submit a progress report on weir optimization implementation (may combine with the CSO Annual Report).'}
+        - {step: iv, due: '2029-02-01', event_code: '04599', event_code_note: 'padded; the table prints the unpadded 4599 for this milestone.', requirement: 'Complete weir optimization implementation and submit a summary report to Ohio EPA (may combine with the CSO Annual Report).'}
+      fountain_avenue_tunnel:
+        letter: b
+        steps:
+        - {step: i, due: '2028-02-01', event_code: '01499', event_code_note: 'padded; table prints unpadded 1499.', requirement: 'Initiate design of the Fountain Avenue project; notify Ohio EPA within 14 days.'}
+        - {step: ii, due: '2029-02-01', event_code: '03099', event_code_note: 'padded; table prints unpadded 3099.', requirement: 'Initiate construction and submit notification to Ohio EPA (may combine with the CSO Annual Report).'}
+        - {step: iii, due: '2030-02-01', event_code: '30399', requirement: 'Submit a progress report on construction (may combine with the CSO Annual Report).'}
+        - {step: iv, due: '2031-02-01', event_code: '30399', event_code_note: 'IDENTICAL code to step iii, for a DIFFERENT due date; this step is not in the milestone table at all — see permit.warnings.', requirement: 'Submit a progress report on construction (may combine with the CSO Annual Report).'}
+        - {step: v, due: '2032-02-01', event_code: null, event_code_note: 'no event code printed anywhere for this step; not in the milestone table.', requirement: 'Complete construction of the Fountain Avenue project; notify Ohio EPA within 14 days of completion.'}
+      john_street_enhancement:
+        letter: c
+        steps:
+        - {step: i, due: '2030-04-01', event_code: '01499', event_code_note: 'padded; table prints unpadded 1499 — IDENTICAL code to Fountain Avenue Tunnel step b.i, a different project on a different date. See permit.warnings.', requirement: 'Initiate design of the John Street project; notify Ohio EPA within 14 days.'}
+        - {step: ii, due: '2031-04-01', event_code: '30499', event_code_note: 'not in the milestone table at all.', requirement: 'Initiate construction of the John Street project; notify Ohio EPA within 14 days of beginning.'}
+        - {step: iii, due: '2032-01-01', event_code: null, event_code_note: 'no event code printed; not in the milestone table.', requirement: 'Complete construction of the John Street project; notify Ohio EPA within 14 days of completion.'}
+      sunset_avenue_separation_and_detention:
+        letter: d
+        table_presence: 'ABSENT from the milestone summary table entirely — see permit.warnings.'
+        steps:
+        - {step: i, due: '2032-07-01', event_code: null, requirement: 'Initiate design of the Sunset Avenue project; notify Ohio EPA within 14 days.'}
+        - {step: ii, due: '2033-07-01', event_code: null, requirement: 'Begin construction of the Sunset Avenue project; notify Ohio EPA within 14 days of beginning.'}
+        - {step: iii, due: '2034-02-01', event_code: null, requirement: 'Submit a progress report on construction (may combine with the CSO Annual Report).'}
+        - {step: iv, due: '2035-01-01', event_code: null, requirement: 'Complete construction of the Sunset Avenue project; notify Ohio EPA within 14 days of completion.'}
+      programmatic_review:
+        letter: e
+        table_presence: 'ABSENT from the milestone summary table entirely — see permit.warnings.'
+        steps:
+        - {step: i, due: 'upon completion of the last of items a, b, c and d', event_code: null, requirement: 'Initiate a programmatic review of LTCP implementation.'}
+        - {step: ii, due: '2036-01-01', event_code: null, requirement: 'Submit a programmatic review report — assessment of level of control attained, re-evaluation of financial capability, and (if applicable) a proposal and justification for LTCP project or schedule revisions.'}
+      note_f: >-
+        "This Schedule of Compliance includes items that extend beyond the expiration date of
+        this NPDES permit, 1PE00007*VD. The requirements of Schedule of Compliance will be
+        included in permit number 1PE00007 when it is renewed."
+
+  # ── Part II — other requirements of note (sheets 28-42) ─────────────────────────────────
+  other_requirements_of_note:
+    citation: 'Permit 1PE00007*VD, Part II, sheets 28-42'
+    tag: '[verified]'
+    operator_certification:
+      item: 'A. Operator Certification Requirements (sheet 28)'
+      classification: 'Class IV treatment works under OAC 3745-7-04; tributary collection systems are Class II.'
+      professional_operator_of_record: >-
+        Notify the Director within 3 days of a change; renewal applications must include an
+        updated Operator of Record Notification form; a backup operator one classification
+        lower may serve up to 30 consecutive days without notice (longer with Director
+        authorization on written request, e.g. military leave or long-term illness).
+      minimum_staffing: 'Per OAC 3745-7-04(C)(1) (treatment works) and (C)(2) (collection system), or an approved staffing-hour reduction plan; loss of the plan''s underlying conditions forces an immediate return to the baseline requirement.'
+    cso_conditions:
+      item: 'D. CSO Conditions (sheets 32-33)'
+      nine_minimum_controls: >-
+        Standard NMC list: O&M of collection system and CSOs; maximize in-system storage
+        prior to CSO; review/modify pretreatment to minimize CSO impact of nondomestic
+        discharges; maximize POTW treatment of wet weather flow; prohibit dry-weather
+        overflows; control solids/floatables in CSO discharge; inspect/monitor/report CSOs;
+        pollution-prevention programs; public notification for affected areas.
+      cso_annual_report:
+        due: 'January 31 each year, to Ohio EPA Southwest District Office'
+        contents: 'Frequency/volume of CSO discharges per station (meter or hydraulic-model data); parameter monitoring data; a summary of nine-minimum-control actions; a summary of LTCP implementation and coming-year activities.'
+      cso_permit_reopener: 'Modification/revocation-reissuance triggers: new/revised CSO or SSO law; new information showing CSO controls have failed to attain WQS; new information from LTCP development/implementation; or any 40 CFR 122.62 / OAC 3745-33-04 reason.'
+    cso_related_bypass:
+      item: 'E. CSO-Related Bypass (sheet 33)'
+      design_basis: '"The average daily design flow of the facility''s secondary treatment processes is 25 MGD, with a peak hydraulic capacity of 40 MGD. The facility also has a high rate treatment facility which provides an additional 100 MGD of partial treatment capacity."'
+      numeric_trigger: >-
+        "A CSO-related bypass, monitored at Bypass Station 1PE00007602, is approved when the
+        flow rate to the treatment plant exceeds 40 MGD as a result of a precipitation event.
+        Bypasses that occur when the flow rate at the time of the bypass is under the
+        specified flow rate are not approved under this condition and are subject to the
+        bypass provision at 40 CFR 122.41(m)."
+      minimum_treatment: 'Solids & floatables removal, primary clarification, and disinfection (in summer).'
+      significance: >-
+        The enforceable form of the fact sheet's HRT/bypass background — testable against the
+        plant's own flow record: "was 40 MGD exceeded at the plant before the bypass?"
+    sso_reporting:
+      item: 'F. Sanitary Sewer Overflow (SSO) Reporting Requirements (sheets 33-35)'
+      imminent_endangerment: '24-hour phone notice to Ohio EPA (1-800-282-9378) and the local Board of Health, plus a 5-day written follow-up report (8 required elements).'
+      all_ssos: 'System-wide occurrence count on the monthly DMR at station 300; a public annual report (due March 31) with an SSO ID/location/receiving-water table (numbered from 301), a date/volume table, and a water-in-basements (WIB) summary with narrative analysis by location/frequency/cause.'
+    bypass_trigger: 'see cso_related_bypass above'
+    biomonitoring_program:
+      item: 'X. Biomonitoring Program Requirements (sheets 37-39)'
+      text: '"The permittee shall continue to implement an effluent biomonitoring program to determine the toxicity of the effluent from outfall 1PE00007001."'
+      sop_due: '2025-06-01 [inference] — "no later than three months after the effective date" (2025-03-01 + 3 months); the permit prints no calendar date.'
+      testing: >-
+        Chronic and definitive acute toxicity tests for the duration of the permit, on both
+        Ceriodaphnia dubia and Pimephales promelas, per Ohio EPA's "Reporting and Testing
+        Guidance for Biomonitoring," July 1998 (or current revision); ambient/upstream
+        control water from station 800.
+      significance: '"Continue to implement" means the biomonitoring program predates this permit renewal — consistent with the Fact Sheet''s Category 4 (no toxicity) finding, see fact_sheet below.'
+    pretreatment_program_requirements:
+      item: 'Y. Pretreatment Program Requirements (sheets 39-43)'
+      approved: 'March 1, 1985, and all subsequent modifications approved before this permit''s effective date.'
+      elements_indexed: >-
+        Legal authority and interjurisdictional agreements; adequate funding/staffing;
+        industrial user inventory and Significant Industrial User notification within 30
+        days; slug-load control plan evaluation (existing SIUs within 1 year if never
+        evaluated, new SIUs within 1 year of designation); technically based local limits;
+        control mechanisms meeting OAC 3745-3-03(C)(1)(c); compliance monitoring/inspection
+        (SIUs at least annually); annual POTW priority-pollutant monitoring of influent,
+        effluent and sludge (results on Ohio EPA Form 4221 with the annual report);
+        enforcement and a February 15 published Significant-Noncompliance list; quarterly
+        (Feb/May/Aug/Nov 15) industrial-user violation reports and a March 15 annual
+        pretreatment report; 3-year record retention (extended during unresolved litigation);
+        program-modification review (45-day effective date unless deemed substantial).
+      local_limits_wla_table_ug_per_l: {arsenic: 680, cadmium: 33, chromium_hexavalent: 31, chromium_total: 1234, copper: 89, cyanide_free: 62, lead: 158, mercury_ng_l: 12, molybdenum: 102860, nickel: 770, selenium: 23, silver: 6.7, zinc: 680}
+    stormwater_no_exposure_certification:
+      item: 'W. Stormwater No Exposure Certification (sheet 37)'
+      text: >-
+        Certification number 1GRN00745*BG, signed 2022-10-06. Must be re-affirmed every five
+        years; a new form (or other compliance provision) is due no later than 2027-10-06.
+    limits_below_quantification:
+      item: 'M. Limits Below Quantification (sheets 35-36)'
+      table: {parameter: Chlorine, Total Residual, pql_mg_l: 0.050}
+      rule: >-
+        For maximum limits, any value reported below the QL is in compliance; for average
+        limits, compliance uses the arithmetic mean with zero substituted for sub-QL values.
+        All results, even sub-QL, must be reported (above-QL: report as-is; above-MDL/below-QL:
+        report as-is; below-MDL: report "AA" - below detection).
+    other_items_present:
+      note: >-
+        Transcribed as an index of what Part II contains, so a later reader knows what is in
+        the instrument without re-walking it. Not summarized in detail here.
+      items: >-
+        B. Sampling station locations (see sampling_stations above) · C. CSO station list
+        (see cso_stations above) · G. Maintain treatment/sewerage works per ORC 6111.01 · H.
+        Non-flow parameters need not be monitored on unstaffed days (report "AN") · I.
+        Composite sample method · J. Grab sample method · K. Multiple grab sample method
+        (≥3 grabs, ≥3 hours apart; critical value reported) · L. 85 percent removal
+        requirement (CBOD5 and TSS) · N. WQBELs may be revised per updated WLAs/TMDLs · O.
+        Sludge/biosolids handling per ORC 6111/OAC 3745-40 · P. Annual sludge report due
+        March 1 · Q. Pathogen/vector-attraction-reduction SOPs (OAC 3745-40-09) · R. Sampling
+        Plan maintenance (locations, frequency, procedures, storage/preservation; ≥6 grabs
+        for biosolids composites) · S. Free cyanide (low-level) method · T. Mercury
+        (low-level) method · U. Dissolved orthophosphate method (0.45 micron filter within 15
+        minutes, analyzed within 48 hours) · V. Outfall signage (name/permit number/outfall
+        number/phone, ≥2in letters, ≥2ft x 2ft sign, ≥3ft above ground, CSO warning language
+        where applicable).
+
+  # ── The bound Fact Sheet — a distinct sub-document, PDF pages 55-90 (its own p.1-36) ────
+  fact_sheet:
+    tag: '[verified]'
+    note: >-
+      Everything in this block is read off the bound "Fact Sheet for NPDES Permit Renewal,
+      Springfield WWTP, 2024" (PDF index 54-89) — the Director's supporting technical
+      rationale, NOT an operative permit term. See permit.warnings for its internal date
+      disagreement and its mismatched draft permit-number header.
+    header:
+      public_notice_no: '208345'
+      permit_no_as_printed: 1PE00007*TD
+      public_notice_date: '2024-12-16'
+      comment_period_ends: '2025-01-15'
+      applicant: {name: City of Springfield, address: '76 East High Street, Springfield, OH 45502'}
+      facility: {name: Springfield WWTP, address: '965 Dayton Avenue, Springfield, OH 45503, Clark County'}
+      receiving_water: Mad River
+      subsequent_stream_network: Great Miami River, Ohio River
+      contact: David Brumbaugh, (614) 644-2138, david.brumbaugh@epa.ohio.gov
+    receiving_water_classification:
+      citation: 'Fact Sheet p.6'
+      ohio_epa_river_code: 14-100
+      hydrologic_unit_code: 05080001-18-05
+      county: Clark
+      ecoregion: Eastern Corn Belt Plain
+      use_designations: Warmwater Habitat, Agricultural Water Supply, Industrial Water Supply, Primary Contact Recreation
+      impairment: >-
+        "The Rock Run-Mad River watershed assessment unit, which includes the Mad River in the
+        vicinity of Springfield WWTP, is listed as impaired for aquatic life, recreation, and
+        human health uses on Ohio's 303(d) list." A TMDL report for the Mad River was approved
+        January 2010, addressing nitrate, sedimentation, fecal coliform and habitat, based on a
+        2003 biological survey; it "did not make any specific recommendations for Springfield
+        WWTP." A 2023 Rock Run-Mad River survey was conducted but its data was not yet
+        available as of this Fact Sheet.
+    facility_description:
+      citation: 'Fact Sheet p.6'
+      constructed: 1935
+      last_upgraded: 2014
+      average_design_flow_mgd: 25
+      peak_hydraulic_capacity_mgd: 40
+      hrt_partial_treatment_capacity_mgd: 100
+      population_served: approximately 59,000
+      collection_system: 78% separate sewers, 22% combined sewers
+      treatment_processes: Bar screening, grit removal, primary sedimentation, trickling filter, activated sludge, secondary clarification, chlorination/dechlorination, post-aeration
+      sludge_processes: Anaerobic digestion, polymer addition, dewatering (belt filter press); land applied (station 581), with landfill (586) and NPDES-transfer (588) provisions.
+      ltcp_background: >-
+        A 2016 programmatic review found continued implementation of the original LTCP no
+        longer feasible (geotechnical data since the 2012 approval). Since then the City ran a
+        collection-system flow study, recalibrated its hydraulic model, and developed an LTCP
+        Update (submitted for review February 2024) targeting the SAME 85% wet-weather-capture
+        interim level over a 20-year schedule, via: storage maximization in the existing
+        Fountain Avenue Tunnel, a 72" sewer from CSO 008 to the WWTP, and a 34 MGD satellite
+        high-rate treatment facility at CSO 041. Cost: $92M LTCP + $88M asset-management plan,
+        "projected to place a high burden on the City." Even after completion, the collection
+        system is still projected to discharge ~50 CSO events/year — Ohio EPA "does not
+        support the presumption that this discharge frequency would meet water quality
+        standards" but approved the LTCP Update as an interim phase "due to the financial
+        condition of the City," with re-evaluation to follow.
+      pretreatment_program: '17 significant industrial users — 9 categorical users discharging 0.337 MGD, 8 non-categorical users discharging 0.833 MGD.'
+    description_of_existing_discharge:
+      citation: 'Fact Sheet pp.7-9'
+      violation_history: 'A single reported effluent violation in the previous five years — E. coli, 2019.'
+      infiltration_inflow: '2.14 MGD estimated I/I rate; addressed via a sewer-lining program and downspout-disconnection requirements.'
+      cso_elimination_note: >-
+        "Springfield WWTP has 54 combined sewer overflows (CSOs). CSO 003 was eliminated in
+        2023 via separation and is proposed to be removed from the permit" — but Table 5's own
+        footnote says CSO 003 "was eliminated in 2020 via sewer separation" (see
+        permit.warnings). CSO 018 "was physically eliminated in 2024" (Table 5 footnote b).
+        Both are absent from the issued permit's Item C roster.
+      annual_flow_rates_mgd_50th_95th_max:
+        '2019': {p50: 16.39, p95: 32.77, max: 39.75, note: 'data begins 5/1/19'}
+        '2020': {p50: 16.23, p95: 31.19, max: 49.55}
+        '2021': {p50: 14.60, p95: 23.89, max: 37.38}
+        '2022': {p50: 16.29, p95: 27.44, max: 37.33}
+        '2023': {p50: 14.34, p95: 18.45, max: 32.48}
+        '2024': {p50: 15.46, p95: 29.26, max: 36.05, note: 'data ends 4/31/24'}
+      sso_occurrences_by_year: {'2019': 3, '2020': 6, '2021': 5, '2022': 6, '2023': 2}
+      bypass_discharges:
+        station_602: {'2019': {occurrences: 8, volume_mg: 343.8}, '2020': {occurrences: 9, volume_mg: 174.2}, '2021': {occurrences: 10, volume_mg: 64.5}, '2022': {occurrences: 11, volume_mg: 321.1}, '2023': {occurrences: 10, volume_mg: 247.8}}
+        station_066: {'2020': {occurrences: 1, volume_mg: 4.44}, '2023': {occurrences: 3, volume_mg: 20}, note: 'no discharges reported in 2019, 2021, or 2022'}
+      seasonal_total_phosphorus_loading:
+        '2019': {median_p_mg_l: 1.71, median_flow_mgd: 17.52, median_loading_kg_day: 109}
+        '2020': {median_p_mg_l: 1.76, median_flow_mgd: 15.50, median_loading_kg_day: 102}
+        '2021': {median_p_mg_l: 2.04, median_flow_mgd: 13.97, median_loading_kg_day: 110}
+        '2022': {median_p_mg_l: 1.87, median_flow_mgd: 16.29, median_loading_kg_day: 115}
+        '2023': {median_p_mg_l: 2.28, median_flow_mgd: 13.84, median_loading_kg_day: 116}
+    wla_and_reasonable_potential_basis:
+      citation: 'Fact Sheet pp.9-14'
+      stream_design_flows: {'1q10_cfs': 92, '7q10_cfs': 100, '30q10_summer_cfs': 112, '30q10_winter_cfs': 145, harmonic_mean_cfs: 285, source: 'USGS gage 03269500, adjusted for plant flow'}
+      plant_flow_cfs: 24.137
+      acute_dilution_ratio: '4.2 to 1 — (1Q10 78 cfs? printed as 78 cfs + 24.1 cfs) / 24.1 cfs; the Fact Sheet''s own arithmetic line reads "78 cfs + 24.1 cfs = 4.2" over "24.1 cfs", differing from the 92 cfs 1Q10 given in Table 14 two pages later — transcribed as printed, not reconciled here.'
+      wet_wqc: {acute_tua: 0.3, chronic_tuc: 1.0, citation: 'OAC 3745-1-44'}
+      outfall_001_wla: {acute_tua: 1.0, chronic_tuc: 5.1}
+      reasonable_potential_result: >-
+        Whole Effluent Toxicity: Category 4 ("no toxicity") for both species/both endpoints —
+        Table A shows all Ceriodaphnia results non-detect and Pimephales acute at a maximum of
+        0.3 TUa against a 1.0 WLA (0% of tests exceeding). Carcinogen additivity (BEHP +
+        bromodichloromethane): sum of fractions 0.17 (< 1.0), so no additivity limit proposed.
+      parameter_groupings: >-
+        Group 1 (no criteria, unevaluated): chlorides, manganese. Group 2 (PEQ < 25% of WQS,
+        no WLA/limit needed): antimony, arsenic, barium, cadmium, chloroform, chromium, free
+        cyanide, dibromochloromethane, iron, lead, molybdenum, nickel, nitrate+nitrite,
+        selenium, strontium, zinc. Group 3 (PEQ < 50% of PEL, no limit needed): BEHP,
+        bromodichloromethane, total residual chlorine, dissolved hexavalent chromium, copper,
+        total filterable residue, mercury, silver. Groups 4 and 5 (limit warranted): NO
+        parameter placed in either group.
+      basis_summary_001: >-
+        TSS/CBOD5/ammonia limits are plant-design-based (more stringent than 40 CFR 133
+        secondary treatment standards for TSS/CBOD5); ammonia additionally WLA-protective.
+        Chlorine is plant-design, WLA-protective, and below the 0.050 mg/L QL (special
+        Part II Item M language applies). Oil & grease and pH are WQS-based. Metals/cyanide/
+        mercury/filterable residue are monitor-only per the group-2/3 findings. Nitrate+nitrite
+        and TKN are monitored on best technical judgment for nutrient datasets; nitrate+nitrite
+        separately WLA-confirmed protective. Orthophosphate/total phosphorus monitoring is
+        required by ORC 6111.03.
+      basis_summary_602: >-
+        TSS and chlorine limits at bypass 602 are plant-design values from Permit-to-Install
+        837393 (TSS as a calculated quarterly maximum average); ammonia/CBOD5/phosphorus
+        monitoring removed at this renewal "as these parameters are not necessary to
+        demonstrate compliance with the CSO Control Policy."
+      basis_summary_099: >-
+        Station 099 is new at this renewal — a calculated (not physically sampled) blended
+        end-of-pipe station for 001+602 — with E. coli limits from the primary-contact
+        recreation standard (OAC 3745-1-37).
+    changes_from_prior_permit:
+      citation: 'Fact Sheet p.2, SUMMARY OF PERMIT CONDITIONS'
+      summary: >-
+        New fictitious blended station 099 for E. coli. Barium/silver monitoring dropped at
+        001/601 (no reasonable potential). Annual chronic toxicity testing (with acute
+        endpoints derived) continues for permit life. CSO stations 003 and 018 removed
+        (eliminated outfalls). Upstream (800)/downstream (901) E. coli monitoring frequency
+        increased to 1/2 weeks, June-August (from monthly). Bypass 602 approved as a
+        CSO-related bypass; its phosphorus/CBOD5/ammonia monitoring removed. Bypass 067
+        removed (no discharge through the station). Temperature/pH/DO monitoring removed at
+        upstream stations 800/801 and DO at downstream 901. A CSO LTCP schedule of compliance
+        is added.
+    use_attainment:
+      citation: 'Fact Sheet p.27, Table 12 — data from the 2003 Biological and Water Quality Study of the Mad River Basin'
+      locations:
+      - {location: Mad River upstream of Springfield, river_mile: 25.8, use: WWH, status: Partial, cause: 'Habitat alterations — channelization, agriculture'}
+      - {location: 'Mad River west of Springfield at Lower Valley Pike', river_mile: 24.1, use: WWH, status: Full}
+      - {location: 'Buck Creek at Springfield, adjacent to Old Reid Park', river_mile: 6.4, use: WWH, status: Partial, cause: 'Flow regime alteration, habitat alteration — dam or impoundment'}
+      - {location: 'Buck Creek at Springfield, adjacent to Snyder Park', river_mile: 0.6, use: WWH, status: Full}
+    acronyms_note: >-
+      Attachment 3 (Fact Sheet p.36) defines the standard Ohio EPA acronym set used throughout
+      this file's fact_sheet block (ABS, BPJ, CMOM, CONSWLA, CSO, CWA, DMR, DMT, IMZM, LTCP,
+      MDL, MGD, NPDES, OAC, ORC, ORSANCO, PEL, PEQ, PMP, PPE, SSO, TMDL, TRE, TU, WET, WLA,
+      WPCF, WQBEL, WQS) — not re-expanded per-use below.
