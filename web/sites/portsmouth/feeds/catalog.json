@@ -360,6 +360,61 @@
     }
   },
   {
+    "id": "oepa-portsmouth",
+    "title": "Ohio EPA NPDES Permit Extractions (Portsmouth Lawson Run WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 0PD00013*PD (application OH0027197) for the City of Portsmouth Lawson Run Wastewater Treatment Plant, Scioto County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:portsmouth",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "combined-sewer-overflow",
+      "long-term-control-plan",
+      "portsmouth",
+      "scioto-county",
+      "ohio-river"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/portsmouth/0PD00013.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4dc02ed2650412f2daf2109900ee44e81cc19e8d8c4a423bbda47b468fdebe91",
+      "size_bytes": 47436,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 0PD00013*PD (application OH0027197) for the City of Portsmouth Lawson Run Wastewater Treatment Plant, Scioto County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "permits-dazzler-portsmouth",
     "title": "Project Dazzler Permit Extractions (Scioto County §401 / wetland mitigation)",
     "scope": "extracted",

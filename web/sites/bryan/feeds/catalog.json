@@ -360,6 +360,60 @@
     }
   },
   {
+    "id": "oepa-bryan",
+    "title": "Ohio EPA NPDES Permit Extractions (Bryan WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 2PD00018*RD (application OH0020532) for the City of Bryan Wastewater Treatment Plant, 1521 Evansport Road, Williams County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:bryan",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "mercury-variance",
+      "bryan",
+      "williams-county",
+      "maumee"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/bryan/2PD00018.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "e9c3ab6b5c136f16e20f6d7b12897239a7a2a4871d3d83a7097e4d04d64cf6c4",
+      "size_bytes": 53945,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 2PD00018*RD (application OH0020532) for the City of Bryan Wastewater Treatment Plant, 1521 Evansport Road, Williams County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "abatement-parameters",
     "title": "Williams County, OH Abatement Parameters + What-If Scenario Knobs",
     "scope": "reference",

@@ -1,6 +1,6 @@
 {
   "site": "portsmouth",
-  "catalog_version": "5e7652c77d17ef2fd386cfcab9bda78d97d89afef8794aa6f2d787edb6ae277f",
+  "catalog_version": "474bb71f2f2d2367108e4fd7d9489208efd949d5ef8c4cd518107691c200978c",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -924,6 +924,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:portsmouth:oepa-portsmouth",
+      "kind": "dataset",
+      "site": "portsmouth",
+      "local_id": "oepa-portsmouth",
+      "title": "Ohio EPA NPDES Permit Extractions (Portsmouth Lawson Run WWTP)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:portsmouth:onboard-bundle",
       "kind": "dataset",
       "site": "portsmouth",
@@ -1044,6 +1052,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:portsmouth:CITY OF PORTSMOUTH",
+      "kind": "entity",
+      "site": "portsmouth",
+      "local_id": "CITY OF PORTSMOUTH",
+      "title": "City of Portsmouth",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:portsmouth:EMH&T",
       "kind": "entity",
       "site": "portsmouth",
@@ -1092,6 +1108,14 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:portsmouth:OHIO RIVER",
+      "kind": "entity",
+      "site": "portsmouth",
+      "local_id": "OHIO RIVER",
+      "title": "Ohio River",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:portsmouth:RANDY BARRERA",
       "kind": "entity",
       "site": "portsmouth",
@@ -1130,6 +1154,22 @@
       "local_id": "VORYS",
       "title": "Vorys, Sater, Seymour, and Pease",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:portsmouth:npdes:0PD00013",
+      "kind": "entity",
+      "site": "portsmouth",
+      "local_id": "npdes:0PD00013",
+      "title": "Lawson Run WWTP",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:portsmouth:oepa/portsmouth/0PD00013.npdes.yaml",
+      "kind": "record",
+      "site": "portsmouth",
+      "local_id": "oepa/portsmouth/0PD00013.npdes.yaml",
+      "title": "Lawson Run WWTP",
+      "feed": "records"
     },
     {
       "handle": "record:portsmouth:permits/dazzler-permits/4071697.epa.yaml",

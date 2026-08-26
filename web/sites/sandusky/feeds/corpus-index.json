@@ -1,12 +1,45 @@
 [
   {
+    "id": "artifact/city-of-sandusky",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Sandusky",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-2pf00001",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Sandusky Water Pollution Control wastewater treatment works",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/sandusky-bay",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Sandusky Bay",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/site-sandusky",
     "node_class": "artifact",
     "kind": "site",
     "label": "Sandusky · Perkins Twp",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 6,
     "lines": 13,
     "updated": null
   },
@@ -866,6 +899,28 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 10,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-sandusky--operates--npdes-2pf00001",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF SANDUSKY operates npdes:2PF00001",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-2pf00001--discharges-to--sandusky-bay",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:2PF00001 discharges_to SANDUSKY BAY",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
     "updated": null
   }
 ]

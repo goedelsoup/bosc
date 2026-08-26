@@ -42,5 +42,74 @@
     "lei": "875500ULXB4CYQSJVA03",
     "uei": null,
     "federal_obligations": null
+  },
+  {
+    "key": "npdes:0PB00031",
+    "display": "Piketon Wastewater Treatment Works",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Piketon Wastewater Treatment Works"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/piketon/0PB00031.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "VILLAGE OF PIKETON",
+    "display": "Village of Piketon",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Village of Piketon"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/piketon/0PB00031.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "SCIOTO RIVER",
+    "display": "Scioto River",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Scioto River"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/piketon/0PB00031.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
   }
 ]

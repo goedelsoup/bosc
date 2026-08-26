@@ -1,6 +1,6 @@
 {
   "site": "piketon",
-  "catalog_version": "65bdd0bbc1502c43d718f2ab097b85aef8e27bedb5263685f5501a1896a710a3",
+  "catalog_version": "d060dbca9737ff746fd3fef087d46b406b886bb5269ab7f477903b67cecfccf8",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -924,6 +924,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:piketon:oepa-piketon",
+      "kind": "dataset",
+      "site": "piketon",
+      "local_id": "oepa-piketon",
+      "title": "Ohio EPA NPDES Permit Extractions (Village of Piketon WWTP)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:piketon:onboard-bundle",
       "kind": "dataset",
       "site": "piketon",
@@ -1050,6 +1058,38 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:piketon:SCIOTO RIVER",
+      "kind": "entity",
+      "site": "piketon",
+      "local_id": "SCIOTO RIVER",
+      "title": "Scioto River",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:piketon:VILLAGE OF PIKETON",
+      "kind": "entity",
+      "site": "piketon",
+      "local_id": "VILLAGE OF PIKETON",
+      "title": "Village of Piketon",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:piketon:npdes:0PB00031",
+      "kind": "entity",
+      "site": "piketon",
+      "local_id": "npdes:0PB00031",
+      "title": "Piketon Wastewater Treatment Works",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:piketon:oepa/piketon/0PB00031.npdes.yaml",
+      "kind": "record",
+      "site": "piketon",
+      "local_id": "oepa/piketon/0PB00031.npdes.yaml",
+      "title": "Piketon Wastewater Treatment Works",
+      "feed": "records"
     }
   ]
 }

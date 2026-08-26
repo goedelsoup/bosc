@@ -1,0 +1,54 @@
+id: oepa-bryan
+title: Ohio EPA NPDES Permit Extractions (Bryan WWTP)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 2PD00018*RD (application OH0020532) for the City of
+    Bryan Wastewater Treatment Plant, 1521 Evansport Road, Williams County; retrieved from the
+    Ohio EPA DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:bryan
+storage:
+- relpath: extracted/oepa/bryan/2PD00018.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- mercury-variance
+- bryan
+- williams-county
+- maumee
+notes: >-
+  Bryan WWTP permit 2PD00018*RD, issued 2024-05-07, effective 2024-06-01, expiring 2029-05-31,
+  signed Anne M. Vogel. Hand-read from the digitally generated text layer; no render receipt.
+  The source PDF binds the 47-sheet issued permit (PDF pages 0-46) and a 39-page Fact Sheet
+  (pages 47-85), 47+39=86, transcribed into separate `permit:` and `fact_sheet:` blocks because a
+  fact sheet is Ohio EPA's rationale document, not an enforceable term. The limit table is for
+  outfall **002**, a single Final table of 33 parameters with no phase-in this cycle, on a 3.1 MGD
+  average design flow (7.0 MGD peak hydraulic). Discharge to Pigeon Run / Prairie Creek, River
+  Mile 11.0 on the authorization sentence.
+  ⚠️ THE ISSUED PERMIT AND ITS OWN BOUND FACT SHEET DISAGREE ON A LIMIT: copper loadings print
+  0.51 / 0.30 kg/day in Part I.A and 0.52 / 0.31 in Fact Sheet Table 14, for the same limit. The
+  concentrations agree exactly (44 / 26 ug/l) and every OTHER loading pair in Table 14 matches the
+  permit cell for cell, so copper is the sole divergence — confirmed both in text and against a
+  render of the two rows. Part I.C also disagrees with itself on the pretreatment schedule's due
+  date: the narrative says "18 months after the permit effective date" while the Milestone Summary
+  Report table on the same sheet, under the same event code 52599, says "12 months". Both dates
+  have passed; whether anything was filed is `[open]`.
+  Further document defects recorded rather than normalized: Part II cross-references cite a
+  nonexistent "Item BB" twice where the section is lettered W; the river mile prints 11.0 on the
+  authorization sentence and RM 11.01 in the Fact Sheet; the Fact Sheet refers to "outfall 001"
+  monitoring in a permit whose sole outfall is 002; and the Fact Sheet cover reverses the
+  receiving-water order. BARIUM, STRONTIUM AND METHYL BROMIDE carry no limit and no monitoring
+  anywhere in the permit despite a prior barium limit (220 / 2060 ug/L) and four recorded barium
+  violations in 2020-2023 — the Fact Sheet confirms the removal was deliberate, on a
+  no-reasonable-potential finding. Whether the new Ceriodaphnia dubia toxicity limits are new to
+  this cycle is `[open]`: the prior revision is not committed.

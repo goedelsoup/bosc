@@ -529,14 +529,19 @@
         "relpath": "extracted/oepa/west-union/252171W.iwp.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/west-union/0PC00019.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "037ce11c49fa574fb208532c16df56e15ac4ba5033d205e2f76ff2e0017d3761",
-      "size_bytes": 8468,
+      "sha256": "b7a9be34cd4813abfe43b7c690f7f43d355355089168316dd91c02e5ef1539ac",
+      "size_bytes": 39009,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 2,
       "stale": false,
       "asof": null
     },

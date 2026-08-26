@@ -109,5 +109,99 @@
     "lei": null,
     "uei": null,
     "federal_obligations": null
+  },
+  {
+    "key": "npdes:4PF00000",
+    "display": "Jackson Pike Wastewater Treatment Plant",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Jackson Pike Wastewater Treatment Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/columbus/4PF00000.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:4PF00001",
+    "display": "Southerly Wastewater Treatment Plant",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Southerly Wastewater Treatment Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/columbus/4PF00001.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF COLUMBUS",
+    "display": "City of Columbus",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Columbus"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/columbus/4PF00000.npdes.yaml",
+      "oepa/columbus/4PF00001.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "SCIOTO RIVER",
+    "display": "Scioto River",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Scioto River"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/columbus/4PF00000.npdes.yaml",
+      "oepa/columbus/4PF00001.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
   }
 ]

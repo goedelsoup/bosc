@@ -360,6 +360,61 @@
     }
   },
   {
+    "id": "oepa-toledo",
+    "title": "Ohio EPA NPDES Permit Extractions (Toledo Bay View WRF)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 2PF00000*OD (application OH0027740) for the City of Toledo Bay View Water Reclamation facility, 3900 N. Summit St., Lucas County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:toledo",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "combined-sewer-overflow",
+      "mercury-variance",
+      "toledo",
+      "lucas-county",
+      "maumee"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/toledo/2PF00000.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "e92f9c8ef4638a23c8c09fc68c1811deb335722001ef6ca2980566c6d1821c4d",
+      "size_bytes": 71541,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 2PF00000*OD (application OH0027740) for the City of Toledo Bay View Water Reclamation facility, 3900 N. Summit St., Lucas County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "toledo-napoleon-spill-waterville-monitor-read",
     "title": "Maumee-at-Waterville (04193500) Monitor Read — Napoleon Spill (narrative)",
     "scope": "extracted",

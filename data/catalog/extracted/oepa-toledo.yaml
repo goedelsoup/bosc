@@ -1,0 +1,56 @@
+id: oepa-toledo
+title: Ohio EPA NPDES Permit Extractions (Toledo Bay View WRF)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 2PF00000*OD (application OH0027740) for the City of
+    Toledo Bay View Water Reclamation facility, 3900 N. Summit St., Lucas County; retrieved from
+    the Ohio EPA DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:toledo
+storage:
+- relpath: extracted/oepa/toledo/2PF00000.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- combined-sewer-overflow
+- mercury-variance
+- toledo
+- lucas-county
+- maumee
+notes: >-
+  Toledo Bay View WRF permit 2PF00000*OD, issued 2024-01-12, effective 2024-02-01, expiring
+  2029-01-31, signed Anne M. Vogel. Hand-read from the digitally generated PDF's own text layer
+  (no scan, no OCR), so the file carries no render receipt per watermark.models.TranscribedExtraction.
+  THREE RECEIVING WATERS on one authorization sentence — the Maumee River, the Ottawa River and
+  Swan Creek — plus the associated combined sewer overflows, and the sentence gives NO river mile
+  for any of them; the only river mile in the corpus (1.0, Maumee) is Fact-Sheet-only and is not
+  an enforceable term. The source PDF binds two documents: the 51-sheet issued permit (PDF pages
+  0-50) and a 40-page 2023 Fact Sheet (pages 51-90), 51+40=91. One lifetime limit table for
+  outfall 001, 33 parameters, no phase-in, on a 130 MGD average design flow; every populated
+  kg/day loading was re-derived from its concentration at that flow and matched the printed value,
+  with the shoulder-season ammonia pair (1780/1190) computed by the agency from unrounded
+  concentrations rather than the printed ones. FOUR DISTINCT MERCURY NUMBERS appear across the
+  instrument and are easy to conflate — 1700 ng/l daily maximum, 3.9 ng/l monthly-average variance
+  limit, 12 ng/l annual-average variance condition, and a 1.3 ng/l underlying WQBEL that attaches
+  only if the variance lapses; each is transcribed with its own citation. The permit's own Part
+  I,B.2 boilerplate says "26 CSO sampling stations" while Part II Item F enumerates 25 and the
+  Fact Sheet says 25, its Table 6 showing a 26th station 026 marked "(eliminated)". Other document
+  defects recorded rather than normalized: a CSO DMS printing "97" seconds, Item R printing a
+  nine-digit station id, a blank Cullen Park row, and two stale cross-references pointing at
+  "Part II, Item V" where Item X is meant. One schedule milestone (pretreatment local limits,
+  2025-08-01) had lapsed as of 2026-08-26 — WHETHER IT WAS FILED IS `[open]`; past-due here means
+  the date passed, not that the city missed it. Adversarial review REJECTED a first pass over a
+  fabricated "3.2 mg/L (sic)" silver WLA (the permit prints 3.2 ug/L plainly), a key naming a 95
+  percent removal standard where Item M says 85, and an invented Fact Sheet section that had
+  displaced Table 17 — the Fact Sheet's own restatement of the outfall-001 table, now recorded as
+  corroboration. Add further Toledo OEPA extractions to storage as produced.

@@ -2975,8 +2975,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4620fbd93d9fe46a4bf2c6c1b15298abe41f61c0ee26be5b88b6b4cf84120470",
-      "size_bytes": 42339,
+      "sha256": "e8eccc1b924d112a2add9105e6d9b8cd9bb3b6c875bfefff4f53026a28d23820",
+      "size_bytes": 44201,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -3206,8 +3206,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "2c70ad488ff9bf2e88a61f53947b060fb9948efbd8dfde8130381d51246fa59f",
-      "size_bytes": 58338,
+      "sha256": "c13513433caeec540e0dd76ddc5d06f25056af7660902ff09204dcd3edfaa3ff",
+      "size_bytes": 58926,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -4092,6 +4092,120 @@
     }
   },
   {
+    "id": "oepa-bryan",
+    "title": "Ohio EPA NPDES Permit Extractions (Bryan WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 2PD00018*RD (application OH0020532) for the City of Bryan Wastewater Treatment Plant, 1521 Evansport Road, Williams County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:bryan",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "mercury-variance",
+      "bryan",
+      "williams-county",
+      "maumee"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/bryan/2PD00018.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "e9c3ab6b5c136f16e20f6d7b12897239a7a2a4871d3d83a7097e4d04d64cf6c4",
+      "size_bytes": 53945,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 2PD00018*RD (application OH0020532) for the City of Bryan Wastewater Treatment Plant, 1521 Evansport Road, Williams County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-columbus",
+    "title": "Ohio EPA NPDES Permit Extractions (Columbus — Jackson Pike and Southerly WWTPs)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permits 4PF00000*QD (application OH0024732, Jackson Pike WWTP) and 4PF00001*SD (application OH0024741, Southerly WWTP), City of Columbus, Franklin County; retrieved from the Ohio EPA DAM permit slots",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:columbus",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "combined-sewer-overflow",
+      "biosolids",
+      "columbus",
+      "franklin-county",
+      "scioto"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/columbus/4PF00000.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/columbus/4PF00001.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "90799b702aab03aa9688f116c71521a3b109d9180be3fc872963fda2bdbe35be",
+      "size_bytes": 111178,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permits 4PF00000*QD (application OH0024732, Jackson Pike WWTP) and 4PF00001*SD (application OH0024741, Southerly WWTP), City of Columbus, Franklin County; retrieved from the Ohio EPA DAM permit slots",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "oepa-lima-2dp00130-application",
     "title": "Ohio EPA record extractions (Project BOSC indirect-discharge application — permit 2DP00130)",
     "scope": "extracted",
@@ -4702,6 +4816,170 @@
     }
   },
   {
+    "id": "oepa-piketon",
+    "title": "Ohio EPA NPDES Permit Extractions (Village of Piketon WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 0PB00031*KD (application OH0027031) for the Village of Piketon wastewater treatment works, Old Jasper Road, Pike County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:piketon",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "antidegradation",
+      "piketon",
+      "pike-county",
+      "scioto"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/piketon/0PB00031.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4c0e6012d34f4aaffc597f427df0f0be7561aa93036ad8744b9814f799db53c1",
+      "size_bytes": 34440,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 0PB00031*KD (application OH0027031) for the Village of Piketon wastewater treatment works, Old Jasper Road, Pike County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-portsmouth",
+    "title": "Ohio EPA NPDES Permit Extractions (Portsmouth Lawson Run WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 0PD00013*PD (application OH0027197) for the City of Portsmouth Lawson Run Wastewater Treatment Plant, Scioto County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:portsmouth",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "combined-sewer-overflow",
+      "long-term-control-plan",
+      "portsmouth",
+      "scioto-county",
+      "ohio-river"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/portsmouth/0PD00013.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4dc02ed2650412f2daf2109900ee44e81cc19e8d8c4a423bbda47b468fdebe91",
+      "size_bytes": 47436,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 0PD00013*PD (application OH0027197) for the City of Portsmouth Lawson Run Wastewater Treatment Plant, Scioto County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-sandusky",
+    "title": "Ohio EPA NPDES Permit Extractions (Sandusky Water Pollution Control)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 2PF00001*SD (application OH0027332) for the City of Sandusky Water Pollution Control, Erie County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:sandusky",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "combined-sewer-overflow",
+      "long-term-control-plan",
+      "sandusky",
+      "erie-county",
+      "lake-erie"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/sandusky/2PF00001.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "29d07f09427aae9b8d5c20979d3951da63ac3dd3a35afcdcab7322f95c55e763",
+      "size_bytes": 53569,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 2PF00001*SD (application OH0027332) for the City of Sandusky Water Pollution Control, Erie County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "oepa-sidney",
     "title": "Ohio EPA Permit Extractions (Sidney — AWS data-center campus, City road permit, Hidden Valley MHP)",
     "scope": "extracted",
@@ -4789,6 +5067,61 @@
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permits, general-permit coverages, 401/isolated-wetland authorizations, surface-water permits to install, fact sheets and draft public notices for facilities in Sidney, Ohio (Shelby County), retrieved from the eDocument public portal and the DAM permit slots",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-toledo",
+    "title": "Ohio EPA NPDES Permit Extractions (Toledo Bay View WRF)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 2PF00000*OD (application OH0027740) for the City of Toledo Bay View Water Reclamation facility, 3900 N. Summit St., Lucas County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:toledo",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "combined-sewer-overflow",
+      "mercury-variance",
+      "toledo",
+      "lucas-county",
+      "maumee"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/toledo/2PF00000.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "e92f9c8ef4638a23c8c09fc68c1811deb335722001ef6ca2980566c6d1821c4d",
+      "size_bytes": 71541,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 2PF00000*OD (application OH0027740) for the City of Toledo Bay View Water Reclamation facility, 3900 N. Summit St., Lucas County; retrieved from the Ohio EPA DAM permit slot",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -4941,14 +5274,19 @@
         "relpath": "extracted/oepa/west-union/252171W.iwp.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/west-union/0PC00019.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "037ce11c49fa574fb208532c16df56e15ac4ba5033d205e2f76ff2e0017d3761",
-      "size_bytes": 8468,
+      "sha256": "8640d1f5af6c3941f849b4d55c6218e7411ebc400c7912f299a7cdf8d3d2e579",
+      "size_bytes": 39168,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 2,
       "stale": false,
       "asof": null
     },

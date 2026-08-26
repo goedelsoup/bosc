@@ -360,6 +360,60 @@
     }
   },
   {
+    "id": "oepa-piketon",
+    "title": "Ohio EPA NPDES Permit Extractions (Village of Piketon WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 0PB00031*KD (application OH0027031) for the Village of Piketon wastewater treatment works, Old Jasper Road, Pike County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:piketon",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "antidegradation",
+      "piketon",
+      "pike-county",
+      "scioto"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/piketon/0PB00031.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4c0e6012d34f4aaffc597f427df0f0be7561aa93036ad8744b9814f799db53c1",
+      "size_bytes": 34440,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 0PB00031*KD (application OH0027031) for the Village of Piketon wastewater treatment works, Old Jasper Road, Pike County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "abatement-parameters",
     "title": "Pike County, OH Abatement Parameters + What-If Scenario Knobs",
     "scope": "reference",

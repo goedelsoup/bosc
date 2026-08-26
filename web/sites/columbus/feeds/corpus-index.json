@@ -1,12 +1,56 @@
 [
   {
+    "id": "artifact/city-of-columbus",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Columbus",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 13,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-4pf00000",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Jackson Pike Wastewater Treatment Plant",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-4pf00001",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Southerly Wastewater Treatment Plant",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/scioto-river",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Scioto River",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 13,
+    "updated": null
+  },
+  {
     "id": "artifact/site-columbus",
     "node_class": "artifact",
     "kind": "site",
     "label": "Columbus",
     "scope": "site",
     "links_out": 3,
-    "links_in": 3,
+    "links_in": 7,
     "lines": 13,
     "updated": null
   },
@@ -877,6 +921,50 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 16,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-columbus--operates--npdes-4pf00000",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF COLUMBUS operates npdes:4PF00000",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-columbus--operates--npdes-4pf00001",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF COLUMBUS operates npdes:4PF00001",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-4pf00000--discharges-to--scioto-river",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:4PF00000 discharges_to SCIOTO RIVER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-4pf00001--discharges-to--scioto-river",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:4PF00001 discharges_to SCIOTO RIVER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
     "updated": null
   }
 ]

@@ -1,0 +1,453 @@
+# Village of West Union WWTP — NPDES permit 0PC00019*KD (application OH0028088), a
+# renewal issued 2023-02-07 and effective 2023-03-01.
+#
+# Hand-read from the committed PDF's embedded text layer, not machine-extracted. This
+# document is digitally generated (producer "Microsoft: Print To PDF"; no scan, no OCR),
+# so the text layer is the instrument's own bytes; every figure below is transcribed with
+# its printed sheet cited on the block. Nothing is derived, rounded or inferred unless the
+# block says so.
+#
+# NO page was rendered at 300 DPI. Every value below was legible in pypdf's default text
+# extraction, re-checked in "layout" mode for the two wide effluent-limit tables (Part I.A,
+# sheet 2-3, and Attachment II), and the two tables independently agree on every figure —
+# see effluent_limits_001.cross_check. Nothing here was genuinely ambiguous enough to need
+# a visual check, so this file carries no render receipt at all (no doc_id / dpi /
+# pages_read). See watermark.models.TranscribedExtraction — a receipt is all-or-nothing.
+#
+# The record -> document join (watermark.site.records._source_ref) reads a TOP-LEVEL
+# `source_path`, so the primary instrument is named there as well as in meta.sources.
+#
+# SCOPE FENCE: this file transcribes ONLY 0PC00019.pdf. data/documents/oepa/west-union/
+# holds ~32 other PDFs belonging to a different task (issue #1981 / task A3) and to the
+# already-committed data/extracted/oepa/west-union/252171W.iwp.yaml; neither is read,
+# referenced, or modified here. This file also makes NO claim about any data-center
+# development in Adams County — this permit's own text says nothing about one, at any
+# outfall, in any part of the document, so nothing is written about it (per task scope).
+source_path: data/documents/oepa/west-union/0PC00019.pdf
+meta:
+  subject: Village of West Union WWTP — issued NPDES permit (2023 renewal)
+  site: west-union
+  captured_for: 'task A1 — network-site WWTP NPDES permit ingest (record domain)'
+  extracted_at: '2026-08-26'
+  method: >-
+    pypdf text-layer read over the committed source PDF (default mode, re-read in
+    extraction_mode="layout" for the two wide effluent-limit tables); values transcribed
+    and page-cited. No page was rendered — see the header note.
+  sources:
+    permit:
+      path: data/documents/oepa/west-union/0PC00019.pdf
+      sha256: d987cdb5d6a74b7e2b1b75c2315af6be2e0e85a36f007346710b2d453ace2a43
+      url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/0PC00019.pdf
+  fact_sheet_note: >-
+    Unlike the Mansfield precedent, the Fact Sheet and its two Attachments ARE bound into
+    this same PDF (PDF pages 28-33, unpaginated relative to the permit's own "Page N"
+    scheme) — see permit.fact_sheet_and_attachments below. Nothing about it is "not in this
+    corpus"; it is read in full here.
+
+permit:
+  tag: '[verified]'
+  confidence: high
+  warnings:
+  - >-
+    THE RECEIVING WATER IS NAMED TWO DIFFERENT WAYS ON THE FACE OF THE SAME PDF. The
+    authorization sentence (sheet 1), the Fact Sheet header, and Attachment I's location
+    paragraph all say "Beasley Creek" (3 occurrences, no "Fork"). The Part II Item B
+    sampling-station table (sheet 10) names the SAME water "Beasley Fork Creek" three times,
+    at stations 001, 801 and 901 (3 occurrences, with "Fork"). This file transcribes each
+    exactly as printed where it appears rather than harmonizing the name; see
+    receiving_water_note and sampling_stations below.
+  - >-
+    THE FACILITY ADDRESS IS PRINTED TWO WAYS. The sheet-1 authorization sentence gives
+    "6875 State Route 247, West Union, Ohio, Adams County" (no directional suffix, no ZIP).
+    The Fact Sheet (bound into this same PDF) gives "6875 State Route 247 South, West
+    Union, OH 45693" — adding "South" and the ZIP code. Same facility, same road; the
+    document does not explain the "South" suffix. Transcribed as printed at each location.
+  - >-
+    THIS PERMIT CONTAINS NO PART I.C SCHEDULE OF COMPLIANCE. Unlike the Mansfield precedent
+    (which carries a Toxicity Reduction Evaluation and a Municipal Pretreatment Schedule),
+    Part I of this permit ends at Part I.B (the non-outfall monitoring tables, sheets 4-8)
+    and Part II, "Other Requirements," begins directly on sheet 9. There is no whole
+    effluent toxicity (WET) limit anywhere in this permit, no biomonitoring program item,
+    no pretreatment schedule, and no numeric bypass-volume trigger — this is a materially
+    smaller and simpler instrument than the Mansfield one. See no_schedule_of_compliance
+    below for the explicit absence.
+  - >-
+    THE PDF HOLDS 33 PAGES; THE PERMIT'S OWN "Total Pages" READS 27. This reconciles
+    cleanly and is not a defect: sheets 1-27 (PDF indices 0-26) are the permit itself
+    (Parts I-III), each headed "Page N / 0PC00019*KD" — 27 pages, matching the printed
+    count exactly. PDF indices 27-32 (6 more pages) are the bound-in Fact Sheet plus
+    Attachments I and II; none of those 6 pages carries the permit's "Page N" header or is
+    counted in "Total Pages: 27". See fact_sheet_and_attachments below.
+  - >-
+    ATTACHMENT II'S FOOTNOTES SKIP "b". The table cites footnote "a" (design flow) and
+    footnote "c" (the Basis-code legend on the following page) but no footnote "b" appears
+    anywhere on either page — a gap in the document's own lettering, not a transcription
+    omission. Checked in both default and layout-mode extraction of both pages. The same
+    design-flow note also carries a DIFFERENT marker in each table for the same fact: Part
+    I.A marks it "*" (bound to the column header "Loading* kg/day", sheet 2; see
+    effluent_limits_001.footnotes) while Attachment II marks the identical note "a" — one
+    document, two footnote-lettering conventions for the same note.
+  - >-
+    FREE CYANIDE'S UNITS DISAGREE BY 1000× BETWEEN THE TWO EFFLUENT-LIMIT TABLES. Part I.A
+    (sheet 3) prints "51173 - Cyanide, Free (Low-Level) - ug/l"; Attachment II (PDF idx 31)
+    prints the same monitor-only parameter as "Cyanide, Free ... mg/l" — a milligram value,
+    where this permit's own Part II Item I sets the free-cyanide PQL at 0.025 mg/L (sheet
+    12). Neither table carries a numeric limit here (both monitor-only), so there is no live
+    compliance conflict, but the unit disagreement is real and internal to this one
+    committed document — re-checked in extraction_mode="layout" for both pages. See
+    effluent_limits_001.limits.cyanide_free_low_level and effluent_limits_001.cross_check.
+
+  facility_name: West Union Wastewater Treatment Plant
+  permit_no: 0PC00019*KD
+  application_no: OH0028088
+  permit_action: renewal
+  permit_action_source: >-
+    Not stated in the authorization sentence itself; the Fact Sheet (Section I, bound into
+    this PDF) says "The above named applicant has applied for an NPDES permit renewal,
+    which will be issued by the Ohio Environmental Protection Agency..."
+  permittee: Village of West Union
+  facility_address: >-
+    6875 State Route 247, West Union, Ohio, Adams County — as printed in the sheet-1
+    authorization sentence. See warnings[1] for the Fact Sheet's variant form.
+  applicant_mailing_address: >-
+    Village of West Union, 11700 State Route 41, West Union, OH 45693 — from the Fact
+    Sheet's "Name and Address of Applicant" (not printed anywhere in Parts I-III). This is
+    the Village government address, distinct from the treatment-plant address above.
+  receiving_water: Beasley Creek
+  receiving_water_note: >-
+    As printed in the sheet-1 authorization sentence, the Fact Sheet header, and
+    Attachment I. See warnings[0]: the Part II Item B station table names the same water
+    "Beasley Fork Creek" three times.
+  river_mile: >-
+    NOT PRINTED anywhere in this permit. The authorization sentence reads "...discharging
+    to Beasley Creek in accordance with the conditions specified in Parts I, II, and III of
+    this permit" — no parenthetical river mile, unlike the Mansfield precedent's "(River
+    Mile 11.18)" [reference]. No river mile appears in the Fact Sheet or Attachments either.
+  action_date: '2023-02-07'
+  effective_date: '2023-03-01'
+  expiration_date: '2028-02-29'
+  signed_by: Anne M. Vogel, Director
+  total_pages: 27
+  total_pages_note: 'See warnings[3]: the 33-page PDF reconciles as 27 permit pages + 6 unpaginated Fact Sheet/Attachment pages.'
+  parts_in_this_permit: >-
+    "Parts I, II, and III" — as printed in the sheet-1 authorization sentence. There is no
+    Part IV, V, or VI in this instrument (no stormwater/SWPPP part, no combined-sewer-
+    overflow part), unlike the Mansfield precedent's six-part permit [reference].
+  renewal_application_due: >-
+    The permit's own text requires the renewal submission "no later than 180 days prior to
+    the above date of expiration" — i.e. on or about 2027-09-03 for the 2028-02-29
+    expiration. [inference] from the permit's stated rule; the permit prints no calendar
+    date for it.
+  treatment_works_classification:
+    citation: 'Permit 0PC00019*KD, sheet 9, Part II Item A.1'
+    tag: '[verified]'
+    treatment_works: >-
+      Class II under OAC 3745-7-04. The permittee must designate one or more professional
+      operator of record with a valid certification of a class equal to or greater than
+      Class II. This is a materially smaller classification than Mansfield's Class IV
+      [reference].
+    collection_systems: >-
+      "All sewerage (collection) systems that are tributary to this treatment works are
+      Class II sewerage systems in accordance with paragraph (B)(1)(b) of rule 3745-7-04."
+
+  # ── Part II, Item B — sampling stations (sheet 10) ──────────────────────────────────────
+  sampling_stations:
+    citation: 'Permit 0PC00019*KD, sheet 10, Part II Item B'
+    tag: '[verified]'
+    '0PC00019001':
+      description: Final effluent prior to discharge to Beasley Fork Creek
+      latitude_dms: 38 N 47 ' 15 "
+      longitude_dms: 83 W 32 ' 29 "
+      latitude_dd: 38.7875
+      longitude_dd: -83.541389
+      coordinate_note: >-
+        [inference] decimal-degree conversion of the permit's own printed DMS; a conversion,
+        not a second source. This is the ONLY station in this table with a printed
+        coordinate — the other six carry none.
+    '0PC00019300': {description: Sanitary Sewer Overflows}
+    '0PC00019586': {description: Sludge removed from the WWTP for disposal at an approved landfill}
+    '0PC00019588': {description: Sludge hauled to another NPDES permitted POTW authorized to store, treat, and dispose of sewage sludge}
+    '0PC00019601': {description: WWTP influent}
+    '0PC00019801': {description: Beasley Fork Creek upstream of WWTP discharge}
+    '0PC00019901': {description: Beasley Fork Creek downstream (1/4 mile) of WWTP discharge}
+    naming_note: >-
+      Stations 001, 801 and 901 are described here using "Beasley Fork Creek" — see
+      warnings[0]. Transcribed exactly as printed rather than normalized to "Beasley Creek".
+
+  # ── Part I.A — outfall 001, whole term, ONE table (sheet 2-3) ──────────────────────────
+  # No Initial/Final phase-in — a single limit set applies effective date through
+  # expiration. This is also the ONLY outfall in the permit; unlike Mansfield's split
+  # (technology-based 001 / water-quality-based 002) [reference], this single outfall 001
+  # carries both kinds of limit directly (e.g. ammonia and copper are numerically limited
+  # here, at 001).
+  effluent_limits_001:
+    citation: 'Permit 0PC00019*KD, sheet 2-3, Part I.A.1'
+    tag: '[verified]'
+    period: effective date through expiration date — one table, no phase-in
+    outfall: '0PC00019001'
+    design_flow_basis: >-
+      "Effluent loadings based on average design flow of 0.7 MGD." (Part I.A's own note;
+      Attachment II's footnote a gives the same figure to three decimals, "0.700 MGD" — see
+      cross_check.)
+    limits:
+      water_temperature: {units: C, limit: null, monitoring: 1/Day Grab All}
+      dissolved_oxygen: {units: mg/l, minimum: 5.0, monitoring: 1/Day Grab All}
+      ph: {units: S.U., maximum: 9.0, minimum: 6.5, monitoring: 1/Day Grab All}
+      total_suspended_solids: {units: mg/l, weekly: 15.5, monthly: 10.25, load_weekly_kg: 41.1, load_monthly_kg: 27.1, monitoring: 2/Week 24hr Composite All}
+      oil_and_grease: {units: mg/l, maximum: 10, monitoring: 1/Month Grab All}
+      ammonia_nh3_summer: {units: mg/l, weekly: 1.2, monthly: 0.80, load_weekly_kg: 3.18, load_monthly_kg: 2.12, monitoring: 2/Week 24hr Composite Summer}
+      ammonia_nh3_winter: {limit: null, monitoring: 2/Week 24hr Composite Winter, note: MONITOR ONLY in winter}
+      nitrogen_kjeldahl_total: {units: mg/l, limit: null, monitoring: 1/Month 24hr Composite All}
+      nitrite_plus_nitrate_total: {units: mg/l, limit: null, monitoring: 1/Month 24hr Composite All, note: 'Attachment II inverts this parameter''s name — "Nitrate Plus Nitrite, Total" — same analyte (00630), same units, same M basis; transcribed as printed at each location.'}
+      phosphorus_total: {units: mg/l, limit: null, monitoring: 1/Month 24hr Composite All, note: 'MONITOR ONLY — no numeric phosphorus limit in this permit.'}
+      nickel_total_recoverable: {units: ug/l, limit: null, monitoring: 1/Quarter 24hr Composite Quarterly}
+      zinc_total_recoverable: {units: ug/l, limit: null, monitoring: 1/Quarter 24hr Composite Quarterly}
+      cadmium_total_recoverable: {units: ug/l, limit: null, monitoring: 1/Quarter 24hr Composite Quarterly}
+      lead_total_recoverable: {units: ug/l, limit: null, monitoring: 1/Quarter 24hr Composite Quarterly}
+      chromium_total_recoverable: {units: ug/l, limit: null, monitoring: 1/Quarter 24hr Composite Quarterly}
+      copper_total_recoverable: {units: ug/l, maximum: 31, load_daily_kg: 0.0822, monitoring: 1/Quarter 24hr Composite Quarterly}
+      chromium_dissolved_hexavalent: {units: ug/l, limit: null, monitoring: 1/Quarter Grab Quarterly}
+      e_coli: {units: '#/100 ml', weekly: 284, monthly: 126, monitoring: 2/Week Grab Summer}
+      flow_rate: {units: MGD, limit: null, monitoring: 1/Day 24hr Total All}
+      mercury_total_low_level: {units: ng/l, limit: null, monitoring: 2/Year Grab Semi-annual}
+      cyanide_free_low_level: {units: ug/l, limit: null, monitoring: 1/Quarter Grab Quarterly, note: 'Attachment II prints this same monitor-only parameter in mg/l — a 1000× unit disagreement between the two tables; see warnings[5].'}
+      peracetic_acid: {units: ug/l, maximum: 330, monitoring: 1/Day Multiple Grab Summer}
+      cbod_5_day: {units: mg/l, weekly: 13, monthly: 8.5, load_weekly_kg: 34.5, load_monthly_kg: 22.6, monitoring: 2/Week 24hr Composite All}
+    footnotes:
+      '*': Effluent loadings based on average design flow of 0.7 MGD.
+      a: Low Level Mercury — See Part II, Item Q.
+      b: Free cyanide — See Part II, Items I & P.
+      c: Peracetic Acid — See Part II, Item S.
+    cross_check: >-
+      Attachment II, "Final Effluent Limits for Outfall 0PC00019-001" (bound into this same
+      PDF, sheet unnumbered / PDF page 32), reprints every one of the 23 parameters above
+      under a different column layout (30 Day Average / Weekly Average / Daily Maximum /
+      Daily Minimum, plus a "Basis" code) and every NUMERIC figure and column placement
+      agrees exactly with Part I.A — re-checked in extraction_mode="layout" for both tables.
+      ONE thing does NOT agree: free cyanide's units (ug/l in Part I.A, mg/l in Attachment
+      II — see warnings[5] and limits.cyanide_free_low_level). Basis codes as printed: pH,
+      Dissolved Oxygen, Oil & Grease, E. coli and Peracetic Acid = WQS; Total Suspended
+      Solids and CBOD = BADCT; Ammonia (Summer) and Copper = WLA; every OTHER monitor-only
+      parameter = M (per "Division of Surface Water NPDES Permit Guidance 1: Monitoring
+      frequency requirements for Sanitary Discharges") EXCEPT Ammonia (Winter), which is
+      monitor-only but coded WLA, not M — Ohio EPA ran a wasteload allocation for winter
+      ammonia and elected monitor-only, a materially different regulatory posture from the
+      generic monitoring-frequency guidance that covers the rest. This is agreement within
+      the one committed document, not a second source — see fact_sheet_and_attachments
+      below.
+
+  # ── Part I.B — the non-outfall monitoring stations (sheets 4-8) ────────────────────────
+  monitoring_stations:
+    citation: 'Permit 0PC00019*KD, sheets 4-8, Part I.B'
+    tag: '[verified]'
+    sso_300:
+      parameter: Overflow Occurrence (74062), No./Month, 1/Month Total, all months
+      note: >-
+        The permit is explicit that the 1/Month frequency is a REPORTING frequency, not a
+        monitoring one: "these overflows shall be monitored on each day when they
+        discharge." Only SSOs that reach waters of the state — directly or through a storm
+        sewer — are reported at this station; each location overflowing on a given day
+        counts as one occurrence.
+      annual_report: >-
+        An annual SSO report covering ALL overflows in the collection system is due March
+        31 for the prior calendar year, with locations numbered consecutively from 301,
+        volumes in millions of gallons, and a narrative water-in-basement analysis.
+      prohibition: >-
+        Part II Item D itself (sheet 10) states a flat prohibition, distinct from the
+        reporting/monitoring machinery around it: "All SSOs are prohibited." The station-300
+        table's own Notes (sheet 4, footnote c) independently state the same thing: "All
+        sanitary sewer overflows are prohibited." One of this instrument's few absolute
+        conditions, not merely a reporting requirement.
+      submission_district_office: >-
+        Part II Item D.2(b) names where the hardcopy alternative to electronic submission
+        goes: "you may submit one hardcopy of the report to Ohio EPA Southeast District
+        Office and one copy to: Ohio EPA; Division of Surface Water; NPDES Permit Unit..."
+        This is the one place in this instrument that identifies a specific Ohio EPA
+        district office for this facility (Adams County) — unlike the Mansfield precedent
+        [reference], where the district office was left [open].
+    sludge_586: {parameter: Sludge Fee Weight (51129), units: dry tons, frequency: 1/Year Total, month: December, applies_to: disposal in a solid waste landfill}
+    sludge_588_note: >-
+      Station 0PC00019588 (sludge transferred to another NPDES permit holder in an
+      emergency) is authorized in Part II Item O but, as the permit itself says, "the table
+      is not included in Part I.B for this station" — it is reported only on the Annual
+      Sludge Report, not on the DMR.
+    influent_601:
+      description: WWTP influent — all monitor-only, no limits
+      parameters: Water Temperature (1/Day Grab All), pH (1/Day Grab All), Total Suspended Solids and CBOD 5-day (both 2/Week 24hr Composite All)
+      note: >-
+        A narrower parameter list than Mansfield's influent station [reference] — no
+        metals, cyanide, mercury or B2EHP monitored at influent here. This is also a
+        document-internal gap: Part II Item Q (sheet 14) requires "the influent and
+        effluent mercury monitoring requirements of this permit," but this Part I.B
+        influent table (station 601) carries no mercury parameter at all — mercury is
+        monitored only at the effluent (station 001, low-level, 2/Year Grab Semi-annual;
+        see effluent_limits_001.limits.mercury_total_low_level).
+    upstream_801:
+      description: Beasley Fork Creek upstream of WWTP discharge (see naming_note above)
+      parameters: >-
+        Water Temperature, Dissolved Oxygen, pH, Ammonia (NH3), Total Kjeldahl Nitrogen,
+        Nitrite Plus Nitrate, Total Phosphorus — 1/Quarter Grab, Quarterly; E. coli —
+        1/Quarter Grab, Summer-Qtrly.
+      significance: >-
+        No ambient toxicity (WET) battery is run at this station — consistent with there
+        being no WET limit anywhere in this permit, unlike Mansfield's upstream station.
+    downstream_farfield_901:
+      description: Beasley Fork Creek downstream (1/4 mile) of WWTP discharge
+      parameters: >-
+        Same suite as upstream_801 plus Hardness, Total (as CaCO3) — 1/Quarter Grab,
+        Quarterly; E. coli — 1/Quarter Grab, Summer-Qtrly.
+    same_day_sampling_rule: >-
+      Part II Item L (sheet 13): "Sampling for these parameters at station 0PC00019001,
+      0PC00019601, and 0PC00019901 shall occur the same day." As printed, this ties
+      effluent, influent and downstream sampling together but does NOT name station 801
+      (upstream) — transcribed as printed rather than assumed to be an omission. This is an
+      internal contradiction, not just a drafting gap: station 801's own Part I.B footnote
+      (sheet 7) reads "Sampling Events - See Part II, Item L," pointing 801 at the very
+      Item L rule that excludes it by name.
+
+  no_schedule_of_compliance:
+    tag: '[verified]'
+    note: >-
+      This permit has no Part I.C. Part I ends at Part I.B (sheet 8); Part II, "Other
+      Requirements," begins on sheet 9. There is no Toxicity Reduction Evaluation, no
+      Municipal Pretreatment Schedule, no Phosphorus Optimization plan requirement, and no
+      milestone table anywhere in this instrument. See warnings[2].
+
+  # ── Part II — other requirements (sheets 9-14) ───────────────────────────────────────────
+  other_requirements_of_note:
+    citation: 'Permit 0PC00019*KD, Part II, sheets 9-14'
+    tag: '[verified]'
+    operator_certification:
+      item: 'A. Operator Certification Requirements (sheet 9)'
+      note: >-
+        Treatment works Class II, collection system Class II (see
+        treatment_works_classification above). Professional operator of record change must
+        be notified to the Director within 3 days. A backup operator one classification
+        lower may cover for up to 30 consecutive days without notification.
+    limits_below_quantification:
+      item: 'I. Limits Below Quantification (sheet 12)'
+      table: {parameter: Cyanide, free, pql: 0.025 mg/L, ml: '--'}
+      note: >-
+        Free cyanide is the only parameter this permit lists with a limit set below the
+        Ohio EPA Quantification Level; compliance rules for maximum vs. average limits are
+        given per ORC 6111.13 / OAC 3745-33-07(C).
+    outfall_signage:
+      item: 'R. Outfall Signage (sheet 14)'
+      requirement: >-
+        A permanent stream-bank marker at every regulated outfall — minimum 2 ft x 2 ft,
+        at least 3 ft above ground, letters at least 2 inches tall, naming the permittee,
+        the Ohio EPA permit number, the outfall number and a contact phone number.
+    peracetic_acid_monitoring:
+      item: 'S. Peracetic Acid (sheet 14)'
+      requirement: >-
+        "Peracetic acid shall be monitored by measuring for total residual oxidants (TRO)
+        in samples" — the permit's own substitution of TRO methods for direct peracetic
+        acid analysis.
+    bypass_provisions_note: >-
+      Part II carries NO station-specific bypass table and NO numeric bypass-volume
+      trigger anywhere in this permit (contrast Mansfield's 19 MGD threshold at station
+      602) [reference] — bypass at this facility is governed only by the general Part III
+      conditions (see general_conditions_part_iii.unauthorized_discharges below).
+    biomonitoring_and_pretreatment_note: >-
+      This permit has no biomonitoring-program item and no pretreatment item (compare
+      Mansfield's Items T and U) [reference] — the letter sequence in Part II runs A
+      through S and stops there.
+    other_items_present:
+      note: >-
+        Transcribed as an index of the remaining Part II items so a later reader knows what
+        is in the instrument without re-walking it.
+      items: >-
+        C. Non-staffed-day reporting ("AN" on Saturdays/Sundays/holidays) · D. Sanitary
+        Sewer Overflow Reporting Requirements (see monitoring_stations.sso_300) · E-G.
+        General maintenance / composite-sample / grab-sample requirements · H. 85 Percent
+        Removal requirement for CBOD5 and TSS (per Part III Item 1's definition) · J. POTW
+        hazardous-waste TSDF "permit-by-rule" provisions (40 CFR 270.60(c)) · K. Water
+        quality-based limits subject to revision on updated wasteload allocations · L.
+        Same-day sampling rule (see monitoring_stations above) · M-O. Sewage sludge
+        disposal / Annual Sludge Report due March 1 / emergency transfer to another
+        permittee · P. Free Cyanide (low-level) approved methods (ASTM D7237-10, OIA-1677-
+        09, ASTM D4282-02) · Q. Mercury (low-level) approved methods (EPA Method 1631 or
+        245.7).
+
+  # ── Part III — General Conditions (sheets 15-27) ────────────────────────────────────────
+  general_conditions_part_iii:
+    citation: 'Permit 0PC00019*KD, Part III, sheets 15-27'
+    tag: '[verified]'
+    note: >-
+      A standard 32-item Ohio EPA general-conditions boilerplate (Definitions, General
+      Effluent Limitation, Facility Operation and Quality Control, Reporting, Sampling and
+      Analytical Method, Recording of Results, Records Retention, Availability of Reports,
+      Duty to Provide Information, Right of Entry, Unauthorized Discharges, Noncompliance
+      Notification, RESERVED, Duty to Mitigate, Authorized Discharges, Discharge Changes,
+      Toxic Pollutants, Permit Modification or Revocation, Transfer of Ownership or
+      Control, Oil and Hazardous Substance Liability, Solids Disposal, Construction
+      Affecting Navigable Waters, Civil and Criminal Liability, State Laws and Regulations,
+      Property Rights, Upset, Severability, Signatory Requirements, Other Information, Need
+      to Halt or Reduce Activity, Applicable Federal Rules, Availability of Public Sewers)
+      — all 32 named. Item 13, "RESERVED," is a placeholder carrying no substantive text of
+      its own. Indexed here rather than walked item by item; two items carry
+      facility-independent numeric content worth recording:
+    unauthorized_discharges:
+      item: '11. Unauthorized Discharges (sheet 20-21)'
+      note: >-
+        Bypass not exceeding limitations is allowed only for essential maintenance to
+        assure efficient operation; bypass causing an exceedance is otherwise prohibited
+        unless unavoidable to prevent loss of life/injury/severe property damage, with no
+        feasible alternative, and with notice given. NO numeric flow threshold is attached
+        to this provision anywhere in the permit — see other_requirements_of_note.bypass_provisions_note.
+    penalties:
+      item: '29. Other Information (sheet 26-27)'
+      note: >-
+        Cites ORC 6111.99: falsifying or tampering with required monitoring devices or
+        methods, or knowingly making a false statement/certification in a required record
+        or report, is punishable by a fine of not more than $25,000 per violation upon
+        conviction; violating ORC 6111.04, 6111.042, 6111.05 or 6111.07(A) is punishable by
+        a fine of not more than $25,000, imprisonment of not more than one year, or both.
+    noncompliance_notification_districts_note: >-
+      Item 12 lists all six Ohio EPA district-office emergency contacts (Southeast,
+      Southwest, Northwest, Northeast, Central District, Central Office) as generic
+      boilerplate — it does not itself identify which one covers this facility. The one
+      place this permit DOES name a specific district office for this facility is Item D.2(b)
+      (see monitoring_stations.sso_300.submission_district_office).
+
+  # ── Fact Sheet + Attachments (bound into this same PDF; PDF pages 28-33) ────────────────
+  fact_sheet_and_attachments:
+    citation: >-
+      Permit 0PC00019*KD PDF, pages 28-33 (unpaginated relative to the permit's own
+      "Page N" scheme — see warnings[3] and total_pages_note)
+    tag: '[verified]'
+    public_notice_no: '168883'
+    public_notice_date: '2022-12-26'
+    applicant_name_and_address: Village of West Union, 11700 State Route 41, West Union, OH 45693
+    facility_address_as_printed_here: West Union WWTP, 6875 State Route 247 South, West Union, OH 45693, Adams County
+    receiving_water_as_printed_here: Beasley Creek
+    receiving_water_classification: >-
+      "Warm water habitat, agricultural water supply, primary contact recreation, and
+      industrial water supply." (Section VI)
+    standards_applied: >-
+      "Ohio Water Quality Standards (WQS), Waste Load Allocation (WLA), Antibacksliding
+      (ABS), Best Technical Judgement (BTJ), Best Practical Waste Treatment technology
+      (BPT)" — as printed, Section VI.
+    average_monthly_flow:
+      station: '0PC00019001'
+      value_gpd: 415000
+      citation: Section VII, "Average Flows and Temperature, if significant"
+      note: >-
+        415,000 GPD is approximately 0.415 MGD — well under the 0.7 MGD average design flow
+        used to compute the effluent loadings in Part I.A. [inference] for the MGD
+        conversion; the permit itself prints only the GPD figure.
+    attachment_i:
+      content: >-
+        "This facility is located in Adams County at 6875 State Route 247 South, West
+        Union, Ohio. The facility discharges to Beasley Creek." followed by a site-location
+        sketch/graphic with no extractable text layer. Not rendered — nothing on this page
+        was ambiguous enough in the text layer to require a visual check, and the graphic
+        itself carries no data this file needs to verify.
+    attachment_ii:
+      content: >-
+        "Final Effluent Limits for Outfall 0PC00019-001" — the independent restatement of
+        every Part I.A limit used for cross_check under effluent_limits_001 above, followed
+        by a Basis-code legend page (ABS, BADCT, BEJ, BPJ, BPT, BTJ, FEG, M, PD, PTS, RP,
+        TMDL, VAR, WET, WLA, WLA/IMZM, WQS). Only WQS, BADCT, WLA and M are actually used
+        against a parameter in this permit's table; the rest of the legend is printed but
+        unused here. See warnings[4] for the footnote-lettering gap on these two pages.

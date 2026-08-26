@@ -1,5 +1,25 @@
 [
   {
+    "src": "CITY OF SANDUSKY",
+    "rel": "operates",
+    "dst": "npdes:2PF00001",
+    "date": "",
+    "ref": "2PF00001*SD",
+    "source": "oepa/sandusky/2PF00001.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PF00001",
+    "rel": "discharges_to",
+    "dst": "SANDUSKY BAY",
+    "date": "",
+    "ref": "2PF00001*SD",
+    "source": "oepa/sandusky/2PF00001.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

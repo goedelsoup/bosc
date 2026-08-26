@@ -1,5 +1,25 @@
 [
   {
+    "src": "CITY OF PORTSMOUTH",
+    "rel": "operates",
+    "dst": "npdes:0PD00013",
+    "date": "",
+    "ref": "0PD00013*PD",
+    "source": "oepa/portsmouth/0PD00013.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:0PD00013",
+    "rel": "discharges_to",
+    "dst": "OHIO RIVER",
+    "date": "",
+    "ref": "0PD00013*PD",
+    "source": "oepa/portsmouth/0PD00013.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "RANDY BARRERA",
     "rel": "principal_of",
     "dst": "TILTED GATE",

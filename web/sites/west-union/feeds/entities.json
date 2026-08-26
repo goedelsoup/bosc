@@ -42,5 +42,74 @@
     "lei": "875500ULXB4CYQSJVA03",
     "uei": null,
     "federal_obligations": null
+  },
+  {
+    "key": "npdes:0PC00019",
+    "display": "West Union Wastewater Treatment Plant",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "West Union Wastewater Treatment Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/west-union/0PC00019.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "VILLAGE OF WEST UNION",
+    "display": "Village of West Union",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Village of West Union"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/west-union/0PC00019.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "BEASLEY CREEK",
+    "display": "Beasley Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Beasley Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/west-union/0PC00019.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
   }
 ]

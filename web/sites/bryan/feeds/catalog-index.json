@@ -1,6 +1,6 @@
 {
   "site": "bryan",
-  "catalog_version": "9681dd65e96cd89a98b8e7cca061afb88541bfdd9ec65abeba26ce97ba8a5e14",
+  "catalog_version": "51b3981b01b3520c4cb81e97a2e0841441cab1a83e8cef087bde72e468092c7d",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -916,6 +916,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:bryan:oepa-bryan",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "oepa-bryan",
+      "title": "Ohio EPA NPDES Permit Extractions (Bryan WWTP)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:bryan:oepa-cooling-reconciliation",
       "kind": "dataset",
       "site": "bryan",
@@ -1052,6 +1060,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:bryan:CITY OF BRYAN",
+      "kind": "entity",
+      "site": "bryan",
+      "local_id": "CITY OF BRYAN",
+      "title": "City of Bryan",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:bryan:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "bryan",
@@ -1066,6 +1082,30 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:bryan:PIGEON RUN PRAIRIE CREEK",
+      "kind": "entity",
+      "site": "bryan",
+      "local_id": "PIGEON RUN PRAIRIE CREEK",
+      "title": "Pigeon Run/Prairie Creek",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:bryan:npdes:2PD00018",
+      "kind": "entity",
+      "site": "bryan",
+      "local_id": "npdes:2PD00018",
+      "title": "City of Bryan Wastewater Treatment Plant",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:bryan:oepa/bryan/2PD00018.npdes.yaml",
+      "kind": "record",
+      "site": "bryan",
+      "local_id": "oepa/bryan/2PD00018.npdes.yaml",
+      "title": "City of Bryan Wastewater Treatment Plant",
+      "feed": "records"
     }
   ]
 }

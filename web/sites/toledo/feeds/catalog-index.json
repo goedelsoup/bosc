@@ -1,6 +1,6 @@
 {
   "site": "toledo",
-  "catalog_version": "10f0ed0971c08139af4213d61efa7bd9d13fe7b31d5410aaebe646c8a0b4ef41",
+  "catalog_version": "27014df935517d8c5d7a6b079a066675ead02903a5944a7fe035e395ef96f97b",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -948,6 +948,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:toledo:oepa-toledo",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "oepa-toledo",
+      "title": "Ohio EPA NPDES Permit Extractions (Toledo Bay View WRF)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:toledo:onboard-bundle",
       "kind": "dataset",
       "site": "toledo",
@@ -1068,6 +1076,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:toledo:CITY OF TOLEDO",
+      "kind": "entity",
+      "site": "toledo",
+      "local_id": "CITY OF TOLEDO",
+      "title": "City of Toledo",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:toledo:FORD MOTOR",
       "kind": "entity",
       "site": "toledo",
@@ -1114,6 +1130,22 @@
       "local_id": "MPLX TERMINALS LLC OREGON OH TERMINAL",
       "title": "MPLX TERMINALS LLC - OREGON OH TERMINAL",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:toledo:npdes:2PF00000",
+      "kind": "entity",
+      "site": "toledo",
+      "local_id": "npdes:2PF00000",
+      "title": "City of Toledo Bay View Water Reclamation Facility",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:toledo:oepa/toledo/2PF00000.npdes.yaml",
+      "kind": "record",
+      "site": "toledo",
+      "local_id": "oepa/toledo/2PF00000.npdes.yaml",
+      "title": "City of Toledo Bay View Water Reclamation Facility",
+      "feed": "records"
     }
   ]
 }

@@ -360,6 +360,61 @@
     }
   },
   {
+    "id": "oepa-sandusky",
+    "title": "Ohio EPA NPDES Permit Extractions (Sandusky Water Pollution Control)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 2PF00001*SD (application OH0027332) for the City of Sandusky Water Pollution Control, Erie County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:sandusky",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "combined-sewer-overflow",
+      "long-term-control-plan",
+      "sandusky",
+      "erie-county",
+      "lake-erie"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/sandusky/2PF00001.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "29d07f09427aae9b8d5c20979d3951da63ac3dd3a35afcdcab7322f95c55e763",
+      "size_bytes": 53569,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 2PF00001*SD (application OH0027332) for the City of Sandusky Water Pollution Control, Erie County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "abatement-parameters",
     "title": "Erie County, OH Abatement Parameters + What-If Scenario Knobs",
     "scope": "reference",

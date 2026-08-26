@@ -1,0 +1,51 @@
+id: oepa-portsmouth
+title: Ohio EPA NPDES Permit Extractions (Portsmouth Lawson Run WWTP)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 0PD00013*PD (application OH0027197) for the City of
+    Portsmouth Lawson Run Wastewater Treatment Plant, Scioto County; retrieved from the Ohio EPA
+    DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:portsmouth
+storage:
+- relpath: extracted/oepa/portsmouth/0PD00013.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- combined-sewer-overflow
+- long-term-control-plan
+- portsmouth
+- scioto-county
+- ohio-river
+notes: >-
+  Portsmouth Lawson Run WWTP permit 0PD00013*PD, renewal action-dated 2025-12-12, effective
+  2026-01-01, expiring 2030-12-31, signed John Logue, discharging to the Ohio River at Mile Point
+  353.9. Hand-read from the digitally generated text layer; no render receipt. The source PDF
+  binds the 37-sheet permit (PDF pages 0-36) and a 26-page Fact Sheet (pages 37-62), 37+26=63.
+  ⚠️ FIVE OF THE TEN CSO OUTFALLS DISCHARGE TO THE SCIOTO RIVER, NOT THE OHIO. The sheet-1
+  authorization sentence names only the Ohio; Part II Item C.1's own station table puts 005, 006,
+  007, 008 and 009 on the Scioto. At the confluence this is a real distinction and anyone reading
+  the authorization sentence alone will get the receiving water wrong for half the CSO field.
+  Only 7 of 27 parameters at outfall 001 carry a numeric limit (TSS, oil & grease, total residual
+  chlorine, fecal coliform-winter, E. coli-summer, pH max/min, CBOD5); the other 20 are
+  monitor-only. The reason is dilution: the Fact Sheet gives a 7Q10 of 10,600 cfs against a 6.5
+  MGD design flow, roughly 1000:1. No Initial/Final phase-in and no bypass station exist at all.
+  ⚠️ THE PERMIT AND ITS OWN BOUND FACT SHEET DISAGREE ON THE E. COLI LIMIT: Part I.A.1 prints 284
+  weekly / 126 monthly; Fact Sheet Table 15 prints 240 daily-max / 126 30-day-average. The monthly
+  figure agrees, the other does not. The operative Part I.A.1 table is treated as controlling and
+  the disagreement is recorded rather than reconciled.
+  This is the one site in the batch with NO overdue deliverable: all three CSO Long Term Control
+  Plan milestones (2026-12-01, 2027-09-01, 2028-03-01) were still ahead as of 2026-08-26. A
+  further document conflict is recorded — the Fact Sheet says Part III Item 2 ("General Effluent
+  Limitations") is proposed for removal, but the issued permit still contains it at sheet 28 and
+  the Part I.B CSO notes affirmatively invoke it.

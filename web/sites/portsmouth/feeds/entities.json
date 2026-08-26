@@ -82,6 +82,52 @@
     "federal_obligations": null
   },
   {
+    "key": "npdes:0PD00013",
+    "display": "Lawson Run WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Lawson Run WWTP"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/portsmouth/0PD00013.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF PORTSMOUTH",
+    "display": "City of Portsmouth",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Portsmouth"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/portsmouth/0PD00013.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "EMH&T",
     "display": "EMH&T",
     "kind": "individual",
@@ -272,6 +318,29 @@
     "addresses": [],
     "sources": [
       "permits/dazzler-permits/4081908.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "OHIO RIVER",
+    "display": "Ohio River",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Ohio River"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/portsmouth/0PD00013.npdes.yaml"
     ],
     "lei": null,
     "uei": null,

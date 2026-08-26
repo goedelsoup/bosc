@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-24T16:13:43.959205+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-08-26T22:59:53.784971+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **185** catalogued datasets — **184** reviewed.
-- **185** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **191** catalogued datasets — **190** reviewed.
+- **191** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -34,7 +34,7 @@ Snapshot reconciled: **2026-08-24T16:13:43.959205+00:00**. Regenerate with `wate
 | extracted | limaohio | 1 | 1 | 0 | 0 |
 | extracted | mansfield | 1 | 1 | 0 | 0 |
 | extracted | meetings | 1 | 1 | 0 | 0 |
-| extracted | oepa | 16 | 16 | 0 | 0 |
+| extracted | oepa | 22 | 22 | 0 | 0 |
 | extracted | ottawa | 2 | 2 | 0 | 0 |
 | extracted | permits | 2 | 2 | 0 | 0 |
 | extracted | perry-township | 1 | 1 | 0 | 0 |
@@ -97,8 +97,8 @@ Snapshot reconciled: **2026-08-24T16:13:43.959205+00:00**. Regenerate with `wate
 | site | relevant | present | missing |
 | --- | --- | --- | --- |
 | bowling-green | 60 | 54 | 6 |
-| bryan | 56 | 47 | 9 |
-| columbus | 54 | 46 | 8 |
+| bryan | 57 | 48 | 9 |
+| columbus | 55 | 47 | 8 |
 | coshocton | 54 | 39 | 15 |
 | defiance | 57 | 48 | 9 |
 | findlay | 68 | 62 | 6 |
@@ -109,12 +109,12 @@ Snapshot reconciled: **2026-08-24T16:13:43.959205+00:00**. Regenerate with `wate
 | mansfield | 56 | 48 | 8 |
 | new-albany | 55 | 47 | 8 |
 | ottawa | 59 | 52 | 7 |
-| piketon | 54 | 39 | 15 |
-| portsmouth | 55 | 40 | 15 |
-| sandusky | 54 | 39 | 15 |
+| piketon | 55 | 40 | 15 |
+| portsmouth | 56 | 41 | 15 |
+| sandusky | 55 | 40 | 15 |
 | sidney | 63 | 58 | 5 |
 | springfield | 54 | 47 | 7 |
-| toledo | 58 | 49 | 9 |
+| toledo | 59 | 50 | 9 |
 | troy-piqua | 59 | 53 | 6 |
 | urbana | 56 | 49 | 7 |
 | van-wert | 64 | 58 | 6 |

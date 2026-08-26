@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "a23fd6f6ec87cfb5b7cfe95b0355ac8b794899cb1c32a6f4b753b097e69fac2b",
+  "catalog_version": "2439f6a660380f351e2c26c36de87de2168e96614b5e67f3f3b53022f32eac3d",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -1596,6 +1596,22 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:oepa-bryan",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-bryan",
+      "title": "Ohio EPA NPDES Permit Extractions (Bryan WWTP)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-columbus",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-columbus",
+      "title": "Ohio EPA NPDES Permit Extractions (Columbus — Jackson Pike and Southerly WWTPs)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:oepa-cooling-reconciliation",
       "kind": "dataset",
       "site": "lima",
@@ -1644,11 +1660,43 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:oepa-piketon",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-piketon",
+      "title": "Ohio EPA NPDES Permit Extractions (Village of Piketon WWTP)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-portsmouth",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-portsmouth",
+      "title": "Ohio EPA NPDES Permit Extractions (Portsmouth Lawson Run WWTP)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-sandusky",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-sandusky",
+      "title": "Ohio EPA NPDES Permit Extractions (Sandusky Water Pollution Control)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:oepa-sidney",
       "kind": "dataset",
       "site": "lima",
       "local_id": "oepa-sidney",
       "title": "Ohio EPA Permit Extractions (Sidney — AWS data-center campus, City road permit, Hidden Valley MHP)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:oepa-toledo",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "oepa-toledo",
+      "title": "Ohio EPA NPDES Permit Extractions (Toledo Bay View WRF)",
       "feed": "catalog"
     },
     {

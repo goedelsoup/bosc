@@ -360,6 +360,66 @@
     }
   },
   {
+    "id": "oepa-columbus",
+    "title": "Ohio EPA NPDES Permit Extractions (Columbus — Jackson Pike and Southerly WWTPs)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permits 4PF00000*QD (application OH0024732, Jackson Pike WWTP) and 4PF00001*SD (application OH0024741, Southerly WWTP), City of Columbus, Franklin County; retrieved from the Ohio EPA DAM permit slots",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:columbus",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "combined-sewer-overflow",
+      "biosolids",
+      "columbus",
+      "franklin-county",
+      "scioto"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/columbus/4PF00000.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/columbus/4PF00001.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "90799b702aab03aa9688f116c71521a3b109d9180be3fc872963fda2bdbe35be",
+      "size_bytes": 111178,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permits 4PF00000*QD (application OH0024732, Jackson Pike WWTP) and 4PF00001*SD (application OH0024741, Southerly WWTP), City of Columbus, Franklin County; retrieved from the Ohio EPA DAM permit slots",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "abatement-parameters",
     "title": "Franklin County, OH Abatement Parameters + What-If Scenario Knobs",
     "scope": "reference",
