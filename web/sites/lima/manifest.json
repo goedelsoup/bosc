@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-26T22:59:48+00:00",
+  "generated_at": "2026-08-26T23:15:28+00:00",
   "feed_count": 56,
-  "row_total": 4394,
+  "row_total": 4402,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -325,7 +325,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 191
+      "count": 199
     },
     {
       "name": "geo/campus",

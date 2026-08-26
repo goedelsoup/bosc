@@ -1,1 +1,640 @@
-[]
+[
+  {
+    "rel": "oepa/xenia/1PD00015.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Xenia - Ford Road WWTP",
+    "confidence": "high",
+    "warnings": [
+      "THE RECEIVING WATER IS NOT BLANK HERE (contrast with the mansfield precedent). Sheet 1's authorization sentence reads in full: \"...discharge from the City of Xenia - Ford Road WWTP wastewater treatment works, located at 779 Ford Road, Xenia, Ohio, Greene County, to the Little Miami River at River Mile 77.03 in accordance with the conditions specified in Part I, II, and III, of this permit.\" Stream name and river mile are both present and read directly from that sentence; no recovery from Part II was needed for either.",
+      "THIS PERMIT HAS NO PHASE-IN AND NO SECOND LIMITED OUTFALL. Unlike the mansfield precedent (outfall 002 carrying Initial/Final tables with a 36/37-month toxicity phase-in), Xenia's Part I.A is ONE table, for the WHOLE permit term (2026-02-01 through 2031-01-31), at ONE outfall (001). Station 002 here is a bypass-only monitoring point (Part I.B.1) with no numeric effluent limits at all — see `bypass_002` below. There is nothing to diff.",
+      "PART I.C CARRIES A SINGLE MILESTONE, NOT A TOXICITY REDUCTION EVALUATION. The Fact Sheet (p.15) explains why: WET testing places Ford Road WWTP in \"Category 4\" — the plant's effluent does not currently pose a toxicity problem, so only continued annual monitoring is required, with no numeric acute/chronic toxicity limit and consequently no TRE schedule. The only Schedule of Compliance item is the Municipal Pretreatment local-limits justification, due 6 months after the effective date (event code 52599). See `schedule_of_compliance` below.",
+      "THE DISTRICT OFFICE IS NAMED CONSISTENTLY (contrast with the mansfield precedent, which named two different district offices for two schedules at the same facility). Both Part I.C.1.a (sheet 16) and Part II Item J (sheet 21-22) name the \"Southwest District Office\" — the pretreatment submittal and the selenium PEL notification both route there. No cross-part disagreement to flag.",
+      "STATION 588's TABLE CODE AND ITS OWN FOOTNOTE DISAGREE ON THE PARAMETER CODE. The Part I.B.5 monitoring table for station 1PD00015588 (sludge transferred to another NPDES permittee, sheet 11) lists parameter \"51129 - Sludge Fee Weight.\" Footnote d on the SAME sheet reads: \"...This value of percent total solids shall be used to calculate the total Sewage Sludge Weight (Discharge Monitoring Report code 70316) removed from the treatment plant on that day\" — citing code 70316, which does not appear anywhere in the 588 table. 588 is the ONLY one of the three sludge-monitoring stations where table and footnote disagree: station 581 (sheets 8-9) prints BOTH codes in its own table (51129 and 70316) and its footnote f cites both together (\"...code 70316) and/or total Sewage Sludge Fee Weight (Discharge Monitoring Report code 51129)...\"); station 586 (sheet 10) prints only 51129 and its footnote d cites only 51129, matching its own table. 588 alone prints 51129 but has its footnote d cite 70316 instead — the real anomaly. Transcribed as printed at both places rather than silently reconciling; see `sludge_588` and `biosolids_581.also_monitored` below.",
+      "ONE PHOSPHORUS ROW HOLDS A CALCULATED VALUE UNDER A \"MAXIMUM\" HEADING. Part I.A footnote i (sheet 4) states outright that parameter 51451 (\"Phosphorus, Total Load\", printed with a \"maximum\" of 6.8 kg) \"is actually a calculated annual average loading in 'kilograms' calculated during the summer months of May-October only although it is listed under a maximum concentration limit\" — entered once, in November, via the Item Y calculation. The document is explicit that its own column header for this row is a formatting artifact, not a true daily maximum. Transcribed with that caveat attached rather than as an ordinary limit.",
+      "STATION 002's SAMPLING-STATION DESCRIPTION CARRIES TWO COORDINATE PAIRS, NOT ONE. Part II Item B (sheet 18) describes 1PD00015002 as: \"Influent bypass from retention basin at (Lat/Long: 39.7119, -83.9652) prior to combining with final effluent at (Lat/Long: 39.7126, -83.9672) and ultimately discharging to the Little Miami River at Station 1PD00015001.\" Those are two distinct points in the process train (the bypass diversion itself, and the post-blending point), both printed inside one station's row. Both are transcribed under `sampling_stations.'1PD00015002'` rather than picking one.",
+      "NO DMS-TO-DECIMAL CONVERSION WAS NEEDED. Unlike the mansfield precedent, this permit prints its sampling-station coordinates already in decimal degrees (\"Lat/Long: 39.7164, -83.9700\"), not DMS. The values below are transcribed as printed, unconverted."
+    ],
+    "fields": {
+      "tag": "[verified]",
+      "facility_name": "City of Xenia - Ford Road WWTP",
+      "permit_no": "1PD00015*OD",
+      "application_no": "OH0028193",
+      "permit_action": "Not stated on the permit's own sheet 1 (which prints only the standard authorization sentence, action/effective/expiration dates, and no \"modification\"/\"renewal\" label). The bound Fact Sheet titles itself \"Fact Sheet for NPDES Permit Renewal\" (p.1) and \"Public Notice No.: 216588\", \"Public Notice Date: 12/9/2025\" — so `renewal` is [reference] from the Fact Sheet (see `fact_sheet_context`, tagged [reference] throughout), not [verified] from the permit body itself.",
+      "permittee": "City of Xenia",
+      "applicant_address": "107 East Main Street, Xenia, OH 45385 — [reference], Fact Sheet p.1; not printed on the permit itself.",
+      "facility_address": "779 Ford Road, Xenia, Ohio, Greene County",
+      "receiving_water": "Little Miami River",
+      "river_mile": 77.03,
+      "stream_network": "Little Miami River → Ohio River. The Fact Sheet (p.1) states this two-link chain directly as \"Subsequent Stream Network: Ohio River\" — [reference], read off the Fact Sheet, not the permit body.",
+      "action_date": "2026-01-12",
+      "effective_date": "2026-02-01",
+      "expiration_date": "2031-01-31",
+      "signed_by": "John Logue, Director",
+      "total_pages": 41,
+      "renewal_application_due": "The permit's own text requires renewal submission \"no later than 180 days prior to the above date of expiration\" — i.e. on or about 2030-08-04 for the 2031-01-31 expiration. [inference] from the permit's stated rule; the permit prints no calendar date for it.",
+      "parts_present": "Sheet 1's authorization sentence names only \"Part I, II, and III\" — and that is the whole document; there is no Part IV/V/VI here (contrast with a permit carrying stormwater/SWPPP or CSO parts). Consistent with the Fact Sheet's own statement (p.7) that \"The City of Xenia has 100% separated sewers in the collection system for the Ford Road WWTP. There are no combined sewers\" — so no CSO part is expected or present.",
+      "treatment_works_classification": {
+        "citation": "Permit 1PD00015*OD, sheet 18, Part II Item A.1",
+        "tag": "[verified]",
+        "treatment_works": "Class III under OAC 3745-7-04. The permittee must designate a professional operator of record certified at class III or greater.",
+        "collection_systems": "\"All sewerage (collection) systems that are tributary to this treatment works are Class II sewerage systems in accordance with paragraph (B)(1)(b) of rule 3745-7-04.\""
+      },
+      "sampling_stations": {
+        "citation": "Permit 1PD00015*OD, sheet 19, Part II Item B",
+        "tag": "[verified]",
+        "1PD00015001": {
+          "description": "Final effluent to the Little Miami River",
+          "latitude_dd": 39.7164,
+          "longitude_dd": -83.97
+        },
+        "1PD00015002": {
+          "description": "Influent bypass from retention basin, prior to combining with final effluent and ultimately discharging to the Little Miami River at Station 1PD00015001. See warnings[6]: two coordinate pairs are printed for this one station.",
+          "bypass_point_latitude_dd": 39.7119,
+          "bypass_point_longitude_dd": -83.9652,
+          "post_blending_point_latitude_dd": 39.7126,
+          "post_blending_point_longitude_dd": -83.9672
+        },
+        "1PD00015300": {
+          "description": "Collection system sanitary sewer overflows"
+        },
+        "1PD00015581": {
+          "description": "Beneficial use of Class B biosolids"
+        },
+        "1PD00015586": {
+          "description": "Disposal of sewage sludge or biosolids in an authorized landfill"
+        },
+        "1PD00015588": {
+          "description": "Transfer of sewage sludge or biosolids to another NPDES permittee"
+        },
+        "1PD00015601": {
+          "description": "Influent monitoring"
+        },
+        "1PD00015801": {
+          "description": "Upstream monitoring in the Little Miami River at the Fairground Road Bridge"
+        },
+        "1PD00015901": {
+          "description": "Downstream monitoring in the Little Miami River at the Trebein Road Bridge"
+        }
+      },
+      "effluent_limits_001": {
+        "citation": "Permit 1PD00015*OD, sheets 2-4, Part I.A.1",
+        "tag": "[verified]",
+        "period": "February 1, 2026 through January 31, 2031 — one table, no phase-in (see warnings[1])",
+        "outfall": "1PD00015001",
+        "design_flow_basis": "\"Effluent loadings based on average design flow of 3.6 MGD.\" (footnote, sheet 4)",
+        "limits": {
+          "water_temperature": {
+            "units": "C",
+            "limit": null,
+            "monitoring": "1/Day Maximum Indicating Thermometer",
+            "months": "All"
+          },
+          "dissolved_oxygen_summer": {
+            "units": "mg/l",
+            "minimum": 7.0,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "Summer"
+          },
+          "dissolved_oxygen_winter": {
+            "units": "mg/l",
+            "minimum": 6.0,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "Winter"
+          },
+          "total_suspended_solids_summer": {
+            "units": "mg/l",
+            "weekly": 30,
+            "monthly": 20,
+            "load_weekly_kg": 409,
+            "load_monthly_kg": 273,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Summer"
+          },
+          "total_suspended_solids_winter": {
+            "units": "mg/l",
+            "weekly": 45,
+            "monthly": 30,
+            "load_weekly_kg": 613,
+            "load_monthly_kg": 409,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Winter"
+          },
+          "oil_and_grease": {
+            "units": "mg/l",
+            "maximum": 10,
+            "monitoring": "1/Month Grab",
+            "months": "All"
+          },
+          "ammonia_nh3_summer": {
+            "units": "mg/l",
+            "weekly": 2.3,
+            "monthly": 1.5,
+            "load_weekly_kg": 31.3,
+            "load_monthly_kg": 20.4,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Summer"
+          },
+          "ammonia_nh3_winter": {
+            "units": "mg/l",
+            "weekly": 14,
+            "monthly": 9.3,
+            "load_weekly_kg": 190,
+            "load_monthly_kg": 127,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Winter"
+          },
+          "tkn_total": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Month 24hr Composite",
+            "months": "All"
+          },
+          "nitrite_plus_nitrate": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Month 24hr Composite",
+            "months": "All"
+          },
+          "phosphorus_total_summer": {
+            "units": "mg/l",
+            "weekly": 1.5,
+            "monthly": 1.0,
+            "load_weekly_kg": 20.4,
+            "load_monthly_kg": 13.6,
+            "monitoring": "1/Week 24hr Composite",
+            "months": "Summer"
+          },
+          "phosphorus_total_winter": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Week 24hr Composite",
+            "months": "Winter",
+            "note": "MONITOR ONLY in winter — no numeric limit prints for this season."
+          },
+          "orthophosphate_dissolved": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Month Grab",
+            "months": "All"
+          },
+          "selenium": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Month 24hr Composite",
+            "months": "All"
+          },
+          "nickel": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "zinc": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "cadmium": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "lead": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "chromium_total": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "copper": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly - Alt."
+          },
+          "chromium_dissolved_hexavalent": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter Grab",
+            "months": "Quarterly - Alt."
+          },
+          "e_coli": {
+            "units": "#/100 ml",
+            "weekly": 284,
+            "monthly": 126,
+            "monitoring": "3/Week Grab",
+            "months": "Summer"
+          },
+          "butyl_benzyl_phthalate": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter Composite",
+            "months": "Quarterly - Alt."
+          },
+          "bis_2_ethylhexyl_phthalate": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter Composite",
+            "months": "Quarterly - Alt."
+          },
+          "flow_rate": {
+            "units": "MGD",
+            "limit": null,
+            "monitoring": "1/Day Continuous",
+            "months": "All"
+          },
+          "mercury_total_low_level": {
+            "units": "ng/l",
+            "limit": null,
+            "monitoring": "1/Quarter Grab",
+            "months": "Quarterly - Alt."
+          },
+          "cyanide_free_low_level": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter Grab",
+            "months": "Quarterly - Alt."
+          },
+          "phosphorus_total_load": {
+            "units": "Kg",
+            "maximum": 6.8,
+            "monitoring": "1/Year Calculated",
+            "months": "November",
+            "note": "Printed under a \"maximum concentration limit\" column but is a CALCULATED ANNUAL AVERAGE loading for May-October only, entered once in November — see warnings[5] and Part I.A footnote i (sheet 4)."
+          },
+          "acute_toxicity_ceriodaphnia_dubia": {
+            "units": "TUa",
+            "limit": null,
+            "monitoring": "1/Year 24hr Composite",
+            "months": "September"
+          },
+          "chronic_toxicity_ceriodaphnia_dubia": {
+            "units": "TUc",
+            "limit": null,
+            "monitoring": "1/Year 24hr Composite",
+            "months": "September"
+          },
+          "acute_toxicity_pimephales_promelas": {
+            "units": "TUa",
+            "limit": null,
+            "monitoring": "1/Year 24hr Composite",
+            "months": "September"
+          },
+          "chronic_toxicity_pimephales_promelas": {
+            "units": "TUc",
+            "limit": null,
+            "monitoring": "1/Year 24hr Composite",
+            "months": "September"
+          },
+          "ph_maximum": {
+            "units": "S.U.",
+            "maximum": 9.0,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "ph_minimum": {
+            "units": "S.U.",
+            "minimum": 6.5,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "residue_total_filterable": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/2 Weeks 24hr Composite",
+            "months": "All"
+          },
+          "cbod_5_day_summer": {
+            "units": "mg/l",
+            "weekly": 15,
+            "monthly": 10,
+            "load_weekly_kg": 204,
+            "load_monthly_kg": 136,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Summer"
+          },
+          "cbod_5_day_winter": {
+            "units": "mg/l",
+            "weekly": 40,
+            "monthly": 25,
+            "load_weekly_kg": 545,
+            "load_monthly_kg": 341,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Winter"
+          }
+        },
+        "footnotes": {
+          "citation": "Permit 1PD00015*OD, sheet 4, Notes for Station Number 1PD00015001",
+          "a": "Sampling for the respective/common parameters shall occur on the same day as Outfall 1PD00015601.",
+          "b": "Mercury — See Part II, Item Q.",
+          "c": "Free cyanide — See Part II, Item P.",
+          "d": "Selenium — See Part II, Item J.",
+          "e": "Dissolved Orthophosphate — See Part II, Item R.",
+          "f": "Toxicity Biomonitoring — See Part II, Item V.",
+          "g": "Bis(2-ethylhexyl) Phthalate — See Part II, Item S.",
+          "h": "Phosphorus — See Part II, Item Y.",
+          "i": "See warnings[5] above — the calculated-loading caveat on parameter 51451."
+        },
+        "note": "Only ONE outfall carries limits in this permit. Compare the mansfield precedent's 001/002 split (technology-based vs. water-quality-based compliance points) — Xenia has no such split; 001 alone carries both conventional (TSS/CBOD/ammonia/phosphorus) and water-quality-based (E. coli, pH, metals monitoring, WET monitoring) parameters."
+      },
+      "bypass_002": {
+        "citation": "Permit 1PD00015*OD, sheet 5, Part I.B.1",
+        "tag": "[verified]",
+        "description": "Treatment plant's bypass — monitored WHEN DISCHARGING; carries NO numeric limits (contrast with mansfield's 602, which had real TSS/CBOD limits)",
+        "parameters": {
+          "total_suspended_solids": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "When Disch. Grab",
+            "months": "All"
+          },
+          "flow_rate": {
+            "units": "MGD",
+            "limit": null,
+            "monitoring": "When Disch. Continuous",
+            "months": "All"
+          },
+          "cbod_5_day": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "When Disch. Grab",
+            "months": "All"
+          },
+          "bypass_occurrence": {
+            "units": "No./Month",
+            "limit": null,
+            "monitoring": "When Disch. Total",
+            "months": "All"
+          },
+          "bypass_duration": {
+            "units": "Hr/Month",
+            "limit": null,
+            "monitoring": "When Disch. Total",
+            "months": "All"
+          }
+        },
+        "note_e": "\"Discharge through this station is prohibited. The Director may take enforcement action for violations of this prohibition unless the three conditions specified at 40 CFR 122.41(m) and in Part III, Item M.3.a of this permit are met.\" As printed — the bypass station is monitored and reported in full even though bypass itself remains formally prohibited absent the CFR conditions.",
+        "no_numeric_trigger_in_the_permit_itself": "Unlike the mansfield precedent (a printed \"sustained peak flow of 19 MGD\" precondition on its bypass station), NOTHING in this permit's own text sets a numeric flow threshold for when Ford Road's bypass may divert. The only such figure — \"influent is diverted to the EQ basin when the flow exceeds 4 MGD\" — appears in the bound Fact Sheet's Facility Description (p.6), which is NOT part of Parts I/II/III and is not itself an enforceable permit condition. See `fact_sheet_context.facility_description` below."
+      },
+      "sso_300": {
+        "citation": "Permit 1PD00015*OD, sheet 6, Part I.B.2",
+        "tag": "[verified]",
+        "parameter": "Overflow Occurrence (74062), No./Month, 1/Month Total, All",
+        "note": "As at mansfield, the permit is explicit that 1/Month is a REPORTING frequency, not a monitoring one: \"the intent of that provision is to specify a reporting frequency for Overflow Occurrence, not a monitoring frequency... these overflows shall be monitored on each day when they discharge.\" Only SSOs reaching waters of the state (directly or through a storm sewer) are reported at this station; a multi-location day counts multiply.",
+        "annual_report": "An annual SSO report covering ALL overflows in the collection system (including those never reaching waters of the state) is due March 31 for the prior calendar year, with locations numbered consecutively from 301, volumes in millions of gallons, and a narrative WIB (water-in-basement) analysis by location, frequency and cause. Public notice of the report's availability is required (Part II Item C)."
+      },
+      "biosolids_581": {
+        "citation": "Permit 1PD00015*OD, sheets 7-9, Part I.B.3",
+        "tag": "[verified]",
+        "class": "B",
+        "frequency": "1/Quarter Composite (Quarterly - Alt.), reported on the March/June/September/December DMR",
+        "ceilings_mg_per_kg": {
+          "arsenic": 75,
+          "cadmium": 85,
+          "copper": 4300,
+          "lead": 840,
+          "nickel": 420,
+          "zinc": 7500,
+          "selenium": 100,
+          "mercury": 57,
+          "molybdenum": 75
+        },
+        "ceilings_note": "These match the standard 40 CFR Part 503 sludge ceiling concentrations exactly (As 75, Cd 85, Cu 4300, Pb 840, Hg 57, Mo 75, Ni 420, Se 100, Zn 7500) — the permit carries two more ceilinged metals (selenium, zinc) than the mansfield precedent transcribed.",
+        "fecal_coliform_max": {
+          "units": "CFU/gram",
+          "maximum": 2000000
+        },
+        "also_monitored": "ammonia, total Kjeldahl nitrogen, total phosphorus, potassium (nutrient suite, no limits); 51129 - Sludge Fee Weight - dry tons; and 70316 - Sludge Weight - Dry Tons (all sheet 8, table columns dashed — monitor-only, no limits). This table's own 70316 row is that code's genuine home in this permit — see warnings[4] and `sludge_588.footnote_code_disagreement`."
+      },
+      "sludge_586": {
+        "citation": "Permit 1PD00015*OD, sheet 10, Part I.B.4",
+        "parameter": "Sludge Fee Weight (51129), dry tons, 1/Year Total, month December",
+        "applies_to": "disposal in a municipal solid waste landfill"
+      },
+      "sludge_588": {
+        "citation": "Permit 1PD00015*OD, sheet 11, Part I.B.5",
+        "parameter": "Sludge Fee Weight (51129), dry tons, 1/Year Total, month December",
+        "applies_to": "transfer to another NPDES permit holder",
+        "footnote_code_disagreement": "See warnings[4]. This table's own parameter row prints 51129 (Sludge Fee Weight); its own footnote d cites code 70316 (Sludge Weight) for the same calculation. Transcribed as printed on both lines rather than reconciled."
+      },
+      "influent_601": {
+        "citation": "Permit 1PD00015*OD, sheets 12-13, Part I.B.6",
+        "tag": "[verified]",
+        "description": "Influent monitoring downstream of the bar screen — all monitor-only, no limits",
+        "parameters": "TSS (3/Week 24hr Composite, All), total cyanide (1/Quarter Grab, Quarterly-Alt.), selenium (1/Month 24hr Composite, All), nickel/zinc/cadmium/lead/total chromium/copper (1/Quarter 24hr Composite, Quarterly-Alt.), dissolved hexavalent chromium (1/Quarter Grab, Quarterly-Alt.), low-level mercury (1/Quarter Grab, Quarterly-Alt.), pH maximum/minimum (1/Day Multiple Grab, All), CBOD 5-day (3/Week 24hr Composite, All).",
+        "note": "\"Samples of influent used for determination of net values or percent removal must be taken the same day as those samples of effluent used for that determination.\" Sampling for common parameters occurs the same day as outfall 001."
+      },
+      "upstream_801": {
+        "citation": "Permit 1PD00015*OD, sheet 14, Part I.B.7",
+        "description": "Receiving stream ABOVE the discharge, at the Fairground Road Bridge",
+        "chemistry": "ammonia, total Kjeldahl nitrogen, nitrite+nitrate, total phosphorus — 1/Month Grab, all months",
+        "bacteria": "E. coli, 1 per 2 Weeks Grab, June - Aug",
+        "ambient_toxicity": "48-hr acute Ceriodaphnia dubia (61432) and 7-day chronic Ceriodaphnia dubia (61438), 96-hr acute Pimephales promelas (61435) and 7-day chronic Pimephales promelas (61441) — ALL FOUR at 1/Year Grab, September. Reported as \"% Affected\", no limits.",
+        "significance": "The ambient toxicity battery here runs on the SAME single September date as the effluent's own annual toxicity test (see effluent_limits_001, acute/chronic rows) — a tighter alignment than the mansfield precedent, whose upstream station ran a fuller February/August schedule against the effluent's quarterly test. One shared sampling date makes plant-caused vs. background toxicity directly comparable here."
+      },
+      "downstream_farfield_901": {
+        "citation": "Permit 1PD00015*OD, sheet 15, Part I.B.8",
+        "description": "Receiving stream BELOW the discharge, at the Trebein Road Bridge",
+        "parameters": "Water temperature, pH, ammonia, total Kjeldahl nitrogen, nitrite+nitrate, total phosphorus, total hardness (as CaCO3) — 1/Month Grab, all months; E. coli 1 per 2 Weeks Grab, June - Aug.",
+        "note": "Sampling for the respective/common parameters shall occur on the same day as Outfall 1PD00015001."
+      },
+      "schedule_of_compliance": {
+        "citation": "Permit 1PD00015*OD, sheets 16-17, Part I.C",
+        "tag": "[verified]",
+        "milestone_summary_report": {
+          "milestones": [
+            {
+              "section": "Municipal Pretreatment Schedule",
+              "report_event": "Effluent Limits For Pollutants",
+              "event_code": "52599",
+              "due": "6 months after the permit effective date"
+            }
+          ],
+          "event_code_note": "The table (sheet 16) and the narrative (sheet 16, \"(Event Code 52599)\") print the SAME code, '52599' — no padding disagreement to flag here (contrast with the mansfield precedent's event_code_forms finding)."
+        },
+        "municipal_pretreatment_schedule": {
+          "part": "I.C.1",
+          "due_calendar_date": "[inference] resolving \"6 months after the permit effective date\" against the 2026-02-01 effective date: on or about 2026-08-01. The permit prints no calendar date for this milestone, only the offset.",
+          "event_code": "52599",
+          "submit_to": "\"Ohio EPA, Central Office Pretreatment Unit and to Ohio EPA, Southwest District Office\"",
+          "requirement": "Evaluate the adequacy of local industrial user limitations to prevent pollutants entering the POTW that would interfere with its operation, pass through in amounts exceeding water quality standard-based limits, be incompatible with the POTW, or limit wastewater/sludge use options. Submit either a technical justification for REVISING local limits (with a pretreatment program modification request) or a technical justification for RETAINING the existing ones. Same structure and the same pollutant list as the mansfield precedent's I.C.B (arsenic, cadmium, total chromium, dissolved hexavalent chromium, copper, free cyanide, lead, mercury, molybdenum, nickel, selenium, silver, zinc).",
+          "wla_values_for_local_limits": "Sheet 26 (Part II Item W.5) lists numeric waste load allocation values the permittee must use when evaluating local limits for parameters lacking a final effluent limit: arsenic 266 ug/L, cadmium 11 ug/L, hexavalent chromium 19 ug/L, total chromium 389 ug/L, copper 43 ug/L, free cyanide 21 ug/L, lead 51 ug/L, mercury 12 ng/L, molybdenum 35433 ug/L, nickel 227 ug/L, selenium 8.9 ug/L, silver 2.3 ug/L, zinc 527 ug/L.",
+          "engineering_requirement": "If new or revised industrial user discharge limits are proposed, the stamp and signature of a licensed Ohio professional engineer is required.",
+          "revisions": "A revised report is due within 90 days of Ohio EPA notifying the permittee of deficiencies; revised limits must be incorporated into all industrial user control documents no later than 4 months after Ohio EPA's approval."
+        },
+        "status_of_this_milestone": {
+          "tag": "[open]",
+          "as_of": "2026-08-26",
+          "lapsed": "The single milestone date (on or about 2026-08-01) has passed — by roughly 25 days as of this extraction.",
+          "what_is_not_established": "WHETHER IT WAS FILED. Nothing in this corpus establishes that — no submittal, no acknowledgment, no violation notice, and no ECHO/ICIS extract for this facility is committed. \"Past due\" here means the date has passed, NOT that the city missed it. Do not write it as a missed deadline.",
+          "how_to_close_it": "A public-records request to Ohio EPA for the 52599 submittal under permit 1PD00015 would settle this. Address it to the Southwest District Office and/or the Central Office Pretreatment Unit — see `submit_to` above."
+        }
+      },
+      "other_requirements_of_note": {
+        "citation": "Permit 1PD00015*OD, Part II, sheets 18-28",
+        "tag": "[verified]",
+        "parameter_tracking_selenium": {
+          "item": "J. Parameter Tracking (sheet 21-22)",
+          "pel": "Selenium: 8.9 ug/L (30-day average), 105 ug/L (maximum)",
+          "text": "A preliminary effluent limit (PEL) tracking condition, not a numeric limit. The permittee must report to Ohio EPA Southwest District Office, in writing, within 30 days, any effluent result exceeding the PEL, and must reduce discharge levels below the PEL if the maximum PEL is exceeded four or more months, or the 30-day average PEL is exceeded two or more months, within any consecutive six-month period.",
+          "significance": "Matches the Fact Sheet's own account (p.13-14): selenium sits in \"group 4\" — PEQ ≥ 50 percent but < 100 percent of the PEL — which under OAC 3745-33-07(A)(2) requires exactly this tracking condition rather than a numeric limit."
+        },
+        "biomonitoring_program": {
+          "item": "V. Biomonitoring Program Requirements (sheet 23-25)",
+          "testing": "Annual chronic (Ceriodaphnia dubia AND fathead minnow) and annual definitive acute toxicity tests on effluent from outfall 1PD00015001, per Ohio EPA's \"Reporting and Testing Guidance for Biomonitoring\", July 1998 or current revision. Ambient/upstream testing at station 801 in conjunction with the effluent tests. SOP or verification of SOP submittal due no later than three months after the effective date — on or about 2026-05-01 [inference].",
+          "significance": "No \"continue to implement\" language here (contrast with mansfield) — nothing in this permit indicates whether the biomonitoring program predates this permit term."
+        },
+        "pretreatment_program_requirements": {
+          "item": "W. Pretreatment Program Requirements (sheet 25-28)",
+          "approved": "August 1, 1997, and all subsequent modifications approved before this permit's effective date",
+          "industrial_user_context": "Per the Fact Sheet (p.7): \"The City of Xenia has two significant industrial users in their pretreatment program. Neither of these categorical industrial users are within the Ford Road WWTP collection area\" — i.e. Ford Road's two SIUs are stated to be outside its own service area (presumably tributary to Glady Run instead; the Fact Sheet does not say so explicitly and this file does not assert it).",
+          "enforcement_publication": "On or prior to February 15th each year, the permittee must publish in a newspaper of general circulation a list of industrial users in Significant Noncompliance during the previous 12 months."
+        },
+        "stormwater_no_exposure_certification": {
+          "item": "X. Stormwater No Exposure Certification (sheet 28)",
+          "certification_number": "1GRN00728*BG",
+          "signed": "2024-10-21",
+          "reaffirm_by": "2029-10-20",
+          "note": "This is a DIFFERENT NPDES permit number (1GRN00728*BG) referenced inside 1PD00015*OD, not a station or part of this permit's own numbering. Both the reaffirmation deadline and the certification number are printed calendar facts, not inferred."
+        },
+        "tmdl_phosphorus_compliance": {
+          "item": "Y. Upper LMR TMDL Phosphorus Load Compliance (sheet 28)",
+          "allowable_load_kg_per_day": 6.8,
+          "season": "May through October",
+          "annual_report_due": "\"Beginning on December 1, 2015 and annually thereafter\" — transcribed as printed (sheet 28). The 2015 start date is STALE: it survives verbatim into this 2026-2031 permit term, apparently unedited boilerplate carried forward from an earlier permit cycle. Transcribed as printed rather than silently normalized to \"annually.\"",
+          "report_contents": "Median May-October daily flow at station 001 for the previous 5 consecutive calendar years (med Qeff), median daily effluent TP concentration for the most recent calendar year (med Peff), the calculated daily TP load (med Qeff × med Peff × 3.7854), a compliance statement, and — if noncompliant — planned corrective actions and a timeline."
+        },
+        "other_items_present": {
+          "note": "Transcribed as an index of what Part II contains, so a later reader knows what is in the instrument without re-walking it. Not summarized in detail here.",
+          "items": "A. Operator Certification Requirements · C. Sanitary Sewer Overflow (SSO) Reporting Requirements · D-I. Facility operation, sample-type definitions (composite/grab/ multiple grab), 85% removal · K. WQBEL revision authority · L-O. Sewage sludge/ biosolids handling, annual report, SOPs, sampling plan · P. Monitoring for Low Level Free Cyanide · Q. Monitoring for Mercury (low level) · R. Monitoring for Dissolved Orthophosphate · S. Monitoring for Bis(2-ethylhexyl) Phthalate · T. Outfall Signage · U. Sufficiently Sensitive Data/MDLs. There is no Part IV/V/VI (see `parts_present` above) and no combined-sewer-overflow provisions.",
+          "part_iii_not_indexed": "PART III - GENERAL CONDITIONS (sheets 29-41, Items A through AG) is NOT indexed here or anywhere else in this file. Unlike Part II above, it is the permit's standard general-conditions boilerplate (definitions, duty to comply, bypass/upset provisions, inspection and entry, signatory requirements, and similar federal/state standard permit language) and was not walked item-by-item for this extraction. A later reader needing a specific Part III condition should go to the source PDF, sheets 29-41."
+        }
+      },
+      "fact_sheet_context": {
+        "tag": "[reference]",
+        "citation_style": "Fact Sheet for NPDES Permit Renewal, City of Xenia – Ford Road WWTP, 2025, page N of 35",
+        "facility_description": {
+          "page": 6,
+          "text": "\"The Ford Road WWTP was constructed in 1970 and last upgraded in 1999. The average design flow is 3.6 million gallons per day (MGD)... serves the north side of Xenia.\" Treatment train: influent pumping/screening, grit removal, flow equalization, activated sludge aeration with biological phosphorus removal, secondary clarification, ultraviolet disinfection. Sludge train: aerobic digestion, lime stabilization, mechanical dewatering; treated sludge is land applied.",
+          "eq_basin_and_bypass_trigger": "\"The Ford Road WWTP has the ability to divert influent flow at the head of the plant to a 0.278-million-gallon flow equalization (EQ) basin. In general, influent is diverted to the EQ basin when the flow exceeds 4 MGD. When the EQ basin becomes full, wastewater discharges through an emergency overflow (outfall 002) without treatment. The untreated wastewater from outfall 002 combines with the final effluent, and the combined effluent discharges directly to the Little Miami River at outfall 001.\" This is the ONLY place any numeric bypass trigger appears in this document — see `bypass_002.no_numeric_trigger_in_the_permit_itself` above.",
+          "infiltration_inflow_rate": "\"[T]he city of Xenia estimates there is an infiltration/inflow (I/I) rate to the collection system of 0.75 MGD.\" (Fact Sheet p.7, not p.6 — see the page note on `separated_sewers` below.) Mitigation measures listed: sliplining of sanitary lines, televising sewers for potential repairs, rehabilitation of manholes, smoke testing for illegal connections.",
+          "separated_sewers": "\"The City of Xenia has 100% separated sewers... There are no combined sewers in the collection system for the Ford Road WWTP.\" (Fact Sheet p.7 — this block's own `page: 6` header covers only the construction/design-flow/treatment-train and EQ-basin text above; separated_sewers, significant_industrial_users and infiltration_inflow_rate are one page later.)",
+          "significant_industrial_users": "\"The City of Xenia has two significant industrial users in their pretreatment program. Neither of these categorical industrial users are within the Ford Road WWTP collection area.\" (Fact Sheet p.7, same as separated_sewers above.)"
+        },
+        "interacting_dischargers_in_the_shared_wla": {
+          "page": 11,
+          "list": "Xenia-Ford Road WWTP, Xenia-Glady Run WWTP, Montgomery County Eastern Regional WWTP, Greene County Beavercreek WRRF, Greene County Sugarcreek WRRF — allocated together for most parameters (except ammonia-N, done separately per facility) via the CONSWLA model. Glady Run is named here purely as this shared allocation's other Xenia plant; no Glady Run figure is carried into this file's own permit blocks (see meta.not_in_this_corpus.glady_run_permit).",
+          "xenia_ford_road_flow_used_in_wla": "5.57 cfs (3.6 MGD) — NPDES permit application (Table 12, page 28)",
+          "xenia_glady_run_flow_used_in_wla": "6.19 cfs (4.0 MGD) — NPDES permit application (Table 12, page 28), for context only"
+        },
+        "phosphorus_item_reference_error": {
+          "page": 15,
+          "text": "\"Instructions on how to calculate phosphorus loadings are found in Part II, Item AA of the permit.\" As printed, in the Fact Sheet's Phosphorus section — but Part II runs A through Y (see `other_items_present` and `tmdl_phosphorus_compliance` above); there is no Item AA anywhere in this permit. The instructions are actually at Item Y (sheet 28), which the permit's own footnotes h and i (sheet 4) cite correctly. The error is the Fact Sheet's cross-reference, not the permit's."
+        },
+        "wet_reasonable_potential": {
+          "page": 15,
+          "text": "\"Based on evaluating the WET data presented in Table 9... the Ford Road WWTP is placed in Category 4 with respect to WET. While this indicates that the plant's effluent does not currently pose a toxicity problem, annual toxicity testing is proposed consistent with the minimum monitoring requirements at OAC 3754-33-07(B)(11).\" — the basis for warnings[2] (no TRE schedule in this permit).",
+          "rule_number_typo": "\"OAC 3754-33-07(B)(11)\" as printed — a transposition of 3745. The correct rule is cited two sentences earlier in this SAME paragraph (\"under the provisions of OAC 3745-33-07(B)\") and correctly elsewhere in this permit (`parameter_tracking_selenium.significance` above cites OAC 3745-33-07(A)(2)). Transcribed as printed, not silently corrected.",
+          "wla_values": "0.8 TUa and 3.06 TUc (page 12) — not printed as permit limits; annual monitor-only testing continues instead."
+        },
+        "effluent_violations_table_2": {
+          "page": 20,
+          "data": {
+            "2019": 0,
+            "2020": 0,
+            "2021": 0,
+            "2022": 0,
+            "2023": 3
+          },
+          "parameter": "CBOD 5-day",
+          "note": "\"These violations were not caused by a known process error or upset condition.\" No other parameter shows a violation in the reviewed five-year window (2019-2023)."
+        },
+        "effluent_flow_table_3": {
+          "page": 20,
+          "data_mgd": {
+            "2019": {
+              "p50": 2.91,
+              "p95": 5.31,
+              "max": 8.14
+            },
+            "2020": {
+              "p50": 2.15,
+              "p95": 3.56,
+              "max": 9.59
+            },
+            "2021": {
+              "p50": 2.04,
+              "p95": 3.16,
+              "max": 4.23
+            },
+            "2022": {
+              "p50": 2.21,
+              "p95": 4.04,
+              "max": 6.78
+            },
+            "2023": {
+              "p50": 1.92,
+              "p95": 3.54,
+              "max": 7.18
+            }
+          },
+          "note": "\"Table 3. Average Annual Effluent Flow Rates\" — 50th/95th percentile and maximum MGD by year, 2019-2023. Every year's 50th-percentile flow (1.92-2.91 MGD) runs well under the permit's 3.6 MGD average design flow basis (see `effluent_limits_001.design_flow_basis` above); every year's maximum spikes above it (4.23-9.59 MGD)."
+        },
+        "sso_occurrences_table_4": {
+          "page": 20,
+          "data": {
+            "2019": 1,
+            "2020": 1,
+            "2021": 1,
+            "2022": 0,
+            "2023": 1
+          }
+        },
+        "bypass_history": {
+          "page": 7,
+          "text": "\"Bypasses are reported at station 002. For the five-year period reviewed, a single bypass incident was reported. The bypass occurred in March 2020.\""
+        },
+        "sludge_removed_table_1": {
+          "page": 20,
+          "data_dry_tons": {
+            "2019": 906,
+            "2020": 898,
+            "2021": 1050,
+            "2022": 1240,
+            "2023": 1030
+          }
+        },
+        "receiving_water_use_designation": {
+          "page": 6,
+          "text": "Ohio EPA River Code 11-001, Hydrologic Unit Code 05090202-02-06, Greene County, Eastern Corn Belt Plains ecoregion. Designated uses: Exceptional Warmwater Habitat, Agricultural Water Supply, Industrial Water Supply, Primary Contact Recreation.",
+          "impairment_303d": "(Fact Sheet p.8, not p.6 — this block's own `page: 6` header covers only the River Code/HUC/designated-uses text above.) The Shawnee Creek – Little Miami River watershed assessment unit (including this reach) is listed as impaired for aquatic life, recreation, and human health on Ohio's 303(d) list; the human-health impairment is attributed to mercury/PCB fish-tissue contamination, not to this facility (page 9: \"the Ford Road WWTP has not reported exceedances of WQS for E. coli or mercury, meaning they are likely not contributing to the impairments in the watershed\").",
+          "tmdl": "Total Maximum Daily Loads for the upper Little Miami River Watershed, Ohio EPA, approved 2002-07-02 (page 8)."
+        },
+        "tables_present_but_not_transcribed": {
+          "note": "Indexed rather than fully transcribed — these are large statistical tables supporting the WLA math, not enforceable permit terms. A later reader wanting the underlying DMR/pretreatment statistics should go to the source PDF pages listed.",
+          "list": "Table 5 (calculated seasonal phosphorus loadings, 2019-2023, p.21) · Table 6 (pretreatment-data effluent characterization, p.21) · Table 7 (self-monitoring DMR summary statistics vs. current permit limits, p.22-23) · Table 8 (Projected Effluent Quality, PEQ average/maximum by parameter, p.24) · Table 9 (WET test results, 2019-2023, p.25) · Table 10 (use attainment by river mile, p.25) · Table 11 (water quality criteria in the study area, p.26) · Table 12 (instream flow conditions — 1Q10/7Q10/30Q10/harmonic mean by tributary, plus every discharger's permitted flow, p.27-30) · Table 13 (WLA-derived summary effluent limits, p.31) · Table 14 (parameter group assignments 1-5, p.32) · Table 15 (final effluent limits for outfall 001 with basis codes, p.33-34)."
+        }
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/xenia/1PD00015.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/xenia/1PD00015.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  }
+]

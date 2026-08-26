@@ -2,9 +2,9 @@
   "site": "wpafb",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T04:36:01+00:00",
+  "generated_at": "2026-08-26T23:18:02+00:00",
   "feed_count": 32,
-  "row_total": 467,
+  "row_total": 469,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -29,7 +29,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 3
     },
     {
       "name": "timeline",
@@ -221,7 +221,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 56
+      "count": 57
     },
     {
       "name": "geo/enclave",

@@ -1,6 +1,6 @@
 {
   "site": "urbana",
-  "catalog_version": "fe4ff6b6564a15a1669dc613ca7b073e6a79af15fe22a9dc2fe07b5d25eb7a95",
+  "catalog_version": "37030b99d4c8c19bc03c7dbf4fe5fce307821e6f2f972ddab2eec420e024199f",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -924,6 +924,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:urbana:oepa-urbana",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "oepa-urbana",
+      "title": "Ohio EPA NPDES Permit Extractions (Urbana Water Reclamation Facility)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:urbana:ohio-water-withdrawal-champaign",
       "kind": "dataset",
       "site": "urbana",
@@ -1052,6 +1060,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:urbana:CITY OF URBANA",
+      "kind": "entity",
+      "site": "urbana",
+      "local_id": "CITY OF URBANA",
+      "title": "City of Urbana",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:urbana:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "urbana",
@@ -1065,6 +1081,22 @@
       "site": "urbana",
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:urbana:MAD RIVER",
+      "kind": "entity",
+      "site": "urbana",
+      "local_id": "MAD RIVER",
+      "title": "Mad River",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:urbana:npdes:1PD00011",
+      "kind": "entity",
+      "site": "urbana",
+      "local_id": "npdes:1PD00011",
+      "title": "City of Urbana Water Reclamation Facility",
       "feed": "entities"
     },
     {
@@ -1122,6 +1154,14 @@
       "local_id": "URB-WATER-METER",
       "title": "The \"office building\" water claim is untestable by any state instrument — and the City holds the only record that could settle it",
       "feed": "leads"
+    },
+    {
+      "handle": "record:urbana:oepa/urbana/1PD00011.npdes.yaml",
+      "kind": "record",
+      "site": "urbana",
+      "local_id": "oepa/urbana/1PD00011.npdes.yaml",
+      "title": "City of Urbana Water Reclamation Facility",
+      "feed": "records"
     },
     {
       "handle": "record:urbana:urbana/incentive-instruments.yaml",

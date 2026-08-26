@@ -360,6 +360,52 @@
     }
   },
   {
+    "id": "oepa-coshocton",
+    "title": "Ohio EPA NPDES Permit Extractions (Coshocton WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 0PD00004*MD (application OH0024775) for the City of Coshocton Wastewater Treatment Plant, 2742 County Road 271, Coshocton County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:coshocton",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "pretreatment",
+      "coshocton",
+      "coshocton-county",
+      "muskingum"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/coshocton/0PD00004.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 0PD00004*MD (application OH0024775) for the City of Coshocton Wastewater Treatment Plant, 2742 County Road 271, Coshocton County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "abatement-parameters",
     "title": "Coshocton County, OH Abatement Parameters + What-If Scenario Knobs",
     "scope": "reference",

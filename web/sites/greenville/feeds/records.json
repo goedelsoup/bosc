@@ -1,1 +1,673 @@
-[]
+[
+  {
+    "rel": "oepa/greenville/1PD00005.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Greenville Wastewater Treatment Plant",
+    "confidence": "high",
+    "warnings": [
+      "THE PDF HAS 81 PAGES; THE PERMIT'S OWN PRINTED \"Total Pages\" ON SHEET 1 IS 47. This is NOT a missing/extra-page defect in the issued instrument: PDF pages (0-based) 0-46 ARE the permit's own 47 numbered pages (\"Page 1\" through \"Page 47\", Parts I-III), and PDF pages 47-80 are the Fact Sheet for the same permit action, bound into the same file with its own independent \"Page 1 of 34\" .. \"Page 34 of 34\" numbering that the permit's own page count does not include. 47 + 34 = 81 exactly. See meta.bound_fact_sheet_note and the `fact_sheet` block below for what those 34 pages contain. Read all 81 PDF pages to produce this file; the permit body proper is only the first 47.",
+      "THE SAME EVENT CODE, 1799, IS ASSIGNED TO TWO DIFFERENT MILESTONES WITH DIFFERENT DUE DATES, and the Milestone Summary Report table on sheet 19 lists only ONE of them. Part I.C.A.2 (the Permit-to-Install application for the new WQ-based limits) is due \"not later than 24 months after the effective date...(Event Code 1799)\" and IS in the milestone table. Part I.C.B.1 (the municipal pretreatment local-limits technical justification) is due \"no later than 6 months after the permit effective date (Event Code 1799)\" and is ABSENT from the milestone table entirely — the table has no row for it at all, under 1799 or any other code. A reader relying on the milestone table alone would miss the 6-month pretreatment deadline and would, if they noticed 1799 twice, reasonably read it as one requirement rather than two. See schedule_of_compliance.",
+      "THE FINAL EFFLUENT TABLE'S OWN FOOTNOTES MISNUMBER, and the letters after the error no longer match the Initial table's footnotes for the same items. The Initial table (sheet 4) letters its notes a. Mercury, b. Free Cyanide, c. Orthophosphate, d. Biomonitoring, e. Selenium/PAHs/Silver, f. Ammonia-Summer/PAHs/Selenium. The Final table (sheet 8) prints a. Mercury, b. Free Cyanide, **b. Orthophosphate** (repeating \"b.\" instead of advancing to \"c.\"), c. Biomonitoring, d. Selenium/PAHs/Silver, e. Ammonia-Summer/PAHs/Selenium — every letter from Orthophosphate onward is shifted one letter earlier than in the Initial table for the identical content. Transcribed as printed in both tables; see effluent_limits_001 notes.",
+      "NO RIVER MILE IS PRINTED ANYWHERE IN THE PERMIT ITSELF. The sheet-1 authorization sentence names the receiving water (\"discharging to Greenville Creek\") but gives no mile marker — contrast the mansfield precedent, where the water was blank but the mile WAS printed. Part II Item B's station table gives station 1PD00005001 a DMS coordinate but likewise no river mile. \"River Mile 19.35\" appears only in the bound Fact Sheet's location paragraph (sheet \"Page 6 of 34\") — a distinct document, tagged [reference] in the `fact_sheet` block, not [verified] against the permit's own text.",
+      "ONLY STATION 1PD00005001 CARRIES A PRINTED COORDINATE. Part II Item B gives DMS lat/long for the outfall alone; the upstream (801) and downstream (901) stations are identified only by named bridge crossings (\"at the Ohio Street bridge\", \"at the Jaysville-St. John bridge\"), with no coordinates on the permit's face. The Fact Sheet's Table 11 independently lists river miles for locations matching those bridge names (19.55 for \"Ohio St.\", 18.33 for \"Jaysville-St. Johns Rd.\") — cited as [reference] corroboration in sampling_stations, not as a second source of coordinates.",
+      "THE WATER TEMPERATURE MONITORING TYPE CHANGES AT THE PHASE-IN, and this was checked against 300 DPI renders of both table pages (see header) because it looked like it could be a text-extraction line-wrap. It is not: the Initial table's Sampling Type cell for 00010 reads \"Continuous\"; the Final table's reads \"Daily Continuous Max\" — three lines in the same cell, confirmed visually. No other cell in either table changed as a result of that check.",
+      "A FACT-SHEET-ONLY TYPOD STATION NUMBER: the Fact Sheet's summary-of-changes text twice refers to \"upstream monitoring station 3PD00002801\" where the permit's own Part I.B and Part II Item B consistently use 1PD00005801. Likely a copy-paste carryover from a different facility's fact sheet template. Recorded as printed in `fact_sheet.observations` — not corrected, and not present anywhere in the permit body itself.",
+      "THE FACT SHEET CONTRADICTS THE PERMIT BODY — AND ITS OWN TABLE — ON THE CAUSE OF THE DOWNSTREAM IMPAIRMENT. Fact Sheet sheet \"Page 9 of 34\" (\"ASSESSMENT OF IMPACT ON RECEIVING WATERS\"), summarizing the 2013 Biological Water Quality Monitoring and Assessment Report of the Stillwater River Basin: \"The source of this degradation was the Greenville WWTP according to the report.\" The permit body, Part I.C.C (sheet 21), summarizing the SAME 2013 assessment: impairments in the Bridge Creek-Greenville Creek watershed assessment unit are \"due to natural causes and sources,\" and, \"based on the indication that the Greenville WWTP is not contributing,\" the permit does not require a WLA-achievement plan. The Fact Sheet's OWN Table 11 (sheet \"Page 26 of 34\") agrees with the permit body, not with its own narrative sentence: for the impaired downstream station (Jaysville-St. Johns Rd., river mile 18.33) it lists Cause as \"Natural Conditions (Flow or Habitat)\" and Source as \"Natural Sources\" — no mention of the WWTP. Both sides are transcribed faithfully elsewhere in this file (schedule_of_compliance.part_C_stillwater_tmdl_schedule.background and fact_sheet.impairment) but the disagreement between them was not previously flagged."
+    ],
+    "fields": {
+      "tag": "[verified]",
+      "facility_name": "Greenville Wastewater Treatment Plant",
+      "permit_no": "1PD00005*OD",
+      "application_no": "OH0025429",
+      "permit_action": "[reference] \"renewal\" — per the Fact Sheet's own title, \"Fact Sheet for NPDES Permit Renewal, Greenville Wastewater Treatment Plant, 2023\" (fact-sheet sheet 1). The permit's own sheet 1 authorization text prints no action-type label (\"modification\", \"renewal\", etc.) — only the permit/application numbers and the three dates.",
+      "permittee": "City of Greenville",
+      "facility_address": "209 N Ohio Street, Greenville, Ohio, Darke County",
+      "county": "Darke",
+      "receiving_water": "Greenville Creek",
+      "receiving_water_source": "Sheet 1 authorization sentence (\"...discharging to Greenville Creek in accordance with...\") AND Part II Item B, sheet 24, station 1PD00005001 (\"Plant effluent to Greenville Creek\") — the two agree, unlike mansfield where the authorization sentence was blank. Established directly from this instrument, per the site-specific instruction not to assume it from the county.",
+      "river_mile": null,
+      "river_mile_note": "Not printed anywhere on the permit's own face. See permit.warnings[3]; the only mile marker in this corpus for the discharge point (19.35) is [reference], from the bound Fact Sheet.",
+      "stream_network": "Greenville Creek → Stillwater River → Great Miami River → Ohio River. [reference] — read off the bound Fact Sheet's \"Subsequent Stream Network\" line (its own \"Page 1 of 34\"), NOT printed anywhere in the permit body.",
+      "action_date": "2023-08-29",
+      "effective_date": "2023-10-01",
+      "expiration_date": "2028-09-30",
+      "signed_by": "Anne M. Vogel, Director",
+      "total_pages": 47,
+      "total_pages_note": "The permit's own printed count, sheet 1. See permit.warnings[0] for the relationship to the PDF's 81 pages.",
+      "pdf_page_count": 81,
+      "renewal_application_due": {
+        "tag": "[inference]",
+        "value": "The permit's own text requires submission \"no later than 180 days prior to the above date of expiration\" — i.e. on or about 2028-04-03 for the 2028-09-30 expiration. The permit prints no calendar date for it."
+      },
+      "treatment_works_classification": {
+        "citation": "Permit 1PD00005*OD, sheet 23, Part II Item A.1",
+        "tag": "[verified]",
+        "treatment_works": "Class III under OAC 3745-7-04. The permittee must designate one or more professional operator of record certified at class III or greater.",
+        "collection_systems": "\"All sewerage (collection) systems that are tributary to this treatment works are Class II sewerage systems in accordance with paragraph (B)(1)(b) of rule 3745-7-04.\""
+      },
+      "sampling_stations": {
+        "citation": "Permit 1PD00005*OD, sheet 24, Part II Item B",
+        "tag": "[verified]",
+        "1PD00005001": {
+          "description": "Plant effluent to Greenville Creek",
+          "role": "outfall",
+          "latitude_dms": "40 N 05' 58\"",
+          "longitude_dms": "84 W 36' 50\"",
+          "latitude_dd": 40.099444,
+          "longitude_dd": -84.613889,
+          "conversion_note": "DMS→DD conversion of the permit's own printed coordinate; not a second source."
+        },
+        "1PD00005300": {
+          "description": "System-wide sanitary sewer overflow occurrences"
+        },
+        "1PD00005581": {
+          "description": "Sludge disposal by land application at agronomic rates"
+        },
+        "1PD00005586": {
+          "description": "Sludge disposal by hauling to a mixed waste landfill",
+          "description_conflict_note": "Part I.B.3 note a (sheet 12) describes this same station's destination as \"a solid waste landfill\" — twice on that sheet — not \"mixed waste.\" The permit is not internally consistent on which term applies; Item B's \"mixed waste landfill\" wording (printed above) is what this file records as the station description."
+        },
+        "1PD00005588": {
+          "description": "Sludge disposal by hauling to another NPDES holder"
+        },
+        "1PD00005601": {
+          "description": "Raw influent prior to bar screen"
+        },
+        "1PD00005602": {
+          "description": "Headworks bypass via equalization basin overflow chamber to Ultraviolet disinfection."
+        },
+        "1PD00005801": {
+          "description": "Upstream on Greenville Creek at the Ohio Street bridge",
+          "coordinates": "not printed — no DMS given, unlike station 001",
+          "river_mile": {
+            "tag": "[reference]",
+            "value": 19.55,
+            "source": "Fact Sheet Table 11 (\"Greenville Creek at Greenville @ Ohio St.\"), sheet \"Page 26 of 34\" — the location name matches this station's description; not a value printed against the station itself in Part II Item B."
+          }
+        },
+        "1PD00005901": {
+          "description": "Downstream on Greenville Creek at the Jaysville-St. John bridge",
+          "coordinates": "not printed — no DMS given, unlike station 001",
+          "river_mile": {
+            "tag": "[reference]",
+            "value": 18.33,
+            "source": "Fact Sheet Table 11 (\"Greenville Creek E of Greenville @ Jaysville-St. Johns Rd.\"), sheet \"Page 26 of 34\" — matched by location name, not printed against the station itself."
+          }
+        }
+      },
+      "effluent_limits_001": {
+        "citation": "Permit 1PD00005*OD, sheets 2-4 (Initial) and 5-8 (Final), Part I.A.1 and I.A.2",
+        "tag": "[verified]",
+        "outfall": "1PD00005001",
+        "design_flow_basis": "\"Effluent loadings based on average design flow of 3.5 MGD.\" — identical note on both tables.",
+        "initial_period": "\"During the period beginning on the effective date of this permit and lasting until the end of the 35th month\" — 2023-10-01 through on or about 2026-09-30.",
+        "final_period": "\"During the period beginning 36 months after the effective date of this permit and lasting until the expiration date\" — on or about 2026-10-01 through 2028-09-30.",
+        "changeover_date_note": "[inference] The permit prints no calendar date for either boundary — only \"the end of the 35th month\" and \"36 months after the effective date.\" Resolving the latter against the 2023-10-01 effective date gives 2026-10-01 by calendar arithmetic; \"the end of the 35th month\" is presumably the day before that, on or about 2026-09-30, but the permit does not say so independently. AS OF 2026-08-26 (this file's extraction date), the changeover is roughly five weeks away and the facility is still operating under the INITIAL table.",
+        "corroboration_note": "The Fact Sheet's own \"SUMMARY OF PERMIT CONDITIONS\" (sheet \"Page 2 of 34\") independently names exactly the same five parameters as newly limited — \"Summer Ammonia, Benzo(a)pyrene, Dibenz(a,h)anthracene, Indeno(1,2,3-c,d)pyrene, and Selenium\" — that this file's own line-by-line diff of the two tables below finds changed. [reference] cross-check, not a second transcription source.",
+        "unchanged_across_both_periods": {
+          "note": "These parameters print IDENTICAL limits and monitoring in both the Initial and Final tables. Transcribed once. All units mg/l unless noted.",
+          "dissolved_oxygen": {
+            "units": "mg/l",
+            "minimum": 7.0,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "total_suspended_solids_summer": {
+            "units": "mg/l",
+            "weekly": 18,
+            "monthly": 12,
+            "load_weekly_kg": 239,
+            "load_monthly_kg": 159,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Summer"
+          },
+          "total_suspended_solids_winter": {
+            "units": "mg/l",
+            "weekly": 45,
+            "monthly": 30,
+            "load_weekly_kg": 597,
+            "load_monthly_kg": 398,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Winter"
+          },
+          "oil_and_grease": {
+            "units": "mg/l",
+            "maximum": 10,
+            "monitoring": "1/2 Weeks Grab",
+            "months": "All"
+          },
+          "ammonia_nh3_winter": {
+            "units": "mg/l",
+            "weekly": 5.7,
+            "monthly": 3.8,
+            "load_weekly_kg": 75.6,
+            "load_monthly_kg": 50.4,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Winter"
+          },
+          "phosphorus_total": {
+            "units": "mg/l",
+            "weekly": 1.5,
+            "monthly": 1.0,
+            "load_weekly_kg": 19.9,
+            "load_monthly_kg": 13.3,
+            "monitoring": "1/Week 24hr Composite",
+            "months": "All"
+          },
+          "e_coli": {
+            "units": "#/100 ml",
+            "weekly": 284,
+            "monthly": 126,
+            "monitoring": "3/Week Grab",
+            "months": "Summer"
+          },
+          "ph_maximum": {
+            "units": "S.U.",
+            "maximum": 9.0,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "ph_minimum": {
+            "units": "S.U.",
+            "minimum": 6.5,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "cbod_5_day_summer": {
+            "units": "mg/l",
+            "weekly": 15,
+            "monthly": 10,
+            "load_weekly_kg": 199,
+            "load_monthly_kg": 133,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Summer"
+          },
+          "cbod_5_day_winter": {
+            "units": "mg/l",
+            "weekly": 40,
+            "monthly": 25,
+            "load_weekly_kg": 530,
+            "load_monthly_kg": 332,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "Winter"
+          },
+          "monitor_only_no_change": "The following carry a monitoring frequency and NO numeric limit in EITHER table: Total Kjeldahl Nitrogen (1/Month 24hr Composite, All), Nitrite Plus Nitrate (1/Month 24hr Composite, All), Orthophosphate Dissolved (1/Month Grab, All), Barium (1/Quarter 24hr Composite, Quarterly), Nickel (1/Quarter 24hr Composite, Quarterly), Silver (2/Year 24hr Composite, Semi-annual), Zinc (1/Quarter 24hr Composite, Quarterly), Cadmium (2/Year 24hr Composite, Semi-annual), Lead (1/Quarter 24hr Composite, Quarterly), Chromium Total (1/Quarter 24hr Composite, Quarterly), Copper (1/Quarter 24hr Composite, Quarterly), Chromium Dissolved Hexavalent (2/Year Grab, Semi-annual), Fluoranthene (1/Month 24hr Composite, All — stays monitor-only in the Final table too, unlike its three PAH siblings below), Flow Rate (1/Day Continuous, All), Mercury Total Low Level (1/Quarter Grab, Quarterly), Cyanide Free Low-Level (1/Quarter Grab, Quarterly), and all four toxicity parameters — Acute and Chronic on both Ceriodaphnia dubia and Pimephales promelas (1/Year 24hr Composite, August). The water flea and fathead minnow gain no numeric limit at any point in this permit term.",
+          "not_present_in_either_table": "Total Residual Chlorine and Bis(2-ethylhexyl) phthalate (B2EHP) carry NO parameter row at outfall 001 in either table. The Fact Sheet's summary of changes (sheet \"Page 2 of 34\") explains why: chlorine limits/monitoring were proposed for removal \"because Greenville WWTP now uses ultraviolet disinfection,\" and B2EHP monitoring was proposed for removal based on the wasteload allocation. [reference] cross-check — the permit body itself simply has no row for either."
+        },
+        "changed_at_month_36": {
+          "tag": "[verified]",
+          "water_temperature": {
+            "what_changed": "Sampling Type cell only — no concentration limit in either table",
+            "units": "C",
+            "initial": {
+              "limit": null,
+              "monitoring": "1/Day Continuous",
+              "months": "All"
+            },
+            "final": {
+              "limit": null,
+              "monitoring": "1/Day Daily Continuous Max",
+              "months": "All"
+            },
+            "note": "Verified by 300 DPI render of both table pages — see header. The Final cell literally prints \"Daily / Continuous / Max\" across three lines; whether this means a continuous-recording daily maximum reading (as opposed to a bare continuous trace) is not explained anywhere else in the permit."
+          },
+          "ammonia_nh3_summer": {
+            "units": "mg/l",
+            "initial": {
+              "weekly": 1.8,
+              "monthly": 1.2,
+              "load_weekly_kg": 23.9,
+              "load_monthly_kg": 15.9,
+              "monitoring": "3/Week 24hr Composite",
+              "months": "Summer"
+            },
+            "final": {
+              "weekly": 1.65,
+              "monthly": 1.1,
+              "load_weekly_kg": 22,
+              "load_monthly_kg": 15,
+              "monitoring": "3/Week 24hr Composite",
+              "months": "Summer"
+            },
+            "note": "The only conventional-pollutant limit that tightens at the phase-in; every winter/CBOD/TSS/phosphorus limit is unchanged."
+          },
+          "selenium_total_recoverable": {
+            "units": "ug/l",
+            "initial": {
+              "limit": null,
+              "monitoring": "1/Month 24hr Composite",
+              "months": "All",
+              "note": "MONITOR ONLY in the Initial table."
+            },
+            "final": {
+              "maximum": 83,
+              "monthly": 8.1,
+              "load_daily_kg": 1.1,
+              "load_monthly_kg": 0.11,
+              "monitoring": "1/Month 24hr Composite",
+              "months": "All"
+            }
+          },
+          "benzo_a_pyrene": {
+            "units": "ug/l",
+            "initial": {
+              "limit": null,
+              "monitoring": "1/Month 24hr Composite",
+              "months": "All",
+              "note": "MONITOR ONLY in the Initial table."
+            },
+            "final": {
+              "monthly": 0.0089,
+              "load_monthly_kg": 0.00012,
+              "monitoring": "1/Month 24hr Composite",
+              "months": "All"
+            }
+          },
+          "indeno_123_cd_pyrene": {
+            "units": "ug/l",
+            "initial": {
+              "limit": null,
+              "monitoring": "1/Month 24hr Composite",
+              "months": "All",
+              "note": "MONITOR ONLY in the Initial table."
+            },
+            "final": {
+              "monthly": 0.089,
+              "load_monthly_kg": 0.0012,
+              "monitoring": "1/Month 24hr Composite",
+              "months": "All"
+            }
+          },
+          "dibenzo_a_h_anthracene": {
+            "units": "ug/l",
+            "initial": {
+              "limit": null,
+              "monitoring": "1/Month 24hr Composite",
+              "months": "All",
+              "note": "MONITOR ONLY in the Initial table."
+            },
+            "final": {
+              "monthly": 0.0089,
+              "load_monthly_kg": 0.00012,
+              "monitoring": "1/Month 24hr Composite",
+              "months": "All"
+            }
+          },
+          "residue_total_filterable": {
+            "what_changed": "Measuring frequency only — monitor-only (no limit) in both tables",
+            "units": "mg/l",
+            "initial": {
+              "limit": null,
+              "monitoring": "1/Month 24hr Composite",
+              "months": "All"
+            },
+            "final": {
+              "limit": null,
+              "monitoring": "1/2 Weeks 24hr Composite",
+              "months": "All"
+            },
+            "note": "Frequency roughly doubles (monthly → twice-monthly); no numeric limit is added."
+          }
+        },
+        "footnote_lettering_defect": {
+          "tag": "[verified]",
+          "note": "See permit.warnings[2]. Initial table (sheet 4): a. Mercury (Part II Item R), b. Free Cyanide (Item Q), c. Orthophosphate (Item S), d. Biomonitoring (Item X), e. Selenium/Benzo(a)pyrene/Dibenz(ah)anthracene/Indeno(1,2,3-cd)pyrene/Silver (Item U), f. Ammonia-Summer/Benzo(a)pyrene/Dibenz(a,h)anthracene/ Indeno(1,2,3-c,d)pyrene/Selenium (Part I Item C, Part II Item J). Final table (sheet 8): a. Mercury, b. Free Cyanide, b. Orthophosphate (repeated letter), c. Biomonitoring, d. Selenium/PAHs/Silver, e. Ammonia-Summer/PAHs/Selenium — the content is identical to the Initial table's notes, only the letters after Free Cyanide are shifted one earlier."
+        }
+      },
+      "monitoring_stations": {
+        "citation": "Permit 1PD00005*OD, sheets 8-18, Part I.B",
+        "tag": "[verified]",
+        "sso_300": {
+          "parameter": "Overflow Occurrence (74062), No./Month, 1/Month Total, all months",
+          "note": "Explicit that 1/Month is a REPORTING frequency, not monitoring: \"these overflows shall be monitored on each day when they discharge.\" Only SSOs reaching waters of the state (directly or through a storm sewer) are reported at this station. A two-location day counts as two occurrences.",
+          "annual_report": "An annual SSO report (all overflows, including those never reaching waters of the state) is due March 31 for the prior calendar year, with locations numbered consecutively from 301, volumes in millions of gallons, and a narrative WIB (water-in-basement) analysis by location, frequency and cause."
+        },
+        "sludge_581": {
+          "class": "not stated as a letter class on this permit's face — parameters mirror biosolids land-application monitoring",
+          "frequency": "1/Year, reported on the December DMR. Sampling Type is NOT uniform across the table: Composite for the metals/nutrient rows, Multiple Grab for fecal coliform (51131), and Total for Sludge Fee Weight (51129) and Sludge Weight (70316).",
+          "ceilings_mg_per_kg": {
+            "arsenic": 75,
+            "cadmium": 85,
+            "copper": 4300,
+            "lead": 840,
+            "nickel": 420,
+            "mercury": 57,
+            "molybdenum": 75,
+            "zinc": 7500,
+            "selenium": 100
+          },
+          "fecal_coliform_max": {
+            "units": "CFU/gram",
+            "maximum": 2000000
+          },
+          "also_monitored": "ammonia, total Kjeldahl nitrogen, total phosphorus, potassium (nutrient suite, no limits), sludge fee weight (dry tons)"
+        },
+        "sludge_586": {
+          "parameter": "Sludge Fee Weight (51129)",
+          "units": "dry tons",
+          "frequency": "1/Year Total",
+          "month": "December",
+          "applies_to": "disposal in a mixed waste landfill"
+        },
+        "sludge_588": {
+          "parameter": "Sludge Weight (70316)",
+          "units": "Dry Tons",
+          "frequency": "1/Year Total",
+          "month": "December",
+          "applies_to": "transfer to another NPDES permit holder"
+        },
+        "influent_601": {
+          "description": "Raw influent prior to bar screen — all monitor-only, no limits",
+          "parameters": "TSS, selenium, nickel, zinc, cadmium, lead, total chromium, copper, dissolved hexavalent chromium, benzo(a)pyrene, indeno(1,2,3-cd)pyrene, dibenzo(a,h)anthracene, mercury (low level), pH max/min, CBOD 5-day.",
+          "note": "\"Samples of influent used for determination of net values or percent removal must be taken the same day as those samples of effluent used for that determination.\" Sampling for common parameters occurs the same day as outfall 001.",
+          "footnote_defect": "Notes for Station Number 1PD00005601 (sheet 15) include \"c. Free Cyanide, See Part II, Item Q\" — but no Free Cyanide parameter row appears anywhere in this station's own table (sheets 14-15, listed in `parameters` above). The footnote cites a parameter this table does not monitor."
+        },
+        "bypass_602": {
+          "description": "Headworks bypass via equalization basin overflow chamber to UV disinfection — no numeric trigger printed on the permit's own face",
+          "trigger_note": "[reference] The Fact Sheet (sheet \"Page 7 of 34\") states the trigger explicitly — \"When influent flow rate exceeds 6.0 MGD, flow is diverted at the headworks to the equalization basins\" — and gives the basin geometry (two basins, 90 ft diameter × 7.25 ft deep, 0.345 MG storage each). Part I,B.6 on the permit's own face describes ONLY monitoring/limits, not the trigger flow; this file does not assert the 6.0 MGD figure as [verified] against the permit body.",
+          "limits": {
+            "total_suspended_solids": {
+              "units": "mg/l",
+              "monitoring": "When Disch. Grab"
+            },
+            "cbod_5_day": {
+              "units": "mg/l",
+              "monitoring": "When Disch. Grab"
+            }
+          },
+          "monitor_only": {
+            "bypass_occurrence": "No./Day (00051)",
+            "bypass_total_hours_per_day": "Hrs/Day (00052)",
+            "bypass_volume": "MGAL (51428)"
+          },
+          "note": "A DMR for this station must be submitted every month whether or not it discharged. Occurrence and volume may be estimated if no measuring device is available. \"Discharge through this station is prohibited\" absent the 40 CFR 122.41(m) / Part III Item 11.C.1 conditions."
+        },
+        "upstream_801": {
+          "description": "Receiving stream ABOVE the discharge, at the Ohio Street bridge",
+          "chemistry": "ammonia, total Kjeldahl nitrogen, nitrite+nitrate, total phosphorus — 1/Month Grab, all months",
+          "bacteria": "E. coli, 1 per 2 Weeks Grab, June-August",
+          "ambient_toxicity": "48-hr acute Ceriodaphnia dubia (61432) and 7-day chronic Ceriodaphnia dubia (61438), 1/Year Grab, August; 96-hr acute Pimephales promelas (61435) and 7-day chronic Pimephales promelas (61441), 1/Year Grab, August. Reported as \"% Affected\", no limits.",
+          "significance": "Runs the same species pair as the effluent biomonitoring program (Part II Item X), at the same August timing — separates plant-caused toxicity from what Greenville Creek already carries past the plant."
+        },
+        "downstream_farfield_901": {
+          "description": "Receiving stream BELOW the discharge, at the Jaysville-St. John bridge",
+          "parameters": "Water temperature, pH, ammonia, total Kjeldahl nitrogen, nitrite+nitrate, total phosphorus, total hardness (as CaCO3) — 1/Month Grab, all months; E. coli 1 per 2 Weeks Grab, June-August.",
+          "note": "Sampling for the respective/common parameters shall occur on the same day as Outfall 1PD00005001."
+        }
+      },
+      "schedule_of_compliance": {
+        "citation": "Permit 1PD00005*OD, sheets 19-22, Part I.C",
+        "tag": "[verified]",
+        "milestone_summary_report": {
+          "note": "Transcribed verbatim from the permit's own table (sheet 19). Dates are offset-from-effective-date EXCEPT the five TMDL status reports, which the permit prints as fixed calendar dates.",
+          "milestones": [
+            {
+              "section": "Stillwater TMDL Implementation Schedule",
+              "report_event": "Status Report",
+              "event_code": "95999",
+              "due": "2024-07-01"
+            },
+            {
+              "section": "Stillwater TMDL Implementation Schedule",
+              "report_event": "Status Report",
+              "event_code": "95999",
+              "due": "2025-07-01"
+            },
+            {
+              "section": "Stillwater TMDL Implementation Schedule",
+              "report_event": "Status Report",
+              "event_code": "95999",
+              "due": "2026-07-01"
+            },
+            {
+              "section": "Stillwater TMDL Implementation Schedule",
+              "report_event": "Status Report",
+              "event_code": "95999",
+              "due": "2027-07-01"
+            },
+            {
+              "section": "Stillwater TMDL Implementation Schedule",
+              "report_event": "Status Report",
+              "event_code": "95999",
+              "due": "2028-07-01"
+            },
+            {
+              "section": "Final Effluent Limits",
+              "report_event": "First Monitoring Report",
+              "event_code": "7099",
+              "due": "12 months after the permit effective date"
+            },
+            {
+              "section": "Final Effluent Limits",
+              "report_event": "Complete Plans & Specs",
+              "event_code": "1799",
+              "due": "24 months after the permit effective date"
+            },
+            {
+              "section": "Final Effluent Limits",
+              "report_event": "Final Compliance w/ Eff Limits",
+              "event_code": "5699",
+              "due": "36 months after the permit effective date"
+            }
+          ],
+          "due_dates_resolved": {
+            "tag": "[inference]",
+            "value": "Against the 2023-10-01 effective date: 12mo≈2024-10-01, 24mo≈2025-10-01, 36mo≈2026-10-01. The permit itself prints only the offsets for these three; the five TMDL rows already carry printed calendar dates and needed no resolution."
+          }
+        },
+        "part_A_new_limits_schedule": {
+          "part": "I.C.A",
+          "title": "Ammonia (Summer), Selenium, Benzo(a)pyrene, Dibenz(a,h)anthracene, and Indeno(1,2,3-c,d)pyrene Limits",
+          "preamble": "\"The permittee shall attain compliance with the new effluent limits...as expeditiously as possible but no later than the dates in the following schedule.\"",
+          "steps": [
+            {
+              "step": 1,
+              "due": "2024-10-01",
+              "due_basis": "[inference] — \"no later than 12 months after the permit effective date.\"",
+              "event_code": "7099",
+              "requirement": "Submit a progress report to Ohio EPA Southwest District Office, providing 12 months of data for the five newly-limited parameters and describing activities completed toward compliance."
+            },
+            {
+              "step": 2,
+              "due": "2025-10-01",
+              "due_basis": "[inference] — \"not later than 24 months after the effective date of this permit.\"",
+              "event_code": "1799",
+              "requirement": "IF the permittee determines existing facilities cannot meet the final limits, submit an approvable Permit-to-Install application for plant improvements to Ohio EPA Southwest District Office. Conditional on that determination, as printed (\"If the permittee determines...\")."
+            },
+            {
+              "step": 3,
+              "due": "2026-10-01",
+              "due_basis": "[inference] — \"no later than 36 months after the permit effective date.\"",
+              "event_code": "5699",
+              "requirement": "Attain compliance with the final effluent limits for the five parameters; notify Ohio EPA Southwest District Office within 10 days of attaining compliance."
+            }
+          ]
+        },
+        "part_B_municipal_pretreatment_schedule": {
+          "part": "I.C.B",
+          "due": "2024-04-01",
+          "due_basis": "[inference] — \"no later than 6 months after the permit effective date.\"",
+          "event_code": "1799",
+          "event_code_warning": "SAME CODE as part_A step 2 above, which has a DIFFERENT due date (24 months) and is NOT the same requirement. See permit.warnings[1]. This 6-month milestone does not appear in the milestone_summary_report table at all.",
+          "submit_to": "Ohio EPA, Central Office Pretreatment Unit and to Ohio EPA, Southwest District Office",
+          "requirement": "Evaluate the adequacy of local industrial user limitations to prevent pollutants entering the POTW that interfere with its operation, pass through in amounts exceeding WQS-based limits, are incompatible with the POTW, or limit wastewater/sludge use options. Submit either technical justification for REVISING local limits (with a pretreatment program modification request) or technical justification for RETAINING existing ones.",
+          "pollutants_requiring_justification": "Arsenic, cadmium, total chromium, dissolved hexavalent chromium, copper, free cyanide, lead, mercury, molybdenum, nickel, selenium, silver, Benzo(a)pyrene, Dibenz(a,h)anthracene, Indeno(1,2,3-c,d)pyrene, and zinc — \"unless screening... indicate these pollutants are not present in significant amounts\" — plus any other pollutant where a local limit may be necessary.",
+          "revisions": "A revised report is due within 90 days of Ohio EPA notifying the permittee of deficiencies; revised limits must be incorporated into industrial user control documents no later than 4 months after Ohio EPA's approval.",
+          "engineering_requirement": "If new/revised industrial-user limits are proposed, the report requires the stamp and signature of a licensed Ohio professional engineer."
+        },
+        "part_C_stillwater_tmdl_schedule": {
+          "part": "I.C.C",
+          "wla": "Total phosphorus - 1.80 kg/day, 0.14 mg/l at average daily design flow",
+          "wla_citation": "Permit 1PD00005*OD, sheet 21, Part I.C.C (the permit body itself, not the Fact Sheet)",
+          "background": "\"Total Maximum Daily Loads for the Stillwater River Watershed\" approved by U.S. EPA September 2009. Initial reductions completed December 2012. A 2013 Ohio EPA watershed assessment found the Bridge Creek-Greenville Creek impairments due to natural causes/sources, not the Greenville WWTP — so this permit does NOT require a general WLA-achievement plan, a water quality trading management plan, or WLA compliance at this time.",
+          "status_reports": "See milestone_summary_report above — 5 fixed-date reports, event code 95999, one each July 1 2024-2028.",
+          "lettering_defect": "Part I.C.C.1's own printed list of the five TMDL status-report dates skips the letter \"a.\": item 1's intro sentence is unlettered, then the dates run b. (2024-07-01), c. (2025-07-01), d. (2026-07-01), e. (2027-07-01), f. (2028-07-01) — sheet 22. Same class of printing defect as the Final effluent table's footnote misnumbering; see permit.warnings[2].",
+          "no_action_trigger": "The Director may re-evaluate the schedule if biological indices for Greenville Creek show full attainment, or if monitoring at the lower end of assessment unit 05080001-11-02 shows median total phosphorus ≤ 0.05 mg/l instream target for two consecutive years."
+        },
+        "status_of_these_milestones": {
+          "tag": "[open]",
+          "as_of": "2026-08-26",
+          "lapsed": "Six of the NINE dated milestones in this schedule are in the past. The milestone_summary_report table above lists only eight dated rows; the ninth is the 6-month pretreatment local-limits report (see part_B_municipal_pretreatment_schedule below), which is dated but does not appear in that table at all — see warnings[1]. Past: three of the five TMDL status reports (2024-07-01, 2025-07-01, 2026-07-01), the 12-month First Monitoring Report (2024-10-01), the 6-month pretreatment local-limits report (2024-04-01), and the 24-month Complete-Plans-&-Specs / PTI conditional milestone (2025-10-01). Still ahead: the 36-month Final Compliance milestone (2026-10-01) and the two remaining TMDL status reports (2027-07-01, 2028-07-01) — three milestones total.",
+          "what_is_not_established": "WHETHER ANY OF THEM WAS FILED. Nothing in this corpus establishes that — no submittal, no acknowledgment, no violation notice, and no ECHO/ICIS extract for this facility is committed. \"Past due\" here means the date has passed, NOT that the city missed it. Do not write it as a missed deadline.",
+          "how_to_close_it": "A public-records request to Ohio EPA Southwest District Office (Item A reports) and to the Central Office Pretreatment Unit (Item B report) for the 7099, 1799 (both instances — specify which), 5699 and 95999 submittals under permit 1PD00005 would settle this. Because 1799 is double-booked (warnings[1]), such a request should describe the requirement, not just cite the code."
+        }
+      },
+      "other_requirements_of_note": {
+        "citation": "Permit 1PD00005*OD, Part II, sheets 23-34",
+        "tag": "[verified]",
+        "limits_below_quantification": {
+          "item": "J (sheet 27)",
+          "table": {
+            "selenium_total_recoverable": {
+              "pql": 10,
+              "ml": 5,
+              "units": "ug/l"
+            },
+            "benzo_a_pyrene": {
+              "pql": 0.11,
+              "ml": 10,
+              "units": "ug/l"
+            },
+            "dibenzo_a_h_anthracene": {
+              "pql": 0.15,
+              "ml": 20,
+              "units": "ug/l"
+            },
+            "indeno_123_cd_pyrene": {
+              "pql": 0.21,
+              "ml": 20,
+              "units": "ug/l"
+            }
+          },
+          "significance": "These are exactly the four parameters that gain numeric limits at the Final table (plus ammonia, which is not below quantification) — the permit is explicit that their limits sit below Ohio EPA's own analytical quantification level, and specifies compliance-determination rules (maximum limits: below-QL results count as compliant; average limits: below-QL results count as zero in the mean)."
+        },
+        "method_detection_limits": {
+          "item": "U (sheet 29)",
+          "table": {
+            "selenium_total_recoverable": {
+              "mdl_ug_l": 2.7
+            },
+            "benzo_a_pyrene": {
+              "mdl_ug_l": 0.03
+            },
+            "dibenz_ah_anthracene": {
+              "mdl_ug_l": 0.03
+            },
+            "indeno_123_cd_pyrene": {
+              "mdl_ug_l": 0.3
+            },
+            "silver": {
+              "mdl_ug_l": 0.7
+            }
+          }
+        },
+        "pretreatment_local_limits_wla": {
+          "item": "W.5, Local Limits (sheet 30)",
+          "table": {
+            "arsenic": {
+              "value": 100,
+              "units": "ug/l"
+            },
+            "cadmium": {
+              "value": 4.2,
+              "units": "ug/l"
+            },
+            "chromium_hexavalent": {
+              "value": 11,
+              "units": "ug/l"
+            },
+            "chromium_total": {
+              "value": 100,
+              "units": "ug/l"
+            },
+            "copper": {
+              "value": 17,
+              "units": "ug/l"
+            },
+            "lead": {
+              "value": 16,
+              "units": "ug/l"
+            },
+            "mercury": {
+              "value": 770,
+              "units": "ng/l"
+            },
+            "nickel": {
+              "value": 94,
+              "units": "ug/l"
+            },
+            "zinc": {
+              "value": 220,
+              "units": "ug/l"
+            }
+          },
+          "significance": "Waste load allocation values the permittee must use \"when evaluating local limits for the following pollutants for which a final effluent limit has not been established\" (Part II Item W.5). A real numeric permit table, previously untranscribed and unmentioned in this file."
+        },
+        "biomonitoring_program": {
+          "item": "X. Biomonitoring Program Requirements (sheet 32)",
+          "text": "\"The permittee shall CONTINUE TO IMPLEMENT an effluent biomonitoring program to determine the toxicity of the effluent from outfall 1PD00005001.\"",
+          "testing": "Annual definitive CHRONIC toxicity tests on Ceriodaphnia dubia and Pimephales promelas for the life of the permit, PLUS annual definitive ACUTE tests — \"Acute toxicity tests need not be performed for months in which chronic toxicity tests are conducted\" (acute endpoints derived from the chronic test instead). Ambient (upstream, station 801) water is tested in conjunction. SOP submittal due no later than three months after the effective date — on or about 2024-01-01 [inference].",
+          "significance": "\"Continue to implement\" means the program predates this permit. Unlike mansfield, this permit's toxicity parameters (61425-61428) stay MONITOR ONLY at the outfall in BOTH the Initial and Final tables — no numeric WET limit is introduced anywhere in this permit term, and the Fact Sheet places the plant in WET \"Category 4\" (no current toxicity problem, monitoring only)."
+        },
+        "stormwater": {
+          "item": "V. Storm water (sheet 29)",
+          "text": "\"No Exposure Certification\" signed June 2018, certificate 1GRN00567*EG per the Fact Sheet. Must be re-affirmed every five years; \"No later than June 2023, the permittee must submit a new form...or make other provisions to comply.\"",
+          "note": "June 2023 is BEFORE this permit's own 2023-10-01 effective date — the re-affirmation deadline printed in Part II Item V predates the permit that contains it. Whether it was met by June 2023 is [open]; not established by this corpus."
+        },
+        "other_items_present": {
+          "note": "Transcribed as an index of what Part II contains (items A through X, no gaps), so a later reader knows what is in the instrument without re-walking it.",
+          "items": "A. Operator Certification Requirements · B. Sampling station locations (see sampling_stations) · C. Non-staffed-day monitoring exemption · D. Sanitary Sewer Overflow (SSO) Reporting Requirements · E. Treatment works maintenance · F. Composite sample definition · G. Grab sample definition · H. Multiple grab sample definition · I. 85% removal requirement (BOD5/TSS) · J. Limits Below Quantification (see above) · K. RCRA \"permit-by-rule\" for hazardous-waste- accepting POTWs · L. WQ-based limit revision clause · M. Sewage sludge ORC/OAC compliance · N. Sludge composite sample definition · O. Annual sludge disposal report (due March 1) · P. Daily percent-solids sampling for sludge weight · Q. Monitoring for Free Cyanide (low-level) · R. Monitoring for Mercury (low-level) · S. Monitoring for Dissolved Orthophosphate (as P) · T. Outfall Signage · U. Method Detection Limits (see above) · V. Storm water (see above) · W. Pretreatment Program Requirements (approved 1984-12-05, plus 12 numbered sub-items: legal authority, funding, industrial user inventory, slug load control, local limits (see pretreatment_local_limits_wla above), control mechanisms, compliance monitoring, priority pollutant monitoring, enforcement, reporting, record keeping, program modification) · X. Biomonitoring Program Requirements (see above). No Parts IV, V or VI — the sheet-1 authorization sentence cites only Parts I, II and III, and this permit has no dedicated stormwater outfall station (no 6xx-series station beyond the 602 bypass)."
+        }
+      },
+      "general_conditions_part_III": {
+        "tag": "[verified]",
+        "citation": "Permit 1PD00005*OD, sheets 35-47, Part III",
+        "not_transcribed": "General Conditions 1 through 32 (sheets 35-47, 13 sheets) were read in full but are not line-by-line transcribed here — standard Ohio EPA boilerplate (definitions, duty to comply, monitoring/reporting mechanics, enforcement, severability, and similar administrative conditions) carrying no facility-specific figure.",
+        "numbering_gap": "Condition 13 is printed \"RESERVED\" (sheet 43) — a numbering gap in the general conditions themselves, not an artifact of this transcription."
+      },
+      "fact_sheet": {
+        "tag": "[reference]",
+        "location": "PDF pages (0-based) 47-80 of this same file, sha256 identical to the permit (one PDF)",
+        "title": "Fact Sheet for NPDES Permit Renewal, Greenville Wastewater Treatment Plant, 2023",
+        "public_notice_no": "185940",
+        "public_notice_date": "2023-07-12",
+        "comment_period_ends": "2023-08-11",
+        "river_mile_discharge": 19.35,
+        "facility_history": "Constructed 1936, last upgraded 2021.",
+        "design_flow": {
+          "average_design_mgd": 3.5,
+          "peak_hydraulic_mgd": 6.0
+        },
+        "bypass_trigger": "\"When influent flow rate exceeds 6.0 MGD, flow is diverted at the headworks to the equalization basins\" — two basins, 90 ft diameter × 7.25 ft deep, 0.345 MG storage each; overflow past the basins bypasses all treatment except UV disinfection. See monitoring_stations.bypass_602.trigger_note above.",
+        "pretreatment_program": "Approved pretreatment program; 3 significant industrial users (2 categorical); average industrial flow 0.202 MGD.",
+        "infiltration_inflow_rate_mgd": {
+          "value": 0.202,
+          "note": "Sheet \"Page 7 of 34\": \"Greenville WWTP has an estimated infiltration/inflow (I/I) rate of 0.202 MGD that does not cause known problems in the collection system.\" Printed identically to pretreatment_program's average industrial-user flow figure above (also 0.202 MGD, same sheet) — two different quantities that happen to share a printed value; recording both so neither reads as the other."
+        },
+        "receiving_water_use_designations": "Agricultural Water Supply, Industrial Water Supply, Primary Contact Recreation throughout; aquatic-life designation varies by reach — Warmwater Habitat through Greenville and downstream to the Boyd Creek confluence, Exceptional Warmwater Habitat elsewhere; the reach from the Indiana line to the Stillwater confluence is an Ohio outstanding state water. Ohio EPA River Code 14-220, HUC 05080001-11-02, Ecoregion Eastern Corn Belt Plains.",
+        "impairment": "The Bridge Creek-Greenville Creek assessment unit is listed impaired for primary contact recreation (E. coli) on Ohio's 303(d) list; downstream is listed impaired for aquatic life. A 2013 basin survey attributed downstream partial attainment to habitat/flow degradation \"according to the report\", sourced to the Greenville WWTP. No nutrient-related impairment was found 20 miles downstream in that survey.",
+        "wet_wla": "0.4 TUa, 1.62 TUc; acute WLA computed as 30 percent mortality in 100 percent effluent at a 1.39:1 dilution ratio (1Q10 1.83 cfs + 5.4 cfs WWTP flow, over 5.4 cfs).",
+        "wet_wla_arithmetic_note": "The dilution-ratio arithmetic printed on sheet \"Page 12 of 34\" does not follow from its own inputs: \"Downstream Dilution Ratio = (1Q10 + [WWTP flow rate]) / [WWTP flow rate] = (1.83 cfs + 5.4 cfs) / 5.4 cfs = 1.39.\" (1.83 + 5.4) / 5.4 = 1.339, not 1.39. Transcribed above in wet_wla as printed (1.39, carried through to \"30 percent mortality...at a 1.39:1 dilution ratio\" later on the same sheet); this note records that the printed quotient does not follow from the printed inputs.",
+        "dmr_history_summary": "9 effluent violations 2017-2022 (2 dissolved oxygen, 1 oil & grease, 3 total phosphorus, 3 TSS), \"not caused by a known process error or upset condition.\" Zero SSOs reported 2017-2022. Bypass events: 2 (2018) / 5 (2019) / 3 (2020) / 1 (2021) / 0 (2022).",
+        "observations": {
+          "duplicate_upstream_station_typo": "The summary-of-changes text (sheet \"Page 2 of 34\") and the additional-monitoring section (sheet \"Page 15 of 34\") both print \"upstream monitoring station 3PD00002801\" where the permit itself and the rest of the Fact Sheet consistently use 1PD00005801. Transcribed as printed; see permit.warnings[6].",
+          "toc_table_numbering_defect": "The Fact Sheet's own Table of Contents (sheet \"Page 3 of 34\") misnumbers its List of Tables from Table 7 onward: it prints \"Table 7\" twice (\"Table 7. Effluent Characterization Using Pretreatment Data\" and \"Table 7. Effluent Characterization Using Self-Monitoring Data\") and, continuing the resulting off-by-one, ends at \"Table 15. Final Effluent Limits for Outfall 001.\" The body itself is correctly numbered Table 1 through Table 16 (the Final Effluent Limits table is actually Table 16, on sheet \"Page 32 of 34\" — the TOC's printed PAGE number, 32, is correct; only the TABLE number is off). This file's own citations follow the body, not the TOC, but a reader hunting the use-attainment river miles by the TOC's \"Table 10\" would land on the wrong table (the body's Table 10 is the toxicity-results table; the use-attainment table is the body's Table 11).",
+          "not_transcribed": "Tables 1-16, the additivity-of-carcinogens attachment, and the acronym addendum (sheets \"Page 19 of 34\" through \"Page 34 of 34\") were read in full but are not line-by-line transcribed here — they are DMR-derived historical statistics and WLA arithmetic supporting the limits already transcribed in effluent_limits_001, not additional permit conditions. The five newly-limited parameters and their Group-5 classification were independently cross-checked against effluent_limits_001.changed_at_month_36 (see corroboration_note) and agree."
+        }
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/greenville/1PD00005.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/greenville/1PD00005.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  }
+]

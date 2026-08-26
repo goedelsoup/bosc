@@ -4206,6 +4206,148 @@
     }
   },
   {
+    "id": "oepa-coshocton",
+    "title": "Ohio EPA NPDES Permit Extractions (Coshocton WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 0PD00004*MD (application OH0024775) for the City of Coshocton Wastewater Treatment Plant, 2742 County Road 271, Coshocton County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:coshocton",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "pretreatment",
+      "coshocton",
+      "coshocton-county",
+      "muskingum"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/coshocton/0PD00004.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 0PD00004*MD (application OH0024775) for the City of Coshocton Wastewater Treatment Plant, 2742 County Road 271, Coshocton County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-greenville",
+    "title": "Ohio EPA NPDES Permit Extractions (Greenville WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 1PD00005*OD (application OH0025429) for the City of Greenville Wastewater Treatment Plant, 209 N Ohio Street, Darke County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:greenville",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "tmdl",
+      "greenville",
+      "darke-county",
+      "great-miami"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/greenville/1PD00005.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 1PD00005*OD (application OH0025429) for the City of Greenville Wastewater Treatment Plant, 209 N Ohio Street, Darke County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-hamilton-middletown",
+    "title": "Ohio EPA NPDES Permit Extractions (Hamilton and Middletown WWTPs)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permits 1PE00002*OD (application OH0025445, City of Hamilton) and 1PE00003*RD (application OH0026522, City of Middletown), Butler County; retrieved from the Ohio EPA DAM permit slots",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:hamilton-middletown",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "hamilton-middletown",
+      "butler-county",
+      "great-miami"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/hamilton-middletown/1PE00002.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/hamilton-middletown/1PE00003.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permits 1PE00002*OD (application OH0025445, City of Hamilton) and 1PE00003*RD (application OH0026522, City of Middletown), Butler County; retrieved from the Ohio EPA DAM permit slots",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "oepa-lima-2dp00130-application",
     "title": "Ohio EPA record extractions (Project BOSC indirect-discharge application — permit 2DP00130)",
     "scope": "extracted",
@@ -4816,6 +4958,53 @@
     }
   },
   {
+    "id": "oepa-new-albany",
+    "title": "Ohio EPA NPDES Permit Extractions (Johnstown WWTP — shelved under new-albany)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 4PC00001*MD (application OH0020508) for the City of Johnstown wastewater treatment plant, 470 West Jersey Street, Licking County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:new-albany",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "antidegradation",
+      "new-albany",
+      "johnstown",
+      "licking-county",
+      "raccoon-creek"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/new-albany/4PC00001.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 4PC00001*MD (application OH0020508) for the City of Johnstown wastewater treatment plant, 470 West Jersey Street, Licking County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "oepa-piketon",
     "title": "Ohio EPA NPDES Permit Extractions (Village of Piketon WWTP)",
     "scope": "extracted",
@@ -5076,6 +5265,53 @@
     }
   },
   {
+    "id": "oepa-springfield",
+    "title": "Ohio EPA NPDES Permit Extractions (Springfield WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 1PE00007*VD (application OH0027481) for the City of Springfield WWTP, 965 Dayton Avenue, Clark County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:springfield",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "combined-sewer-overflow",
+      "long-term-control-plan",
+      "springfield",
+      "clark-county",
+      "mad-river"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/springfield/1PE00007.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 1PE00007*VD (application OH0027481) for the City of Springfield WWTP, 965 Dayton Avenue, Clark County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "oepa-toledo",
     "title": "Ohio EPA NPDES Permit Extractions (Toledo Bay View WRF)",
     "scope": "extracted",
@@ -5178,6 +5414,51 @@
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for permits at the Piqua wastewater treatment works (permit 1PD00008, Miami County)",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-urbana",
+    "title": "Ohio EPA NPDES Permit Extractions (Urbana Water Reclamation Facility)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 1PD00011*PD (application OH0027880) for the City of Urbana Water Reclamation Facility, 1263 Muzzy Road, Champaign County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:urbana",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "urbana",
+      "champaign-county",
+      "mad-river"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/urbana/1PD00011.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 1PD00011*PD (application OH0027880) for the City of Urbana Water Reclamation Facility, 1263 Muzzy Road, Champaign County; retrieved from the Ohio EPA DAM permit slot",
       "source_kind": "document",
       "page": null,
       "pages": null,
@@ -5379,6 +5660,98 @@
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permits for facilities in Wilmington, OH (Clinton County); sourced from the Ohio EPA DAM (permits 1PD00013 + 1PD00013 fact sheet, 1PX00010, 1PV00089, 1IW00240, 1II00129, 1PT00125, 1MP00060)",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-wpafb",
+    "title": "Ohio EPA NPDES Correspondence Extractions (WPAFB — 1IN00274 revocation request)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), docid 2090290 — a one-page letter from 88 ABW/CEVO, Wright-Patterson AFB, to the Ohio EPA Southwest District Office, Division of Surface Water",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:wpafb",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "correspondence",
+      "federal-installation",
+      "bioslurper",
+      "wpafb",
+      "greene-county",
+      "mad-river"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/wpafb/edoc-2090290.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), docid 2090290 — a one-page letter from 88 ABW/CEVO, Wright-Patterson AFB, to the Ohio EPA Southwest District Office, Division of Surface Water",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "oepa-xenia",
+    "title": "Ohio EPA NPDES Permit Extractions (Xenia Ford Road WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 1PD00015*OD (application OH0028193) for the City of Xenia Ford Road WWTP, 779 Ford Road, Greene County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:xenia",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "wasteload-allocation",
+      "xenia",
+      "greene-county",
+      "little-miami"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/xenia/1PD00015.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 1PD00015*OD (application OH0028193) for the City of Xenia Ford Road WWTP, 779 Ford Road, Greene County; retrieved from the Ohio EPA DAM permit slot",
       "source_kind": "document",
       "page": null,
       "pages": null,

@@ -1,6 +1,6 @@
 {
   "site": "new-albany",
-  "catalog_version": "6d4a6775845c3c2ba0cc14834fddb1b1b2b22210f8d44b06ea86e82a6373caae",
+  "catalog_version": "d3f3a10f78fa9e2ef78cf431f96646e1becd5b632127c843029ad440f035d6ed",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -908,6 +908,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:new-albany:oepa-new-albany",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "oepa-new-albany",
+      "title": "Ohio EPA NPDES Permit Extractions (Johnstown WWTP — shelved under new-albany)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:new-albany:oepa-ohd000001-coverage",
       "kind": "dataset",
       "site": "new-albany",
@@ -1044,6 +1052,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:new-albany:CITY OF JOHNSTOWN",
+      "kind": "entity",
+      "site": "new-albany",
+      "local_id": "CITY OF JOHNSTOWN",
+      "title": "City of Johnstown",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:new-albany:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "new-albany",
@@ -1074,6 +1090,30 @@
       "local_id": "MARATHON PIPELINE CO LLC HEATH TERMINAL",
       "title": "MARATHON PIPELINE CO LLC HEATH TERMINAL",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:new-albany:RACCOON CREEK",
+      "kind": "entity",
+      "site": "new-albany",
+      "local_id": "RACCOON CREEK",
+      "title": "Raccoon Creek",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:new-albany:npdes:4PC00001",
+      "kind": "entity",
+      "site": "new-albany",
+      "local_id": "npdes:4PC00001",
+      "title": "City of Johnstown WWTP",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:new-albany:oepa/new-albany/4PC00001.npdes.yaml",
+      "kind": "record",
+      "site": "new-albany",
+      "local_id": "oepa/new-albany/4PC00001.npdes.yaml",
+      "title": "City of Johnstown WWTP",
+      "feed": "records"
     }
   ]
 }

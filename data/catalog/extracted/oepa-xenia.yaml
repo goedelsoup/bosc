@@ -1,0 +1,56 @@
+id: oepa-xenia
+title: Ohio EPA NPDES Permit Extractions (Xenia Ford Road WWTP)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 1PD00015*OD (application OH0028193) for the City of
+    Xenia Ford Road WWTP, 779 Ford Road, Greene County; retrieved from the Ohio EPA DAM permit
+    slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:xenia
+storage:
+- relpath: extracted/oepa/xenia/1PD00015.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- wasteload-allocation
+- xenia
+- greene-county
+- little-miami
+notes: >-
+  Xenia Ford Road WWTP permit 1PD00015*OD, action 2026-01-12, effective 2026-02-01, expiring
+  2031-01-31, signed John Logue, discharging to the Little Miami River at River Mile 77.03 —
+  receiving water and river mile both printed in full on the authorization sentence. Hand-read
+  from the digitally generated text layer; no render receipt. The source PDF binds the 41-sheet
+  permit (PDF pages 0-40) and a 35-page Fact Sheet (pages 41-75), 41+35=76. 37 parameters at the
+  single limited outfall 001, one table for the whole term with no phase-in, on a 3.6 MGD design
+  flow. Coordinates are printed in decimal degrees, so no DMS conversion was performed.
+  ⚠️ THIS IS THE FORD ROAD PLANT, NOT GLADY RUN. Glady Run is a SECOND Xenia plant with its own
+  uncommitted permit; it appears in this document only inside the bound Fact Sheet, as a
+  co-allocated discharger in a shared wasteload allocation. No Glady Run figure was carried into
+  any permit block, and its flow appears only in the file's `[reference]`-tagged fact-sheet
+  context.
+  Part I.C carries only ONE milestone — the pretreatment local-limits justification, due
+  ~2026-08-01 by `[inference]` from "6 months after the permit effective date" — and NO Toxicity
+  Reduction Evaluation, because the Fact Sheet places this plant's whole-effluent toxicity in
+  "Category 4". That date had passed as of 2026-08-26; whether it was filed is `[open]`.
+  There is NO numeric bypass-diversion trigger anywhere in Parts I-III; the only such figure
+  ("diverted … when flow exceeds 4 MGD") is Fact-Sheet-only and is not an enforceable permit
+  condition — recorded as such rather than promoted.
+  Document defects recorded rather than normalized: sludge station 588's table prints parameter
+  code 51129 while its own footnote d cites 70316 (stations 581 and 586 are internally consistent,
+  so 588 is the sole anomaly); parameter 51451 is printed under a maximum-concentration column
+  though footnote i says it is a calculated annual-average loading; the Fact Sheet cites a
+  nonexistent "Part II, Item AA" for the phosphorus-loading instructions (Part II runs A-Y, and
+  the instructions are at Item Y); the Fact Sheet misprints the rule as "OAC 3754-33-07(B)(11)";
+  and Part II Item Y carries a stale "Beginning on December 1, 2015" start date inside a
+  2026-2031 permit.

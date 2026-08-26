@@ -360,6 +360,52 @@
     }
   },
   {
+    "id": "oepa-greenville",
+    "title": "Ohio EPA NPDES Permit Extractions (Greenville WWTP)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 1PD00005*OD (application OH0025429) for the City of Greenville Wastewater Treatment Plant, 209 N Ohio Street, Darke County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:greenville",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "tmdl",
+      "greenville",
+      "darke-county",
+      "great-miami"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/greenville/1PD00005.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 1PD00005*OD (application OH0025429) for the City of Greenville Wastewater Treatment Plant, 209 N Ohio Street, Darke County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "abatement-parameters",
     "title": "Darke County, OH Abatement Parameters + What-If Scenario Knobs",
     "scope": "reference",

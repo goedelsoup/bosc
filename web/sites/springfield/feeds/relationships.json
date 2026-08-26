@@ -1,5 +1,25 @@
 [
   {
+    "src": "CITY OF SPRINGFIELD",
+    "rel": "operates",
+    "dst": "npdes:1PE00007",
+    "date": "",
+    "ref": "1PE00007*VD",
+    "source": "oepa/springfield/1PE00007.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PE00007",
+    "rel": "discharges_to",
+    "dst": "MAD RIVER",
+    "date": "",
+    "ref": "1PE00007*VD",
+    "source": "oepa/springfield/1PE00007.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

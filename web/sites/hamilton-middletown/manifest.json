@@ -2,16 +2,16 @@
   "site": "hamilton-middletown",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T04:34:31+00:00",
+  "generated_at": "2026-08-26T23:12:52+00:00",
   "feed_count": 29,
-  "row_total": 401,
+  "row_total": 431,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "absent",
       "places": "absent",
-      "record": "seeded",
+      "record": "live",
       "inquiry": "seeded"
     }
   },
@@ -23,7 +23,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "timeline",
@@ -39,7 +39,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 7
     },
     {
       "name": "relationships",
@@ -47,7 +47,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 5
     },
     {
       "name": "people",
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 55
+      "count": 56
     },
     {
       "name": "facts",
@@ -231,7 +231,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 80
+      "count": 89
     },
     {
       "name": "corpus-nodes",
@@ -239,7 +239,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 80
+      "count": 89
     },
     {
       "name": "ask-embeddings",
