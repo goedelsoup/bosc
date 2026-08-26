@@ -1,0 +1,173 @@
+# Wright-Patterson AFB (88 ABW/CEVO) letter to Ohio EPA-Southwest District, dated 9 August
+# 2006, requesting REVOCATION of NPDES permit 1IN00274*AD (the base's Bioslurper
+# groundwater-remediation unit).
+#
+# THIS IS NOT A PERMIT. The corpus does not hold permit 1IN00274 itself — only this one-page
+# request letter, filed by Ohio EPA's eDocument portal under docid 2090290. See permit.warnings
+# below for the full statement of what this document is and is not.
+#
+# Producer "Data Capture Server" / Creator "OmniPage CSDK 20" — this file IS an OCR'd scan,
+# the only one in this batch's other 16 documents are digitally generated with a clean text
+# layer, so unlike them this document was correctly extracted by VISION, not text-layer
+# transcription. The page was rendered at 300 DPI (pypdfium2) and read directly off the image;
+# nothing here was taken from the OCR text layer, whose digits and names are badly garbled
+# (see meta.method and permit.warnings for specific corrections). This file therefore carries
+# a full render receipt (doc_id/kind/dpi/pages_read/image_pages_read) per
+# watermark.models.DocExtraction — it is honest because the render actually happened, unlike a
+# hand transcription of a clean text layer, which must carry none of those fields.
+source_path: data/documents/oepa/wpafb/edoc-2090290.pdf
+doc_id: edoc-2090290-801b7842
+kind: npdes
+dpi: 300
+pages_read:
+- 0
+image_pages_read:
+- 0
+meta:
+  subject: >-
+    Wright-Patterson AFB (88 ABW/CEVO) letter requesting Ohio EPA revoke NPDES permit
+    1IN00274*AD (Bioslurper unit) — not a permit instrument
+  site: wpafb
+  captured_for: 'task A1 — network-site WWTP NPDES permit ingest (record domain)'
+  extracted_at: '2026-08-26'
+  method: >-
+    The source PDF is a scanned/OCR'd document (Producer "Data Capture Server", Creator
+    "OmniPage CSDK 20"), so the OCR text layer is NOT the instrument's own bytes and its digits
+    were never trusted. The single page was rendered at 300 DPI with pypdfium2 and read
+    visually (plus two further crops at 600 DPI to verify the body paragraph's exact wording
+    and the "National Pollution Discharge Elimination System" phrasing). Every field below was
+    read off the rendered image, not the OCR layer. For reference, the OCR layer's garbling of
+    this same text included "2d06" for "2006", "aate" for "date", "Dlstrlct" for "District",
+    "HEA04l1AIiTERS" for "HEADQUARTERS", "p]ease" for "please", "Sherrn" for "Sherm", and
+    "(937}" for "(937)" — none of that was used; it is recorded here only as evidence of this
+    corpus's OCR reliability.
+  sources:
+    letter:
+      path: data/documents/oepa/wpafb/edoc-2090290.pdf
+      sha256: 1e893b75e24b33715d0fefed3a2ced5e709eba8f38aabee255709c48715aaeac
+      url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=2090290
+
+permit:
+  tag: '[verified]'
+  confidence: high
+  warnings:
+  - >-
+    THIS DOCUMENT IS A ONE-PAGE REVOCATION-REQUEST LETTER, NOT A PERMIT. It is Wright-Patterson
+    AFB's 2006-08-09 letter to Ohio EPA asking that NPDES permit 1IN00274*AD be revoked. The
+    corpus holds NO copy of permit 1IN00274 itself — no permit face sheet, no fact sheet, no
+    effluent-limit tables, nothing from Ohio EPA's side of the correspondence. Every field below
+    describes what THIS LETTER SAYS about permit 1IN00274 (its number, its stated expiration
+    date, the reason the base wants it gone) — it is not read off the permit and must not be
+    cited as if it were. Anyone wanting the permit's actual terms (outfall, limits, receiving
+    water, issuance history) has to find that instrument separately; this artifact cannot supply
+    it.
+  - >-
+    PERMIT 1IN00274 WAS AN INDUSTRIAL PERMIT FOR A BIOSLURPER, NOT A POTW/SEWAGE PERMIT. The
+    letter's second paragraph identifies the regulated unit: "the Bioslurper unit has not be in
+    use for a couple of years" (verbatim, including the document's own grammar — "has not be"
+    rather than "has not been"). A bioslurper is a soil/groundwater vapor-extraction remediation
+    technology, not a wastewater treatment plant. This document is therefore NOT evidence of a
+    municipal sewage-plant permit for Wright-Patterson AFB, and nothing here should be read into
+    a WWTP/POTW context.
+  - >-
+    WHETHER OHIO EPA ACTUALLY REVOKED THE PERMIT IS [open]. The letter only requests revocation
+    "at the earliest possible date" — it is one half of a correspondence. No response, order,
+    or revocation notice from Ohio EPA is captured in this corpus. Do not write that the permit
+    "was revoked"; the correct statement is that the base asked for revocation on 2006-08-09 and
+    the agency's response is not established by anything held here.
+  - >-
+    A FEDERAL ENCLAVE HAS NO CITY SEWAGE-PLANT NPDES PERMIT, AND THIS DOCUMENT DOES NOT SUPPLY
+    ONE. Wright-Patterson AFB does not appear in this OEPA batch with a POTW/municipal-sewage
+    permit because it is not a municipality — its land is a federal enclave, not incorporated
+    territory served by a city plant. Do NOT substitute a nearby Dayton-area municipal WWTP
+    permit for WPAFB's own sanitary-sewage disposal, and do not assert that any specific plant
+    treats the base's sewage. Whether and where WPAFB's sanitary flow is treated (on-base
+    package plant, connection to a municipal system, or something else) is `[open]` — no
+    captured source in this corpus answers it. This letter concerns an unrelated industrial
+    remediation permit only.
+  - >-
+    THE STATED EXPIRATION DATE IS ~20 YEARS IN THE PAST. The letter gives the permit's
+    expiration as 31 December 2006. As of this extraction (2026-08-26), that is roughly twenty
+    years ago. Regardless of whether Ohio EPA ever acted on the revocation request, permit
+    1IN00274*AD is long expired on its own stated terms.
+
+  facility_name: null
+  permit_no: 1IN00274*AD
+  permit_action: revocation requested
+  applicant: null
+  application_no: null
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: Wright-Patterson AFB, Ohio (letterhead address below; the letter names no
+    separate discharge-point address for the Bioslurper unit)
+  discharge_address: null
+  receiving_water: null
+  stream_network: null
+  outfalls: []
+  note: >-
+    NpdesPermit's schema is built for a permit instrument (facility_name, application_no,
+    receiving_water, outfalls, …). This document is a request letter and simply does not carry
+    most of those facts — they are left null/empty deliberately rather than invented. See
+    letter_detail below for everything the letter DOES say.
+
+  # ── What the image actually shows ─────────────────────────────────────────────────────────
+  letter_detail:
+    citation: 'edoc-2090290.pdf, page 1 (the only page), read at 300 DPI'
+    tag: '[verified]'
+    date: '2006-08-09'
+    date_as_printed: 9 August 2006
+    letterhead:
+      seal: Department of Defense seal (eagle-and-shield), upper left
+      lines:
+      - DEPARTMENT OF THE AIR FORCE
+      - 'HEADQUARTERS, 88TH AIR BASE WING (AFMC)'
+      - WRIGHT-PATTERSON AIR FORCE BASE, OHIO
+    sender:
+      office_symbol: 88 ABW/CEVO
+      building: Bldg 89
+      address: 5490 Pearson Road, Wright-Patterson AFB OH 45433-5332
+      signed_by: Linda G. Rogers
+      signed_by_title: Environmental Scientist
+      signed_by_office: Office of Environmental Management
+      signature_note: >-
+        A cursive signature reading "Linda G. Rogers" appears above the printed name block;
+        printed name and title are unambiguous at 300 DPI.
+      contact_named_in_body: Mr. Sherm Siegal (of "this office", i.e. 88 ABW/CEVO)
+      phone_sherm_siegal: (937) 257-8591
+      phone_linda_rogers: (937) 257-5537
+    recipient:
+      name: Ms. Sandra Leibfritz
+      office: Ohio EPA-Southwest District Office
+      division: Division of Surface Water
+      address: 401 E. Fifth Street, Dayton OH 45402
+    salutation: Dear Ms. Leibfritz
+    body_paragraph_1_verbatim: >-
+      "Per our recent correspondence regarding the National Pollution Discharge Elimination
+      System (NPDES) permit # 1IN00274*AD which is due to expire 31 December 2006, we are
+      requesting that this permit be revoked at the earliest possible date."
+    body_paragraph_1_note: >-
+      The document itself prints "National Pollution Discharge Elimination System" — "Pollution"
+      rather than the standard statutory "Pollutant". Verified at 600 DPI; this is the
+      document's own wording, not an artifact of this transcription, and is transcribed
+      verbatim rather than silently corrected to the standard term.
+    body_paragraph_2_verbatim: >-
+      "As you've observed on the Form 4500 Monthly Reports, the Bioslurper unit has not be in
+      use for a couple of years. We have no future plans to reuse this piece of equipment and
+      would like to cease further monthly reporting. If you have any questions regarding this
+      issue, please contact Mr. Sherm Siegal, of this office, at (937) 257-8591 or myself at
+      (937) 257-5537."
+    body_paragraph_2_note: >-
+      "has not be in use" is printed exactly that way (missing "en") — the document's own
+      grammar, verified at 600 DPI and transcribed as printed rather than corrected to "has not
+      been in use".
+    stated_reason_for_revocation: >-
+      The Bioslurper unit has been unused "for a couple of years" as of 2006-08-09, with no
+      future plans to reuse it; the base wants to stop filing the associated Form 4500 monthly
+      reports.
+    referenced_prior_correspondence: >-
+      The letter opens "Per our recent correspondence regarding..." — it references an earlier,
+      uncaptured exchange between the base and Ohio EPA about this permit. That prior
+      correspondence is not in this corpus.
+    referenced_form: Form 4500 Monthly Reports (the recurring compliance filing the base wants
+      to stop submitting)

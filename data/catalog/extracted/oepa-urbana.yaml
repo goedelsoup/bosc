@@ -1,0 +1,55 @@
+id: oepa-urbana
+title: Ohio EPA NPDES Permit Extractions (Urbana Water Reclamation Facility)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 1PD00011*PD (application OH0027880) for the City of
+    Urbana Water Reclamation Facility, 1263 Muzzy Road, Champaign County; retrieved from the Ohio
+    EPA DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:urbana
+storage:
+- relpath: extracted/oepa/urbana/1PD00011.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- urbana
+- champaign-county
+- mad-river
+notes: >-
+  Urbana Water Reclamation Facility permit 1PD00011*PD, issued 2020-10-26, effective 2020-12-01,
+  **expired 2025-11-30** — the only lapsed instrument in this batch. Signed Laurie A. Stevenson,
+  discharging to the Mad River on a 4.5 MGD design flow. Hand-read from the digitally generated
+  text layer; no render receipt. 42 printed sheets == 42 PDF pages with a clean +1 offset
+  throughout. 31 parameters in a single outfall table with no phase-in.
+  NO numeric whole-effluent-toxicity limit anywhere — all four WET parameters are monitor-only and
+  there is no Toxicity Reduction Evaluation — and NO numeric phosphorus limit, only a
+  planning-evaluation schedule item. Both absences were confirmed by full-text search rather than
+  inferred. The permit's own text NEVER uses the words "modification" or "renewal" about itself,
+  so `permit_action` is tagged `[reference]` from the collection's filename-map rather than
+  `[verified]`.
+  ⚠️ SCOPE FENCE, DELIBERATE. `data/documents/oepa/urbana/` holds 13 further eDocuments and a fact
+  sheet belonging to the Urbana standing-watch work (#1355); this extraction reads ONLY the permit
+  itself. The 7Q10 / 1Q10 / 30Q10 / harmonic-mean figures for the Mad River sit in the file's
+  declined-scope block and are not promoted into any permit claim.
+  ⚠️ A COORDINATE THE CORPUS DISAGREES WITH ITSELF ABOUT, LEFT UNRECONCILED. The permit's printed
+  DMS for station 001 converts to 40.096111, -83.797222; this collection's README and filename-map
+  record 40.095278, -83.797222 for the same outfall, sourced from an out-of-scope 2025 renewal
+  application. The extraction records the permit's own figure, labels the conversion a conversion
+  rather than a second source, and explicitly declines to reconcile the two.
+  Document defects recorded rather than normalized: Part I.B's own section numbering skips "3."
+  (running 1, 2, 4, 5, 6, 7), corroborated by the complete absence of stations 588, 602 and 603;
+  the 601 note lettering runs a, b, c then g; note "a" under the outfall table prints "lead"
+  twice; and parameter 61435 prints "Pimephales promela" where 61441 prints "promelas". Two
+  Schedule-of-Compliance milestones resolved to 2021-12-01 and the industrial-stormwater No
+  Exposure recertification deadline of 2025-06-30 have all passed; whether any was filed is
+  `[open]`, and past-due here means the date passed, not that the city missed it.

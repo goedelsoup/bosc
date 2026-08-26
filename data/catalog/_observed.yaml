@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-26T22:59:53.784971+00:00'
+reconciled_at: '2026-08-26T23:18:13.564175+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -2360,6 +2360,36 @@ entries:
     asof: '2026-07-21'
     stale: false
     site_scope: state:OH
+  oepa-coshocton:
+    exists: true
+    sha256: c80bcdc74985dff31b393ce764bea3b30e869efd1de465e5753fe3513556b57d
+    size_bytes: 51205
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:coshocton
+  oepa-greenville:
+    exists: true
+    sha256: 85c199730afb85366dd63c303bf98b7ab5837df9fc0c07fcb6b7c0d831663747
+    size_bytes: 51570
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:greenville
+  oepa-hamilton-middletown:
+    exists: true
+    sha256: e252a07afae9d34feabcae6a0eadd1bb728a551ae02eb58f09271cc345a68c8f
+    size_bytes: 99428
+    lfs_materialized: true
+    file_count: 2
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:hamilton-middletown
   oepa-lima-2dp00130-application:
     exists: true
     sha256: 03c4c78c2b8c86630e1b80750965af81363578c24daa61bc9b24ff3c3a800e2c
@@ -2390,6 +2420,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:mansfield
+  oepa-new-albany:
+    exists: true
+    sha256: c8bbc55a2d652ea14a0448bb2431e190418984ff3760270f11ddedf5c4249219
+    size_bytes: 41595
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:new-albany
   oepa-ohd000001-coverage:
     exists: true
     sha256: 2a70dd340cc5d6363b72f09e9bf11800f649b010fb5f0868db1ca168e0ecbeb2
@@ -2450,6 +2490,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:sidney
+  oepa-springfield:
+    exists: true
+    sha256: 3b87b4d669a39301d5df25f0c6440835cb85e98633a719d8895e9735348e881e
+    size_bytes: 73702
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:springfield
   oepa-toledo:
     exists: true
     sha256: e92f9c8ef4638a23c8c09fc68c1811deb335722001ef6ca2980566c6d1821c4d
@@ -2470,6 +2520,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:troy-piqua
+  oepa-urbana:
+    exists: true
+    sha256: 4f8dbc512d5745c2bbdfa7a0ab5a55c3ca9658811306e9451987d31047dac3c8
+    size_bytes: 40517
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:urbana
   oepa-van-wert:
     exists: true
     sha256: 2f29d2aabf14483b270a30737ae2b39484d20d081cbc2ea6f85571db32e48b8f
@@ -2500,6 +2560,26 @@ entries:
     asof: null
     stale: false
     site_scope: site:wilmington
+  oepa-wpafb:
+    exists: true
+    sha256: 79cc57d6527f24959a92f81233e47e5e0d65fbbe1298d16e927b289afa51e331
+    size_bytes: 10077
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:wpafb
+  oepa-xenia:
+    exists: true
+    sha256: 910c950c4aa82ecda420905b59e25dbccc209360223f38f0733eeb49c4e13d62
+    size_bytes: 46523
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:xenia
   ohio-water-withdrawal-allen:
     exists: true
     sha256: 3b275c411aa9c537fad498f81a9d5690ca7c4bd1f3a582f2381efc5e3a41210c

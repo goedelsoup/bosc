@@ -1,5 +1,25 @@
 [
   {
+    "src": "CITY OF COSHOCTON",
+    "rel": "operates",
+    "dst": "npdes:0PD00004",
+    "date": "",
+    "ref": "0PD00004*MD",
+    "source": "oepa/coshocton/0PD00004.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:0PD00004",
+    "rel": "discharges_to",
+    "dst": "MUSKINGUM RIVER",
+    "date": "",
+    "ref": "0PD00004*MD",
+    "source": "oepa/coshocton/0PD00004.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

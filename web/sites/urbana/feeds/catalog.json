@@ -360,6 +360,51 @@
     }
   },
   {
+    "id": "oepa-urbana",
+    "title": "Ohio EPA NPDES Permit Extractions (Urbana Water Reclamation Facility)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permit 1PD00011*PD (application OH0027880) for the City of Urbana Water Reclamation Facility, 1263 Muzzy Road, Champaign County; retrieved from the Ohio EPA DAM permit slot",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:urbana",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "urbana",
+      "champaign-county",
+      "mad-river"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/urbana/1PD00011.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permit 1PD00011*PD (application OH0027880) for the City of Urbana Water Reclamation Facility, 1263 Muzzy Road, Champaign County; retrieved from the Ohio EPA DAM permit slot",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "urbana",
     "title": "Urbana (Champaign County, OH) Investigative Findings & Onboarding Record",
     "scope": "extracted",

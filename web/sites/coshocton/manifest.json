@@ -2,9 +2,9 @@
   "site": "coshocton",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T04:34:06+00:00",
+  "generated_at": "2026-08-26T23:12:55+00:00",
   "feed_count": 24,
-  "row_total": 327,
+  "row_total": 344,
   "readiness": {
     "tier": "stub",
     "domains": {
@@ -12,7 +12,7 @@
       "facility": "absent",
       "places": "absent",
       "record": "seeded",
-      "inquiry": "absent"
+      "inquiry": "seeded"
     }
   },
   "facility": null,
@@ -23,7 +23,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 1
     },
     {
       "name": "timeline",
@@ -39,7 +39,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 5
     },
     {
       "name": "relationships",
@@ -47,7 +47,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 1
+      "count": 3
     },
     {
       "name": "people",
@@ -159,7 +159,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 54
+      "count": 55
     },
     {
       "name": "facts",
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 79
+      "count": 84
     },
     {
       "name": "corpus-nodes",
@@ -199,7 +199,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 79
+      "count": 84
     },
     {
       "name": "ask-embeddings",

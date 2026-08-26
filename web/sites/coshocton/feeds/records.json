@@ -1,1 +1,571 @@
-[]
+[
+  {
+    "rel": "oepa/coshocton/0PD00004.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Coshocton Wastewater Treatment Plant",
+    "confidence": "high",
+    "warnings": [
+      "THIS SOURCE PDF BUNDLES THE FACT SHEET INTO THE SAME FILE AS THE PERMIT — unlike this corpus's mansfield precedent (2PE00001.npdes.yaml), where the Fact Sheet is explicitly not committed. The operative permit is PDF pages 0-36 (37 pages, matching the \"Total Pages: 37\" printed on sheet 1), and the 2023 Fact Sheet for the same permit action follows immediately at PDF pages 37-69 with its own restarted \"Page N of 33\" numbering. 37 + 33 = 70, the PDF's actual page count — so there is NO discrepancy in total page coverage, but the permit's own \"Total Pages: 37\" field describes only the permit portion, not the whole file. Anyone citing \"the permit is N pages\" from sheet 1 alone will undercount this file by 33 pages. Because the Fact Sheet is part of THIS instrument, its content is transcribed below (see `fact_sheet`) with the same `[verified]` tag as the permit body — it is read off the face of the committed document, not an outside source.",
+      "THREE OF THE FACT SHEET'S FOUR FIGURES ARE IMAGE-ONLY — their entire substance is unreachable from the text layer and would be invisible to any text-layer-only read. This is the coverage gap the task brief asked to be reported explicitly, not silently omitted. See `fact_sheet.figures` for what each one shows (established by rendering all four at 300 DPI): Figure 1 (PDF p.50, a street/aerial location map with the plant's two sampling-station icons and an Ohio county locator inset), Figure 2 (PDF p.51, the plant's flow schematic, carrying clarifier dimensions, tank capacities in gallons, and trickling-filter diameters found NOWHERE else in this document), and Figure 3 (PDF p.52, an aerial photo of the plant overlaid with the sludge-handling process narrative and site labels) all extract to essentially nothing but their caption line — `pypdf` returns only \"Figure N. <title>\" and the page footer for each. Figure 4 (PDF p.53, the Muskingum River study-area schematic) is the ONE exception: its labels (river names, river miles, \"Direction of Flow\", the RM/WWTP legend) DO extract cleanly and match the rendered image exactly — confirmed by rendering it too, for symmetry with the other three, not because it needed rescue.",
+      "FIGURE 2's FLOW NUMBERS DO NOT MATCH THE FACT SHEET'S OWN PROSE, and this document does not reconcile the two. Two pages earlier, \"FACILITY DESCRIPTION\" states plainly: \"The average design flow is 4.4 million gallons per day (MGD) and the peak hydraulic capacity is 10.6 MGD\" (Fact Sheet p.6 of 33) — the same 4.4 MGD design flow the permit itself cites as the effluent-loading basis at both outfall 001 and station 602 (Part I.A notes). Figure 2's flow schematic, however, labels the headworks Bar Screen/Grit Channel building \"Peak Flow 6.6 MGD, Average Flow 1.3 MGD, Minimum Flow 0.30 MGD\" — none of which is 4.4 or 10.6. Nothing on the page or elsewhere explains whether the schematic's numbers describe a different flow point (e.g. a single train, or a superseded design year) than the plant-wide figures in the prose. Both are transcribed as printed; which one (if either) describes current whole-plant capacity is `[open]`.",
+      "AMMONIA CARRIES NO NUMERIC LIMIT ANYWHERE IN THIS PERMIT — monitor-only at both outfall 001 (3/Week 24hr Composite) and internal station 602 (2/Week 24hr Composite), for the whole permit term, with no phase-in and no seasonal split. This is a real finding, not an omission on this file's part: Fact Sheet Table 13 computes ammonia wasteload allocations of 38.5 mg/L (summer) and 229 mg/L (winter) — so far above anything the plant could plausibly discharge that no limit was warranted — and Table 14's Group 5 (the only group that carries a recommended numeric limit) states outright: \"No parameters meet the criteria of this group.\" Every numeric limit that DOES appear at outfall 001 (TSS, CBOD5, oil & grease, pH, E. coli) is technology-based or narrative-WQS-based per Table 15's own \"Basis\" column (`BPT, PD` or `WQS`), not wasteload-allocation-derived. Coshocton's outfall 001 has, in other words, no water-quality-based effluent limit of any kind in this permit term.",
+      "THERE IS NO DOWNSTREAM/FARFIELD AMBIENT STATION IN THIS PERMIT AT ALL — Part II Item B's station list runs 001, 300, 581, 586, 601, 602, 801 and stops; there is no \"9xx\"-series station. The one ambient station this permit has (801, upstream) carries ONLY the whole-effluent-toxicity battery (48-hr acute Ceriodaphnia dubia and 96-hr acute Pimephales promelas, both %Affected, 1/Year Grab in August) — no nutrient or bacteria chemistry monitoring of any kind, unlike this corpus's mansfield precedent, whose upstream/downstream pair ran a full nutrient suite monthly. Recorded as an absence, not a defect: nothing here says Ohio EPA requires more.",
+      "THE SCHEDULE OF COMPLIANCE HAS EXACTLY ONE ITEM, and its due date has already passed. Part I.C carries only the Municipal Pretreatment Schedule (no TRE, no phosphorus-optimization schedule, unlike mansfield's three-track schedule) — a local-limits technical-justification report due \"no later than 12 months after the permit effective date (Event Code 52599).\" No calendar date is printed; resolved against the 2024-03-01 effective date that is 2025-03-01, `[inference]`. As of 2026-08-26 that date is roughly 17 months in the past. NOTHING IN THIS CORPUS ESTABLISHES WHETHER THE CITY FILED IT — no submittal, no acknowledgment, no violation notice, and no ECHO/ICIS extract for this facility is committed. \"Past due\" here means the date has passed, NOT that the City missed it.",
+      "NO CSO AND NO NUMERIC BYPASS TRIGGER. The Fact Sheet states the City \"has 100% separate sewers in the collection system\" — so this permit carries no combined-sewer-overflow parts. Separately, its plant bypass (a manually-operated sluice gate at the headworks, \"for catastrophic plant failure,\" \"has not been operated within the previous permit cycle and not anticipated to operate in the proposed permit cycle\" — Fact Sheet, Description of Existing Discharge) has NO stated MGD precondition anywhere in the permit or Fact Sheet, unlike mansfield's explicit 19 MGD sustained-flow trigger. Recorded as printed; there is no numeric threshold to transcribe.",
+      "AN UNANNOUNCED LIMIT CHANGE: THE pH-MINIMUM AT OUTFALL 001 TIGHTENS FROM 6.0 TO 6.5 S.U., AND THE FACT SHEET'S OWN \"SAME AS THE CURRENT PERMIT\" SUMMARY DOES NOT FLAG IT. Table 7 (Fact Sheet p.22 of 33, \"Current Permit Limits\" column) prints the existing permit's daily pH-minimum as 6.0; this renewal's own Part I.A.1 table (sheet 3) and Table 15 (Fact Sheet p.30 of 33, Basis \"WQS\") both set it at 6.5 — see effluent_limits_001.limits.ph_minimum. The Fact Sheet's \"Summary of Permit Conditions\" (p.2 of 33) states \"the effluent limits and/or monitoring requirements proposed for all parameters are the same as in the current permit, except those listed below,\" then lists mercury (limit removed), several parameters' monitoring removed or reduced at outfall 001 and station 601, free cyanide and oil & grease monitoring frequency reductions, and the Municipal Pretreatment Schedule — pH is not among them. It is the only tightened numeric limit in this renewal. It also bears on Table 2 (Fact Sheet p.18 of 33): the sole pH-minimum violation in the five-year DMR window (2018, x1) was scored against the CURRENT 6.0 limit, not the tighter 6.5 the plant will be held to going forward."
+    ],
+    "fields": {
+      "tag": "[verified]",
+      "facility_name": "Coshocton Wastewater Treatment Plant",
+      "permit_no": "0PD00004*MD",
+      "application_no": "OH0024775",
+      "permit_action": "Renewal. The permit body (Parts I-III) never labels THIS ACTION a renewal — where the word appears there, it is only in generic procedural or definitional language (Part II.A.2.b: \"All applications for renewal of this NPDES permit shall include an updated Operator of Record Notification form…\"; Part III §1's definitions: \"…when the NPDES permit is up for renewal\"), never used to characterize the current issuance. The Fact Sheet's own title and running header are the actual source: \"Fact Sheet for NPDES Permit Renewal, Coshocton Wastewater Treatment Plant, 2023.\" The permit number's `*MD` suffix is printed throughout but this document nowhere explains what \"MD\" denotes.",
+      "permittee": "City of Coshocton",
+      "facility_address": "2742 County Road 271, Coshocton, Ohio, Coshocton County",
+      "applicant_mailing_address": "760 Chestnut Street, Coshocton, OH 43812 — the City's own address, printed on the Fact Sheet's cover (\"Name and Address of Applicant\"), distinct from the treatment plant's physical address above (\"Name and Address of Facility Where Discharge Occurs\").",
+      "county": "Coshocton",
+      "receiving_water": "Muskingum River",
+      "receiving_water_source": "Sheet 1, the authorization sentence itself: \"...discharging to Muskingum River in accordance with the conditions specified in Parts I, II, and III of this permit.\" Unlike mansfield's 2PE00001*PD, this authorization sentence is complete — no blank, no river mile in the sentence either (see river_mile below, which is Fact-Sheet-sourced, not permit-body-sourced).",
+      "river_mile": 108.56,
+      "river_mile_source": "NOT printed anywhere in the permit body (Parts I-III). It appears only in the Fact Sheet: \"Coshocton Wastewater Treatment Plant discharges to Muskingum River at River Mile 108.56, downstream from the confluence of the Tuscarawas River and Walhonding River\" (Fact Sheet p.6 of 33), and again on Figure 4 (see fact_sheet.figures).",
+      "subsequent_stream_network": "\"Subsequent Stream Network: Ohio River\" — printed directly on the Fact Sheet's cover page, Fact Sheet p.1 of 33. Unlike mansfield, no intervening rivers had to be assembled from a site profile; this permit's own attached document names the terminal receiving system. [reference] only insofar as it is the Fact Sheet's summary, not the permit's own text.",
+      "ohio_epa_river_code": "\"17-001, Large River Assessment Unit 050400004-90-01, County: Coshocton, Ecoregion: Western Allegheny Plateau.\" Fact Sheet p.6 of 33, \"Location of Discharge/Receiving Water Use Classification.\"",
+      "use_designations": "Warmwater Habitat, Agricultural Water Supply, Industrial Water Supply, and Primary Contact Recreation (OAC 3745-1-07). Fact Sheet p.6 of 33.",
+      "impairment_303d": "\"The Muskingum River watershed assessment unit, which includes the Muskingum River in the vicinity of Coshocton WWTP, is listed as impaired for human health and recreation on Ohio's 303(d) list. The impairment for human health is shown due to PCBs in fish tissue and the impairment for recreation is shown due to elevated concentrations of Escherichia Coli (E. coli). The Coshocton WWTP has not been identified as a source of the PCBs and limits have been applied to address E. coli.\" Fact Sheet p.8 of 33 — a negative finding on the face of the document, transcribed as printed: this plant is explicitly NOT implicated in the PCB impairment. Biological sampling in 2006, and again in 2020/2021, showed Full Attainment of the Warmwater Habitat use both upstream and downstream of the plant.",
+      "action_date": "2024-01-16",
+      "effective_date": "2024-03-01",
+      "expiration_date": "2029-02-28",
+      "signed_by": "Anne M. Vogel, Director",
+      "total_pages": 37,
+      "total_pages_note": "The permit's own printed field on sheet 1. It counts only the permit (PDF pages 0-36); the bound-in Fact Sheet is 33 further pages not counted in this field. See warnings[0].",
+      "renewal_application_due": "The permit's own text requires the renewal submission \"no later than 180 days prior to the above date of expiration\" — i.e. on or about 2028-09-01 for the 2029-02-28 expiration. [inference] from the permit's stated rule; the permit prints no calendar date for it.",
+      "treatment_works_classification": {
+        "citation": "Permit 0PD00004*MD, sheet 15, Part II Item A.1",
+        "tag": "[verified]",
+        "treatment_works": "Class III under OAC 3745-7-04, requiring a designated professional operator of record certified at class III or greater.",
+        "collection_systems": "\"All sewerage (collection) systems that are tributary to this treatment works are Class II sewerage systems in accordance with paragraph (B)(1)(b) of rule 3745-7-04.\""
+      },
+      "sampling_stations": {
+        "citation": "Permit 0PD00004*MD, sheet 16, Part II Item B",
+        "tag": "[verified]",
+        "note": "Only station 001 carries a printed coordinate in this table — 300, 581, 586, 601, 602 and 801 have a description only. (Figure 1 plots 801 and 001 on a map, but prints no DMS text for either — see fact_sheet.figures.figure_1.)",
+        "station_number_typo": "Two of Part I.B's \"Notes for Station Number\" headers print only SEVEN digits, where every other reference to these stations (including this Part II Item B table) prints eight: \"Notes for Station Number 0PD0004581\" (sheet 8, missing a zero — every other reference reads 0PD00004581) and \"Notes for Station Number 0PD0004801\" (sheet 12, correct elsewhere as 0PD00004801). Present in both `layout` and default pypdf extraction modes, so it is the document's own typo, not a layout artifact.",
+        "0PD00004001": {
+          "description": "Final effluent collected prior to discharge to the Muskingum River near the effluent weirs.",
+          "latitude_dms": "40 N 14 ' 28 \"",
+          "longitude_dms": "81 W 52 ' 21 \"",
+          "latitude_dd": 40.241111,
+          "longitude_dd": -81.8725,
+          "coordinate_note": "DMS as printed; decimal-degree conversion done here, not a second source."
+        },
+        "0PD00004300": {
+          "description": "Sanitary Sewer Overflow (SSO) throughout the sanitary sewer collection system"
+        },
+        "0PD00004581": {
+          "description": "Sludge removed for land application"
+        },
+        "0PD00004586": {
+          "description": "Sludge removed and hauled to landfill in an emergency"
+        },
+        "0PD00004601": {
+          "description": "Influent monitoring at the headworks"
+        },
+        "0PD00004602": {
+          "description": "Biothane pretreatment unit effluent directed to plant influent"
+        },
+        "0PD00004801": {
+          "description": "Upstream monitoring location on Muskingum River above the influence of 0PD00004001"
+        }
+      },
+      "effluent_limits_001": {
+        "citation": "Permit 0PD00004*MD, sheets 2-3, Part I.A.1; notes sheet 4",
+        "tag": "[verified]",
+        "period": "effective date through expiration — one table, no phase-in",
+        "outfall": "0PD00004001",
+        "design_flow_basis": "\"Effluent loadings based on average design flow of 4.4 MGD.\"",
+        "limits": {
+          "water_temperature": {
+            "units": "C",
+            "limit": null,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "dissolved_oxygen": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Day Grab",
+            "months": "All"
+          },
+          "total_suspended_solids": {
+            "units": "mg/l",
+            "weekly": 45,
+            "monthly": 30,
+            "load_weekly_kg": 750,
+            "load_monthly_kg": 500,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "All"
+          },
+          "oil_and_grease": {
+            "units": "mg/l",
+            "maximum": 10,
+            "monitoring": "1/Month Grab",
+            "months": "All"
+          },
+          "ammonia_nh3": {
+            "limit": null,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "All",
+            "note": "MONITOR ONLY — no numeric limit at all. See warnings[3]."
+          },
+          "nitrite_plus_nitrate_total": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Month 24hr Composite",
+            "months": "All"
+          },
+          "phosphorus_total": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Month 24hr Composite",
+            "months": "All"
+          },
+          "orthophosphate_dissolved": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Month Grab",
+            "months": "All",
+            "note": "See Part II, Item T."
+          },
+          "nickel_total_recoverable": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly"
+          },
+          "zinc_total_recoverable": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly"
+          },
+          "cadmium_total_recoverable": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly"
+          },
+          "lead_total_recoverable": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly"
+          },
+          "chromium_total_recoverable": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly"
+          },
+          "copper_total_recoverable": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter 24hr Composite",
+            "months": "Quarterly"
+          },
+          "chromium_dissolved_hexavalent": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter Grab",
+            "months": "Quarterly"
+          },
+          "e_coli": {
+            "units": "#/100 ml",
+            "weekly": 284,
+            "monthly": 126,
+            "monitoring": "3/Week Grab",
+            "months": "Summer"
+          },
+          "flow_rate": {
+            "units": "MGD",
+            "limit": null,
+            "monitoring": "1/Day Continuous",
+            "months": "All"
+          },
+          "mercury_total_low_level": {
+            "units": "ng/l",
+            "limit": null,
+            "monitoring": "1/Month Grab",
+            "months": "All",
+            "note": "See Part II, Item S."
+          },
+          "cyanide_free_low_level": {
+            "units": "ug/l",
+            "limit": null,
+            "monitoring": "1/Quarter Grab",
+            "months": "Quarterly",
+            "note": "See Part II, Item R."
+          },
+          "acute_toxicity_ceriodaphnia_dubia": {
+            "units": "TUa",
+            "limit": null,
+            "monitoring": "1/Year 24hr Composite",
+            "months": "August",
+            "note": "See Part II, Item X."
+          },
+          "acute_toxicity_pimephales_promelas": {
+            "units": "TUa",
+            "limit": null,
+            "monitoring": "1/Year 24hr Composite",
+            "months": "August",
+            "note": "See Part II, Item X."
+          },
+          "ph_maximum": {
+            "units": "S.U.",
+            "maximum": 9.0,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "ph_minimum": {
+            "units": "S.U.",
+            "minimum": 6.5,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "residue_total_filterable": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "1/Month 24hr Composite",
+            "months": "All"
+          },
+          "cbod_5_day": {
+            "units": "mg/l",
+            "weekly": 40,
+            "monthly": 25,
+            "load_weekly_kg": 666,
+            "load_monthly_kg": 416,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "All"
+          }
+        },
+        "note": "Of 25 parameters, only five carry a numeric limit: TSS, CBOD5 (both technology-based), oil & grease, E. coli, and pH (all three WQS-narrative-based per Fact Sheet Table 15's Basis column). Every water-quality-based-allocation candidate — ammonia, nutrients, the metals suite, mercury, cyanide, both toxicity species — is monitor-only. See warnings[3]."
+      },
+      "effluent_limits_602": {
+        "citation": "Permit 0PD00004*MD, sheet 5, Part I.A.2",
+        "tag": "[verified]",
+        "station": "0PD00004602",
+        "station_type": "NOT an outfall — an internal monitoring station. Fact Sheet, Facility Description: \"The City has a Biothane anaerobic digestor that was intended to serve as a pretreatment unit for wastewaters to be received from an ethanol facility. Monitoring station 602 is in the existing permit and was intended to monitor the pretreatment unit performance. The pretreatment unit has not been used during the previous permit cycle and not anticipated to be used in the near future.\" The Fact Sheet's \"Additional Monitoring Requirements\" section confirms the station is retained anyway, \"to assess treatment performance in the event the unit is brought back into operation.\"",
+        "limits": {
+          "water_temperature": {
+            "units": "C",
+            "limit": null,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "total_suspended_solids": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "All"
+          },
+          "ammonia_nh3": {
+            "limit": null,
+            "monitoring": "2/Week 24hr Composite",
+            "months": "All"
+          },
+          "flow_rate": {
+            "units": "MGD",
+            "limit": null,
+            "monitoring": "1/Day Continuous",
+            "months": "All"
+          },
+          "ph_maximum": {
+            "units": "S.U.",
+            "limit": null,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "ph_minimum": {
+            "units": "S.U.",
+            "limit": null,
+            "monitoring": "1/Day Multiple Grab",
+            "months": "All"
+          },
+          "cbod_5_day": {
+            "units": "mg/l",
+            "limit": null,
+            "monitoring": "3/Week 24hr Composite",
+            "months": "All"
+          }
+        },
+        "note": "ALL SEVEN parameters are monitor-only — station 602 carries no numeric limit whatsoever, consistent with the fact that its process is not in use. Note the ammonia measuring frequency (2/Week) differs from outfall 001's (3/Week) for the same parameter.",
+        "footnote_a": "Sampling for the respective/common parameters shall occur on the same day as Outfall 0PD00004001."
+      },
+      "monitoring_stations": {
+        "citation": "Permit 0PD00004*MD, sheets 6-12, Part I.B",
+        "tag": "[verified]",
+        "sso_300": {
+          "parameter": "Overflow Occurrence (74062), No./Month, 1/Month Total, months All",
+          "note": "As with this corpus's other transcribed permits, the permit is explicit that 1/Month is a REPORTING frequency, not a monitoring one: overflows \"shall be monitored on each day when they discharge.\" Only SSOs reaching waters of the state (directly or via storm sewer) are reported at this station; \"All sanitary sewer overflows are prohibited.\"",
+          "annual_report": "Due March 31 for the prior calendar year, SSO locations numbered consecutively from 301, volumes in millions of gallons, with a narrative analysis of water-in-basement (WIB) patterns by location, frequency and cause.",
+          "history": "Fact Sheet Table 4 (5-year SSO occurrence count, `[verified]` from the same document): 2018=0, 2019=2, 2020=3, 2021=2, 2022=0, 2023=0."
+        },
+        "biosolids_581": {
+          "frequency": "1/Year Composite, December (except sludge weight/fee weight — 1/Year Total; fecal coliform — 1/Year Multiple Grab)",
+          "ceilings_mg_per_kg": {
+            "arsenic": 75,
+            "cadmium": 85,
+            "copper": 4300,
+            "lead": 840,
+            "nickel": 420,
+            "zinc": 7500,
+            "selenium": 100,
+            "mercury": 57,
+            "molybdenum": 75
+          },
+          "fecal_coliform_max": {
+            "units": "CFU/gram",
+            "maximum": 2000000
+          },
+          "also_monitored": "ammonia (in sludge), total Kjeldahl nitrogen, nitrite plus nitrate, total phosphorus, potassium — nutrient suite, no limits, all December.",
+          "note": "Ceilings are limits, not monitor-only — unlike Coshocton's outfall/internal-station tables, this station has real numeric caps on nine metals plus fecal coliform."
+        },
+        "sludge_586": {
+          "description": "Emergency landfill disposal — Part II Item Q explicitly states no Part I.B effluent table is included for this station; reported on the Annual Sludge Report instead."
+        },
+        "influent_601": {
+          "description": "Influent monitoring at the headworks — all monitor-only, no limits.",
+          "parameters": "TSS (3/Week 24hr Composite — NOT 1/Quarter; verified against the printed table in both `layout` and default pypdf extraction modes), total cyanide, nickel, zinc, cadmium, lead, total chromium, copper, dissolved hexavalent chromium (all 1/Quarter), low-level mercury (1/Month Grab), pH minimum and maximum (1/Day Multiple Grab), CBOD 5-day (3/Week).",
+          "note": "Fact Sheet, Summary of Permit Conditions: \"Dissolved oxygen, arsenic, selenium, and silver are being removed from influent monitoring station 601 because the annual pretreatment sampling provides adequate monitoring and the influent dissolved oxygen monitoring is not relevant to operations. Monitoring for dissolved hexavalent chromium and total cyanide is proposed to be reduced to frequency similar other metal parameters.\" Those four parameters' absence from the table above, and cyanide/hex-Cr's quarterly frequency, are therefore a documented change from the prior permit cycle, not an extraction gap."
+        },
+        "upstream_801": {
+          "description": "Receiving stream ABOVE the discharge — toxicity monitoring ONLY.",
+          "parameters": "48-Hr Acute Toxicity Ceriodaphnia dubia (61432) and 96-Hr Acute Toxicity Pimephales promelas (61435), both % Affected, 1/Year Grab, August.",
+          "footnote_a": "Biomonitoring — see Part II, Item X.",
+          "note": "See warnings[4] — no downstream station exists in this permit, and 801 carries no chemistry/bacteria suite."
+        }
+      },
+      "schedule_of_compliance": {
+        "citation": "Permit 0PD00004*MD, sheets 13-14, Part I.C",
+        "tag": "[verified]",
+        "note": "ONE item only — Municipal Pretreatment Schedule. No Toxicity Reduction Evaluation, no Phosphorus Optimization schedule (both present in mansfield's permit but absent here).",
+        "municipal_pretreatment_schedule": {
+          "due": "2025-03-01",
+          "due_tag": "[inference]",
+          "due_basis": "[inference] — the permit says \"no later than 12 months after the permit effective date\"; 2024-03-01 + 12 months.",
+          "event_code": "52599",
+          "submit_to": "Ohio EPA, Central Office Pretreatment Unit and to Ohio EPA, Southeast District Office",
+          "requirement": "Evaluate the adequacy of local industrial user limitations to prevent the introduction of pollutants into the POTW that would interfere with its operation, pass through in amounts exceeding water quality standard-based limits, be incompatible with the POTW, or limit wastewater/sludge use options. Submit either a technical justification for REVISING local limits (with a pretreatment program modification request) or a technical justification for RETAINING the existing ones.",
+          "pollutants_requiring_justification": "Arsenic, cadmium, total chromium, dissolved hexavalent chromium, copper, free cyanide, lead, mercury, molybdenum, nickel, selenium, silver and zinc — \"unless screening of wastewater and sludge indicate these pollutants are not present in significant amounts\" — plus any other pollutant where a local limit may be necessary.",
+          "engineering_requirement": "If new or revised industrial user discharge limits are proposed, the report requires \"the stamp and signature of a licensed Ohio professional engineer.\"",
+          "revisions": "A revised report is due within 90 days of Ohio EPA notifying the permittee of deficiencies; revised limits must be incorporated into all industrial user control documents no later than 4 months after Ohio EPA's approval."
+        },
+        "status": {
+          "tag": "[open]",
+          "as_of": "2026-08-26",
+          "lapsed": "The one milestone date (2025-03-01) is roughly 17 months in the past as of this writing.",
+          "what_is_not_established": "WHETHER IT WAS FILED. Nothing in this corpus establishes that — no submittal, no acknowledgment, no violation notice, and no ECHO/ICIS extract for this facility is committed. \"Past due\" here means the date has passed, NOT that the City missed it.",
+          "how_to_close_it": "A public-records request to Ohio EPA Southeast District Office and the Central Office Pretreatment Unit for the 52599 submittal under permit 0PD00004 would settle it."
+        }
+      },
+      "other_requirements_of_note": {
+        "citation": "Permit 0PD00004*MD, Part II, sheets 15-24",
+        "tag": "[verified]",
+        "local_limits_wla": {
+          "item": "W.5 — Local Limits",
+          "values_ug_per_l": {
+            "arsenic": 680,
+            "cadmium": 27,
+            "chromium_hexavalent": 31,
+            "chromium_total": 8000,
+            "copper": 70,
+            "free_cyanide": 92,
+            "lead": 840,
+            "nickel": 2100,
+            "selenium": 120,
+            "silver": 17,
+            "zinc": 550
+          },
+          "mercury_ng_per_l": 12,
+          "significance": "These are the wasteload-allocation values the permittee must use when evaluating local industrial-user limits for pollutants with no final table limit of their own — i.e. the headworks ceiling this permit implicitly assumes. See fact_sheet.local_limits_cross_reference for how these numbers trace back to the Fact Sheet's own technical-basis tables."
+        },
+        "biomonitoring_program": {
+          "item": "X. Biomonitoring Program Requirements",
+          "text": "\"The permittee shall continue to implement an effluent biomonitoring program to determine the toxicity of the effluent from outfall 001.\"",
+          "testing": "Definitive acute toxicity tests on Ceriodaphnia dubia (water fleas) and Pimephales promelas (fathead minnows) at outfall 001, for the duration of the permit, plus ambient testing at upstream station 801, all per Ohio EPA's \"Reporting and Testing Guidance for Biomonitoring,\" July 1998 (or current revision). SOP or verification of SOP submittal due no later than three months after the effective date — on or about 2024-06-01 `[inference]`.",
+          "definition": "TUa = Acute Toxicity Units = 100/LC50 (as printed)."
+        },
+        "storm_water": {
+          "item": "V",
+          "text": "\"To comply with industrial storm water regulations, the permittee submitted a form for 'No Exposure Certification' which was signed on September 13, 2022. Compliance with the industrial storm water regulations must be re-affirmed every five years. No later than September 13, 2027, the permittee must submit a new form...\"",
+          "certification_number": "0GRN00138*EG",
+          "certification_number_source": "Fact Sheet, \"Storm Water Compliance\", p.13 of 33 — the permit body itself does not print the certification number, only the date."
+        },
+        "pretreatment_program": {
+          "item": "W",
+          "approved_date": "1985-03-29",
+          "text": "\"The permittee's pretreatment program initially approved on March 29, 1985 and all subsequent modifications approved before the effective date of this permit, shall be an enforceable term and condition of this permit.\"",
+          "reporting_deadlines": {
+            "quarterly_industrial_user_violation_report": "On or prior to the 15th day of January, April, July, and October.",
+            "annual_pretreatment_report": "On or prior to October 15th of each year."
+          },
+          "record_retention": "A minimum of three years, extended during unresolved litigation."
+        },
+        "emergency_landfill_disposal": {
+          "item": "Q",
+          "station": "0PD00004586",
+          "text": "\"The permittee is authorized to dispose of sewage sludge in a sanitary landfill in an emergency. Station 586 for disposal in a sanitary landfill is included in the authorized list of station(s) in Part II, Item B of this permit, however, effluent tables are not included in Part 1.B.\" Reported on the Annual Sludge Report instead."
+        },
+        "free_cyanide_and_mercury_methods": {
+          "items": "R and S",
+          "free_cyanide": "ASTM D7237-10, OIA-1677-09, or ASTM D4282-02 (the last requiring documentation it meets the \"sufficiently sensitive\" test-procedure standard, 40 CFR 122.44(i)(1)(iv)).",
+          "mercury": "EPA Method 1631 or EPA Method 245.7, 40 CFR 136."
+        },
+        "dissolved_orthophosphate_method": {
+          "item": "T",
+          "text": "Grab sample, filtered within 15 minutes of collection using a 0.45-micron filter, analyzed within 48 hours."
+        },
+        "outfall_signage": {
+          "item": "U",
+          "text": "Permanent stream-bank marker at each regulated outfall, minimum 2 ft by 2 ft, minimum 3 ft above ground, lettering not less than 2 inches, unobstructed from river users' view."
+        },
+        "other_items_present": {
+          "note": "Transcribed as an index of what Part II contains, so a later reader knows what is in the instrument without re-walking it. Not summarized in detail here.",
+          "items": "A. Operator Certification Requirements · B. Sampling Station Locations · C. Weekend/Holiday Monitoring Exemption · D. Sanitary Sewer Overflow (SSO) Reporting Requirements · E. Treatment Works Maintenance · F. Composite Sample Definition · G. Grab Sample Definition · H. Multiple Grab Sample Definition · I. 85 Percent Removal Requirement · J. Chlorine Use for Disinfection · K. RCRA \"Permit-by-Rule\" for POTWs Accepting Hazardous Waste · L. Water-Quality-Based Limit Revisions · M. Sewage Sludge ORC/OAC Compliance · N. Sewage Sludge Composite Sample Definition · O. Annual Sewage Sludge Disposal Report (due March 1) · P. Daily Percent-Solids Sampling for Sludge Weight Calculation · Q. Emergency Landfill Disposal (station 586) · R. Free Cyanide Monitoring Methods · S. Mercury Monitoring Methods · T. Dissolved Orthophosphate Monitoring · U. Outfall Signage · V. Storm Water No Exposure Certification · W. Pretreatment Program Requirements (12 subsections) · X. Biomonitoring Program Requirements."
+        }
+      },
+      "fact_sheet": {
+        "citation": "Fact Sheet for NPDES Permit Renewal, Coshocton Wastewater Treatment Plant, 2023 (bound at PDF pages 37-69 of this file)",
+        "tag": "[verified]",
+        "cover": {
+          "public_notice_no": "193167",
+          "public_notice_date": "2023-12-14",
+          "comment_period_ends": "2024-01-13",
+          "contact": "Aaron Pennington, 740-380-5272, aaron.pennington@epa.ohio.gov"
+        },
+        "facility_description": {
+          "constructed": 1954,
+          "last_upgraded": 2018,
+          "average_design_flow_mgd": 4.4,
+          "peak_hydraulic_capacity_mgd": 10.6,
+          "infiltration_inflow_estimate_mgd": 0.2,
+          "infiltration_inflow_basis": "Fact Sheet p.7 of 33: \"Coshocton Wastewater Treatment Plant has an estimated infiltration/inflow (I/I) rate of 0.2 MGD that does not cause known problems in the collection system. The estimation for infiltration/inflow was made by subtracting the median daily flow value from the average daily flow value.\"",
+          "serves": "City of Coshocton and adjacent areas served by the Coshocton County Sewer collection system.",
+          "collection_system": "100% separate sewers — no combined sewer overflows. See warnings[6].",
+          "treatment_processes": "Influent pumping, mechanical screening, grit removal, scum removal, primary clarification, trickling filter, secondary clarification, ultraviolet light disinfection (Figure 2).",
+          "sludge_treatment_processes": "Anaerobic digestion, mechanical dewatering belt filter press (Figure 3); treated sludge is land-applied.",
+          "pretreatment_users": "One categorical user discharging 0.033 MGD; seven significant non-categorical users discharging 0.422 MGD combined.",
+          "biothane_unit": "\"The City has a Biothane anaerobic digestor that was intended to serve as a pretreatment unit for wastewaters to be received from an ethanol facility.\" Never used during the previous permit cycle; not anticipated to be used soon. See effluent_limits_602.",
+          "potable_water_source": "Groundwater.",
+          "plant_bypass": "\"Coshocton Wastewater Treatment Plant has a plant bypass at the headworks of the facility that is constructed with a sluice gate that can be manually opened in the event of catastrophic plant failure. The piping for the bypass connects to the effluent sewer upon leaving the 001 monitoring station. The bypass has not been operated within the previous permit cycle and not anticipated to operate in the proposed permit cycle.\" See warnings[6] — no numeric MGD precondition is stated anywhere."
+        },
+        "interactive_dischargers": {
+          "note": "Wasteload allocations for the Muskingum River in this stretch are computed jointly for two currently-operating dischargers, plus two that have since ceased operations.",
+          "current": [
+            "Coshocton WWTP",
+            "Cleveland Cliffs – Coshocton Works (RM 105.88)"
+          ],
+          "formerly_included_now_ceased": [
+            "Columbus Southern Power - Conesville Power Plant (coal-fired steam electric)",
+            "WestRock Coshocton Mill (pulp and paper)"
+          ],
+          "model": "CONSWLA (conservative substance wasteload allocation), Fact Sheet p.9-10 of 33."
+        },
+        "design_flow_criteria_basis": {
+          "aquatic_life_toxics_average": "Annual 7Q10",
+          "aquatic_life_toxics_maximum": "Annual 1Q10",
+          "ammonia_average_summer": "Summer 30Q10",
+          "ammonia_average_winter": "Winter 30Q10",
+          "agricultural_water_supply": "Harmonic mean flow",
+          "human_health_nondrinking": "Harmonic mean flow"
+        },
+        "instream_flows_table_12": {
+          "citation": "Fact Sheet Table 12, p.26 of 33",
+          "7q10_cfs": 544,
+          "1q10_cfs": 385,
+          "30q10_summer_cfs": 630,
+          "30q10_winter_cfs": 1093,
+          "harmonic_mean_cfs": 2033,
+          "basis": "Combined USGS gages 03129000 and 03138500, 1921-2023 data.",
+          "coshocton_wwtp_design_flow_cfs": "6.81 (4.4 MGD)",
+          "cleveland_cliffs_flow_cfs": "3.71 (2.4 MGD, 95th percentile of average monthly flow, May 2018-April 2023)"
+        },
+        "whole_effluent_toxicity_wla": {
+          "outfall_001_wla": {
+            "acute_TUa": 1.0,
+            "chronic_TUc": 81.73
+          },
+          "category": "4 (no toxicity)",
+          "annual_acute_monitoring": "\"Annual acute toxicity monitoring is proposed for the life of the permit.\" Chronic (TUc) monitoring is not required because \"the available downstream dilution is more than twenty to one\" (OAC 3745-33-07(B)(11)(c)).",
+          "rule_citation_typo": "The Fact Sheet prints \"OAC 3754-33-07(B)(11)\" — transposed digits — twice, both times in this same WET discussion (Summary of Permit Conditions, p.2 of 33; Whole Effluent Toxicity Reasonable Potential, p.12 of 33), where the same document prints the correct \"3745-33-07\" seven other times across five pages (FS pp.5, 10 (×2), 11, 12, 30). The document's own typo, not corrected here."
+        },
+        "local_limits_cross_reference": {
+          "tag": "[inference]",
+          "note": "Part II Item W.5's local-limits WLA values (transcribed above under other_requirements_of_note.local_limits_wla) match the Fact Sheet's own Table 11/13 \"Inside Mixing Zone Maximum\" column for every listed pollutant EXCEPT mercury: arsenic 680, cadmium 27, hexavalent chromium 31, total chromium 8000, copper 70, free cyanide 92, lead 840, nickel 2100, selenium 120, silver 17, and zinc 550 (all ug/L) are each identical to that column in Table 11/13. Mercury instead uses the Human Health average value (12 ng/L) rather than Table 13's Inside Mixing Zone Maximum for mercury (3400 ng/L) — consistent with the Fact Sheet's own stated rule: \"By rule, mixing zones are not authorized for pollutants, such as mercury, which have been designated as bioaccumulative chemicals of concern (BCCs). For BCCs, the WLA is set equal to the respective WQS value.\" The document nowhere states this cross-reference explicitly; it is assembled here from two separately-printed tables."
+        },
+        "parameter_screening_table_14": {
+          "citation": "Fact Sheet Table 14, p.29 of 33",
+          "groups": "Group 1 (no numeric criteria, not evaluated): aluminum, chlorides, manganese-TR. Group 2 (PEQ < 25% of WQS, no limit): antimony, arsenic, barium, beryllium, cadmium, chromium-TR, dissolved hexavalent chromium, free cyanide, iron-TR, lead-TR, nickel-TR, nitrate+nitrite, silver, strontium, thallium. Group 3 (PEQ < 50% of PEL, no limit): ammonia (summer & winter), B2EHP, butyl benzyl phthalate, copper-TR, selenium-TR, total filterable residue, zinc-TR. Group 4 (monitoring appropriate): mercury-TR. Group 5 (limit recommended): \"No parameters meet the criteria of this group.\" See warnings[3]."
+        },
+        "tables_index": {
+          "note": "Fifteen numbered tables, one attachment, AND one addendum — the Fact Sheet's own Table of Contents (FS p.3 of 33) lists all four (4 figures, 15 tables, 1 attachment, 1 addendum) under separate headings (\"List of Tables\" / \"List of Attachments\" / \"List of Addendums\"). The highest-value figures are pulled forward into blocks above (Table 4 into monitoring_stations.sso_300.history; Tables 11-14 into local_limits_cross_reference and parameter_screening_table_14). The rest are indexed here rather than fully re-typed.",
+          "table_1_sewage_sludge_removal_dry_tons": {
+            "2018": 213,
+            "2019": 231,
+            "2020": 238,
+            "2021": 188,
+            "2022": 150
+          },
+          "table_2_effluent_violations_outfall_001_2018_2023": "4 total violations in the five-year window, ALL in 2018: E. coli x3, pH-minimum x1. Zero violations in 2019, 2020, 2021, 2022, or 2023 (partial year to April).",
+          "table_3_annual_effluent_flow_rates": "50th/95th percentile/maximum MGD by year, 2018-2023 — maximum ranged from 3.20 MGD (2021) to 8.50 MGD (2022), against the 4.4 MGD design flow and 10.6 MGD peak capacity.",
+          "table_5_7_effluent_characterization": "Chemical-specific data from pretreatment reports (2018-2022), Ohio EPA compliance sampling (2022-12-07), and self-monitoring DMR data (May 2018-April 2023), compared against current permit limits.",
+          "table_8_projected_effluent_quality": "PEQavg/PEQmax for outfall 001 across ~28 parameters, computed per Ohio EPA Modeling Guidance #1.",
+          "table_9_acute_toxicity_results": "Five annual tests (Aug 2018-Aug 2022): Ceriodaphnia dubia non-detect every year; Pimephales promelas non-detect in 2018/2019/2022, 0.5 TUa in 2020 and 2021.",
+          "table_10_use_attainment": "Full attainment of the Warmwater Habitat designated use at four Muskingum River locations (RM 110.7, 107.6, 105.0, 101.8) in the 2006 biological survey.",
+          "table_15_final_limits_basis": "Cross-checked in full against effluent_limits_001 above; Basis codes are BPT/PD (technology + plant design, TSS & CBOD5), WQS (oil & grease, E. coli, pH), M (monitor-only per Division of Surface Water Guidance 1), PMR (phosphorus monitoring, ORC 6111.03), and WET (minimum toxicity testing, OAC 3745-33-07(B)(11)).",
+          "attachment_1_wet_reasonable_potential": "Both species placed in Hazard Category 4 (\"No Toxicity\") for acute; chronic (TUc) is N/A for both. The document's own stated reason (Fact Sheet p.12 of 33, \"Whole Effluent Toxicity Reasonable Potential\"): \"In accordance with OAC 3745-33-07(B)(11)(c), TUc criteria are generally applied when the available mixing zone dilution is less than twenty to one. Coshocton Wastewater Treatment Plant is not required to monitor for TUc because the available downstream dilution is more than twenty to one.\"",
+          "addendum_1_acronyms": "FS p.33 of 33 — a standard acronym glossary (ABS, BPJ, CFR, CMOM, CONSWLA, CSO, CWA, DMR, DMT, IMZM, LTCP, MDL, MGD, NPDES, OAC, Ohio EPA, ORC, ORSANCO, PEL, PEQ, PMP, PPE, SSO, TMDL, TRE, TU, U.S. EPA, WET, WLA, WPCF, WQBEL, WQS, WWTP). Indexed here for completeness, not re-typed in full."
+        },
+        "figures": {
+          "citation": "Fact Sheet Figures 1-4, PDF pages 50-53 (Fact Sheet pages 14-17 of 33). All four rendered at 300 DPI (pypdfium2) to read — see the header note.",
+          "figure_1": {
+            "title": "Location of Coshocton Wastewater Treatment Plant",
+            "pdf_page": 50,
+            "text_layer_coverage": "NONE beyond the caption and page footer. The entire map is a raster image.",
+            "content": "A street/road map (South 2nd Street, Cherry Street, South 6th, South Lawn, South 7th and South 8th Streets, Buckeye Street, County Road 271, State Route 83) with the Muskingum River running along the plant's west side. Two station icons are plotted: \"Station: 0PD00004-801\" (a blue square, upstream/north of the plant) and \"Station: 0PD00004-001\" (a yellow diamond, the final outfall). The plant itself is marked with a purple dot and the label \"Coshocton WWTP / OEPA#: 0PD00004 / USEPA#: OH0024775.\" A legend distinguishes NPDES-Permit-Location, Downstream-Nearfield Monitoring, Upstream Monitoring, and Final Outfall icon types (the legend is a shared map template — this permit has no downstream-nearfield station, so that legend entry is unused on this particular map). An inset locates Coshocton County within Ohio."
+          },
+          "figure_2": {
+            "title": "Diagram of Wastewater Treatment System",
+            "pdf_page": 51,
+            "text_layer_coverage": "NONE beyond the caption and page footer. See warnings[2] for the flow-figure discrepancy this figure raises against the Fact Sheet's own prose.",
+            "content": "\"COSHOCTON WASTEWATER TREATMENT PLANT FLOW SCHEMATIC\" — a labeled process-flow diagram. Influent enters a Bar Screen/Grit Channel in the Main Building (labeled Peak Flow 6.6 MGD, Average Flow 1.3 MGD, Minimum Flow 0.30 MGD — see warnings[2]) via three raw water pumps from the Raw Water Wet Well. Flow splits to four identical Primary Clarifiers (36.5 x 14 x 15.5 ft, 59,242 gallons each) plus one larger Primary Clarifier (60 x 15.5 x 24.15 ft, 168,000 gallons). From the clarifiers, flow goes to a Transfer Building serving three trickling filters (#1 TF and #2 TF, 100' diameter each; #3 TF, 140' diameter), then to a Splitter Box dividing into two Final Clarifiers, then UV Disinfection, then Outfall 001. None of the dimensions, gallon capacities, or diameters in this diagram appear anywhere in the text layer of this document."
+          },
+          "figure_3": {
+            "title": "Diagram of Sludge Treatment System",
+            "pdf_page": 52,
+            "text_layer_coverage": "NONE beyond the caption and page footer.",
+            "content": "\"Sludge Flow Schematic Coshocton WWTP\" — an aerial/satellite photo of the plant overlaid with a process narrative and site labels. Narrative (verbatim from the image): \"Solids accumulate from two locations. Primary settling and Secondary settling. Solids from Secondary settling are pumped to the Primary sedimentation tanks and are resettled before being pumped to the North or South Anaerobic digesters. After solids stabilization the solids are pumped to the Secondary anaerobic digester for further stabilization. From the Secondary digester the solids are pumped to the Dewatering building where they are belt pressed and removed for land application.\" Labeled site features: Primary Sedimentation, two circular Secondary Clarifiers, North Digester, South Digester, a Secondary [anaerobic] Digester, a Belt Press / Dewatering Building. This entire narrative and site layout is absent from the text layer."
+          },
+          "figure_4": {
+            "title": "Muskingum River Study Area",
+            "pdf_page": 53,
+            "text_layer_coverage": "COMPLETE — the extracted text (\"Direction of Flow\", \"RM = River mile\", \"WWTP = wastewater treatment plant\", \"Muskingum River\", \"Cleveland Cliffs RM 105.88\", \"Coshocton WWTP RM 108.56\", \"Tuscarawas River\", \"Walhonding River\") matches the rendered image exactly. Rendered for symmetry with the other three figures, not because of any gap.",
+            "content": "A simple schematic: the Walhonding River and Tuscarawas River converge to form the Muskingum River; downstream, arrows mark Coshocton WWTP at RM 108.56 and Cleveland Cliffs at RM 105.88, with a \"Direction of Flow\" arrow and an RM/WWTP legend."
+          }
+        }
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/coshocton/0PD00004.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/coshocton/0PD00004.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  }
+]

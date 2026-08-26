@@ -1,6 +1,6 @@
 {
   "site": "hamilton-middletown",
-  "catalog_version": "bed79e463b56859cc7fc0375bb26417b53ba8eb7542e533393825fa61ea5dcec",
+  "catalog_version": "56641790d8a165f4c8f42c6502f4af72f15cff2e7f6fd1fbef7de641fa7ef179",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -916,6 +916,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:hamilton-middletown:oepa-hamilton-middletown",
+      "kind": "dataset",
+      "site": "hamilton-middletown",
+      "local_id": "oepa-hamilton-middletown",
+      "title": "Ohio EPA NPDES Permit Extractions (Hamilton and Middletown WWTPs)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:hamilton-middletown:oepa-ohd000001-coverage",
       "kind": "dataset",
       "site": "hamilton-middletown",
@@ -1044,6 +1052,22 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:hamilton-middletown:CITY OF HAMILTON",
+      "kind": "entity",
+      "site": "hamilton-middletown",
+      "local_id": "CITY OF HAMILTON",
+      "title": "City of Hamilton",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:hamilton-middletown:CITY OF MIDDLETOWN",
+      "kind": "entity",
+      "site": "hamilton-middletown",
+      "local_id": "CITY OF MIDDLETOWN",
+      "title": "City of Middletown",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:hamilton-middletown:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "hamilton-middletown",
@@ -1058,6 +1082,46 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:hamilton-middletown:GREAT MIAMI RIVER",
+      "kind": "entity",
+      "site": "hamilton-middletown",
+      "local_id": "GREAT MIAMI RIVER",
+      "title": "Great Miami River",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:hamilton-middletown:npdes:1PE00002",
+      "kind": "entity",
+      "site": "hamilton-middletown",
+      "local_id": "npdes:1PE00002",
+      "title": "Hamilton Water Reclamation Facility",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:hamilton-middletown:npdes:1PE00003",
+      "kind": "entity",
+      "site": "hamilton-middletown",
+      "local_id": "npdes:1PE00003",
+      "title": "City of Middletown Wastewater Treatment Works",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:hamilton-middletown:oepa/hamilton-middletown/1PE00002.npdes.yaml",
+      "kind": "record",
+      "site": "hamilton-middletown",
+      "local_id": "oepa/hamilton-middletown/1PE00002.npdes.yaml",
+      "title": "Hamilton Water Reclamation Facility",
+      "feed": "records"
+    },
+    {
+      "handle": "record:hamilton-middletown:oepa/hamilton-middletown/1PE00003.npdes.yaml",
+      "kind": "record",
+      "site": "hamilton-middletown",
+      "local_id": "oepa/hamilton-middletown/1PE00003.npdes.yaml",
+      "title": "City of Middletown Wastewater Treatment Works",
+      "feed": "records"
     }
   ]
 }

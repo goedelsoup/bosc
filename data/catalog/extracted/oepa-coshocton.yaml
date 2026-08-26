@@ -1,0 +1,59 @@
+id: oepa-coshocton
+title: Ohio EPA NPDES Permit Extractions (Coshocton WWTP)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 0PD00004*MD (application OH0024775) for the City of
+    Coshocton Wastewater Treatment Plant, 2742 County Road 271, Coshocton County; retrieved from
+    the Ohio EPA DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:coshocton
+storage:
+- relpath: extracted/oepa/coshocton/0PD00004.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- pretreatment
+- coshocton
+- coshocton-county
+- muskingum
+notes: >-
+  Coshocton WWTP permit 0PD00004*MD, renewal issued 2024-01-16, effective 2024-03-01, expiring
+  2029-02-28, signed Anne M. Vogel, discharging to the Muskingum River at RM 108.56 (a Fact Sheet
+  figure, not a permit-body one). Hand-read from the digitally generated text layer; no render
+  receipt. The source PDF binds the 37-sheet permit (PDF pages 0-36) and its 33-page 2023 Fact
+  Sheet (pages 37-69), 37+33=70. 25 parameters at outfall 001, 7 at internal station 602, nine
+  metal ceilings at biosolids station 581, on a 4.4 MGD average design flow.
+  ⚠️ AMMONIA CARRIES NO NUMERIC LIMIT ANYWHERE — monitor-only at both 001 and 602 — and Fact Sheet
+  Table 14 says so outright: "No parameters meet the criteria of this group." There is no
+  downstream/farfield ambient station at all, and the single upstream station 801 runs only the
+  toxicity battery with no chemistry. No CSO (the Fact Sheet records 100% separate sewers) and no
+  numeric bypass precondition. Part I.C carries exactly one milestone, the pretreatment
+  local-limits report, due 2025-03-01 by `[inference]` from "12 months after the permit effective
+  date" — the permit prints no calendar date. That date had passed as of 2026-08-26; whether it
+  was filed is `[open]`.
+  ⚠️ THIS FILE CARRIES A DECLARED COVERAGE GAP. Three of the Fact Sheet's four figures — the
+  station-location street map, the flow schematic with clarifier dimensions and trickling-filter
+  diameters, and the aerial sludge-process diagram — exist ONLY as embedded rasters; pypdf
+  extracts nothing but their captions. They were read by opening the embedded images directly, and
+  the reading is declared as such. Figure 2's headworks flows (Peak 6.6 / Average 1.3 / Minimum
+  0.30 MGD) contradict the Fact Sheet's own prose two pages earlier (4.4 MGD average design flow,
+  10.6 MGD peak hydraulic capacity); both are transcribed as printed and the reconciliation is
+  left `[open]`.
+  Document defects recorded rather than normalized: an unannounced tightening of the pH-minimum
+  daily limit from 6.0 to 6.5 that the Fact Sheet's "Summary of Permit Conditions" does not list
+  among its exceptions — the only tightened limit in the renewal, and it bears on the 2018
+  pH-minimum violation scored against the old limit; two station numbers printed with seven digits
+  instead of eight; and "OAC 3754-33-07(B)(11)" printed twice where the same Fact Sheet prints
+  3745-33-07 correctly elsewhere. The Part II.W.5 pretreatment local-limits values match the Fact
+  Sheet's Inside Mixing Zone Maximum table for every pollutant except mercury, which correctly
+  uses the Human Health value under the document's own BCC/no-mixing-zone rule.

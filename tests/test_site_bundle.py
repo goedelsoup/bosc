@@ -674,6 +674,13 @@ def test_wpafb_committed_bundle_is_fresh(wpafb_bundle: Path) -> None:
     assert committed_records == {
         "wpafb/ssa-53fr15876.epa.yaml",
         "wpafb/cercla-ffa-1991.epa.yaml",
+        # A1: `edoc-2090290` — and it is NOT a third agency record of the same kind. The document
+        # is a one-page 2006 letter from 88 ABW/CEVO asking Ohio EPA to REVOKE NPDES 1IN00274*AD
+        # (a bioslurper groundwater-remediation permit, not a POTW); the corpus holds the REQUEST
+        # and no copy of the permit, and whether the agency acted is `[open]`. It publishes as
+        # `permits-npdes` because its subject is that permit's lifecycle. A federal enclave has no
+        # city sewage-plant permit, which is why nothing else NPDES-shaped lands here.
+        "oepa/wpafb/edoc-2090290.npdes.yaml",
     }, f"committed wpafb records feed drifted, got {sorted(committed_records)}"
 
 
@@ -1055,7 +1062,14 @@ def test_urbana_record_domain_publishes_its_worked_corpus(urbana_bundle: Path) -
         "urbana/incentive-instruments.yaml",
         "urbana/land-assembly.yaml",
         "urbana/litigation-thor-v-urbana.yaml",
+        # A1: the City's issued NPDES permit 1PD00011*PD, as `permits-npdes`. It is a FOURTH
+        # genre on this site, not a re-filing of one above — and it reaches the feed by the
+        # `*/<slug>` agency-nesting prefix (`oepa/urbana`) rather than Urbana's own collection.
+        # Note the instrument EXPIRED 2025-11-30; the extraction records that and makes no claim
+        # about its current legal status, which no captured source here settles.
+        "oepa/urbana/1PD00011.npdes.yaml",
     }, f"urbana records feed drifted, got {sorted(by_rel)}"
+    assert by_rel["oepa/urbana/1PD00011.npdes.yaml"]["group"] == "permits-npdes"
     assert by_rel["urbana/incentive-instruments.yaml"]["group"] == "incentive-package"
     assert by_rel["urbana/land-assembly.yaml"]["group"] == "land-assembly"
 
@@ -1126,17 +1140,26 @@ def test_wpafb_exports_at_reference_tier(wpafb_bundle: Path) -> None:
     assert enclave["toxics"]["scope_disagreement"] is True
     assert enclave["toxics"]["tri_county_fips"] != enclave["toxics"]["site_rsei_fips"]
 
-    # ``record`` is live because the site owns exactly its two real, in-scope agency records —
-    # the SSA designation and the CERCLA FFA — not scaffolding: assert the records feed holds
-    # precisely those two artifacts by their extracted-tree source paths (#1397).
+    # ``record`` is live because the site owns real, in-scope agency records — the SSA
+    # designation and the CERCLA FFA (#1397), plus the 1IN00274 revocation-request letter (A1) —
+    # not scaffolding: assert the records feed holds precisely those artifacts by their
+    # extracted-tree source paths. The two `permits-epa` records are what cleared
+    # ``RECORD_LIVE_THRESHOLD``; the third neither lifted nor could lift anything.
     records = _rows(out, _feeds_by_name(out)["records"])
     assert {r["rel"] for r in records} == {
         "wpafb/ssa-53fr15876.epa.yaml",
         "wpafb/cercla-ffa-1991.epa.yaml",
+        # A1: `edoc-2090290` — and it is NOT a third agency record of the same kind. The document
+        # is a one-page 2006 letter from 88 ABW/CEVO asking Ohio EPA to REVOKE NPDES 1IN00274*AD
+        # (a bioslurper groundwater-remediation permit, not a POTW); the corpus holds the REQUEST
+        # and no copy of the permit, and whether the agency acted is `[open]`. It publishes as
+        # `permits-npdes` because its subject is that permit's lifecycle. A federal enclave has no
+        # city sewage-plant permit, which is why nothing else NPDES-shaped lands here.
+        "oepa/wpafb/edoc-2090290.npdes.yaml",
     }, (
-        f"records feed should hold exactly the two in-scope agency records, got {sorted(r['rel'] for r in records)}"
+        f"records feed should hold exactly the in-scope agency records, got {sorted(r['rel'] for r in records)}"
     )
-    assert len(records) == 2
+    assert len(records) == 3
 
 
 def test_troy_piqua_exports_at_case_tier(site_bundle: Callable[[str], Path]) -> None:

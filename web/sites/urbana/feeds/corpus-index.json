@@ -1,12 +1,45 @@
 [
   {
+    "id": "artifact/city-of-urbana",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Urbana",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/mad-river",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "Mad River",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 1,
+    "lines": 12,
+    "updated": null
+  },
+  {
+    "id": "artifact/npdes-1pd00011",
+    "node_class": "artifact",
+    "kind": "entity",
+    "label": "City of Urbana Water Reclamation Facility",
+    "scope": "site",
+    "links_out": 1,
+    "links_in": 2,
+    "lines": 12,
+    "updated": null
+  },
+  {
     "id": "artifact/site-urbana",
     "node_class": "artifact",
     "kind": "site",
     "label": "Urbana",
     "scope": "site",
     "links_out": 3,
-    "links_in": 10,
+    "links_in": 13,
     "lines": 13,
     "updated": null
   },
@@ -943,6 +976,28 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 23,
+    "updated": null
+  },
+  {
+    "id": "relation/city-of-urbana--operates--npdes-1pd00011",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "CITY OF URBANA operates npdes:1PD00011",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
+    "updated": null
+  },
+  {
+    "id": "relation/npdes-1pd00011--discharges-to--mad-river",
+    "node_class": "relation",
+    "kind": "relation",
+    "label": "npdes:1PD00011 discharges_to MAD RIVER",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 15,
     "updated": null
   }
 ]

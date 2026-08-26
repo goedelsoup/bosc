@@ -1,6 +1,6 @@
 {
   "site": "wpafb",
-  "catalog_version": "ec1bddef465bb0e549a6e0e752da3ab441b20ec51e49851b52800d09c562c0c0",
+  "catalog_version": "973acdfd960a8e375a4cc7be5d31c1eaad976b9283ebc72373d327d9e81a7a89",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -932,6 +932,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:wpafb:oepa-wpafb",
+      "kind": "dataset",
+      "site": "wpafb",
+      "local_id": "oepa-wpafb",
+      "title": "Ohio EPA NPDES Correspondence Extractions (WPAFB — 1IN00274 revocation request)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:wpafb:onboard-bundle",
       "kind": "dataset",
       "site": "wpafb",
@@ -1098,6 +1106,14 @@
       "local_id": "UNITED STATES DEPARTMENT OF THE AIR FORCE WRIGHT PATTERSON AFB",
       "title": "United States Department of the Air Force (Wright-Patterson AFB)",
       "feed": "entities"
+    },
+    {
+      "handle": "record:wpafb:oepa/wpafb/edoc-2090290.npdes.yaml",
+      "kind": "record",
+      "site": "wpafb",
+      "local_id": "oepa/wpafb/edoc-2090290.npdes.yaml",
+      "title": "Wright-Patterson AFB (88 ABW/CEVO) letter requesting Ohio EPA revoke NPDES permit 1IN00274*AD (Bioslurper unit) — not a permit instrument",
+      "feed": "records"
     },
     {
       "handle": "record:wpafb:wpafb/cercla-ffa-1991.epa.yaml",

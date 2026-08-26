@@ -1,1 +1,544 @@
-[]
+[
+  {
+    "rel": "oepa/new-albany/4PC00001.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Johnstown WWTP",
+    "confidence": "high",
+    "warnings": [
+      "⚠️ TREATING THIS AS \"NEW ALBANY'S PLANT\" IS AN [inference], NOT [verified] — AND IT IS PROBABLY WRONG. The permittee, facility name, address and county below are transcribed exactly as the instrument prints them: City of Johnstown, City of Johnstown WWTP, 470 West Jersey Street, Johnstown, Ohio, Licking County. Johnstown is a separate incorporated municipality from New Albany, in the same county (Licking) but not the same place. This file is shelved at data/extracted/oepa/new-albany/ because `new-albany` is the watershed point this corpus tracks (data/sites.yaml, issue #1279) — the shelf records CUSTODY (which site's working set this document was fetched into), not an assertion that the permit belongs to New Albany. Compounding this: New Albany's own SiteProfile (data/sites.yaml, new-albany) records its receiving water as Big Walnut Creek in the Scioto basin, while this permit's own receiving water — see below — is Raccoon Creek, a different stream. [reference] to data/sites.yaml for the New Albany profile fact; nothing in that comparison is asserted about which basin Raccoon Creek itself drains to, which this document does not state and this corpus does not otherwise establish.",
+      "WHETHER THIS PLANT HAS ANY ACTUAL CONNECTION TO NEW ALBANY IS [open]. Two distinct questions are both unresolved by any captured source in this corpus: (1) whether the City of Johnstown's sanitary sewer system carries any flow that originates in New Albany (e.g., through an intermunicipal agreement or shared sewershed at the two cities' shared Licking County border), and (2) whether the New Albany data-center campus tracked elsewhere in this corpus discharges, directly or indirectly, to this plant. This document is silent on both — it names no other municipality, no data center, and no interconnection agreement anywhere in its 66 pages (checked by grepping the full text for \"New Albany\" and \"data center\", zero hits either way). Do not cite this file as evidence for or against either question; it settles neither.",
+      "THE PERMIT NAMES A SINGLE OUTFALL — 4PC00001001 — for the plant's entire term. There is no 002, no bypass outfall, and no CSO. This is a simpler outfall structure than some other permits in this corpus (e.g. Mansfield's 001/002 split); everything below attaches to the one outfall unless stated otherwise.",
+      "AN ANTIDEGRADATION FINDING IS PRINTED ON SHEET 1: \"I have determined that a lowering of water quality in Raccoon Creek is necessary. In accordance with Ohio Administrative Code 3745-1-05, this decision was reached only after examining a series of technical alternatives, reviewing social and economic issues related to the degradation, and considering all public and appropriate intergovernmental comments.\" This sentence is signed by the Director along with the rest of the authorization page; it is not explained further anywhere else in the permit (no fact sheet is committed — see meta.not_in_this_corpus). It reads as the water-quality justification for the facility-expansion effluent limits described in permit.facility_expansion_context and permit.schedule_of_compliance below.",
+      "A CROSS-REFERENCE IN THE EFFLUENT-LIMIT TABLE FOOTNOTES DOES NOT MATCH PART II'S OWN LETTERING. Every effluent-limit table (Initial, Interim, Final — sheets 4, 7 and 10) footnotes \"Toxicity Biomonitoring - See Part II, Item U.\" Part II's own lettered items run A through T and stop there; T is \"Biomonitoring Program Requirements\" (sheet 32). There is no Item U anywhere in this permit. The cross-reference is off by one letter; a reader following it literally would not find a section U. Transcribed as printed — see permit.other_requirements_of_note.lettering_defect.",
+      "\"WWPT\" — the sentence gating Parts IV, V and VI reads \"The stormwater conditions in Parts IV, V, and VI apply to the permittee after construction of the expanded WWPT have been completed\" (sheet 45). This is the document's own typo for WWTP; transcribed as printed. Substantively it matters more than the typo: the industrial-stormwater/SWPPP obligations in Parts IV-VI are NOT YET ACTIVE. They are gated on completion of the facility expansion, whose own schedule (permit.schedule_of_compliance) puts \"End Construction\" no earlier than 30 months after the effective date — on or about 2027-09-01, still in the future as of 2026-08-26. See permit.stormwater_parts_iv_v_vi."
+    ],
+    "fields": {
+      "tag": "[verified]",
+      "facility_name": "City of Johnstown WWTP",
+      "permit_no": "4PC00001*MD",
+      "application_no": "OH0020508",
+      "permit_action": "NOT STATED ON THE FACE OF THE INSTRUMENT. Sheet 1 prints \"Action Date,\" \"Effective Date\" and \"Expiration Date\" but never names what kind of action produced this permit (issuance, renewal, modification). The \"*MD\" suffix is presumably a revision-letter code in Ohio EPA's own permit-numbering convention (this corpus has also seen *ND, *OD, *PD, *UD, *VD suffixes on other permits — see data/documents/oepa/README.md), but no legend for the letters is printed in this document and none is asserted here. [open].",
+      "permittee": "City of Johnstown",
+      "facility_address": "470 West Jersey Street, Johnstown, Ohio, Licking County",
+      "county": "Licking County",
+      "receiving_water": "Raccoon Creek",
+      "receiving_water_source": "Sheet 1 authorization sentence: \"...to discharge from the City of Johnstown WWTP, located at 470 West Jersey Street, Johnstown, Ohio, Licking County, to Raccoon Creek at River Mile 23.8...\" Also named (without the river mile) in Part II Item B's station table (sheet 27), station 4PC00001001: \"Final effluent prior to discharge to Raccoon Creek.\"",
+      "river_mile": 23.8,
+      "action_date": "2025-02-10",
+      "effective_date": "2025-03-01",
+      "expiration_date": "2030-02-28",
+      "signed_by": "Anne M. Vogel, Director",
+      "total_pages_printed": 66,
+      "pdf_page_count": 66,
+      "page_count_check": "The instrument's own \"Total Pages: 66\" (sheet 1) and the committed PDF's actual page count (66, via pypdf) AGREE. No discrepancy — every printed page from sheet 1 through the closing Abbreviations and Acronyms glossary (sheet 66) is present in the file.",
+      "renewal_application_due": "\"In order to receive authorization to discharge beyond the above date of expiration, the permittee shall submit such information and forms as required by the Ohio EPA no later than 180 days prior to the above date of expiration\" (sheet 1) — i.e. on or about 2029-09-01 for the 2030-02-28 expiration. [inference] from the permit's stated rule; no calendar date is printed for it.",
+      "treatment_works_classification": {
+        "citation": "Permit 4PC00001*MD, sheet 26, Part II Item A.1",
+        "tag": "[verified]",
+        "treatment_works": "Class III under OAC 3745-7-04. The permittee shall designate one or more professional operator of record certified at class III or greater.",
+        "collection_systems": "\"All sewerage (collection) systems that are tributary to this treatment works are Class II sewerage systems in accordance with paragraph (B)(1)(b) of rule 3745-7-04.\""
+      },
+      "facility_expansion_context": {
+        "tag": "[inference]",
+        "note": "Not a separately labeled section of the permit — assembled here from three things the document DOES say on its face: (1) the Part I,A design-flow basis note doubles between the Interim and Final effluent-limit tables, \"average design flow of 1.2 MGD\" to \"average design flow of 2.4 MGD\" (see permit.effluent_limits_001); (2) Part I,C's schedule of compliance carries a \"Facility Expansion\" track with its own milestones (Submit First/Second Construction Annual Report, End Construction — see permit.schedule_of_compliance); and (3) the sentence gating Parts IV-VI to \"after construction of the expanded WWPT have been completed\" (see permit.warnings[5]). Read together they describe a plant expansion from a 1.2 MGD to a 2.4 MGD design flow, with new effluent limits phasing in as construction completes on or about 2027-09-01. The permit never states the expansion's cost, contractor, or engineering description — those would be in the uncommitted fact sheet (see meta.not_in_this_corpus)."
+      },
+      "sampling_stations": {
+        "citation": "Permit 4PC00001*MD, sheet 27, Part II Item B",
+        "tag": "[verified]",
+        "coordinate_note": "This permit prints DMS coordinates for ONLY the final-effluent station, 4PC00001001. No coordinates are given anywhere in the document for stations 300, 581, 586, 588, 601, 801 or 901 — unlike some other permits in this corpus (e.g. Mansfield), which print coordinates for the upstream/downstream ambient stations too. The decimal-degree value below is a conversion of the permit's own DMS, shown for use, NOT a second source.",
+        "4PC00001001": {
+          "description": "Final effluent prior to discharge to Raccoon Creek",
+          "latitude_dms": "40 N 08 ' 33 \"",
+          "longitude_dms": "82 W 41 ' 32 \"",
+          "latitude_dd": 40.1425,
+          "longitude_dd": -82.692222
+        },
+        "4PC00001300": {
+          "description": "System-wide sanitary sewer overflows"
+        },
+        "4PC00001581": {
+          "description": "Sludge disposal via land application"
+        },
+        "4PC00001586": {
+          "description": "Sludge disposal via sanitary landfill"
+        },
+        "4PC00001588": {
+          "description": "Sludge disposal via transfer to another NPDES permit holder"
+        },
+        "4PC00001601": {
+          "description": "Influent monitoring"
+        },
+        "4PC00001801": {
+          "description": "Upstream monitoring"
+        },
+        "4PC00001901": {
+          "description": "Downstream monitoring"
+        }
+      },
+      "effluent_limits_001": {
+        "citation": "Permit 4PC00001*MD, sheets 2-4 (Initial), 5-7 (Interim) and 8-10 (Final), Part I,A items 1, 2 and 3",
+        "tag": "[verified]",
+        "outfall": "4PC00001001",
+        "periods": {
+          "initial": {
+            "span_as_printed": "beginning on the effective date of this permit and lasting 6 months",
+            "span_resolved": "2025-03-01 through on or about 2025-08-31 [inference]",
+            "design_flow_basis": "\"Effluent loadings based on average design flow of 1.2 MGD.\""
+          },
+          "interim": {
+            "span_as_printed": "\"beginning 6 months after the effective date of this permit and lasting through 30 months the effective date of this permit\" — printed exactly this way, missing the word \"after\" before \"30 months\"; transcribed as printed, not corrected.",
+            "span_resolved": "2025-09-01 through on or about 2027-08-31 [inference]",
+            "design_flow_basis": "\"Effluent loadings based on average design flow of 1.2 MGD.\" (unchanged from Initial)",
+            "currently_in_effect": "As of 2026-08-26, this is the table presently governing the permit — today falls inside the Interim span."
+          },
+          "final": {
+            "span_as_printed": "'beginning 31 months after the effective date of this permit and lasting until the expiration date of this permit'",
+            "span_resolved": "2027-10-01 through 2030-02-28 [inference]",
+            "design_flow_basis": "\"Effluent loadings based on average design flow of 2.4 MGD.\" — double the Initial/Interim basis."
+          }
+        },
+        "unchanged_across_all_three_tables": {
+          "note": "These parameters and limits are IDENTICAL in the Initial, Interim and Final tables.",
+          "dissolved_oxygen": {
+            "units": "mg/l",
+            "minimum": 6.0,
+            "monitoring": "1/Day Multiple Grab"
+          },
+          "oil_and_grease": {
+            "units": "mg/l",
+            "maximum": 10,
+            "monitoring": "1 / 2 Weeks Grab"
+          },
+          "ph": {
+            "units": "S.U.",
+            "maximum": 9.0,
+            "minimum": 6.5,
+            "monitoring": "1/Day Multiple Grab"
+          },
+          "e_coli": {
+            "units": "#/100 ml",
+            "weekly": 284,
+            "monthly": 126,
+            "monitoring": "3/Week Grab",
+            "months": "Summer"
+          },
+          "water_temperature": {
+            "limit": null,
+            "monitoring": "1/Day Maximum Indicating Thermometer"
+          },
+          "monitor_only_no_limit_change": "Total Kjeldahl nitrogen, nitrite plus nitrate, dissolved orthophosphate, total filterable residue — all carry a monitoring frequency and NO numeric limit in any of the three tables."
+        },
+        "design_flow_scaled_at_final": {
+          "note": "Concentration limits are UNCHANGED between Interim and Final; the mass LOADING doubles because the design-flow basis doubles (1.2 to 2.4 MGD). Transcribed once per parameter with both load figures shown.",
+          "total_suspended_solids": {
+            "units": "mg/l",
+            "weekly": 18,
+            "monthly": 12,
+            "load_weekly_kg_interim": 81.8,
+            "load_monthly_kg_interim": 54.5,
+            "load_weekly_kg_final": 163,
+            "load_monthly_kg_final": 109
+          },
+          "cbod_5_day": {
+            "units": "mg/l",
+            "weekly": 15,
+            "monthly": 10,
+            "load_weekly_kg_interim": 68.1,
+            "load_monthly_kg_interim": 45.4,
+            "load_weekly_kg_final": 136,
+            "load_monthly_kg_final": 90.8
+          }
+        },
+        "ammonia_nh3": {
+          "note": "Concentration limits LOOSEN slightly at Final relative to Initial/Interim even though the load roughly doubles — both effects of the doubled design-flow basis. Identical between Initial and Interim.",
+          "summer": {
+            "units": "mg/l",
+            "weekly_initial_interim": 1.4,
+            "monthly_initial_interim": 0.94,
+            "weekly_final": 1.5,
+            "monthly_final": 1.0,
+            "load_weekly_kg_initial_interim": 6.36,
+            "load_monthly_kg_initial_interim": 4.27,
+            "load_weekly_kg_final": 13.6,
+            "load_monthly_kg_final": 9.1,
+            "monitoring": "3/Week 24hr Composite"
+          },
+          "winter": {
+            "units": "mg/l",
+            "weekly_initial_interim": 3.9,
+            "monthly_initial_interim": 2.6,
+            "weekly_final": 4.5,
+            "monthly_final": 3.0,
+            "load_weekly_kg_initial_interim": 17.8,
+            "load_monthly_kg_initial_interim": 11.9,
+            "load_weekly_kg_final": 40.9,
+            "load_monthly_kg_final": 27.2,
+            "monitoring": "3/Week 24hr Composite"
+          }
+        },
+        "total_phosphorus": {
+          "tag": "[verified]",
+          "note": "NEW LIMIT AT INTERIM, TIGHTENED AT FINAL — the one parameter whose concentration limit changes at every phase. Monitor-only in the Initial table (Schedule item 1's \"interim effluent limits for total phosphorus\" have not yet attached); a monthly limit appears starting with the Interim table; the Final table's monthly limit is numerically TIGHTER even though the load figure is higher (because the design-flow basis doubled).",
+          "initial": {
+            "limit": null,
+            "monitoring": "1/Week 24hr Composite",
+            "months": "All"
+          },
+          "interim": {
+            "units": "mg/l",
+            "monthly": 1.0,
+            "load_monthly_kg": 4.5,
+            "monitoring": "1/Week 24hr Composite"
+          },
+          "final": {
+            "units": "mg/l",
+            "monthly": 0.7,
+            "load_monthly_kg": 6.4,
+            "monitoring": "1/Week 24hr Composite"
+          }
+        },
+        "new_at_final_only": {
+          "note": "Monitor-only (no numeric limit) in BOTH the Initial and Interim tables; a numeric limit appears for the first time in the Final table, alongside the doubled design-flow basis.",
+          "nitrogen_inorganic_total": {
+            "note": "\"Total inorganic nitrogen shall be calculated as the sum of the concentration results for Nitrite Plus Nitrate and Ammonia\" — a calculated parameter, not independently sampled.",
+            "initial_interim": {
+              "limit": null,
+              "monitoring": "1/Month Calculated",
+              "months": "All"
+            },
+            "final": {
+              "units": "mg/l",
+              "monthly": 10,
+              "load_monthly_kg": 90.8,
+              "monitoring": "1/Month Calculated",
+              "months": "All"
+            }
+          },
+          "mercury_total_low_level": {
+            "initial_interim": {
+              "limit": null,
+              "monitoring": "1/Month Grab",
+              "months": "All"
+            },
+            "final": {
+              "units": "ng/l",
+              "maximum": 1700,
+              "monthly": 12,
+              "load_daily_kg": 0.015,
+              "load_monthly_kg": 0.00011,
+              "monitoring": "1/Month Grab",
+              "months": "All"
+            }
+          },
+          "acute_toxicity_ceriodaphnia_dubia": {
+            "units": "TUa",
+            "initial_interim": {
+              "limit": null,
+              "monitoring": "2/Year 24hr Composite",
+              "months": "June and Aug"
+            },
+            "final": {
+              "maximum": 1.0,
+              "monitoring": "2/Year 24hr Composite",
+              "months": "June and Aug"
+            }
+          },
+          "chronic_toxicity_ceriodaphnia_dubia": {
+            "units": "TUc",
+            "initial_interim": {
+              "limit": null,
+              "monitoring": "2/Year 24hr Composite",
+              "months": "June and Aug"
+            },
+            "final": {
+              "monthly": 1.1,
+              "monitoring": "2/Year 24hr Composite",
+              "months": "June and Aug"
+            }
+          }
+        },
+        "pimephales_never_limited": {
+          "tag": "[verified]",
+          "note": "Acute (61427, TUa) and chronic (61428, TUc) toxicity on Pimephales promelas (fathead minnow) stay MONITOR ONLY — 1/Year 24hr Composite, August — in ALL THREE tables, Initial, Interim and Final alike. Only Ceriodaphnia dubia (water flea) gains a numeric WET limit at Final. Whatever drove the numeric WET limit onto this plant's fathead minnow test never happens in this permit term; only the water flea does."
+        },
+        "metals_and_cyanide_monitor_only_frequency_intensifies_at_final": {
+          "note": "Nickel, zinc, cadmium, lead, chromium (total recoverable), copper and free cyanide (low-level) stay monitor-only — NO numeric limit is ever added, in any of the three tables — but their monitoring FREQUENCY intensifies from 1/Quarter (Quarterly months) in Initial and Interim to 1/Month (All months) in Final. Chromium, dissolved hexavalent (01220), is the one metal already monitored 1/Month/Grab/All in every table — it does not change.",
+          "parameters": "01074 Nickel, 01094 Zinc, 01113 Cadmium, 01114 Lead, 01118 Chromium (total recoverable), 01119 Copper — all ug/l, 24hr Composite; 51173 Cyanide, Free (Low-Level), ug/l, Grab."
+        },
+        "schedule_cross_reference_note_narrows_by_phase": {
+          "tag": "[verified]",
+          "note": "Each table's own footnotes cite which Part I,C schedule items apply to it, and the citation narrows as the permit term advances. Initial table (sheet 4): \"New Effluent Limits Schedule of Compliance - see Part I,C, Items 1, 2, and 3.\" Interim table (sheet 7): \"...see Part I,C, Items 1 and 2.\" — Item 3 (facility expansion) dropped even though its own limits do not attach until Final, and even though Item 1's citation is KEPT despite the Interim table already carrying phosphorus's interim numeric limit. Final table (sheet 10): the schedule-of-compliance footnote is DROPPED ENTIRELY — none of Items 1, 2 or 3 is cited, consistent with every phased limit already being in force by then. Transcribed as printed; the Initial-table citation of Item 3 before that item's limits are relevant to ANY of the three tables looks like an editorial carryover, but this file does not resolve it."
+        }
+      },
+      "monitoring_stations": {
+        "citation": "Permit 4PC00001*MD, sheets 11-24, Part I,B",
+        "tag": "[verified]",
+        "sso_300": {
+          "parameter": "Overflow Occurrence (74062), No./Month, 1/Month Total",
+          "note": "As printed, the 1/Month figure is a REPORTING frequency, not a monitoring one — \"these overflows shall be monitored on each day when they discharge.\" Only SSOs reaching waters of the state (directly or through a storm sewer) are reported at this station. \"All sanitary sewer overflows are prohibited.\" (note c).",
+          "annual_report": "An annual SSO report covering ALL overflows in the collection system (including those never reaching waters of the state) is due March 31 for the prior calendar year, with locations numbered consecutively from 301, volumes in millions of gallons, and a narrative analysis of water-in-basement (WIB) patterns by sewershed."
+        },
+        "sludge_581": {
+          "note": "Two tables — Interim (sheets 12-14, effective through 30 months, 1/Year Composite, December) and Final (sheets 15-17, from 31 months, 1/Quarter Composite, Quarterly - Alt.). The metal ceilings and fecal coliform limit are IDENTICAL between the two tables — only the sampling FREQUENCY changes.",
+          "ceilings_mg_per_kg": {
+            "arsenic": 75,
+            "cadmium": 85,
+            "copper": 4300,
+            "lead": 840,
+            "nickel": 420,
+            "zinc": 7500,
+            "selenium": 100,
+            "mercury": 57,
+            "molybdenum": 75
+          },
+          "fecal_coliform_max": {
+            "units": "MPN/G",
+            "maximum": 2000000
+          },
+          "also_monitored": "ammonia, total Kjeldahl nitrogen, nitrite plus nitrate, total phosphorus, potassium (nutrient suite, no limits)"
+        },
+        "sludge_586": {
+          "parameter": "Sludge Fee Weight (51129)",
+          "units": "dry tons",
+          "frequency": "1/Year Total",
+          "month": "December",
+          "applies_to": "disposal in a solid waste landfill"
+        },
+        "sludge_588": {
+          "parameter": "Sludge Weight (70316)",
+          "units": "Dry Tons",
+          "frequency": "1/Year Total",
+          "month": "December",
+          "applies_to": "transfer to another NPDES permit holder"
+        },
+        "influent_601": {
+          "description": "Influent monitoring — all monitor-only, no limits",
+          "parameters": "total suspended solids, mercury (low-level), pH maximum/minimum, CBOD 5-day",
+          "note": "\"Sampling for the respective/common parameters shall occur on the same day as Outfall 4PC00001001,\" and \"samples of influent used for determination of net values or percent removal must be taken the same day as those samples of effluent used for that determination.\""
+        },
+        "upstream_801": {
+          "description": "Receiving stream ABOVE the discharge — all monitor-only, \"% Affected\" for toxicity, no limits",
+          "chemistry": "water temperature, dissolved oxygen, pH, ammonia, total Kjeldahl nitrogen, nitrite plus nitrate, total phosphorus — 1/Month Grab, all months",
+          "bacteria": "E. coli, 1 / 2 Weeks Grab, June - Aug",
+          "ambient_toxicity": "48-hr acute (61432) and 7-day chronic (61438) Ceriodaphnia dubia, 2/Year Grab, June and Aug; 96-hr acute (61435) and 7-day chronic (61441) Pimephales promelas, 1/Year Grab, August.",
+          "significance": "The upstream station runs the SAME toxicity battery (both species, acute and chronic) as the effluent tables, which is what makes a future toxicity reduction question answerable against ambient conditions — even though only Ceriodaphnia gains a numeric limit at the outfall (see pimephales_never_limited above)."
+        },
+        "downstream_farfield_901": {
+          "description": "Receiving stream BELOW the discharge — all monitor-only, no limits",
+          "parameters": "Water temperature, dissolved oxygen, pH, ammonia, total Kjeldahl nitrogen, nitrite plus nitrate, total phosphorus, total hardness (as CaCO3) — 1/Month Grab, all months; E. coli, 1 / 2 Weeks Grab, June - Aug.",
+          "note": "Sampling for the respective/common parameters shall occur on the same day as Outfall 4PC00001001.",
+          "significance": "801 + 901 together are a committed monthly upstream/downstream nutrient record on Raccoon Creek, arriving through DMRs for the life of the permit (to 2030-02-28)."
+        }
+      },
+      "schedule_of_compliance": {
+        "citation": "Permit 4PC00001*MD, sheets 24-25, Part I,C",
+        "tag": "[verified]",
+        "dates_are_offsets_not_calendar_dates": "Unlike some other permits in this corpus, EVERY due date here is printed as an offset from the permit's own effective date (\"6 months after the permit effective date,\" etc.) — no calendar date is printed anywhere in Part I,C. All calendar dates below are resolved against the 2025-03-01 effective date and are [inference], not read directly off the page.",
+        "event_code_forms": {
+          "tag": "[verified]",
+          "note": "The milestone table prints event codes UNPADDED; the narrative items print the SAME codes zero-padded to five digits where the leading digit would otherwise be dropped (a 4-digit-looking code like \"5699\" becomes \"05699\"; already-5-digit codes like \"90199\" print identically in both places). More notably, ONE code — 5699 / 05699 — is reused for TWO DIFFERENT milestones due at two different times (Total Phosphorus Final Compliance at 6 months, and Mercury & WET Final Compliance at 30 months). Transcribed as printed in both places, not deduplicated or corrected.",
+          "table_vs_narrative": {
+            "total_phosphorus_final_compliance": {
+              "table": "5699",
+              "narrative": "05699",
+              "agree": false
+            },
+            "mercury_wet_first_annual_report": {
+              "table": "90199",
+              "narrative": "90199",
+              "agree": true
+            },
+            "facility_expansion_first_construction_annual": {
+              "table": "3599",
+              "narrative": "03599",
+              "agree": false
+            },
+            "mercury_wet_second_annual_report": {
+              "table": "90299",
+              "narrative": "90299",
+              "agree": true
+            },
+            "facility_expansion_second_construction_annual": {
+              "table": "3699",
+              "narrative": "03699",
+              "agree": false
+            },
+            "mercury_wet_final_compliance": {
+              "table": "5699",
+              "narrative": "05699",
+              "agree": false
+            },
+            "facility_expansion_end_construction": {
+              "table": "4599",
+              "narrative": "04599",
+              "agree": false
+            }
+          },
+          "shared_code_note": "total_phosphorus_final_compliance and mercury_wet_final_compliance print the IDENTICAL code (5699 in the table, 05699 in the narrative) despite being different requirements due 24 months apart. No other event code in this schedule repeats."
+        },
+        "milestone_summary_report": {
+          "note": "Transcribed verbatim from the permit's own table, including its unpadded event codes.",
+          "milestones": [
+            {
+              "section": "Total Phosphorus",
+              "report_event": "Final Compliance with Effluent Limits",
+              "event_code": "5699",
+              "due_offset": "6 months after the permit effective date",
+              "due_resolved": "2025-09-01"
+            },
+            {
+              "section": "Mercury & WET",
+              "report_event": "Submit First Limits Annual Report",
+              "event_code": "90199",
+              "due_offset": "12 months after the permit effective date",
+              "due_resolved": "2026-03-01"
+            },
+            {
+              "section": "Facility Expansion",
+              "report_event": "Submit First Construction Annual Report",
+              "event_code": "3599",
+              "due_offset": "12 months after the permit effective date",
+              "due_resolved": "2026-03-01"
+            },
+            {
+              "section": "Mercury & WET",
+              "report_event": "Submit Second Limits Annual Report",
+              "event_code": "90299",
+              "due_offset": "24 months after the permit effective date",
+              "due_resolved": "2027-03-01"
+            },
+            {
+              "section": "Facility Expansion",
+              "report_event": "Submit Second Construction Annual Report",
+              "event_code": "3699",
+              "due_offset": "24 months after the permit effective date",
+              "due_resolved": "2027-03-01"
+            },
+            {
+              "section": "Mercury & WET",
+              "report_event": "Final Compliance with Effluent Limits",
+              "event_code": "5699",
+              "due_offset": "30 months after the permit effective date",
+              "due_resolved": "2027-09-01"
+            },
+            {
+              "section": "Facility Expansion",
+              "report_event": "End Construction",
+              "event_code": "4599",
+              "due_offset": "30 months after the permit effective date",
+              "due_resolved": "2027-09-01"
+            }
+          ]
+        },
+        "item_1_total_phosphorus": {
+          "part": "I,C.1",
+          "due": "2025-09-01",
+          "event_code": "05699",
+          "submit_to": "Ohio EPA Central District Office",
+          "requirement": "\"No later than 6 months after the permit effective date, the permittee shall attain compliance with the interim effluent limits for total phosphorus. The permittee shall notify Ohio EPA Central District Office within 14 days of attaining compliance.\""
+        },
+        "item_2_mercury_and_wet": {
+          "part": "I,C.2",
+          "preamble": "\"The permittee shall attain compliance with the new final effluent limits for mercury and whole effluent toxicity (WET) as soon as possible but not later than the dates in the following schedule.\"",
+          "submit_to": "Ohio EPA Central District Office (all three steps)",
+          "steps": [
+            {
+              "step": "a",
+              "due": "2026-03-01",
+              "event_code": "90199",
+              "requirement": "Submit a report on progress toward attaining compliance with the final mercury and WET limits, including influent and effluent data from the previous twelve months and a summary of activities completed to identify and mitigate sources of mercury and address WET."
+            },
+            {
+              "step": "b",
+              "due": "2027-03-01",
+              "event_code": "90299",
+              "requirement": "Same reporting requirement as step a, for the following twelve-month period."
+            },
+            {
+              "step": "c",
+              "due": "2027-09-01",
+              "event_code": "05699",
+              "requirement": "Attain compliance with the final effluent limits for mercury and WET; notify Ohio EPA Central District Office within 14 days of attaining compliance."
+            }
+          ]
+        },
+        "item_3_facility_expansion": {
+          "part": "I,C.3",
+          "preamble": "\"The permittee shall attain compliance with the new final effluent limits associated with the expanded facility capacity, including ammonia (summer and winter), total suspended solids, 5-day carbonaceous biochemical oxygen demand (CBOD5), total phosphorus, and total inorganic nitrogen, as soon as possible but not later than the dates in the following schedule.\"",
+          "submit_to": "Ohio EPA Central District Office (all three steps)",
+          "steps": [
+            {
+              "step": "a",
+              "due": "2026-03-01",
+              "event_code": "03599",
+              "requirement": "Submit a progress report on construction of the facility expansion."
+            },
+            {
+              "step": "b",
+              "due": "2027-03-01",
+              "event_code": "03699",
+              "requirement": "Submit a progress report on construction of the facility expansion."
+            },
+            {
+              "step": "c",
+              "due": "2027-09-01",
+              "event_code": "04599",
+              "requirement": "Complete construction of the facility expansion and attain compliance with the associated final effluent limits; notify Ohio EPA Central District Office within 14 days of attaining compliance."
+            }
+          ]
+        },
+        "status_of_these_milestones": {
+          "tag": "[open]",
+          "as_of": "2026-08-26",
+          "lapsed": "Three of the seven milestone dates are in the past: the Total Phosphorus final compliance (2025-09-01), and BOTH first-annual-report items due 2026-03-01 (Mercury & WET's, and Facility Expansion's).",
+          "not_yet_due": "The remaining four — both second-annual-report items (2027-03-01) and both 30-month final items, Mercury & WET final compliance and Facility Expansion end construction (2027-09-01) — are still in the future as of 2026-08-26.",
+          "what_is_not_established": "WHETHER ANY OF THE THREE LAPSED MILESTONES WAS FILED. Nothing in this corpus establishes that — no submittal, no acknowledgment, no violation notice, and no ECHO/ICIS extract for this facility is committed. \"Past due\" here means the date has passed, NOT that the City of Johnstown missed it.",
+          "how_to_close_it": "A public-records request to Ohio EPA Central District Office for the 05699 (total phosphorus) and the two 2026-03-01 progress-report submittals under permit 4PC00001 would settle whether the interim phosphorus limit was met and how construction on the facility expansion was progressing at the one-year mark."
+        }
+      },
+      "other_requirements_of_note": {
+        "citation": "Permit 4PC00001*MD, Part II, sheets 26-33",
+        "tag": "[verified]",
+        "lettering_defect": {
+          "note": "See permit.warnings[4]. Part II's own items run A through T; T is Biomonitoring Program Requirements (sheet 32). Every effluent-limit-table footnote pointing readers to the biomonitoring section calls it \"Item U\" — a letter that does not exist in this document's Part II. All other cross-references checked (Free Cyanide -> O, Mercury -> P, Orthophosphate -> Q, sludge sections -> K/L/M/N) match Part II's actual lettering."
+        },
+        "biomonitoring_program": {
+          "item": "T. Biomonitoring Program Requirements (sheet 32)",
+          "text": "\"The permittee shall continue to implement an effluent biomonitoring program to determine the toxicity of the effluent from outfall 4PC0001001.\" (as printed — the item text drops a leading zero from the outfall number, printing \"4PC0001001\" instead of \"4PC00001001\"; transcribed as printed.)",
+          "testing": "Chronic and definitive acute toxicity tests for the duration of the permit, on both Ceriodaphnia dubia and Pimephales promelas, per Ohio EPA's \"Reporting and Testing Guidance for Biomonitoring,\" July 1998 or current revision. The SOP (or verification of its submittal) was due no later than three months after the effective date — on or about 2025-06-01 [inference].",
+          "significance": "\"Continue to implement\" implies the biomonitoring program predates this permit action. What drove Ohio EPA to write a numeric Ceriodaphnia WET limit into the Final table (see permit.effluent_limits_001.new_at_final_only) was presumably measured under whatever instrument preceded this one — which this corpus does not hold (see meta.not_in_this_corpus.prior_revision)."
+        },
+        "other_items_present": {
+          "note": "Transcribed as an index of what Part II contains, so a later reader knows what is in the instrument without re-walking it. Not summarized in detail here beyond what is already broken out above.",
+          "items": "A. Operator Certification Requirements (Class III treatment works / Class II collection system — see treatment_works_classification) · B. Sampling Station Locations · C. Sanitary Sewer Overflow (SSO) Reporting Requirements · D-J. General operation, monitoring-method and reporting provisions (good working order, weekday/weekend monitoring exemption, composite/grab/multiple-grab sample definitions, 85% removal requirement, WQBEL revision clause) · K-N. Sewage sludge disposal, storage and reporting (ORC 6111 / OAC 3745-40, composite-sample rule, March 1 annual report, daily percent-solids calculation) · O. Monitoring for Free Cyanide (low-level) · P. Monitoring for Mercury (low-level) · Q. Monitoring for Dissolved Orthophosphate (as P) · R. Outfall Signage · S. NPDES Application Supplemental Data Requirements (40 CFR 122.21(j) Appendix J, 101-parameter renewal-application testing list) · T. Biomonitoring Program Requirements. There is no pretreatment item and no bypass-numeric-threshold item comparable to some other permits in this corpus — Part III Item 11 covers bypass in generic (non-facility-specific) terms only."
+        }
+      },
+      "general_conditions_part_iii": {
+        "citation": "Permit 4PC00001*MD, sheets 33-44, Part III",
+        "tag": "[verified]",
+        "note": "32 numbered general conditions (Definitions, General Effluent Limitation, Facility Operation and Quality Control, Reporting, Sampling and Analytical Method, Recording of Results, Records Retention, Availability of Reports, Duty to Provide Information, Right of Entry, Unauthorized Discharges/bypass, Noncompliance Notification, Duty to Mitigate, Authorized Discharges, Discharge Changes, Toxic Pollutants, Permit Modification or Revocation, Transfer of Ownership, Oil and Hazardous Substance Liability, Solids Disposal, Construction Affecting Navigable Waters, Civil and Criminal Liability, State Laws, Property Rights, Upset, Severability, Signatory Requirements, Other Information, Need to Halt or Reduce Activity, Applicable Federal Rules, Availability of Public Sewers) — standard-form language, not facility-specific."
+      },
+      "stormwater_parts_iv_v_vi": {
+        "citation": "Permit 4PC00001*MD, sheets 45-66, Parts IV, V and VI",
+        "tag": "[verified]",
+        "gating_clause": "\"The stormwater conditions in Parts IV, V, and VI apply to the permittee after construction of the expanded WWPT have been completed.\" (sheet 45; see permit.warnings[5] on the WWPT/WWTP typo). As of 2026-08-26 this has NOT yet been triggered — the schedule's own \"End Construction\" milestone is not due before 2027-09-01.",
+        "part_iv": "Stormwater Control Measures and Pollution Prevention Programs — control-measure selection and design, a standard BMP list (minimize exposure, good housekeeping, maintenance, spill prevention, erosion/sediment controls, runoff management, salt storage, employee training, authorized non-stormwater discharges), corrective-action triggers and deadlines, routine facility inspections and quarterly visual assessments (with stated exceptions for inactive/unstaffed sites and Ohio EPA's E3 program), SWPPP contents and deadlines (plan due six months after facility-expansion completion; implementation due twelve months after), and Item K sector-specific BMPs for a POTW (grit/screenings/sludge handling areas, employee training topics, drainage-area site map, additional inspection areas).",
+        "part_v": "Monitoring and Reporting Requirements — short. Item A.1 \"Reporting Benchmark Monitoring Data to Ohio EPA\" is printed \"Reserved.\" Item A.2 requires an annual report on Ohio EPA's form, not required to be submitted unless requested, kept with the SWPPP. Item B \"Stormwater Monitoring Requirements\" is also printed \"Reserved.\"",
+        "part_vi": "Definitions and Acronyms (a standard industrial-stormwater glossary — Action Area, BMPs, Illicit Discharge, Impaired Water, No Exposure, Operator, Reportable Quantity Release, Runoff Coefficient, Run-On, Surface Waters of the State, etc.), followed by a closing Abbreviations and Acronyms list (BAT, BOD5, BMP, BPJ, BPT, CERCLA, CGP, COD, CWA, CWT, DMR, U.S. EPA, FWS, LA, MDMR, MGD, MOS, MS4, MSDS, MSGP, NAICS, NMFS, NOI, NOT, NPDES, NRC, NTU, OMB, ORW, OSM, POTW, RCRA, RQ, SARA, SIC, SMCRA, SPCC, SWPPP, TMDL, TSDF, TSS, USGS, WLA, WQS) that closes the document on sheet 66."
+      }
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/new-albany/4PC00001.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/new-albany/4PC00001.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  }
+]

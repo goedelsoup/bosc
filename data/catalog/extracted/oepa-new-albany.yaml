@@ -1,0 +1,57 @@
+id: oepa-new-albany
+title: Ohio EPA NPDES Permit Extractions (Johnstown WWTP — shelved under new-albany)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA — issued NPDES permit 4PC00001*MD (application OH0020508) for the City of
+    Johnstown wastewater treatment plant, 470 West Jersey Street, Licking County; retrieved from
+    the Ohio EPA DAM permit slot
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:new-albany
+storage:
+- relpath: extracted/oepa/new-albany/4PC00001.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- npdes
+- permits
+- wastewater
+- antidegradation
+- new-albany
+- johnstown
+- licking-county
+- raccoon-creek
+notes: >-
+  ⚠️ READ THE SHELF AS CUSTODY, NOT ATTRIBUTION. This instrument is shelved under the
+  `new-albany` site slug because that is the watershed point the network tracks, but the permittee
+  on its face is the **City of Johnstown, Licking County** — a different municipality. Treating
+  this as "New Albany's plant" is an `[inference]`, NOT `[verified]`, and the extraction says so
+  in its header and twice in `permit.warnings`. A full-text search of all 66 pages returns ZERO
+  hits for "New Albany" and zero for "data center". Whether Johnstown's system carries any New
+  Albany flow, and whether the New Albany campus discharges here, are both `[open]` — no captured
+  source in this corpus establishes either. Note also that New Albany's own SiteProfile names a
+  different receiving water entirely (Big Walnut Creek, Scioto basin) than this permit's Raccoon
+  Creek; that is recorded as `[reference]` context and asserts nothing about this instrument.
+  Permit 4PC00001*MD, action 2025-02-10, effective 2025-03-01, expiring 2030-02-28, signed Anne M.
+  Vogel, discharging to Raccoon Creek at RM 23.8. Hand-read from the digitally generated text
+  layer; no render receipt. 66 printed sheets == 66 PDF pages, exact agreement.
+  Sheet 1 carries an ANTIDEGRADATION FINDING under OAC 3745-1-05 — a lowering of water quality in
+  Raccoon Creek found necessary — with no bound fact sheet to explain it. The limit structure is
+  three-phase (Initial / Interim / Final) on the single outfall 001, ~24 parameters, and the
+  facility appears to be expanding from 1.2 to 2.4 MGD design flow — that expansion is
+  `[inference]` from three separate document facts (the design-flow-basis note change, the
+  Facility Expansion schedule track, and the Parts IV-VI gating clause) and is deliberately not
+  asserted as a labelled section.
+  Document defects recorded rather than normalized: every effluent-table footnote cites "Toxicity
+  Biomonitoring — See Part II, Item U" but Part II's lettering runs only A-T and there is no Item
+  U anywhere; event code 5699/05699 is reused for two milestones due 24 months apart; the interim
+  span sentence drops a word ("lasting through 30 months the effective date"); and the Parts IV-VI
+  gating sentence prints "WWPT" for "WWTP". As of 2026-08-26 the permit is inside its Interim
+  phase and 3 of 7 milestones have lapsed — recorded as dates having passed, not as missed
+  filings.

@@ -270,16 +270,24 @@ def test_star_slug_exclusions_are_real_attribution_not_name_collision() -> None:
 
 def test_unscoped_sibling_loads_its_own_corpus_not_lima() -> None:
     """The read side honors the #780 scope: Urbana's corpus is bounded to its own extracted tree +
-    its Highland55 land-assembly document prefixes (#1328), NOT Lima's whole tree. Urbana has no
-    *extracted* deeds/permits/OPC-summaries (its Highland55 corpus is raw source documents), so the
-    scoped read stays free of Lima's Allen-County extractions.
-    Before #780 its ``None`` scope meant the whole tree, silently inheriting Allen County."""
+    its Highland55 land-assembly document prefixes (#1328), NOT Lima's whole tree.
+    Before #780 its ``None`` scope meant the whole tree, silently inheriting Allen County.
+
+    ⚠️ THE PERMIT ASSERTION IS NOT ``not urbana.permits``, AND THAT IS THE POINT. It was, while
+    Urbana held no extracted permit of its own — but "inherits nothing from Lima" and "holds
+    nothing" are different claims, and only the first is what #780 is about. A1 gave Urbana its own
+    NPDES read (``oepa/urbana/1PD00011.npdes.yaml``, reached by the ``*/<slug>`` agency-nesting
+    prefix), so the emptiness proxy would now fail for exactly the wrong reason. Assert the real
+    invariant instead: every permit Urbana loads is Urbana's."""
     from watermark.pipeline.corpus import load_corpus
 
     urbana = load_corpus(Settings(site="urbana", data_dir=REPO_ROOT / "data"))
     assert not urbana.deeds, "Urbana must not inherit Lima's recorder deeds"
-    assert not urbana.permits, "Urbana must not inherit Lima's NPDES permits"
     assert not urbana.summaries, "Urbana must not inherit Lima's OPC estimates"
+    assert {rel for rel, _ in urbana.permits} == {"oepa/urbana/1PD00011.npdes.yaml"}, (
+        "Urbana must load its OWN NPDES permit and none of Lima's, got "
+        f"{sorted(rel for rel, _ in urbana.permits)}"
+    )
 
     # Contrast: Lima (the reference build) still loads its full corpus.
     lima = load_corpus(Settings(site="lima", data_dir=REPO_ROOT / "data"))

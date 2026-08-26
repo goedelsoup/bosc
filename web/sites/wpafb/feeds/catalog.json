@@ -416,6 +416,52 @@
     }
   },
   {
+    "id": "oepa-wpafb",
+    "title": "Ohio EPA NPDES Correspondence Extractions (WPAFB — 1IN00274 revocation request)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), docid 2090290 — a one-page letter from 88 ABW/CEVO, Wright-Patterson AFB, to the Ohio EPA Southwest District Office, Division of Surface Water",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:wpafb",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "correspondence",
+      "federal-installation",
+      "bioslurper",
+      "wpafb",
+      "greene-county",
+      "mad-river"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/wpafb/edoc-2090290.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), docid 2090290 — a one-page letter from 88 ABW/CEVO, Wright-Patterson AFB, to the Ohio EPA Southwest District Office, Division of Surface Water",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "wpafb",
     "title": "WPAFB (Greene + Montgomery Co., OH) Groundwater Primary Records & Onboarding Findings",
     "scope": "extracted",

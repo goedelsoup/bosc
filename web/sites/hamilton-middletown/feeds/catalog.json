@@ -418,6 +418,56 @@
     }
   },
   {
+    "id": "oepa-hamilton-middletown",
+    "title": "Ohio EPA NPDES Permit Extractions (Hamilton and Middletown WWTPs)",
+    "scope": "extracted",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA — issued NPDES permits 1PE00002*OD (application OH0025445, City of Hamilton) and 1PE00003*RD (application OH0026522, City of Middletown), Butler County; retrieved from the Ohio EPA DAM permit slots",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:hamilton-middletown",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "npdes",
+      "permits",
+      "wastewater",
+      "hamilton-middletown",
+      "butler-county",
+      "great-miami"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/oepa/hamilton-middletown/1PE00002.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/hamilton-middletown/1PE00003.npdes.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": null,
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio EPA — issued NPDES permits 1PE00002*OD (application OH0025445, City of Hamilton) and 1PE00003*RD (application OH0026522, City of Middletown), Butler County; retrieved from the Ohio EPA DAM permit slots",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "id": "abatement-parameters",
     "title": "Butler County, OH Abatement Parameters + What-If Scenario Knobs",
     "scope": "reference",

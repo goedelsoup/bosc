@@ -1,6 +1,6 @@
 {
   "site": "coshocton",
-  "catalog_version": "5a1c12e11e54f7d11e0742ca4487c3e988c2d7ca2a7b6d67ef40a7afd6cc1818",
+  "catalog_version": "a1ab0a52b25eb8abfff8ac4f51fe89bda22f11fe8259ba5ac9a41ae708813a92",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -908,6 +908,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:coshocton:oepa-coshocton",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "oepa-coshocton",
+      "title": "Ohio EPA NPDES Permit Extractions (Coshocton WWTP)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:coshocton:oepa-ohd000001-coverage",
       "kind": "dataset",
       "site": "coshocton",
@@ -1036,6 +1044,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:coshocton:CITY OF COSHOCTON",
+      "kind": "entity",
+      "site": "coshocton",
+      "local_id": "CITY OF COSHOCTON",
+      "title": "City of Coshocton",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:coshocton:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "coshocton",
@@ -1050,6 +1066,30 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:coshocton:MUSKINGUM RIVER",
+      "kind": "entity",
+      "site": "coshocton",
+      "local_id": "MUSKINGUM RIVER",
+      "title": "Muskingum River",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:coshocton:npdes:0PD00004",
+      "kind": "entity",
+      "site": "coshocton",
+      "local_id": "npdes:0PD00004",
+      "title": "Coshocton Wastewater Treatment Plant",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:coshocton:oepa/coshocton/0PD00004.npdes.yaml",
+      "kind": "record",
+      "site": "coshocton",
+      "local_id": "oepa/coshocton/0PD00004.npdes.yaml",
+      "title": "Coshocton Wastewater Treatment Plant",
+      "feed": "records"
     }
   ]
 }
