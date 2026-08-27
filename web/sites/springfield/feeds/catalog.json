@@ -394,7 +394,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "3b87b4d669a39301d5df25f0c6440835cb85e98633a719d8895e9735348e881e",
+      "size_bytes": 73702,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 1PE00007*VD (application OH0027481) for the City of Springfield WWTP, 965 Dayton Avenue, Clark County; retrieved from the Ohio EPA DAM permit slot",

@@ -8,7 +8,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-26"
   },
   {
     "id": "artifact/mad-river",
@@ -19,7 +19,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-26"
   },
   {
     "id": "artifact/npdes-1pe00007",
@@ -30,7 +30,7 @@
     "links_out": 1,
     "links_in": 2,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-26"
   },
   {
     "id": "artifact/site-springfield",
@@ -921,7 +921,7 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-26"
   },
   {
     "id": "relation/npdes-1pe00007--discharges-to--mad-river",
@@ -932,6 +932,6 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-26"
   }
 ]

@@ -341,7 +341,7 @@ permit:
       copper_total_recoverable: {units: ug/l, limit: null, monitoring: 1/Month 24hr Composite, months: All}
       chromium_dissolved_hexavalent: {units: ug/l, limit: null, monitoring: 1/Month Grab, months: All}
       e_coli: {units: '#/100 ml', weekly: 284, monthly: 126, monitoring: 1/Day Grab, months: April-Oct}
-      trichlorophenol_246: {units: ug/l, limit: null, monitoring: 2/Year 24hr Composite, months: Semi-annual, note: new monitoring this permit term — group 4 per Ohio EPA risk assessment (bound Fact Sheet, Page 13 of 40)}
+      trichlorophenol_246: {units: ug/l, limit: null, monitoring: 2/Year 24hr Composite, months: Semi-annual, note: 'new monitoring this permit term — group 4 per Ohio EPA risk assessment (bound Fact Sheet, Page 13 of 40)'}
       flow_rate: {units: MGD, limit: null, monitoring: 1/Day Continuous, months: All}
       chlorine_total_residual_apr_oct: {units: mg/l, maximum: 0.028, monitoring: 1/Day Multiple Grab, months: April-Oct}
       chlorine_total_residual_nov_mar: {units: mg/l, maximum: 0.028, monitoring: When Disch. Multiple Grab, months: Nov. - March}

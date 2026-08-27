@@ -80,16 +80,13 @@
           "description": "Influent monitoring"
         },
         "1PE00007602": {
-          "description": "CSO-related bypass monitoring",
-          "prior to blending with secondary treatment effluent": null
+          "description": "CSO-related bypass monitoring, prior to blending with secondary treatment effluent"
         },
         "1PE00007800": {
-          "description": "Upstream monitoring in Mad River",
-          "upstream of confluence with Buck Creek": null
+          "description": "Upstream monitoring in Mad River, upstream of confluence with Buck Creek"
         },
         "1PE00007801": {
-          "description": "Upstream monitoring in Buck Creek",
-          "upstream of confluence with Mad River": null
+          "description": "Upstream monitoring in Buck Creek, upstream of confluence with Mad River"
         },
         "1PE00007900_or_901": {
           "description": "Downstream monitoring in Mad River at Old Mill Road",
@@ -1030,8 +1027,7 @@
         "limits_below_quantification": {
           "item": "M. Limits Below Quantification (sheets 35-36)",
           "table": {
-            "parameter": "Chlorine",
-            "Total Residual": null,
+            "parameter": "Chlorine, Total Residual",
             "pql_mg_l": 0.05
           },
           "rule": "For maximum limits, any value reported below the QL is in compliance; for average limits, compliance uses the arithmetic mean with zero substituted for sub-QL values. All results, even sub-QL, must be reported (above-QL: report as-is; above-MDL/below-QL: report as-is; below-MDL: report \"AA\" - below detection)."

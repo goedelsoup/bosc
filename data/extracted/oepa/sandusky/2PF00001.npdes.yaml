@@ -249,8 +249,8 @@ permit:
     '2PF00001586': {description: Disposal of sewage sludge or biosolids in an authorized landfill}
     '2PF00001588': {description: Transfer of sewage sludge or biosolids to another NPDES permittee}
     '2PF00001601': {description: Influent monitoring at aerated grit tank}
-    '2PF00001602': {description: Internal monitoring station — secondary treatment effluent, prior to blending with high rate treatment (HRT) effluent}
-    '2PF00001603': {description: CSO-related bypass station — HRT effluent, prior to blending with secondary effluent}
+    '2PF00001602': {description: 'Internal monitoring station — secondary treatment effluent, prior to blending with high rate treatment (HRT) effluent'}
+    '2PF00001603': {description: 'CSO-related bypass station — HRT effluent, prior to blending with secondary effluent'}
     no_downstream_ambient_station: >-
       Unlike the Mansfield precedent's 801/901 upstream+downstream pair, this permit names only
       ONE ambient station — 2PF00001801, upstream — and it does not appear in this Item B table

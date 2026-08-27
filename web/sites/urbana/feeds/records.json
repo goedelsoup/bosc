@@ -1087,16 +1087,13 @@
           "description": "Sludge disposal via landfill"
         },
         "1PD00011601": {
-          "description": "Influent monitoring",
-          "prior to fine screens": null
+          "description": "Influent monitoring, prior to fine screens"
         },
         "1PD00011801": {
-          "description": "Upstream monitoring",
-          "at State Route 36 bridge": null
+          "description": "Upstream monitoring, at State Route 36 bridge"
         },
         "1PD00011901": {
-          "description": "Downstream monitoring",
-          "at Old Troy Pike bridge": null
+          "description": "Downstream monitoring, at Old Troy Pike bridge"
         },
         "absent_stations_note": "No 588, 602 or 603 station is listed here or anywhere else in the permit. See warnings[2]."
       },
