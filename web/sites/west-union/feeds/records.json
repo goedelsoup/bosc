@@ -795,9 +795,7 @@
           "description": "Sludge removed from the WWTP for disposal at an approved landfill"
         },
         "0PC00019588": {
-          "description": "Sludge hauled to another NPDES permitted POTW authorized to store",
-          "treat": null,
-          "and dispose of sewage sludge": null
+          "description": "Sludge hauled to another NPDES permitted POTW authorized to store, treat, and dispose of sewage sludge"
         },
         "0PC00019601": {
           "description": "WWTP influent"
@@ -1004,8 +1002,7 @@
         "limits_below_quantification": {
           "item": "I. Limits Below Quantification (sheet 12)",
           "table": {
-            "parameter": "Cyanide",
-            "free": null,
+            "parameter": "Cyanide, free",
             "pql": "0.025 mg/L",
             "ml": "--"
           },

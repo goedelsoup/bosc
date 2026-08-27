@@ -240,9 +240,9 @@ permit:
     '1PE00007586': {description: Disposal of sewage sludge or biosolids in an authorized landfill}
     '1PE00007588': {description: Transfer of sewage sludge or biosolids to another NPDES permittee}
     '1PE00007601': {description: Influent monitoring}
-    '1PE00007602': {description: CSO-related bypass monitoring, prior to blending with secondary treatment effluent}
-    '1PE00007800': {description: Upstream monitoring in Mad River, upstream of confluence with Buck Creek}
-    '1PE00007801': {description: Upstream monitoring in Buck Creek, upstream of confluence with Mad River}
+    '1PE00007602': {description: 'CSO-related bypass monitoring, prior to blending with secondary treatment effluent'}
+    '1PE00007800': {description: 'Upstream monitoring in Mad River, upstream of confluence with Buck Creek'}
+    '1PE00007801': {description: 'Upstream monitoring in Buck Creek, upstream of confluence with Mad River'}
     '1PE00007900_or_901':
       description: Downstream monitoring in Mad River at Old Mill Road
       id_note: 'Printed 901 here, 900 in Part I,B Item 13 (sheet 23). See permit.warnings.'
@@ -737,7 +737,7 @@ permit:
         years; a new form (or other compliance provision) is due no later than 2027-10-06.
     limits_below_quantification:
       item: 'M. Limits Below Quantification (sheets 35-36)'
-      table: {parameter: Chlorine, Total Residual, pql_mg_l: 0.050}
+      table: {parameter: 'Chlorine, Total Residual', pql_mg_l: 0.050}
       rule: >-
         For maximum limits, any value reported below the QL is in compliance; for average
         limits, compliance uses the arithmetic mean with zero substituted for sub-QL values.

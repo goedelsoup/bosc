@@ -166,7 +166,7 @@ permit:
         coordinate — the other six carry none.
     '0PC00019300': {description: Sanitary Sewer Overflows}
     '0PC00019586': {description: Sludge removed from the WWTP for disposal at an approved landfill}
-    '0PC00019588': {description: Sludge hauled to another NPDES permitted POTW authorized to store, treat, and dispose of sewage sludge}
+    '0PC00019588': {description: 'Sludge hauled to another NPDES permitted POTW authorized to store, treat, and dispose of sewage sludge'}
     '0PC00019601': {description: WWTP influent}
     '0PC00019801': {description: Beasley Fork Creek upstream of WWTP discharge}
     '0PC00019901': {description: Beasley Fork Creek downstream (1/4 mile) of WWTP discharge}
@@ -326,7 +326,7 @@ permit:
         lower may cover for up to 30 consecutive days without notification.
     limits_below_quantification:
       item: 'I. Limits Below Quantification (sheet 12)'
-      table: {parameter: Cyanide, free, pql: 0.025 mg/L, ml: '--'}
+      table: {parameter: 'Cyanide, free', pql: 0.025 mg/L, ml: '--'}
       note: >-
         Free cyanide is the only parameter this permit lists with a limit set below the
         Ohio EPA Quantification Level; compliance rules for maximum vs. average limits are

@@ -8,7 +8,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-26"
   },
   {
     "id": "artifact/npdes-2pf00001",
@@ -19,7 +19,7 @@
     "links_out": 1,
     "links_in": 2,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-26"
   },
   {
     "id": "artifact/sandusky-bay",
@@ -30,7 +30,7 @@
     "links_out": 1,
     "links_in": 1,
     "lines": 12,
-    "updated": null
+    "updated": "2026-08-26"
   },
   {
     "id": "artifact/site-sandusky",
@@ -910,7 +910,7 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-26"
   },
   {
     "id": "relation/npdes-2pf00001--discharges-to--sandusky-bay",
@@ -921,6 +921,6 @@
     "links_out": 2,
     "links_in": 0,
     "lines": 15,
-    "updated": null
+    "updated": "2026-08-26"
   }
 ]

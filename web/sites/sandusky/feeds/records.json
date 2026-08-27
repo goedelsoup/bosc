@@ -72,12 +72,10 @@
           "description": "Influent monitoring at aerated grit tank"
         },
         "2PF00001602": {
-          "description": "Internal monitoring station — secondary treatment effluent",
-          "prior to blending with high rate treatment (HRT) effluent": null
+          "description": "Internal monitoring station — secondary treatment effluent, prior to blending with high rate treatment (HRT) effluent"
         },
         "2PF00001603": {
-          "description": "CSO-related bypass station — HRT effluent",
-          "prior to blending with secondary effluent": null
+          "description": "CSO-related bypass station — HRT effluent, prior to blending with secondary effluent"
         },
         "no_downstream_ambient_station": "Unlike the Mansfield precedent's 801/901 upstream+downstream pair, this permit names only ONE ambient station — 2PF00001801, upstream — and it does not appear in this Item B table at all; it surfaces only inside Part II Item U's biomonitoring narrative (sheet 27) as the point where \"upstream control water shall be collected.\" No coordinates for 801 are printed anywhere in this document, and there is no downstream (9xx) station of any kind — this permit carries no committed monthly upstream/downstream ambient nutrient-chemistry record the way Mansfield's does."
       },

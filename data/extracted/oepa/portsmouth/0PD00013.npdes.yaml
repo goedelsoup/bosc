@@ -214,7 +214,6 @@ permit:
       "The permittee is authorized to discharge from the following combined sewer overflows
       (CSOs) only during wet weather periods when the flow in the sewer system exceeds the
       capacity of the sewer system."
-    stations:
     '0PD00013002':
       description: Lawson Run CSO overflow to Ohio River
       receiving_water: Ohio River
