@@ -1033,9 +1033,14 @@ async def query(args: dict[str, Any]) -> dict[str, Any]:
         run.rejected = bad_field
 
     limit = max(1, int(args.get("limit") or 50))
+    # A REJECTION CARRIES NO ROWS. `parse_select` rejects an unprojectable field by returning an
+    # empty field list, and projecting against it yielded a page of `{"origin": null}` — a
+    # non-null `rejected` shipped alongside a non-zero `returned`, which is the one shape the
+    # envelope promises never to produce. `matched` still reports what the traversal found.
     # `limit` bounds the PROJECTION, not the traversal — `matched` is always the full count.
-    rows = [corpus_query.project(n, select) for n in run.matched[:limit]]
-    run.cost.read(n.id for n in run.matched[:limit])
+    projected = [] if run.rejected is not None else run.matched[:limit]
+    rows = [corpus_query.project(n, select) for n in projected]
+    run.cost.read(n.id for n in projected)
     body = {
         "kind": "query",
         **_query_envelope(run, across=bool(args.get("across"))),
@@ -1062,11 +1067,32 @@ async def query(args: dict[str, Any]) -> dict[str, Any]:
         # server holding one declares `ontology: false` and serves no `query` at all.
         "unschematised": False,
     }
-    body["cost"] = run.cost.to_dict()
     return _json(body)
 
 
 _PACK = _spec("pack")
+
+
+#: What `pack` puts between two rendered nodes. Named because `_pack_chars` must join exactly
+#: as the packer does — a different separator is a silently wrong quote.
+PACK_JOIN = "\n\n"
+
+
+def _render_for_pack(node: MirrorNode) -> str:
+    """One node as `pack` writes it.
+
+    **The single renderer, deliberately.** `estimate` quotes what a `pack` of the same query
+    would cost, and it used to price a JSON projection instead — a different field set in a
+    different container, overstating a real Lima pack by 113%. `estimate` exists to let a caller
+    decide affordability, so a quote for prose it will never receive is worse than no quote.
+    Both callers render through here; the numbers cannot drift apart again.
+    """
+    return f"## {node.label}\n\n{node.description}".rstrip()
+
+
+def _pack_chars(nodes: list[MirrorNode]) -> int:
+    """Exact serialized length of the pack body those nodes would produce."""
+    return len(PACK_JOIN.join(_render_for_pack(n) for n in nodes))
 
 
 @tool(_PACK["name"], _PACK["description"], _PACK["inputSchema"])
@@ -1091,9 +1117,8 @@ async def pack(args: dict[str, Any]) -> dict[str, Any]:
 
     written: list[str] = []
     omitted: list[MirrorNode] = []
-    elided = 0
     for node in run.matched:
-        rendered = f"## {node.label}\n\n{node.description}".rstrip()
+        rendered = _render_for_pack(node)
         # `budget` is in TOKENS, and tokens are chars/4 by the same approximation `cost` uses.
         if budget is not None and (sum(len(w) for w in written) + len(rendered)) // 4 > budget:
             omitted.append(node)
@@ -1106,7 +1131,7 @@ async def pack(args: dict[str, Any]) -> dict[str, Any]:
     for node in omitted:
         by_class[node.node_class] = by_class.get(node.node_class, 0) + 1
 
-    body = "\n\n".join(written)
+    body = PACK_JOIN.join(written)
     if not body:
         # **The diagnosis goes in `text`, not only in `absence`.** A pack is what a caller reads
         # *as* the corpus, and it travels without the envelope around it — so an empty one that
@@ -1126,7 +1151,10 @@ async def pack(args: dict[str, Any]) -> dict[str, Any]:
             "anchor": run.anchor,
             "reachable": len(run.matched),
             "written": len(written),
-            "elided": elided,
+            # Always 0, and kept because the contract names it: this packer writes a
+            # node whole or omits it whole, so nothing is ever truncated mid-node. A
+            # later reader must not mistake the constant for a wired counter.
+            "elided": 0,
             "omitted": len(omitted),
             "omitted_by_class": by_class,
             "budget": {"tokens": budget, "basis": "chars/4"},
@@ -1164,7 +1192,10 @@ async def estimate(args: dict[str, Any]) -> dict[str, Any]:
     budget = args.get("budget")
     budget = int(budget) if budget is not None else None
     priced = run.matched[:limit]
-    run.cost.read(n.id for n in priced)
+    # `pack` takes no `limit` — only `query`/`budget`/`anchor_k` — so it renders the WHOLE match
+    # set. Quoting `priced` here priced an operation the caller cannot ask for.
+    pack_chars = _pack_chars(run.matched)
+    run.cost.read(n.id for n in run.matched)
 
     projections = []
     for select in _PROJECTIONS:
@@ -1194,13 +1225,16 @@ async def estimate(args: dict[str, Any]) -> dict[str, Any]:
             "limit": limit,
             "budget": budget,
             "projections": projections,
-            # What `pack` would cost for this query — the widest projection, since a pack
-            # renders prose. An object rather than a number so the verdict travels with it.
+            # What `pack` would cost for this query, priced from `pack`'s OWN renderer over the
+            # whole match set — not from the widest projection, which is JSON of a different
+            # field set and quoted more than double the truth. An object rather than a number so
+            # the verdict travels with it.
             "pack": {
-                "nodes": len(priced),
-                "chars": projections[-1]["chars"],
-                "tokens": projections[-1]["tokens"],
-                "fits": projections[-1]["fits"],
+                "nodes": len(run.matched),
+                "chars": pack_chars,
+                "tokens": pack_chars // 4,
+                # Null exactly when no budget was given, as in `projections`.
+                "fits": None if budget is None else pack_chars // 4 <= budget,
             },
             # `chars` is exact; `tokens` is this, and naming it is what keeps a caller holding a
             # real tokenizer from mistaking the approximation for a measurement.

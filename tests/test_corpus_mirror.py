@@ -9,6 +9,7 @@ The projection must satisfy yidam's two hard ``graph-check`` rules — every nod
 
 from __future__ import annotations
 
+import re
 from collections.abc import Callable
 from pathlib import Path
 
@@ -17,6 +18,7 @@ import yaml
 from tests.conftest import ExportedBundle
 from watermark.config import Settings
 from watermark.hypotheses import HYPOTHESES, HypothesisAssessment
+from watermark.site import corpus_mirror
 from watermark.site.corpus_mirror import (
     CLASSES,
     ONTOLOGY,
@@ -483,3 +485,41 @@ def test_the_universal_declaration_is_written_beside_the_classes(tmp_path: Path)
     # Re-writing clears the previous one rather than leaving a stale file behind.
     write_mirror(mirror, tmp_path)
     assert (tmp_path / "universal.yml").is_file()
+
+
+def test_every_relationship_the_projection_can_author_is_licensed() -> None:
+    """The guard that would have caught the two undeclared fallbacks.
+
+    `edge_policy: exhaustive` makes an unlicensed relationship an **ERROR**, and two of this
+    module's edges are written only on a fallback path: a concept that cross-references no
+    sibling gets `in-corpus`, and a relation whose endpoints both fail to resolve gets
+    `in-site`. Neither fires against today's corpus, so declaring the vocabulary from the
+    *emitted* mirror looked complete and was not — the first isolated glossary term or
+    unresolved entity key would have failed the gate.
+
+    So this reads the relationship literals out of the **source**, which is what the projection
+    can author, rather than out of the graph, which is only what it happened to author here.
+    """
+    src = Path(corpus_mirror.__file__).read_text(encoding="utf-8")
+    authored = set(re.findall(r'anchor_link\(\s*"([a-z][a-z-]*)"', src))
+    authored |= set(re.findall(r'MirrorLink\([^,]+,\s*"([a-z][a-z-]*)"', src))
+    assert authored, "the scan found no relationships — the pattern has rotted, not the code"
+    # And the scan must be at least as complete as reality: every relationship the projection
+    # actually wrote has to be one the patterns above found. Without this the regex could rot
+    # into matching a subset and the guard would keep passing while covering less and less.
+    built = {
+        link.relationship
+        for node in build_mirror(Settings(site="lima", data_dir=REPO_ROOT / "data")).nodes
+        for link in node.links
+        if link.relationship
+    }
+    assert built <= authored, (
+        f"the source scan missed {sorted(built - authored)} — a new link-writing call shape "
+        "was added and these patterns no longer see it"
+    )
+
+    licensed = {edge.relationship for ont in ONTOLOGY.values() for edge in ont.edges}
+    assert authored <= licensed, (
+        f"unlicensed relationship(s) {sorted(authored - licensed)} — under an exhaustive policy "
+        "this is an ERROR the moment the path is taken, not a warning"
+    )

@@ -125,6 +125,13 @@ class OntologyEdge:
     target: str
     description: str
     direction: str = "out"
+    #: Declared for a path the projection **can** take and has not taken yet — a fallback link
+    #: no instance authors against the current corpus. It must still be licensed, because
+    #: `edge_policy: exhaustive` makes the first traversal of an undeclared relationship an
+    #: ERROR, and it must be marked, because "declared and unauthored" is otherwise
+    #: indistinguishable from an ontology that has reached past its corpus. Not rendered into
+    #: `<class>.ont.yml`: it is a fact about this projection, not part of yidam's schema.
+    fallback: bool = False
 
 
 @dataclass(frozen=True)
@@ -184,6 +191,17 @@ ONTOLOGY: dict[str, ClassOntology] = {
                 "concept",
                 "A cross-reference authored in the glossary as a `[[wiki link]]`.",
             ),
+            # Unexercised by the current corpus and NOT dead: `project_mirror` falls back to
+            # this when a concept resolves no `related` sibling, so an isolated glossary term
+            # stays reachable from the site anchor. Under an `exhaustive` policy the first such
+            # term would be an ERROR-severity `unlicensed-edge` — the failure is in the
+            # declaration, not the projection, so the licence is written before it can fire.
+            OntologyEdge(
+                "in-corpus",
+                "artifact",
+                "The site anchor, when a concept cross-references no other concept.",
+                fallback=True,
+            ),
         ),
     ),
     "relation": ClassOntology(
@@ -213,6 +231,16 @@ ONTOLOGY: dict[str, ClassOntology] = {
         edges=(
             OntologyEdge("from", "artifact", "The entity this relationship is authored from."),
             OntologyEdge("to", "artifact", "The entity this relationship lands on."),
+            # The same fallback on the other side: an edge node whose endpoints BOTH failed to
+            # resolve against the entity graph keeps its tie to the site rather than floating
+            # free. Unreachable today because every relationship resolves — which is exactly
+            # what makes it an undeclared ERROR waiting on the first entity-key miss.
+            OntologyEdge(
+                "in-site",
+                "artifact",
+                "The site anchor, when neither endpoint resolves to an entity.",
+                fallback=True,
+            ),
         ),
     ),
     "artifact": ClassOntology(
