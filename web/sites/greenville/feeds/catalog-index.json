@@ -1,6 +1,6 @@
 {
   "site": "greenville",
-  "catalog_version": "3091123a4a9b6756139f0a88b3a80b9f9cbdffc9b2af273a555f5dfbcca63257",
+  "catalog_version": "19ee1dc7c3e1fde6e1af528f33a1c5e7b0692c4151ddd3853b738fd3a3e7e1a0",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:greenville:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:greenville:bundle-records",
       "kind": "dataset",
       "site": "greenville",
@@ -825,6 +833,14 @@
       "site": "greenville",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:greenville:hydrology-routing",
+      "kind": "dataset",
+      "site": "greenville",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

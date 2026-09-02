@@ -1,5 +1,5 @@
 id: datacenter-facility-wwtp-in0032191-wwtp-receiving-water
-title: Fort Wayne WWTP (NPDES IN0032191) Receiving-Water, Facility & Site-Footprint Characterization
+title: Fort Wayne WWTP (NPDES IN0032191) Receiving-Water & Facility Characterization
 scope: extracted
 status: reviewed
 producer:
@@ -13,17 +13,19 @@ license: U.S. Government work (public domain) [DMR]; public record otherwise
 access_tier: public
 site_scope: site:fort-wayne
 storage:
-- relpath: extracted/{site}/datacenter-facility.md
+# Fort Wayne's own files, named concretely. These were `extracted/{site}/…` under a
+# `site:fort-wayne` scope, which the per-site resolver discards outright (#2138) — and because
+# the orphan gate expanded the template for EVERY slug, the declaration silently claimed eight
+# other sites' `bosc-site-footprint.yaml`. That member now belongs to the slug-scoped
+# `bosc-site-footprint` entry, which is what it always was: one dataset, one file per site.
+- relpath: extracted/fort-wayne/datacenter-facility.md
   media_type: text/markdown
   lfs: false
-- relpath: extracted/{site}/wwtp-in0032191.dmr.yaml
+- relpath: extracted/fort-wayne/wwtp-in0032191.dmr.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/{site}/wwtp-receiving-water.md
+- relpath: extracted/fort-wayne/wwtp-receiving-water.md
   media_type: text/markdown
-  lfs: false
-- relpath: extracted/{site}/bosc-site-footprint.yaml
-  media_type: application/x-yaml
   lfs: false
 refresh:
   cadence: on-demand
@@ -36,5 +38,5 @@ tags:
 - receiving-water
 notes: 'The DMR (wwtp-in0032191.dmr.yaml) is verbatim ECHO effluent-chart data regenerable via `watermark dmr`;
   the two .md files are reviewed receiving-water (7Q10) and facility-discovery syntheses resolving Fort
-  Wayne #358/#359/#360. bosc-site-footprint.yaml is the parcel-assemblage boundary + measured acreage +
-  SSURGO-validated HSG (#362; developed/impervious still [open] pending the stormwater permit).'
+  Wayne #358/#359/#360. The site''s footprint record (#362) is catalogued separately as
+  bosc-site-footprint, the network-wide slug-scoped dataset it is one member of.'

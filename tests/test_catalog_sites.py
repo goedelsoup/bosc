@@ -263,3 +263,65 @@ def test_peer_civic_datasets_are_owned_by_findlay_not_lima() -> None:
     for eid in ("subdivisions", "american-township-meetings", "lacrpc-meetings"):
         assert entries[eid].site_scope == "lima-legacy", eid
         assert not is_relevant(entries[eid], "findlay"), eid
+
+
+def test_no_declared_member_resolves_for_no_site() -> None:
+    """Every storage member some entry declares is reachable by at least one registered site (#2138).
+
+    A ``{site}`` template only resolves for ``slug-scoped``; ``resolve._resolved`` filters templated
+    members out of every other scope, so a template under ``site:``/``basin:`` declares storage its
+    own scope discards. Three committed entries were in that state — `idem` and the Fort Wayne WWTP
+    entry (``site:fort-wayne``) and `hydrology` (``basin:maumee``) — and the failure is silent from
+    every angle a reviewer looks from: the file is on disk, the entry names it, `catalog check`
+    covered it, and it belongs to nobody. Downstream, a record citing it earns no ``rests-on`` link
+    and its ``[verified]`` claims read as resting on nothing.
+    """
+    from watermark.catalog import load_entries
+    from watermark.catalog.resolve import resolved_for_site
+    from watermark.sites import SITES
+
+    orphaned: dict[str, list[str]] = {}
+    for entry in load_entries():
+        reachable = {rel for slug in SITES for rel in resolved_for_site(entry, slug)}
+        lost = [
+            item.relpath
+            for item in entry.storage
+            if not any(item.relpath.replace("{site}", slug) in reachable for slug in SITES)
+        ]
+        if lost:
+            orphaned[entry.id] = lost
+    assert orphaned == {}
+
+
+def test_the_per_site_datasets_split_out_of_narrow_entries_reach_their_sites() -> None:
+    """The #2138 repair, pinned by what each entry must resolve to.
+
+    Both were declared as ``{site}`` members of an entry scoped to one site or one basin. They are
+    genuinely per-site datasets — the footprint record is committed at nine points, and routing
+    crosses basins (Sidney is Great Miami, Wilmington Little Miami) — so each is its own
+    ``slug-scoped`` entry, and Lima's routing table keeps the un-slugged reference-build layout.
+    """
+    from watermark.catalog import load_entries
+    from watermark.catalog.resolve import resolved_for_site
+
+    entries = {e.id: e for e in load_entries()}
+    footprint = entries["bosc-site-footprint"]
+    assert footprint.site_scope == "slug-scoped"
+    for slug in ("findlay", "van-wert", "fort-wayne", "urbana"):
+        assert resolved_for_site(footprint, slug) == [f"extracted/{slug}/bosc-site-footprint.yaml"]
+
+    routing = entries["hydrology-routing"]
+    assert routing.site_scope == "slug-scoped"
+    # The reference build gets its flat table AND the slug expansion; a sibling gets only its own.
+    assert resolved_for_site(routing, "lima") == [
+        "reference/hydrology/routing.yaml",
+        "reference/hydrology/lima/routing.yaml",
+    ]
+    assert resolved_for_site(routing, "wilmington") == [
+        "reference/hydrology/wilmington/routing.yaml"
+    ]
+    # The entries they were declared on keep only what they own.
+    for eid in ("idem", "datacenter-facility-wwtp-in0032191-wwtp-receiving-water"):
+        assert entries[eid].site_scope == "site:fort-wayne"
+        assert all("{site}" not in s.relpath for s in entries[eid].storage), eid
+    assert all("{site}" not in s.relpath for s in entries["hydrology"].storage)

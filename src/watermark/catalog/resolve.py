@@ -1,4 +1,4 @@
-"""Per-site resolution of a catalog entry's storage (#2066) — one rule, four consumers.
+"""Per-site resolution of a catalog entry's storage (#2066) — one rule, five consumers.
 
 A ``slug-scoped`` dataset has a *different file per site*: its storage carries a ``{site}``
 template that resolves against the active slug. Answering "what does this dataset look like
@@ -21,6 +21,11 @@ applies at the entry level:
   ``rsei-inventory`` turned on: it declares a second templated member (``{site}/enclave.yaml``)
   that only the one federal-enclave site has, and an all-members rule read 21 sites that hold
   their inventory as missing it.
+
+``watermark catalog check`` was the fifth consumer and kept its own copy until #2138 — its
+orphan gate expanded a ``{site}`` template for *every* slug regardless of scope, so three entries
+that declared templated members under a ``site:``/``basin:`` scope were covered there (never
+orphans) while resolving here for no site at all. Both now ask the same question.
 
 Pure and offline: path arithmetic plus ``Path.exists``. It imports no other catalog module, so
 ``reconcile`` and ``sites`` can both depend on it without a cycle.

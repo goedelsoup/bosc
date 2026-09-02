@@ -1,6 +1,6 @@
 {
   "site": "defiance",
-  "catalog_version": "7d10645684ab09e5411146a5b66dda18a4d0fafe4484f307e129913c1ab4bbbf",
+  "catalog_version": "4d825e7a7183977dcaba8b85db3ccbacea243a25059ae095c20ea269a0572e7a",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:defiance:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "defiance",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:defiance:bundle-records",
       "kind": "dataset",
       "site": "defiance",
@@ -849,6 +857,14 @@
       "site": "defiance",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:defiance:hydrology-routing",
+      "kind": "dataset",
+      "site": "defiance",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

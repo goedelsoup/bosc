@@ -1,0 +1,51 @@
+id: hydrology-routing
+title: Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: Hand-authored per-site routing table — each WWTP→stream route and its permitted average
+    design flow transcribed from that plant's own Ohio EPA NPDES permit or fact sheet in the corpus
+    and cited per route; Lima's BOSC forcemain graph additionally from the Periplus watch-items
+    forcemain features
+license: Public record (Ohio R.C. 149.43); BOSC-curated
+access_tier: public
+site_scope: slug-scoped
+storage:
+# Lima's un-slugged table is the reference build's committed layout; every other site reads its own
+# `{site}` expansion and never inherits Lima's forcemain routes (#829, `routing._routing_path`).
+# Split out of the `hydrology` bundle, where the templated member sat under a `basin:maumee` scope
+# that discarded it (#2138) — and routing is not a Maumee dataset: Sidney's is Great Miami and
+# Wilmington's is Little Miami.
+- relpath: reference/hydrology/routing.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/hydrology/{site}/routing.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+schema_ref: watermark.hydrology.routing.RoutingTable
+tags:
+- hydrology
+- routing
+- npdes
+- design-flow
+- receiving-water
+- forcemain
+- per-site
+notes: >-
+  Two load-bearing things per site, and both are read structurally rather than from prose.
+  `wwtp_receiving` names the stream each plant discharges to and its permitted average
+  `design_flow_mgd` — the numerator of the assimilative screen, which `watermark.hydrology.balance`
+  reads here so it never falls back to a regex over the watch-items summary (WS-22, #1622); the
+  `receiving_water` NAME is also the key `assimilative.check_assimilative` looks the cited design low
+  flow up by, so it must be spelled as the parenthesized key, not the natural reading. `bosc_routing`
+  (Lima only) is where the BOSC campus sends its own wastewater by forcemain: FM-1/FM-2 confirmed,
+  the FM-3 Shawnee II lead carried as status:theorized so it is never silently treated as a route.
+  Committed for Lima plus bowling-green, findlay, sidney, van-wert and wilmington; a site with no
+  table is absent from the map and the balance resolves its receiving water from the SiteProfile.
+  Wilmington's was the first peer table (#886), written for exactly that reason — to supply the
+  structured, fact-sheet-cited design flow instead of the regex-over-prose fallback the watch-items
+  summary would otherwise trigger.

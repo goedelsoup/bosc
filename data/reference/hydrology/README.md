@@ -89,8 +89,6 @@ Source: Mixed-provenance hydrology working set — USGS NWIS, Ohio EPA TMDL docu
 | `reference/hydrology/reaches.yaml` | application/x-yaml | no |
 | `reference/hydrology/refill-adequacy.yaml` | application/x-yaml | no |
 | `reference/hydrology/routed-hydrograph.yaml` | application/x-yaml | no |
-| `reference/hydrology/routing.yaml` | application/x-yaml | no |
-| `reference/hydrology/{site}/routing.yaml` | application/x-yaml | no |
 | `reference/hydrology/lima/sanitary-basis.yaml` | application/x-yaml | no |
 | `reference/hydrology/theories.yaml` | application/x-yaml | no |
 | `reference/hydrology/thermal-discharge-screen.yaml` | application/x-yaml | no |
@@ -152,6 +150,15 @@ Regenerate: `watermark reaches --write`
 | `reference/hydrology/{site}/network.yaml` | application/x-yaml | no |
 | `reference/hydrology/{site}/reaches.yaml` | application/x-yaml | no |
 | `reference/hydrology/reaches/{site}.geojson` | application/geo+json | no |
+
+### `hydrology-routing` — Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains
+
+Source: Hand-authored per-site routing table — each WWTP→stream route and its permitted average design flow transcribed from that plant's own Ohio EPA NPDES permit or fact sheet in the corpus and cited per route; Lima's BOSC forcemain graph additionally from the Periplus watch-items forcemain features · License: Public record (Ohio R.C. 149.43); BOSC-curated · Access: public · Site scope: slug-scoped · Refresh: on-demand
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/hydrology/routing.yaml` | application/x-yaml | no |
+| `reference/hydrology/{site}/routing.yaml` | application/x-yaml | no |
 
 ### `hydrology-swmm` — Tier-1 EPA SWMM5 Input Decks (Pre / As-Permitted / Full-Buildout / Detention / Sanitary)
 

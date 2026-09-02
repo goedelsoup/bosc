@@ -1,4 +1,4 @@
-reconciled_at: '2026-08-27T00:30:14.259112+00:00'
+reconciled_at: '2026-09-02T23:34:05.189761+00:00'
 entries:
   abatement-parameters:
     exists: true
@@ -139,6 +139,89 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  bosc-site-footprint:
+    exists: true
+    sha256: e900952f258ca21c74fe774dc2b6e626f21b484c351a72833a91471851ddd23e
+    size_bytes: 132141
+    lfs_materialized: true
+    file_count: 9
+    missing: []
+    asof: null
+    stale: false
+    site_scope: slug-scoped
+    sites:
+      bowling-green:
+        exists: true
+        sha256: d83d541a0b2a688d179320cdfe4c24ac56dcb3fe77e4ebda721db83cf36fef92
+        size_bytes: 23613
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      findlay:
+        exists: true
+        sha256: 72f8c0e4349ef5f516a13b9dac4cbb77b9898ffe3b25f023460801eca201708b
+        size_bytes: 20810
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      fort-wayne:
+        exists: true
+        sha256: 5f1beb209f326fe0617a7293a3b6f2a6354604613e1b0620d7db1d8125bc21e3
+        size_bytes: 5236
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      ottawa:
+        exists: true
+        sha256: 3210c03222a276ccd9429f824ccea1129632da9bc42505c4ffd57d6d6696e1f3
+        size_bytes: 17960
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      sidney:
+        exists: true
+        sha256: b528dfd4792031de0bc08d08696d853fb627040b6ae6e279f234c0676b760df5
+        size_bytes: 12604
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      troy-piqua:
+        exists: true
+        sha256: e762e603ee6dfb0eea85cd3e00bf8c094bd41e8df25f6281839c76d5c187c6e1
+        size_bytes: 7140
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      urbana:
+        exists: true
+        sha256: c5796a5091283a93d1bbc6000dcb6c8068ebfd8ad9c5e4b846b00ef771779152
+        size_bytes: 6254
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      van-wert:
+        exists: true
+        sha256: 8652332156d660d5cafc75d6e1fe140efb2c1f8d78025b9663a245e4b817e41e
+        size_bytes: 17410
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      wilmington:
+        exists: true
+        sha256: 77c3163257f3603ea50186f1e9150e3f38a659a66c969443805bef7f3dd864e0
+        size_bytes: 21114
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
   bowling-green-apollo-power:
     exists: true
     sha256: 19ecb941f3aabfe6cc2cb870bb6e0b13fe023c787108c54bfd99e99996dd1e97
@@ -454,10 +537,10 @@ entries:
     site_scope: site:xenia
   datacenter-facility-wwtp-in0032191-wwtp-receiving-water:
     exists: true
-    sha256: ad65ad42d704884a40739b4517b9c965653569d494989912fa761e40f022c238
-    size_bytes: 169184
+    sha256: d5aade1e9cb5ed2cef93e0e8f6dfd6b7c3b3fe8a98b102311dd268a0649e078b
+    size_bytes: 25015
     lfs_materialized: true
-    file_count: 13
+    file_count: 3
     missing: []
     asof: null
     stale: false
@@ -1484,10 +1567,10 @@ entries:
     site_scope: lima-legacy
   hydrology:
     exists: true
-    sha256: 5c8f0b45757446cb84337355e5e28b2a67e1160db98f3bd8cb8ba351b4dfe09a
-    size_bytes: 208425
+    sha256: 3a365628580f60f63e52eb9c3f529bf4d3fda0f16ba5209a6f74478570530a30
+    size_bytes: 184024
     lfs_materialized: true
-    file_count: 26
+    file_count: 20
     missing: []
     asof: null
     stale: false
@@ -1919,6 +2002,65 @@ entries:
         size_bytes: 91811
         lfs_materialized: true
         file_count: 4
+        asof: null
+        stale: false
+  hydrology-routing:
+    exists: true
+    sha256: 192ee51d822eba25717ba981e6616ad4115e61f229d6d180b6edfb2e7c90c4dd
+    size_bytes: 24401
+    lfs_materialized: true
+    file_count: 6
+    missing: []
+    asof: null
+    stale: false
+    site_scope: slug-scoped
+    sites:
+      bowling-green:
+        exists: true
+        sha256: e788de005e0c3e48647bfce2a98fd9fac73250e4ef4347c291657d78dee1f1c0
+        size_bytes: 6050
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      findlay:
+        exists: true
+        sha256: 0544ebb5b80b87c5b15f0895318592f93e931cf74985e6e53cb06d5b6b151661
+        size_bytes: 3952
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      lima:
+        exists: true
+        sha256: d44228c8ba3257e7ade54ffc26a31baa948a8beee93809becd8c8d0bea483872
+        size_bytes: 4078
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      sidney:
+        exists: true
+        sha256: 17472a08f2fb5d6015326d840de56e54eea4d7373a9744fd30b75c38e3593087
+        size_bytes: 3182
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      van-wert:
+        exists: true
+        sha256: bdc14846ee9eb7b6f06dee32708d0e8c99ceaf2ebb0de72d73f17d9fc349a193
+        size_bytes: 4906
+        lfs_materialized: true
+        file_count: 1
+        asof: null
+        stale: false
+      wilmington:
+        exists: true
+        sha256: 26c42877443b8796cc90b71d2c1b8fd349b59707c753ca98612f7443d82ab9ac
+        size_bytes: 2233
+        lfs_materialized: true
+        file_count: 1
         asof: null
         stale: false
   hydrology-swmm:
@@ -3208,10 +3350,10 @@ entries:
     site_scope: site:troy-piqua
   urbana:
     exists: true
-    sha256: db79cbddca878a3d7c25dc8dc24b9071b1394bcb17455ce5dc603367a4556663
-    size_bytes: 167941
+    sha256: 71f2113c30d1145f827210a91001183bd7a5bfdddd01a8c1cba0e0d47056fa17
+    size_bytes: 161687
     lfs_materialized: true
-    file_count: 11
+    file_count: 10
     missing: []
     asof: null
     stale: false

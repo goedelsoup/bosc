@@ -1,6 +1,6 @@
 {
   "site": "mansfield",
-  "catalog_version": "2e34d9839846a3f14838c8a23cf86e4aff0dae7f806edb720e88fa35fabf3a74",
+  "catalog_version": "c94372bcc0f678d6a9904994d39cd9f27c349386f8f754fce089fc3c2b1958b2",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:mansfield:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:mansfield:bundle-records",
       "kind": "dataset",
       "site": "mansfield",
@@ -825,6 +833,14 @@
       "site": "mansfield",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:mansfield:hydrology-routing",
+      "kind": "dataset",
+      "site": "mansfield",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

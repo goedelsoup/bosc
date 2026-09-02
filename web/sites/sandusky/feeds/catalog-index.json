@@ -1,6 +1,6 @@
 {
   "site": "sandusky",
-  "catalog_version": "6caa9783fcc9c8c94dd5e9ce438cb8662cb9ba739ae3317e14b3b36b5a99292e",
+  "catalog_version": "b3a7b7eff561cf52d8f1e6e5ffd0c67e6986dab41e98a03adf8773e2aa855b67",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:sandusky:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "sandusky",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:sandusky:bundle-records",
       "kind": "dataset",
       "site": "sandusky",
@@ -825,6 +833,14 @@
       "site": "sandusky",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:sandusky:hydrology-routing",
+      "kind": "dataset",
+      "site": "sandusky",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

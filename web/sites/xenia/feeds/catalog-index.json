@@ -1,6 +1,6 @@
 {
   "site": "xenia",
-  "catalog_version": "7f3b7dc64018c3e1fcaa6c187ba290898fd0acca1a28b75557ad22d9eb4c0b93",
+  "catalog_version": "0889effd6b2282664d5d495d88982bd6154dca4251f2c0b6c8c1c8e924268cff",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:xenia:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:xenia:bundle-records",
       "kind": "dataset",
       "site": "xenia",
@@ -833,6 +841,14 @@
       "site": "xenia",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:xenia:hydrology-routing",
+      "kind": "dataset",
+      "site": "xenia",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

@@ -422,6 +422,62 @@
     }
   },
   {
+    "id": "bosc-site-footprint",
+    "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+    "scope": "extracted",
+    "collection": "extracted",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Hand-authored per-site footprint record — the boundary drawn from that site's committed parcel GIS (reference/<site>/parcel-assemblage.geojson), planar acreage measured from the same geometry, hydrologic soil group from a SSURGO read over it, and every quantity tagged with its own source kind",
+    "external_url": null,
+    "license": "Public record (county auditor CAMA / recorded instruments); BOSC-derived measurements",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "footprint",
+      "campus",
+      "parcels",
+      "acreage",
+      "ssurgo",
+      "places",
+      "per-site"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/{site}/bosc-site-footprint.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": false,
+      "sha256": null,
+      "size_bytes": 0,
+      "lfs_materialized": true,
+      "file_count": 0,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": {
+      "sites_present": 9,
+      "sites_total": 26
+    },
+    "citation": {
+      "source": "Hand-authored per-site footprint record — the boundary drawn from that site's committed parcel GIS (reference/<site>/parcel-assemblage.geojson), planar acreage measured from the same geometry, hydrologic soil group from a SSURGO read over it, and every quantity tagged with its own source kind",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "bowling-green-apollo-power",
     "title": "Bowling Green — Apollo Power Generation Facility, OPSB 25-0973-EL-BLN + Ohio EPA PTI P0139272 (Extractions)",
     "scope": "extracted",
@@ -1567,9 +1623,9 @@
   },
   {
     "id": "datacenter-facility-wwtp-in0032191-wwtp-receiving-water",
-    "title": "Fort Wayne WWTP (NPDES IN0032191) Receiving-Water, Facility & Site-Footprint Characterization",
+    "title": "Fort Wayne WWTP (NPDES IN0032191) Receiving-Water & Facility Characterization",
     "scope": "extracted",
-    "collection": "extracted",
+    "collection": "fort-wayne",
     "status": "reviewed",
     "producer_kind": "extracted",
     "command": "dmr IN0032191 --start 2023-01-01 --end 2023-12-31 --design-flow 74.0",
@@ -1591,32 +1647,27 @@
     ],
     "storage": [
       {
-        "relpath": "extracted/{site}/datacenter-facility.md",
+        "relpath": "extracted/fort-wayne/datacenter-facility.md",
         "media_type": "text/markdown",
         "lfs": false
       },
       {
-        "relpath": "extracted/{site}/wwtp-in0032191.dmr.yaml",
+        "relpath": "extracted/fort-wayne/wwtp-in0032191.dmr.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/{site}/wwtp-receiving-water.md",
+        "relpath": "extracted/fort-wayne/wwtp-receiving-water.md",
         "media_type": "text/markdown",
-        "lfs": false
-      },
-      {
-        "relpath": "extracted/{site}/bosc-site-footprint.yaml",
-        "media_type": "application/x-yaml",
         "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "ad65ad42d704884a40739b4517b9c965653569d494989912fa761e40f022c238",
-      "size_bytes": 169184,
+      "sha256": "d5aade1e9cb5ed2cef93e0e8f6dfd6b7c3b3fe8a98b102311dd268a0649e078b",
+      "size_bytes": 25015,
       "lfs_materialized": true,
-      "file_count": 13,
+      "file_count": 3,
       "stale": false,
       "asof": null
     },
@@ -2386,12 +2437,12 @@
     ],
     "storage": [
       {
-        "relpath": "extracted/idem/{site}/47378f.idem.yaml",
+        "relpath": "extracted/idem/fort-wayne/47378f.idem.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/idem/{site}/wqc001454.idem.yaml",
+        "relpath": "extracted/idem/fort-wayne/wqc001454.idem.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       }
@@ -6992,11 +7043,6 @@
         "lfs": false
       },
       {
-        "relpath": "extracted/urbana/bosc-site-footprint.yaml",
-        "media_type": "application/yaml",
-        "lfs": false
-      },
-      {
         "relpath": "extracted/urbana/land-assembly.yaml",
         "media_type": "application/yaml",
         "lfs": false
@@ -7039,10 +7085,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "db79cbddca878a3d7c25dc8dc24b9071b1394bcb17455ce5dc603367a4556663",
-      "size_bytes": 167941,
+      "sha256": "71f2113c30d1145f827210a91001183bd7a5bfdddd01a8c1cba0e0d47056fa17",
+      "size_bytes": 161687,
       "lfs_materialized": true,
-      "file_count": 11,
+      "file_count": 10,
       "stale": false,
       "asof": null
     },
@@ -10169,16 +10215,6 @@
         "lfs": false
       },
       {
-        "relpath": "reference/hydrology/routing.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/{site}/routing.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
         "relpath": "reference/hydrology/lima/sanitary-basis.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -10216,10 +10252,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5c8f0b45757446cb84337355e5e28b2a67e1160db98f3bd8cb8ba351b4dfe09a",
-      "size_bytes": 208425,
+      "sha256": "3a365628580f60f63e52eb9c3f529bf4d3fda0f16ba5209a6f74478570530a30",
+      "size_bytes": 184024,
       "lfs_materialized": true,
-      "file_count": 26,
+      "file_count": 20,
       "stale": false,
       "asof": null
     },
@@ -10538,6 +10574,67 @@
       "confidence": "medium",
       "note": "watermark reaches --write",
       "verified": true
+    }
+  },
+  {
+    "id": "hydrology-routing",
+    "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
+    "scope": "reference",
+    "collection": "hydrology",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Hand-authored per-site routing table — each WWTP→stream route and its permitted average design flow transcribed from that plant's own Ohio EPA NPDES permit or fact sheet in the corpus and cited per route; Lima's BOSC forcemain graph additionally from the Periplus watch-items forcemain features",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43); BOSC-curated",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "hydrology",
+      "routing",
+      "npdes",
+      "design-flow",
+      "receiving-water",
+      "forcemain",
+      "per-site"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/hydrology/routing.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/{site}/routing.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "d44228c8ba3257e7ade54ffc26a31baa948a8beee93809becd8c8d0bea483872",
+      "size_bytes": 4078,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": {
+      "sites_present": 6,
+      "sites_total": 26
+    },
+    "citation": {
+      "source": "Hand-authored per-site routing table — each WWTP→stream route and its permitted average design flow transcribed from that plant's own Ohio EPA NPDES permit or fact sheet in the corpus and cited per route; Lima's BOSC forcemain graph additionally from the Periplus watch-items forcemain features",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {

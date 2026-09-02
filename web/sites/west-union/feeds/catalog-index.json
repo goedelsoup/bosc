@@ -1,6 +1,6 @@
 {
   "site": "west-union",
-  "catalog_version": "cc2e17bf991dcab0d51f8bc215394def1dbe6df67db89e8978b6653faeb7eeca",
+  "catalog_version": "75b5aafcedef5c0c2842cdabdf0cca02efd4448825a282bce67f3a9069330289",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -636,6 +636,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:west-union:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:west-union:bundle-records",
       "kind": "dataset",
       "site": "west-union",
@@ -841,6 +849,14 @@
       "site": "west-union",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:west-union:hydrology-routing",
+      "kind": "dataset",
+      "site": "west-union",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

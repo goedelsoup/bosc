@@ -1,6 +1,6 @@
 {
   "site": "portsmouth",
-  "catalog_version": "474bb71f2f2d2367108e4fd7d9489208efd949d5ef8c4cd518107691c200978c",
+  "catalog_version": "a03c53e1320ce08c354dfc788632d2e4d65f3f78f539a222e6c5c0105a80dc15",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:portsmouth:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "portsmouth",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:portsmouth:bundle-records",
       "kind": "dataset",
       "site": "portsmouth",
@@ -825,6 +833,14 @@
       "site": "portsmouth",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:portsmouth:hydrology-routing",
+      "kind": "dataset",
+      "site": "portsmouth",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

@@ -2,9 +2,9 @@
   "site": "xenia",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-09-02T21:52:04+00:00",
+  "generated_at": "2026-09-02T23:49:10+00:00",
   "feed_count": 28,
-  "row_total": 418,
+  "row_total": 420,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 56
+      "count": 58
     },
     {
       "name": "facts",
