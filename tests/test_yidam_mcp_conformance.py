@@ -23,6 +23,7 @@ in full.
 from __future__ import annotations
 
 import json
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
@@ -89,11 +90,10 @@ def test_capabilities_are_declared_honestly() -> None:
     assert caps["phases"] is False and caps["sangha"] is False
     # The Agent SDK's in-process servers register tools only; there is no `resources/*` channel.
     assert caps["resources"] is False
-    # `ontology` backs the CLASS CONTRACT — what a class declares it may link to. The mirror
-    # writes a `<class>.ont.yml` per class and each declares only `class:` + `description:`, so
-    # there is an ontology and it says nothing about edges. Declaring true would pass 22 cases
-    # by accident; #2132 is where it changes.
-    assert caps["ontology"] is False
+    # `ontology` backs the CLASS CONTRACT — what a class declares it may link to. Since #2132
+    # each class declares its properties and the relationships it licenses, so this is now
+    # backed rather than declined, and all four ontology tools are served.
+    assert caps["ontology"] is True
     # `check_citation` resolves into a tonpa dependency. BOSC pins none.
     assert caps["dependencies"] is False
     assert isinstance(caps["retrieve"]["vector"], bool)
@@ -144,14 +144,21 @@ async def test_upstream_case_shape(case_id: str, case: dict[str, Any]) -> None:
     # something else that passes.
     if tool == "retrieve" and "results" in case["expect"].get("nonEmpty", []):
         call["query"] = "water"
-    # A case whose EXPECTATION names a fixture class cannot be re-pointed without rewriting the
-    # assertion, which is grading a second implementation. Skip it by name and assert the rule
-    # it encodes against this corpus below.
+    # A case whose CALL or EXPECTATION names a fixture class cannot be re-pointed without
+    # rewriting the assertion, which is grading a second implementation. Skip it by name and
+    # assert the rule it encodes against this corpus below.
     for wanted in case["expect"].get("everyItemHas", {}).values():
         if (klass := wanted.get("class")) and klass not in yidam_tools.CLASSES:
             pytest.skip(f"case pins the fixture class `{klass}`; the rule is asserted separately")
-    if (klass := call.get("class")) and tool == "retrieve" and klass not in yidam_tools.CLASSES:
+    if (klass := call.get("class")) and klass not in yidam_tools.CLASSES:
         pytest.skip(f"case pins the fixture class `{klass}`; the rule is asserted separately")
+    # `edge_policy` is a property of the CORPUS, not of the server. Upstream's fixture leaves it
+    # unstated, so an undeclared relationship there runs with a diagnostic; BOSC declares
+    # `exhaustive` on all five classes — truthfully, because its mirror is generated — so the
+    # same query is rejected. Both arms are the contract; only one is reachable here, and it is
+    # asserted below along with the other.
+    if case_id == "query/undeclared-relationship-is-a-diagnostic.json":
+        pytest.skip("case needs a non-exhaustive `edge_policy`; both arms are asserted separately")
 
     body = await _call(tool, call)
     expect = case["expect"]
@@ -167,6 +174,13 @@ async def test_upstream_case_shape(case_id: str, case: dict[str, Any]) -> None:
     for name, wanted in expect.get("everyItemHas", {}).items():
         for item in body.get(name, []):
             for key, value in wanted.items():
+                # An INTEGER here is a cardinality of yidam's fixture corpus, not a shape rule —
+                # `rows: 4` says that fixture holds four concepts, and this one holds seventy
+                # seven. It is the same fact `count` carries, which this runner already declines
+                # to assert for the same reason; the rule (every row prices the SAME rows) is
+                # asserted against this corpus below. Every other value is a shape and is checked.
+                if isinstance(value, int) and not isinstance(value, bool):
+                    continue
                 assert item[key] == value, f"{tool}: `{name}[]` not filtered by {key}\n{why}"
     # `equals`/`equalsAt`/`count` name yidam's fixture corpus; the rules they encode are
     # asserted against this corpus in the dedicated tests below.
@@ -180,9 +194,14 @@ async def test_retrieve_is_one_adaptive_tool_and_always_flags_degraded() -> None
     assert body["results"], "the Lima mirror should match a query for 'water'"
     for hit in body["results"]:
         assert set(hit) >= {"path", "class", "label", "text", "score"}
-    # ...and there is no second retrieval tool to choose between.
+    # ...and there is no second RETRIEVAL tool to choose between. `query` is served (#2132) and
+    # is not one: it walks named, directed relationships and takes no free text, so a caller
+    # never has to decide which vector space it is in — which is the decision the split pair
+    # forced and the reason the contract keeps `retrieve` adaptive.
     names = [t.name for t in yidam_tools.ALL_TOOLS]
-    assert "semantic_search" not in names and "query" not in names
+    assert "semantic_search" not in names
+    retrieval = [n for n in names if n in {"retrieve", "semantic_search", "search", "vector"}]
+    assert retrieval == ["retrieve"]
 
 
 async def test_retrieve_reports_degraded_true_without_a_built_index() -> None:
@@ -424,6 +443,223 @@ async def test_check_subject_reads_a_scope_suffix_as_its_own_finding() -> None:
     bare = await _call("check_subject", {"subject": "vendor: prelude into .yidam"})
     assert bare["recognized"] is True and bare["kind"] == "operational"
     assert bare["violations"] == []
+
+
+async def test_query_walks_by_type_where_neighbors_cannot() -> None:
+    """The reason `query` exists beside `neighbors`.
+
+    `neighbors` chains edges in both directions and filters on neither relationship nor
+    direction — it carries both out as labels and reads neither as an input. A server offering
+    only that has typed its graph and left no way to walk by the types.
+    """
+    body = await _call("query", {"query": "concept -related-> concept", "limit": 5})
+    assert body["rejected"] is None and body["absence"] is None
+    assert body["matched"] > 0
+    assert body["returned"] == len(body["results"]) <= 5
+    # `limit` bounds the PROJECTION, not the traversal.
+    assert body["matched"] > body["returned"]
+    for row in body["results"]:
+        assert set(row) >= {"node", "class", "label", "origin"}
+        assert row["origin"] is None, "a local node is attributed to no package"
+
+    # The same relationship, walked backwards, is a different question with a real answer.
+    back = await _call("query", {"query": "concept <-related- concept"})
+    assert back["rejected"] is None and back["matched"] > 0
+
+
+async def test_every_declared_edge_traverses_and_lands_on_its_declared_class() -> None:
+    """The ontology is a promise about the corpus; this is the test that it is kept.
+
+    A relationship a class licenses and no instance authors comes back from a traversal exactly
+    as a mistyped name would — which is why the absence codes split the two. Walking every
+    declared edge is how a projection bug in `resolve_link_target` surfaces as a failure here
+    rather than as a quietly empty answer somewhere downstream.
+    """
+    for owner, ont in corpus_mirror.ONTOLOGY.items():
+        for edge in ont.edges:
+            body = await _call("query", {"query": f"{owner} -{edge.relationship}-> {edge.target}"})
+            assert body["rejected"] is None, f"{owner} -{edge.relationship}->: {body['rejected']}"
+            assert body["matched"] > 0, (
+                f"`{owner}` declares `{edge.relationship}` and no instance authors it — "
+                f"the ontology reached past the corpus, or the projection stopped writing it"
+            )
+            for row in body["results"]:
+                assert row["class"] == edge.target
+
+
+async def test_a_mistyped_class_is_rejected_with_the_near_miss() -> None:
+    """Without an ontology every class name is accepted and a misspelling comes back as zero
+    results — the one failure this tool exists to prevent."""
+    body = await _call("query", {"query": "concpet"})
+    assert body["rejected"]["code"] == "unknown-class"
+    assert "concept" in body["rejected"]["message"], "a rejection without the near miss is a shrug"
+    assert body["absence"] is None, "a typo is not a true negative"
+    assert body["results"] == []
+
+
+async def test_an_unlicensed_relationship_is_rejected_because_this_corpus_is_closed() -> None:
+    """BOSC declares `edge_policy: exhaustive` on every class, and it is entitled to.
+
+    The mirror is **generated**, so its relationship vocabulary is closed by construction: a
+    relationship outside the declaration is a bug in `corpus_mirror`, not a coinage somebody
+    made deliberately. That is exactly what an exhaustive policy turns into an error.
+    """
+    assert all(o.edge_policy == "exhaustive" for o in corpus_mirror.ONTOLOGY.values())
+    body = await _call("query", {"query": "concept -enables-> concept"})
+    assert body["rejected"]["code"] == "unlicensed-edge"
+
+    # A hop that IS licensed but lands somewhere else is its own code, because the repair is
+    # different: the relationship is right and the destination is wrong.
+    wrong = await _call("query", {"query": "concept -related-> artifact"})
+    assert wrong["rejected"]["code"] == "edge-target-class"
+
+
+async def test_an_undeclared_relationship_only_runs_when_the_policy_is_not_exhaustive(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The arm this corpus cannot reach, asserted rather than assumed.
+
+    A non-empty `edges:` says *these relationships exist*, not *and no others may*. Reading
+    every declaration as exhaustive refuses legal queries against every corpus written before
+    `edge_policy` existed — upstream measured 210 such errors on a compliant corpus. So under
+    any other policy an undeclared relationship is a DIAGNOSTIC on a query that runs, and
+    `rejected` stays null.
+    """
+    from watermark.agent import corpus_query
+
+    open_concept = replace(corpus_mirror.ONTOLOGY["concept"], edge_policy="characteristic")
+    monkeypatch.setitem(corpus_query.ONTOLOGY, "concept", open_concept)
+
+    steps, parse_rejection = corpus_query.parse("concept -leads-to-> concept")
+    assert parse_rejection is None
+    rejection, diagnostics = corpus_query.typecheck(steps)
+    assert rejection is None, "a warning is not a rejection"
+    assert [d.code for d in diagnostics] == ["undeclared-relationship"]
+    assert diagnostics[0].level == "warn"
+
+
+async def test_a_well_formed_query_that_matches_nothing_is_an_absence_not_a_rejection() -> None:
+    """`rejected` says the query is wrong; `absence` says the query is right and the corpus is
+    quiet. Both keys are present on every response and at most one is non-null — a server that
+    merged them would tell a caller its mistake was a true negative."""
+    body = await _call("query", {"query": "hypothesis[status=nosuchstatus]"})
+    assert body["rejected"] is None
+    assert body["absence"]["code"] == "predicate-unsatisfied"
+    # `instances` is the DENOMINATOR the message is about — none of three and none of nine
+    # hundred are different facts about a corpus.
+    assert body["absence"]["instances"] > 0
+    assert body["absence"]["elsewhere"] == [], "no dependency is installed to point at"
+
+
+async def test_a_star_step_narrows_to_the_classes_that_declare_the_property() -> None:
+    body = await _call("query", {"query": "*[claim_tag=open]"})
+    assert body["rejected"] is None and body["matched"] > 0
+    assert body["steps"][0]["class"] == "*"
+    # `claim_tag` is declared by `question` alone, so `*` is one class here, not five.
+    assert body["steps"][0]["classes"] == ["question"]
+    assert [d["level"] for d in body["diagnostics"]] == ["info"]
+    assert all(row["class"] == "question" for row in body["results"])
+
+    # ...and it agrees with the tool that answers the same question a different way.
+    opens = await _call("open_questions", {})
+    assert body["matched"] == len(opens["open_questions"])
+
+
+async def test_the_anchor_carries_degraded_and_only_the_entry_step_may_have_one() -> None:
+    """`degraded` lives on the anchor, never at the top level: a query with no anchor performed
+    no retrieval, and a `false` up there would read as retrieval having succeeded."""
+    body = await _call("query", {"query": 'concept~"water quality"', "anchor_k": 2})
+    assert body["rejected"] is None
+    assert body["anchor"]["step"] == 0 and body["anchor"]["k"] == 2
+    assert (body["anchor"]["degraded_reason"] is None) is (body["anchor"]["degraded"] is False)
+    assert len(body["anchor"]["entries"]) <= 2
+
+    later = await _call("query", {"query": 'concept -related-> concept~"x"'})
+    assert later["rejected"]["code"] == "anchor-not-entry"
+
+
+async def test_estimate_prices_the_same_rows_at_every_projection_and_returns_none() -> None:
+    """Cheap for the caller, not for the server. A conforming server MUST NOT return rows."""
+    body = await _call("estimate", {"query": "concept"})
+    assert body["projections"] and body["basis"] == "chars/4"
+    assert "results" not in body, "a quote that returns the rows is the call, not a quote"
+    rows = {p["rows"] for p in body["projections"]}
+    assert len(rows) == 1, "every projection must price the SAME match set"
+    # Cheapest first, and `tokens` is `chars // 4` throughout — one approximation, named.
+    assert [p["chars"] for p in body["projections"]] == sorted(
+        p["chars"] for p in body["projections"]
+    )
+    assert all(p["tokens"] == p["chars"] // 4 for p in body["projections"])
+    # `fits` is null exactly when no budget was quoted.
+    assert all(p["fits"] is None for p in body["projections"])
+
+    budgeted = await _call("estimate", {"query": "concept", "budget": 1})
+    assert all(p["fits"] is False for p in budgeted["projections"])
+
+
+async def test_a_pack_says_why_in_its_own_text_when_it_is_empty() -> None:
+    """A pack travels WITHOUT the envelope around it, so an empty one that says nothing is a
+    context window asserting the corpus has no view — the invention the field exists to
+    prevent. A server carrying the reason in `absence` alone passes every JSON assertion and
+    hands a model a blank page."""
+    body = await _call("pack", {"query": "concpet"})
+    assert body["rejected"]["code"] == "unknown-class"
+    assert body["text"], "an empty pack must still say why"
+    assert "concept" in body["text"]
+
+    full = await _call("pack", {"query": "hypothesis"})
+    assert full["written"] == full["reachable"] and full["omitted"] == 0
+    assert full["budget"]["tokens"] is None and full["budget"]["basis"] == "chars/4"
+
+    # A budget changes what is WRITTEN and never what was reachable.
+    tight = await _call("pack", {"query": "hypothesis", "budget": 1})
+    assert tight["reachable"] == full["reachable"]
+    assert tight["omitted"] > 0 and sum(tight["omitted_by_class"].values()) == tight["omitted"]
+
+
+async def test_licensed_edges_reports_both_ends_and_distinguishes_silence(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """`declares_edges: false` means the class SAID NOTHING, not that it licenses nothing.
+
+    The two answers look alike and mean opposite things; a client that collapses them reports
+    every instance in a half-filled corpus. Every BOSC class declares edges, so the false arm is
+    only reachable with an ontology that does not — asserted here rather than left untested.
+    """
+    from watermark.agent import corpus_query
+
+    body = await _call("licensed_edges", {"class": "artifact"})
+    assert body["declares_edges"] is True
+    directions = {e["direction"] for e in body["edges"]}
+    # An edge is documented from BOTH ends — the licensing check ignores direction, so
+    # filtering to `out` would answer a question the gate does not ask.
+    assert directions == {"in", "out"}
+    for edge in body["edges"]:
+        assert set(edge) >= {"relationship", "target", "direction"}
+
+    silent = replace(corpus_mirror.ONTOLOGY["hypothesis"], edges=())
+    monkeypatch.setitem(corpus_query.ONTOLOGY, "hypothesis", silent)
+    monkeypatch.setitem(yidam_tools.ONTOLOGY, "hypothesis", silent)
+    quiet = await _call("licensed_edges", {"class": "hypothesis"})
+    assert quiet["declares_edges"] is False
+    assert "not the same as licensing none" in quiet["note"]
+
+
+async def test_cost_is_what_the_caller_pays_not_what_the_server_read() -> None:
+    """`nodes_read` counts nodes whose content was evaluated, tested for a hop, or projected —
+    never the corpus load, which happens either way. Class narrowing is a directory listing and
+    is not charged; a predicate reads every candidate it tests."""
+    listing = await _call("query", {"query": "concept", "limit": 3})
+    assert listing["cost"]["corpus_nodes"] > listing["cost"]["nodes_read"]
+    assert listing["cost"]["nodes_read"] == 3, "only the projected rows were read"
+
+    # A predicate reads every candidate it tests — but only after `*` has narrowed to the
+    # classes declaring the property, and that narrowing is a directory listing. So the charge
+    # is the size of the narrowed class, not of the corpus: 35 questions, not 234 nodes.
+    predicated = await _call("query", {"query": "*[claim_tag=open]"})
+    questions = await _call("list_nodes", {"class": "question"})
+    assert predicated["cost"]["nodes_read"] == len(questions["nodes"])
+    assert predicated["cost"]["nodes_read"] < predicated["cost"]["corpus_nodes"]
 
 
 async def test_a_missing_node_is_a_tool_error_not_a_crash() -> None:

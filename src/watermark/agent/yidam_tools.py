@@ -47,10 +47,12 @@ from typing import Any
 import yaml
 from claude_agent_sdk import create_sdk_mcp_server, tool
 
+from watermark.agent import corpus_query
 from watermark.agent.tracing import traced_tool
 from watermark.config import Settings, get_settings
 from watermark.site.corpus_mirror import (
     CLASSES,
+    ONTOLOGY,
     Mirror,
     MirrorNode,
     build_mirror,
@@ -374,9 +376,11 @@ _STATIC_CAPABILITIES: dict[str, Any] = {
     # holds nodes and edges and an ontology that says nothing about either, which is precisely
     # the case the contract anticipates: *"it can back `graph` and not this. Optional is not
     # absent: such a server declares false and its cases are skipped rather than passed."*
-    # Declaring true before `_ont_yaml` has something to say would pass 22 cases by accident.
-    # #2132 is where this changes.
-    "ontology": False,
+    # #2132 gave it something to say: each class declares the properties its instances carry
+    # and the relationships it licenses, with `edge_policy: exhaustive` — truthful because the
+    # mirror is generated, so a relationship outside the declaration is a bug in
+    # `corpus_mirror` rather than a coinage.
+    "ontology": True,
     # `check_citation` resolves citations INTO a tonpa dependency — another corpus this one
     # pins and reads. BOSC pins none, so there is no far side for a span to have drifted from.
     "dependencies": False,
@@ -977,6 +981,272 @@ async def neighbors(args: dict[str, Any]) -> dict[str, Any]:
     return _json({"id": start.id, "neighbors": neighbors_of(mirror, start.id, depth)})
 
 
+# --- the ontology tools (#2132) ---------------------------------------------------------------
+# All four are `ontology`-tier, which is ONE capability: there is no way to serve `licensed_edges`
+# and withhold `query`. Declaring it means backing every one of them, and the engine they share
+# lives in `corpus_query` rather than here — `yidam_tools` is the MCP surface.
+
+
+def _query_envelope(run: corpus_query.Execution, *, across: bool = False) -> dict[str, Any]:
+    """The fields every ontology response shares, in the discipline the contract sets.
+
+    `rejected` and `absence` are both present on every response and **at most one is non-null**.
+    A rejection says the query is wrong; an absence says the query is right and the corpus is
+    quiet. A server that merged them would tell a caller its typo was a true negative.
+    """
+    return {
+        "query": run.query,
+        # `scope` reports what was ASKED FOR, not what was found: a spanning query over a
+        # repository with no installed dependency is still a spanning query, and answering
+        # `local` would tell the caller its flag was ignored. BOSC pins no tonpa dependency, so
+        # the reachable set is identical either way and every result carries `origin: null`.
+        "scope": "across" if across else "local",
+        "rejected": run.rejected.to_dict() if run.rejected else None,
+        "absence": run.absence.to_dict() if run.absence else None,
+        "diagnostics": [d.to_dict() for d in run.diagnostics],
+        "cost": run.cost.to_dict(),
+    }
+
+
+_QUERY = _spec("query")
+
+
+@tool(_QUERY["name"], _QUERY["description"], _QUERY["inputSchema"])
+@traced_tool
+async def query(args: dict[str, Any]) -> dict[str, Any]:
+    """A typed path over the graph — the walk `neighbors` cannot express.
+
+    `neighbors` chains edges in both directions and filters on neither relationship nor
+    direction. This reads both as inputs, and rejects a path the ontology does not license
+    instead of returning the zero results a misspelling would otherwise produce.
+    """
+    args = args or {}
+    settings = get_settings()
+    select, bad_field = corpus_query.parse_select(args.get("select"))
+    run = corpus_query.execute(
+        _mirror(settings),
+        str(args.get("query") or ""),
+        anchor_k=max(1, int(args.get("anchor_k") or 1)),
+        vector_ready=vector_ready(settings),
+    )
+    if bad_field is not None and run.rejected is None:
+        run.rejected = bad_field
+
+    limit = max(1, int(args.get("limit") or 50))
+    # `limit` bounds the PROJECTION, not the traversal — `matched` is always the full count.
+    rows = [corpus_query.project(n, select) for n in run.matched[:limit]]
+    run.cost.read(n.id for n in run.matched[:limit])
+    body = {
+        "kind": "query",
+        **_query_envelope(run, across=bool(args.get("across"))),
+        # A LIST, not a count. `steps[i].classes` is what a `*` narrowed to, which is the
+        # difference between "every class" and "the one that declares the property".
+        "steps": [
+            {
+                "step": i,
+                "class": step.node_class,
+                "classes": list(run.step_classes[i]) if i < len(run.step_classes) else [],
+                "relationship": step.relationship,
+                "direction": step.direction if step.relationship else None,
+                "predicate": list(step.predicate) if step.predicate else None,
+            }
+            for i, step in enumerate(run.steps)
+        ],
+        "anchor": run.anchor,
+        "at": run.at,
+        "results": rows,
+        "matched": len(run.matched),
+        "returned": len(rows),
+        # This corpus declares a class contract, so a query here is never answered blind. The
+        # `true` arm is only reachable from a CLI pointed at a corpus with no ontology — a
+        # server holding one declares `ontology: false` and serves no `query` at all.
+        "unschematised": False,
+    }
+    body["cost"] = run.cost.to_dict()
+    return _json(body)
+
+
+_PACK = _spec("pack")
+
+
+@tool(_PACK["name"], _PACK["description"], _PACK["inputSchema"])
+@traced_tool
+async def pack(args: dict[str, Any]) -> dict[str, Any]:
+    """The whole answer to a query, filled to a budget, with an account of what did not fit.
+
+    `retrieve` returns top-k and says nothing about the rest; this says what was reachable and
+    what was left out, by class — which is the difference between a caller that knows it has a
+    partial view and one that does not.
+    """
+    args = args or {}
+    settings = get_settings()
+    run = corpus_query.execute(
+        _mirror(settings),
+        str(args.get("query") or ""),
+        anchor_k=max(1, int(args.get("anchor_k") or 1)),
+        vector_ready=vector_ready(settings),
+    )
+    budget = args.get("budget")
+    budget = int(budget) if budget is not None else None
+
+    written: list[str] = []
+    omitted: list[MirrorNode] = []
+    elided = 0
+    for node in run.matched:
+        rendered = f"## {node.label}\n\n{node.description}".rstrip()
+        # `budget` is in TOKENS, and tokens are chars/4 by the same approximation `cost` uses.
+        if budget is not None and (sum(len(w) for w in written) + len(rendered)) // 4 > budget:
+            omitted.append(node)
+            continue
+        written.append(rendered)
+    run.cost.read(n.id for n in run.matched)
+    run.cost.chars = sum(len(w) for w in written)
+
+    by_class: dict[str, int] = {}
+    for node in omitted:
+        by_class[node.node_class] = by_class.get(node.node_class, 0) + 1
+
+    body = "\n\n".join(written)
+    if not body:
+        # **The diagnosis goes in `text`, not only in `absence`.** A pack is what a caller reads
+        # *as* the corpus, and it travels without the envelope around it — so an empty one that
+        # says nothing is a context window asserting the corpus has no view, which is the exact
+        # invention this field exists to prevent. A server carrying the reason in the sibling
+        # field alone passes every JSON assertion and hands a model a blank page.
+        if run.rejected is not None:
+            body = f"No pack: {run.rejected.message}"
+        elif run.absence is not None:
+            body = f"No pack: {run.absence.message}"
+        else:
+            body = "No pack: the query matched nothing in this corpus."
+
+    return _json(
+        {
+            **_query_envelope(run),
+            "anchor": run.anchor,
+            "reachable": len(run.matched),
+            "written": len(written),
+            "elided": elided,
+            "omitted": len(omitted),
+            "omitted_by_class": by_class,
+            "budget": {"tokens": budget, "basis": "chars/4"},
+            "text": body,
+        }
+    )
+
+
+_ESTIMATE = _spec("estimate")
+
+#: The projections priced, cheapest first. Every entry prices the SAME match set at a different
+#: `select`, because the caller's decision is not *whether* to ask but how much of each node.
+_PROJECTIONS = ("node", "node,class,label", "node,class,label,description", "node,class,label,body")
+
+
+@tool(_ESTIMATE["name"], _ESTIMATE["description"], _ESTIMATE["inputSchema"])
+@traced_tool
+async def estimate(args: dict[str, Any]) -> dict[str, Any]:
+    """What a query would cost, before paying for it — and **no rows**.
+
+    Cheap for the caller, not for the server, and that asymmetry is the point: knowing exactly
+    what a query costs means running it, so a quote is the answer with the prose withheld. The
+    traversal runs **exactly once** — a quote that resolved a similarity anchor twice would
+    charge double for the thing it exists to call affordable.
+    """
+    args = args or {}
+    settings = get_settings()
+    run = corpus_query.execute(
+        _mirror(settings),
+        str(args.get("query") or ""),
+        anchor_k=max(1, int(args.get("anchor_k") or 1)),
+        vector_ready=vector_ready(settings),
+    )
+    limit = max(1, int(args.get("limit") or 50))
+    budget = args.get("budget")
+    budget = int(budget) if budget is not None else None
+    priced = run.matched[:limit]
+    run.cost.read(n.id for n in priced)
+
+    projections = []
+    for select in _PROJECTIONS:
+        fields, _ = corpus_query.parse_select(select)
+        # `chars` is the EXACT serialized length of the payload that would come back, not an
+        # estimate — a server that rounded it would break the only promise here.
+        chars = len(
+            json.dumps([corpus_query.project(n, fields) for n in priced], ensure_ascii=False)
+        )
+        projections.append(
+            {
+                "select": select,
+                # The same match set at every projection — the caller has its question either
+                # way; what it chooses is how much of each node to ask for.
+                "rows": len(priced),
+                "chars": chars,
+                "tokens": chars // 4,
+                # Null exactly when no budget was given: a verdict nobody asked for is not one.
+                "fits": None if budget is None else chars // 4 <= budget,
+            }
+        )
+
+    return _json(
+        {
+            **_query_envelope(run),
+            "matched": len(run.matched),
+            "limit": limit,
+            "budget": budget,
+            "projections": projections,
+            # What `pack` would cost for this query — the widest projection, since a pack
+            # renders prose. An object rather than a number so the verdict travels with it.
+            "pack": {
+                "nodes": len(priced),
+                "chars": projections[-1]["chars"],
+                "tokens": projections[-1]["tokens"],
+                "fits": projections[-1]["fits"],
+            },
+            # `chars` is exact; `tokens` is this, and naming it is what keeps a caller holding a
+            # real tokenizer from mistaking the approximation for a measurement.
+            "basis": "chars/4",
+        }
+    )
+
+
+_LICENSED_EDGES = _spec("licensed_edges")
+
+
+@tool(_LICENSED_EDGES["name"], _LICENSED_EDGES["description"], _LICENSED_EDGES["inputSchema"])
+@traced_tool
+async def licensed_edges(args: dict[str, Any]) -> dict[str, Any]:
+    """What a class declares it may link to — asked before writing a link.
+
+    **`declares_edges: false` does not mean the class licenses nothing.** It means the class has
+    said nothing and the gate skips it. The two answers look alike and mean opposite things, and
+    a client that collapses them reports every instance in a half-filled corpus. `note` states
+    which case this is in words, so a client reading only prose still gets it right.
+    """
+    node_class = str((args or {}).get("class") or "")
+    if not node_class:
+        return _error("missing required argument: class")
+    if node_class not in CLASSES:
+        return _error(f"unknown class {node_class!r}. Valid: {_CLASS_LIST}.")
+    edges = corpus_query.licensed_edges(node_class)
+    declares = bool(ONTOLOGY[node_class].edges)
+    return _json(
+        {
+            "class": node_class,
+            "declares_edges": declares,
+            "edges": edges,
+            "note": (
+                f"`{node_class}` declares {len(ONTOLOGY[node_class].edges)} relationship(s) and "
+                f"is party to {len(edges)} in total, counting the ones other classes author into "
+                f"it. Its `edge_policy` is `{ONTOLOGY[node_class].edge_policy}`, so a "
+                "relationship outside this list is an error rather than a coinage."
+                if declares
+                else f"`{node_class}` has said nothing about its relationships. That is not the "
+                "same as licensing none — the gate skips it, and any relationship is accepted."
+            ),
+        }
+    )
+
+
 # The served list, in contract order. Assembled from `served_tool_names()` so a capability this
 # server stops backing drops its tool rather than leaving one that answers wrongly.
 _HANDLERS: dict[str, Any] = {
@@ -988,6 +1258,10 @@ _HANDLERS: dict[str, Any] = {
     "check_subject": check_subject,
     "claim_tags": claim_tags,
     "neighbors": neighbors,
+    "query": query,
+    "pack": pack,
+    "estimate": estimate,
+    "licensed_edges": licensed_edges,
 }
 ALL_TOOLS = [_HANDLERS[name] for name in served_tool_names()]
 ALLOWED_TOOL_NAMES = [f"mcp__{YIDAM_SERVER_NAME}__{t.name}" for t in ALL_TOOLS]

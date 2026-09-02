@@ -138,8 +138,18 @@ questions where the binary saw 2, and nothing could detect the gap.
   (which also vendors `commit_vocabulary.json`, the closed commit list `check_subject` serves);
   CI proves both copies match the pin. Tool names, descriptions and schemas come **from that
   file** — never hand-written, and the served list is **derived** from it, so a tool added
-  upstream is an `ImportError` rather than a tool that quietly does not exist. BOSC serves 8 of
-  13 and declines `ontology` and `dependencies` honestly. See `src/watermark/agent/CLAUDE.md`.
+  upstream is an `ImportError` rather than a tool that quietly does not exist. BOSC serves 12 of
+  13 and declines only `dependencies` (it pins no tonpa dependency). See
+  `src/watermark/agent/CLAUDE.md`.
+- **The mirror's classes declare a contract** (#2132): each `<class>.ont.yml` names the
+  properties its instances carry and the relationships it licenses, `edge_policy: exhaustive`,
+  with the genuinely optional properties in `.yidam/corpus/universal.yml`. Declared as data in
+  `corpus_mirror.ONTOLOGY` and rendered from there, so the MCP tools read the same object the
+  binary reads a rendering of. **An instance's provenance nests under `properties:`** — yidam
+  reads properties from that mapping and nowhere else, and the bare top-level keys this
+  projection wrote until #2132 were invisible to the whole ontology layer. Four
+  `missing-property` warnings are deliberate and documented in the declaration; every other
+  ontology check reports zero, and now that means something.
 - ⚠️ **The five baselined `broken-prose-link` findings are LINK_MAP pages — do not "fix" them.**
   `entities.md`, `candidates.md`, `gis-map.md` and `economics-baseline.md` (×2) are legacy
   generated pages that no longer exist as files; `@watermark/core`'s `rehype-doc-links.ts`

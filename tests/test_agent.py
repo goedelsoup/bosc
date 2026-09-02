@@ -278,8 +278,13 @@ def test_yidam_backend_wires_a_second_server_and_can_be_disabled() -> None:
     opts = ResearchAgent()._options()
     assert set(opts.mcp_servers) == {tools.SERVER_NAME, yidam_tools.YIDAM_SERVER_NAME}
     # Bare names — the server is already namespaced by its own name (`mcp__yidam__*`), which
-    # is why the frozen contract drops the redundant `yidam_` prefix.
-    assert opts.allowed_tools[-1] == "mcp__yidam__neighbors"
+    # is why the frozen contract drops the redundant `yidam_` prefix. Asserted over every yidam
+    # tool rather than at a position: this named `[-1] == neighbors` until #2132 appended the
+    # four ontology tools, and a positional check reports "the wrong tool is last" for what is
+    # really "the list grew" — which says nothing about the rule it was defending.
+    yidam_allowed = [t for t in opts.allowed_tools if t.startswith("mcp__yidam__")]
+    assert yidam_allowed == yidam_tools.ALLOWED_TOOL_NAMES
+    assert not any(t.startswith("mcp__yidam__yidam_") for t in yidam_allowed)
     assert "mcp__yidam__retrieve" in opts.allowed_tools
 
     # enable_yidam=False drops the server + its tools, leaving only the base BOSC tools.
