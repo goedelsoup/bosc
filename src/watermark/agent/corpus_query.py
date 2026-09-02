@@ -386,7 +386,12 @@ def typecheck(steps: tuple[Step, ...]) -> tuple[Rejection | None, list[Diagnosti
             classes = CLASSES if step.node_class == "*" else (step.node_class,)
             declaring = [c for c in classes if step.predicate[0] in declared_properties(c)]
             if not declaring:
-                near = _near_miss(step.predicate[0], declared_properties(classes[0]))
+                # Over EVERY candidate, not `classes[0]`: the rejection was decided across all
+                # of them, so drawing the hint from one arbitrary class hides the near miss a
+                # later class would have supplied.
+                near = _near_miss(
+                    step.predicate[0], {p for c in classes for p in declared_properties(c)}
+                )
                 return (
                     Rejection(
                         index,
@@ -484,12 +489,20 @@ def _satisfies(node: MirrorNode, predicate: tuple[str, str]) -> bool:
     return str(value).strip().strip("[]") == wanted.strip("[]")
 
 
-def _keyword_entries(mirror: Mirror, node_class: str, text: str, k: int) -> list[MirrorNode]:
-    """The degraded anchor: term-overlap over the class's instances, best first."""
+def _keyword_entries(
+    mirror: Mirror, node_classes: tuple[str, ...], text: str, k: int
+) -> list[MirrorNode]:
+    """The degraded anchor: term-overlap over the entry step's instances, best first.
+
+    Takes the step's RESOLVED classes, not its written one. `*[rel=owns]~"water"` narrows to the
+    classes that declare `rel` before the anchor runs, so the anchor scores that pool and no
+    other — otherwise it both leaks out-of-class nodes into `anchor.entries` and scores far more
+    candidates than `cost` is charged for.
+    """
     terms = [t for t in re.split(r"\s+", text.lower().strip()) if t]
     if not terms:
         return []
-    pool = [n for n in mirror.nodes if node_class in ("*", n.node_class)]
+    pool = [n for n in mirror.nodes if n.node_class in node_classes]
     scored = []
     for node in pool:
         haystack = node_text(node).lower()
@@ -548,8 +561,11 @@ def execute(
     if entry.anchor is not None:
         # `degraded` lives on the anchor, never at the top level: a query with no anchor
         # performed no retrieval, and a `false` up there would read as retrieval succeeding.
-        entries = _keyword_entries(mirror, entry.node_class, entry.anchor, max(1, anchor_k))
-        run.cost.read(n.id for n in pool)  # a keyword anchor scored every candidate
+        entries = _keyword_entries(mirror, entry_classes, entry.anchor, max(1, anchor_k))
+        # `pool` IS what the anchor scored — same classes, same nodes. The charge is honest only
+        # because those two are built from `entry_classes`; feeding the anchor a wider set would
+        # silently under-bill the most expensive step there is.
+        run.cost.read(n.id for n in pool)
         run.anchor = {
             "step": 0,
             "text": entry.anchor,

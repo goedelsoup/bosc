@@ -159,6 +159,15 @@ async def test_upstream_case_shape(case_id: str, case: dict[str, Any]) -> None:
     # asserted below along with the other.
     if case_id == "query/undeclared-relationship-is-a-diagnostic.json":
         pytest.skip("case needs a non-exhaustive `edge_policy`; both arms are asserted separately")
+    # `everyItemHas: {edges: {target: concept}}` is a fact about YIDAM'S FIXTURE — there,
+    # `concept` happens to link only to concepts. It is not a rule a conforming server can keep:
+    # the contract must admit a corpus whose class links to more than one other, and the case's
+    # own `why` is about DIRECTION, not about targets being uniform. BOSC's `concept` licenses
+    # `related` → `concept` and the `in-corpus` fallback → `artifact`, so it spans two. This
+    # passed before the fallback edges were declared only because the corpus coincided with the
+    # fixture. The rule it carries is asserted over both classes below.
+    if case_id == "licensed_edges/declares-edges.json":
+        pytest.skip("case pins the fixture's single-target vocabulary; the rule is asserted below")
 
     body = await _call(tool, call)
     expect = case["expect"]
@@ -467,6 +476,19 @@ async def test_query_walks_by_type_where_neighbors_cannot() -> None:
     assert back["rejected"] is None and back["matched"] > 0
 
 
+#: The absence each deliberately-unauthored fallback edge produces — and they are NOT the same
+#: code, which is the point of splitting them. Nothing in the corpus authors `in-corpus`, so a
+#: traversal of it is `relationship-unauthored`: the ontology promised a relationship the corpus
+#: has never written. `in-site` **is** authored — by 61 `artifact` nodes — just not by any
+#: `relation`, so the same query from `relation` is `no-edge-from-here`: the name is real and
+#: nothing that reached this step has one. A caller repairs those two differently, which is why
+#: a server that collapsed them would be useless in exactly the case they exist for.
+_FALLBACK_ABSENCE = {
+    ("concept", "in-corpus"): "relationship-unauthored",
+    ("relation", "in-site"): "no-edge-from-here",
+}
+
+
 async def test_every_declared_edge_traverses_and_lands_on_its_declared_class() -> None:
     """The ontology is a promise about the corpus; this is the test that it is kept.
 
@@ -479,12 +501,32 @@ async def test_every_declared_edge_traverses_and_lands_on_its_declared_class() -
         for edge in ont.edges:
             body = await _call("query", {"query": f"{owner} -{edge.relationship}-> {edge.target}"})
             assert body["rejected"] is None, f"{owner} -{edge.relationship}->: {body['rejected']}"
+            if edge.fallback:
+                # A path the projection can take and this corpus has not: the traversal is
+                # legal and finds nothing, which is an ABSENCE and not a rejection.
+                assert body["matched"] == 0
+                assert body["absence"]["code"] == _FALLBACK_ABSENCE[owner, edge.relationship]
+                continue
             assert body["matched"] > 0, (
                 f"`{owner}` declares `{edge.relationship}` and no instance authors it — "
-                f"the ontology reached past the corpus, or the projection stopped writing it"
+                f"the ontology reached past the corpus, or the projection stopped writing it. "
+                f"If the path is a deliberate fallback, mark the edge `fallback=True`."
             )
             for row in body["results"]:
                 assert row["class"] == edge.target
+
+    # The marking is a licence to be unauthored, not a licence to be forgotten: it must stay
+    # rare and deliberate, or the invariant above quietly stops covering the vocabulary.
+    marked = {
+        (owner, e.relationship)
+        for owner, ont in corpus_mirror.ONTOLOGY.items()
+        for e in ont.edges
+        if e.fallback
+    }
+    assert marked == set(_FALLBACK_ABSENCE), (
+        "a new unauthored edge was declared — confirm it is a reachable projection path, "
+        "not an ontology reaching past its corpus, then record which absence it produces"
+    )
 
 
 async def test_a_mistyped_class_is_rejected_with_the_near_miss() -> None:
@@ -637,6 +679,17 @@ async def test_licensed_edges_reports_both_ends_and_distinguishes_silence(
     for edge in body["edges"]:
         assert set(edge) >= {"relationship", "target", "direction"}
 
+    # And the coverage the skipped `declares-edges` case gave up: a class's licensed edges are
+    # NOT constrained to one target class. `concept` licenses `related` → `concept` and the
+    # `in-corpus` fallback → `artifact`, and both must be reported.
+    spanning = await _call("licensed_edges", {"class": "concept"})
+    assert spanning["declares_edges"] is True
+    assert {e["target"] for e in spanning["edges"]} == {"concept", "artifact"}
+    # All outbound here, and that is the honest answer rather than a filtered one: no other
+    # class licenses an edge INTO `concept`, so the inbound view is genuinely empty. `artifact`
+    # above is what proves the inbound half is reported when it exists.
+    assert {e["direction"] for e in spanning["edges"]} == {"out"}
+
     silent = replace(corpus_mirror.ONTOLOGY["hypothesis"], edges=())
     monkeypatch.setitem(corpus_query.ONTOLOGY, "hypothesis", silent)
     monkeypatch.setitem(yidam_tools.ONTOLOGY, "hypothesis", silent)
@@ -667,3 +720,81 @@ async def test_a_missing_node_is_a_tool_error_not_a_crash() -> None:
     result = await handler.handler({"id": "no/such-node"})
     assert result.get("isError") is True
     assert "not found" in result["content"][0]["text"]
+
+
+async def test_a_rejected_select_carries_no_rows() -> None:
+    """A rejection is an answer with nothing in it — including when the *projection* is what
+    was wrong.
+
+    `parse_select` rejects an unprojectable field by returning an empty field list, and the
+    handler went on to project against it: fifty rows of `{"origin": null}` shipped beside a
+    non-null `rejected`. Every JSON assertion passed and the envelope's one invariant — a
+    rejection returns no results — was broken in the only place the suite did not look.
+    """
+    body = await _call("query", {"query": "concept", "select": "nope"})
+    assert body["rejected"]["code"] == "unknown-field"
+    assert body["results"] == [], "a rejected projection must not emit placeholder rows"
+    assert body["returned"] == 0
+    # The traversal still ran and still reports what it found — `matched` is not a projection.
+    assert body["matched"] > 0
+    assert body["absence"] is None, "at most one of `rejected`/`absence` is ever non-null"
+
+
+async def test_the_anchor_scores_only_the_classes_the_step_narrowed_to() -> None:
+    """The entry step applies its class filter to the anchor, not just to the plain pool.
+
+    A hop filters its landings by `step_classes[i]`; the entry step never did, so an anchored
+    `*[property=value]` scored every node in the corpus, reported out-of-class nodes in
+    `anchor.entries`, and was billed for the narrowed pool it did not read. `Cost` says a
+    degraded keyword anchor is charged for every candidate it scored, so that under-bill
+    contradicted the rule in the same file that states it.
+    """
+    body = await _call("query", {"query": '*[claim_tag=open]~"water"'})
+    narrowed = body["steps"][0]["classes"]
+    assert narrowed == ["question"], "`claim_tag` is declared by exactly one class"
+    entries = (body["anchor"] or {}).get("entries", [])
+    assert entries, "the probe needs a non-empty anchor to be about anything"
+    assert {e["class"] for e in entries} <= set(narrowed), "the anchor leaked an out-of-class node"
+    # Charged for what it scored: the narrowed pool, not the whole corpus. Before the fix the
+    # anchor scored all 234 nodes and was billed for the 35 it was narrowed to.
+    questions = await _call("list_nodes", {"class": "question"})
+    everything = await _call("list_nodes", {})
+    assert body["cost"]["nodes_read"] <= len(questions["nodes"])
+    assert len(questions["nodes"]) < len(everything["nodes"]), "the bound must bite"
+
+
+async def test_the_pack_quote_prices_the_pack_and_not_a_projection() -> None:
+    """`estimate.pack` must quote what `pack` would actually return, to the character.
+
+    It quoted the widest *projection* instead — JSON of `node,class,label,body` rather than the
+    markdown `pack` writes — overstating a real Lima pack by 113% while the comment above it
+    promised `chars` was exact. `estimate` exists so a caller can decide affordability; a quote
+    for prose it will never receive is worse than no quote. Both now render through
+    `_render_for_pack`, so the two cannot drift apart again.
+    """
+    quote = await _call("estimate", {"query": "concept"})
+    packed = await _call("pack", {"query": "concept"})
+    assert quote["pack"]["chars"] == len(packed["text"])
+    assert quote["pack"]["tokens"] == len(packed["text"]) // 4
+    # `pack` takes no `limit`, so the quote covers the whole match set — not `estimate`'s page.
+    assert quote["pack"]["nodes"] == packed["written"] == quote["matched"]
+    assert quote["pack"]["fits"] is None, "no budget asked, so no verdict given"
+
+    # And the verdict agrees with what `pack` then does with the same budget.
+    tight = await _call("estimate", {"query": "artifact", "budget": 500})
+    trimmed = await _call("pack", {"query": "artifact", "budget": 500})
+    assert tight["pack"]["fits"] is False
+    assert trimmed["omitted"] > 0, "the quote said it would not fit; the packer must have trimmed"
+
+
+async def test_the_near_miss_is_drawn_from_every_candidate_class() -> None:
+    """A `*` predicate is rejected across all classes, so its hint must come from all of them.
+
+    Reading `classes[0]` drew the suggestion from one arbitrary class and silently dropped the
+    near miss a later class would have supplied — a rejection without the near miss is a shrug.
+    """
+    body = await _call("query", {"query": "*[claimtag=open]"})
+    assert body["rejected"]["code"] == "unknown-property"
+    assert "claim_tag" in body["rejected"]["message"], (
+        "`claim_tag` is declared by `question`, not by the first class searched"
+    )

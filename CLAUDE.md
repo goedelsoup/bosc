@@ -150,6 +150,14 @@ questions where the binary saw 2, and nothing could detect the gap.
   projection wrote until #2132 were invisible to the whole ontology layer. Four
   `missing-property` warnings are deliberate and documented in the declaration; every other
   ontology check reports zero, and now that means something.
+  ⚠️ **Declare every relationship the projection CAN author, not just the ones it did.** Two of
+  them (`concept -in-corpus->`, `relation -in-site->`) are fallback links no instance writes
+  against today's corpus, so a vocabulary read off the emitted mirror looks complete and is not
+  — and under `exhaustive` the first isolated glossary term or unresolved entity key is an
+  **ERROR**, not a warning. Such an edge is marked `fallback=True` (a fact about the projection,
+  never rendered into the YAML), which is what keeps "declared for a path not yet taken" apart
+  from "the ontology reached past its corpus". `test_every_relationship_the_projection_can_author_is_licensed`
+  reads the relationship literals out of the **source** for exactly this reason.
 - ⚠️ **The five baselined `broken-prose-link` findings are LINK_MAP pages — do not "fix" them.**
   `entities.md`, `candidates.md`, `gis-map.md` and `economics-baseline.md` (×2) are legacy
   generated pages that no longer exist as files; `@watermark/core`'s `rehype-doc-links.ts`
