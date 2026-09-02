@@ -2,9 +2,9 @@
   "site": "van-wert",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T04:35:45+00:00",
+  "generated_at": "2026-09-02T21:07:52+00:00",
   "feed_count": 36,
-  "row_total": 809,
+  "row_total": 845,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -285,7 +285,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 110
+      "count": 128
     },
     {
       "name": "corpus-nodes",
@@ -293,7 +293,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 110
+      "count": 128
     },
     {
       "name": "ask-embeddings",

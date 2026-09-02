@@ -1872,6 +1872,8 @@ export type CorpusNodeKind =
   | "lead"
   | "open-question"
   | "relation"
+  /** One committed extraction (#2134) — the corpus the other kinds are derived from. */
+  | "record"
   | "node";
 
 /**
@@ -1879,7 +1881,7 @@ export type CorpusNodeKind =
  *
  * A **projection** feed (`bosc.site.corpus_index`), not a new extraction: it re-reads the projected
  * corpus mirror into a flat, sortable table. `node_class` is the yidam class
- * (`artifact`/`concept`/`hypothesis`/`question`/`relation`); `kind` is the finer BOSC display kind
+ * (`artifact`/`concept`/`hypothesis`/`question`/`record`/`relation`); `kind` is the finer BOSC display kind
  * (an `artifact` is a site anchor, an entity, or a person; a `question` is a lead or an open cell).
  * `links_out` is the node's outgoing-edge count, `links_in` the edges pointing at it, `lines` the
  * serialized-node line count (parity with `yidam corpus-index`). `updated` is the newest commit
@@ -1888,7 +1890,7 @@ export type CorpusNodeKind =
 export interface CorpusNodeItem {
   /** The yidam node id — `<class>/<name>`. */
   id: string;
-  /** The yidam class — `artifact` | `concept` | `hypothesis` | `question` | `relation`. */
+  /** The yidam class — `artifact` | `concept` | `hypothesis` | `question` | `record` | `relation`. */
   node_class: string;
   /** The finer BOSC display kind, refined from the node's meta. */
   kind: CorpusNodeKind;

@@ -1502,6 +1502,8 @@ CorpusNodeKind = Literal[
     "lead",
     "open-question",
     "relation",
+    # One committed extraction (#2134) — the corpus the other kinds are derived FROM.
+    "record",
     "node",
 ]
 
@@ -1523,7 +1525,9 @@ class CorpusNodeItem(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     id: str  # the yidam node id — `<class>/<name>`
-    node_class: str  # the yidam class — artifact | concept | hypothesis | question | relation
+    node_class: (
+        str  # the yidam class — artifact | concept | hypothesis | question | record | relation
+    )
     kind: CorpusNodeKind  # the BOSC display kind refined from meta
     label: str
     scope: str | None = None  # "site" | "network" (from the node's meta.scope), when known

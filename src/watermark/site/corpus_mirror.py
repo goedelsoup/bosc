@@ -60,10 +60,10 @@ from watermark.people import load_people
 from watermark.pipeline.corpus import load_corpus
 from watermark.pipeline.entities import build_entity_graph
 from watermark.site import concepts as concepts_mod
+from watermark.site import corpus_catalog, corpus_records, yidam_cli
 from watermark.site import graph as graph_mod
 from watermark.site import leads as leads_mod
 from watermark.site import people as people_mod
-from watermark.site import yidam_cli
 from watermark.site.feeds import (
     ConceptItem,
     EntityNode,
@@ -78,7 +78,14 @@ log = get_logger(__name__)
 
 # The five yidam node kinds this mirror emits (the issue's taxonomy). Each becomes a class
 # directory + a `<class>.ont.yml` schema. Order is display order.
-CLASSES: tuple[str, ...] = ("concept", "relation", "artifact", "question", "hypothesis")
+CLASSES: tuple[str, ...] = (
+    "concept",
+    "relation",
+    "artifact",
+    "question",
+    "hypothesis",
+    "record",
+)
 
 # --- the class contract ----------------------------------------------------------------------
 # What each class declares about its own instances: the properties they carry and the
@@ -272,6 +279,40 @@ ONTOLOGY: dict[str, ClassOntology] = {
             ),
         ),
     ),
+    "record": ClassOntology(
+        name="record",
+        label="Record",
+        description="One committed extraction — a reviewed artifact of the public record.",
+        properties=(
+            OntologyProperty(
+                "scope", "string", "Always site-local: a record belongs to the site that holds it."
+            ),
+            OntologyProperty(
+                "site", "string", "The watershed-point slug this projection was built for."
+            ),
+            OntologyProperty(
+                "relpath",
+                "string",
+                "The extraction's path under `data/extracted/`. This is the record's identity — "
+                "the catalog registers it by exactly this path, so a citation resolves through "
+                "it and a typo here is an uncited record rather than a wrong one.",
+            ),
+            OntologyProperty(
+                "collection",
+                "string",
+                "The first path segment — `oepa`, `legal`, `permits`. The extracted tree mirrors "
+                "`data/documents/` by collection, so this is the source shelf.",
+            ),
+        ),
+        edges=(
+            OntologyEdge(
+                "in-site",
+                "artifact",
+                "The site anchor this record was filed under. Every record carries it, so a "
+                "record is connected whether or not the catalog registers its file.",
+            ),
+        ),
+    ),
     "question": ClassOntology(
         name="question",
         label="Question",
@@ -351,6 +392,50 @@ ONTOLOGY: dict[str, ClassOntology] = {
 #: would throw away the gate that catches the next real typo; each entry below names a property
 #: this projection actually writes, and a name that is not here is a finding.
 UNIVERSAL_PROPERTIES: tuple[OntologyProperty, ...] = (
+    # --- the record's claim profile (#2134) ----------------------------------------------
+    # Optional because most records assert nothing: 39 of Lima's 250 carry a claim marker at
+    # all. Declaring these on `record` would emit a `missing-property` warning for the other
+    # 211, which would say "this extraction has no evidence tags" — true, unremarkable, and
+    # not a gap anybody should be asked to close.
+    OntologyProperty(
+        "claim_standings",
+        "claim",
+        "The distinct evidence standings this record carries, bracketed so yidam counts them. "
+        "One token per standing, NOT per assertion — the question `verified-unsourced` asks is "
+        "whether this record rests on a registered source, which is a fact about the record.",
+    ),
+    OntologyProperty(
+        "claim_counts",
+        "mapping",
+        "The true per-tag totals, including `[reference]`, which yidam has no counter for. "
+        "Carried so the summary above loses nothing a reader might want back.",
+    ),
+    # --- the assessed cell (#2134) ------------------------------------------------------
+    # A hypothesis node carries the active site's committed reading when there is one, and a
+    # site may legitimately have none for a given hypothesis — Lima's H1 cell is `open`, so it
+    # lands on a `question` node and leaves the hypothesis node without a cell at all. They are
+    # therefore genuinely optional, which is what `universal.yml` is for: declaring them on the
+    # class would assert a contract the projection does not keep and emit a `missing-property`
+    # warning for every (site, hypothesis) pair with nothing committed.
+    OntologyProperty(
+        "cell_tag",
+        "claim",
+        "The evidentiary standing this site's reading of the hypothesis is asserted at, "
+        "written bracketed so the text scan counts it. This is the property that gives "
+        "`verified-unsourced` something to check: a `[verified]` cell whose citations reach "
+        "no catalog entry is a standing the corpus cannot demonstrate.",
+    ),
+    OntologyProperty("cell_signal", "string", "How loud the nexus is — orthogonal to the tag."),
+    OntologyProperty("cell_group", "string", "The hypothesis's own taxonomy group for the cell."),
+    OntologyProperty("cell_sub_thesis", "string", "Which kind of claim the cell makes."),
+    OntologyProperty("cell_fields", "mapping", "The per-hypothesis fields the cell records."),
+    OntologyProperty(
+        "cell_sources",
+        "list",
+        "Every source the cell cites, verbatim — INCLUDING the ones no catalog entry "
+        "registers. The `rests-on` links carry only the registered ones, so the difference "
+        "between these two is exactly what `verified-unsourced` reports on.",
+    ),
     OntologyProperty("kind", "string", "A class-specific kind discriminator."),
     OntologyProperty("tags", "list", "Facets, carried by concepts and by some entities."),
     OntologyProperty(
@@ -473,6 +558,36 @@ class MirrorNode:
         return out
 
 
+def _citation_links(
+    cell: HypothesisAssessment, catalog: list[corpus_catalog.CatalogSource]
+) -> list[MirrorLink]:
+    """The cell's citations, as links to the catalog entries that register them.
+
+    **A citation is a link that resolves to the catalog file** — `checks.rs::linked_paths`
+    reads `links:` targets and prose links and nothing else, so naming a source in a property
+    is not citing it. That is the whole mechanism by which `verified-unsourced` can tell a
+    grounded claim from an ungrounded one, and it is why this returns links rather than text.
+
+    A citation the catalog does not register produces **no link**, deliberately. Lima's
+    defense cell rests on `data/reference/economics/baseline.yaml`, which is registered, and
+    resolves; four cells across the network rest only on `docs/defense-nexus.md`, which is
+    internally-authored prose no catalog entry covers — and `source_is_verified` already says
+    a `reference` kind is "authoritative but not a record about the subject". Manufacturing a
+    link for those would be the flattering error the check exists to catch.
+    """
+    seen: set[str] = set()
+    links: list[MirrorLink] = []
+    for citation in cell.citations:
+        if not citation.source:
+            continue
+        slug = corpus_catalog.entry_for_path(catalog, citation.source)
+        if slug is None or slug in seen:
+            continue
+        seen.add(slug)
+        links.append(MirrorLink(corpus_catalog.catalog_link_target(slug), corpus_catalog.CITES))
+    return links
+
+
 def _claim_token(tag: str | None) -> str | None:
     """The canonical bracketed claim token for a bare evidence tag — ``open`` → ``[open]``.
 
@@ -593,10 +708,17 @@ def node_text(node: MirrorNode) -> str:
 
 @dataclass
 class Mirror:
-    """A projected, in-memory corpus mirror for one site — write it with :func:`write_mirror`."""
+    """A projected, in-memory corpus mirror for one site — write it with :func:`write_mirror`.
+
+    Carries its **catalog** as well as its nodes, because the two are one artifact: a node
+    cites a source by linking to `.yidam/catalog/<slug>.md`, so a corpus written without its
+    registry has dangling citations and breaks the projection's own edge invariant. Coupling
+    them here means anywhere a mirror can be written, it can be written whole.
+    """
 
     site: str
     nodes: list[MirrorNode] = field(default_factory=list)
+    catalog: list[corpus_catalog.CatalogSource] = field(default_factory=list)
 
     @property
     def classes(self) -> list[str]:
@@ -641,6 +763,9 @@ def project_mirror(
     leads: list[LeadItem],
     hypotheses: dict[str, Hypothesis],
     open_claims: list[HypothesisAssessment],
+    assessed_claims: list[HypothesisAssessment] = (),  # type: ignore[assignment]
+    catalog: list[corpus_catalog.CatalogSource] = (),  # type: ignore[assignment]
+    records: list[corpus_records.CorpusRecord] = (),  # type: ignore[assignment]
 ) -> Mirror:
     """Project the loaded feeds into a connected yidam :class:`Mirror` (pure, no I/O).
 
@@ -671,6 +796,9 @@ def project_mirror(
         cell.hypothesis: names.take("question", f"open-{_slug(cell.hypothesis)}")
         for cell in open_claims
     }
+    record_name: dict[str, str] = {
+        r.relpath: names.take("record", _slug(r.relpath.rsplit(".", 1)[0])) for r in records
+    }
 
     def anchor_link(relationship: str, *, cross: bool) -> MirrorLink:
         """A guaranteed-valid link to the site anchor (``cross`` from a non-artifact class)."""
@@ -694,26 +822,43 @@ def project_mirror(
         )
     )
 
-    # hypotheses (network-shared). Link back to the site + out to any open thread.
+    # hypotheses (network-shared). Link back to the site, out to any open thread, and — where
+    # this site has committed a reading — out to the catalog entries that reading rests on.
+    assessed_by_hyp = {cell.hypothesis: cell for cell in assessed_claims}
     for hid, hyp in hypotheses.items():
         open_links = (
             [MirrorLink(f"../question/{open_name[hid]}.yml", "open-thread")]
             if hid in open_name
             else []
         )
+        meta: dict[str, Any] = {
+            "scope": "network",
+            "number": hyp.number,
+            "status": hyp.status,
+            "site": site,
+        }
+        cite_links: list[MirrorLink] = []
+        if (cell := assessed_by_hyp.get(hid)) is not None:
+            # **The claim this corpus makes about this site, at the standing it asserts.**
+            # The projection carried only `open` cells until #2134, so the mirror held no
+            # `[verified]` claim at all and `verified-unsourced` returned early at zero — a
+            # green meaning "nothing asserted", not "nothing unsupported".
+            meta["cell_tag"] = _claim_token(cell.tag)
+            meta["cell_signal"] = cell.signal
+            meta["cell_group"] = cell.group
+            meta["cell_sub_thesis"] = cell.sub_thesis
+            if cell.fields:
+                meta["cell_fields"] = dict(cell.fields)
+            cite_links = _citation_links(cell, catalog)
+            meta["cell_sources"] = [c.source for c in cell.citations if c.source]
         nodes.append(
             MirrorNode(
                 "hypothesis",
                 hyp_name[hid],
                 label=f"{hyp.number} · {hyp.name}",
                 description=_oneline(hyp.claim),
-                meta={
-                    "scope": "network",
-                    "number": hyp.number,
-                    "status": hyp.status,
-                    "site": site,
-                },
-                links=[anchor_link("assessed-at", cross=True), *open_links],
+                meta=meta,
+                links=[anchor_link("assessed-at", cross=True), *open_links, *cite_links],
             )
         )
 
@@ -890,7 +1035,37 @@ def project_mirror(
             )
         )
 
-    return Mirror(site=site, nodes=nodes)
+    # records (per-site) — the committed extractions themselves, each tied to the site anchor
+    # and, where the catalog registers its file, to the source it rests on. The `rests-on`
+    # link is what makes `verified-unsourced` answerable: a record asserting `[verified]` with
+    # no such link is a standing the corpus cannot demonstrate.
+    for record in records:
+        record_meta: dict[str, Any] = {
+            "scope": "site",
+            "relpath": record.relpath,
+            "collection": record.collection,
+            "site": site,
+        }
+        if record.standings:
+            record_meta["claim_standings"] = record.standings
+        if record.counts:
+            record_meta["claim_counts"] = dict(record.counts)
+        links = [MirrorLink(f"../artifact/{anchor_name}.yml", "in-site")]
+        if (slug := corpus_catalog.entry_for_path(catalog, record.data_relpath)) is not None:
+            links.append(MirrorLink(corpus_catalog.catalog_link_target(slug), corpus_catalog.CITES))
+        nodes.append(
+            MirrorNode(
+                "record",
+                record_name[record.relpath],
+                label=record.title,
+                description=_oneline(f"{record.collection or 'corpus'} · {record.relpath}"),
+                source_refs=[record.relpath],
+                meta=record_meta,
+                links=links,
+            )
+        )
+
+    return Mirror(site=site, nodes=nodes, catalog=list(catalog))
 
 
 @dataclass
@@ -912,6 +1087,17 @@ class MirrorFeeds:
     people: list[PersonItem]
     leads: list[LeadItem]
     open_claims: list[HypothesisAssessment]
+    #: The site's NON-open cells — the readings this corpus asserts rather than the ones it is
+    #: still asking. Split from `open_claims` because they land on different nodes and mean
+    #: opposite things: an open cell is a question, an assessed one is a claim.
+    #: Defaulted, like the two below, because a mirror without them is thin rather than
+    #: invalid — a peer with no committed reading, no catalog and no extraction still projects
+    #: its always-present spine, and the wiki-lint callers build feeds for exactly that shape.
+    assessed_claims: list[HypothesisAssessment] = field(default_factory=list)
+    #: The projected source registry, so a cell's citation can resolve to a catalog slug.
+    catalog: list[corpus_catalog.CatalogSource] = field(default_factory=list)
+    #: The committed extractions themselves — the corpus the other feeds are derived FROM.
+    records: list[corpus_records.CorpusRecord] = field(default_factory=list)
 
 
 def load_mirror_feeds(settings: Settings | None = None) -> MirrorFeeds:
@@ -927,11 +1113,11 @@ def load_mirror_feeds(settings: Settings | None = None) -> MirrorFeeds:
     egraph = build_entity_graph(corpus, settings=settings)
 
     # The [open] claims: the open-tagged hypothesis cells committed for *this* site.
-    open_claims = [
-        cell
-        for cell in load_assessments(settings=settings)
-        if cell.site == settings.site and cell.tag == "open"
-    ]
+    cells = [cell for cell in load_assessments(settings=settings) if cell.site == settings.site]
+    open_claims = [cell for cell in cells if cell.tag == "open"]
+    # Everything the site actually asserts. Dropping these is what left the mirror with zero
+    # `[verified]` claims while the committed corpus held thousands (#2134).
+    assessed_claims = [cell for cell in cells if cell.tag != "open"]
     return MirrorFeeds(
         site=settings.site,
         site_label=profile.place or settings.site.replace("-", " ").title(),
@@ -951,6 +1137,9 @@ def load_mirror_feeds(settings: Settings | None = None) -> MirrorFeeds:
             ),
         ),
         open_claims=open_claims,
+        assessed_claims=assessed_claims,
+        catalog=corpus_catalog.build_catalog(settings),
+        records=corpus_records.load_records(settings),
     )
 
 
@@ -974,6 +1163,9 @@ def build_mirror(settings: Settings | None = None) -> Mirror:
         leads=feeds.leads,
         hypotheses=HYPOTHESES,
         open_claims=feeds.open_claims,
+        assessed_claims=feeds.assessed_claims,
+        catalog=feeds.catalog,
+        records=feeds.records,
     )
     log.info(
         "corpus_mirror.built",
@@ -1069,9 +1261,15 @@ def _clear_corpus(corpus_dir: Path) -> None:
 
 
 def write_mirror(mirror: Mirror, corpus_dir: Path) -> None:
-    """Write ``mirror`` to ``corpus_dir`` as yidam node files (clearing a prior mirror first)."""
+    """Write ``mirror`` to ``corpus_dir`` as yidam node files (clearing a prior mirror first).
+
+    Writes the **catalog** beside it, at `<corpus_dir>/../catalog/`. Not optional: the nodes
+    cite it by relative link, so a corpus written alone fails its own "every link resolves"
+    invariant on the first cited record.
+    """
     corpus_dir.mkdir(parents=True, exist_ok=True)
     _clear_corpus(corpus_dir)
+    corpus_catalog.write_catalog(mirror.catalog, corpus_dir.parent)
 
     # Written whatever classes are present: `undeclared-property` consults it for every class,
     # so a corpus that projected only `concept` still needs the artifact-side names covered.

@@ -18,7 +18,7 @@ import yaml
 from tests.conftest import ExportedBundle
 from watermark.config import Settings
 from watermark.hypotheses import HYPOTHESES, HypothesisAssessment
-from watermark.site import corpus_mirror
+from watermark.site import corpus_catalog, corpus_mirror
 from watermark.site.corpus_mirror import (
     CLASSES,
     ONTOLOGY,
@@ -504,18 +504,21 @@ def test_every_relationship_the_projection_can_author_is_licensed() -> None:
     authored = set(re.findall(r'anchor_link\(\s*"([a-z][a-z-]*)"', src))
     authored |= set(re.findall(r'MirrorLink\([^,]+,\s*"([a-z][a-z-]*)"', src))
     assert authored, "the scan found no relationships — the pattern has rotted, not the code"
+
     # And the scan must be at least as complete as reality: every relationship the projection
-    # actually wrote has to be one the patterns above found. Without this the regex could rot
-    # into matching a subset and the guard would keep passing while covering less and less.
+    # actually wrote has to be one the patterns above found, or a catalog citation. Without
+    # this the regex could rot into matching a subset and the guard would keep passing while
+    # covering less and less — which is how `rests-on` first slipped past it, written through
+    # a constant rather than a literal.
     built = {
         link.relationship
         for node in build_mirror(Settings(site="lima", data_dir=REPO_ROOT / "data")).nodes
         for link in node.links
         if link.relationship
     }
-    assert built <= authored, (
-        f"the source scan missed {sorted(built - authored)} — a new link-writing call shape "
-        "was added and these patterns no longer see it"
+    assert built - {corpus_catalog.CITES} <= authored, (
+        f"the source scan missed {sorted(built - {corpus_catalog.CITES} - authored)} — a new "
+        "link-writing call shape was added and these patterns no longer see it"
     )
 
     licensed = {edge.relationship for ont in ONTOLOGY.values() for edge in ont.edges}
@@ -523,3 +526,35 @@ def test_every_relationship_the_projection_can_author_is_licensed() -> None:
         f"unlicensed relationship(s) {sorted(authored - licensed)} — under an exhaustive policy "
         "this is an ERROR the moment the path is taken, not a warning"
     )
+
+
+def test_a_catalog_citation_is_not_a_class_edge_and_must_stay_undeclared() -> None:
+    """`rests-on` is the one relationship no class licenses, and that is load-bearing.
+
+    yidam's `unlicensed-edge` and `edge-target-class` walk `instance_links`, which pairs a link
+    with the **node** it resolves to. A catalog entry is a file, not a node, so a citation is
+    invisible to both — while `linked_paths`, which `verified-unsourced` reads, parses `links:`
+    straight out of the YAML and sees it. That split is what lets a corpus with an `exhaustive`
+    edge policy cite its sources at all.
+
+    Declaring it would need a `target:` class, and there is no class to name. A declaration with
+    an empty target licenses every class, which would quietly widen the vocabulary for every
+    real edge too.
+    """
+    licensed = {edge.relationship for ont in ONTOLOGY.values() for edge in ont.edges}
+    assert corpus_catalog.CITES not in licensed
+
+    mirror = build_mirror(Settings(site="lima", data_dir=REPO_ROOT / "data"))
+    citing = [
+        n
+        for n in mirror.nodes
+        if any(link.relationship == corpus_catalog.CITES for link in n.links)
+    ]
+    assert citing, "the corpus cites no source — the projection has stopped resolving the catalog"
+    for node in citing:
+        for link in node.links:
+            if link.relationship == corpus_catalog.CITES:
+                assert link.target.startswith("../../catalog/"), (
+                    "a citation must resolve OUT of the corpus tree and into the catalog; "
+                    "anything else resolves to a node and re-enters the class contract"
+                )

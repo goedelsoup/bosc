@@ -393,7 +393,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "c80bcdc74985dff31b393ce764bea3b30e869efd1de465e5753fe3513556b57d",
+      "size_bytes": 51205,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 0PD00004*MD (application OH0024775) for the City of Coshocton Wastewater Treatment Plant, 2742 County Road 271, Coshocton County; retrieved from the Ohio EPA DAM permit slot",

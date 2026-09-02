@@ -52,6 +52,8 @@ def _kind(node: MirrorNode) -> CorpusNodeKind:
         return "hypothesis"
     if cls == "relation":
         return "relation"
+    if cls == "record":
+        return "record"
     if cls == "question":
         return "lead" if meta.get("lead_kind") else "open-question"
     if cls == "artifact":

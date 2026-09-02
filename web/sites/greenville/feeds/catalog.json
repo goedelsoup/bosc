@@ -393,7 +393,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "85c199730afb85366dd63c303bf98b7ab5837df9fc0c07fcb6b7c0d831663747",
+      "size_bytes": 51570,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 1PD00005*OD (application OH0025429) for the City of Greenville Wastewater Treatment Plant, 209 N Ohio Street, Darke County; retrieved from the Ohio EPA DAM permit slot",

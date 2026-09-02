@@ -455,7 +455,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "e252a07afae9d34feabcae6a0eadd1bb728a551ae02eb58f09271cc345a68c8f",
+      "size_bytes": 99428,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permits 1PE00002*OD (application OH0025445, City of Hamilton) and 1PE00003*RD (application OH0026522, City of Middletown), Butler County; retrieved from the Ohio EPA DAM permit slots",
