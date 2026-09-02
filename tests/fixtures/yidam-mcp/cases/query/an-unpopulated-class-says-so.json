@@ -1,0 +1,16 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "An empty result is where an agent invents. `note` is declared by this corpus and holds no instances — that is the entire reason the class is here — and a server that answers zero rows without saying which kind of zero has handed a caller something indistinguishable from a bad embedding, a typo it already ruled out, and a corpus that genuinely has no view. `absence.instances` is 0 because the class is empty, and `elsewhere` is an empty list rather than absent so a client never distinguishes `no dependency holds it` from `nothing looked`. This corpus has no dependencies, so there is nothing to name.",
+  "call": { "query": "note" },
+  "expect": {
+    "fields": ["absence"],
+    "equals": { "matched": 0, "returned": 0, "rejected": null },
+    "equalsAt": {
+      "absence.step": 0,
+      "absence.code": "class-unpopulated",
+      "absence.instances": 0,
+      "absence.elsewhere": []
+    }
+  }
+}

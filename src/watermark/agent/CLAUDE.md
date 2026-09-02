@@ -39,17 +39,39 @@ Wraps the Claude Agent SDK and the Anthropic Messages API. Defers to the root
     `tier1_swmm`) still return a `_reference_only(...)` notice off-home — tracked in #900.
 - `yidam_tools.py` — a **second** in-process SDK MCP server (`yidam`, namespace
   `mcp__yidam__*`), implementing the **frozen MCP tool contract** (RFC-0005), vendored beside it
-  as `mcp_contract.json`. Five bare-named tools — `retrieve` / `get_node` / `list_nodes` /
-  `open_questions` / `neighbors` — whose descriptions and input schemas are **read from that
-  file**, so a tool added upstream and not added here fails the conformance suite instead of
-  quietly not existing. **Never rename a tool or hand-write a schema here**; re-vendor with
-  `mise run yidam-contract-sync` (CI proves the copy matches the pin). Three rules the contract
-  makes non-negotiable: `retrieve` is **one adaptive tool** carrying `degraded` on every
-  response (never a keyword/vector pair — that makes the caller choose a vector space, its least
-  informed decision); `get_node` returns the **unified JSON model**, never a YAML render; and the
-  `open_questions` predicate is **frozen at two arms** (`?` label, `[open]` in text) — no server
-  may widen it. `capabilities()` declares what BOSC backs (`graph` yes; `phases`/`sangha` no —
-  they need a working yidam repo; `resources` no — SDK servers register tools only). It serves
+  as `mcp_contract.json` (**contract 0.12.0**). The contract lists **13** tools across four
+  tiers; BOSC serves **8** — the seven `core` ones (`retrieve` / `get_node` / `list_nodes` /
+  `open_questions` / `claims` / `check_subject` / `claim_tags`) plus `neighbors`, which is
+  `graph`. Descriptions and input schemas are **read from that file**, and the served list is
+  **derived** from it by `served_tool_names()`, so a tool added upstream and not added here is
+  an `ImportError` rather than a tool that quietly does not exist — which is exactly what the
+  0.1.0 → 0.12.0 bump produced (#2127). **Never rename a tool or hand-write a schema here**;
+  re-vendor with `mise run yidam-contract-sync` (CI proves the copy matches the pin — and the
+  vendored `commit_vocabulary.json`, which is `check_subject`'s closed list, with it).
+
+  **The five BOSC does not serve are declined honestly, not skipped.** `check_citation` is
+  `dependencies`, and BOSC pins no tonpa dependency, so there is no far side for a citation to
+  have drifted from. `query` / `pack` / `estimate` / `licensed_edges` are `ontology`, which
+  backs *the class contract — what a class declares it may link to*: the mirror writes a
+  `<class>.ont.yml` per class and each declares only `class:` + `description:`, so BOSC holds
+  nodes and edges and an ontology that says nothing about either. The contract's own words for
+  that case: *"Optional is not absent: such a server declares false and its cases are skipped
+  rather than passed."* Declaring true would pass 22 conformance cases by accident. **#2132 is
+  where that changes** — it also un-vacuums eight new error-severity `lint` checks.
+
+  Four rules the contract makes non-negotiable: `retrieve` is **one adaptive tool** carrying
+  `degraded` on every response (never a keyword/vector pair — that makes the caller choose a
+  vector space, its least informed decision), and since 0.4.0 carrying `degraded_reason`,
+  `rejected` and `absence` with it — *why*, not only *whether*, because a bare boolean made a
+  repo that never built an index and one whose binary cannot read its index look identical;
+  `get_node` returns the **unified JSON model**, never a YAML render; the `open_questions`
+  predicate is **frozen at three arms** (`?` label, `[open]` in the body, an open tag in a
+  property the class declared `type: claim`) — no server may add a fourth, and the third arm is
+  the one **this repository reported missing** (goedelsoup/yidam#127, settled by widening the
+  contract); and `claims` **serves the tag or serves nothing** — there is no untagged arm, and
+  `total` is always the count before `k`. `capabilities()` declares what BOSC backs (`graph`
+  yes; `phases`/`sangha` no — they need a working yidam repo; `resources` no — SDK servers
+  register tools only; `ontology`/`dependencies` no — see above). It serves
   the corpus mirror (`watermark.site.corpus_mirror`, Epic #1560) built **in-memory** for the
   active site (offline read of
   committed corpus, cached per turn) rather than reading the git-ignored `.yidam/corpus/` tree,

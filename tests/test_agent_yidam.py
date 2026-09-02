@@ -170,9 +170,13 @@ async def test_tools_serve_the_tiny_mirror(monkeypatch: pytest.MonkeyPatch) -> N
     assert hits["degraded"] is True  # no index built for the tiny mirror
     assert hits["results"][0]["path"] == ".yidam/corpus/question/lead-cooling.yml"
 
-    retrieve = next(t for t in yidam_tools.ALL_TOOLS if t.name == "retrieve")
-    empty = await retrieve.handler({"query": "  "})
-    assert empty.get("isError") and "missing required argument" in empty["content"][0]["text"]
+    # A blank query is an ABSENCE, not an error (contract 0.4.0). It used to be `isError`, and
+    # the change is the tool doing its job: an agent that passed an empty string gets back the
+    # size of the corpus it failed to search, which it can act on. A refusal is a dead end.
+    empty = await _call("retrieve", {"query": "  "})
+    assert empty["absence"]["code"] == "query-no-terms"
+    assert empty["absence"]["instances"] == len(mirror.nodes)
+    assert empty["rejected"] is None and empty["results"] == []
 
     opens = await _call("open_questions", {})
     assert [q["label"] for q in opens["open_questions"]] == ["Cooling-water intake for the campus"]
@@ -270,12 +274,24 @@ async def test_retrieve_degrades_rather_than_building_an_index_on_demand(
     assert not (tmp_path / "index").exists(), "retrieve built an index as a side effect"
 
 
-async def test_retrieve_validates_its_args() -> None:
+async def test_retrieve_answers_a_bad_call_instead_of_refusing_it() -> None:
+    """Neither arm is an `isError` any more, and the two are deliberately different shapes.
+
+    A blank query is an `absence` — the corpus was searchable and the call brought nothing to
+    search it with. An undeclared class is a `rejected` — the call named something this corpus
+    does not have. Different repairs, and `rejected`/`absence` are mutually exclusive because
+    of it. Both carry enough for the caller to fix the call without a second round trip.
+    """
     retrieve = next(t for t in yidam_tools.ALL_TOOLS if t.name == "retrieve")
-    empty = await retrieve.handler({"query": "  "})
-    assert empty.get("isError") and "missing required argument" in empty["content"][0]["text"]
-    bad = await retrieve.handler({"query": "x", "class": "bogus"})
-    assert bad.get("isError") and "unknown class" in bad["content"][0]["text"]
+
+    empty = json.loads((await retrieve.handler({"query": "  "}))["content"][0]["text"])
+    assert empty["absence"]["code"] == "query-no-terms" and empty["rejected"] is None
+
+    bad = json.loads(
+        (await retrieve.handler({"query": "x", "class": "bogus"}))["content"][0]["text"]
+    )
+    assert bad["rejected"]["code"] == "unknown-class" and bad["absence"] is None
+    assert "bogus" in bad["rejected"]["detail"], "the rejection must name what was rejected"
 
 
 # --- against the real Lima mirror (offline read of the committed corpus) --------------------

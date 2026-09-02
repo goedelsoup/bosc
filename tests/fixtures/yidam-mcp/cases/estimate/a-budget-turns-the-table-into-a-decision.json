@@ -1,0 +1,11 @@
+{
+  "tool": "estimate",
+  "capability": "ontology",
+  "why": "What a caller actually decides is not WHETHER to run the query — it has a question either way — but how much of each node to ask for. So the quote is a table and `fits` is the verdict that turns it into a decision. A budget of one token cannot hold four nodes at any width in any serialization, which is what makes this assertion safe to freeze without pinning a byte of this corpus's prose: every row is over budget, including the pack, and a server that answered otherwise has not priced the payload it would send.",
+  "call": { "query": "concept", "budget": 1 },
+  "expect": {
+    "equals": { "matched": 4, "budget": 1 },
+    "everyItemHas": { "projections": { "fits": false } },
+    "equalsAt": { "pack.fits": false }
+  }
+}

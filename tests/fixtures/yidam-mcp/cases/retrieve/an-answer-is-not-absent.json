@@ -1,0 +1,20 @@
+{
+  "tool": "retrieve",
+  "why": "The other half of the freeze, and the one a server gets wrong by being helpful: `absence` is null exactly when `results` is non-empty. A code meaning `fine` would make the one field a caller consults about silence ambiguous, which is the whole failure it was added to end. `rejected` is null here too — the call was legal and it found something, so it carries neither.",
+  "call": {
+    "query": "knowledge graph"
+  },
+  "expect": {
+    "fields": [
+      "rejected",
+      "absence"
+    ],
+    "equals": {
+      "rejected": null,
+      "absence": null
+    },
+    "nonEmpty": [
+      "results"
+    ]
+  }
+}

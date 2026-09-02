@@ -1,0 +1,11 @@
+{
+  "tool": "licensed_edges",
+  "capability": "ontology",
+  "why": "The load-bearing arm, and the one that looks like the other. `note` declares no edges: it has SAID NOTHING about what it may link to, which is not the same as licensing nothing. A server that returns an empty list without `declares_edges: false` lets a client read silence as a closed contract, and that client will report every instance in a corpus whose ontology is not filled in. The corpus carries this class for no other reason.",
+  "call": { "class": "note" },
+  "expect": {
+    "equals": { "class": "note", "declares_edges": false },
+    "count": { "edges": 0 },
+    "fields": ["note"]
+  }
+}

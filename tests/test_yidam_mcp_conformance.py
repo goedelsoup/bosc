@@ -30,6 +30,7 @@ import pytest
 
 from watermark.agent import yidam_tools
 from watermark.config import Settings
+from watermark.site import corpus_mirror
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CASES_DIR = Path(__file__).parent / "fixtures" / "yidam-mcp" / "cases"
@@ -60,7 +61,7 @@ def _cases() -> list[tuple[str, dict[str, Any]]]:
 
 # --- the contract itself ---------------------------------------------------------------------
 def test_the_vendored_contract_is_the_one_this_server_was_written_against() -> None:
-    assert yidam_tools.contract()["contract"] == "0.1.0"
+    assert yidam_tools.contract()["contract"] == "0.12.0"
     assert (Path(__file__).parent / "fixtures" / "yidam-mcp" / "VERSION").read_text().strip() == (
         yidam_tools.contract()["contract"]
     )
@@ -88,7 +89,29 @@ def test_capabilities_are_declared_honestly() -> None:
     assert caps["phases"] is False and caps["sangha"] is False
     # The Agent SDK's in-process servers register tools only; there is no `resources/*` channel.
     assert caps["resources"] is False
+    # `ontology` backs the CLASS CONTRACT — what a class declares it may link to. The mirror
+    # writes a `<class>.ont.yml` per class and each declares only `class:` + `description:`, so
+    # there is an ontology and it says nothing about edges. Declaring true would pass 22 cases
+    # by accident; #2132 is where it changes.
+    assert caps["ontology"] is False
+    # `check_citation` resolves into a tonpa dependency. BOSC pins none.
+    assert caps["dependencies"] is False
     assert isinstance(caps["retrieve"]["vector"], bool)
+    # Null exactly when `vector` is true — the same value every call's `degraded_reason` carries,
+    # answered at connect time instead of one failed search later.
+    assert (caps["retrieve"]["reason"] is None) is caps["retrieve"]["vector"]
+
+
+def test_every_core_tool_in_the_contract_has_a_handler() -> None:
+    """The guarantee the derived list exists for, asserted rather than inferred.
+
+    `ALL_TOOLS` is built at import, so a missing core handler is an ImportError and this module
+    never loads — which is a real failure but an illegible one. Naming it here means the next
+    contract bump reports *which* tool is unimplemented instead of a `KeyError` in a traceback.
+    """
+    core = [t["name"] for t in yidam_tools.contract()["tools"] if t.get("tier", "core") == "core"]
+    served = {t.name for t in yidam_tools.ALL_TOOLS}
+    assert set(core) <= served, f"core tools with no handler: {sorted(set(core) - served)}"
 
 
 def test_no_tool_name_carries_the_old_prefix() -> None:
@@ -111,10 +134,24 @@ async def test_upstream_case_shape(case_id: str, case: dict[str, Any]) -> None:
     # has, so the shape rules are exercised rather than skipped.
     if tool in {"get_node", "neighbors"} and "id" in call:
         call["id"] = "hypothesis/water"
-    if tool == "retrieve":
-        call["query"] = "water"
     if tool == "list_nodes" and call.get("class"):
         call["class"] = "concept"
+    if tool == "claims" and call.get("node"):
+        call["node"] = "hypothesis/water"
+    # Re-point IDENTITY, never behaviour. A case asserting `nonEmpty: [results]` needs a query
+    # this corpus matches; every other retrieve case is *about* an empty answer — a blank query,
+    # or words no corpus uses — and rewriting its query would turn the case into a test of
+    # something else that passes.
+    if tool == "retrieve" and "results" in case["expect"].get("nonEmpty", []):
+        call["query"] = "water"
+    # A case whose EXPECTATION names a fixture class cannot be re-pointed without rewriting the
+    # assertion, which is grading a second implementation. Skip it by name and assert the rule
+    # it encodes against this corpus below.
+    for wanted in case["expect"].get("everyItemHas", {}).values():
+        if (klass := wanted.get("class")) and klass not in yidam_tools.CLASSES:
+            pytest.skip(f"case pins the fixture class `{klass}`; the rule is asserted separately")
+    if (klass := call.get("class")) and tool == "retrieve" and klass not in yidam_tools.CLASSES:
+        pytest.skip(f"case pins the fixture class `{klass}`; the rule is asserted separately")
 
     body = await _call(tool, call)
     expect = case["expect"]
@@ -216,9 +253,21 @@ async def test_neighbors_reports_each_node_once_at_its_shortest_hop() -> None:
     assert by_depth == sorted(by_depth), "breadth-first: shortest hop first"
 
 
-async def test_open_questions_predicate_is_frozen_at_two_arms() -> None:
-    """No server may add an arm. BOSC's third — a structured `claim_tag` — is gone; the tag is
-    in the serialized text now, so the two arms already cover it."""
+async def test_open_questions_predicate_is_frozen_at_three_arms() -> None:
+    """No server may add a fourth arm, and none may skip one.
+
+    Three at contract 0.12.0 — a `?` label, an `[open]` claim in the body, and an open tag in a
+    property the class declared `type: claim`. The third is the arm this repository reported as
+    missing (goedelsoup/yidam#127) and upstream added; it reads both spellings.
+
+    The third arm changes nothing here and that is the point of asserting it. `_ont_yaml`
+    declares no properties, so a conforming read of the declaration finds none — and BOSC's
+    `claim_tag` is reached by arm two regardless, because `_claim_token` writes the bracketed
+    token into the serialized text. A two-arm and a three-arm server return the identical set
+    over a corpus that declares nothing, which is exactly what the contract says. The recompute
+    below carries the arm anyway, so that the day #2132 declares the property, this test is
+    already asking the right question.
+    """
     body = await _call("open_questions", {})
     assert body["open_questions"]
     for item in body["open_questions"]:
@@ -226,16 +275,155 @@ async def test_open_questions_predicate_is_frozen_at_two_arms() -> None:
 
     mirror = yidam_tools._mirror()
     served = {q["id"] for q in body["open_questions"]}
-    # Recompute with the *contract's* two arms only, independently of the implementation.
+    # Recompute with the *contract's* three arms, independently of the implementation.
     import yaml
 
-    expected = {
-        n.id
-        for n in mirror.nodes
-        if n.label.startswith("?")
-        or "[open]" in yaml.safe_dump(n.to_dict(), sort_keys=False, allow_unicode=True)
-    }
-    assert served == expected
+    declared = yidam_tools._CLAIM_PROPERTY
+
+    def is_open(node: Any) -> bool:
+        if node.label.startswith("?"):
+            return True
+        if "[open]" in yaml.safe_dump(node.to_dict(), sort_keys=False, allow_unicode=True):
+            return True
+        # Both spellings, and only a property a class declared. `_ont_yaml` declares none, so
+        # this arm is empty today — asserted, not assumed.
+        return str(node.meta.get(declared, "")).strip().strip("[]") == "open" and bool(
+            _declared_claim_properties(node.node_class)
+        )
+
+    assert served == {n.id for n in mirror.nodes if is_open(n)}
+
+
+def _declared_claim_properties(node_class: str) -> list[str]:
+    """The properties ``node_class`` declares as `type: claim` — read from the ontology the
+    mirror actually writes, so this answers `[]` until #2132 declares one."""
+    import yaml as _yaml
+
+    ont = _yaml.safe_load(corpus_mirror._ont_yaml(node_class)) or {}
+    return [p["name"] for p in ont.get("properties", []) if p.get("type") == "claim"]
+
+
+async def test_an_unknown_class_is_rejected_not_absent_and_not_an_error() -> None:
+    """The rule the two skipped `retrieve` cases encode, re-expressed for a corpus that *does*
+    declare its classes.
+
+    Upstream's fixture declares none, so there `gage` is simply a filter that matches nothing —
+    `rejected: null`, `absence: null`. BOSC writes a `<class>.ont.yml` per class, so it can tell
+    a wrong class from an empty one, and the contract's answer for that case is a **rejection**:
+    a bad request, not an empty result. They are different repairs — fix the call, versus the
+    corpus has nothing — and `rejected` and `absence` are mutually exclusive because of it.
+
+    Not an `isError` either, which is what this used to be. A rejection the agent can read
+    carries the valid class list; a tool error carries a string and a dead end.
+    """
+    body = await _call("retrieve", {"query": "water", "class": "nosuchclass"})
+    assert body["rejected"] is not None and body["rejected"]["code"] == "unknown-class"
+    assert body["absence"] is None
+    assert body["results"] == []
+    # ...and a class this corpus does declare filters rather than rejecting.
+    good = await _call("retrieve", {"query": "water", "class": "concept"})
+    assert good["rejected"] is None
+    assert all(hit["class"] == "concept" for hit in good["results"])
+
+
+async def test_retrieve_says_which_kind_of_nothing() -> None:
+    """`absence` is null when there is an answer, and names the cause when there is not."""
+    answered = await _call("retrieve", {"query": "water"})
+    assert answered["results"] and answered["absence"] is None
+
+    blank = await _call("retrieve", {"query": "   "})
+    assert blank["absence"]["code"] == "query-no-terms"
+    assert blank["absence"]["instances"] > 0, "a blank query must still report the corpus size"
+    assert blank["rejected"] is None and blank["results"] == []
+
+    unused = await _call("retrieve", {"query": "hydropeaking zzzznotaword"})
+    assert unused["absence"]["code"] == "no-term-match"
+
+
+async def test_degraded_reason_is_null_exactly_when_not_degraded() -> None:
+    """`no_index`, never `no_vector_support` — the corpus is missing the artefact, which is the
+    repair either way, and pinning the nearer cause keeps every build answering identically."""
+    body = await _call("retrieve", {"query": "water"})
+    assert (body["degraded_reason"] is None) is (body["degraded"] is False)
+    if body["degraded"]:
+        assert body["degraded_reason"] == "no_index"
+
+
+async def test_claims_serves_the_tag_or_nothing() -> None:
+    """There is no untagged arm. An unmarked sentence is prose, and `get_node` is where prose
+    lives — inventing a fourth standing would turn every aside into a weakly-evidenced claim."""
+    body = await _call("claims", {})
+    assert body["claims"], "the Lima mirror carries tagged claims"
+    for claim in body["claims"]:
+        assert set(claim) >= {"text", "standing", "node", "class", "scope", "sources"}
+        assert claim["standing"] in yidam_tools.STANDINGS
+    # Every claim is anchored on a node that exists — no claim invented from nowhere.
+    ids = {n.id for n in yidam_tools._mirror().nodes}
+    assert {c["node"] for c in body["claims"]} <= ids
+
+
+async def test_claims_total_counts_what_k_dropped() -> None:
+    """An agent told `here are 5 claims` and one told `here are 5 of 41` can take different next
+    actions, and only the second can decide to ask for more."""
+    everything = await _call("claims", {})
+    assert everything["total"] > 1, "this corpus needs more than one claim to make the point"
+    capped = await _call("claims", {"k": 1})
+    assert capped["returned"] == 1 and len(capped["claims"]) == 1
+    assert capped["total"] == everything["total"], "`total` was computed after truncating"
+
+
+async def test_claims_filters_by_standing_and_agrees_with_open_questions() -> None:
+    """`what does this corpus take as X` is the query an agent should make before it writes.
+
+    The `open` arm is cross-checked against `open_questions`, which is a different predicate over
+    the same tags: every node with an open claim must be a node the frozen predicate flags. A
+    server whose two answers disagree has two vocabularies and no way to notice.
+    """
+    for standing in yidam_tools.STANDINGS:
+        body = await _call("claims", {"standing": standing})
+        assert all(c["standing"] == standing for c in body["claims"])
+
+    opens = await _call("claims", {"standing": "open"})
+    flagged = {q["id"] for q in (await _call("open_questions", {}))["open_questions"]}
+    assert {c["node"] for c in opens["claims"]} <= flagged
+
+
+async def test_claim_tags_carries_both_spellings_and_no_fourth_standing() -> None:
+    body = await _call("claim_tags", {})
+    assert len(body["tags"]) == 3, "an `untagged` or `implicit` fourth is a different vocabulary"
+    for tag in body["tags"]:
+        assert set(tag) >= {"standing", "in_prose", "in_property", "meaning"}
+        # Prose is scanned for the bracketed form only; a declared property takes the bare one.
+        assert tag["in_prose"] == f"[{tag['standing']}]"
+        assert tag["in_property"] == tag["standing"]
+    assert body["note"]
+
+
+async def test_check_subject_is_total_and_never_an_error() -> None:
+    """An unrecognized verb is a finding in the payload, not a failed call. A tool that failed
+    harder than the gate would assert a verdict nobody agreed to, and an agent would learn to
+    stop asking."""
+    handler = next(t for t in yidam_tools.ALL_TOOLS if t.name == "check_subject")
+    for subject in ["frobnicate: nothing", "", "no colon here", "establish: a thing"]:
+        result = await handler.handler({"subject": subject})
+        assert not result.get("isError"), subject
+        body = json.loads(result["content"][0]["text"])
+        assert body["kind"] in {"epistemic", "operational"}, "every subject gets a kind"
+        assert all(v["severity"] == "warn" for v in body["violations"])
+        assert body["vocabulary"], "the closed list travels with the verdict"
+
+
+async def test_check_subject_reads_a_scope_suffix_as_its_own_finding() -> None:
+    """It costs twice: `vendor(yidam)` is in no list, AND classification falls through to
+    epistemic, filing an operational commit as a change in understanding. A caller told only
+    `recognized: false` would go looking for a verb that is already correct."""
+    scoped = await _call("check_subject", {"subject": "vendor(yidam): prelude into .yidam"})
+    assert scoped["recognized"] is False
+    assert [v["rule"] for v in scoped["violations"]] == ["scope-suffix"]
+
+    bare = await _call("check_subject", {"subject": "vendor: prelude into .yidam"})
+    assert bare["recognized"] is True and bare["kind"] == "operational"
+    assert bare["violations"] == []
 
 
 async def test_a_missing_node_is_a_tool_error_not_a_crash() -> None:

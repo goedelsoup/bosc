@@ -167,18 +167,23 @@ def _claim_token(tag: str | None) -> str | None:
     Readers normalize with ``.strip("[]")`` (:func:`watermark.site.corpus_nodes._evidence`),
     so the bracketing changes no downstream feed value. Idempotent.
 
-    **Do not revert this to the bare word.** Upstream has since added a structural route —
-    a class may declare, in its ``.ont.yml``, which properties carry an evidence tag
-    (``yidam/cli/src/claims.rs``, `goedelsoup/yidam` `6aaf18e`, filed from here as
-    goedelsoup/yidam#127) — so ``yidam open-questions`` *would* now find a bare ``open``.
-    Its MCP contract would not: the frozen ``open_questions`` predicate is **two arms**, and
-    the note beside it forbids exactly this extension by name ("a ``claim_tag`` filter, say,
-    is a different tool"). BOSC's own MCP server implements that frozen predicate
-    (:mod:`watermark.agent.yidam_tools`) and its conformance test asserts the two-arm set.
+    **The inconsistency this used to work around is settled, and the bracketing stays anyway.**
+    The two surfaces once disagreed: upstream added a structural route — a class may declare, in
+    its ``.ont.yml``, which properties carry an evidence tag (``yidam/cli/src/claims.rs``,
+    `goedelsoup/yidam` `6aaf18e`) — so ``yidam open-questions`` would find a bare ``open``,
+    while the frozen MCP ``open_questions`` predicate was two arms and forbade that extension by
+    name. Filed from here as goedelsoup/yidam#127; upstream resolved it by **widening the
+    contract rather than narrowing the CLI**, and at contract 0.12.0 the predicate is three arms
+    reading both spellings. Its note names this corpus by measurement: *"the corpus that
+    measured 26 open questions against this tool's 2, and reshaped its data to `[open]` to be
+    seen at all."*
 
-    So the bracketed token is the only form that satisfies **both** surfaces. Reverting would
-    fix the CLI and silently empty the MCP tool. The upstream inconsistency is reported;
-    until it settles, this stays.
+    So the bracketed token is no longer the *only* form that satisfies both surfaces — but it
+    still satisfies every arm of both, and reverting is a data-shape change with nothing to buy
+    it. The third arm reads a property a class **declares**, and ``_ont_yaml`` declares none, so
+    a bare word here would be invisible to the declaration-reading arm and to the text scan
+    alike. The bare form becomes available when the ontology declares the property (#2132) — and
+    that is where the decision belongs, with the declaration in front of it.
     """
     raw = (tag or "").strip()
     if not raw:

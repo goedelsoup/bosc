@@ -1,0 +1,10 @@
+{
+  "tool": "claims",
+  "why": "There is no untagged arm. This corpus has four nodes of prose and exactly two tagged claims; a server that fell back to the SDK's `extract_claims` — which tags every non-link line `Implicit` — would return dozens here and each one would look like an assertion the corpus made. `total` is the count before `k`, so it is also the assertion that the receipt is not just an echo of the list length.",
+  "call": {},
+  "expect": {
+    "count": { "claims": 2 },
+    "equals": { "returned": 2, "total": 2 },
+    "each": { "claims": ["text", "standing", "node", "class", "scope", "sources"] }
+  }
+}

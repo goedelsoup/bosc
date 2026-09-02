@@ -1,0 +1,25 @@
+{
+  "tool": "retrieve",
+  "capability": "ontology",
+  "why": "`retrieve` took a `class` argument and never read it. Filtering on a class the ontology does not declare produced zero results and reported nothing wrong, which tells a caller its typo was a true negative — the exact failure `query`'s `unknown-class` rejection exists to prevent, one tool over, on the tool an agent reaches for first. The filter is validated BEFORE the search, so `results` is empty because nothing ran and `absence` is null: a rejection is not an absence and a server carrying both would be answering two questions with one key. The message is not pinned — the codes are the contract and the prose is not — but a conforming server SHOULD name the near miss, as `query` does from the same edit-distance-1 rule.",
+  "call": {
+    "query": "knowledge graph",
+    "class": "notes"
+  },
+  "expect": {
+    "fields": [
+      "degraded",
+      "degraded_reason",
+      "rejected",
+      "absence",
+      "results"
+    ],
+    "equalsAt": {
+      "rejected.code": "unknown-class",
+      "absence": null
+    },
+    "count": {
+      "results": 0
+    }
+  }
+}

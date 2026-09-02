@@ -1,0 +1,15 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "The same edge read from the other end. A link lives on the node that wrote it, so `-enables->` and `<-enables-` name one edge and answer with opposite nodes — `traversal` forward, `knowledge-graph` backward. This is the only part of the syntax that has to be learned rather than guessed, and it is what makes `direction: out` in `.ont.yml` mean something at query time. A server that walks the adjacency undirected passes the forward case and answers both nodes here.",
+  "call": { "query": "concept <-enables- concept" },
+  "expect": {
+    "equals": { "matched": 1, "rejected": null },
+    "count": { "results": 1 },
+    "equalsAt": {
+      "results.0.node": "concept/knowledge-graph.yml",
+      "steps.0.hop.direction": "in",
+      "cost.edges_walked": 1
+    }
+  }
+}

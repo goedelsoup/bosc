@@ -1,0 +1,22 @@
+{
+  "tool": "retrieve",
+  "why": "The keyword arm's honest answer, and the one an agent most needs distinguished from coverage. The corpus has four nodes and the installed dependency two, and none of the six discusses these words — so the search read every one of them and matched nothing, which is a statement about the words rather than about what is known. `instances` is 6 rather than 4 BECAUSE `retrieve` spans the dependency set: the denominator has to be the set actually searched or it is a figure about a different question. It is not 0, and that is the whole difference between this and `class-unpopulated` — a server reporting either code for the other's situation tells a caller the opposite of what happened. A corpus that covers the subject in different words answers exactly this way, which is why this message must not be read as 'no coverage'.",
+  "call": {
+    "query": "hydropeaking ramping rates"
+  },
+  "expect": {
+    "fields": [
+      "rejected",
+      "absence",
+      "results"
+    ],
+    "equalsAt": {
+      "rejected": null,
+      "absence.code": "no-term-match",
+      "absence.instances": 6
+    },
+    "count": {
+      "results": 0
+    }
+  }
+}

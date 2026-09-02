@@ -1,0 +1,19 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "The walk `neighbors` cannot express. `neighbors` chains outbound and inbound edges unconditionally and filters on neither relationship nor direction, so a server offering only that has typed its graph and left no way to walk by the types. `enables` is authored once in this corpus, from `knowledge-graph` to `traversal`, and `relates-to` is authored twice — a server ignoring the relationship name answers three nodes here, and a server ignoring direction answers the wrong one.",
+  "call": { "query": "concept -enables-> concept" },
+  "expect": {
+    "fields": ["query", "scope", "steps", "rejected", "anchor", "diagnostics", "results", "matched", "returned", "cost", "unschematised"],
+    "equals": { "scope": "local", "matched": 1, "returned": 1, "rejected": null, "anchor": null, "unschematised": false },
+    "count": { "results": 1, "steps": 2 },
+    "equalsAt": {
+      "results.0.node": "concept/traversal.yml",
+      "steps.0.hop.relationship": "enables",
+      "steps.0.hop.direction": "out",
+      "cost.steps": 2,
+      "cost.edges_walked": 1
+    },
+    "each": { "results": ["node", "class", "label"] }
+  }
+}

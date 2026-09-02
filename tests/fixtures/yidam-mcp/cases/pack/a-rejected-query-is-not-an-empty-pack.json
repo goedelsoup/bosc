@@ -1,0 +1,10 @@
+{
+  "tool": "pack",
+  "capability": "ontology",
+  "why": "A misspelled class must not come back as a context window that reads like a corpus with nothing to say. That is the invention this surface exists to prevent, arriving through the door marked compliance: an agent handed an empty pack for `concpet` learns that the corpus is silent on the subject, and fills the silence from its own weights. So a rejection is carried on `rejected` with `query`'s own code, `text` is empty, `reachable` is 0, and none of it is signalled with MCP's `isError` — a rejection is an answer and a client branches on the code.",
+  "call": { "query": "concpet" },
+  "expect": {
+    "equals": { "scope": "local", "reachable": 0, "written": 0, "omitted": 0, "text": "" },
+    "equalsAt": { "rejected.code": "unknown-class" }
+  }
+}

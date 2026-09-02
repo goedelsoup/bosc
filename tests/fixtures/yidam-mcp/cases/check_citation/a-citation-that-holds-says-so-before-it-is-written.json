@@ -1,0 +1,21 @@
+{
+  "tool": "check_citation",
+  "capability": "dependencies",
+  "why": "The whole ambition of #357, in one call. `upstream::concept/telemetry` is a node `retrieve` will answer from and `get_node` will read out, and until this tool there was no way to ask whether a `cites:` naming what they returned would stand — the surfaces that make a foreign node reachable are exactly the ones that make a bad citation easy to write. A citation that resolves, quotes text the far side still carries, and records the pin actually installed fires none of the four checks, and the installed set travels back with the verdict so a caller that got a name or a pin wrong can correct without a second call.",
+  "call": {
+    "package": "upstream",
+    "node": "concept/telemetry",
+    "commit": "abc1234",
+    "span": "Readings a field instrument emits"
+  },
+  "expect": {
+    "fields": ["citation", "holds", "gates", "findings", "dependencies"],
+    "equals": { "holds": true, "gates": false },
+    "count": { "findings": 0 },
+    "equalsAt": {
+      "dependencies.0.package": "upstream",
+      "dependencies.0.pin": "abc1234",
+      "dependencies.0.kind": "fetched"
+    }
+  }
+}

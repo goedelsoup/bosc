@@ -1,0 +1,15 @@
+{
+  "tool": "check_citation",
+  "capability": "dependencies",
+  "why": "The citation an agent is most likely to write and the one the design exists to refuse. Everything about it is correct — the package is installed, the node is there, the pin is the pin — and it quotes nothing, so nothing about it can ever go stale visibly. Asking before writing is what makes this recoverable: told at `lint` time, the repair is to go back and read a node you have already committed to leaning on.",
+  "call": {
+    "package": "upstream",
+    "node": "concept/telemetry",
+    "commit": "abc1234"
+  },
+  "expect": {
+    "equals": { "holds": false, "gates": true },
+    "count": { "findings": 1 },
+    "equalsAt": { "findings.0.check": "external-citation-span-drift" }
+  }
+}

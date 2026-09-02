@@ -94,8 +94,8 @@ corpus **reports** over that mirror (`graph-check` · `lint` · `corpus-index` �
 those come from the real `yidam` binary via `watermark.site.yidam_cli`, which parses
 `--format json` (the RFC-0016 Phase 0 envelope: `format_version`, a `yidam` build block, and a
 per-violation `in_baseline` flag). **Never re-implement a yidam report in Python.** BOSC did,
-for the sound reason that the binary once required the whole native ML stack; RFC-0003's light
-`reports` build retired that (no protoc, no lancedb, ~20s to compile) and the replica was deleted
+for the sound reason that the binary once required the whole native ML stack; RFC-0003's default
+build retired that (no protoc, no lancedb, ~1 min to compile) and the replica was deleted
 because it had silently drifted: over the same mirror the replica reported 20 open
 questions where the binary saw 2, and nothing could detect the gap.
 
@@ -103,12 +103,25 @@ questions where the binary saw 2, and nothing could detect the gap.
   upstream's convention (its own `mise.yidam.toml` and the VS Code extension both resolve that
   path as "this repository's own build"), never the shared `~/.cargo/bin`, which any other yidam
   checkout silently overwrites. mise puts it on `PATH`. Rust is scoped to that task, not a
-  repo-wide `[tools]` entry.
+  repo-wide `[tools]` entry. The build is the **default feature set** plus `.yidam.toml`'s
+  `[build] features` — *not* `--no-default-features --features reports`, which upstream now
+  names as a mistake (`reports` gates nothing, and the flag drops `tonpa`, `vault-s3` and
+  `export-graph`).
 - **Run:** `mise run yidam-reports`. Locally the binary is *optional* — `watermark corpus-mirror`
   projects and says so when it cannot report. CI installs it and **gates** (the `corpus` job).
 - **The pin is `.yidam.toml`**, on upstream's schema (`origin`/`commit`/`template`/`committed`;
-  the old `cli`/`cli_ref` names are dead and fail `yidam-build`). `mise run yidam-vendor-status`
-  reports drift — a report, never a gate.
+  the old `cli`/`cli_ref` names are dead and fail `yidam-build`), currently **`cli/v0.8.0`**.
+  `mise run yidam-vendor-status` reports drift — a report, never a gate.
+- ⚠️ **`[build] features` is the one part of that file BOSC writes, and it is load-bearing.**
+  It declares what this repo's gates need beyond the released default set — today
+  `export-graph`, which makes `export --format rdf` available. Its absence is **silent**: the
+  RDF half of the #2053 conformance check *skips* on a binary that cannot answer, so a build
+  without the feature does not fail, it stops checking. Through `cli/v0.7.0` the released
+  binary carried no `export-graph`, so adopting upstream's download channel would have deleted
+  half that gate unnoticed; reported from here and fixed in v0.8.0 (goedelsoup/yidam#532), which
+  put it in `default` **and** added this table. It is redundant at the current pin and written
+  anyway — it costs nothing until it would cost a capability. Both `mise run yidam-build` and
+  the CI `corpus` job read it, so the feature set is stated in exactly one place.
 - **`lint` gates against `.yidam/lint-baseline.yml`**, the one committed file under `.yidam/`
   (the rest is regenerable and ignored). It enumerates accepted inherited debt so only a
   *regression* fails; `orphan-in` is `info` upstream and never gates. Re-bless deliberately
@@ -118,11 +131,15 @@ questions where the binary saw 2, and nothing could detect the gap.
   back in the export path. Their fidelity is enforced instead — CI runs the real binary over the
   same mirror and compares structurally (#2053). **Never "fix" a divergence by changing the
   expectation**; the renderers must agree, or the difference must be a deliberate, recorded
-  decision.
-- **The MCP surface implements the frozen tool contract** (RFC-0005), vendored as
-  `src/watermark/agent/mcp_contract.json` and re-vendored with `mise run yidam-contract-sync`;
-  CI proves the copy matches the pin. Tool names, descriptions and schemas come **from that
-  file** — never hand-written. See `src/watermark/agent/CLAUDE.md`.
+  decision. Re-measured at the `cli/v0.8.0` re-pin: RDF subject IRIs, the `yidam:` predicate
+  vocabulary, and GraphML nodes / edges / key schema are all identical to the previous pin's.
+- **The MCP surface implements the frozen tool contract** (RFC-0005) at **0.12.0**, vendored as
+  `src/watermark/agent/mcp_contract.json` and re-vendored with `mise run yidam-contract-sync`
+  (which also vendors `commit_vocabulary.json`, the closed commit list `check_subject` serves);
+  CI proves both copies match the pin. Tool names, descriptions and schemas come **from that
+  file** — never hand-written, and the served list is **derived** from it, so a tool added
+  upstream is an `ImportError` rather than a tool that quietly does not exist. BOSC serves 8 of
+  13 and declines `ontology` and `dependencies` honestly. See `src/watermark/agent/CLAUDE.md`.
 - ⚠️ **The five baselined `broken-prose-link` findings are LINK_MAP pages — do not "fix" them.**
   `entities.md`, `candidates.md`, `gis-map.md` and `economics-baseline.md` (×2) are legacy
   generated pages that no longer exist as files; `@watermark/core`'s `rehype-doc-links.ts`

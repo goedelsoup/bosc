@@ -1,0 +1,22 @@
+{
+  "tool": "retrieve",
+  "why": "The third frozen code that had no case, found while writing the one for `class-undeclared` (#358). Punctuation and whitespace leave nothing to search with, and the honest answer is about the QUERY — a server reporting `no-term-match` here would say the corpus was read and disagreed, when nothing was compared against it at all. The two are one character apart in a client's branch and opposite in what they tell an agent to do next: rephrase, or believe the silence. `instances` is 6 and not 0 because the filter admitted every node local and foreign, which is what makes the distinction visible rather than asserted — a server that skipped the search cannot claim a denominator it never read.",
+  "call": {
+    "query": "   "
+  },
+  "expect": {
+    "fields": [
+      "rejected",
+      "absence",
+      "results"
+    ],
+    "equalsAt": {
+      "rejected": null,
+      "absence.code": "query-no-terms",
+      "absence.instances": 6
+    },
+    "count": {
+      "results": 0
+    }
+  }
+}

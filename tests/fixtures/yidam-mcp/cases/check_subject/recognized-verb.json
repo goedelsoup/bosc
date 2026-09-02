@@ -1,0 +1,28 @@
+{
+  "tool": "check_subject",
+  "why": "Compliance by asking rather than by having remembered. The closed list travels with the verdict so a caller that got it wrong can correct without a second call.",
+  "call": {
+    "subject": "establish: confounding framework — links to identification"
+  },
+  "expect": {
+    "fields": [
+      "text",
+      "verb",
+      "kind",
+      "recognized",
+      "violations",
+      "vocabulary"
+    ],
+    "equals": {
+      "verb": "establish",
+      "recognized": true,
+      "kind": "epistemic"
+    },
+    "count": {
+      "violations": 0
+    },
+    "nonEmpty": [
+      "vocabulary"
+    ]
+  }
+}

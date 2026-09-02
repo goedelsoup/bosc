@@ -1,0 +1,11 @@
+{
+  "tool": "claims",
+  "why": "The query an agent should make before it writes anything is `what does this corpus take as X`, and a server that ignores `standing` still answers plausibly. Both arms of the predicate are exercised here: `retrieval` carries a bracketed [open] in prose, `embedding-space` carries a structural `claim_tag` its class declared `type: claim`. A server implementing only the prose arm returns one claim and looks correct.",
+  "call": { "standing": "open" },
+  "expect": {
+    "fields": ["claims", "returned", "total"],
+    "nonEmpty": ["claims"],
+    "count": { "claims": 2 },
+    "everyItemHas": { "claims": { "standing": "open" } }
+  }
+}

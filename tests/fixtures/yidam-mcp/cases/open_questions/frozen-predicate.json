@@ -1,10 +1,10 @@
 {
   "tool": "open_questions",
-  "why": "The predicate has two arms — a `?` label and an [open] claim — and the fixture carries one node flagged by each, never both. A server implementing only one arm returns one node instead of two, which is exactly the divergence a fixture flagged both ways cannot see.",
+  "why": "The predicate has three arms — a `?` label, an [open] claim in the body, and an open tag in a property the class declared `type: claim` — and `corpus/` carries one node flagged by each, never two ways. A server implementing two of them returns two nodes instead of three, and which two names the arm it is missing: no `concept/traversal` is the label arm, no `concept/retrieval` the text arm, no `concept/embedding-space` the declared-field arm. The third is the one that goes unnoticed, because a corpus that declares no `type: claim` property makes it match nothing and a two-arm server answers identically everywhere.",
   "call": {},
   "expect": {
     "fields": ["open_questions"],
-    "count": { "open_questions": 2 },
+    "count": { "open_questions": 3 },
     "each": { "open_questions": ["id", "label", "path"] }
   }
 }

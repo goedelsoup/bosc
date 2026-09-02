@@ -218,9 +218,9 @@ jobs:
   # the binary is optional and `watermark corpus-mirror` degrades to projecting only, so
   # without this the reports would run nowhere.
   #
-  # Cheap on purpose. The light `reports` build pulls no protoc, no lancedb and no ML runtime,
-  # so it compiles in seconds; keyed on the pinned commit, the cache makes it near-free after
-  # the first run on a given pin.
+  # Cheap on purpose. The default build pulls no protoc, no lancedb and no ML runtime, so it
+  # compiles in about a minute; keyed on the pin AND the feature set, the cache makes it
+  # near-free after the first run on a given pin.
   corpus:
     needs: changes
     if: ${{ needs.changes.outputs.corpus == 'true' }}
@@ -241,7 +241,16 @@ jobs:
           fi
           # https:// so CI needs no deploy key; the origin repo is public.
           origin=$(echo "$origin" | sed 's|^git@github.com:|https://github.com/|')
-          { echo "source=$origin"; echo "commit=$commit"; } >> "$GITHUB_OUTPUT"
+          # `[build] features` — read here rather than written into the install step below, so
+          # the pin file is the one place the feature set is stated. Same `sed` upstream and
+          # `mise run yidam-build` use, so all three agree about what the pin says.
+          feat=$(sed -n 's/^ *features *= *\[\(.*\)\]/\1/p' .yidam.toml \
+                 | tr -d '"' | tr -d ' ' | tr '\n' ',' | sed 's/,$//')
+          {
+            echo "source=$origin"
+            echo "commit=$commit"
+            echo "features=$feat"
+          } >> "$GITHUB_OUTPUT"
 
       # Keyed on the pin, so re-pinning is the only thing that pays for a rebuild.
       - name: Cache the yidam binary
@@ -249,10 +258,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .yidam/bin/yidam
-          # The feature set is part of the identity: a cached `reports`-only binary
-          # cannot answer `export --format rdf`, and would fail the conformance step
-          # in a way that looks like a renderer bug.
-          key: yidam-${{ runner.os }}-reports+export-graph-${{ steps.pin.outputs.commit }}
+          # The feature set is part of the identity, and it is INTERPOLATED rather than
+          # spelled: a cached binary without `export-graph` cannot answer
+          # `export --format rdf`, and the conformance step would skip rather than fail —
+          # which is the failure a conformance check must not have. A hand-written label
+          # would go stale against `.yidam.toml [build] features` and still look right.
+          key: yidam-${{ runner.os }}-${{ steps.pin.outputs.features }}-${{ steps.pin.outputs.commit }}
 
       - uses: dtolnay/rust-toolchain@stable
         if: steps.yidam-cache.outputs.cache-hit != 'true'
@@ -264,11 +275,13 @@ jobs:
           git clone --filter=blob:none --no-checkout "${{ steps.pin.outputs.source }}" /tmp/yidam
           git -C /tmp/yidam checkout --quiet "${{ steps.pin.outputs.commit }}"
 
-      - name: Install the yidam CLI (light `reports` build)
+      - name: Install the yidam CLI (the default set + [build] features)
         if: steps.yidam-cache.outputs.cache-hit != 'true'
         run: |
-          cargo install --path /tmp/yidam/yidam/cli --locked --features export-graph \
+          cargo install --path /tmp/yidam/yidam/cli --locked \
+            --features "${{ steps.pin.outputs.features }}" \
             --root "$PWD/.yidam"
+          .yidam/bin/yidam --version
 
       # Project the corpus, then let the binary report on it. `--no-check` here because the
       # reports are run explicitly below, where their output is annotated.
@@ -292,6 +305,44 @@ jobs:
             echo "::error::Run 'mise run yidam-contract-sync'."
             exit 1
           fi
+          # The closed commit vocabulary `check_subject` serves. Vendored for the same reason
+          # and checked the same way — it is derived from the pinned tree's certified lists, so
+          # a verb added upstream must not sit unnoticed in a tool that claims to carry the
+          # closed list. Compared by CONTENT, not by file: the vendored form is JSON and the
+          # source is a Python module, so a byte diff would be comparing two shapes.
+          python3 - <<'PYEOF'
+          import ast, json, sys
+
+          src = "/tmp/yidam/yidam/prelude/sdks/python/yidam_core/git.py"
+          tree = ast.parse(open(src, encoding="utf-8").read())
+          lists = {}
+          for node in ast.walk(tree):
+              if isinstance(node, ast.Assign):
+                  for t in node.targets:
+                      if isinstance(t, ast.Name) and t.id in {
+                          "EPISTEMIC_VERBS",
+                          "OPERATIONAL_VERBS",
+                      }:
+                          lists[t.id] = {ast.literal_eval(e) for e in node.value.args[0].elts}
+          vendored = json.load(open("src/watermark/agent/commit_vocabulary.json"))["verbs"]
+          have = {"epistemic": set(), "operational": set()}
+          for entry in vendored:
+              have[entry["kind"]].add(entry["verb"])
+          want = {
+              "epistemic": lists["EPISTEMIC_VERBS"],
+              "operational": lists["OPERATIONAL_VERBS"],
+          }
+          if have != want:
+              for kind in ("epistemic", "operational"):
+                  missing, extra = want[kind] - have[kind], have[kind] - want[kind]
+                  if missing:
+                      print(f"::error::{kind}: vendored copy is missing {sorted(missing)}")
+                  if extra:
+                      print(f"::error::{kind}: vendored copy has stale {sorted(extra)}")
+              print("::error::Run 'mise run yidam-contract-sync'.")
+              sys.exit(1)
+          print(f"vendored commit vocabulary matches the pin ({len(vendored)} verbs)")
+          PYEOF
           echo "vendored MCP contract matches ${{ steps.pin.outputs.commit }}"
 
       # The hard gate: every node carries a class and a label, and every edge resolves.

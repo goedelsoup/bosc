@@ -1,0 +1,19 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "Hybrid anchoring: enter by meaning, leave by typed edge. The anchor is CLASS-QUALIFIED because a hop's verdict depends on the source class's `edge_policy` — a bare anchor could not be typechecked before it ran, since the source class would be whatever retrieval returned. It is an ENTRY: only the first step may carry one. It is LOCAL: unlike `retrieve`, it MUST NOT enter through an installed dependency's node, because this response says `\"scope\": \"local\"`. And it degrades and says so — this corpus ships no index, so `degraded` is true and `degraded_reason` is `no_index` under the same precedence `retrieve` follows. No score is asserted: a score is a property of a model, and a contract pinning one fails every server that legitimately embeds differently.",
+  "call": { "query": "concept~\"embedding space\"", "anchor_k": 1 },
+  "expect": {
+    "equals": { "scope": "local", "rejected": null },
+    "fields": ["anchor"],
+    "equalsAt": {
+      "anchor.step": 0,
+      "anchor.k": 1,
+      "anchor.text": "embedding space",
+      "anchor.degraded": true,
+      "anchor.degraded_reason": "no_index"
+    },
+    "count": { "anchor.entries": 1 },
+    "each": { "anchor.entries": ["node", "score"] }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "tool": "pack",
+  "capability": "ontology",
+  "why": "The baseline the whole receipt is read against. Every `concept` instance in this corpus is reachable and nothing bounds the pack, so `written` is all four, `omitted` and `elided` are zero, and `omitted_by_class` is empty. A server that cannot produce this cannot be trusted on the budgeted case, where the same fields are the only evidence a caller has about what it is NOT holding. `budget.tokens` is null rather than absent — the present-and-null discipline `origin` and `degraded_reason` already follow — so a client testing the key never has to distinguish `unbudgeted` from `a server too old to say`.",
+  "call": { "query": "concept" },
+  "expect": {
+    "fields": ["query", "scope", "rejected", "anchor", "diagnostics", "cost", "reachable", "written", "elided", "omitted", "omitted_by_class", "budget", "text"],
+    "equals": { "scope": "local", "rejected": null, "anchor": null, "reachable": 4, "written": 4, "omitted": 0, "elided": 0 },
+    "equalsAt": { "budget.tokens": null, "budget.basis": "chars/4", "budget.over_budget": false },
+    "nonEmpty": ["text"]
+  }
+}

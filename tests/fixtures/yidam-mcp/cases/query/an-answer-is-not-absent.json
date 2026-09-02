@@ -1,0 +1,9 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "The other half of the freeze, and the one a server gets wrong by being helpful: `absence` is null exactly when the query matched something. A code meaning `fine` would make the one field a caller consults about silence ambiguous, which is the whole failure it was added to end. Paired with `rejected: null` here, because a response carries at most one of the two and this one carries neither — the query was right, it ran, and it found something.",
+  "call": { "query": "concept -enables-> concept" },
+  "expect": {
+    "equals": { "matched": 1, "rejected": null, "absence": null }
+  }
+}

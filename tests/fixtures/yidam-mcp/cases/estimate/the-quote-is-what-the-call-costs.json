@@ -1,0 +1,14 @@
+{
+  "tool": "estimate",
+  "capability": "ontology",
+  "why": "The promise, and the only thing worth freezing here. `chars` is the serialized length of the payload `query` would return for that `select` over that match set — exact, not rounded, not padded. A quote that is not what the call actually costs is worse than no quote at all: a caller that budgeted against it has already spent the difference by the time it can tell. The values are not asserted, because they are a property of this corpus's prose and of the server's serialization; what is asserted is the shape, the match count, and that every row prices the same rows. `fits` is null throughout: no budget was quoted, and a client testing the key must not have to distinguish `affordable` from `nothing was asked`.",
+  "call": { "query": "concept" },
+  "expect": {
+    "fields": ["query", "scope", "rejected", "absence", "diagnostics", "cost", "matched", "limit", "budget", "projections", "pack", "basis"],
+    "equals": { "scope": "local", "rejected": null, "absence": null, "matched": 4, "budget": null, "basis": "chars/4" },
+    "nonEmpty": ["projections"],
+    "each": { "projections": ["select", "rows", "chars", "tokens", "fits"] },
+    "everyItemHas": { "projections": { "rows": 4, "fits": null } },
+    "equalsAt": { "pack.nodes": 4, "pack.fits": null }
+  }
+}

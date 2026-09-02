@@ -1,0 +1,15 @@
+{
+  "tool": "retrieve",
+  "capability": "ontology",
+  "why": "`note` is declared by the fixture and holds no instances, so this is the one kind of empty that is a true statement about the corpus rather than about the query: the class exists and nothing has been written into it. `instances` is 0 and must be present — it is the denominator the message is about, and *none of zero* is what distinguishes this from a class the corpus populates and the search missed. A server that answered `no-term-match` here would blame the caller's words for a class nobody has authored.",
+  "call": { "query": "knowledge graph", "class": "note" },
+  "expect": {
+    "fields": ["rejected", "absence", "results"],
+    "equalsAt": {
+      "rejected": null,
+      "absence.code": "class-unpopulated",
+      "absence.instances": 0
+    },
+    "count": { "results": 0 }
+  }
+}

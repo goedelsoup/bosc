@@ -1,0 +1,28 @@
+{
+  "tool": "retrieve",
+  "corpus": "corpus-unschematised",
+  "why": "The other half of the same missing evidence, and the half a server gets wrong by being strict. `gage` is not declared here either — nothing is — so a server that validated the filter against a declared set would reject the one class this corpus actually holds, and an agent would be told its correct name was a typo. The filter is read and not judged: it admits the two `gage` nodes, the search finds them, and both `rejected` and `absence` are null because the call was legal and it found something. Without this case the sibling one is satisfiable by a server that rejects every `class` filter on an unschematised corpus and reports `class-undeclared` on the way past.",
+  "call": {
+    "query": "hydropeaking ramping",
+    "class": "gage"
+  },
+  "expect": {
+    "fields": [
+      "rejected",
+      "absence",
+      "results"
+    ],
+    "equals": {
+      "rejected": null,
+      "absence": null
+    },
+    "nonEmpty": [
+      "results"
+    ],
+    "everyItemHas": {
+      "results": {
+        "class": "gage"
+      }
+    }
+  }
+}

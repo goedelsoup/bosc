@@ -1,10 +1,10 @@
 {
   "tool": "retrieve",
-  "why": "The fixture has no vector index, so this is the arm every server hits first and the one whose flag matters most. A server that answered without `degraded` here would be claiming a vector space it does not have.",
+  "why": "The fixture has no vector index, so this is the arm every server hits first and the one whose flag matters most. A server that answered without `degraded` here would be claiming a vector space it does not have. `degraded_reason` must say `no_index` and not `no_vector_support` even on a build with no vector support at all: the corpus is missing the artefact, which is the repair either way, and pinning the nearer cause is what keeps this case answerable identically by every build of every server.",
   "call": { "query": "knowledge graph" },
   "expect": {
-    "fields": ["degraded", "results"],
-    "equals": { "degraded": true },
+    "fields": ["degraded", "degraded_reason", "results"],
+    "equals": { "degraded": true, "degraded_reason": "no_index" },
     "nonEmpty": ["results"],
     "each": { "results": ["path", "class", "label", "text", "score"] }
   }

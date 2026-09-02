@@ -1,0 +1,17 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "The load-bearing arm, and the one a strict reading gets backwards. `concept` declares `enables`, `relates-to` and `supersedes` and states no `edge_policy`, so its vocabulary is UNSTATED — a non-empty `edges:` says these relationships exist, not and no others may. A server that rejects `leads-to` here refuses legal queries against every corpus written before `edge_policy` existed; reading it as an exhaustive list put 210 errors on a compliant corpus, which is why the field exists. So this RUNS, matches nothing, and says why in `diagnostics` — a warning is not a rejection, and `rejected` MUST stay null. It also reaches the second unauthored arm: nothing declares `leads-to` and nothing authors it, so the absence is `relationship-unknown` and NOT `relationship-unauthored`. A server collapsing the two answers a misspelling with a sentence about the ontology having overreached, and sends a reader to audit a class file.",
+  "call": { "query": "concept -leads-to-> concept" },
+  "expect": {
+    "equals": { "matched": 0, "returned": 0, "rejected": null },
+    "count": { "results": 0 },
+    "nonEmpty": ["diagnostics"],
+    "each": { "diagnostics": ["level", "step", "code", "message"] },
+    "equalsAt": {
+      "diagnostics.0.level": "warn",
+      "diagnostics.0.step": 0,
+      "absence.code": "relationship-unknown"
+    }
+  }
+}

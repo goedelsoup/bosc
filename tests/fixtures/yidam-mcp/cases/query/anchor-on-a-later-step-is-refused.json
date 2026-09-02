@@ -1,0 +1,10 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "An anchor enters the graph, and only the first step is entered — a later step is ARRIVED AT by a typed hop. Ranking a set an edge already produced is a similarity filter: a different operation, with a different cost model and a different meaning for `matched`. A server that quietly reinterprets it returns a plausible answer to a question nobody asked, so the shape is refused with its own code rather than accepted.",
+  "call": { "query": "concept -enables-> concept~\"walking the graph\"" },
+  "expect": {
+    "equals": { "matched": 0 },
+    "equalsAt": { "rejected.code": "anchor-not-entry", "rejected.step": 1 }
+  }
+}
