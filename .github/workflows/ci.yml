@@ -246,6 +246,21 @@ jobs:
           # `mise run yidam-build` use, so all three agree about what the pin says.
           feat=$(sed -n 's/^ *features *= *\[\(.*\)\]/\1/p' .yidam.toml \
                  | tr -d '"' | tr -d ' ' | tr '\n' ',' | sed 's/,$//')
+          # `.yidam.toml` is repository content, and `pull_request` runs this job with the
+          # SUBMITTED revision of it. Whatever comes out of that `sed` reaches a `cargo`
+          # command line, so its SHAPE is checked here rather than trusted: cargo feature
+          # names are `[a-z0-9-]`, and anything else — `$(…)`, a backtick, a semicolon — is a
+          # value nobody meant to pin and the job refuses rather than passes on. The step
+          # below also takes it through `env` instead of interpolating it into the shell, so
+          # even a value that passed here is never expanded as source.
+          # `[ -n "$feat" ] &&` first: a repo that declares no `[build] features` is legal and
+          # yields an empty string, which `grep` refuses for having no lines to match rather
+          # than for failing the pattern.
+          if [ -n "$feat" ] && ! printf '%s\n' "$feat" \
+             | grep -Eq '^[a-z0-9][a-z0-9-]*(,[a-z0-9][a-z0-9-]*)*$'; then
+            echo "::error::.yidam.toml [build] features is not a plain feature list: '$feat'"
+            exit 1
+          fi
           {
             echo "source=$origin"
             echo "commit=$commit"
@@ -277,9 +292,15 @@ jobs:
 
       - name: Install the yidam CLI (the default set + [build] features)
         if: steps.yidam-cache.outputs.cache-hit != 'true'
+        env:
+          # Through `env`, never interpolated into the `run:` body. A `${{ }}` expression is
+          # substituted into the shell SOURCE before bash parses it, so a crafted value would
+          # execute; a variable is only ever data. GitHub's own guidance, and the reason the
+          # shape check above is a second line of defence rather than the only one.
+          YIDAM_FEATURES: ${{ steps.pin.outputs.features }}
         run: |
           cargo install --path /tmp/yidam/yidam/cli --locked \
-            --features "${{ steps.pin.outputs.features }}" \
+            --features "$YIDAM_FEATURES" \
             --root "$PWD/.yidam"
           .yidam/bin/yidam --version
 
