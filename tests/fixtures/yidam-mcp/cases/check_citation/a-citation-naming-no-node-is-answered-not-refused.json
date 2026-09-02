@@ -1,0 +1,10 @@
+{
+  "tool": "check_citation",
+  "capability": "dependencies",
+  "why": "`package` is required and `node` is not, and this is why. Without a package there is no question — nothing names a corpus to check against — so a call omitting it is a tool error. Without a node there IS a question, and its answer is a finding the gate would also give, so it comes back as one rather than as a schema error. A server that made `node` required would have moved a frozen check id out of reach of the surface that exists to report it.",
+  "call": { "package": "upstream" },
+  "expect": {
+    "equals": { "holds": false, "gates": true },
+    "equalsAt": { "findings.0.check": "external-citation-unresolved" }
+  }
+}

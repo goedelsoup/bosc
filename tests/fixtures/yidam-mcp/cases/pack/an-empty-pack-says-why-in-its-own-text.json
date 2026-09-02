@@ -1,0 +1,12 @@
+{
+  "tool": "pack",
+  "capability": "ontology",
+  "why": "A pack is what a caller reads *as* the corpus, so an empty one that says nothing is a context window asserting the corpus has no view — the invention this field exists to prevent, arriving in the one artefact that travels without the envelope around it. So the diagnosis must be in `text` and not only in `absence`, and a server that carries it in the field alone passes every JSON assertion while handing a model a blank page. `note` is declared here and holds no instances, which is why the class is in this corpus at all.",
+  "call": { "query": "note" },
+  "expect": {
+    "fields": ["absence", "text"],
+    "equals": { "reachable": 0, "written": 0, "omitted": 0 },
+    "equalsAt": { "absence.code": "class-unpopulated", "absence.instances": 0 },
+    "nonEmpty": ["text"]
+  }
+}

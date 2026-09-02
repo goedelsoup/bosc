@@ -1,0 +1,25 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "The absence code worth the most, and the one hardest to reach any other way. `concept` declares `supersedes` and no instance in this corpus authors it — the declaration exists for no other reason. A relationship a class licenses and nothing uses is either an ontology that reached past its corpus or a gap worth an open question, and from outside it looks exactly like a mistyped name: the class file says it exists, the gate has nothing to complain about, and the traversal returns zero rows either way. It is deliberately DISTINCT from `relationship-unknown`, which is the arm `concept -leads-to-> concept` reaches; the two come back identically and their repairs are opposite. `instances` is the denominator — how many nodes reached the step before the hop — because *none of four* and *none of nine hundred* are different facts about a corpus. \n\n`elsewhere` names `upstream` here, and this is the only case in this directory where it is non-empty — before the fixture gained an installed dependency (#333) the field was empty on every response, so a server that never looked passed identically to one that did. It is a POINTER and not an answer: the dependency holds `concept` instances, which is all that is claimed. Whether any of them authors `supersedes` is that corpus's business and is what `across: true` would go and ask.",
+  "call": {
+    "query": "concept -supersedes-> concept"
+  },
+  "expect": {
+    "fields": [
+      "absence"
+    ],
+    "equals": {
+      "matched": 0,
+      "rejected": null
+    },
+    "equalsAt": {
+      "absence.step": 1,
+      "absence.code": "relationship-unauthored",
+      "absence.instances": 4,
+      "absence.elsewhere": [
+        "upstream"
+      ]
+    }
+  }
+}

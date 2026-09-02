@@ -1,0 +1,11 @@
+{
+  "tool": "pack",
+  "capability": "ontology",
+  "why": "The one thing a server gets wrong that makes the receipt worthless. `reachable` is the count BEFORE the budget — four `concept` instances, the same four the unbudgeted case holds — and a server reporting the post-budget count answers `2 of 2`, which is exactly what silent truncation looks like from the inside. Nothing here pins `written`, `omitted`, or a byte of `text`: how many sections a given budget buys is a property of a renderer, and a case pinning it would freeze one server's section layout on every other. What is pinned is that the budget was echoed, that the account exists, and that the denominator did not move.",
+  "call": { "query": "concept", "budget": 40 },
+  "expect": {
+    "fields": ["written", "elided", "omitted", "omitted_by_class", "text"],
+    "equals": { "scope": "local", "rejected": null, "reachable": 4 },
+    "equalsAt": { "budget.tokens": 40, "budget.basis": "chars/4" }
+  }
+}

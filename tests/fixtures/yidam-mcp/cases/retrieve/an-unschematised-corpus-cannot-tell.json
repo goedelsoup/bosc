@@ -1,0 +1,24 @@
+{
+  "tool": "retrieve",
+  "corpus": "corpus-unschematised",
+  "why": "The frozen code no case over `corpus/` can reach, and the reason a second corpus exists. `retrieve` is `core`, so unlike `query`'s family it cannot hide behind the `ontology` tier: a server with no `.ont.yml` backs this tool and can derive NEITHER class answer — it cannot reject `gauge` as unknown, because no class is declared, and it cannot call it unpopulated, because nothing declares it a class at all. `class-unpopulated` here would assert an ontology this corpus has not written, which the contract states as a MUST NOT and which nothing enforced until this case: `corpus/` declares `concept` and `note`, so its class set is never empty and this branch is unreachable from every case beside it. `instances` is 0 for the same reason it is 0 under `class-unpopulated`, and the codes must not be readable as each other — that is the whole assertion.",
+  "call": {
+    "query": "hydropeaking ramping",
+    "class": "gauge"
+  },
+  "expect": {
+    "fields": [
+      "rejected",
+      "absence",
+      "results"
+    ],
+    "equalsAt": {
+      "rejected": null,
+      "absence.code": "class-undeclared",
+      "absence.instances": 0
+    },
+    "count": {
+      "results": 0
+    }
+  }
+}

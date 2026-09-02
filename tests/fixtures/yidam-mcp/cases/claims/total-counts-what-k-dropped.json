@@ -1,0 +1,9 @@
+{
+  "tool": "claims",
+  "why": "An agent told `here are 1 claims` and one told `here are 1 of 2` can take different next actions, and only the second can decide to spend more budget. A server that computed `total` after truncating reports the two as equal and the receipt says nothing.",
+  "call": { "k": 1 },
+  "expect": {
+    "count": { "claims": 1 },
+    "equals": { "returned": 1, "total": 2 }
+  }
+}

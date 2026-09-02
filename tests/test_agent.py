@@ -256,8 +256,12 @@ def test_options_wire_the_discipline_prompt_and_research_skills() -> None:
     # backend's `mcp__yidam__*` tools (enabled by default).
     assert opts.allowed_tools == tools.ALLOWED_TOOL_NAMES + yidam_tools.ALLOWED_TOOL_NAMES
     assert len(tools.ALLOWED_TOOL_NAMES) == 25  # +search_web, +fetch_url (#1048)
-    # list/read/query/open-questions (#1563) + semantic-search (#1564)
-    assert len(yidam_tools.ALLOWED_TOOL_NAMES) == 5
+    # The yidam half is DERIVED from the frozen contract, so it is asserted against the contract
+    # rather than against a number. A literal count here went stale the moment the contract grew
+    # from 5 tools to 13 (#2126) and said only `8 != 5` — which names nothing. This says which
+    # tool appeared or vanished, and it cannot drift from what the server actually serves.
+    served = [f"mcp__yidam__{name}" for name in yidam_tools.served_tool_names()]
+    assert served == yidam_tools.ALLOWED_TOOL_NAMES
     assert "data-center-sweep" in RESEARCH_SKILLS  # +data-center-sweep (#1049)
 
 

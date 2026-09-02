@@ -1,0 +1,19 @@
+{
+  "tool": "check_citation",
+  "capability": "dependencies",
+  "why": "`holds` and `gates` are not the same question, and this is the case that separates them. A stale dependency is a normal state — it is pinned deliberately — and escalating this would let a producer cutting a release turn a stranger's CI red without the stranger changing anything, the exact failure a pin exists to prevent. So the citation does not hold and does not gate: a caller reading only `gates` would write it without ever being told, and one reading only `holds` would treat a warning as a refusal. The span still matches, which is what keeps this case about the pin alone.",
+  "call": {
+    "package": "upstream",
+    "node": "concept/telemetry",
+    "commit": "0000000",
+    "span": "Readings a field instrument emits"
+  },
+  "expect": {
+    "equals": { "holds": false, "gates": false },
+    "count": { "findings": 1 },
+    "equalsAt": {
+      "findings.0.check": "external-citation-pin-moved",
+      "findings.0.severity": "warn"
+    }
+  }
+}

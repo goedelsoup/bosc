@@ -1,0 +1,13 @@
+{
+  "tool": "licensed_edges",
+  "capability": "ontology",
+  "why": "What a class may link to, asked before writing the link. `target` is the class at the other end and `direction` says which end authors it — an edge is documented from both ends, so a server filtering to `direction: out` answers a question the licensing check does not ask.",
+  "call": { "class": "concept" },
+  "expect": {
+    "fields": ["class", "declares_edges", "edges", "note"],
+    "equals": { "class": "concept", "declares_edges": true },
+    "nonEmpty": ["edges"],
+    "each": { "edges": ["relationship", "target", "direction"] },
+    "everyItemHas": { "edges": { "target": "concept" } }
+  }
+}

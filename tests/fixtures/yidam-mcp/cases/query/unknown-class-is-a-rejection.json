@@ -1,0 +1,12 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "The failure this tool exists to prevent: a misspelling that comes back as an empty result is indistinguishable from a true negative, and an agent cannot tell that it asked the wrong question. Class names ARE closed — `unknown-class` is an error-severity gate in the ontology — so this is a rejection and not a diagnostic, and it carries the step and the declared names. It MUST NOT be signalled with MCP's `isError`: the rejection is the answer, and a client branches on `rejected.code`.",
+  "call": { "query": "concpet" },
+  "expect": {
+    "equals": { "matched": 0, "returned": 0 },
+    "count": { "results": 0 },
+    "fields": ["rejected"],
+    "equalsAt": { "rejected.code": "unknown-class", "rejected.step": 0 }
+  }
+}

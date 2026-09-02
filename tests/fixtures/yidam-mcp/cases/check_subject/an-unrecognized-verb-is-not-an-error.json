@@ -1,0 +1,9 @@
+{
+  "tool": "check_subject",
+  "why": "The gate reports an unrecognized verb at warn severity because history cannot be rewritten to fix a verb. A tool that failed the call — isError, or an error-severity violation — would assert a verdict nobody agreed to, and an agent would learn to stop asking.",
+  "call": { "subject": "frobnicate: something the vocabulary never heard of" },
+  "expect": {
+    "equals": { "recognized": false, "verb": "frobnicate" },
+    "everyItemHas": { "violations": { "severity": "warn" } }
+  }
+}

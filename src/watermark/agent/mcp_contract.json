@@ -1,34 +1,56 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "contract": "0.1.0",
-  "description": "The frozen MCP tool contract (RFC-0005). Names are bare — no `yidam_` prefix — because the server is already namespaced by its own name in every client that mounts one. `tier` is `core` (every server MUST back it) or a capability name (backed iff the server declares that capability true). This file is the only place the list lives; a harness that restates it is a second freeze, which is how three servers ended up sharing one name out of five capabilities.",
+  "contract": "0.12.0",
+  "description": "The frozen MCP tool contract (RFC-0005). Names are bare — no `yidam_` prefix — because the server is already namespaced by its own name in every client that mounts one. `tier` is `core` (every server MUST back it) or a capability name (backed iff the server declares that capability true). This file is the only place the list lives; a harness that restates it is a second freeze, which is how three servers ended up sharing one name out of five capabilities. A TOOL A SERVER DOES NOT BACK MUST REFUSE, NOT MERELY GO UNLISTED (contract 0.11.1). Omitting an unbacked tool from `tools/list` and dispatching it anyway re-opens the hole the capability block exists to close, from the other side: the block is what lets a client learn the holes at connect time rather than through a tool-not-found error, and a server that answers a tool it has just said it does not serve has told a client two things at once. The refusal is an MCP tool error (`isError: true`) whose text begins `capability-not-supported`, and that token is frozen — `unknown tool` is a different repair, and a caller told it will go hunting for a spelling mistake in a name this file froze. It was unenforceable until a fixture corpus existed on which some tier goes unbacked; `corpora.json` ships one.",
   "capabilities": {
     "retrieve": {
-      "description": "Not a tier — `retrieve` is core either way. `vector: false` says the index is absent or unloadable, which is the same fact `degraded` reports per call; a server declaring it is promising every `retrieve` comes back degraded.",
-      "shape": { "vector": "boolean" }
+      "description": "Not a tier — `retrieve` is core either way. `vector: false` says the index is absent or unloadable, which is the same fact `degraded` reports per call; a server declaring it is promising every `retrieve` comes back degraded. `reason` carries the same value `degraded_reason` will carry on every call, so a client learns at connect time what it would otherwise learn one failed search later; it is null exactly when `vector` is true.",
+      "shape": {
+        "vector": "boolean",
+        "reason": "string|null"
+      }
     },
     "graph": "Backs the bidirectional walk. A server whose corpus is a projected mirror can still back it; one that holds no edges declares false.",
     "phases": "Reads live `ma/*` and `rigpa/*` refs. Backable only by a server with the working git repository.",
     "sangha": "Reads elector positions from those refs. Same constraint as `phases`.",
-    "resources": "Serves the `yidam://` URI scheme over MCP `resources/*`. A tools-only server declares false and MUST map each URI to its tool peer without diverging — `read_resource(\"yidam://corpus/<class>/<name>\")` returns the same node as `get_node(\"<class>/<name>\")`."
+    "resources": "Serves the `yidam://` URI scheme over MCP `resources/*`. A tools-only server declares false and MUST map each URI to its tool peer without diverging — `read_resource(\"yidam://corpus/<class>/<name>\")` returns the same node as `get_node(\"<class>/<name>\")`.",
+    "ontology": "Backs the class contract: what a class declares it may link to. A server whose corpus is a projected mirror holds nodes and edges and may hold no `.ont.yml` at all — it can back `graph` and not this. Optional is not absent: such a server declares false and its cases are skipped rather than passed. Whether a server declares it is a fact about ITS CORPUS, not about its build: a corpus with no `.ont.yml` has no class contract to back, so a conforming server pointed at one declares false — which is what `corpora.json` freezes for `corpus-unschematised/`. One consequence is worth stating, because it reads as a gap otherwise: `query`'s `unschematised` is therefore always `false` on this surface. The only corpus that would make it true is one where `query` is not served at all, so the `true` arm is reachable from a CLI and not from a conforming server, and no case here can assert it.",
+    "dependencies": "Backs the four `cites:` checks against the dependencies actually installed. True iff the server resolved at least one — a fact about ITS CORPUS, not about its build, in exactly the way `ontology` is. A server that resolved none MUST declare false and refuse `check_citation`, and MUST NOT serve it answering `external-citation-unresolved` to everything: that verdict is literally correct and asserts a fact about a dependency set the server does not have, which is the shape `class-unpopulated` on an unschematised corpus already has a MUST NOT for. A projected mirror carries no `.yidam/tonpa/` and would be reporting about the mirror while its caller reads it as being about the repository the mirror came from. Optional is not absent: such a server declares false and its cases are skipped rather than passed."
   },
   "tools": [
     {
       "name": "retrieve",
       "tier": "core",
-      "description": "Semantic search over corpus nodes. Returns the top-k nodes by cosine similarity; degrades to keyword search (with \"degraded\": true) when the vector index is absent.",
+      "description": "Semantic search over corpus nodes. Returns the top-k nodes by cosine similarity; degrades to keyword search (with \"degraded\": true and a \"degraded_reason\") when the vector index is absent or this build cannot read it. An empty answer carries `absence` saying which kind of nothing it is, and a `class` filter naming no declared class is `rejected` rather than searched.",
       "inputSchema": {
         "type": "object",
         "properties": {
-          "query": { "type": "string", "description": "Natural-language query" },
-          "k": { "type": "integer", "description": "Number of results (default 5)" },
-          "class": { "type": "string", "description": "Restrict results to one class" }
+          "query": {
+            "type": "string",
+            "description": "Natural-language query"
+          },
+          "k": {
+            "type": "integer",
+            "description": "Number of results (default 5)"
+          },
+          "class": {
+            "type": "string",
+            "description": "Restrict results to one class"
+          }
         },
-        "required": ["query"]
+        "required": [
+          "query"
+        ]
       },
       "response": {
-        "required": ["degraded", "results"],
-        "notes": "One adaptive tool, not a split pair. A server offering `query` and `semantic_search` as separate names has made the caller decide which vector space it is in, which is the caller's least informed decision. `degraded` MUST be present on every response — there is no third state."
+        "required": [
+          "degraded",
+          "degraded_reason",
+          "rejected",
+          "absence",
+          "results"
+        ],
+        "notes": "One adaptive tool, not a split pair. A server offering `query` and `semantic_search` as separate names has made the caller decide which vector space it is in, which is the caller's least informed decision. `degraded` MUST be present on every response — there is no third state.\n\nWHY, NOT ONLY WHETHER (contract 0.4.0). `degraded_reason` is required alongside it, and is null exactly when `degraded` is false. Null rather than absent, the convention `origin` already follows: a client testing the key must not have to distinguish \"not degraded\" from \"a server too old to say why\". The bare boolean made two different repositories look identical — one that never built an index, and one whose index the running binary cannot read — and they have different repairs, so a client (or a person) told only `degraded: true` cannot act on it. The frozen values:\n\n  no_index           — the corpus has no vector index. Build one.\n  no_vector_support  — an index exists; this build cannot read it. Reinstall with the vector dependencies.\n  stale_contract     — an index exists and was built with different embedding settings than this server would use, so answering from it would be answering in another vector space.\n\nPrecedence is by what must be fixed FIRST, and it is not the order a server discovers them in: a build without vector support looking at a corpus with no index reports `no_index`, because indexing is the repair either way and the missing corpus artefact is the nearer cause. `no_vector_support` is reserved for the case where the artefact is present and only the binary is the obstacle. Servers that always embed reserve `stale_contract` for the `embed.config.json` mismatch the degraded signal already forbids answering silently. A value outside this set is a divergence; a server needing one should add it here first.\n\nAN EMPTY RETRIEVAL IS WHERE AN AGENT INVENTS (contract 0.10.0). Contract 0.8.0 answered this for `query`, `pack` and `estimate` — the surfaces where the ontology derives the reason. It did not touch `retrieve`, which is the tool an agent reaches for BEFORE it knows enough to write a query. There `results: []` still meant all of: the corpus has nothing on this subject, the query's words are not the corpus's words, the class filter names a class holding no instances, and the class filter names a class that does not exist.\n\n`rejected` IS REQUIRED AND IS NOT AN ABSENCE. It is null when the call ran, and otherwise carries `{code, message}`. The only code is `unknown-class`: a `class` filter naming no class this corpus declares MUST be rejected BEFORE the search rather than searched and reported empty. This tool took a `class` argument and never read it, so `retrieve(\"hydropeaking\", class: \"gauge\")` against a corpus declaring `gage` came back with zero results and nothing wrong — the exact failure `query`'s `unknown-class` exists to prevent, one tool over, on the more-used tool. The near-miss clause is the same one `query` renders, from the same edit-distance-1 rule. A server MUST NOT signal this with `isError`.\n\n`absence` IS REQUIRED and is null exactly when `results` is non-empty, otherwise carrying `{code, message, instances}`. `instances` is the denominator the message is about: how many nodes the class filter admitted to the search, local and dependency alike. *None of four* and *none of nine hundred* are different facts about a corpus. At most one of `rejected` and `absence` is non-null.\n\nA SMALLER SHAPE THAN `query`'s, DELIBERATELY. No `step`, because `retrieve` has no steps. No `elsewhere`, because `retrieve` already searches every installed dependency — that field exists on `query` to point at corpora a local walk did not read, and here it would be empty on every response by construction, which is a field that teaches a client nothing and costs it a branch.\n\nThe codes are frozen:\n\n  class-unpopulated   the ontology declares the class and no node in this corpus or its dependencies belongs to it\n  class-undeclared    no node carries the class AND this corpus declares no ontology, so a misspelling and an empty class cannot be told apart here\n  class-unindexed     the vector index holds no rows for the class though the corpus holds instances — the index predates them\n  index-empty         the vector index holds no rows and there was nothing to search\n  query-no-terms      the query contains no searchable terms\n  no-term-match       keyword search: none of the nodes searched contains any word of the query\n\nTHE `core` TIER IS WHY `class-undeclared` EXISTS. Unlike `query`'s family this tool cannot hide behind the `ontology` tier: a server with no `.ont.yml` backs `retrieve` and can derive NEITHER class row — it cannot reject an unknown class, because none is declared, and it cannot call one unpopulated, because nothing declares it a class at all. That state is reported as its own code rather than as silence or as a guess. A server MUST NOT report `class-unpopulated` on an unschematised corpus; doing so asserts an ontology it does not have. That clause is answerable only over a corpus with no `.ont.yml`, so one ships: `corpus-unschematised/`, which `cases/retrieve/an-unschematised-corpus-cannot-tell.json` names. Over the default corpus the branch is unreachable and a server can report `class-unpopulated` there and pass everything.\n\nTHE SEMANTIC PATH SAYS MORE THAN A THRESHOLD WOULD. There is no score threshold and a conforming server MUST NOT invent one — that would be a claim about a model. But nothing is dropped for scoring badly, so an empty vector answer is NOT a weak answer: it is proof the filter admitted no rows at all, which is derivable without asserting anything about similarity. That is what makes `class-unindexed` reachable — a class the corpus populates and the index does not hold is an index built before those nodes were written, and it is the one diagnosis the keyword path is blind to. A weak-but-non-empty answer remains undiagnosable and MUST be left undiagnosed."
       }
     },
     {
@@ -38,12 +60,24 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "id": { "type": "string", "description": "Node id, e.g. \"concept/confounding\"" }
+          "id": {
+            "type": "string",
+            "description": "Node id, e.g. \"concept/confounding\""
+          }
         },
-        "required": ["id"]
+        "required": [
+          "id"
+        ]
       },
       "response": {
-        "required": ["id", "class", "label", "description", "content", "links"],
+        "required": [
+          "id",
+          "class",
+          "label",
+          "description",
+          "content",
+          "links"
+        ],
         "notes": "The unified node model (RFC-0002), as JSON. Not a language-specific YAML render: the envelope is the contract, and a server that returns its own serialization has made every consumer parse a second format."
       }
     },
@@ -54,22 +88,160 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "class": { "type": "string", "description": "Restrict to one class; omit for the whole corpus" }
+          "class": {
+            "type": "string",
+            "description": "Restrict to one class; omit for the whole corpus"
+          }
         }
       },
       "response": {
-        "required": ["nodes"],
+        "required": [
+          "nodes"
+        ],
         "notes": "Core rather than optional so a tools-only server is first-class. Its result MUST equal `read_resource(\"yidam://corpus/<class>\")` on a server that backs resources."
       }
     },
     {
       "name": "open_questions",
       "tier": "core",
-      "description": "All nodes flagged as open questions: label starts with \"?\" or the body contains an [open] claim.",
-      "inputSchema": { "type": "object", "properties": {} },
+      "description": "All nodes flagged as open questions: label starts with \"?\", the body asserts an [open] claim, or a property the node's class declared as `type: claim` holds an open tag.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
       "response": {
-        "required": ["open_questions"],
-        "notes": "The predicate is frozen (RFC-0001) and no server may add arms to it. An extension — a `claim_tag` filter, say — is a different tool, because a server that quietly widens this one makes two corpora incomparable while both answer."
+        "required": [
+          "open_questions"
+        ],
+        "notes": "Three arms, frozen (RFC-0001), and a server may add none. The third reads only properties the node's class declared `type: claim` in its `.ont.yml`, and both `open` and `[open]` are read as the tag. It is the arm a server is most likely to skip, and skipping it is invisible on a prose corpus: with no `type: claim` declaration anywhere the arm matches nothing, so two-arm and three-arm servers return the identical set. It diverges only on the corpus that declared the field — which is the corpus that measured 26 open questions against this tool's 2, and reshaped its data to `\"[open]\"` to be seen at all. What is still forbidden is a fourth arm and a blessed key name: matching a bare `open` under any key makes `status: open` on a ballot measure an open claim, and no corpus can opt out of that. The ontology declares the field or the arm reads nothing. \n\nWHAT COUNTS AS A CLAIM (contract 0.3.0). The second arm says *asserts*, and until 0.3.0 it did not say how — so an implementation was free to pick a rule, and one did: it read a tag in backticks as a mention. Measured against a mature corpus that rule silenced 184 of 230 `[open]` tags, because an open question is written mid-sentence with the token set off from the prose (\"whether the two are connected is `[open]`\") while `[verified]` ends a sentence of fact and reads bare. The repository understated its open questions fivefold on its own front page. Two conforming servers could differ by that much, which is what freezing the arms was supposed to prevent. So the rule is frozen too. Typography decides NOTHING: a backticked tag is a claim like any other. A tag is read as NAMED on four shapes and no others — (1) pluralised, `[open]`s; (2) immediately followed by a naming noun (tag/claim/marker/token); (3) the object of a past-tense transitive reporting verb (carried, said, stated, called, wrote, tagged, marked, read) earlier in the same clause; (4) negated (not, never, no longer) earlier in the same clause. Narration does not cross a clause boundary. The present tense is NOT narration — \"now carries [open]\" applies a tag — and neither are copulas (was, were, remains, held); both were cut by measurement at eight false positives, all of which promoted. Content inside a fenced block is shown rather than said and is never counted. A server unsure of a residual case should COUNT it: over-counting [open] overstates how much is unsettled, which is the safe error, while under-counting it promotes blocks that should not travel."
+      }
+    },
+    {
+      "name": "claims",
+      "tier": "core",
+      "description": "Assertions, not documents. Returns the claims a corpus makes with the standing each is made at — `verified`, `inference`, or `open` — filterable by standing and class, without returning the nodes' full prose. A node is 2-10 sentences; a claim is one.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "standing": {
+            "type": "string",
+            "enum": [
+              "verified",
+              "inference",
+              "open"
+            ],
+            "description": "Only claims made at this standing. `verified` is the query an agent should make before it writes anything."
+          },
+          "class": {
+            "type": "string",
+            "description": "Restrict to one class"
+          },
+          "node": {
+            "type": "string",
+            "description": "Restrict to one node (\"<class>/<name>\")"
+          },
+          "k": {
+            "type": "integer",
+            "description": "Maximum claims to return (default 50)"
+          }
+        },
+        "required": []
+      },
+      "response": {
+        "required": [
+          "claims",
+          "returned",
+          "total"
+        ],
+        "notes": "WHAT COUNTS AS A CLAIM. The same predicate `status`, `open-questions` and `lint` use, and deliberately not the SDK's `extract_claims` — that is a line-oriented parser for the markdown node model, and over a YAML instance it reads `class: gage` as an untagged claim. Concretely: the three tokens matched exactly; fenced blocks masked and inline code NOT masked; a tag that is pluralised, named by the noun after it, the object of a past-tense reporting verb, or negated is a MENTION and is not served; and a property the class declared `type: claim` contributes the node's own standing, once, whether it is written `open` or `[open]`.\n\nSERVE THE TAG OR SERVE NOTHING. There is no untagged arm. An unmarked sentence is prose and `get_node` is where prose lives; inventing a fourth standing for it would turn every aside in a corpus into a weakly-evidenced claim.\n\nTHE INVARIANT IS NOT `WHEN IN DOUBT, DROP IT`. It is: never make the corpus look better-evidenced than it is. Serving a `[verified]` nobody asserted breaks it — and so does dropping an `[open]` somebody did, because a corpus with its open questions silenced reads as settled. Both are promotion, on different tags. A server that filtered backticked tags as mentions would understate a real corpus's open questions fivefold; that rule was measured and thrown out.\n\n`standing` is the claim's OWN tag. It is not a minimum over the claims it rests on — no implementation computes that, and a field named for it would manufacture a tier nobody derived.\n\n`total` is the count before `k`, always. An agent told `here are 5 claims` and one told `here are 5 of 41` can take different next actions, and only the second can decide to ask for more.\n\nLOCAL CORPUS ONLY. A dependency's assertions are its corpus's. Composition is retrieval-only (`retrieve` reaches them, and says so with `origin`); presenting a foreign claim here as this repository's would cross a boundary nothing has argued across."
+      }
+    },
+    {
+      "name": "check_subject",
+      "tier": "core",
+      "description": "Whether a commit subject is in the closed vocabulary, and what the commit would be filed as. Asked before writing the commit rather than learned from a failing gate.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "The subject line, e.g. `establish: confounding framework`"
+          }
+        },
+        "required": [
+          "subject"
+        ]
+      },
+      "response": {
+        "required": [
+          "text",
+          "verb",
+          "kind",
+          "recognized",
+          "violations",
+          "vocabulary"
+        ],
+        "notes": "TOTAL, AND NEVER AN ERROR. An unrecognized verb is a finding in the payload, not a failed call: the gate reports it at warn severity because history cannot be rewritten to fix a verb, and a tool that failed harder than the gate would assert a verdict nobody agreed to. Each violation carries that severity read from the check rather than restated.\n\n`verb` IS EVERYTHING BEFORE THE FIRST `: `, which is why a conventional-commits `(scope)` suffix costs twice — `vendor(yidam): …` is read as the verb `vendor(yidam)`, which is in no list, and classification then falls through to Epistemic and files an operational commit as a change in understanding. That case is reported as its own violation rather than folded into `unrecognized-verb`, because it has a known cause and a known fix.\n\n`vocabulary` CARRIES THE CLOSED LIST so a caller that got it wrong can correct without a second call, which is the whole point of asking before the act."
+      }
+    },
+    {
+      "name": "check_citation",
+      "tier": "dependencies",
+      "description": "Whether a `cites:` into an installed dependency would hold, asked before it is written. Answers with the check ids that would fire, or that none would.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "package": {
+            "type": "string",
+            "description": "The dependency, as `.yidam/tonpa.toml` names it."
+          },
+          "node": {
+            "type": "string",
+            "description": "`<class>/<name>` inside that corpus. Unqualified — `package` already says whose."
+          },
+          "commit": {
+            "type": "string",
+            "description": "The `manifest.yml` commit the citation will record having read."
+          },
+          "tag": {
+            "type": "string",
+            "description": "The producer's standing as observed at that pin. Recorded, never transferred."
+          },
+          "span": {
+            "type": "string",
+            "description": "Verbatim text from the cited node — the field the design turns on."
+          }
+        },
+        "required": [
+          "package"
+        ]
+      },
+      "response": {
+        "required": [
+          "citation",
+          "holds",
+          "gates",
+          "findings",
+          "dependencies"
+        ],
+        "notes": "TOTAL, AND NEVER AN ERROR, for `check_subject`'s reason: a citation that will not hold is a verdict in the payload, and a tool that failed harder than the gate would assert a verdict nobody agreed to. `isError` stays for a tool that could not run, and this one always can — a server that cannot answer declines it at the `dependencies` capability instead of guessing.\n\n`package` IS REQUIRED AND `node` IS NOT, which is a distinction rather than an oversight. Without a package there is no question — nothing names a corpus to check against. Without a node there is still a question, and its answer is `external-citation-unresolved`, the same finding the gate gives, so it comes back as one rather than as a schema error.\n\n`findings` CARRIES THE CHECK IDS THE GATE WOULD REPORT — `external-citation-unresolved` and `external-citation-span-drift` at error, `external-citation-pin-moved` at warn, `external-citation-unpinned` at info — each with that check's own message, because the message names the repair and a caller asking before the act needs the repair more than a caller reading a report afterwards. A server MUST answer from the same predicate its gate uses; re-deriving the four rules beside them is how the two come to disagree about what a citation is.\n\n`holds` AND `gates` ARE NOT THE SAME QUESTION. `holds` is false when anything at all fired; `gates` is true only when something at error severity did. A moved pin and an unpinnable path dependency are both worth saying and neither blocks, so a caller reading only `holds` over-reports and one reading only `gates` writes a citation it was warned about.\n\n`dependencies` CARRIES THE INSTALLED SET — `package`, `pin`, `kind` — so a caller that got the name wrong can correct without a second call, which is `check_subject`'s `vocabulary` and the whole point of asking before the act. `pin` is the part reachable no other way on this surface: it is the value a correct `commit:` must carry, and an agent left to guess it writes `external-citation-pin-moved` into the corpus on its first try.\n\nSPAN VERIFICATION READS THE STARTUP SNAPSHOT, not the working tree — the same corpus `get_node` and `query --across` answer from, settled the way 0.9.1 settled it for `query --select body`. A verdict read through to disk would call a citation sound against text no other tool on the server can show you. Freshness is a restart."
+      }
+    },
+    {
+      "name": "claim_tags",
+      "tier": "core",
+      "description": "The three evidence tags, what each means, and how each may be written. Tens of tokens instead of a prose file held in context.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "response": {
+        "required": [
+          "tags",
+          "note"
+        ],
+        "notes": "THE PROSE STAYS. `prelude/guidelines/agent-conduct.md` carries the REASONING, which is what makes the vocabulary arguable and revisable; this carries the CONTENT, which is what makes it cheap to obey. A server must not let this become the only statement of the rule.\n\nBOTH SPELLINGS. A property the class declared `type: claim` accepts the bare token (`open`) and the bracketed one (`[open]`). Prose is scanned for the BRACKETED form only — a bare `open` in a sentence is a word.\n\nWRITE THE TAG ALONE. `[verified — Pearl 2009]` matches nothing and is counted as no claim at all: it looks tagged to a reader and reads as bare assertion to every tool. Write the tag and put the citation beside it."
       }
     },
     {
@@ -79,14 +251,197 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "id": { "type": "string", "description": "Node id, e.g. \"concept/confounding\"" },
-          "depth": { "type": "integer", "description": "Maximum hops (default 1)" }
+          "id": {
+            "type": "string",
+            "description": "Node id, e.g. \"concept/confounding\""
+          },
+          "depth": {
+            "type": "integer",
+            "description": "Maximum hops (default 1)"
+          }
         },
-        "required": ["id"]
+        "required": [
+          "id"
+        ]
       },
       "response": {
-        "required": ["id", "neighbors"],
+        "required": [
+          "id",
+          "neighbors"
+        ],
         "notes": "Undirected: each reached node once, at its shortest hop, carrying the direction of the edge it was reached by. Half the interesting connections are inbound, which is why the corpus has an `orphan-in` check at all."
+      }
+    },
+    {
+      "name": "query",
+      "tier": "ontology",
+      "description": "Execute a typed path over the graph — `reach -measured-by-> gage`. Enters at a class, at `*`, or by similarity (`concept~\"…\"`), then follows named, directed relationships. A query that does not typecheck against the ontology is rejected with the step and the near miss; a query that typechecks and matches nothing returns zero results and is not a rejection.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The path, e.g. `concept -enables-> concept`. Whitespace around a hop is required: `-rel->` and `<-rel-` are single tokens."
+          },
+          "select": {
+            "type": "string",
+            "description": "Comma-separated fields to project: node, class, label, description, body, or `properties.<name>`. Default `node,class,label`."
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Maximum results returned (default 50). Bounds the projection, not the traversal — `matched` is always the full count."
+          },
+          "anchor_k": {
+            "type": "integer",
+            "description": "How many entry nodes a `class~\"…\"` anchor opens on (default 1)."
+          },
+          "across": {
+            "type": "boolean",
+            "description": "Also query every installed dependency's corpus, one execution per corpus, with every result attributed by `origin`. Default false."
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "response": {
+        "required": [
+          "kind",
+          "query",
+          "scope",
+          "steps",
+          "rejected",
+          "anchor",
+          "absence",
+          "at",
+          "diagnostics",
+          "results",
+          "matched",
+          "returned",
+          "cost",
+          "unschematised"
+        ],
+        "notes": "TYPED TRAVERSAL, NOT A FLOOD (contract 0.6.0). `neighbors` chains outbound and inbound edges unconditionally and filters on neither relationship nor direction; it carries both out as labels on the result and reads neither as an input. A server offering only that has typed its graph and left no way to walk by the types. `query` is the walk.\n\nTIER. `ontology`, and not `graph`, because the tier names what the DIAGNOSIS needs. Without `.ont.yml` every class name and every relationship is accepted, so a misspelling comes back as zero results — the one failure this tool exists to prevent. A server that backs `ontology` and holds no edges is fine: its hops are licensed and match nothing, which is a true statement about its corpus. Such a server sets `unschematised: false` and answers; a server with no ontology at all declares `ontology: false` and its cases are skipped rather than passed.\n\nREJECTED IS AN ANSWER, NOT AN ERROR. `rejected` is null when the query ran and otherwise carries `{step, code, message}`. It MUST NOT be signalled with MCP's `isError` — the codes are the contract's own (`parse`, `unknown-class`, `unknown-property`, `unlicensed-edge`, `edge-target-class`, `unknown-field`, `anchor-not-entry`, `anchor-unavailable`, `anchor-unresolvable`) and a client branches on them. An empty `results` with `rejected: null` means the query was well-formed and matched nothing; the two MUST be distinguishable, which is the whole reason this tool is not `retrieve` with a filter.\n\nDIAGNOSTICS ARE NOT REJECTIONS. `diagnostics` carries `{level, step, code, message}` for a query that RAN: an undeclared relationship under a non-exhaustive `edge_policy`, a `*` narrowed to the classes declaring a property, a relationship one character from one the class declares. A server that promotes these to rejections refuses legal queries — a non-empty `edges:` says these relationships exist, not and no others may.\n\nANCHORS, AND WHERE `degraded` LIVES. `anchor` is null unless the first step anchored, and otherwise carries `{step, text, k, degraded, degraded_reason, repair, entries}` with the same discipline `retrieve` uses: `degraded_reason` is null exactly when `degraded` is false, and its values come from the same frozen set. There is deliberately NO top-level `degraded` on this response: a query with no anchor performed no retrieval, and a `false` there would read as retrieval having succeeded. An anchor is an ENTRY — only the first step may carry one, and a later one is rejected `anchor-not-entry` rather than reinterpreted as a similarity filter. The anchor is LOCAL: unlike `retrieve`, it MUST NOT enter through an installed dependency's node, because the response says `\"scope\": \"local\"`.\n\nCOST IS PART OF THE ANSWER. `cost` carries `{steps, edges_walked, nodes_read, chars, tokens, corpus_nodes}`. `nodes_read` is the CALLER's cost — nodes whose content was evaluated by a predicate, tested for a hop's class, or projected — not the server's I/O, which always loads the corpus. Class narrowing is a directory listing and is not charged; a degraded keyword anchor IS charged for every candidate it scored, because it read them. `tokens` is `chars / 4` and is an approximation by construction, not a tokenizer.\n\nAN EMPTY RESULT IS WHERE AN AGENT INVENTS (contract 0.8.0). `absence` is null exactly when `matched` is non-zero, and otherwise carries `{step, code, message, instances, elsewhere}` — the reason the answer is empty, DERIVED from what the corpus states rather than inferred from the query's shape. Zero rows is otherwise indistinguishable from a bad embedding, a class nobody has written into, and a corpus that genuinely has no view; a caller that cannot tell those apart fills the gap from its own weights, under a claim that will be attributed to having worked in the corpus. `retrieve` already has the instinct one door over — it degrades and says so rather than quietly answering worse — and this is the same principle applied to COVERAGE rather than to method.\n\nThe codes are frozen. Three are about the entry step, four about a hop, and one is the fallback:\n\n  class-unpopulated        the ontology declares the class and it holds no instances\n  predicate-unsatisfied    it holds instances and none satisfies the predicate\n  anchor-empty             the similarity anchor resolved to no entry node\n  relationship-unauthored  a class in the source set declares it and no instance authors it\n  relationship-unknown     no class declares it and no instance authors it\n  no-edge-from-here        it is authored elsewhere, by nothing that reached the previous step\n  edge-lands-elsewhere     edges were followed and nothing they landed on satisfied the step\n  no-match                 none of the above; reported rather than asserted away\n\n`relationship-unauthored` IS WORTH THE MOST. A relationship a class licenses and no instance uses is either an ontology that overreached or a corpus with a gap, and it is invisible from every other angle: the class file says it exists, the gate has nothing to complain about, and the traversal comes back exactly as a mistyped name would. Surfacing it produces an open question rather than a shrug. That is also why it is SPLIT FROM `relationship-unknown`: declared-and-unused and never-heard-of come back from a traversal identically and their repairs are opposite. The first is a corpus that has not written what its ontology promises; the second is almost always a name that was mistyped, which the step's own diagnostics have already said. One code covering both hands a caller a sentence about the ontology when the answer is a typo.\n\nABSENCE IS NOT A REJECTION AND MUST NOT BE MERGED WITH ONE. `rejected` says the query is wrong; `absence` says the query is right and the corpus is quiet. A server reporting a typo as `class-unpopulated` would tell a caller its mistake was a true negative — the exact failure `rejected` exists to prevent — and one rejecting an empty answer would refuse a legal query. Both keys are present on every response and at most one is non-null.\n\n`instances` IS THE DENOMINATOR THE MESSAGE IS ABOUT: instances of the step's class(es) at an entry step, nodes that reached the previous step at a hop. *None of three* and *none of nine hundred* are different facts about a corpus.\n\n`elsewhere` NAMES INSTALLED PACKAGES THAT HOLD WHAT THIS CORPUS DOES NOT, and is a POINTER rather than an answer — whatever it names is that corpus's claim, not this one's. Always present, empty when there is nothing to name, so a client never distinguishes 'no dependency has it' from 'nothing looked'. Empty by construction on a run that already spanned the dependency set (it looked) and on a run about a past commit (a dependency set has no history, so naming today's packages to explain an older corpus's silence would be an anachronism).\n\nWHICH CORPUS, AND WHEN (contract 0.9.1). `kind` is `query`, and it is on the response because the CLI's `--between` emits a SERIES under the same envelope and the same `format_version`; a client that told the two apart by testing for an absent key would be making exactly the inference `at` forbids. `at` is the commit the answer is about and is null for a server answering about its loaded corpus. Both keys are always present.\n\nTHE CORPUS IS THE ONE LOADED AT STARTUP, INCLUDING `--select body`. Every read this server makes comes from the corpus and index built on disk when it started — `retrieve`, `get_node`, `neighbors` and `query` alike. `select=body` returns the node text as it was read then, not as the file reads now, and a long-running server therefore answers with the corpus it was started against until it is restarted. That is the same snapshot the staleness banner reports at connect time, and it is deliberate: a `body` that reached for the working tree at request time would be the one field on the one tool answering about a different corpus than every other field beside it. A server that wants freshness restarts; it MUST NOT make this field alone live.\n\nDIAGNOSED AGAINST THE LOCAL CORPUS, ALWAYS, even under a spanning run: a foreign corpus's silence is that corpus's claim, and counting across both would produce a figure over classes that share a name and not a meaning.\n\nA DEPENDENCY IS QUERYABLE, AND ONLY ON REQUEST (contract 0.11.0). `across` is an optional boolean input defaulting to FALSE, and the default is the boundary: a caller that did not ask MUST NOT be shown a foreign node. `yidam query --across` shipped at #268 and this surface did not have it for three contract bumps, so an agent could `retrieve` from a dependency and read a node out of one but could not ask the composed corpus a typed question that a person at the CLI could.\n\nONE EXECUTION PER CORPUS, NOT ONE OVER A MERGED SET. Every result carries `origin` — null for this repository, the package name for a dependency — and foreign ids are qualified `pkg::class/name.yml`. A hop MUST NOT cross the boundary: no execution may hold two corpora's nodes at once, which is what makes crossing structurally impossible rather than merely forbidden. Two corpora sharing a class name is not agreement, and an unqualified id would name a node that is not the one that answered.\n\n`scope` REPORTS WHAT HAPPENED, NOT WHAT WAS ASKED. It reads `across` only when a dependency set was actually walked. A server with no dependencies installed that is asked to span answers `local` with the same rows a local run gives — that is not an error and MUST NOT be reported as one, and it is what `yidam query --across` already does. A caller that needs to know whether its request took effect reads `scope`.\n\nAN ANCHORED SPANNING QUERY IS REJECTED `anchor-across`, unchanged from the CLI: the vector index is this corpus's, and resolving an anchor against it to enter a foreign corpus would rank a dependency's nodes in a space built from someone else's text.\n\nWHEN THE DEPENDENCY SET IS READ IS PART OF THE SNAPSHOT. A conforming server MUST answer a spanning call from the same snapshot every other tool answers from — the corpus as of startup. Reading dependencies lazily on the first spanning call would create a SECOND snapshot moment, so a `tonpa install` mid-session would be invisible to `retrieve` and visible to `query`, and the one-snapshot promise this contract makes at 0.9.1 would hold for some tools and not others. Freshness is a restart, for this too.\n\nSPANNING IS `query`-ONLY, AND THAT IS A DECISION RATHER THAN AN OMISSION. `pack` and `estimate` take no `across` and a conforming server MUST NOT add one. A pack is context an agent writes from, and one mixing two corpora would put a dependency's prose in a context window under this repository's class names — where `omitted_by_class` would report `concept: 12` across two corpora that each mean something different by `concept`. The receipt would be arithmetic over a category nobody declared, which is worse than a pack that says it is local. `estimate` quotes a pack, so it inherits the same answer. The composition story is therefore: `retrieve` and `get_node` reach a dependency, `query` may be asked to, and `pack`/`estimate` are local by construction."
+      }
+    },
+    {
+      "name": "pack",
+      "tier": "ontology",
+      "description": "A context pack for one goal: the whole answer to a typed query, rendered as prose and filled to a token budget, with an account of what did not fit. `retrieve` returns top-k and says nothing about the rest; `query` says how many it dropped; this says what kind.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The goal, in `query`'s language — including a similarity anchor, e.g. `concept~\"embedding space\" -relates-to-> concept`."
+          },
+          "budget": {
+            "type": "integer",
+            "description": "Approximate token budget for the pack. Omit for unbounded."
+          },
+          "anchor_k": {
+            "type": "integer",
+            "description": "How many entry nodes a `class~\"…\" ` anchor opens on (default 1)."
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "response": {
+        "required": [
+          "query",
+          "scope",
+          "rejected",
+          "anchor",
+          "absence",
+          "diagnostics",
+          "cost",
+          "reachable",
+          "written",
+          "elided",
+          "omitted",
+          "omitted_by_class",
+          "budget",
+          "text"
+        ],
+        "notes": "THE RECEIPT IS THE CONTRACT; THE PROSE IS NOT (contract 0.7.0). `text` is a rendering, and no case in this directory pins a byte of it — a server whose sections carry a different heading is conforming, and one that pins `written: 2` on a corpus of four would be freezing yidam's section layout on every other implementation. What is frozen is the accounting: `written + omitted == reachable`, `omitted_by_class` sums to `omitted`, and every one of those keys is present on every response including the unbudgeted one.\n\n`reachable` IS THE COUNT BEFORE THE BUDGET, ALWAYS — the rule `claims.total` follows, one field further out. A server reporting the post-budget count has produced a receipt that says nothing: `12 of 12` is what silent truncation looks like from the inside, and the failure this tool exists to prevent is a caller reporting what it was given rather than what it wrote.\n\n`omitted_by_class` IS THE FIELD THIS TOOL IS FOR. \"I retrieved 12 nodes\" and \"I retrieved 12 of 40, and the 28 I dropped were all `recording` instances\" license completely different next actions, and only the second lets a caller decide between spending more budget and reporting incompleteness. A server may not collapse it to a total it already reports.\n\nBUDGET IS AN ESTIMATE AND SAYS SO. `budget` carries `{tokens, used, chars, basis, over_budget}`. `tokens` is what was asked for and is null on an unbudgeted pack; `used` is what the pack runs to; `basis` names how both were computed and is `chars/4` for a server that does not tokenize. A precise-looking number computed with the wrong tokenizer is worse than a stated approximation, so the approximation is stated rather than hidden.\n\nTHE RECEIPT IS THE FLOOR. A budget too small to hold the account itself cannot be met, and `over_budget` is true exactly then. Dropping the receipt to fit would produce a pack that silently holds nothing — the failure mode, arriving through the door marked compliance. Whenever a single node is written, the pack fits.\n\nREJECTION IS AN ANSWER, AND AN EMPTY PACK IS NOT ONE. `rejected` carries `query`'s own codes and MUST NOT be signalled with `isError`; when it is non-null, `text` is empty and `reachable` is 0. Handing back an empty pack for a misspelled class would give a caller a context window that reads as a corpus with nothing to say.\n\nABSENCE TRAVELS INTO THE TEXT (contract 0.8.0). `absence` carries the shape and the frozen codes `query` defines, and it matters MORE here: a pack is what a caller reads *as* the corpus, so an empty one that says nothing is a context window asserting the corpus has no view. A conforming server renders the diagnosis into `text` as well as into the field — the artefact travels without the envelope, and a caller handed only the pack must still be able to tell 'the corpus does not cover this' from 'the retrieval missed'.\n\nLOCAL ONLY, like `query` and for the same reason one step further: a pack is context a caller is about to write from. Mixing a dependency's prose into it would put foreign nodes under this corpus's class names, where `omitted_by_class` would then be arithmetic over a category nobody declared."
+      }
+    },
+    {
+      "name": "estimate",
+      "tier": "ontology",
+      "description": "What a query would cost, before paying for it. Returns the number of nodes it matches and what each projection of them would run to in characters and approximate tokens — and none of the prose.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The query to price, in `query`'s language."
+          },
+          "select": {
+            "type": "string",
+            "description": "A projection to price beside the standard three, comma-separated."
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The `limit` the quoted call would carry (default 50). Projections are priced at it; a pack has no limit and is priced whole."
+          },
+          "budget": {
+            "type": "integer",
+            "description": "Token budget to price against. Each row comes back with a `fits` verdict."
+          },
+          "anchor_k": {
+            "type": "integer",
+            "description": "How many entry nodes a `class~\"…\"` anchor opens on (default 1)."
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "response": {
+        "required": [
+          "query",
+          "scope",
+          "rejected",
+          "absence",
+          "diagnostics",
+          "cost",
+          "matched",
+          "limit",
+          "budget",
+          "projections",
+          "pack",
+          "basis"
+        ],
+        "notes": "QUOTE BEFORE, ACCOUNT AFTER (contract 0.9.0). `pack` reports what a call cost; this reports what it would cost, so a caller can widen a query it can afford and narrow one it cannot instead of discovering the difference by having paid.\n\nIT IS CHEAP FOR THE CALLER, NOT FOR THE SERVER, and that asymmetry is the whole point. Knowing exactly what a query costs means running it — so a quote is the answer with the prose withheld. The server holds every node either way (the same reason `nodes_read` refuses to count the corpus load); the caller pays for what comes back. A conforming server therefore MUST NOT return rows here, and MUST run the traversal exactly ONCE: a quote that resolved a similarity anchor twice charges double for the thing it exists to call affordable.\n\n`chars` IS EXACT AND `tokens` IS NOT. `chars` is the serialized length of the payload that would come back — not an estimate, and a server that rounds it has broken the only promise here. `tokens` is `chars / 4` and `basis` names it. There is deliberately NO RANGE: a range would be a second invented number laid over the first, and a caller holding a real tokenizer needs the exact figure rather than a wider guess.\n\n`projections` IS A TABLE BECAUSE THE DECISION IS NOT WHETHER. A caller has its question either way; what it chooses is how much of each node to ask for. Every entry prices the SAME match set at a different `select`, cheapest first, and `fits` is the verdict against `budget` — null exactly when no budget was quoted, the present-and-null discipline every other field on this contract follows.\n\n`limit` IS PART OF THE CALL, SO IT IS PART OF THE QUOTE. Projections are priced at it and `rows` is `matched` capped by it; `matched` is always the full walk. `pack` has no limit — a budget is its only bound — so `pack.nodes` is the whole match set. The two figures sit side by side because a caller comparing them is comparing a page of names against the corpus's prose, and must be able to see which is which.\n\nA QUOTE OF ZERO READS AS CHEAP. `absence` is carried here for that reason and follows `query`'s rules exactly: a caller told a query costs nothing, and not told the class is unpopulated, has been handed the most affordable possible way to learn nothing. `pack.chars` on an empty answer is NOT zero — the pack carries the diagnosis, which is the part worth paying for when there is no answer.\n\nSPECULATIVE, AND SAID SO. This tool is the one part of the surface added on a guess about how callers behave rather than on a measured gap. Nothing else depends on it, it reads nothing new, and it computes entirely from what `query` already produces — so a server that declines to back `ontology` loses it along with `query` and `pack`, and nothing else changes."
+      }
+    },
+    {
+      "name": "licensed_edges",
+      "tier": "ontology",
+      "description": "What a class declares it may link to: the relationships it licenses, the class each targets, and the direction each is authored from. Asked before writing a link rather than discovered from a failing gate.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "class": {
+            "type": "string",
+            "description": "Class name — the `<class>.ont.yml` stem, which is also the directory its instances live in"
+          }
+        },
+        "required": [
+          "class"
+        ]
+      },
+      "response": {
+        "required": [
+          "class",
+          "declares_edges",
+          "edges",
+          "note"
+        ],
+        "notes": "`declares_edges: false` DOES NOT MEAN THE CLASS LICENSES NOTHING. It means the class has said nothing, and the gate skips it. The two answers are opposite and a client that collapses them will report every instance in a corpus whose ontology is not filled in. `note` states which case this is in words, so a client that reads only prose still gets it right.\n\nEVERY DECLARED EDGE, BOTH DIRECTIONS. An edge is documented from both ends — `person` declares `played in` as `direction: out` and `band` declares the same relationship as `direction: in`. The licensing check ignores direction, so filtering to `out` here would answer a question the gate does not ask.\n\nAN EMPTY `target` LICENSES ANY TARGET CLASS, rather than none.\n\nLICENSING APPLIES ONLY TO EDGES BETWEEN INSTANCES. The `instance-of` link to `../<class>.ont.yml` and a citation into the catalog are not relationships and no class declares them; an edge to a file that is not there is `dangling-edge`'s finding, not this one's.\n\nTHE CLASS IS ITS FILENAME. Where a `.ont.yml`'s `class:` field disagrees with its stem, the stem governs — it is what the gate keys on and what an instance's directory must match."
       }
     }
   ]

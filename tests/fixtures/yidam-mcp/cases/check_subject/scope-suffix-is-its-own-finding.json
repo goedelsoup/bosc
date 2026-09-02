@@ -1,0 +1,11 @@
+{
+  "tool": "check_subject",
+  "why": "The common mistake, and it costs twice: everything before the first `: ` is the verb, so `vendor(yidam)` is in no list AND classification falls through to Epistemic, filing an operational commit as a change in understanding. Reported as its own rule rather than folded into `unrecognized-verb`, because it has a known cause and a known fix. A server that answered only `recognized: false` would send the caller looking for a verb that is already correct.",
+  "call": { "subject": "vendor(yidam): prelude into .yidam/.vendor" },
+  "expect": {
+    "equals": { "recognized": false },
+    "nonEmpty": ["violations"],
+    "each": { "violations": ["rule", "severity", "message"] },
+    "everyItemHas": { "violations": { "rule": "scope-suffix" } }
+  }
+}

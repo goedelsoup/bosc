@@ -1,0 +1,10 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "The default IS the boundary. `across` is absent from this call, so the same query that reaches six nodes with it must reach four without it, and no result may carry an `origin`. A server that spans by default has not made a foreign node visible — it has made every existing caller's answers change meaning without their asking, under class names that are this repository's. `scope` reads `local`, which is the field a caller checks to learn what actually happened.",
+  "call": { "query": "concept" },
+  "expect": {
+    "equals": { "scope": "local", "matched": 4 },
+    "everyItemHas": { "results": { "origin": null } }
+  }
+}

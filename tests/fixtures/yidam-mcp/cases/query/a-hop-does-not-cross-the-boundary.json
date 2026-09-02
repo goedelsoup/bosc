@@ -1,0 +1,11 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "The boundary, stated as a traversal. `informs` is declared by the DEPENDENCY's class file and by nothing local, and its one instance is inside the dependency — so a spanning run answers with exactly that edge and the local corpus contributes nothing, because no execution ever holds two corpora's nodes at once. A server that merged the node sets and relied on relative paths not resolving across directories would pass every other case here and answer this one with rows it invented a path to. The single result is the dependency's own, qualified, and `origin` names it.",
+  "call": { "query": "concept -informs-> concept", "across": true },
+  "expect": {
+    "equals": { "scope": "across" },
+    "count": { "results": 1 },
+    "everyItemHas": { "results": { "origin": "upstream" } }
+  }
+}

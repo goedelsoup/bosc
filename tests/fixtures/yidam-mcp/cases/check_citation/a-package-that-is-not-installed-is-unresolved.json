@@ -1,0 +1,18 @@
+{
+  "tool": "check_citation",
+  "capability": "dependencies",
+  "why": "A citation that does not resolve asserts a provenance that is not there, which is strictly worse than claiming none — `dangling-edge`'s own argument carried across the boundary. A server backing this capability has at least one dependency, so it can tell a package it does not carry from having no packages at all, and the message names the repair: declare it and install it. Note that only ONE finding fires: with no package installed there is no text to have drifted, and `external-citation-span-drift` must not also report.",
+  "call": {
+    "package": "nowhere",
+    "node": "concept/base-flow",
+    "span": "the slowly varying component sustained by groundwater discharge"
+  },
+  "expect": {
+    "equals": { "holds": false, "gates": true },
+    "count": { "findings": 1 },
+    "equalsAt": {
+      "findings.0.check": "external-citation-unresolved",
+      "findings.0.severity": "error"
+    }
+  }
+}

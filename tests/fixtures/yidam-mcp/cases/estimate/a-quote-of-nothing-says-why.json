@@ -1,0 +1,12 @@
+{
+  "tool": "estimate",
+  "capability": "ontology",
+  "why": "A quote of zero reads as cheap. `note` is declared here and holds no instances, so every projection costs nothing — and a caller told only that has been handed the most affordable possible way to learn nothing. `absence` is carried for exactly that reason and follows `query`'s rules unchanged. The pack row is deliberately NOT zero: a pack over an empty answer carries the diagnosis, and that is the part worth paying for when there is no answer. A server returning `pack.chars: 0` here has produced a pack that says nothing about a corpus that has something to say.",
+  "call": { "query": "note" },
+  "expect": {
+    "fields": ["absence", "pack"],
+    "equals": { "matched": 0, "rejected": null },
+    "equalsAt": { "absence.code": "class-unpopulated", "pack.nodes": 0 },
+    "everyItemHas": { "projections": { "rows": 0 } }
+  }
+}

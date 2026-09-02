@@ -1,0 +1,10 @@
+{
+  "tool": "claim_tags",
+  "why": "Tens of tokens instead of a prose file held in context. Three tags and no fourth — an `Implicit` or `untagged` fourth is a different vocabulary, and in the guidelines `implicitly verified` is a narrow licence for direct transcriptions rather than a standing anything may carry. Both spellings, because a property the class typed `claim` accepts the bare token and prose is scanned for the bracketed one.",
+  "call": {},
+  "expect": {
+    "fields": ["tags", "note"],
+    "count": { "tags": 3 },
+    "each": { "tags": ["standing", "in_prose", "in_property", "meaning"] }
+  }
+}

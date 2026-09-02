@@ -9,10 +9,16 @@
 # The four corpus REPORTS over that mirror — graph-check · lint · corpus-index ·
 # open-questions — are the real `yidam` binary's, not a Python replica's. BOSC re-implemented
 # them when the only way to obtain the binary was to build the whole native ML stack; RFC-0003
-# retired that constraint (`--no-default-features --features reports` is the default build and
-# needs no protoc, no lancedb, no ONNX runtime), and RFC-0016 Phase 0 added `--format json`, so
-# the binary is now the single source of truth for a verdict. Install it with
-# `mise run yidam-build`, which clones THIS commit and cargo-installs the light build.
+# retired that constraint (the DEFAULT build needs no protoc, no lancedb, no ONNX runtime), and
+# RFC-0016 Phase 0 added `--format json`, so the binary is now the single source of truth for a
+# verdict. Install it with `mise run yidam-build`, which clones THIS commit and cargo-installs it.
+#
+# NOT `--no-default-features --features reports`. That spelling was correct at the previous pin
+# and is now a mistake upstream names as one: `reports` gates nothing (`reports = []`, and there
+# is no `#[cfg(feature = "reports")]` anywhere in its src/), so the flag drops `tonpa`,
+# `vault-s3` and `export-graph` and fails seven of upstream's own tests. THE LIGHT BUILD IS THE
+# DEFAULT SET — that is what `cargo install yidam` resolves, what release.yml cross-compiles,
+# and what this repository builds.
 #
 # SCHEMA NOTE: the keys below are upstream's (`origin`/`commit`/`template`/`committed`), read by
 # `yidam-build`, `yidam-vendor-status`, and the CI corpus gate via `sed`. BOSC previously used
@@ -22,6 +28,29 @@
 
 [yidam]
 origin    = "git@github.com:goedelsoup/yidam.git"
-commit    = "f05b62042e2228f00916bedc763c8cea24a5bcca"
+# cli/v0.8.0. A TAGGED release, deliberately: upstream's own build task will download a
+# prebuilt binary when the pin resolves to a `cli/v*` tag, and a pin that can be downloaded is
+# a pin a future reader can obtain without a Rust toolchain. BOSC still compiles (see the
+# [build] table below and `mise run yidam-build`), but the option is now open rather than
+# foreclosed by the pin.
+commit    = "7b0cef2e067d6d643968f69b043c936a936da4fa"
 template  = "untagged"
-committed = "2026-08-20"
+committed = "2026-09-02"
+
+# The feature set THIS repository's gates need, beyond the released default set.
+#
+# `export-graph` is what makes `export --format rdf` available, and the RDF half of the
+# graph-export conformance check (#2053) SKIPS when the binary cannot answer it — so a build
+# without it does not fail, it quietly stops checking. That is not hypothetical: through
+# cli/v0.7.0 the released binary was built with no `--features` and `export-graph` was not in
+# `default`, so adopting upstream's download channel would have deleted half that gate in
+# silence. Reported from here; fixed in v0.8.0 (goedelsoup/yidam#532), which put `export-graph`
+# in `default` AND added this table so the requirement can be stated rather than assumed.
+#
+# So it is redundant at THIS pin and is written anyway. It costs nothing while the release
+# carries what we ask for, and the moment one does not, the declaration is the difference
+# between a compile and a silent capability downgrade. Upstream reads it on all three of its
+# binary-producing paths; BOSC carries its own `yidam-build`, which reads it for the source
+# build — which is the path this repository actually takes.
+[build]
+features = ["export-graph"]

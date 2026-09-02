@@ -1,0 +1,17 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "`*` is every class, and a predicate over `*` is not. `claim_tag` is declared by `concept` and not by `note`, so the step narrows to `concept` and says which class it skipped. A server that tests the predicate against every class instead answers the same node here and reports no narrowing — identical results, and the caller cannot tell that a class was silently excluded on a property it never declared. The narrowing is `info` and not `warn`: nothing is wrong, something was decided.",
+  "call": { "query": "*[claim_tag=open]" },
+  "expect": {
+    "equals": { "matched": 1, "rejected": null },
+    "nonEmpty": ["diagnostics"],
+    "equalsAt": {
+      "results.0.node": "concept/embedding-space.yml",
+      "diagnostics.0.level": "info",
+      "steps.0.class": "*",
+      "steps.0.classes.0": "concept"
+    },
+    "count": { "results": 1, "steps.0.classes": 1 }
+  }
+}

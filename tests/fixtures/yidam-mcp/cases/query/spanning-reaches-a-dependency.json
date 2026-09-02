@@ -1,0 +1,10 @@
+{
+  "tool": "query",
+  "capability": "ontology",
+  "why": "`yidam query --across` shipped at #268 and this surface went three contract bumps without it, so an agent could search a dependency with `retrieve` and read one node with `get_node` but could not ask the composed corpus a typed question a person at the CLI could ask. Asked to span, the query reaches the local four and the dependency's two. Every foreign row is attributed — `origin` is the package name, never null — and its id is qualified `upstream::concept/name.yml`, because two corpora sharing a class name is not agreement and a bare id would name a node the caller cannot fetch and did not mean.",
+  "call": { "query": "concept", "across": true },
+  "expect": {
+    "equals": { "scope": "across", "matched": 6 },
+    "count": { "results": 6 }
+  }
+}

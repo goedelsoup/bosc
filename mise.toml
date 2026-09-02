@@ -197,7 +197,7 @@ run = "uv run watermark corpus-mirror --index"
 # that never gets rebuilt. Adapted from upstream's own `mise.yidam.toml` task, with the origin
 # rewritten to https so it needs no deploy key and behaves identically in CI.
 [tasks.yidam-build]
-description = "Install the yidam CLI at the commit pinned in .yidam.toml (light `reports` build)."
+description = "Install the yidam CLI at the commit pinned in .yidam.toml (the default set + [build] features)."
 tools = { rust = "1.88.0" }
 run = '''
 set -eu
@@ -223,12 +223,21 @@ trap 'rm -rf "$tmp"' EXIT
 echo "cloning $origin at $commit …"
 git clone --quiet --filter=blob:none --no-checkout "$origin" "$tmp/yidam"
 git -C "$tmp/yidam" checkout --quiet "$commit"
-# The light `reports` build (cargo default) PLUS `export-graph`, which is pure Rust
-# (oxrdf/oxttl — no protoc, no C, no ML runtime) and is what makes `export --format rdf`
-# available. That is not optional here: the RDF/GraphML conformance check compares BOSC's
-# renderers against it, and without the feature the RDF half silently does not run.
-# A full clean build with both is ~11s. `--features full` additionally pulls fastembed,
-# lancedb and protoc — only needed for index-build / serve --mcp / sqlite.
+# THE DEFAULT SET, plus whatever `.yidam.toml [build] features` asks for on top.
+#
+# Read from the pin rather than written here, which is the whole point of the table (v0.8.0,
+# goedelsoup/yidam#532). The feature this repo needs is `export-graph`, and the reason it is
+# stated in a file rather than baked into this line is that its absence is SILENT: the RDF half
+# of the graph-export conformance check (#2053) skips when the binary cannot answer
+# `export --format rdf`, so a build missing it does not fail, it stops checking. Declaring it
+# where every binary-producing path can read it is what makes that detectable.
+#
+# NOT `--no-default-features --features reports`, which this task used to spell. `reports`
+# gates nothing (`reports = []`, no `#[cfg(feature = "reports")]` in upstream's src/), so the
+# flag drops `tonpa`, `vault-s3` and `export-graph` and fails seven of upstream's own tests.
+# THE LIGHT BUILD IS THE DEFAULT SET. `--features full` additionally pulls fastembed, lancedb
+# and protoc — only needed for index-build / serve --mcp / sqlite.
+#
 # `--root .yidam`, NOT the shared ~/.cargo/bin. Every `cargo install` of yidam on a machine
 # writes that one path whatever ref and feature set it was built from, so a yidam checkout
 # doing its own `cargo install --path .` (default features) silently replaces this repo's
@@ -236,19 +245,32 @@ git -C "$tmp/yidam" checkout --quiet "$commit"
 # conformance gate then SKIPPED against.
 #
 # `.yidam/bin/` specifically: `cargo install --root DIR` writes DIR/bin, and upstream made
-# that path the convention (mise.yidam.toml at f05b620, and the VS Code extension resolves
-# `.yidam/bin/yidam` as "this repository's own build" before falling back to ~/.cargo/bin).
-# A private path here would be invisible to any tool that follows it.
-cargo install --path "$tmp/yidam/yidam/cli" --locked --features export-graph \
-  --root "$PWD/.yidam"
+# that path the convention (its own mise.yidam.toml installs there, and the VS Code extension
+# resolves `.yidam/bin/yidam` as "this repository's own build" before falling back to
+# ~/.cargo/bin). A private path here would be invisible to any tool that follows it.
+#
+# The reader is upstream's, character for character, so a `.yidam.toml` this task accepts is
+# one upstream's tasks accept too. It is `sed`, not a TOML parse, for the same reason the
+# commit reader is: the CI gate reads the same field the same way, and a reader that
+# disagreed with it about what the pin says would be worse than no reader.
+features=""
+want=$(sed -n 's/^ *features *= *\[\(.*\)\]/\1/p' .yidam.toml | tr -d '"' | tr -d ' ' | tr ',' ' ')
+if [ -n "$want" ]; then
+  features="--features $(echo $want | tr ' ' ',')"
+  echo "building with $features (from .yidam.toml [build] features)"
+fi
+cargo install --path "$tmp/yidam/yidam/cli" --locked $features --root "$PWD/.yidam"
 echo
-# `yidam` has no --version flag; graph-check's envelope is where the build identifies itself.
-# Probe the binary just installed by its full path, NOT bare `yidam`: the repo-local root is
-# deliberately not on PATH, so a bare name resolves to whatever the shared cargo bin holds —
-# which is how this line reported a commit the build had nothing to do with.
+# `--version` prints the crate version, the build commit AND the compiled feature list — the
+# last of which is the only place the answer to "can this binary export RDF" is a fact rather
+# than an expectation. It did not exist at the previous pin, when this line had to scrape a
+# commit out of a graph-check envelope.
+#
+# Probe by full path, NOT bare `yidam`: the repo-local root is deliberately not on PATH for a
+# non-mise shell, so a bare name resolves to whatever the shared cargo bin holds — which is how
+# this line once reported a commit the build had nothing to do with.
 bin="$PWD/.yidam/bin/yidam"
-echo "installed $("$bin" graph-check --format json 2>/dev/null \
-  | sed -n 's/.*"commit": "\([^"]*\)".*/\1/p' | head -n1) -> $bin"
+echo "installed $("$bin" --version) -> $bin"
 '''
 
 # How far the pin has drifted. A REPORT, never a gate — this repo is entitled to stay pinned,
@@ -322,13 +344,66 @@ fi
 origin=$(echo "$origin" | sed 's|^git@github.com:|https://github.com/|')
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
-git clone --quiet --filter=blob:none --no-checkout "$origin" "$tmp/y"
-git -C "$tmp/y" checkout --quiet "$commit" -- yidam/prelude/sdks/parity/mcp
+# A shallow fetch of the one commit, NOT `clone --filter=blob:none --no-checkout` followed by a
+# path-limited checkout. That spelling is what this task used, and it fails against GitHub with
+# `could not fetch <sha> from promisor remote` — reproducibly, on the same object, though it
+# succeeded once, which is the worst way for it to fail. A path-limited checkout out of a
+# blobless clone has to ask the promisor for individual trees, and GitHub does not always serve
+# them. Fetching the commit outright asks for one pack and needs no promisor at all.
+git init --quiet "$tmp/y"
+git -C "$tmp/y" remote add origin "$origin"
+git -C "$tmp/y" fetch --quiet --depth 1 origin "$commit"
+git -C "$tmp/y" checkout --quiet FETCH_HEAD -- yidam/prelude/sdks/parity/mcp
 src="$tmp/y/yidam/prelude/sdks/parity/mcp"
 cp "$src/tools.json" src/watermark/agent/mcp_contract.json
 cp "$src/VERSION" tests/fixtures/yidam-mcp/VERSION
 rm -rf tests/fixtures/yidam-mcp/cases
 cp -R "$src/cases" tests/fixtures/yidam-mcp/cases
+
+# The closed commit vocabulary, for the `check_subject` tool (contract 0.12.0). Vendored for
+# the same reason the contract is: BOSC has no yidam tree, and `check_subject` must answer
+# offline — the research agent runs with no binary on PATH.
+#
+# Taken from the PYTHON SDK's certified lists (`yidam_core/git.py`), not from GRAPH.md's tables.
+# That is upstream's own split: membership is the parity-certified predicate `lint --commits`
+# gates on, and the prose tables are documentation that has drifted from it before. Read with
+# `ast`, not a regex — a frozenset literal is a parse away and a regex over Python source is
+# the kind of second implementation this whole vendoring exists to avoid.
+git -C "$tmp/y" checkout --quiet FETCH_HEAD -- yidam/prelude/sdks/python/yidam_core/git.py
+python3 - "$tmp/y/yidam/prelude/sdks/python/yidam_core/git.py" <<'PYEOF'
+import ast, json, sys
+
+tree = ast.parse(open(sys.argv[1], encoding="utf-8").read())
+lists = {}
+for node in ast.walk(tree):
+    if not isinstance(node, ast.Assign):
+        continue
+    for target in node.targets:
+        if isinstance(target, ast.Name) and target.id in {
+            "EPISTEMIC_VERBS",
+            "OPERATIONAL_VERBS",
+        }:
+            call = node.value
+            if isinstance(call, ast.Call) and call.args:
+                lists[target.id] = [ast.literal_eval(e) for e in call.args[0].elts]
+if set(lists) != {"EPISTEMIC_VERBS", "OPERATIONAL_VERBS"}:
+    raise SystemExit(f"could not read both verb lists from git.py (got {sorted(lists)})")
+verbs = [{"verb": v, "kind": "epistemic"} for v in lists["EPISTEMIC_VERBS"]]
+verbs += [{"verb": v, "kind": "operational"} for v in lists["OPERATIONAL_VERBS"]]
+out = {
+    "_comment": (
+        "GENERATED by `mise run yidam-contract-sync` from the pinned yidam's "
+        "prelude/sdks/python/yidam_core/git.py. Do not hand-edit. The `when` prose lives "
+        "in upstream's GRAPH.md; membership is these lists, which are what lint --commits "
+        "gates on."
+    ),
+    "verbs": verbs,
+}
+with open("src/watermark/agent/commit_vocabulary.json", "w", encoding="utf-8") as fh:
+    json.dump(out, fh, indent=2, ensure_ascii=False)
+    fh.write("\n")
+print(f"vendored {len(verbs)} verbs -> src/watermark/agent/commit_vocabulary.json")
+PYEOF
 echo "re-vendored the MCP contract at $commit — review the diff, then run the conformance tests"
 '''
 
