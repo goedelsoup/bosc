@@ -20,6 +20,11 @@ export const KIND_META: Record<CorpusNodeKind, { label: string; blurb: string; m
   lead: { label: "Leads", blurb: "Open threads on the site's leads board.", mod: "lead" },
   "open-question": { label: "Open questions", blurb: "Documented gaps with no nexus yet.", mod: "open" },
   relation: { label: "Relationships", blurb: "One node per entity-to-entity edge.", mod: "relation" },
+  record: {
+    label: "Records",
+    blurb: "One node per committed extraction — the corpus the rest is derived from.",
+    mod: "record",
+  },
   node: { label: "Other nodes", blurb: "Uncategorized corpus nodes.", mod: "node" },
 };
 
@@ -33,6 +38,9 @@ export const KIND_ORDER: CorpusNodeKind[] = [
   "lead",
   "open-question",
   "relation",
+  // Last of the real kinds: the committed record is the largest group by a wide margin
+  // (250 of Lima's 484 nodes), so leading with it would bury the spine it supports.
+  "record",
   "node",
 ];
 

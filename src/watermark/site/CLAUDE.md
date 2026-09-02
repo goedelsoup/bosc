@@ -32,6 +32,13 @@ root [`CLAUDE.md`](../../../CLAUDE.md).
   feed — the peer of `rsei.py`: the artifact is already a provenance-carrying model, so the feed
   **is** the model. It is where the enclave's own RSEI/TRI row and the county-scope severance
   that hides it from the site's `rsei` backdrop are published.
+- **The yidam mirror is three modules, and they are one artifact** (#2134): `corpus_mirror.py`
+  projects the nodes, `corpus_catalog.py` projects `.yidam/catalog/` from BOSC's own
+  `data/catalog/**`, and `corpus_records.py` loads the committed extractions the `record` class
+  is built from. `Mirror` carries its catalog and `write_mirror` writes both — a corpus written
+  without its registry has dangling citations and fails the projection's own edge invariant.
+  A citation is a **link resolving to the catalog file**, never a mention; see the root
+  `CLAUDE.md` for why `rests-on` stays undeclared in every `.ont.yml`.
 - **`objectstore.py`** backs the object-store CLI (serving real source bytes from R2), not the
   bundle.
 - The legacy Python SSG (`build.py` / `render.py` / `nav` / `templates/` / `assets/`, the

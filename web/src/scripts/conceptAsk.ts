@@ -30,7 +30,7 @@ function esc(s: string): string {
 
 // `node_text` is `label · description? · class · …meta`, so the segment after the label is the
 // node's description when it has one, or the bare class token when it doesn't.
-const CLASS_WORDS = new Set(["concept", "relation", "artifact", "question", "hypothesis"]);
+const CLASS_WORDS = new Set(["concept", "relation", "artifact", "question", "hypothesis", "record"]);
 
 /** The reader-facing gloss — the node's description segment, or empty when it carries none. */
 function snippet(node: NeighborNode): string {

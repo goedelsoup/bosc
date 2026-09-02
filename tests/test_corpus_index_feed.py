@@ -195,6 +195,9 @@ def test_every_node_carries_kind_and_degree(lima_bundle: Path) -> None:
         "lead",
         "open-question",
         "relation",
+        # The committed extraction itself (#2134) — the largest kind, and the one the
+        # `verified-unsourced` check reads, so its absence here would be the loudest gap.
+        "record",
         "node",
     }
     for n in nodes:

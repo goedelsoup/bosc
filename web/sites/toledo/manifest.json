@@ -2,9 +2,9 @@
   "site": "toledo",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-27T00:26:00+00:00",
+  "generated_at": "2026-09-02T21:07:37+00:00",
   "feed_count": 28,
-  "row_total": 417,
+  "row_total": 421,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -223,7 +223,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 82
+      "count": 84
     },
     {
       "name": "corpus-nodes",
@@ -231,7 +231,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 82
+      "count": 84
     },
     {
       "name": "ask-embeddings",

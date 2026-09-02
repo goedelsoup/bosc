@@ -394,7 +394,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "c8bbc55a2d652ea14a0448bb2431e190418984ff3760270f11ddedf5c4249219",
+      "size_bytes": 41595,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 4PC00001*MD (application OH0020508) for the City of Johnstown wastewater treatment plant, 470 West Jersey Street, Licking County; retrieved from the Ohio EPA DAM permit slot",

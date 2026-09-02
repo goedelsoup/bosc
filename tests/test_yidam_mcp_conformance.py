@@ -602,9 +602,19 @@ async def test_a_star_step_narrows_to_the_classes_that_declare_the_property() ->
     assert [d["level"] for d in body["diagnostics"]] == ["info"]
     assert all(row["class"] == "question" for row in body["results"])
 
-    # ...and it agrees with the tool that answers the same question a different way.
+    # ...and it agrees with the tool that answers a WIDER question the same way. The frozen
+    # `open_questions` predicate has three arms — a `?` label, `[open]` in the body, and an
+    # open tag in a declared claim field — and this query is only the third of them, on the
+    # one class declaring `claim_tag`. The two were equal until #2134 projected `record`
+    # nodes, which carry their claim profile in the body and so arrive through the SECOND
+    # arm; an equality here would have been asserting a corpus coincidence as a rule.
     opens = await _call("open_questions", {})
-    assert body["matched"] == len(opens["open_questions"])
+    matched = {row["node"] for row in body["results"]}
+    listed = {q["id"] for q in opens["open_questions"]}
+    assert matched <= listed, "a claim-tagged open question the predicate does not list"
+    assert len(opens["open_questions"]) >= body["matched"]
+    # And the difference is the other arms, never a `question` the query should have found.
+    assert all(not node.startswith("question/") for node in listed - matched)
 
 
 async def test_the_anchor_carries_degraded_and_only_the_entry_step_may_have_one() -> None:

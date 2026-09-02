@@ -2,9 +2,9 @@
   "site": "springfield",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-27T00:29:06+00:00",
+  "generated_at": "2026-09-02T21:07:31+00:00",
   "feed_count": 33,
-  "row_total": 436,
+  "row_total": 440,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -269,7 +269,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 85
+      "count": 87
     },
     {
       "name": "corpus-nodes",
@@ -277,7 +277,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 85
+      "count": 87
     },
     {
       "name": "ask-embeddings",

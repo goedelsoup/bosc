@@ -158,6 +158,26 @@ questions where the binary saw 2, and nothing could detect the gap.
   never rendered into the YAML), which is what keeps "declared for a path not yet taken" apart
   from "the ontology reached past its corpus". `test_every_relationship_the_projection_can_author_is_licensed`
   reads the relationship literals out of the **source** for exactly this reason.
+- **The mirror carries a catalog, and a record class (#2134).** `.yidam/catalog/` is projected
+  from BOSC's own `data/catalog/**` (199 reviewed `CatalogEntry` records) by
+  `watermark.site.corpus_catalog`; `.yidam/corpus/record/` is one node per committed extraction
+  in the site's scope (`watermark.site.corpus_records`). Together they make **`verified-unsourced`
+  answerable**: a node cites a source by linking to `../../catalog/<slug>.md`, and a `[verified]`
+  claim with no such link is a standing the corpus cannot demonstrate. Before this the mirror
+  held **zero** `[verified]` claims while `data/extracted/**` held 2,145, so the check returned
+  early at zero — the same false green #2132 was filed to end.
+  ⚠️ **`rests-on` is deliberately undeclared in every `<class>.ont.yml`.** yidam's
+  `unlicensed-edge` / `edge-target-class` walk `instance_links`, which pairs a link with the
+  *node* it resolves to; a catalog entry is a **file**, so citations are invisible to the class
+  contract and fully visible to `linked_paths` (what the evidence checks read). That split is
+  what lets an `exhaustive` edge policy coexist with citing sources. Declaring it would need a
+  `target:` class, and an empty target licenses every class for every edge.
+  ⚠️ **A record carries its claim profile, not its prose** — `claim_standings` (one bracketed
+  token per standing, so yidam counts the record once) plus `claim_counts` (the true totals).
+  Excerpting the assertion a tag belongs to is an editorial act with no mechanical answer, and
+  the flattering direction is exactly what the check exists to catch. `README.md` /
+  `ONBOARDING.md` / `COMPLETENESS.md` are **not records**: they carry tag legends, which would
+  manufacture six ungrounded `[verified]` claims out of prose about filing.
 - ⚠️ **The five baselined `broken-prose-link` findings are LINK_MAP pages — do not "fix" them.**
   `entities.md`, `candidates.md`, `gis-map.md` and `economics-baseline.md` (×2) are legacy
   generated pages that no longer exist as files; `@watermark/core`'s `rehype-doc-links.ts`

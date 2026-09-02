@@ -2,9 +2,9 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T04:34:16+00:00",
+  "generated_at": "2026-09-02T21:06:24+00:00",
   "feed_count": 35,
-  "row_total": 1606,
+  "row_total": 1688,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -277,7 +277,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 128
+      "count": 169
     },
     {
       "name": "corpus-nodes",
@@ -285,7 +285,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 128
+      "count": 169
     },
     {
       "name": "ask-embeddings",

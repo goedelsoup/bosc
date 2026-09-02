@@ -449,7 +449,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "79cc57d6527f24959a92f81233e47e5e0d65fbbe1298d16e927b289afa51e331",
+      "size_bytes": 10077,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), docid 2090290 — a one-page letter from 88 ABW/CEVO, Wright-Patterson AFB, to the Ohio EPA Southwest District Office, Division of Surface Water",

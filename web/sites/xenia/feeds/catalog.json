@@ -447,7 +447,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "910c950c4aa82ecda420905b59e25dbccc209360223f38f0733eeb49c4e13d62",
+      "size_bytes": 46523,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 1PD00015*OD (application OH0028193) for the City of Xenia Ford Road WWTP, 779 Ford Road, Greene County; retrieved from the Ohio EPA DAM permit slot",

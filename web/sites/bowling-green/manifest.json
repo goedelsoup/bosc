@@ -2,9 +2,9 @@
   "site": "bowling-green",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T04:33:48+00:00",
+  "generated_at": "2026-09-02T21:05:57+00:00",
   "feed_count": 37,
-  "row_total": 1149,
+  "row_total": 1197,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -293,7 +293,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 105
+      "count": 129
     },
     {
       "name": "corpus-nodes",
@@ -301,7 +301,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 105
+      "count": 129
     },
     {
       "name": "ask-embeddings",

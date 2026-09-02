@@ -2,9 +2,9 @@
   "site": "fort-wayne",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T04:34:22+00:00",
+  "generated_at": "2026-09-02T21:06:30+00:00",
   "feed_count": 34,
-  "row_total": 429,
+  "row_total": 441,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -277,7 +277,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 79
+      "count": 85
     },
     {
       "name": "corpus-nodes",
@@ -285,7 +285,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 79
+      "count": 85
     },
     {
       "name": "ask-embeddings",

@@ -2,9 +2,9 @@
   "site": "sidney",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-08-23T04:35:19+00:00",
+  "generated_at": "2026-09-02T21:07:26+00:00",
   "feed_count": 37,
-  "row_total": 858,
+  "row_total": 922,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -293,7 +293,7 @@
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
-      "count": 127
+      "count": 159
     },
     {
       "name": "corpus-nodes",
@@ -301,7 +301,7 @@
       "media_type": "application/x-ndjson",
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
-      "count": 127
+      "count": 159
     },
     {
       "name": "ask-embeddings",
