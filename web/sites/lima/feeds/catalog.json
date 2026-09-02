@@ -4239,7 +4239,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "c80bcdc74985dff31b393ce764bea3b30e869efd1de465e5753fe3513556b57d",
+      "size_bytes": 51205,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 0PD00004*MD (application OH0024775) for the City of Coshocton Wastewater Treatment Plant, 2742 County Road 271, Coshocton County; retrieved from the Ohio EPA DAM permit slot",
@@ -4285,7 +4293,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "85c199730afb85366dd63c303bf98b7ab5837df9fc0c07fcb6b7c0d831663747",
+      "size_bytes": 51570,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 1PD00005*OD (application OH0025429) for the City of Greenville Wastewater Treatment Plant, 209 N Ohio Street, Darke County; retrieved from the Ohio EPA DAM permit slot",
@@ -4335,7 +4351,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "e252a07afae9d34feabcae6a0eadd1bb728a551ae02eb58f09271cc345a68c8f",
+      "size_bytes": 99428,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permits 1PE00002*OD (application OH0025445, City of Hamilton) and 1PE00003*RD (application OH0026522, City of Middletown), Butler County; retrieved from the Ohio EPA DAM permit slots",
@@ -4992,7 +5016,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "c8bbc55a2d652ea14a0448bb2431e190418984ff3760270f11ddedf5c4249219",
+      "size_bytes": 41595,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 4PC00001*MD (application OH0020508) for the City of Johnstown wastewater treatment plant, 470 West Jersey Street, Licking County; retrieved from the Ohio EPA DAM permit slot",
@@ -5095,8 +5127,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4dc02ed2650412f2daf2109900ee44e81cc19e8d8c4a423bbda47b468fdebe91",
-      "size_bytes": 47436,
+      "sha256": "a848541383d31efd65dfebb6008313c2f648f2a8ba7bc06392fa277f2cdfdc47",
+      "size_bytes": 47422,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -5150,8 +5182,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "29d07f09427aae9b8d5c20979d3951da63ac3dd3a35afcdcab7322f95c55e763",
-      "size_bytes": 53569,
+      "sha256": "c04333df1687701a324b58107d11174621ef6e3caa0741b67cca9f74b1f8a0b1",
+      "size_bytes": 53573,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -5299,7 +5331,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "ad820151d15d0afe7b450bf01ab8f6cb3dddb401db0dd4844486f92a0a11194e",
+      "size_bytes": 73710,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 1PE00007*VD (application OH0027481) for the City of Springfield WWTP, 965 Dayton Avenue, Clark County; retrieved from the Ohio EPA DAM permit slot",
@@ -5348,8 +5388,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e92f9c8ef4638a23c8c09fc68c1811deb335722001ef6ca2980566c6d1821c4d",
-      "size_bytes": 71541,
+      "sha256": "016673ad43eb3b6efa25046908abdbc2f1e18de14a0558bd5a1c9e27b5e1748c",
+      "size_bytes": 71543,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -5455,7 +5495,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "9e20fb00290b26108b89359401f72a92f11158b49037f6be8c9107fd0d6d3d28",
+      "size_bytes": 40523,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 1PD00011*PD (application OH0027880) for the City of Urbana Water Reclamation Facility, 1263 Muzzy Road, Champaign County; retrieved from the Ohio EPA DAM permit slot",
@@ -5564,8 +5612,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8640d1f5af6c3941f849b4d55c6218e7411ebc400c7912f299a7cdf8d3d2e579",
-      "size_bytes": 39168,
+      "sha256": "1783df5f0aa6e23d5efdb9bd6103fe717121f7f8481773ba03dc5798ae76aac1",
+      "size_bytes": 39172,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -5702,7 +5750,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "79cc57d6527f24959a92f81233e47e5e0d65fbbe1298d16e927b289afa51e331",
+      "size_bytes": 10077,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA eDocument public portal (edocpub.epa.ohio.gov/publicportal), docid 2090290 — a one-page letter from 88 ABW/CEVO, Wright-Patterson AFB, to the Ohio EPA Southwest District Office, Division of Surface Water",
@@ -5748,7 +5804,15 @@
         "lfs": false
       }
     ],
-    "observed": null,
+    "observed": {
+      "exists": true,
+      "sha256": "910c950c4aa82ecda420905b59e25dbccc209360223f38f0733eeb49c4e13d62",
+      "size_bytes": 46523,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
     "observed_network": null,
     "citation": {
       "source": "Ohio EPA — issued NPDES permit 1PD00015*OD (application OH0028193) for the City of Xenia Ford Road WWTP, 779 Ford Road, Greene County; retrieved from the Ohio EPA DAM permit slot",

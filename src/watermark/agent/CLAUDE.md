@@ -40,24 +40,31 @@ Wraps the Claude Agent SDK and the Anthropic Messages API. Defers to the root
 - `yidam_tools.py` — a **second** in-process SDK MCP server (`yidam`, namespace
   `mcp__yidam__*`), implementing the **frozen MCP tool contract** (RFC-0005), vendored beside it
   as `mcp_contract.json` (**contract 0.12.0**). The contract lists **13** tools across four
-  tiers; BOSC serves **8** — the seven `core` ones (`retrieve` / `get_node` / `list_nodes` /
-  `open_questions` / `claims` / `check_subject` / `claim_tags`) plus `neighbors`, which is
-  `graph`. Descriptions and input schemas are **read from that file**, and the served list is
+  tiers; BOSC serves **12** — the seven `core` ones (`retrieve` / `get_node` / `list_nodes` /
+  `open_questions` / `claims` / `check_subject` / `claim_tags`), `neighbors` (`graph`), and
+  `query` / `pack` / `estimate` / `licensed_edges` (`ontology`, since #2132). Descriptions and input schemas are **read from that file**, and the served list is
   **derived** from it by `served_tool_names()`, so a tool added upstream and not added here is
   an `ImportError` rather than a tool that quietly does not exist — which is exactly what the
   0.1.0 → 0.12.0 bump produced (#2127). **Never rename a tool or hand-write a schema here**;
   re-vendor with `mise run yidam-contract-sync` (CI proves the copy matches the pin — and the
   vendored `commit_vocabulary.json`, which is `check_subject`'s closed list, with it).
 
-  **The five BOSC does not serve are declined honestly, not skipped.** `check_citation` is
+  **The one BOSC does not serve is declined honestly, not skipped.** `check_citation` is
   `dependencies`, and BOSC pins no tonpa dependency, so there is no far side for a citation to
-  have drifted from. `query` / `pack` / `estimate` / `licensed_edges` are `ontology`, which
-  backs *the class contract — what a class declares it may link to*: the mirror writes a
-  `<class>.ont.yml` per class and each declares only `class:` + `description:`, so BOSC holds
-  nodes and edges and an ontology that says nothing about either. The contract's own words for
-  that case: *"Optional is not absent: such a server declares false and its cases are skipped
-  rather than passed."* Declaring true would pass 22 conformance cases by accident. **#2132 is
-  where that changes** — it also un-vacuums eight new error-severity `lint` checks.
+  have drifted from. The contract's own words for that case: *"Optional is not absent: such a
+  server declares false and its cases are skipped rather than passed."*
+
+  **`ontology` is one capability for all four of its tools** — there is no way to serve
+  `licensed_edges` and withhold `query`. #2132 flipped it to true by giving the ontology
+  something to say: each class declares its properties and the relationships it licenses, with
+  `edge_policy: exhaustive`, which is truthful because the mirror is **generated** — a
+  relationship outside the declaration is a bug in `corpus_mirror`, not a coinage. The engine
+  is `corpus_query.py`; this module keeps only the handlers. Three disciplines a shape-passing
+  implementation gets wrong, each caught by an upstream case: a **rejection is an answer**, not
+  an `isError`; an **absence is not a rejection** (`rejected` says the query is wrong,
+  `absence` says the corpus is quiet, and at most one is non-null); and a **pack says why in
+  its own `text`**, because a pack travels without the envelope and an empty one that explains
+  nothing is a context window asserting the corpus has no view.
 
   Four rules the contract makes non-negotiable: `retrieve` is **one adaptive tool** carrying
   `degraded` on every response (never a keyword/vector pair — that makes the caller choose a

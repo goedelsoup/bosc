@@ -80,13 +80,290 @@ log = get_logger(__name__)
 # directory + a `<class>.ont.yml` schema. Order is display order.
 CLASSES: tuple[str, ...] = ("concept", "relation", "artifact", "question", "hypothesis")
 
-_CLASS_DESC: dict[str, str] = {
-    "concept": "A domain concept, term, or method from the BOSC wiki glossary.",
-    "relation": "A directed, document-traceable relationship between two entities.",
-    "artifact": "A resolved entity, party, profiled person, or the site anchor.",
-    "question": "An open lead or an [open]-tagged claim under investigation.",
-    "hypothesis": "A network-wide reading of the data-center boom (a directory hypothesis).",
+# --- the class contract ----------------------------------------------------------------------
+# What each class declares about its own instances: the properties they carry and the
+# relationships they may author. Declared as DATA here and rendered to `<class>.ont.yml` by
+# `_ont_yaml`, so `watermark.agent`'s `licensed_edges` can read the same object the binary
+# reads a rendering of. A second reader that parsed the emitted YAML back would be a second
+# ontology, and the two would drift the way the report replica did (#2051).
+#
+# Until #2132 this said `class:` and `description:` and nothing else, and the cost was
+# invisible: upstream's eight error-severity ontology checks all reported zero because a check
+# that grades instances against their class declaration has nothing to grade. That is a green
+# meaning "no rule", not one meaning "no violation".
+
+
+@dataclass(frozen=True)
+class OntologyProperty:
+    """One property a class declares its instances may carry.
+
+    ``type`` is upstream's vocabulary and only some of it is *tested*: `claim`, `date` and
+    `string`/`text`/`ref` are checked by `property-type`, and anything else is left alone
+    (`checks.rs`, `property_type_violation`). So `list`, `mapping` and `integer` below are
+    declarative — they say what the field is without asking for a test yidam cannot run.
+
+    **Getting a type wrong is worse than leaving it broad.** Declaring `sources` a `string`
+    would fault all 63 artifacts that carry it, because it is a list.
+    """
+
+    name: str
+    type: str
+    description: str
+
+
+@dataclass(frozen=True)
+class OntologyEdge:
+    """One relationship a class licenses, and the class it lands on.
+
+    ``direction`` is always ``out`` here: the mirror authors every edge from the node that owns
+    it, so a class's declaration describes what its own instances write. Upstream documents an
+    edge from both ends, and `licensed_edges` reconstructs the inbound view rather than the
+    projection carrying it twice.
+    """
+
+    relationship: str
+    target: str
+    description: str
+    direction: str = "out"
+
+
+@dataclass(frozen=True)
+class ClassOntology:
+    """One ``<class>.ont.yml`` — the contract for a node class.
+
+    ``edge_policy`` is ``exhaustive`` for every class, and that is a claim worth defending: the
+    mirror is **generated**, so its relationship vocabulary is closed by construction. A
+    relationship outside `edges` is not a coinage somebody made deliberately — it is a bug in
+    this module, most likely in :func:`resolve_link_target`. `exhaustive` is what turns that
+    into an error instead of a shrug. A hand-authored corpus would say `characteristic`.
+    """
+
+    name: str
+    label: str
+    description: str
+    properties: tuple[OntologyProperty, ...] = ()
+    edges: tuple[OntologyEdge, ...] = ()
+    edge_policy: str = "exhaustive"
+
+
+#: Properties every instance of the class carries, plus a few it *should*.
+#:
+#: `undeclared-property` is all-or-nothing per class: declare any `properties:` and every
+#: instance property must be declared here or covered by `UNIVERSAL_PROPERTIES`. But
+#: `missing-property` reports every declared property an instance omits, and the schema has no
+#: `required` field — so declaring an optional one asserts a contract the ontology cannot
+#: express. Declaring all 40 of this corpus's properties on their classes emits **593** such
+#: warnings for fields that are legitimately optional.
+#:
+#: So a class declares its INVARIANTS, and `UNIVERSAL_PROPERTIES` takes the rest. The four
+#: exceptions are marked in their own `description` — they are near-universal, they each cost
+#: one standing warning today, and the reason to accept that is written where it will be read.
+ONTOLOGY: dict[str, ClassOntology] = {
+    "concept": ClassOntology(
+        name="concept",
+        label="Concept",
+        description="A domain concept, term, or method from the BOSC wiki glossary.",
+        properties=(
+            OntologyProperty(
+                "scope", "string", "Whether the concept is site-local or network-wide."
+            ),
+            OntologyProperty(
+                "site", "string", "The watershed-point slug this projection was built for."
+            ),
+            OntologyProperty(
+                "kind", "string", "The glossary entry's kind — `term`, `method`, `actor`, …"
+            ),
+            OntologyProperty("aliases", "list", "Other names the corpus uses for this concept."),
+            OntologyProperty(
+                "tags", "list", "Glossary facets, used by the wiki's cross-link audit."
+            ),
+        ),
+        edges=(
+            OntologyEdge(
+                "related",
+                "concept",
+                "A cross-reference authored in the glossary as a `[[wiki link]]`.",
+            ),
+        ),
+    ),
+    "relation": ClassOntology(
+        name="relation",
+        label="Relation",
+        description="A directed, document-traceable relationship between two entities.",
+        properties=(
+            OntologyProperty(
+                "scope", "string", "Whether the relationship is site-local or network-wide."
+            ),
+            OntologyProperty(
+                "site", "string", "The watershed-point slug this projection was built for."
+            ),
+            OntologyProperty(
+                "rel", "string", "The relationship verb as the source document states it."
+            ),
+            OntologyProperty(
+                "src", "string", "The source entity's key, as resolved by the entity graph."
+            ),
+            OntologyProperty(
+                "dst", "string", "The target entity's key, as resolved by the entity graph."
+            ),
+            OntologyProperty(
+                "source", "ref", "The committed extraction this relationship was read from."
+            ),
+        ),
+        edges=(
+            OntologyEdge("from", "artifact", "The entity this relationship is authored from."),
+            OntologyEdge("to", "artifact", "The entity this relationship lands on."),
+        ),
+    ),
+    "artifact": ClassOntology(
+        name="artifact",
+        label="Artifact",
+        description="A resolved entity, party, profiled person, or the site anchor.",
+        properties=(
+            OntologyProperty(
+                "scope", "string", "Whether the artifact is site-local or network-wide."
+            ),
+            OntologyProperty(
+                "site", "string", "The watershed-point slug this projection was built for."
+            ),
+            OntologyProperty(
+                "sources",
+                "list",
+                "The committed extractions this entity was resolved from. Declared here although "
+                "one instance lacks it — `artifact/site-lima` is the synthetic site anchor and has "
+                "no source document — because an entity arriving with no citation is a real gap "
+                "and this is the only thing that would report it. The anchor's standing "
+                "`missing-property` warning is the price, and it is deliberate.",
+            ),
+        ),
+        edges=(
+            OntologyEdge("in-site", "artifact", "The site anchor this entity was found under."),
+            OntologyEdge("is-entity", "artifact", "The resolved entity a profiled person is."),
+            OntologyEdge(
+                "assessed-under", "hypothesis", "A network hypothesis this entity is evidence for."
+            ),
+        ),
+    ),
+    "question": ClassOntology(
+        name="question",
+        label="Question",
+        description="An open lead or an [open]-tagged claim under investigation.",
+        properties=(
+            OntologyProperty(
+                "scope", "string", "Whether the question is site-local or network-wide."
+            ),
+            OntologyProperty(
+                "site", "string", "The watershed-point slug this projection was built for."
+            ),
+            OntologyProperty(
+                "claim_tag",
+                "claim",
+                "The evidence standing this question is asserted at. `type: claim` is what makes "
+                "the third arm of the frozen `open_questions` predicate literal here rather than "
+                "incidental — see `_claim_token`, and goedelsoup/yidam#127, which was filed from "
+                "this corpus and settled by widening that predicate.",
+            ),
+            OntologyProperty(
+                "lead_kind",
+                "string",
+                "The lead's kind — `signal`, `question`, `redaction`, `claim`. Declared although "
+                "`question/open-water` lacks it: that node is a hypothesis thread rather than a "
+                "lead. One standing warning, accepted so a lead arriving unkinded is reported.",
+            ),
+            OntologyProperty(
+                "status",
+                "string",
+                "The lead's review status. Same exception as `lead_kind`, same reason.",
+            ),
+            OntologyProperty(
+                "source",
+                "ref",
+                "The committed lead or extraction this question was read from. Same exception as "
+                "`lead_kind`, same reason.",
+            ),
+        ),
+        edges=(
+            OntologyEdge("on-site", "artifact", "The site anchor this question is open against."),
+            OntologyEdge(
+                "open-under", "hypothesis", "The hypothesis this question is a thread of."
+            ),
+        ),
+    ),
+    "hypothesis": ClassOntology(
+        name="hypothesis",
+        label="Hypothesis",
+        description="A network-wide reading of the data-center boom (a directory hypothesis).",
+        properties=(
+            OntologyProperty("scope", "string", "Hypotheses are network-wide by construction."),
+            OntologyProperty(
+                "site", "string", "The watershed-point slug this projection was built for."
+            ),
+            OntologyProperty("number", "string", "The hypothesis's stable id — `H1`, `H2`, `H3`."),
+            OntologyProperty("status", "string", "Where the hypothesis stands against the record."),
+        ),
+        edges=(
+            OntologyEdge(
+                "assessed-at", "artifact", "A site anchor this hypothesis is assessed at."
+            ),
+            OntologyEdge("open-thread", "question", "An open question pursuing this hypothesis."),
+        ),
+    ),
 }
+
+
+#: Properties any class may carry, whatever its own ontology declares.
+#:
+#: Rendered to `.yidam/corpus/universal.yml`, which is the corpus speaking about itself rather
+#: than about one of its classes. Everything here is genuinely optional — present on some
+#: instances of a class and legitimately absent from others — so declaring it per class would
+#: assert a contract the corpus does not hold and emit a `missing-property` warning for every
+#: instance that correctly does without it.
+#:
+#: This is **not** a way to stop declaring things. Upstream is explicit that a blanket opt-out
+#: would throw away the gate that catches the next real typo; each entry below names a property
+#: this projection actually writes, and a name that is not here is a finding.
+UNIVERSAL_PROPERTIES: tuple[OntologyProperty, ...] = (
+    OntologyProperty("kind", "string", "A class-specific kind discriminator."),
+    OntologyProperty("tags", "list", "Facets, carried by concepts and by some entities."),
+    OntologyProperty(
+        "entity_kind",
+        "string",
+        "The resolved entity's kind — absent on people and on the site anchor.",
+    ),
+    OntologyProperty(
+        "classification", "string", "The entity's registry classification, where one was resolved."
+    ),
+    OntologyProperty("entity_key", "string", "The entity-graph key a profiled person resolves to."),
+    OntologyProperty("roles", "list", "A profiled person's roles, where the record states them."),
+    OntologyProperty(
+        "affiliations", "list", "A profiled person's affiliations, where the record states them."
+    ),
+    OntologyProperty("issue", "integer", "The GitHub issue tracking this lead."),
+    OntologyProperty("note", "string", "A short editorial note carried from the lead."),
+    OntologyProperty("hypothesis", "string", "The hypothesis slug a question threads under."),
+    OntologyProperty("sub_thesis", "string", "The sub-thesis a question threads under."),
+    OntologyProperty("signal", "string", "The lead's signal state, where the lead declares one."),
+    OntologyProperty("group", "string", "The lead's grouping key, where the lead declares one."),
+    OntologyProperty(
+        "fields", "mapping", "A question's structured answer fields, where it carries any."
+    ),
+    OntologyProperty("ref", "string", "A permit or instrument reference the relationship names."),
+    OntologyProperty("date", "date", "The date the source document states for this relationship."),
+    # Latent, and declared for exactly that reason. `to_dict` drops an empty value, so none of
+    # these four reaches a node file on the current corpus — but the projection writes them
+    # whenever the entity graph resolves one, and an undeclared property is an ERROR. Declaring
+    # them now costs nothing and stops the first LEI this corpus resolves from failing the gate.
+    OntologyProperty("lei", "string", "The entity's Legal Entity Identifier, where GLEIF has one."),
+    OntologyProperty(
+        "uei", "string", "The entity's federal Unique Entity Identifier, where one is known."
+    ),
+    OntologyProperty(
+        "relation_class", "string", "How the entity graph classified this relationship."
+    ),
+    OntologyProperty(
+        "relation_basis", "string", "The evidence the relationship classification rests on."
+    ),
+)
 
 _SLUG_RE = re.compile(r"[^a-z0-9]+")
 _MAX_NAME_PART = 48  # keep filenames stable + readable; long keys are truncated then deduped
@@ -136,14 +413,32 @@ class MirrorNode:
         return f"{self.node_class}/{self.name}"
 
     def to_dict(self) -> dict[str, Any]:
-        """The instance's YAML mapping — class/label/description first, meta, then links last."""
+        """The instance's YAML mapping — class/label/description, then ``properties``, then links.
+
+        **The provenance nests under ``properties:``, and that is not cosmetic.** yidam reads an
+        instance's properties from that mapping (`Node::inst.properties`) and from nowhere else,
+        so the bare top-level keys this projection wrote until #2132 were invisible to the whole
+        ontology layer: `undeclared-property` saw an instance with no properties at all, and
+        `missing-property` reported every declared one as absent — 1,129 findings over a corpus
+        that was carrying all of them. A class contract cannot grade what the instances are not
+        saying in the shape it reads.
+
+        ``claim_tag`` stays **bracketed** here. A property the class declares `type: claim`
+        accepts the bare token, so `open` would satisfy the ontology arm — but BOSC's own
+        `open_question_nodes` scans the serialized text for the bracketed form, and the prose
+        arm of the frozen predicate reads only that. The bracket satisfies every arm of both
+        surfaces; the bare word satisfies one. See :func:`_claim_token`.
+        """
         out: dict[str, Any] = {"class": self.node_class, "label": self.label}
         if self.description:
             out["description"] = self.description
-        for key, value in self.meta.items():
-            if value is None or value == [] or value == {} or value == "":
-                continue
-            out[key] = value
+        properties = {
+            key: value
+            for key, value in self.meta.items()
+            if value is not None and value != [] and value != {} and value != ""
+        }
+        if properties:
+            out["properties"] = properties
         out["links"] = [
             {"target": link.target, "relationship": link.relationship} for link in self.links
         ]
@@ -669,9 +964,44 @@ def default_corpus_dir(settings: Settings | None = None) -> Path:
 
 
 def _ont_yaml(node_class: str) -> str:
-    """The ``<class>.ont.yml`` class schema (yidam reads the class name from the filename)."""
+    """Render one class's :class:`ClassOntology` to its ``<class>.ont.yml``.
+
+    yidam reads the class name from the *filename*, not the `class:` field — where the two
+    disagree the stem governs — so this writes both and they are the same by construction.
+    """
+    ont = ONTOLOGY[node_class]
+    body: dict[str, Any] = {
+        "class": ont.name,
+        "label": ont.label,
+        "description": ont.description,
+    }
+    if ont.properties:
+        body["properties"] = [
+            {"name": p.name, "type": p.type, "description": p.description} for p in ont.properties
+        ]
+    if ont.edges:
+        body["edge_policy"] = ont.edge_policy
+        body["edges"] = [
+            {
+                "relationship": e.relationship,
+                "target": e.target,
+                "direction": e.direction,
+                "description": e.description,
+            }
+            for e in ont.edges
+        ]
+    return yaml.safe_dump(body, sort_keys=False, allow_unicode=True)
+
+
+def _universal_yaml() -> str:
+    """Render :data:`UNIVERSAL_PROPERTIES` to ``.yidam/corpus/universal.yml``."""
     return yaml.safe_dump(
-        {"class": node_class, "description": _CLASS_DESC.get(node_class, node_class)},
+        {
+            "properties": [
+                {"name": p.name, "type": p.type, "description": p.description}
+                for p in UNIVERSAL_PROPERTIES
+            ]
+        },
         sort_keys=False,
         allow_unicode=True,
     )
@@ -704,15 +1034,20 @@ def _clear_corpus(corpus_dir: Path) -> None:
         ont = corpus_dir / f"{node_class}.ont.yml"
         if ont.exists():
             ont.unlink()
-    readme = corpus_dir / "README.md"
-    if readme.exists():
-        readme.unlink()
+    for owned in ("README.md", "universal.yml"):
+        stale = corpus_dir / owned
+        if stale.exists():
+            stale.unlink()
 
 
 def write_mirror(mirror: Mirror, corpus_dir: Path) -> None:
     """Write ``mirror`` to ``corpus_dir`` as yidam node files (clearing a prior mirror first)."""
     corpus_dir.mkdir(parents=True, exist_ok=True)
     _clear_corpus(corpus_dir)
+
+    # Written whatever classes are present: `undeclared-property` consults it for every class,
+    # so a corpus that projected only `concept` still needs the artifact-side names covered.
+    (corpus_dir / "universal.yml").write_text(_universal_yaml(), encoding="utf-8")
 
     for node_class in mirror.classes:  # only classes that actually have instances
         (corpus_dir / f"{node_class}.ont.yml").write_text(_ont_yaml(node_class), encoding="utf-8")

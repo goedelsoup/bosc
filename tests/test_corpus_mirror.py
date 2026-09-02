@@ -18,6 +18,9 @@ from tests.conftest import ExportedBundle
 from watermark.config import Settings
 from watermark.hypotheses import HYPOTHESES, HypothesisAssessment
 from watermark.site.corpus_mirror import (
+    CLASSES,
+    ONTOLOGY,
+    UNIVERSAL_PROPERTIES,
     _claim_token,
     build_mirror,
     project_mirror,
@@ -197,7 +200,9 @@ def test_claim_tags_are_preserved(tmp_path: Path) -> None:
     tags = {}
     for path in (corpus / "question").glob("*.yml"):
         data = yaml.safe_load(path.read_text())
-        tags[path.stem] = data.get("claim_tag")
+        # Under `properties:` since #2132 — yidam reads an instance's properties from that
+        # mapping and nowhere else, so a bare top-level key is invisible to the ontology.
+        tags[path.stem] = data["properties"].get("claim_tag")
     # Leads carry their own tag; the open hypothesis cell is [open]. The value is the
     # BRACKETED token, not the bare word — `yidam open-questions` decides a node is open by
     # scanning its raw text for the literal `[open]`, so the bare form made the real binary
@@ -211,15 +216,18 @@ def test_claim_tags_are_preserved(tmp_path: Path) -> None:
 def test_provenance_survives_projection(tmp_path: Path) -> None:
     corpus = tmp_path / "corpus"
     write_mirror(_project(), corpus)
+    # Provenance nests under `properties:` (#2132), which is the mapping yidam reads an
+    # instance's properties from — the bare top-level keys this projection wrote before were
+    # invisible to the whole ontology layer.
     # entity keeps its source
     ent = yaml.safe_load((corpus / "artifact" / "google.yml").read_text())
-    assert ent["sources"] == ["oepa/permit.yaml"]
+    assert ent["properties"]["sources"] == ["oepa/permit.yaml"]
     # person keeps each source's evidentiary kind ([reference] here)
     person = yaml.safe_load((corpus / "artifact" / "person-jane-doe.yml").read_text())
-    assert person["sources"][0]["source_kind"] == "reference"
+    assert person["properties"]["sources"][0]["source_kind"] == "reference"
     # relationship keeps its document source
     rels = [yaml.safe_load(p.read_text()) for p in (corpus / "relation").glob("*.yml")]
-    assert any(r.get("source") == "oepa/permit.yaml" for r in rels)
+    assert any(r["properties"].get("source") == "oepa/permit.yaml" for r in rels)
 
 
 def test_relationship_edges_point_at_their_entities(tmp_path: Path) -> None:
@@ -315,7 +323,10 @@ def test_every_node_carries_class_and_label(tmp_path: Path) -> None:
     corpus = tmp_path / "corpus"
     write_mirror(_project(), corpus)
     for inst in corpus.rglob("*.yml"):
-        if inst.name.endswith(".ont.yml"):
+        # The corpus root holds two kinds of non-instance file: a `<class>.ont.yml` per class,
+        # and `universal.yml` — the corpus speaking about itself rather than about one class.
+        # Neither is a node, and the real `graph-check` does not read them as one either.
+        if inst.name.endswith(".ont.yml") or inst.name == "universal.yml":
             continue
         data = yaml.safe_load(inst.read_text(encoding="utf-8")) or {}
         assert data.get("class"), f"{inst} has no class:"
@@ -395,3 +406,80 @@ def test_build_mirror_over_the_real_lima_corpus_is_clean(tmp_path: Path) -> None
     assert counts["artifact"] > 1  # the site anchor + real entities
     assert counts["relation"] > 0
     assert counts["question"] > 0
+
+
+# --- the class contract (#2132) -------------------------------------------------------------
+def test_every_class_declares_a_contract_and_the_two_lists_agree() -> None:
+    """`CLASSES` is display order and `ONTOLOGY` is the contract; a class in one and not the
+    other would write a node directory with no schema, or a schema for nothing."""
+    assert set(ONTOLOGY) == set(CLASSES)
+    for name, ont in ONTOLOGY.items():
+        assert ont.name == name, "the class name must match its key — the filename governs"
+        assert ont.properties and ont.edges, f"`{name}` declares nothing"
+        # Truthful only because the mirror is GENERATED: a relationship outside the declaration
+        # is a bug in this module, not a coinage somebody made deliberately.
+        assert ont.edge_policy == "exhaustive"
+
+
+def test_every_declared_edge_targets_a_class_that_exists() -> None:
+    for name, ont in ONTOLOGY.items():
+        for edge in ont.edges:
+            assert edge.target in CLASSES, f"`{name}` licenses `{edge.relationship}` into nothing"
+            assert edge.direction == "out", (
+                "the mirror authors every edge from the node that owns it"
+            )
+
+
+def test_the_declaration_covers_every_property_the_projection_writes() -> None:
+    """The invariant behind `undeclared-property`, checked here rather than only by the binary.
+
+    Declaring any `properties:` makes the class contract total: every property an instance
+    carries must be declared on its class or in `UNIVERSAL_PROPERTIES`. A property this
+    projection starts writing and nobody declares is an ERROR-severity lint finding, so it is
+    worth failing on in a suite that runs without a Rust toolchain.
+    """
+    universal = {p.name for p in UNIVERSAL_PROPERTIES}
+    mirror = build_mirror(Settings(site="lima", data_dir=REPO_ROOT / "data"))
+    undeclared: set[tuple[str, str]] = set()
+    for node in mirror.nodes:
+        declared = {p.name for p in ONTOLOGY[node.node_class].properties} | universal
+        undeclared |= {(node.node_class, k) for k in node.meta if k not in declared}
+    assert not undeclared, f"undeclared properties: {sorted(undeclared)}"
+
+
+def test_a_near_universal_property_is_declared_with_its_reason() -> None:
+    """The four `missing-property` warnings this corpus carries are deliberate, and the
+    declaration is where that decision is recorded — not a commit message nobody will find."""
+    sources = next(p for p in ONTOLOGY["artifact"].properties if p.name == "sources")
+    assert "site anchor" in sources.description
+    lead_kind = next(p for p in ONTOLOGY["question"].properties if p.name == "lead_kind")
+    assert "open-water" in lead_kind.description
+
+
+def test_an_instance_nests_its_provenance_under_properties(tmp_path: Path) -> None:
+    """yidam reads an instance's properties from that mapping and from NOWHERE else.
+
+    Written as bare top-level keys — as this projection did until #2132 — they are invisible to
+    the whole ontology layer: `undeclared-property` sees an instance with no properties at all,
+    and `missing-property` reports every declared one as absent. Measured before the fix: 1,129
+    findings over a corpus that was carrying all of them.
+    """
+    mirror = _project()
+    write_mirror(mirror, tmp_path)
+    node = next(p for p in (tmp_path / "artifact").glob("*.yml"))
+    body = yaml.safe_load(node.read_text())
+    assert "properties" in body and isinstance(body["properties"], dict)
+    assert body["properties"], "the provenance is inside, not beside"
+    for reserved in ("class", "label", "links"):
+        assert reserved in body, "the reserved keys stay at the top level"
+    assert "site" not in body, "a provenance key must not also sit at the top level"
+
+
+def test_the_universal_declaration_is_written_beside_the_classes(tmp_path: Path) -> None:
+    mirror = _project()
+    write_mirror(mirror, tmp_path)
+    body = yaml.safe_load((tmp_path / "universal.yml").read_text())
+    assert {p["name"] for p in body["properties"]} == {p.name for p in UNIVERSAL_PROPERTIES}
+    # Re-writing clears the previous one rather than leaving a stale file behind.
+    write_mirror(mirror, tmp_path)
+    assert (tmp_path / "universal.yml").is_file()
