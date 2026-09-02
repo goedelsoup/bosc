@@ -1,6 +1,6 @@
 {
   "site": "troy-piqua",
-  "catalog_version": "fa083e622460fac6a37a88edc433d29f8b9b6ccc71b3a91bfb16a96ad11ffcf3",
+  "catalog_version": "04d5c7b5e3dee3fb802d5c67bb2198bfe29826130404773ff79b85f8240215f3",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:troy-piqua:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "troy-piqua",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:troy-piqua:bundle-records",
       "kind": "dataset",
       "site": "troy-piqua",
@@ -833,6 +841,14 @@
       "site": "troy-piqua",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:troy-piqua:hydrology-routing",
+      "kind": "dataset",
+      "site": "troy-piqua",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

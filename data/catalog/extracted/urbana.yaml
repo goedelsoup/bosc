@@ -15,9 +15,6 @@ storage:
 - relpath: extracted/urbana/highland55-findings.md
   media_type: text/markdown
   lfs: false
-- relpath: extracted/urbana/bosc-site-footprint.yaml
-  media_type: application/yaml
-  lfs: false
 - relpath: extracted/urbana/land-assembly.yaml
   media_type: application/yaml
   lfs: false
@@ -77,9 +74,11 @@ notes: >
   conflation guard. land-assembly.yaml is the conveyance register —
   four parcels / three Thor SPEs (Urbana Owner I/II LLC, Highland55 Investments LLC), grantor /
   grantee / consideration / date / deed Official-Record book-page, sourced [verified] to the
-  Champaign County auditor CAMA. bosc-site-footprint.yaml commits the ~230-ac recorded ownership
+  Champaign County auditor CAMA. The site's footprint record — the ~230-ac recorded ownership
   assemblage (geometry in reference/urbana/parcel-assemblage.geojson) with the SSURGO-validated
-  dominant HSG C (#1326). litigation-thor-v-urbana.{yaml,md} is the structured read of the federal
+  dominant HSG C (#1326) — is catalogued under `bosc-site-footprint`, the network-wide slug-scoped
+  dataset every site's copy belongs to (#2138).
+  litigation-thor-v-urbana.{yaml,md} is the structured read of the federal
   complaint (S.D. Ohio 3:26-cv-00196-MJN-CHG, filed 2026-06-19; source in
   documents/legal/thor-v-urbana/) — docket, parties, the eight counts, the recited ordinance /
   moratorium record, and the zoning + litigation timeline (#1329).

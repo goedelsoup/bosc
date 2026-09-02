@@ -28,6 +28,7 @@ from pydantic import BaseModel, ConfigDict
 from watermark.catalog import CatalogEntry, load_entries, validate_entries
 from watermark.catalog.backfill import BACKFILL_SCOPES, _is_data_file
 from watermark.catalog.reconcile import ObservedEntry, load_observed, reconcile
+from watermark.catalog.resolve import resolved_for_site
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 from watermark.sites import SITES
@@ -63,19 +64,22 @@ class CheckFinding(BaseModel):
     detail: str = ""
 
 
-def _covered_relpaths(entries: list[CatalogEntry], settings: Settings) -> set[str]:
-    """Every data-tree relpath claimed by some entry's storage (``{site}`` templates expanded)."""
+def _covered_relpaths(entries: list[CatalogEntry]) -> set[str]:
+    """Every data-tree relpath claimed by some entry's storage, over every registered site.
+
+    Coverage is the union of :func:`watermark.catalog.resolve.resolved_for_site` across ``SITES``,
+    which is deliberately **narrower** than expanding every ``{site}`` template for every slug: a
+    template only resolves for a ``slug-scoped`` entry, because that is the only scope whose storage
+    means "a different file per site". This gate expanded them unconditionally until #2138, and the
+    two rules disagreeing is what hid the defect — three entries declared ``{site}`` members under a
+    ``site:``/``basin:`` scope that the per-site resolver discards, so the files were covered *here*
+    (never orphans) while resolving for no site at all, and every claim in them read as unsourced.
+    ``resolve`` is the one rule; this is the consumer that had its own copy.
+    """
     covered: set[str] = set()
     for entry in entries:
-        for item in entry.storage:
-            rel = item.relpath
-            if "{site}" in rel:
-                for slug in sorted(SITES):
-                    actual = rel.replace("{site}", slug)
-                    if (settings.data_dir / actual).exists():
-                        covered.add(actual)
-            else:
-                covered.add(rel)
+        for slug in SITES:
+            covered.update(resolved_for_site(entry, slug))
     return covered
 
 
@@ -180,7 +184,7 @@ def check(
         findings.append(finding.model_copy(update={"severity": "error"}) if strict else finding)
 
     # 4. orphan files — committed data under a catalogued scope with no entry.
-    orphans = _all_data_files(settings) - _covered_relpaths(entries, settings)
+    orphans = _all_data_files(settings) - _covered_relpaths(entries)
     for rel in sorted(orphans):
         findings.append(
             CheckFinding(

@@ -1,6 +1,6 @@
 {
   "site": "urbana",
-  "catalog_version": "37030b99d4c8c19bc03c7dbf4fe5fce307821e6f2f972ddab2eec420e024199f",
+  "catalog_version": "79fef285ee44f511baaeebce28840e8baf3fa63bd9af4291f04166848c734a15",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:urbana:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:urbana:bundle-records",
       "kind": "dataset",
       "site": "urbana",
@@ -825,6 +833,14 @@
       "site": "urbana",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:urbana:hydrology-routing",
+      "kind": "dataset",
+      "site": "urbana",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

@@ -1,6 +1,6 @@
 {
   "site": "ottawa",
-  "catalog_version": "61f80e0f49a34b20b44a848e04c118b6946466a65b56640ca1d1a929bae6d3bb",
+  "catalog_version": "97a16582e2ddde00bb3ca6115846549d4fdadf91a1e999148d36f2eec4d88b5e",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:ottawa:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:ottawa:bundle-records",
       "kind": "dataset",
       "site": "ottawa",
@@ -849,6 +857,14 @@
       "site": "ottawa",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:ottawa:hydrology-routing",
+      "kind": "dataset",
+      "site": "ottawa",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

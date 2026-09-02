@@ -1,6 +1,6 @@
 {
   "site": "new-albany",
-  "catalog_version": "d3f3a10f78fa9e2ef78cf431f96646e1becd5b632127c843029ad440f035d6ed",
+  "catalog_version": "caf82b53be16e7a0a1f738701974123f796188df46b52f7b6ef4413f6d429e79",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:new-albany:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:new-albany:bundle-records",
       "kind": "dataset",
       "site": "new-albany",
@@ -825,6 +833,14 @@
       "site": "new-albany",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:hydrology-routing",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

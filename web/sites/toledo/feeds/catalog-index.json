@@ -1,6 +1,6 @@
 {
   "site": "toledo",
-  "catalog_version": "27014df935517d8c5d7a6b079a066675ead02903a5944a7fe035e395ef96f97b",
+  "catalog_version": "c2b98c9f1358003d815ca5cd34ff3375ddd979eedc02baff739867d194acdcbb",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:toledo:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:toledo:bundle-records",
       "kind": "dataset",
       "site": "toledo",
@@ -841,6 +849,14 @@
       "site": "toledo",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:toledo:hydrology-routing",
+      "kind": "dataset",
+      "site": "toledo",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

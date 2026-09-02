@@ -425,6 +425,51 @@ def test_duplicate_id_is_an_error_and_short_circuits_on_load_error(tmp_path: Pat
     assert errors(findings)
 
 
+# --- coverage rule ---------------------------------------------------------------------------
+def _templated(name: str, scope: str) -> str:
+    return textwrap.dedent(
+        f"""\
+        id: {name}
+        title: T
+        scope: reference
+        producer:
+          kind: connector
+          source: x
+        site_scope: {scope}
+        storage:
+        - relpath: reference/echo/{{site}}/f.yaml
+          media_type: application/x-yaml
+        refresh:
+          cadence: static
+        """
+    )
+
+
+def test_a_template_covers_only_what_its_own_scope_resolves(tmp_path: Path) -> None:
+    """The orphan gate uses ``resolve``'s rule, so it cannot cover what no site can reach (#2138).
+
+    A ``{site}`` template means "a different file per site", which is what ``slug-scoped`` declares
+    and what every other scope denies — ``resolve._resolved`` filters templated members out of a
+    ``site:``/``basin:`` entry entirely. This gate had its own looser expansion (every template for
+    every registered slug, existence-checked), so three committed entries declared templated members
+    under a narrow scope and were covered *here* while resolving for **no site at all**: never
+    orphans, never anyone's dataset, and every ``[verified]`` claim in those files read as unsourced.
+    Both sides now ask ``resolved_for_site``, so the misdeclaration surfaces as what it is.
+    """
+    settings = _settings(tmp_path)
+    _data(settings, "reference/echo/findlay/f.yaml")
+    _data(settings, "reference/echo/lima/f.yaml")
+
+    _entry(settings, "narrow", _templated("narrow", "site:findlay"))
+    orphans = {f.subject for f in check(settings=settings, now=_FIXED) if f.kind == "orphan-file"}
+    # Not even Findlay's own copy: the scope discards the member, so the entry covers nothing.
+    assert orphans == {"reference/echo/findlay/f.yaml", "reference/echo/lima/f.yaml"}
+
+    # The same storage under the scope that actually means it covers both sites' copies.
+    _entry(settings, "narrow", _templated("narrow", "slug-scoped"))
+    assert [f for f in check(settings=settings, now=_FIXED) if f.kind == "orphan-file"] == []
+
+
 # --- regression guard ------------------------------------------------------------------------
 def test_committed_catalog_passes_the_gate() -> None:
     """The real committed catalog + data tree clear the gate (no error findings).

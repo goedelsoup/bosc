@@ -1,6 +1,6 @@
 {
   "site": "bowling-green",
-  "catalog_version": "3a1b6169697faa6bbd371d994f0fd5459b94ff07ab6099ce4c7a73235ccfc593",
+  "catalog_version": "1e07ae49c7f1e55f13e713973cf761d39cd3c4f7dea4b1737804293f0cfef77f",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:bowling-green:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:bowling-green:bowling-green-apollo-power",
       "kind": "dataset",
       "site": "bowling-green",
@@ -865,6 +873,14 @@
       "site": "bowling-green",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bowling-green:hydrology-routing",
+      "kind": "dataset",
+      "site": "bowling-green",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

@@ -1,6 +1,6 @@
 {
   "site": "hamilton-middletown",
-  "catalog_version": "56641790d8a165f4c8f42c6502f4af72f15cff2e7f6fd1fbef7de641fa7ef179",
+  "catalog_version": "6c8b13757eb9cfd03ec97a33a7e53cef1268ce1f2d17962dd83b9e470dbcf32e",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:hamilton-middletown:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "hamilton-middletown",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:hamilton-middletown:bundle-records",
       "kind": "dataset",
       "site": "hamilton-middletown",
@@ -833,6 +841,14 @@
       "site": "hamilton-middletown",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:hamilton-middletown:hydrology-routing",
+      "kind": "dataset",
+      "site": "hamilton-middletown",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

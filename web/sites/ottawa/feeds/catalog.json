@@ -85,6 +85,59 @@
     }
   },
   {
+    "id": "bosc-site-footprint",
+    "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+    "scope": "extracted",
+    "collection": "extracted",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Hand-authored per-site footprint record — the boundary drawn from that site's committed parcel GIS (reference/<site>/parcel-assemblage.geojson), planar acreage measured from the same geometry, hydrologic soil group from a SSURGO read over it, and every quantity tagged with its own source kind",
+    "external_url": null,
+    "license": "Public record (county auditor CAMA / recorded instruments); BOSC-derived measurements",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "footprint",
+      "campus",
+      "parcels",
+      "acreage",
+      "ssurgo",
+      "places",
+      "per-site"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/{site}/bosc-site-footprint.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "3210c03222a276ccd9429f824ccea1129632da9bc42505c4ffd57d6d6696e1f3",
+      "size_bytes": 17960,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Hand-authored per-site footprint record — the boundary drawn from that site's committed parcel GIS (reference/<site>/parcel-assemblage.geojson), planar acreage measured from the same geometry, hydrologic soil group from a SSURGO read over it, and every quantity tagged with its own source kind",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "data-centers",
     "title": "Per-Site Data-Center Activity Register",
     "scope": "extracted",
@@ -1825,16 +1878,6 @@
         "lfs": false
       },
       {
-        "relpath": "reference/hydrology/routing.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/{site}/routing.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
         "relpath": "reference/hydrology/lima/sanitary-basis.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -1872,10 +1915,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5c8f0b45757446cb84337355e5e28b2a67e1160db98f3bd8cb8ba351b4dfe09a",
-      "size_bytes": 208425,
+      "sha256": "3a365628580f60f63e52eb9c3f529bf4d3fda0f16ba5209a6f74478570530a30",
+      "size_bytes": 184024,
       "lfs_materialized": true,
-      "file_count": 26,
+      "file_count": 20,
       "stale": false,
       "asof": null
     },
@@ -2124,6 +2167,64 @@
       "confidence": "medium",
       "note": "watermark reaches --write",
       "verified": true
+    }
+  },
+  {
+    "id": "hydrology-routing",
+    "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
+    "scope": "reference",
+    "collection": "hydrology",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Hand-authored per-site routing table — each WWTP→stream route and its permitted average design flow transcribed from that plant's own Ohio EPA NPDES permit or fact sheet in the corpus and cited per route; Lima's BOSC forcemain graph additionally from the Periplus watch-items forcemain features",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43); BOSC-curated",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "hydrology",
+      "routing",
+      "npdes",
+      "design-flow",
+      "receiving-water",
+      "forcemain",
+      "per-site"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/hydrology/routing.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/{site}/routing.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": false,
+      "sha256": null,
+      "size_bytes": 0,
+      "lfs_materialized": true,
+      "file_count": 0,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Hand-authored per-site routing table — each WWTP→stream route and its permitted average design flow transcribed from that plant's own Ohio EPA NPDES permit or fact sheet in the corpus and cited per route; Lima's BOSC forcemain graph additionally from the Periplus watch-items forcemain features",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {

@@ -1,6 +1,6 @@
 {
   "site": "columbus",
-  "catalog_version": "dca6d1a355190d5e4f58bc36fcaa4516c70f23462302e6b9a29ed69a53061e23",
+  "catalog_version": "8ade3feaa84a99ee6013877a125c34a72abaef157dbb78704779269b955f4878",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:columbus:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:columbus:bundle-records",
       "kind": "dataset",
       "site": "columbus",
@@ -825,6 +833,14 @@
       "site": "columbus",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:columbus:hydrology-routing",
+      "kind": "dataset",
+      "site": "columbus",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

@@ -1,0 +1,47 @@
+id: bosc-site-footprint
+title: Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: Hand-authored per-site footprint record — the boundary drawn from that site's committed
+    parcel GIS (reference/<site>/parcel-assemblage.geojson), planar acreage measured from the same
+    geometry, hydrologic soil group from a SSURGO read over it, and every quantity tagged with its
+    own source kind
+depends_on:
+- parcel-assemblage
+license: Public record (county auditor CAMA / recorded instruments); BOSC-derived measurements
+access_tier: public
+site_scope: slug-scoped
+storage:
+# One dataset, one file per site — which is what the `{site}` template means. It was declared on
+# `datacenter-facility-wwtp-in0032191-wwtp-receiving-water` (`site:fort-wayne`), where the per-site
+# resolver discarded it and the orphan gate expanded it for every slug, so eight other sites' records
+# were covered by a Fort Wayne WWTP entry and resolvable for nobody (#2138).
+- relpath: extracted/{site}/bosc-site-footprint.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: reference
+tags:
+- footprint
+- campus
+- parcels
+- acreage
+- ssurgo
+- places
+- per-site
+notes: >-
+  The `places` domain's anchor record for a watershed point: what the campus IS on the ground —
+  boundary_basis (read this first; it is a recorded-ownership holding at most sites and a
+  document-transcribed earth-disturbance footprint at Lima), the GIS-measured planar acreage, the
+  SSURGO-validated hydrologic soil group, and the developed/impervious split, which stays [open] at
+  every site still awaiting a site plan or stormwater permit. Committed at nine registered sites
+  (bowling-green, findlay, fort-wayne, ottawa, sidney, troy-piqua, urbana, van-wert, wilmington);
+  a site with no copy is absent from the map, not deficient. NOT every record is a data-center
+  campus — Ottawa's is a closed CRT works committed as that site's anchor place. Lima's own
+  footprint is NOT here: it lives in the reference build's un-slugged legacy layout as
+  extracted/plans/bosc-site-footprint.yaml, catalogued under `plans`, and is the one record
+  transcribed from a stormwater permit rather than drawn from parcels. These files deliberately do
+  not all validate as watermark.hydrology.models.SiteFootprint — see Findlay's header for why.

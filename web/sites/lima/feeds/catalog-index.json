@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "e39af8046571ca6da20a1cfd9a382cb67226e258600aefd9f9c323c8f8186470",
+  "catalog_version": "5f59e267ec8334bfe324609066434d0635680539a3a1300c57286054e9d0ab93",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -748,6 +748,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:bowling-green-apollo-power",
       "kind": "dataset",
       "site": "lima",
@@ -912,7 +920,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "datacenter-facility-wwtp-in0032191-wwtp-receiving-water",
-      "title": "Fort Wayne WWTP (NPDES IN0032191) Receiving-Water, Facility & Site-Footprint Characterization",
+      "title": "Fort Wayne WWTP (NPDES IN0032191) Receiving-Water & Facility Characterization",
       "feed": "catalog"
     },
     {
@@ -1273,6 +1281,14 @@
       "site": "lima",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:hydrology-routing",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

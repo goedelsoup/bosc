@@ -14,6 +14,7 @@ depends_on:
 - abatement-parameters
 - air-emission-factors
 - air-naaqs
+- bosc-site-footprint
 - datacenter-industry
 - dewatering-discharge
 - echo-maumee-npdes
@@ -26,6 +27,7 @@ depends_on:
 - hydrology
 - hydrology-low-flow-7q10
 - hydrology-reaches
+- hydrology-routing
 - hydrology-wbd
 - lima-campus-dewatering
 - oepa-cooling-reconciliation

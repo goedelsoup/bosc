@@ -1,6 +1,6 @@
 {
   "site": "wilmington",
-  "catalog_version": "fd083dc59d549a3e68a5f042e72cb5ff8794cdf346e8dcf7e4505e9aaa5a2951",
+  "catalog_version": "d86c7e41f379cd4bc5b79d44b4b86e9ecedb7aa5771b04756c5d3e95508ba126",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:wilmington:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:wilmington:bundle-records",
       "kind": "dataset",
       "site": "wilmington",
@@ -833,6 +841,14 @@
       "site": "wilmington",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wilmington:hydrology-routing",
+      "kind": "dataset",
+      "site": "wilmington",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

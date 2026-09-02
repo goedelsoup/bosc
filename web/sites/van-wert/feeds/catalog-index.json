@@ -1,6 +1,6 @@
 {
   "site": "van-wert",
-  "catalog_version": "f967b4c320feecc7be06dea92b6ea948cabd55336addbca6e1beb8fe20b27b89",
+  "catalog_version": "9aefad3ffb334124d75ace4af435115cf496b9a4eeb38b6fd98ce1a6b8979481",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:van-wert:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:van-wert:bundle-records",
       "kind": "dataset",
       "site": "van-wert",
@@ -849,6 +857,14 @@
       "site": "van-wert",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:van-wert:hydrology-routing",
+      "kind": "dataset",
+      "site": "van-wert",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-08-27T00:30:14.259112+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-09-02T23:34:05.189761+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **199** catalogued datasets — **198** reviewed.
-- **199** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **201** catalogued datasets — **200** reviewed.
+- **201** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -24,6 +24,7 @@ Snapshot reconciled: **2026-08-27T00:30:14.259112+00:00**. Regenerate with `wate
 | extracted | commissioners | 3 | 3 | 0 | 0 |
 | extracted | extracted | 2 | 2 | 0 | 0 |
 | extracted | findlay | 6 | 6 | 0 | 0 |
+| extracted | fort-wayne | 1 | 1 | 0 | 0 |
 | extracted | grid | 5 | 5 | 0 | 0 |
 | extracted | hamilton-middletown | 1 | 1 | 0 | 0 |
 | extracted | history | 1 | 1 | 0 | 0 |
@@ -67,7 +68,7 @@ Snapshot reconciled: **2026-08-27T00:30:14.259112+00:00**. Regenerate with `wate
 | reference | findlay-gis | 1 | 1 | 0 | 0 |
 | reference | gleif | 1 | 1 | 0 | 0 |
 | reference | greenops | 5 | 5 | 0 | 0 |
-| reference | hydrology | 10 | 10 | 0 | 0 |
+| reference | hydrology | 11 | 11 | 0 | 0 |
 | reference | lima-gis | 1 | 1 | 0 | 0 |
 | reference | lsc | 1 | 1 | 0 | 0 |
 | reference | network | 1 | 1 | 0 | 0 |
@@ -96,32 +97,32 @@ Snapshot reconciled: **2026-08-27T00:30:14.259112+00:00**. Regenerate with `wate
 
 | site | relevant | present | missing |
 | --- | --- | --- | --- |
-| bowling-green | 60 | 54 | 6 |
-| bryan | 57 | 48 | 9 |
-| columbus | 55 | 47 | 8 |
-| coshocton | 55 | 40 | 15 |
-| defiance | 57 | 48 | 9 |
-| findlay | 68 | 62 | 6 |
-| fort-wayne | 46 | 38 | 8 |
-| greenville | 55 | 46 | 9 |
-| hamilton-middletown | 56 | 48 | 8 |
-| lima | 111 | 107 | 4 |
-| mansfield | 56 | 48 | 8 |
-| new-albany | 56 | 48 | 8 |
-| ottawa | 59 | 52 | 7 |
-| piketon | 55 | 40 | 15 |
-| portsmouth | 56 | 41 | 15 |
-| sandusky | 55 | 40 | 15 |
-| sidney | 63 | 58 | 5 |
-| springfield | 55 | 48 | 7 |
-| toledo | 59 | 50 | 9 |
-| troy-piqua | 59 | 53 | 6 |
-| urbana | 57 | 50 | 7 |
-| van-wert | 64 | 58 | 6 |
-| west-union | 58 | 51 | 7 |
-| wilmington | 59 | 53 | 6 |
-| wpafb | 57 | 51 | 6 |
-| xenia | 56 | 48 | 8 |
+| bowling-green | 62 | 56 | 6 |
+| bryan | 59 | 48 | 11 |
+| columbus | 57 | 47 | 10 |
+| coshocton | 57 | 40 | 17 |
+| defiance | 59 | 48 | 11 |
+| findlay | 70 | 64 | 6 |
+| fort-wayne | 48 | 41 | 7 |
+| greenville | 57 | 46 | 11 |
+| hamilton-middletown | 58 | 48 | 10 |
+| lima | 113 | 108 | 5 |
+| mansfield | 58 | 48 | 10 |
+| new-albany | 58 | 48 | 10 |
+| ottawa | 61 | 53 | 8 |
+| piketon | 57 | 40 | 17 |
+| portsmouth | 58 | 41 | 17 |
+| sandusky | 57 | 40 | 17 |
+| sidney | 65 | 60 | 5 |
+| springfield | 57 | 48 | 9 |
+| toledo | 61 | 50 | 11 |
+| troy-piqua | 61 | 54 | 7 |
+| urbana | 59 | 51 | 8 |
+| van-wert | 66 | 60 | 6 |
+| west-union | 60 | 51 | 9 |
+| wilmington | 61 | 55 | 6 |
+| wpafb | 59 | 51 | 8 |
+| xenia | 58 | 48 | 10 |
 
 ## Integrity gaps
 

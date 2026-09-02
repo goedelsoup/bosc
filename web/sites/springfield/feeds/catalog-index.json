@@ -1,6 +1,6 @@
 {
   "site": "springfield",
-  "catalog_version": "6ed983b2e65f97a2eac830d074d8ec8086271058eb28389b68a394be872a6410",
+  "catalog_version": "7308c82bc9961b0bf368641da2df3dfe129f0928dc1afca4b7ec558359f000fd",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:springfield:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "springfield",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:springfield:bundle-records",
       "kind": "dataset",
       "site": "springfield",
@@ -825,6 +833,14 @@
       "site": "springfield",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:springfield:hydrology-routing",
+      "kind": "dataset",
+      "site": "springfield",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

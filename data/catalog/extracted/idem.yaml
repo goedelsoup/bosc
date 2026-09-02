@@ -12,10 +12,14 @@ license: Public record
 access_tier: public
 site_scope: site:fort-wayne
 storage:
-- relpath: extracted/idem/{site}/47378f.idem.yaml
+# Fort Wayne's own permits, named concretely. They were `extracted/idem/{site}/…` under a
+# `site:fort-wayne` scope, which the per-site resolver discards outright (#2138): a `{site}`
+# template is only expanded for `slug-scoped`. IDEM is Indiana's agency and a second Indiana
+# point would file its own entry, as every `oepa-<slug>` does.
+- relpath: extracted/idem/fort-wayne/47378f.idem.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/idem/{site}/wqc001454.idem.yaml
+- relpath: extracted/idem/fort-wayne/wqc001454.idem.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:

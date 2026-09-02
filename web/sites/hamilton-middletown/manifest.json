@@ -2,9 +2,9 @@
   "site": "hamilton-middletown",
   "bundle_version": "1.0.0",
   "contract_version": "2.4.0",
-  "generated_at": "2026-09-02T21:50:32+00:00",
+  "generated_at": "2026-09-02T23:47:38+00:00",
   "feed_count": 29,
-  "row_total": 439,
+  "row_total": 441,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -191,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 56
+      "count": 58
     },
     {
       "name": "facts",

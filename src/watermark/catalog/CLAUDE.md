@@ -21,7 +21,19 @@ subsystem audits). Driven by `watermark catalog …` (`cli/catalog.py`).
   files in mansfield's bundle for a 29,769-byte file, and `exists: true` in three bundles whose
   sites hold no such file at all — and, because the aggregate moves whenever *any* site's copy
   does, it kept `export --check --all` reporting 26 of 26 bundles drifted **on a clean tree**.
-- **`resolve.py` is the one per-site rule**, shared by `reconcile` and `sites` so a site's
+- ⚠️ **A `{site}` template is only meaningful under `slug-scoped`, and `check` is a consumer of
+  the resolver, not a second rule (#2138).** Every other scope owns its storage wholesale, so
+  `resolve._resolved` *filters templated members out entirely* — under `site:fort-wayne` or
+  `basin:maumee` a `{site}` member resolves for **no site at all**. That was silent from every
+  angle: the file is on disk, the entry names it, and `check`'s orphan gate had its own looser
+  expansion (every template × every slug, existence-checked) that covered it. Three reviewed
+  entries sat in that state, and downstream each affected record earned no `rests-on` link, so
+  `verified-unsourced` reported 12 grounded records as claims resting on nothing. The gate now
+  unions `resolved_for_site` over `SITES`, so the two agree and the misdeclaration surfaces as
+  orphans; `test_no_declared_member_resolves_for_no_site` pins it against the committed catalog.
+  **A per-site file belongs to a `slug-scoped` entry** (`bosc-site-footprint`, `hydrology-routing`),
+  never to a narrow entry that templates its way across the network.
+- **`resolve.py` is the one per-site rule**, shared by `reconcile`, `sites` and `check` so a site's
   observation and its presence answer the same question the same way. Two parts: what belongs to
   a site (the `{site}` expansions, plus — for the reference build alone — the un-slugged peers, as
   a **union**, since `hydrology-reaches` gives Lima both), and what counts as present (no declared

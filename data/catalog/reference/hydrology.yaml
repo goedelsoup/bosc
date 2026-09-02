@@ -52,12 +52,6 @@ storage:
 - relpath: reference/hydrology/routed-hydrograph.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: reference/hydrology/routing.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: reference/hydrology/{site}/routing.yaml
-  media_type: application/x-yaml
-  lfs: false
 - relpath: reference/hydrology/lima/sanitary-basis.yaml
   media_type: application/x-yaml
   lfs: false
@@ -94,9 +88,7 @@ notes: A mixed-provenance hydrology working set; each file carries its own per-q
   the derived thermal-discharge screen (thermal-discharge-screen.yaml, epic 1715 — modelled
   cooling heat rejection AND the corridor's own ECHO-DMR-reported effluent temperatures, read
   against the Ohio numeric temperature criteria; regenerate with `watermark thermal --offline
-  --write`). `routing.yaml` is slug-scoped like the rest of the per-site hydrology inputs — the
-  flat path is the reference build's (Lima), and a sibling reads reference/hydrology/{site}/ with
-  NO Lima fallback (issue 829), so it never inherits the BOSC forcemain routes. Wilmington's is
-  the first (issue 886), and it exists for one reason — to supply the STRUCTURED,
-  fact-sheet-cited design_flow_mgd the balance reads as the assimilative screen's numerator,
-  instead of the regex-over-prose fallback the watch-items summary would otherwise trigger.
+  --write`). The discharge-routing tables are NOT here — `routing.yaml` and its per-site
+  siblings are genuinely slug-scoped and cross basins (Sidney's is Great Miami, Wilmington's Little
+  Miami), so they were split out to the `hydrology-routing` entry (#2138) — declared here, under a
+  basin:maumee scope, the `{site}` member resolved for no site at all.

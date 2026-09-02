@@ -1,6 +1,6 @@
 {
   "site": "coshocton",
-  "catalog_version": "a1ab0a52b25eb8abfff8ac4f51fe89bda22f11fe8259ba5ac9a41ae708813a92",
+  "catalog_version": "f522278b978d799db6c4931562e43bf033657a3e2f6da2eb1176c8332433d37b",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:coshocton:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:coshocton:bundle-records",
       "kind": "dataset",
       "site": "coshocton",
@@ -825,6 +833,14 @@
       "site": "coshocton",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:coshocton:hydrology-routing",
+      "kind": "dataset",
+      "site": "coshocton",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {

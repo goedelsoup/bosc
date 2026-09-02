@@ -1,6 +1,6 @@
 {
   "site": "bryan",
-  "catalog_version": "51b3981b01b3520c4cb81e97a2e0841441cab1a83e8cef087bde72e468092c7d",
+  "catalog_version": "50800473d145b752e49f4560f226081013114b41536fa8ab09e7ce5fb7239341",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -628,6 +628,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:bryan:bosc-site-footprint",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "bosc-site-footprint",
+      "title": "Per-Site Campus Footprint Records — boundary, measured acreage, SSURGO HSG",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:bryan:bundle-records",
       "kind": "dataset",
       "site": "bryan",
@@ -841,6 +849,14 @@
       "site": "bryan",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:bryan:hydrology-routing",
+      "kind": "dataset",
+      "site": "bryan",
+      "local_id": "hydrology-routing",
+      "title": "Per-Site Discharge Routing — WWTP receiving stream, permitted design flow, forcemains",
       "feed": "catalog"
     },
     {
