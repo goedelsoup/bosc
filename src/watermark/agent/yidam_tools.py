@@ -497,6 +497,15 @@ async def retrieve(args: dict[str, Any]) -> dict[str, Any]:
     settings = get_settings()
     mirror = _mirror(settings)
 
+    # Resolved ONCE, before the early returns, and not restated in each arm. `degraded` is a
+    # fact about this server's index, not about which branch answered — hardcoding it below
+    # made the rejection and the blank-query arms report `no_index` on a site whose index IS
+    # built, contradicting `capabilities()` in the same breath and telling the caller to build
+    # an artefact it already has. The fixtures cannot catch that: they run on a corpus with no
+    # index, where the wrong constant is accidentally right.
+    vector = vector_ready(settings)
+    reason = None if vector else _NO_INDEX
+
     # A class this corpus does not declare is REJECTED, not searched — a bad request, not an
     # empty result. BOSC can tell the difference because it knows its own class list, and the
     # two are different repairs: a rejection means fix the call, an absence means the corpus
@@ -504,8 +513,8 @@ async def retrieve(args: dict[str, Any]) -> dict[str, Any]:
     if node_class is not None and node_class not in CLASSES:
         return _json(
             {
-                "degraded": True,
-                "degraded_reason": _NO_INDEX,
+                "degraded": not vector,
+                "degraded_reason": reason,
                 "rejected": {
                     "code": "unknown-class",
                     "detail": f"unknown class {node_class!r}. Valid: {_CLASS_LIST}.",
@@ -519,15 +528,15 @@ async def retrieve(args: dict[str, Any]) -> dict[str, Any]:
     if not query:
         return _json(
             {
-                "degraded": True,
-                "degraded_reason": _NO_INDEX,
+                "degraded": not vector,
+                "degraded_reason": reason,
                 "rejected": None,
                 "absence": _absent("query-no-terms", in_scope),
                 "results": [],
             }
         )
 
-    if vector_ready(settings):
+    if vector:
         try:
             hits = _index(settings).query(query, limit=k, node_class=node_class)
             by_id = {n.id: n for n in mirror.nodes}

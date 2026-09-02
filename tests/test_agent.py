@@ -256,12 +256,20 @@ def test_options_wire_the_discipline_prompt_and_research_skills() -> None:
     # backend's `mcp__yidam__*` tools (enabled by default).
     assert opts.allowed_tools == tools.ALLOWED_TOOL_NAMES + yidam_tools.ALLOWED_TOOL_NAMES
     assert len(tools.ALLOWED_TOOL_NAMES) == 25  # +search_web, +fetch_url (#1048)
-    # The yidam half is DERIVED from the frozen contract, so it is asserted against the contract
-    # rather than against a number. A literal count here went stale the moment the contract grew
-    # from 5 tools to 13 (#2126) and said only `8 != 5` — which names nothing. This says which
-    # tool appeared or vanished, and it cannot drift from what the server actually serves.
+    # The yidam half is DERIVED from the frozen contract rather than counted. A literal count
+    # went stale the moment the contract grew from 5 tools to 13 (#2126) and reported only
+    # `8 != 5`, which names nothing.
+    #
+    # What this catches is narrower than "which tool appeared or vanished", and worth stating
+    # so nobody trusts it for more: a tool ADDED upstream with no handler is a `KeyError` at
+    # import, before this test runs, and one REMOVED leaves both sides at once. It catches a
+    # handler bound to the wrong `_HANDLERS` key — each `@tool` takes its name from the
+    # contract spec, so a mis-keyed entry makes the two lists disagree in ORDER or CONTENT
+    # while both stay the same length.
     served = [f"mcp__yidam__{name}" for name in yidam_tools.served_tool_names()]
     assert served == yidam_tools.ALLOWED_TOOL_NAMES
+    # The half the derivation cannot see: every handler answers to the name it is filed under.
+    assert [t.name for t in yidam_tools.ALL_TOOLS] == yidam_tools.served_tool_names()
     assert "data-center-sweep" in RESEARCH_SKILLS  # +data-center-sweep (#1049)
 
 

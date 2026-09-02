@@ -274,14 +274,49 @@ async def test_retrieve_degrades_rather_than_building_an_index_on_demand(
     assert not (tmp_path / "index").exists(), "retrieve built an index as a side effect"
 
 
-async def test_retrieve_answers_a_bad_call_instead_of_refusing_it() -> None:
+async def test_the_early_return_arms_do_not_contradict_capabilities(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """`degraded` is a fact about this server's index, not about which branch answered.
+
+    The rejection and blank-query arms return before the search does, and hardcoding
+    `degraded: true` / `no_index` in them made both report a missing artefact on a site whose
+    index IS built — contradicting `capabilities()` in the same breath, and telling the caller
+    to build something it already has.
+
+    The upstream fixtures cannot catch this. They run on a corpus with no index, where the
+    wrong constant is accidentally the right answer, so the arm has to be exercised with the
+    index present or not at all.
+    """
+    monkeypatch.setattr(yidam_tools, "_mirror", lambda settings=None: _tiny_mirror())
+    monkeypatch.setattr(yidam_tools, "vector_ready", lambda settings=None: True)
+    retrieve = next(t for t in yidam_tools.ALL_TOOLS if t.name == "retrieve")
+
+    for args in ({"query": "  "}, {"query": "x", "class": "bogus"}):
+        body = json.loads((await retrieve.handler(args))["content"][0]["text"])
+        assert body["degraded"] is False, f"{args} claimed a missing index that is present"
+        assert body["degraded_reason"] is None
+    # ...and the two surfaces agree, which is the property the contract asks for: `reason`
+    # carries at connect time the same value every call carries.
+    assert yidam_tools.capabilities()["retrieve"] == {"vector": True, "reason": None}
+
+
+async def test_retrieve_answers_a_bad_call_instead_of_refusing_it(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     """Neither arm is an `isError` any more, and the two are deliberately different shapes.
 
     A blank query is an `absence` — the corpus was searchable and the call brought nothing to
     search it with. An undeclared class is a `rejected` — the call named something this corpus
     does not have. Different repairs, and `rejected`/`absence` are mutually exclusive because
     of it. Both carry enough for the caller to fix the call without a second round trip.
+
+    Patches `_mirror` like its neighbours. Without that this reaches the real `get_settings()`,
+    builds the active site's mirror, and — the part that does not stay local — seeds the
+    module-level `_MIRROR_CACHE`, which is keyed by `(site, data_dir)` and never cleared here.
+    The entry then answers for every later test in the session.
     """
+    monkeypatch.setattr(yidam_tools, "_mirror", lambda settings=None: _tiny_mirror())
     retrieve = next(t for t in yidam_tools.ALL_TOOLS if t.name == "retrieve")
 
     empty = json.loads((await retrieve.handler({"query": "  "}))["content"][0]["text"])
