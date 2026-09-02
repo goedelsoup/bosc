@@ -48,6 +48,7 @@ from pathlib import Path
 import yaml
 
 from watermark.catalog import CatalogEntry, load_entries
+from watermark.catalog.resolve import resolved_for_site
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 
@@ -154,30 +155,60 @@ def _body(entry: CatalogEntry) -> str:
     return "\n".join(lines)
 
 
-def _locations(entry: CatalogEntry) -> tuple[CatalogLocation, ...]:
-    """Where the source lives: its committed files, and the upstream when one is named."""
+def _covered_relpaths(entry: CatalogEntry, slug: str) -> list[str]:
+    """Every `data/`-relative path this entry registers **for the active site**.
+
+    ⚠️ **`{site}` templates must be expanded, or the citation silently does not resolve.**
+    A `slug-scoped` dataset stores a different file per site and declares it once as
+    `extracted/{site}/bosc-site-footprint.yaml`; 27 of the catalog's storage relpaths are
+    written that way. Comparing that literal against a real path never matches, so the record
+    got no `rests-on` link and `verified-unsourced` reported it as a claim resting on nothing
+    — a FALSE positive, in the one check this projection exists to make trustworthy. Findlay
+    produced two of them.
+
+    :func:`~watermark.catalog.resolve.resolved_for_site` is the repo's one expansion rule,
+    shared with `reconcile` and `sites`, so a citation resolves the same way an observation
+    does. A second copy of that rule is where the next divergence goes.
+    """
+    concrete = {s.relpath for s in entry.storage if "{site}" not in s.relpath}
+    return sorted(concrete | set(resolved_for_site(entry, slug)))
+
+
+def _locations(entry: CatalogEntry, slug: str) -> tuple[CatalogLocation, ...]:
+    """Where the source lives — its committed files, `{site}` already expanded."""
+    by_rel = {s.relpath: s for s in entry.storage}
     out: list[CatalogLocation] = []
-    for item in entry.storage:
+    for rel in _covered_relpaths(entry, slug):
+        # The templated member's media type lives on the un-expanded declaration.
+        item = by_rel.get(rel) or next(
+            (
+                s
+                for s in entry.storage
+                if "{site}" in s.relpath and rel.endswith(s.relpath.rsplit("{site}", 1)[-1])
+            ),
+            None,
+        )
         out.append(
             CatalogLocation(
                 kind="file",
-                value=f"data/{item.relpath}",
-                description=item.media_type or "",
+                value=f"data/{rel}",
+                description=(item.media_type if item else "") or "",
             )
         )
     return tuple(out)
 
 
-def project_entry(entry: CatalogEntry) -> CatalogSource:
-    """One :class:`~watermark.catalog.CatalogEntry` as a yidam catalog source."""
+def project_entry(entry: CatalogEntry, slug: str) -> CatalogSource:
+    """One :class:`~watermark.catalog.CatalogEntry` as a yidam catalog source, for one site."""
+    covered = _covered_relpaths(entry, slug)
     return CatalogSource(
         slug=entry.id,
         name=entry.title,
         description=_describe(entry),
         type=_TYPE_BY_PRODUCER.get(entry.producer.kind, "other"),
-        locations=_locations(entry),
+        locations=_locations(entry, slug),
         body=_body(entry),
-        covers=tuple(f"data/{item.relpath}" for item in entry.storage),
+        covers=tuple(f"data/{rel}" for rel in covered),
     )
 
 
@@ -191,7 +222,7 @@ def build_catalog(settings: Settings | None = None) -> list[CatalogSource]:
     """
     settings = settings or get_settings()
     entries = load_entries(settings=settings)
-    sources = [project_entry(e) for e in entries]
+    sources = [project_entry(e, settings.site) for e in entries]
     log.info(
         "corpus_catalog.built", sources=len(sources), covered=sum(len(s.covers) for s in sources)
     )
