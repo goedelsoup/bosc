@@ -558,3 +558,52 @@ def test_a_catalog_citation_is_not_a_class_edge_and_must_stay_undeclared() -> No
                     "a citation must resolve OUT of the corpus tree and into the catalog; "
                     "anything else resolves to a node and re-enters the class contract"
                 )
+
+
+def test_a_site_templated_catalog_entry_still_registers_its_files() -> None:
+    """`{site}` in a storage relpath must be EXPANDED before a citation is matched against it.
+
+    27 of the catalog's storage relpaths are written `extracted/{site}/…` — a `slug-scoped`
+    dataset stores a different file per site and declares it once. Comparing that literal
+    against a real path never matches, so the record got no `rests-on` link and
+    `verified-unsourced` reported it as a claim resting on nothing. A **false positive**, in
+    the one check the catalog projection exists to make trustworthy: findlay produced two.
+
+    Lima did not, which is why CI stayed green — the corpus home's own files are declared
+    concretely. So this asserts over a peer, deliberately.
+    """
+    settings = Settings(site="findlay", data_dir=REPO_ROOT / "data")
+    catalog = corpus_catalog.build_catalog(settings)
+
+    templated = [s for s in catalog if any("{site}" in c for c in s.covers)]
+    assert not templated, (
+        f"{[s.slug for s in templated]} carry an unexpanded `{{site}}` — a citation can never "
+        "resolve to a path holding a literal brace"
+    )
+
+    # The concrete case the bug produced: findlay's own copy of a templated dataset.
+    assert corpus_catalog.entry_for_path(catalog, "data/extracted/findlay/data-centers.md")
+
+
+def test_every_record_asserting_verified_cites_a_source_or_is_a_known_gap() -> None:
+    """The invariant `verified-unsourced` reports on, asserted here so it fails without Rust.
+
+    A record carrying `[verified]` and no `rests-on` link is a claim the corpus cannot
+    demonstrate. Lima's is clean and must stay so; the peers' remaining gaps are the three
+    catalog entries whose `{site}` templates their own `site_scope` discards (#2138), which is
+    a defect in committed data rather than in this projection — so they are named, not blessed.
+    """
+    mirror = build_mirror(Settings(site="lima", data_dir=REPO_ROOT / "data"))
+    records = [n for n in mirror.nodes if n.node_class == "record"]
+    assert records, "the record class projected nothing — the scope predicate has moved"
+
+    unsourced = [
+        n.meta.get("relpath")
+        for n in records
+        if "[verified]" in str(n.meta.get("claim_standings", ""))
+        and not any(link.relationship == corpus_catalog.CITES for link in n.links)
+    ]
+    assert unsourced == [], (
+        f"{unsourced} assert `[verified]` and cite no registered source — either the catalog "
+        "lost an entry, or the citation stopped resolving"
+    )
