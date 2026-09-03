@@ -1,0 +1,54 @@
+meta:
+  collection: documents/odd
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 8
+    bytes: 10047682
+    distinct_addresses: 8
+artifacts:
+- rel: documents/odd/11062023-PIA-Decade.pdf
+  sha256: b050627877cd1bc190e315a3ea1711f79fce2b5b39066a68d75e23f56825da4e
+  bytes: 1566115
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/odd/Final_PY25-29_Con_Plan.pdf
+  sha256: 838c79dc27c833385c1f00d135c9de63d3dc243eba8ce8bc4fad7eb828ded04e
+  bytes: 7293392
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/odd/tca/Meeting_Minutes_1.27.25.pdf
+  sha256: d41641dea81f9641aa07887f52d0c12e36cdc2cf90697f2e380b0ac758392b44
+  bytes: 177771
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/odd/tca/Meeting_Minutes_6.2.2025.pdf
+  sha256: 8bcf2ecc2f293786992d50f45bbde7221ea828f525f65c7786b29eb645123d31
+  bytes: 148365
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/odd/tca/Meeting_Minutes_TCA_1.28.2026_gyzb8y.pdf
+  sha256: a02769b4668dcaa84a42cdaa149988087b2a1a64ebe19a52c94a5269a4dfcb9b
+  bytes: 209310
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/odd/tca/Meeting_Minutes_TCA_3.30.2026.pdf
+  sha256: cef8eb0acecd8a505b1ec3d9d321cbf28a8e84d7dce289f1894d469fb33dee7f
+  bytes: 254728
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/odd/tca/Meeting_Minutes_TCA_6.29.2026.pdf
+  sha256: 49ed71ff26509a289150a213eb572cd400ad29c19abf7b0c6161909ae7bf58ac
+  bytes: 200608
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/odd/tca/TCA_Meeting_Minutes_6.1.2026.pdf
+  sha256: 62281b85cbfd7686f0f5b80885f3d94a8a8357409bfcaadb9642ba11930c89ea
+  bytes: 197393
+  media_type: application/pdf
+  redistributable: true

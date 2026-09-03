@@ -1,0 +1,19 @@
+meta:
+  collection: documents/limaohio
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 1
+    bytes: 1381900
+    distinct_addresses: 1
+artifacts:
+- rel: documents/limaohio/2026-07-30-commissioners-approve-google-data-center-sewer-design-change.limaohio-print.pdf
+  sha256: c278aa62b4474d96342bf7a0a59e77457996b6d86d0679d9744491b6cedea89c
+  bytes: 1381900
+  media_type: application/pdf
+  redistributable: true

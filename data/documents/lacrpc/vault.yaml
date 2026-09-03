@@ -1,0 +1,394 @@
+meta:
+  collection: documents/lacrpc
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 76
+    bytes: 322065529
+    distinct_addresses: 73
+artifacts:
+- rel: documents/lacrpc/2023-final-IDREGS-with-dates.pdf
+  sha256: afc48562889b3819b56f1bb84d6ec990d8a563c2f227baeae6f530e9bc243243
+  bytes: 303893
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/2040 Cairo Comprehensive Plan (PDF).pdf
+  sha256: 69f8e4574fd0301e031d40167d5710a7fe7099fc738fd762d8debd19e2ca4cdc
+  bytes: 28487016
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Allen County Access Management Plan December 2024 (PDF).pdf
+  sha256: 5c337cd912898633f26f2a95d2a30699876bbd5c8806f29e322b2bca5e0feae3
+  bytes: 4472958
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Amanda Twp Zoning (PDF).pdf
+  sha256: 0686567f04e3c930a389fcc76c8a53ac5d673788e6ec0dadb4af1004b0a1811e
+  bytes: 2229094
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/AmandaFINAL24_202602051230309488.pdf
+  sha256: b507a785ed3e290315eba89a79054f1434c17287fb91343b3a15390aac307d1d
+  bytes: 8584514
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/American Township Comprehensive Plan (PDF).pdf
+  sha256: 3865eca1a3896ed742456cf8ccfbe8948af59814490f9363fc7afd5cb5c96764
+  bytes: 28615683
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Auglaize Township Comprehensive Plan (PDF).pdf
+  sha256: 2789e3fbaba754dd2162c910a40edb51f37022ead8a1f5b0a801f81cf3173854
+  bytes: 13032428
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Auglaize Twp Zoning (PDF).pdf
+  sha256: d518446f13576eafac39421bc3a2a08e0098f620ae843e86727402dd7e2d394b
+  bytes: 3392471
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Bath Township Comprehensive Plan (PDF).pdf
+  sha256: 16d8218d7461498ff307003cf95ff4c19f418395cb6bc3aaa7f5228250afaa5e
+  bytes: 16284165
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Bath Twp Zoning (PDF).pdf
+  sha256: 04273580e104e9803ed3b3c53db83beac8fd79960e06a0c6a6541f5bd85bd4f4
+  bytes: 1734825
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Bluffton Beyond Tomorrow Plan (PDF).pdf
+  sha256: 0fa019b71d8f7034044fe957f7412cb34496bb70998089133c80bb8b28246598
+  bytes: 9584222
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/City of Lima Vision 2040 Plan (PDF).pdf
+  sha256: 3c1e5e24ea409a5752491386d27ed45f6d840510de27333833e5769ade928f12
+  bytes: 24938209
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/City of Lima Zoning (PDF).pdf
+  sha256: caafdba6ffef20a297f243976207ab91027f874d9eed47b7c2354dc338e503c2
+  bytes: 3470461
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/February 2026 American Township Zoning Resolution_202603191409369887.pdf
+  sha256: 439ebd3b15f81609c36d8d3236eda460aa24e75c9c71c97b245221e86bcf091b
+  bytes: 4278500
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Harrod 2020 to 2040 Comprehensive Plan (PDF).pdf
+  sha256: c3a5c49d3ca9a1e59cb2e51504f8e1a59c2cf8c78e505b2096089fb6ad6e23f1
+  bytes: 13634050
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Jackson Twp Zoning (PDF).pdf
+  sha256: 78f72f184a4c1f957060f629f056be7f0fdb2534659cd089e0ff3b6841190e7a
+  bytes: 2531355
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Land Division Process Brochures (2023) (PDF).pdf
+  sha256: e1e6ee1e01d6b646afb39156057ee9b1ead612405fa7d4219c130e00d37f0602
+  bytes: 639747
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Marion Township Zoning (PDF).pdf
+  sha256: 34a4163cc5fea90c5674f4724f1adcecb18889ba2f8e0398d8e0000e63760b51
+  bytes: 2832175
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Perry Township Comprehensive Plan (PDF).pdf
+  sha256: 78d15173d13038c85954b026f8634e8c5622c9fa3d0e828a1e55885b875916fb
+  bytes: 43474204
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Perry Twp Zoning (PDF).pdf
+  sha256: 5628a36a78ca0bf855ca83375baa988f0ace6df6b89f382a9f27db3d52571a38
+  bytes: 2003140
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Richland Township 2040 Comprehensive Plan (PDF).pdf
+  sha256: 5f5e99da110daec9d4c9567492c55b99849ae496a5258df93893b8333ee52245
+  bytes: 13252092
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Richland Twp Zoning (PDF).pdf
+  sha256: a1afac765c61294e6e840a5c30b48d39cf0263842985e7c93c77c75655fc613f
+  bytes: 8360893
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/SWMSC-Regs-Final-12.1.16.pdf
+  sha256: 023edbf0b4110a953cf769648374dc67c555fe0861aa0f9b1801a65a23fe92cf
+  bytes: 532881
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Shawnee Township Comprehensive Plan (PDF).pdf
+  sha256: c6cbe29726c580275456defb0858d5da8eaad4fe4d63fc7cbf3d5e89d7159244
+  bytes: 6699970
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Shawnee Twp Zoning (PDF).pdf
+  sha256: 399c95dda43603c5e6ed5d57fb45a4c5a454ce23c7dc2d2e44b0ebb18b7deea0
+  bytes: 2916396
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Spencer Twp Zoning (PDF).pdf
+  sha256: a763cad854bd039a94ae39fdd4399bbd2ddee7ca8cc927598e4d91baa462b7c8
+  bytes: 2583338
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Spencer-Spencerville Comprehensive Plan (PDF).pdf
+  sha256: 78b7b65c71d98374869c1bbdfd4e9fc63b5de523cdf057ae5671f146904d6edd
+  bytes: 16738812
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Subdivision_Regs2013.pdf
+  sha256: beda389066f8c2ef3e4c8146109fa8c3340e6a4bb48b7caff41ce11fd82fa845
+  bytes: 2982097
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Sugar Creek Township Zoning (PDF).pdf
+  sha256: a7ad3c3babbc55bddde6c47a33d03c212060df0cbe84bd0e12f54bbcaeab1965
+  bytes: 4158336
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Township Trustees and Fiscal Officers (PDF).pdf
+  sha256: 92f8bbde54914146d9e4e38bc64e3e993bac2bf74379eebb89439cc4bf2f95bf
+  bytes: 55684
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Village of Beaverdam Zoning (PDF).pdf
+  sha256: ee188be11cf618c540a45402112a72db6b1496209849438493e66e01836c2bc1
+  bytes: 11083326
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Village of Cairo Ordinance 388-Zoning Ord Updated Oct 2025 FINAL.pdf
+  sha256: 62fbd2372b62ccfe3890292758a9a69cf4ef76ea1faa75d6aaa14c8040ae5004
+  bytes: 403740
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Village of Elida Comprehensive Plan (PDF).pdf
+  sha256: 08730106b3bdbbf669c1bf6d0ff7abe8d6da5472e565b66ad23401a86405e1fe
+  bytes: 12346324
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Village of Lafayette Comprehensive Plan (PDF).pdf
+  sha256: 237eb78e17e7a38ae24c978bf97e57647f5d119635ef1799d73ac58d4cdcc5f2
+  bytes: 16181067
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Village of Spencerville Zoning (PDF).pdf
+  sha256: 24f87f7ce4db14b5838dccb52820aed1bf649ef355bdc07f530f2856ace6c191
+  bytes: 398086
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/Zoning Inspectors (PDF).pdf
+  sha256: 9687a4c008e4905cffae72b91f10b7fc308250fec82ae05220bcda5ef4123a88
+  bytes: 114717
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260113 Minutes cancelled signed.pdf
+  sha256: 870873a911e2b21e40c8594977f135bb5f08d7b40a05b30686237e20c3a05d04
+  bytes: 20484
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260115 CDC Agenda and Meeting Notice.pdf
+  sha256: 550bf9f43594ce7adcd8c6c0ad6ac71aab182072d907ae136e38dae00ca2ac9e
+  bytes: 174564
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260120 CAC Agenda and Meeting Notice.docx
+  sha256: 92137de79b8a8e08b1c8f5041c777271ca2d0734c3792104565b6ab4cd5b5492
+  bytes: 304939
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260120 CAC Agenda and Meeting Notice.jpg
+  sha256: 5b689e68981642f68aa2ea8252a638aa39355443dcb0bd2a7be35a90953f934e
+  bytes: 805008
+  media_type: image/jpeg
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260120 TAC Agenda and Meeting Notice.docx
+  sha256: 292c9702e8aafdf9fc832ea9a4cb7e76135f551f3510af2054acb9e8f13b9061
+  bytes: 305756
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260122 EC Agenda and Meeting Notice.docx
+  sha256: eefb6fe0f58a74c92cd25fdbd48d8f098fd6efc8e609a96ee8c38cc2ed1af0fa
+  bytes: 304966
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260122 TCC Agenda and Meeting Notice.docx
+  sha256: cda2dad5c9d3595f564a7dabfcc2d4b4154e457e349178370bc56281eadc9e59
+  bytes: 304983
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260127 Minutes cancelled signed.pdf
+  sha256: 3c573971033ed988c6b7ca63c97debd60505d35e28bb9e6efbff9e6f91ecc58b
+  bytes: 41661
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260210 Minutes cancelled signed.pdf
+  sha256: 9cb534ee38bdabaf90831dce4b7cecbe1b4973439cf20ed4c41a9d60afbbeed2
+  bytes: 42456
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260224 DCC Agenda and Meeting Notice.docx
+  sha256: ab08836b0246c3072f21f9ac3efd3b6dcd6d44e5c3254fe9eb4a26f52c2794e9
+  bytes: 304263
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260224 TAC Agenda and Meeting Notice.docx
+  sha256: b5ce8789cd63dccf79ad0b0a5d5758e9f35769fa5cc572faa50df935915aebb7
+  bytes: 306161
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260226 EC Agenda and Meeting Notice.docx
+  sha256: 33c2379bd9ed2b4042b7d51a4243a4219cf41f039fc511e5495eb65d27a30d05
+  bytes: 305349
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260226 TCC Agenda and Meeting Notice.pdf
+  sha256: f9626eea20021457bd38f0e06a6b87a068fd943a72536157717168db5ff8a1e5
+  bytes: 284347
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260310 DCC Agenda and Meeting Notice.docx
+  sha256: 25661c378f0e34c3a456f854a6c5250a73a21467a1c7c04783e08701e6082477
+  bytes: 303841
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260326 EC Agenda and Meeting Notice.docx
+  sha256: 86a7b010780effaffa14ef32be0ad5503b80f46eeed8c5820dd72469474e3a99
+  bytes: 305317
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260326 TCC Agenda and Meeting Notice-cancelled.pdf
+  sha256: e28eecd13f48f39ea4b71ab8639943e2809cb95b99dfbad2b2fa3793b6a021b2
+  bytes: 250462
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260416 CDC Agenda and Meeting Notice.docx
+  sha256: 3bbaeda63e3ddacebfa6b1ac9c80ba4cdd30f2c45215ef2104ff871efe6d87d0
+  bytes: 303815
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260421 CAC Agenda and Meeting Notice.docx
+  sha256: b7cfeca02da9bf6570523813152f5732e4b8ff263c3d322b9cc766258e797a18
+  bytes: 305545
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260421 TAC Agenda and Meeting Notice.docx
+  sha256: bc53c630478df364580caa833a94bbcc83ccb632832931de1bdb27cc93684ec7
+  bytes: 306636
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260422 AAC Agenda and Meeting Notice-cancelled.docx
+  sha256: 40821496432e7139d3f398c6e25b960883cf4e74fdd49d1dd25eedc7ce21cb8d
+  bytes: 303343
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260423 EC Agenda and Meeting Notice.docx
+  sha256: 53cbcf3a32196ad3452c8f00cc888b062ffbf85807934449ce97b93abc2aedad
+  bytes: 305305
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260423 TCC Agenda and Meeting Notice.pdf
+  sha256: fe8147f207e493e907febd56262326d54114a224aedde6d1b5fa521bb775ed66
+  bytes: 284235
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260521 EC Agenda and Meeting Notice.docx
+  sha256: 8be997bd53a5546e7526004fb27cbd63271279fc37484234b94a248604c83b5b
+  bytes: 304847
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/20260521 MPOPC Agenda and Meeting Notice.docx
+  sha256: 78daa1050ebf49950cdbdbe2df57e8c8a92567c9b527f3b54e048c381320eb75
+  bytes: 305388
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/_01132026-261.pdf
+  sha256: 870873a911e2b21e40c8594977f135bb5f08d7b40a05b30686237e20c3a05d04
+  bytes: 20484
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_01152026-242.pdf
+  sha256: 3a05e834cf569df859edfebc7ae6cf2331f7fc6efde5418f06b7ce9c46dd9648
+  bytes: 92868
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_01202026-264.pdf
+  sha256: 7ce9692175247d56c1f0c00f2f5f7cd1eb2f82b3a70f0e9d473a270aed42454f
+  bytes: 131617
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_01202026-268.doc
+  sha256: 5954c0c398943941089529405e8bba0a5eba3d3d3a6b37a571b65446ce9b38c2
+  bytes: 91136
+  media_type: application/msword
+  redistributable: true
+- rel: documents/lacrpc/meetings/_01222026-253.pdf
+  sha256: 8ec06f5faa23dd6e77befd7fd781aa03d52d3f0801b1ebc98614b6d52cb433c2
+  bytes: 185062
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_01222026-257.pdf
+  sha256: 889d2465b47148141d4b3eafbc0f0fd718c7e89b4fb6e11c4dae13e14d938503
+  bytes: 172386
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_01272026-262.pdf
+  sha256: 3c573971033ed988c6b7ca63c97debd60505d35e28bb9e6efbff9e6f91ecc58b
+  bytes: 41661
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_02102026-266.pdf
+  sha256: 9cb534ee38bdabaf90831dce4b7cecbe1b4973439cf20ed4c41a9d60afbbeed2
+  bytes: 42456
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_02242026-259.pdf
+  sha256: b0c68cbf11c3b72474c0c6e20618a7696383c4ba595fe06f708d9729e0dd38f8
+  bytes: 100450
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_02242026-265.docx
+  sha256: b0ceb5901018e612713c60a625d816a9b7154d904440050b1372d4c42469faaa
+  bytes: 58367
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/lacrpc/meetings/_02262026-254.pdf
+  sha256: bc765fe9954b85c78b897e64bbdd511ceafe97a751c2d8f9c37dbc06b9d6bceb
+  bytes: 185072
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_02262026-276.pdf
+  sha256: 45d1856f2c3b3ec7cea48bbe0434e296d5611f7dae9410199db6043affdda154
+  bytes: 160722
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_03262026-271.pdf
+  sha256: 084996c799f6671e52ef75d77211b8b676a37e65a60b133d83d8660142fd03ef
+  bytes: 209789
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_03262026-277.pdf
+  sha256: d63f905a8f193e130543368ab83ddea6a2f0e6ca71dca03f4710e28dd51b4409
+  bytes: 19352
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_04232026-272.pdf
+  sha256: 0c6354fa311767a5cf8a58b1f5eafcc165274c1a38084ef91109d840f2a550bc
+  bytes: 270960
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/lacrpc/meetings/_04232026-278.pdf
+  sha256: 455cb7ed3591f5f25120c15b03e048ca33d7ad19d4ddd5fe096b25dac4be80a0
+  bytes: 168607
+  media_type: application/pdf
+  redistributable: true

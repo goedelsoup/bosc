@@ -1,0 +1,79 @@
+meta:
+  collection: documents/van-wert
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 13
+    bytes: 52985053
+    distinct_addresses: 13
+artifacts:
+- rel: documents/van-wert/council/26-05-028-draft-ordinance.pdf
+  sha256: 039823955abb314a99f96cab530d30292aec5bd37fdcfe82b6460aa78ef56d7a
+  bytes: 671600
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/26-05-028.pdf
+  sha256: 8b50dfac6936c1699fbaaf83e11a9336a53a276b0c474f4c9d3b535c94b186bb
+  bytes: 826996
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/26-05-029-draft-ordinance.pdf
+  sha256: 736be373da1a881a132efd6adca07465998e8f05266e4792574a17eba82ceccd
+  bytes: 716829
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/26-05-029.pdf
+  sha256: 5ce738d193586429fdf9551b65a01016d072c9db16bfedb9beac9262aee0d82b
+  bytes: 207499
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/26-05-030-draft-ordinance.pdf
+  sha256: ebb37f7cb5a3557338e1975d5c94c9315e2adf5e34dfd9818c8f5416e06dfc1a
+  bytes: 737133
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/26-05-030.pdf
+  sha256: 3bf6b2f655651aab753cf80984c3652d441b844cb2aa3ea5292e3e757b65a85c
+  bytes: 862033
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/26-06-034-DRAFT.pdf
+  sha256: 4db9d9aed8aa911147c3ea0dce190b41a22f75a1f37712ec98e69ed8dbc57b51
+  bytes: 219070
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/4.27.26.pdf
+  sha256: 7a4cae33047c75262791b8ae6663a5acb8930e2f6df7c6762c17c4db4870b61a
+  bytes: 3114560
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/5.11.26.pdf
+  sha256: b28c9490841817a8dea314d11128ca1f031dc49bc924934cb2b6445bf705fcb5
+  bytes: 7946103
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/5.27.26.pdf
+  sha256: 50b6ab83c976a82b04cb9d44bcd6e4ba2c7fad6037c215ff7ce16a05765634b8
+  bytes: 2430572
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/5.4.26-Public-Hearing-1.pdf
+  sha256: 6b3ec8cba8b4bbcb162a1ef780bcea1dfe16b7e7dd845c37523ca82648f285e1
+  bytes: 28721870
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/6.8.26.pdf
+  sha256: 35f415873cbac854f47357f5601f0c352a4a4884fe54fca524e9b7d3d7e59512
+  bytes: 1692179
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/van-wert/council/7.13.26.pdf
+  sha256: a29341a89c7b36ea1d24c2afb737d0d4c8dbced99154ba6d4b2d8b7a5eb2a71b
+  bytes: 4838609
+  media_type: application/pdf
+  redistributable: true

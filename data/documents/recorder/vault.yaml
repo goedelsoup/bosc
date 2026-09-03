@@ -1,0 +1,49 @@
+meta:
+  collection: documents/recorder
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 7
+    bytes: 8944291
+    distinct_addresses: 7
+artifacts:
+- rel: documents/recorder/bistrozzi-deeds/202508130008300.pdf
+  sha256: 5cf40f7e47f11c0d2a71357cfe64bc816b69b03de2f92755bf0863d61d8e18ce
+  bytes: 582100
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/recorder/bistrozzi-deeds/202508130008312.pdf
+  sha256: f5025387229fe504c557e1b680455fc02e765298a9d28915fa152db345b15538
+  bytes: 194769
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/recorder/bistrozzi-deeds/202508130008316.pdf
+  sha256: 1ed40d6fa84daf14237bd5de5314b953ae811d8eed5a5e259734b8dc063f4b87
+  bytes: 161608
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/recorder/bistrozzi-deeds/202603040002064.pdf
+  sha256: 51d2b04f91a8cdcd3c8dff53c64f717cddc8b46017f525de576eca4afbe84861
+  bytes: 125824
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/recorder/bistrozzi-deeds/202604210003890.pdf
+  sha256: 1e4b9ed99f7de72f1ad15eb3773ba9169919ccd91d083e3d668013b87d65a5b7
+  bytes: 1238275
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/recorder/bistrozzi-notices/202606250006699.pdf
+  sha256: 855cca09d86e15b4927bb09004c1d34b3b2aaf6d4ea6cf363c3b61c7943651ea
+  bytes: 6437675
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/recorder/port-authority/202511180011830-amazon-deed.pdf
+  sha256: f8c62d97341ba7e4a367a3b696da4df691c7d80622ab287376cd0cbdcbd6d5a2
+  bytes: 204040
+  media_type: application/pdf
+  redistributable: true

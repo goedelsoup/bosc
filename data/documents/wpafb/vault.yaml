@@ -1,0 +1,29 @@
+meta:
+  collection: documents/wpafb
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 3
+    bytes: 3700951
+    distinct_addresses: 3
+artifacts:
+- rel: documents/wpafb/ccr/2025-Water-Quality-Report.pdf
+  sha256: 3d82a6b53b03d422b74a308c07c0f095c0ce63c78683eb53a0bea63f987c0ffd
+  bytes: 1276985
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/wpafb/cercla/wright-pattersonafb.pdf
+  sha256: 67899e9e1f782e55f547207c1fccc292070b127ca2fbfb6158f6aef0cd37162a
+  bytes: 2385648
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/wpafb/ssa/SSA_greatmiaminorth_FR.pdf
+  sha256: ed935b037a721d5de753db5051a3b0ddaddf46e4c4864217bd6d0ff5405d5c3b
+  bytes: 38318
+  media_type: application/pdf
+  redistributable: true

@@ -1,0 +1,39 @@
+meta:
+  collection: documents/regulatory
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 5
+    bytes: 4832959
+    distinct_addresses: 5
+artifacts:
+- rel: documents/regulatory/OHC000006.pdf
+  sha256: 132d14e8cb60937c8acf2146fddb14981724fe064986e71ef4ecda4bf95b826e
+  bytes: 2361940
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/regulatory/OHC000006_RTC.pdf
+  sha256: 07d1af90c932273836158409ce209e47979acadfa21e60f0430b06968a38067b
+  bytes: 1266303
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/regulatory/allen-co-cwa-consent-decree-1996.pdf
+  sha256: bc1e724cab30d57f778443651ee59f36cf23f8f3bb44fa8e81fee223232983f8
+  bytes: 765476
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/regulatory/allen-co-sanitary-cna-2005.pdf
+  sha256: d488b71963266ac3f651a35f62b6fa09298154c1848ba67681c4791dc8591a24
+  bytes: 144654
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/regulatory/west-union/Village-of-West-Union-Consent-Order-1993.pdf
+  sha256: c156e07be9256c287469acb9dbfadabc285627f184f068aba5d90465df0b2b20
+  bytes: 294586
+  media_type: application/pdf
+  redistributable: true

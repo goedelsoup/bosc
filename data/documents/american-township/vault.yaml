@@ -1,0 +1,259 @@
+meta:
+  collection: documents/american-township
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 49
+    bytes: 896799
+    distinct_addresses: 49
+artifacts:
+- rel: documents/american-township/meetings/1-12-26 minutes.docx
+  sha256: 1b85d2f87a4a777d6d6e4da11c2b32b7f219d38d3f4be65955d5364ddbce8c67
+  bytes: 18561
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/1-13-25 minutes.docx
+  sha256: b980ec3e3daaed5a8168319e83770f49e0cb0398da3c772950655bde012eaf37
+  bytes: 19403
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/1-2-24 reorganizational minutes.docx
+  sha256: 5fe7fa7f15efe2275ba6840a1e56ac2b0e5bec4cc7c4ed789a530e577c0380ae
+  bytes: 17813
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/1-2-25 reorgnizational meeting.docx
+  sha256: a9562eeac859422c61f226c807336456d1d01a102504bdd4c8214024063f43c6
+  bytes: 16079
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/1-2-26 Reorganizational Meeting.docx
+  sha256: c1ec05bdeb8b756fd20a6ddcdb43580e87cdf09df17a885d0bdd4698f764bfee
+  bytes: 16925
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/1-27-25 minutes.docx
+  sha256: e9c82e3c6728b9babe832688015d3504ddacc1e14e0b31db38823c26868be3f2
+  bytes: 16135
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/1-29-24 minutes.docx
+  sha256: 08f1d9ec28b68fae9d97f748a4064573b86d1a641fa882b24e75e946469c8c30
+  bytes: 18106
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/1-8-24 minutes.docx
+  sha256: 6ee28062908f49796fa3a153895ac0cbf9af5abf93d22fb5d9e81d4ccf4208b7
+  bytes: 17455
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/10-13-25 minutes.docx
+  sha256: d20e5b1809d5abed8cdc035ad62101209b87733a19132030543b3bd0b79c9b94
+  bytes: 16420
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/10-14-24 minutes _1_.docx
+  sha256: 3a3c9448406f84287f771ff319295cc81fecca43b124e9aecdb06418081311cc
+  bytes: 16968
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/10-27-25 minutes.docx
+  sha256: 2676840288956f36b09bbb1c27c53e45d1f8a98bf6fa93c1040511d3767a034d
+  bytes: 18247
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/11-11-24 minutes.docx
+  sha256: ec55f2e42551eccbc079ff09beb4f78eedf0fe8fe3b9eb7174f8038191295594
+  bytes: 16852
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/11-24-25 minutes.docx
+  sha256: 630eb8f31b87044158529d3818d8b6764e2117e5f357c6ffd2feab5d57a76011
+  bytes: 18225
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/11-25-24 minutes.docx
+  sha256: 28b8c76c040d6287a13be017b223ffd2908eaf3b6edf6e25830517fa6d0b4a94
+  bytes: 52037
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/12-8-25 minutes.docx
+  sha256: 8fd3515d0f4ce564ebdb8b523a7c2bf41867c1466cc5ff19cc0018e20d4434aa
+  bytes: 18976
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/12-9-24 minutes.docx
+  sha256: e5e34f8ea749f1e5764b2d1ec37c8a9d6ea2a5aa25a6e6b6807ebc3ec01dfa63
+  bytes: 20049
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/2-10-25 minutes.docx
+  sha256: 969d77c0fde1fb30ed518b66ecc6c933c5d42329e88559d9a41b85d2479be25c
+  bytes: 16455
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/2-12-24 minutes.docx
+  sha256: e30582e302eff93825e57170f01ae4f00202c4b6e465528c7a2bb0f9b9019209
+  bytes: 16540
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/2-23-26 minutes.docx
+  sha256: f1af7130f3c5dcfdfc3ea4e7f9e957fc6fe5754b4de4607e1868c8fccbd5dc18
+  bytes: 17821
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/2-24-25 minutes.docx
+  sha256: daec04944901839197cd3292def41cda63d98f61281cbefd66d9d18d371d4222
+  bytes: 17312
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/2-26-24 minutes.docx
+  sha256: 1caf135a3494848855e4ad06864ff74617205b0b423aaf1d15377052018010a3
+  bytes: 17817
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/2-9-26 minutes.docx
+  sha256: 892905b01ff2a915722b96b147072c08b08a992d171f90c56d102bfd3db6ab96
+  bytes: 19191
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/3-11-24 minutes.docx
+  sha256: 4e229e2e3c32c9a3e92ada2300b2dc6ee1e42d26b392acab98039b9c3b55b448
+  bytes: 18341
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/3-11-25 minutes.docx
+  sha256: b5bfbfe17aed4b3cea071125d9a4fa4c8fcea9dd545c80eaae4fd17aa55f47e9
+  bytes: 18569
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/3-25-24 minutes.docx
+  sha256: 095f074caa744a42dab9573a734bdddb15b4b749c4422b3d130816686de42a65
+  bytes: 19026
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/3-30-26 minutes.docx
+  sha256: e7b06e557d8621acdd2e714d24cfc73cb5bad01a56fc11ca7501d27da94f8e55
+  bytes: 17893
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/3-31-25 minutes.docx
+  sha256: 9d237c6bac9e47de93dbd6c410afdf0acab8e7b6f1e24757fbc7c3051a51dac8
+  bytes: 17677
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/3-9-26 minutes.docx
+  sha256: 8ed00ee4738084834e3f09251239881385559ff2b27c9c677e45ec7645ca6ea9
+  bytes: 20329
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/4-14-25 minutes.docx
+  sha256: 6060ea1b06e74a7199321601b59fec8837b8e674785844237771adcee8c63c34
+  bytes: 18574
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/4-28-24 minutes.docx
+  sha256: ccb72ad972d2a2224c46dc8e17c05588ba2e0545d62c72dc8dad0465518bf2e0
+  bytes: 17298
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/4-28-25 minutes.docx
+  sha256: ef9b26f830d9cd376f58e793812b953e2a47dbe5acf754b627a9e9024bac9c1a
+  bytes: 17438
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/4-8-24 minutes.docx
+  sha256: a272bee8b2795763a63e6515982d1cba5bd6b487f8579de42513c822824488f4
+  bytes: 16718
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/5-12-25 minutes.docx
+  sha256: 383059fe5c79fcaaf1c6524160cae5ae269c920e7bffc32054591fcf329030ff
+  bytes: 17191
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/5-13-24 minutes.docx
+  sha256: dac50132d40ad34a3bf34e677ddea5bc6677affbd98d5b9e1fe88a2b829e3c9f
+  bytes: 17772
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/6-10-24 minutes.docx
+  sha256: 37eb4f312d657fb66880c55f4a64666f4fe81cb2d52e08df2f6e115e5ce566c3
+  bytes: 16412
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/6-24-24 minutes.docx
+  sha256: 88908d34032fb7896f74f6f641220215d81bd07f64ca22d77f49a5e73bbb7bba
+  bytes: 15546
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/6-30-25 minutes.docx
+  sha256: ac58f8b87ff8f343a1774d32a1838709cb2e3c0d0a97339617612ef1ccebe597
+  bytes: 16845
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/6-9-25 minutes.docx
+  sha256: 1e6c3854761ad7c007a9676e6e10f2109152c680330d4259bd353f9549f3f1f6
+  bytes: 18236
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/7-14-25 minutes.docx
+  sha256: 066125bef3a0f5b2dec84ceb15f580c0ebf62c54a1f1900036ad03464230c31a
+  bytes: 18740
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/7-18-24 Budget Hearing Minutes.docx
+  sha256: 3646132c2d851ceb73b18d56e5909c9597258576b7d77b1285717c11cf6369da
+  bytes: 14825
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/7-29-24 minutes.docx
+  sha256: 616ce40edb44e2bf9d986adcd4fd2ba7396111f552eed3efb492bfdb0b620b82
+  bytes: 17071
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/7-29-25 minutes.docx
+  sha256: 58b28d9f116f59844f6ae508cc99a571ce46e18f99f624e34628351e655f1c46
+  bytes: 16802
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/8-11-25 minutes.docx
+  sha256: d5be7af8daf6f8eb2fa0494fe86f02cafa1e0d283a4412b83c6241612977ba36
+  bytes: 17639
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/8-12-24 minutes _2_.docx
+  sha256: febaf9252d857dbccba347ebde6050db294331375d7cdb986f2b92a7c32d77e9
+  bytes: 17043
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/8-26-24 minutes.docx
+  sha256: 7a9ce461226cb0ece10a92748a6ef2cb44e6ef5d593e22c4eb6069b252658aa5
+  bytes: 14619
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/9-29-25 minutes.docx
+  sha256: 3f41e2a61c0d6429a9957a24e855ca209d432b926c4e8109ae765009406e220e
+  bytes: 18558
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/9-30-24 minutes.docx
+  sha256: 7c00921c3f72d6c6b7113302c571e0161d6c302015a07942ebf0a8a73e86c35b
+  bytes: 17939
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/9-8-25 minutes.docx
+  sha256: ba5afd8c489cc4fc2d1ab9e7e0c2e54a00293e1cc3eef77cf2c3224d01e82708
+  bytes: 18287
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+- rel: documents/american-township/meetings/9-9-24 minutes.docx
+  sha256: 28bba41f3281901e3bd3c0cfe08c3aa268092906a263a15c8ece4b6571cbb91e
+  bytes: 18024
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true

@@ -1,0 +1,24 @@
+meta:
+  collection: documents/ottawa
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 2
+    bytes: 472837
+    distinct_addresses: 2
+artifacts:
+- rel: documents/ottawa/drinking-water/2024-CCR.pdf
+  sha256: a931709d021a61138c5c56ebbe819c57614339024eee6dee3a471819e19aefb1
+  bytes: 385881
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/ottawa/warn/RKIndustries.pdf
+  sha256: b9030764e9c3e5808e1c4041e57106cdf2a14cd4c1c6b8dac5c21f27a5234e51
+  bytes: 86956
+  media_type: application/pdf
+  redistributable: true

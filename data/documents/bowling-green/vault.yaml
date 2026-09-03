@@ -1,0 +1,90 @@
+meta:
+  collection: documents/bowling-green
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 15
+    bytes: 21193681
+    distinct_addresses: 15
+artifacts:
+- rel: documents/bowling-green/commissioners/10032023.pdf
+  sha256: 2eef46dea0fe97c751c77dcf689409456288ca1c079555af8c9f0cf19a05e16c
+  bytes: 421228
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/drinking-water/2025-Drinking-Water-Consumer-Confidence-Report.pdf
+  sha256: 593623f81a124e47c151bc3a890c14c5741a199466470802c76ed53c66ec8d72
+  bytes: 148277
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/01072026.pdf
+  sha256: 54d4f5c0e4b9ab8db0043a241bd467d81e03af185d3848b2e696b2f379cef759
+  bytes: 224580
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/01152025.pdf
+  sha256: 02e9322554fc2912562d9fc3df1b8acc7b0c4f38f9fdf077079fd1956ea1368d
+  bytes: 232401
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/03292023_special_getzrezone.pdf
+  sha256: e1db703f7f0701ca520288737b0889f4b8783be0eb8efbe565d7b4c20d437629
+  bytes: 170839
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/05032022-special_buschrezone.pdf
+  sha256: 4bd2153f025d5dc24d8f85cf94b58d393095d3b8457190b0a617e69f619f6f0a
+  bytes: 167189
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/07072026_specialrezoning.pdf
+  sha256: ccc845dfff73b9972f3376f831e7fb6f4d4df80d16b338781e940cfca82fec3f
+  bytes: 304966
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/07192023.pdf
+  sha256: 1390f8b291ad4d048bfeaf7a4159656030b75de916e1ef51a2b1c0d7fa7da3f0
+  bytes: 211139
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/0909025_specialrezone.pdf
+  sha256: 36d33f3d655f0fc6509b8dfb61705bf34c28824a248928333088b23b292db15a
+  bytes: 110701
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/09202023.pdf
+  sha256: 93a637d43ed3e0151c0775b9fd479461929cae9a5f919207f06bcfa6d3a3b464
+  bytes: 211149
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/11202024_special_rezone_Busch.pdf
+  sha256: f66f192a4080fd6a7adf774ae7da4581c2e08e30af633803aee6a5adf8882465
+  bytes: 179027
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/11202024_special_rezone_STD1.pdf
+  sha256: 62784a1030345337a74225852218b6812f2a2a0d025988ab915f8f7de9316ddf
+  bytes: 162809
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/middleton-township/Meta-Middleton-Township-Letter-010726.pdf
+  sha256: 9955dd80d63488d3c66a70de629a7b6a01c19405ecddb2e181b000b327e6d856
+  bytes: 173132
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/planning-commission/June 2 2026 WOOD COUNTY PLANNING COMMISSION REGULARLY
+    SCHEDULED MEETING AGENDA updated 5-26-2026 at 405pm.pdf
+  sha256: 317b729870be34179cb60e8d860f213985a41c6c1fd694e2d16a52f40ca392cc
+  bytes: 18332068
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/bowling-green/planning-commission/Wood County Planning Commission Agenda 7-7-2026.pdf
+  sha256: 36041179815fbbb1bfa4b1908d9fa1bb4a631efb6222485713e7c003ed610c6e
+  bytes: 144176
+  media_type: application/pdf
+  redistributable: true

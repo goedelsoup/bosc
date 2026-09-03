@@ -1,0 +1,130 @@
+meta:
+  collection: documents/grid
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 23
+    bytes: 51445196
+    distinct_addresses: 23
+artifacts:
+- rel: documents/grid/aep-lyka-2026/Lyka_MapPoster2.pdf
+  sha256: bc4de8082ebdcbed674045cce2b10f73de98fc95e6e783c644b1b6372e7e715f
+  bytes: 140707
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/aep-lyka-2026/Lyka_ProjectFactsheet_V2.pdf
+  sha256: 6596bbe0101dce7e1e85553d1f090e708c71aa99c3bdc9603ca9021621938254
+  bytes: 2759937
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/bowling-green/TE-2026-Electric-Service.pdf
+  sha256: 5a9c6a43fdff0fcdc3b0272a2cfbc93a3cbc2039c8606180d0a82441d48117e1
+  bytes: 8586625
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/bowling-green/eei-large-load-projects-and-tariffs-july-2026.pdf
+  sha256: 1321631386fe7ecca088d851cd7b29927ffeb3f6f8e204a64f9c1bda6bca2072
+  bytes: 410434
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/bowling-green/power-siting-board-ohio-020326.pdf
+  sha256: 93fee1e08ce049a4d423bd5d3ea76446b9e48fd2f00f1e2e55b0c7f829cc8d80
+  bytes: 2523708
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/findlay/20250916-item-04f---aep-large-load-request.pdf
+  sha256: bd57286c07eef113588fad5b1f147b2aa7ec820bbcc8184baa16e2f39298e652
+  bytes: 2276472
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/findlay/Ebersole-Fostoria Center 2 138 kV Cut-In and Rocky Ford-Border Basin 138
+    kV Tie Line Project Construction Notice.pdf
+  sha256: 4864c9d85bbab573441c00e5ef1fe7d9cdf458f3daf6fde57f75adbf25de4d02
+  bytes: 7417796
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/findlay/July_24_2026_AEP_Ohio_Tariff_Book.pdf
+  sha256: 961432b69f11b809b35f9f64dfbfc9b106d6a7b62a17b57a42ad81ca29d63740
+  bytes: 11336536
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/findlay/Rocky Ford 138 kV Station Project Letter of Notification.pdf
+  sha256: cc9b7a7e0fc0c83269dc0523f12edeab9ddf106ad7e2a2279491f7e4b7d5275b
+  bytes: 7698712
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/findlay/Rocky Ford 138 kV Station Project Public Notice.pdf
+  sha256: ba97d5642f53ac408ff75a605e8e30ba0d86ce6ef7fd21a4547f64ba3888ee81
+  bytes: 94018
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/pjm-202c-2026/doe-order-202-26-32.pdf
+  sha256: 06de9a956025fe6519e26ac6f2922432423ce830d3f5f04a149b91cf92644546
+  bytes: 357058
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/pjm-202c-2026/doe-order-202-26-33.pdf
+  sha256: e97db5c2df38ba7ccb3d7dda1f478d4e0dc6c3e6ae5103df79dc130fd82fcad7
+  bytes: 622776
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/pjm-202c-2026/pjm-application-202-26-33.pdf
+  sha256: c724f785fcd5f735c456b5e10458dc290e1cc3b7ae8e0882c5f93d3d5b2fafcc
+  bytes: 156301
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/sidney/4184081.pdf
+  sha256: 7bb20cb1fcdd88b71e96c27c87851746be29858ebfd870876e12403f624ebf95
+  bytes: 10261
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/van-wert/VanWert-Haviland-Adjustment-PublicNotice.pdf
+  sha256: aaaedc1b1975f8360bab78eb2e6177cbe00f6f8df5a9968ee6276ea5aea2bd47
+  bytes: 144481
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/wilmington/20260203-item-06---dayton-supplemental-projects.pdf
+  sha256: 100c95702a59a431fbee8b187d8c6b07976e0471384fd720584a82c1d4188bc9
+  bytes: 1293704
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/wilmington/20260508-item-05---dayton-supplemental-projects.pdf
+  sha256: 50da0adc5d838dc22fd6f837b1d51baa627b15d970dccf081a8fc6c4f2e79c81
+  bytes: 676207
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/wilmington/20260707-item-11---dayton-supplemental-projects.pdf
+  sha256: 82a2f364e21d91ffaaf82ddd8e43cc94b12bcaede8c1e171c178abff7952e791
+  bytes: 1085941
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/wilmington/2d28e900-service-of-letter-notification-fayette-to-clinton-345-kv-transmission-line-project-puco-case-25-0871-el-bln.pdf
+  sha256: 5e898309523426d2ea7bbf540445ffea8ebcc7e94287c9ee01c836fcf19cfe94
+  bytes: 686469
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/wilmington/AES-Ohio-Fayette-Clinton-Project-Need-Oct-25.pdf
+  sha256: b8a1ddb7d61ffc6a925d0f0b50ed3b37d7dced3ad827c244fdc962cd2f5219d2
+  bytes: 2339215
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/wilmington/FAQ-Fayette-Clinton-AES-Ohio-Nov-2025.pdf
+  sha256: 88f15a72481ed690cd8401c7fc8b1230113e7b079920955ef64112913e6f23c6
+  bytes: 154281
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/wilmington/FAYETT1.pdf
+  sha256: da104eaba092684aadc9591291cb6e13d56792cb4fe2d6e5bc86293b4b17c418
+  bytes: 98827
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/grid/wilmington/fayette_to_clinton_345_kv_project_fact_sheet.pdf
+  sha256: 851109ccc6edba5f94a1a68972fafa2badc2d5d00b27130bff500603e9aa4d75
+  bytes: 574730
+  media_type: application/pdf
+  redistributable: true

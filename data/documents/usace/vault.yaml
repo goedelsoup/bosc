@@ -1,0 +1,84 @@
+meta:
+  collection: documents/usace
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 14
+    bytes: 11662262
+    distinct_addresses: 14
+artifacts:
+- rel: documents/usace/west-union/Email Chain 1.pdf
+  sha256: 7edfb5aed4e17a0f77f6a2b74f47762d8fe1073552e4a0012286bd21fac2c4d5
+  bytes: 863073
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 10.pdf
+  sha256: 5ee6a6a2610505202ae268dda6cc5d134ea22e7502e6366809e3c5da327f1bb7
+  bytes: 1014910
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 11.pdf
+  sha256: 0d8315376cfac88a7687e0c58de178fbf30ed8ec20b9e044aa9b41d56b8cf5fd
+  bytes: 594237
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 12.pdf
+  sha256: b14c383ae00a3d8f48b3db758bed8d9da40a670594d694f94f76cb42f7914a62
+  bytes: 858629
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 13.pdf
+  sha256: b9b01481e888ac2ef8ce78d42a78091bf1a462f6fd9b9317718fe0ae08be4455
+  bytes: 908900
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 14.pdf
+  sha256: d3af155c3950e23a3d250c1a446c25b875b10f06d79f3fb4c1d5d345b934239b
+  bytes: 876948
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 2.pdf
+  sha256: e4e72cc2e18ed314c3afc408f596382d81347ed3af84ffee87b5a5f907f974c3
+  bytes: 875036
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 3.pdf
+  sha256: 281f541812ca63e476f7257a7dd30aa4277047f279ce059dda369635c1ae604c
+  bytes: 881096
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 4.pdf
+  sha256: 3e4eab79485e86599ad25ab8008c45ab4718afb5839dd6b87dbef420d9737863
+  bytes: 808521
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 5.pdf
+  sha256: 223cb01f9f2639d0f22e287a0073a3a3751665548676987eb61322ea4a80bb7d
+  bytes: 893301
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 6.pdf
+  sha256: ca125ad00b102852dba2ad59235600e85188aa0e4043961696b170d081bff29a
+  bytes: 857752
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 7.pdf
+  sha256: 8106d157c8c0f94d5695cfdaa60d8c1010dd8cc4f0144cc94271a3a6dfbd560f
+  bytes: 857749
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 8.pdf
+  sha256: caf55d3ef216a51720d6f0252195525c3e0bf6e298b73dd6804ef1006a377c2f
+  bytes: 522375
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/usace/west-union/Email Chain 9.pdf
+  sha256: 23f03c2fcb3fe9d9edbd37798fb3a1b1e58709ba0e39e85cf183bd70696cb29d
+  bytes: 849735
+  media_type: application/pdf
+  redistributable: true
