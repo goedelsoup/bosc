@@ -1,0 +1,24 @@
+meta:
+  collection: reference/usgs
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 2
+    bytes: 16485884
+    distinct_addresses: 2
+artifacts:
+- rel: reference/usgs/low-flow/sir20245075.pdf
+  sha256: 6051e97fb848bd31308dffbe9d0452c2e170275367b6223ebdad453474ba0f1a
+  bytes: 3329968
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/usgs/low-flow/wri20014140.pdf
+  sha256: 2bde8abe21a11bf7f793e5f6767e34f8663092919d8b727cdf09e29bccb45477
+  bytes: 13155916
+  media_type: application/pdf
+  redistributable: true

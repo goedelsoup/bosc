@@ -1,0 +1,89 @@
+meta:
+  collection: reference/allen-boe
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 15
+    bytes: 5715283
+    distinct_addresses: 15
+artifacts:
+- rel: reference/allen-boe/source-pdf/2024_GEN_OFFICIAL_CANDIDATES_MOST_POPULOUS.pdf
+  sha256: dedd8ca5d71e5e9232027c06cda749389ff1bfbbfeac9b672c0c807d785e3642
+  bytes: 81350
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/2024_GEN_OFFICIAL_QUESTIONS-ISSUES_MOST_POPULOUS.pdf
+  sha256: b960281b290ff50926eb89ce4618281cb235ee6c4a4de542c0852f83b132ea0e
+  bytes: 58602
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/2024_GEN_PRECINCT_OFFICIAL.pdf
+  sha256: 171fc942b94266aef82d10dc86e5b2b08f109915694ef5f037d78dc05a326e9a
+  bytes: 1051318
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/2024_GEN_SUMMARY_OFFICIAL.pdf
+  sha256: 33199d793bf88fb1afeff07624d9faeb5b14c529f8b678a7b6e1e3c12790e8d6
+  bytes: 25336
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/2024_Gen_Audit_Results.pdf
+  sha256: fa12981cb2fad26f1ae2e5a28c2992cb06e1e39208c47df5dbdf56190054a636
+  bytes: 442183
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/2024_SOVC_OFFICIAL.pdf
+  sha256: 90ebbe7337ef49ee0da519f56dcc29b72c7ade2361a801d9697dbae99adccbb9
+  bytes: 293513
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/2026_PRIMARY_MOST_POPULOUS_CANDIDATES.pdf
+  sha256: 46107484d68cb6dc0b98537127eb5900a8b1ea9ad91393f8a633fd94de256c97
+  bytes: 483857
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/2026_PRIMARY_MOST_POPULOUS_ISSUES.pdf
+  sha256: c7772dd59dfe37c7cd05c475c4a3b2a91e5327e8b91342ed672e8fc234b8e1a6
+  bytes: 74459
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/2026_PRIMARY_SOVC_OFFICIAL.pdf
+  sha256: d245279cc2f8c509eae68ac233d8fb7ccccb1302b165b04110461f9f45c441b6
+  bytes: 842348
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/2026_PRIMARY_SUMMARY_OFFICIAL.pdf
+  sha256: 5ba581c599fdcf5de21eb629db78a907a344939c8033bcba2c34a3040cf19e23
+  bytes: 45664
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/G2019_Audit.pdf
+  sha256: 54531c2836b9fa612c5bcad69b95dde07a507696e441be33835054ac02d8599a
+  bytes: 305286
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/G2019_OFFICIAL_PRECINCT.pdf
+  sha256: 498c1f6b2e5a89cdf7dac5d96b2b687769e96a11ab282aa69857eaa75c3a6e88
+  bytes: 480797
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/G2019_OFFICIAL_SUMMARY.pdf
+  sha256: 3e7a4ebe3b4fb49b2cbee1bf7781a7a75f00f5803d335615963e41526a4874ff
+  bytes: 363627
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/G2019_Official_Overlaps.pdf
+  sha256: 0a6368387d080b365802ad78e96d941b350350b8f33d817873e516910d80fcca
+  bytes: 667205
+  media_type: application/pdf
+  redistributable: true
+- rel: reference/allen-boe/source-pdf/G2019_Recount_PandoraGilboaSchoolBoard.pdf
+  sha256: 3d68c9c8ae6868bf4c70782bee5aeb9db1c7af0e6ff91853c4a96d876f37a325
+  bytes: 499738
+  media_type: application/pdf
+  redistributable: true

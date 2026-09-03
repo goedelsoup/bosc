@@ -1,0 +1,39 @@
+meta:
+  collection: documents/plans
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 5
+    bytes: 24928746
+    distinct_addresses: 5
+artifacts:
+- rel: documents/plans/4091285.pdf
+  sha256: bc44ff4d3d57b7c4158d7e1390edfe57cdb46857872f68ce5dbdb23ec096ef09
+  bytes: 10199
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/plans/4091286.pdf
+  sha256: 3c88559d24dcfbc3a2608b7a3146c37cdcf4d3c83a76f0ac4a35eb3e2542a224
+  bytes: 15299498
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/plans/4091287.pdf
+  sha256: c60de2e1410a704c563ad66348fcd734eac710aaf2e5af5573a97681b8c9271f
+  bytes: 42349
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/plans/4091289.pdf
+  sha256: 2efbd88258c43f4bd38b52dac24c22af5972b8b396d095845fcd6d9821c3a7ae
+  bytes: 139181
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/plans/bistrozzi-plans/LMA1A-95-SPS-2025-10-28.odg
+  sha256: 372112185caef6832326bba7b88696e186455b32729a64ca125501d5457a1948
+  bytes: 9437519
+  media_type: application/vnd.oasis.opendocument.graphics
+  redistributable: true

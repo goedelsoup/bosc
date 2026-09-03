@@ -1,0 +1,19 @@
+meta:
+  collection: documents/history
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 1
+    bytes: 64926377
+    distinct_addresses: 1
+artifacts:
+- rel: documents/history/allen-oh/historyallencou00leesgoog_text.pdf
+  sha256: 4b8617df75993b7ea19602d20ea94aad837b6df02bc080d19817bd5a9cc42808
+  bytes: 64926377
+  media_type: application/pdf
+  redistributable: true

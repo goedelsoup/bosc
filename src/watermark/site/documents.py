@@ -80,6 +80,23 @@ _EXT_MEDIA: dict[str, tuple[str, RenderClass]] = {
 _FALLBACK_MEDIA: tuple[str, RenderClass] = ("application/octet-stream", "other")
 
 
+def media_type_by_extension(suffix: str) -> str:
+    """The MIME type for *suffix* from the extension table alone — no content sniff.
+
+    The public half of :data:`_EXT_MEDIA` for callers that must be **deterministic across
+    checkouts**. :func:`_media_type_and_render_class` prefers a content sniff when the real
+    bytes are there, which is right for a feed built from whatever the build tree holds and
+    wrong for a committed record: the same file would be typed one way on a machine that ran
+    ``git lfs pull`` and another way on the CI checkout that did not. The vault manifest
+    (``watermark.documents.vault``) reads this instead, and so agrees with what the *deployed*
+    feed reports for an LFS-tracked file — the production build never pulls LFS, so the sniff
+    never fires there either.
+
+    *suffix* is lower-cased and de-dotted, as :class:`DocumentItem.suffix` carries it.
+    """
+    return _EXT_MEDIA.get(suffix, _FALLBACK_MEDIA)[0]
+
+
 def _sniff_media(head: bytes) -> tuple[str, RenderClass] | None:
     """Identify a file from its leading magic bytes, or ``None`` if unrecognized.
 

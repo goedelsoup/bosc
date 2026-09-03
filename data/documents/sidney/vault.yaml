@@ -1,0 +1,208 @@
+meta:
+  collection: documents/sidney
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 38
+    bytes: 86887569
+    distinct_addresses: 38
+artifacts:
+- rel: documents/sidney/council/14-26 - Accepting a Plat - Consolidation and Right-of-Way Dedication Plat
+    of Survey - Amazon.pdf
+  sha256: bc58f4cf6ea695c7369b668a545660719906cf26c6a67a1d313b273e1d76c97b
+  bytes: 793901
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/26-26 - Authorize Water and Sewer Service Agreement - Amazon Web Services.pdf
+  sha256: 6da592e4ac075657d64cb788c1d8a9d02f71ce3df9609de02e39c22bb57bb38a
+  bytes: 1086818
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/27-26 - Authorizing Infrastructure Development Agreement - Amazon Web
+    Services.pdf
+  sha256: ec32b7b722f98deffa592ebe5013336da90a530a5f14bc110b76ea9c13125a26
+  bytes: 2742009
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/69-25 - Amending Resolution 84-22 - Expanding CRA Boundaries.pdf
+  sha256: acb250062532eb5f1c5fd99ba2612dcfd845c4081f8c9eafeb30e91c17c15cf9
+  bytes: 8764007
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/74-25 - CRA Housing Council Appointments - J Dunson and M Verhotz.pdf
+  sha256: fd8830d79066fc2c390ef961ababe93d26a7ff7f5a97a10c78eb2427d1c61f9d
+  bytes: 731052
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/80-25 - Authorizing a CRA Agreement - Amazon Data Services Inc_202601141342191793.pdf
+  sha256: d915fe3f13ab01ef3980864cf241ff9d75df19f592ac21335f371f5dbe784983
+  bytes: 2608889
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/81-25 - Authorizing Development Agreement with Sidney City Schools and
+    Upper Valley - Amazon Data Services_202601141342204952.pdf
+  sha256: 78a532e7600954c81c3bf1f277104db4d3b64b5e7acec7995ce214dcd617e286
+  bytes: 3057438
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/82-25 - Authorizing Income Tax Sharing Agreement - Sidney City Schools
+    and Upper Valley - Amazon Data Services_202601141345054883.pdf
+  sha256: 321b0a567990924c334b7cc31c0110b9eda30c9e64aae98ccc8c48499e7402d6
+  bytes: 2406329
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/84-22 - Establishing CRA based on Community Boundaries.pdf
+  sha256: 7763af6bfa38427e1cf7ff1dced9576ada0d78d6105fac72b0099dfea063422f
+  bytes: 4085606
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/City Council Agenda Packet October 27, 2025.pdf
+  sha256: b495333f3f0ce9800bf81face8f74dece7de097f87e11d218a8b637ae16decf6
+  bytes: 17140653
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/City Council Minutes April 27, 2026.pdf
+  sha256: d98daa5d4b8ec88dd6c7bfb19e790d8b61d745a3be34c8415c592268786bbb8f
+  bytes: 1301432
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/City Council Minutes February 23, 2026.pdf
+  sha256: 951f37033769939a6ba397632eb0fcf801d74146c58384a9914eb3eb65be8fb7
+  bytes: 933521
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/City Council Minutes October 27, 2025.pdf
+  sha256: c77b549bd78f647c65f357a3b75a0e46e7c97b0bcd13caa97b9d0d01c4671c9a
+  bytes: 1669265
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/City Council Minutes September 08, 2025.pdf
+  sha256: 89b695bb04f362557d4f4110e1028e1c6c075db9b7f6c897bae8af79106dd926
+  bytes: 856533
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/council/Presentation Sewer and Water Agreement 4.27.26 (PDF).pdf
+  sha256: 02974e0934b369b1243cfd38cb2a13e29643a0a255a4ced68d0a4de5b8ad2ee1
+  bytes: 105057
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/cra-housing-council/CRA Housing Council Agenda February 05, 2026.pdf
+  sha256: 9c064c85c237aded0d2e0c94da5544f3b6b9ae52f5fda86bf4b1046f283f012a
+  bytes: 391806
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/cra-housing-council/CRA Housing Council Agenda May 04, 2026.pdf
+  sha256: b5ecb2da82e9b1b20c52a6cbadd4a72ca9b732b4ccca45d5b373be351d589817
+  bytes: 393496
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/cra-housing-council/CRA Housing Council Agenda May 29, 2026.pdf
+  sha256: 077de5587eab5b26f8faed0729774a95febe9b0634d5f6039b06fcfb4e8ed224
+  bytes: 407363
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/cra-housing-council/CRA Housing Council Minutes April 02, 2026.pdf
+  sha256: 8f7b082172bc7f4062e141de24860540a3b0576e643c9b051a15353c5516b5cd
+  bytes: 300520
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/cra-housing-council/CRA Housing Council Minutes February 05, 2026.pdf
+  sha256: 5df6cbb0b97473400194ea974ca062ba3baa3df499b7d5f7c4dea5fa2fda388a
+  bytes: 304239
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/cra-housing-council/CRA Housing Council Minutes March 05, 2026.pdf
+  sha256: e82f981d8d27d6a2ffa33c38c2a5760fc6691dd826e052179e2678e8630f619c
+  bytes: 307129
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/ordinances/A-3210 - New Zoning Map, Sidney, Ohio.pdf
+  sha256: c467f6cfdbe9aef122624127855427a96aa74384e3535717d65a45de2088e7a6
+  bytes: 2139186
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/ordinances/A-3211 - Annexation of 53.083 Acres - Shelby County Commissioners.pdf
+  sha256: 2477c972ad7e72fc81c3e90627fb188dba00306e49eddd2f8e0538451626149b
+  bytes: 1157769
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/ordinances/A-3219 - Adopting Amendments to the Zoning Code.pdf
+  sha256: d2d7f3c061aa6a798125eb863baf54d805ee28a4bcccce7860ace0cbd3a89d01
+  bytes: 6833689
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/ordinances/A-3225 - Annexing 243.092 Acres - Joslin-Drees.pdf
+  sha256: 9729514f50e1d5735a2e4ce3fa625904cb098cae73dad9df3b91da468a769c3d
+  bytes: 1125255
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/ordinances/A-3226 - Zoning 243.092 IIM - Joslin-Drees Annexation.pdf
+  sha256: 27ba8230637e88d3b3f5b2939fe9a66d0f2dc5c570fb4c9e0f0dcebce03d5f72
+  bytes: 1098310
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/ordinances/A-3227 - Zoning 53.16 IIM - County Commissioners Annexation.pdf
+  sha256: 1949e96ac1f88fc4c8d4ee73d4c9d7a471bfa8a9a755eced76a0400191ac1a1b
+  bytes: 1117247
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/ordinances/A-3236 - Adopting Zoning Code Amendments.pdf
+  sha256: 77cf48a33b35d8a966a0ce9c09beb9d7d6b067991f2143fb89abdd3bb5a79686
+  bytes: 6696662
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/ordinances/A-3255 - Amending Zoning Code.pdf
+  sha256: da2f93d0f1c14f1af6bd1ea304f8545e6195fefdcafa290ac781eafa4a7f47dd
+  bytes: 1434309
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/ordinances/A-3270 - Adopting a New Zoning Map.pdf
+  sha256: 4c852c8b6b302d905be288d9627ed899c19b06e62c88f58a6b4a11f5a4caacda
+  bytes: 11624778
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/permits/Grading Permit 5-14-2026 - AWS Data Center 2388 W. Millcreek Road.pdf
+  sha256: a8f3276bd43e9244873ae635bd8a487cd7d26789169369f8f70485b638907c21
+  bytes: 326734
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/planning-commission/Planning Commission Minutes February 18, 2026.pdf
+  sha256: 2ff19fb77f7e3b821882cf44116769189e326bf1a078bff01ab9ca898464dbbe
+  bytes: 500711
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/planning-commission/Planning Commission Minutes July 21, 2025.pdf
+  sha256: 5007c9d04dcdb0d0e555dfee2b1ec36d3ee8429fe980b4b01e45a4dfd48f3dd8
+  bytes: 688006
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/planning-commission/Planning Commission Minutes June 16, 2025.pdf
+  sha256: b3121f2248b5edf7f4c40cda3c3abe2f7a01f73a1207ce3b52d643fec1be3fae
+  bytes: 720298
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/planning-commission/Planning Commission Minutes March 17, 2025.pdf
+  sha256: eb567b7c74dd56a3e601aca8aaba04cc92313011712f1efc290d8ffad0eb184b
+  bytes: 603957
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/reference/shelby-township-officials-2024.pdf
+  sha256: f4be04766fa18f4084ceea0310204cd58ddc2235eb046e34003b621c27d2db25
+  bytes: 19725
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/reference/sidney-council-rules-2024.pdf
+  sha256: 73a4426de1608974a52acce82b15ec391e7b9dc891729b6052187adfe4d0571b
+  bytes: 267863
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/sidney/state/Ohio Tax Credit Authority Meeting Minutes 10.8.2025.pdf
+  sha256: f4132d75cd0f8b3d1aab658360a0f8c61b347844b51b263c83cf73efce75584b
+  bytes: 146007
+  media_type: application/pdf
+  redistributable: true

@@ -1,0 +1,184 @@
+meta:
+  collection: documents/west-union
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 34
+    bytes: 29020385
+    distinct_addresses: 34
+artifacts:
+- rel: documents/west-union/acrwd/finance/2024 Financial Statements.pdf
+  sha256: 6e10ead77191a8101230e93ffd3b8b7f523272e32869b40f7b7a2fe38d6f7f2f
+  bytes: 203568
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/finance/2025 Financial Statements.pdf
+  sha256: b49e6b1541008cb4c8f4f53ba74c34eeec98c07a6b420c2320d9ba50fdf58aeb
+  bytes: 202903
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/finance/2026 Budget.pdf
+  sha256: 0eca59ffda6ed2ee3347100430137a8870aed5883083ce7107e3badea528a284
+  bytes: 77214
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/finance/ACRWD Report 2024.pdf
+  sha256: 1bdf6ad78b41c34f16e22fe55ed34452502e5ef72dece313e82d8dd7ba1f2da7
+  bytes: 76143
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/finance/ACRWD Report 2025.pdf
+  sha256: 9bc8f26b99e36742a8a718bc98239a8a4efa4bffd5f476acc1d7b7fd6ba48f0a
+  bytes: 75725
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/finance/ACRWD Report 2026.pdf
+  sha256: f903fadf0de4985505ee9a7bcac2b0996a45e20bf58d0110cb8bdd50eb678036
+  bytes: 73492
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/finance/Budget 2024 - Capital.pdf
+  sha256: b1fb172ca93c850e76b52f712af84bcd9f5d9320065bab947854b0d12d67140b
+  bytes: 128946
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/finance/Budget 2025 - Capital.pdf
+  sha256: 57a30663fe295f434b82806c0bc2a54afeb3dd319eadeff1fc664e08e51c7b36
+  bytes: 127805
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/finance/Budget 2025.pdf
+  sha256: dcac8a0e6893e053170c75d07c6ac36eaca7c5e68bd55eb28dc5bcaa4c42efc7
+  bytes: 107074
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/finance/Budget for 2024.pdf
+  sha256: fe99e6706f5ab634054d5a6c1d3ededf1955dbd5e0a9261b21036ad00e487485
+  bytes: 104980
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/ginger-ridge/Ginger Ridge Water Line Plan.pdf
+  sha256: df0d7470d754df49c0e1db8355237ca970ecab99434710c6ff17a2b8a4ebdfe7
+  bytes: 15589835
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/ginger-ridge/NDA.pdf
+  sha256: 8712fce975640215fc2bbec22089d5a556104d970139483d034aae38a4cc65da
+  bytes: 120109
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/governance/1969 Bylaws.pdf
+  sha256: 781e7ca74831443bd90034d3dc927e9f2fa01b27a6d3d35220596822dd6829d6
+  bytes: 1132655
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/governance/1969 Rules  Regs.pdf
+  sha256: aec888458a38203466cf880c53db382985344981ffe310a701a4bb74161bd18f
+  bytes: 710112
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/governance/1993-1998 Elections-Appointments.pdf
+  sha256: 400aca51301b5325e1301674fca3f625619fae755f8b3cbb719783891aff6ad1
+  bytes: 857344
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/governance/1994 Bylaws.pdf
+  sha256: 37d80732ecfd3b12a32fd445e53bf6350ab87187b85bfdf180c866c6d9117c55
+  bytes: 3668937
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/governance/Articles of Incorporation of Adams County Water Co. Inc.pdf
+  sha256: 8e925802ef83c466e4021c5b19498c3a1b5d398c5d3d995c6810809c6e2d4c4c
+  bytes: 1075704
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/governance/Code of By Laws - Adams County Water Company Inc.pdf
+  sha256: c832eb3aaa549013e93479dbd75b6ea140b70251436ae9c78f12ebfcf96611ce
+  bytes: 496100
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/governance/Current Bylaws.pdf
+  sha256: 3a9f3f99980bb809de2e7240a2c79740893ab77b59a8dbd29964e3026ea7dfb9
+  bytes: 2361407
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes  - April 26.pdf
+  sha256: 868acd0cbd8f00130663c5e02f8ff7dcaaec9eea26ceb724e8ee54f03a43e41f
+  bytes: 67521
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes  - February 26.pdf
+  sha256: d351e9918285f5d52917a4836c152fce8d8ee8848bd2771b70fdf4f1924e0563
+  bytes: 56375
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes  - January 26.pdf
+  sha256: 82c7ba5c97d149ebec1b1972c4492e4a6f20569b308b51b7a62361fa48ee5701
+  bytes: 60664
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes  - May 26.pdf
+  sha256: 6b63366426183a3ea66616e01cf41e19eeda3c6b37afc63ed3afd6548b67aa70
+  bytes: 67602
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes -  October 2024.pdf
+  sha256: f4be1ed4c317f4191744e602e89304beacec2bc67cc3d39a3a1713f1017711a9
+  bytes: 62923
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes - April 2025.pdf
+  sha256: 91e9dae941eafe98caf0424372cdb267cc01fa07be497e0da37c4cb57c713f96
+  bytes: 57842
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes - December 2025.pdf
+  sha256: 61c2f441643d0283722b6103a951cc78c8155585bfc802f2f1e4f8be811ae9e7
+  bytes: 68775
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes - July 2025.pdf
+  sha256: 2cacf2c3403b50b7ce0581c2ce4621feab459c7addbe3080274099bddf1d6797
+  bytes: 70275
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes - June 26.pdf
+  sha256: 203d5d8fde2936dce4626b6f950715666f8ac9d766a403b8623d4bc8f55b4c00
+  bytes: 56605
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes - March 26.pdf
+  sha256: 1f3172508817256fcfe03e92528d6c382be0a785303aec66ea50673f941f2e57
+  bytes: 63545
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes - May 2025.pdf
+  sha256: 4070986463a25be4979bc173c3556a6b83472a5c35a0538c874931df81e5921d
+  bytes: 64759
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes - November 2025.pdf
+  sha256: 20a077d86c95c55bf01a833302fc9ba0f6005cd2d085e6427a18be74a69256e6
+  bytes: 66113
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes - October 2025.pdf
+  sha256: 54aab06b5a28945c029fe38b0cfc4b565ed19b88bce27b05c0abf04805e88c69
+  bytes: 62295
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes -January 2024.pdf
+  sha256: 7726c5bed3a6ce53a2046b62cd1c6b42234477d8601adc5654484ef5223ad9ac
+  bytes: 142878
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/west-union/acrwd/minutes/Minutes-July 26.pdf
+  sha256: 4abf086b0061c2f105d677a9a03e20a22752a0c320c4c37a5559f871c4cf8892
+  bytes: 862160
+  media_type: application/pdf
+  redistributable: true

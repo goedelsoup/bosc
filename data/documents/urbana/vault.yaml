@@ -1,0 +1,49 @@
+meta:
+  collection: documents/urbana
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 7
+    bytes: 53440405
+    distinct_addresses: 7
+artifacts:
+- rel: documents/urbana/council/2024-11-19_regular_meeting_packet.pdf
+  sha256: c3a6b0cdedc8801fa6f95276c4c1e32ea0b49f6dbcc00ceaf362a4a34b9f6a7d
+  bytes: 22661522
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/urbana/council/2024-12-17_approved_city_council_meeting_minutes.pdf
+  sha256: 07d6c875cf04d53c0946c26e489c577fa91fcbb5d9f0ca781d98ba7c1b3aa538
+  bytes: 843871
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/urbana/council/2025-10-21_approved_city_council_meeting_minutes.pdf
+  sha256: d26d24f65411187c08023bfa121594063b3898d79c41aa28d5ffe6a5f7b9102a
+  bytes: 1069860
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/urbana/council/2025-11-04_approved_city_council_meeting_minutes.pdf
+  sha256: 7614a8373c053f9ba93129f4b9364a841e0479007be8982629a1dfa1a3ae33ae
+  bytes: 944606
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/urbana/council/2025-11-04_regular_meeting_packet.pdf
+  sha256: 14ad9dfb43f152ac64e487644d014cebde1ee5ccf14b10fa8ccb72f91a5136a7
+  bytes: 27007238
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/urbana/council/data_center_timeline_public_notice_2.26.26.docx.pdf
+  sha256: 760b4844ff2f2637bf55695f252281c44410875c67097ad87a384c1cc40c547e
+  bytes: 220624
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/urbana/council/project_overview_-_urbana_technolody_hub.pdf
+  sha256: d2749bde23e243a7d91e74a9c7efdcb5d4868071ce26d92717429dfbfaa84464
+  bytes: 692684
+  media_type: application/pdf
+  redistributable: true

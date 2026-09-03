@@ -1,0 +1,64 @@
+meta:
+  collection: documents/shawnee-township
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 10
+    bytes: 16009498
+    distinct_addresses: 10
+artifacts:
+- rel: documents/shawnee-township/meetings/2026-01-02-Reorganizational-Meeting.pdf
+  sha256: 9b31c941f6e15f484f42be4b7253f6e652ea4f40d1d4fb6f3b7819712a69eea3
+  bytes: 1142005
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/shawnee-township/meetings/2026-01-12-Miuntes.pdf
+  sha256: 5591b98ca88c258c124632f4ba8643b7590f448d612b3965b508a0785cd50291
+  bytes: 3089395
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/shawnee-township/meetings/2026-01-15-Miuntes.pdf
+  sha256: 9207f898d02cf23e85a303212435a6ca072ed1b13eb0d935090bf3d2382744ba
+  bytes: 1462662
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/shawnee-township/meetings/2026-01-26-Miuntes.pdf
+  sha256: 07344d5ad308302fbca96321b110755a5acf7aeaba602ae6782937110f241e64
+  bytes: 2925477
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/shawnee-township/meetings/2026-02-09-Minutes.pdf
+  sha256: b00e96d6ce15a8b803ff1a4e2ed64c6820d121cbee707d72c3861e985dbc72dd
+  bytes: 121605
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/shawnee-township/meetings/2026-02-23-Minutes.pdf
+  sha256: ca2f44c182981334d395042d2f3ce88f888c87d066249dff24f079c342a21c11
+  bytes: 83460
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/shawnee-township/meetings/2026-03-09-Minutes.pdf
+  sha256: 25d47ce23adeaa0f713b1b365ac976560c1f6bedfe767c4bba2fa0a541422b34
+  bytes: 1255711
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/shawnee-township/meetings/2026-03-23-Minutes.pdf
+  sha256: 7201b04dfd75dc6d7746511df96bd57a4c2149ab18cfa45a536d6099a95494a7
+  bytes: 2496136
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/shawnee-township/meetings/2026-04-13-Miuntes.pdf
+  sha256: 7ad88a1e79378c2c98a8d32c5e88f39f14b88a0c93947400a727e7b9364ff726
+  bytes: 2746803
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/shawnee-township/meetings/2026-05-11-Minutes.pdf
+  sha256: 1f0544b4e73124d65dca74eb335597a50e986b27c8876c84455cec856906be6c
+  bytes: 686244
+  media_type: application/pdf
+  redistributable: true

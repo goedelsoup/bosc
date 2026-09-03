@@ -167,6 +167,53 @@ single-PUT cap (multipart is not implemented upstream).
 **476 files are byte-duplicates** (3,662 files, 3,186 addresses), which content addressing
 collapses at no cost.
 
+## The record: `watermark documents manifest`
+
+Implemented by #2143. One `vault.yaml` per first-level collection under each vaulted root — 31 under
+`documents/`, 4 under `reference/`, covering **3,662 artifacts at 3,186 distinct addresses**.
+
+```sh
+watermark documents manifest                            # write every collection's record
+watermark documents manifest --collection documents/aedg # one collection
+watermark documents manifest --check                    # report drift; write nothing
+```
+
+```yaml
+artifacts:
+- rel: documents/american-township/meetings/1-12-26 minutes.docx
+  sha256: 1b85d2f87a4a777d6d6e4da11c2b32b7f219d38d3f4be65955d5364ddbce8c67
+  bytes: 19456
+  media_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  redistributable: true
+```
+
+Four properties of that record are deliberate, and each one is a decision rather than a detail:
+
+- **`rel` is `data_dir`-relative** (`documents/…`, `reference/…`), matching
+  `watermark.catalog.StorageItem.relpath` rather than `DocumentItem.rel`. The record spans two roots,
+  so a documents-relative key would be ambiguous between them; strip `documents/` to recover the
+  `/api/doc` key. Within that the path is the **as-received name, verbatim** — spaces, upper-case
+  extensions, and the three files carrying none at all.
+- **`media_type` comes from the extension table alone, never a content sniff.** A sniff needs real
+  bytes, so the same file would type one way on a `git lfs pull`ed machine and another way in CI —
+  and a record that varies by checkout cannot be checked. This also matches what the *deployed* feed
+  reports for these files, since the production build never pulls LFS either.
+- **`redistributable` is written on every artifact**, never left to a default. See §5 above.
+- **Duplicates keep both entries.** 476 of the 3,662 files are byte-duplicates of another; two
+  custody paths to one blob is a fact about the corpus, and collapsing them would lose one. Content
+  addressing dedupes in the store, which is where dedup belongs.
+
+`--check` needs neither the real bytes nor the network — the same argument that makes the record free
+— so it gates in CI (#2148). It reports six kinds of drift, and the asymmetry between them matters:
+**`unrecorded`** (tracked but in no manifest) is the one that counts, because after the untrack a
+file no manifest names is a source byte with no record at all. **`orphaned`** is not automatically
+wrong: it is the expected state once nothing is LFS-tracked. **`address-changed`** means a source
+file was replaced, which chain of custody forbids outright. **`missing`** is reported rather than
+treated as drift, because an absent file on a partial checkout is not evidence the record is wrong.
+
+A run that cannot address a tracked file **refuses to write** rather than omitting it. A manifest
+with gaps is worse than none: it reads as complete.
+
 ## Two things that make the migration cheap
 
 **The Git-LFS oid is the sha256 a vault addresses by.** Verified byte-identical on

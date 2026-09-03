@@ -1,0 +1,24 @@
+meta:
+  collection: documents/watershed
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 2
+    bytes: 1126543
+    distinct_addresses: 2
+artifacts:
+- rel: documents/watershed/osu-lima-ag-runoff.allenswcd.2026-06-06.pdf
+  sha256: 73306a3ba4b1dfb8e4ad4827cce84466d97edb4ec54d23af4644b1eaa4d08bb3
+  bytes: 650732
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/watershed/shedekar-cv.2025-09-28.pdf
+  sha256: 648e7f071e81bc5d3701b065d1c0b98e4ec3330661a5bb2d2d75042371038436
+  bytes: 475811
+  media_type: application/pdf
+  redistributable: true

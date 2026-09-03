@@ -1,0 +1,64 @@
+meta:
+  collection: documents/idem
+  policy: 'the committed record of bytes kept in a yidam artifact vault, not in git: `sha256` is the content
+    address the vault holds each file under, and equals its Git-LFS oid while the file is still LFS-tracked.
+    Regenerate with `watermark documents manifest`; verify with `--check`. Never hand-edit an entry —
+    the next run reverts it. Losing the vault costs no claim, only a re-fetch, because every digest here
+    is in a commit.'
+  generated_at: '2026-09-03T12:25:50+00:00'
+  generated_by: watermark documents manifest
+  counts:
+    artifacts: 10
+    bytes: 41061698
+    distinct_addresses: 10
+artifacts:
+- rel: documents/idem/fort-wayne/043026-IDEM-Hearing-ORIGINAL.pdf
+  sha256: 4aeff651cb228a27b39000971042c45d7b81b88274d945996ba68f9394c9c6c6
+  bytes: 256046
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/idem/fort-wayne/47378PN-JS.pdf
+  sha256: 1bc010f89ffd502a5bb37b86fbb0a62156e6816bae033609d7e57d18948f9ace
+  bytes: 231211
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/idem/fort-wayne/47378f.pdf
+  sha256: 94fa43293b2baf90d8f957f8d39efa03372f7032a4946270d4f30567e02021ff
+  bytes: 4534916
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/idem/fort-wayne/48739d.pdf
+  sha256: 2cdba4ca304d078ab7e299f67d73a0030ae3881a67604eddf6eebb6bc12cf086
+  bytes: 2083664
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/idem/fort-wayne/Response-to-Public-Comments-WQC001454-Project-Zodiac-Phase-3-Google-Data-Center.pdf
+  sha256: 265f20c8b97c01ebfee5af2b0f4662801deb7f25420fbd1127f5197a9d1e32b6
+  bytes: 428610
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/idem/fort-wayne/WQC001454-Section-401-WQC-Approval.pdf
+  sha256: 753664b2324f09586c1703096b40798b9fc22562a485231b5362d3f9ad783eb7
+  bytes: 311730
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/idem/fort-wayne/caats-confidentiality.pdf
+  sha256: 466e7e91c234f21a7f6150b3a4b7a9269742c16e0f917327d967d9165dc49213
+  bytes: 146602
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/idem/fort-wayne/notice_20260403_401_wqc001454.pdf
+  sha256: 90fac1978683f4c7681147f8d424646d778438aeb22c1b4e0ccfd04d022a2dc2
+  bytes: 6735469
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/idem/fort-wayne/notice_20260629_npdes_in0032191.pdf
+  sha256: e5e79bcb39a509fd41cb69fbc199cde90a000b36f9155b64365aa442a58f3bdf
+  bytes: 13622633
+  media_type: application/pdf
+  redistributable: true
+- rel: documents/idem/fort-wayne/public-comments-compiled.pdf
+  sha256: 4a9401f9bb483f4a517d803a7512eef7c6b8a8c992a9254517ff59e17655b2b4
+  bytes: 12710817
+  media_type: application/pdf
+  redistributable: true

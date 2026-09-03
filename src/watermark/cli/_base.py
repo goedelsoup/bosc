@@ -100,6 +100,12 @@ research_app = typer.Typer(
 app.add_typer(research_app, name="research")
 
 
+documents_app = typer.Typer(
+    name="documents",
+    help="The source corpus under data/documents — its committed vault record (epic #2141).",
+)
+app.add_typer(documents_app, name="documents")
+
 objectstore_app = typer.Typer(
     name="objectstore",
     help="Source-document object store (Cloudflare R2) — epic #274. See docs/object-store.md.",

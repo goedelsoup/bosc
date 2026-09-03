@@ -46,6 +46,7 @@ from watermark.catalog import (
     load_entries,
 )
 from watermark.config import Settings, get_settings
+from watermark.documents.vault import MANIFEST_NAME as VAULT_MANIFEST_NAME
 from watermark.sites import SITES
 
 # The scopes backfill scaffolds — the committed, reviewable artifact tree (issue #624). The
@@ -53,7 +54,19 @@ from watermark.sites import SITES
 BACKFILL_SCOPES: tuple[Scope, ...] = ("reference", "extracted")
 
 # Files that are not datasets: prose, generator scripts, and OS/VCS noise.
-_SKIP_NAMES = {"README.md", "ONBOARDING.md", ".gitignore", ".gitattributes", ".DS_Store"}
+#
+# `vault.yaml` (#2143) joins them for the same reason the README does: it is a statement *about* the
+# files beside it — their content addresses in the artifact vault — not a dataset in its own right.
+# Registering it would make the catalog claim to source the record of its own sources. Imported
+# rather than spelled again so the name has one definition.
+_SKIP_NAMES = {
+    "README.md",
+    "ONBOARDING.md",
+    ".gitignore",
+    ".gitattributes",
+    ".DS_Store",
+    VAULT_MANIFEST_NAME,
+}
 _SKIP_SUFFIXES = {".py"}
 # A collection's per-site instance notes (`<collection>/instances/<slug>.md`, #1905) — the
 # continuation of its README, carrying what one site's copy of the data turned out to say after
