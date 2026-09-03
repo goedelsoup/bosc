@@ -274,6 +274,76 @@ Verified against the pinned binary: `yidam vault list` reports *routed 3662 arti
 names*, `yidam vault status` groups them, `yidam doctor` gains a `vault` row, and `yidam lint` stays
 green (findings 219 → 254, the +35 being `catalog-uncited` at Info severity, which never gates).
 
+## The push, and what it cost (#2145)
+
+All **3,186 distinct addresses** (3,662 files, 3,586 MiB) are in `s3://watermark-documents/vault`,
+verified four ways:
+
+| check | result |
+|---|---|
+| `yidam vault verify` — re-hash the local cache | 3,186 artifacts, **All intact** |
+| the store asked directly, one HEAD per address | **3,186 present, 0 missing, 0 size mismatch, 0 errors** |
+| restore into a clean cache via `yidam vault get`, one per collection | **35 / 35 verified** |
+| an object uploaded by the fallback client, read back through yidam | verified |
+
+The cache holding **3,186** objects for **3,662** files is the dedup, measured a second way: 476 files
+are byte-duplicates and the store keeps one blob each.
+
+### ⚠️ `yidam vault push` re-scans every artifact on every invocation
+
+This is the operational trap, and it is worth knowing before repeating the migration. `push` sends
+what the corpus names and the vault lacks, which means each run HEADs **every cached artifact** to
+find out. So pushing per collection costs *collections × artifacts* requests — here roughly
+**128,000** across 35 pushes, growing as the cache fills — where one push at the end costs 3,186.
+
+Do it in two phases instead: **`vault put` everything first** (purely local, no network at all), then
+**one `vault push`**. Per-collection pushing is attractive for resumability and it is how this
+migration actually ran, but the cost is quadratic and it is what provoked the rate limiting below.
+
+### ⚠️ The pinned binary's HTTP client wedges against R2 under sustained load
+
+After roughly 3,500 artifacts, `yidam vault push` began stalling: **49 minutes elapsed on an 83 MiB
+collection having consumed 8 seconds of CPU**, sleeping on I/O. Adding a per-attempt timeout unmasked
+the cause — `HTTP 403 Forbidden` on a HEAD to the vault prefix — and after that, push emitted nothing
+at all within two minutes, indefinitely.
+
+It is **not** the credential and **not** the service. Measured at the same moment push was wedged:
+
+- the same token HEADed the *rel-keyed* prefix successfully (`200`);
+- the same token HEADed the *vault* prefix successfully, for both a present and an absent key — the
+  absent one returning a clean 404, so it is not the missing-key-needs-`ListBucket` quirk either;
+- an audit of all **3,186** addresses through `watermark.site.objectstore` (httpx, HTTP/1.1)
+  completed with **zero** errors.
+
+So the fault is specific to the binary's own client (reqwest/rustls, negotiating HTTP/2) once
+Cloudflare starts throttling it, and it fails by hanging rather than by reporting. **Worth reporting
+upstream**, in the manner of the `export-graph` trap: a push that stalls silently is
+indistinguishable from a slow one, and the 403 only became visible under an external timeout.
+
+The remaining **105** artifacts were therefore uploaded through `watermark.site.objectstore` to the
+identical key scheme. That is sound rather than a workaround, and RFC-0023 is what makes it sound:
+
+> No manifests in the store. No index objects. No `latest`.
+
+An object at `<prefix>/sha256/<aa>/<64-hex>` **is** the whole contract, so a byte-identical object is
+indistinguishable whoever wrote it. Each was re-hashed before sending — the address is the identity,
+so an object whose bytes do not hash to its key would be a corruption nothing downstream could
+detect — and one was then read back through `yidam vault get` to prove the substitution transparent.
+
+### Credentials
+
+The existing R2 token works unchanged; only the variable names differ:
+
+```sh
+export YIDAM_VAULT_DEFAULT_ACCESS_KEY_ID="$WATERMARK_DOCUMENTS_OBJECT_STORE_ACCESS_KEY_ID"
+export YIDAM_VAULT_DEFAULT_SECRET_ACCESS_KEY="$WATERMARK_DOCUMENTS_OBJECT_STORE_SECRET_ACCESS_KEY"
+```
+
+### Not yet done
+
+Nothing is untracked from Git-LFS (#2147), and `.git/lfs` is **untouched** — it remains the third
+local copy and the fallback that makes everything above reversible. Do not `git lfs prune`.
+
 ## Two things that make the migration cheap
 
 **The Git-LFS oid is the sha256 a vault addresses by.** Verified byte-identical on
