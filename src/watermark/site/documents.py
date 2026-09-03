@@ -242,7 +242,8 @@ def _document_stat(path: Path) -> tuple[int, bool, bool]:
         return 0, False, False
 
 
-def _collection_title(slug: str) -> str:
+def collection_title(slug: str) -> str:
+    """The human label for a collection slug — title-cased unless it reads wrong that way."""
     return _COLLECTION_LABELS.get(slug, slug.replace("-", " ").title())
 
 
@@ -324,7 +325,7 @@ def build_documents(
         if coll is None:
             coll = DocumentCollection(
                 slug=slug,
-                title=_collection_title(slug),
+                title=collection_title(slug),
                 description=_collection_description(documents_dir / slug),
             )
             collections[slug] = coll

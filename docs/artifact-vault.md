@@ -214,6 +214,66 @@ treated as drift, because an absent file on a partial checkout is not evidence t
 A run that cannot address a tracked file **refuses to write** rather than omitting it. A manifest
 with gaps is worse than none: it reads as complete.
 
+## The configuration: `.yidam/config.toml`
+
+Committed (#2144), which took a **third** negation under `.gitignore`'s `/.yidam/*` beside
+`lint-baseline.yml` and `authorship.yml`. It has to travel with the repository, because
+`catalog-artifact-unroutable` is **Error**-severity and compares every projected artifact's `vault:`
+against the stores declared here — an uncommitted config does not degrade quietly, it reports all
+3,662 artifacts as routed nowhere. That is the intended failure mode, and it only works if the file
+is there.
+
+```toml
+[vault.default]
+url = "s3://watermark-documents/vault"
+audience = "…"
+region = "auto"
+endpoint = "https://<account-id>.r2.cloudflarestorage.com"
+path_style = true
+```
+
+- **The endpoint carries the R2 account id, and that is fine.** yidam has no environment
+  interpolation for `endpoint`, so it must be a literal in a committed file. The account id is an
+  *identifier*, not a credential — it appears in every R2 dashboard URL, and a request carrying it
+  without the key pair fails. [object-store.md](object-store.md) previously grouped it with the two
+  real secrets, which read as a prohibition on the one value that is not one; corrected there.
+- **Credentials come from the environment only** — `YIDAM_VAULT_DEFAULT_ACCESS_KEY_ID` /
+  `_SECRET_ACCESS_KEY`. Bare `AWS_*` would also be honoured, since upstream lets them fall through
+  to the vault named `default` and no other; prefer the explicit form, because R2's S3 token is not
+  the account's AWS identity and letting an ambient `AWS_*` satisfy this is how the wrong credential
+  reaches the right-looking store.
+- **One bucket, own prefix** (`/vault`), keeping the content-addressed keyspace clear of the
+  rel-keyed objects `/api/doc` still serves.
+- `region = "auto"` is R2's SigV4 scope. `path_style` defaults to true whenever an endpoint is set;
+  it is stated anyway.
+
+### The `artifacts:` projection
+
+`watermark.site.corpus_catalog.vault_sources` reads the `vault.yaml` manifests and emits **one
+catalog entry per vaulted collection** — 35 of them, carrying all 3,662 artifacts — rather than
+registering 3,662 files in `data/catalog/**`, which is a register of *datasets* and would be wrecked
+by a five-fold inflation to serve a storage layer.
+
+Adopting `artifacts:` arms two Error-severity checks, both satisfied by construction:
+
+| check | what it wants |
+|---|---|
+| `catalog-artifact-malformed` | a 64-character **lowercase** hex `sha256` (hex is case-insensitive and a store is not, so two spellings would be two keys), and no `from:` naming a location index the entry lacks |
+| `catalog-artifact-unroutable` | every `vault:` names a declared store |
+
+So these entries write **no `from:`** — they carry no `location` list, so any index would name nothing
+— and **no `retrieved:`**, because nothing records when a given file was obtained and inventing a
+date is worse than omitting one.
+
+They also register **no `covers`**. That field is what makes a path resolve to a citation, and a
+collection entry spans hundreds of files: covering them would let a node "cite" the whole of
+`documents/aedg` when it means one deed. Measured before deciding — no assessment cell cites a path
+under a vaulted root today, so registering them would have changed nothing anyway.
+
+Verified against the pinned binary: `yidam vault list` reports *routed 3662 artifacts the corpus
+names*, `yidam vault status` groups them, `yidam doctor` gains a `vault` row, and `yidam lint` stays
+green (findings 219 → 254, the +35 being `catalog-uncited` at Info severity, which never gates).
+
 ## Two things that make the migration cheap
 
 **The Git-LFS oid is the sha256 a vault addresses by.** Verified byte-identical on

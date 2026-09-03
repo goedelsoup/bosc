@@ -98,6 +98,18 @@ runs/
 # the (ignored) .yidam/schemas/.
 !/.yidam/authorship.yml
 
+# ...and the vault configuration, which is a THIRD reviewed artifact under this otherwise
+# regenerable tree (#2144, epic #2141). It declares where the corpus keeps the bytes that no longer
+# live in git, and it is load-bearing for a gate: `catalog-artifact-unroutable` is ERROR-severity and
+# compares every projected artifact's `vault:` against the stores declared here. An UNCOMMITTED
+# config therefore does not degrade quietly — CI declares no vault and all 3,662 artifacts read as
+# routed nowhere. That loudness is deliberate (see docs/artifact-vault.md), but it only works if the
+# file travels with the repository.
+#
+# It carries no credential and must never carry one: those come from the environment
+# (YIDAM_VAULT_DEFAULT_ACCESS_KEY_ID / _SECRET_ACCESS_KEY), which is why the file is safe to commit.
+!/.yidam/config.toml
+
 # RSEI v2.3.12 offline test fixture (a small committed Allen County slice zip). The
 # user's global gitignore excludes *.zip, so re-include just this fixture (#1148).
 !tests/fixtures/rsei/*.zip

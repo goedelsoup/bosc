@@ -1,0 +1,34 @@
+# yidam configuration for Project BOSC — the artifact vault (epic #2141, RFC-0023).
+#
+# The corpus under data/documents/** is moving out of Git-LFS, which ran out of budget mid-ingest.
+# A vault stores bytes; git stores the record of them (data/*/*/vault.yaml, `watermark documents
+# manifest`). Losing the vault costs no knowledge claim, only a re-fetch — every digest is in a
+# commit. The decisions behind this file are in docs/artifact-vault.md.
+#
+# ONE VAULT, and no `holds`. Upstream supports several so that a repository's own derived output
+# and third-party documents held under a licence to read can be kept apart. This corpus has no
+# second audience: it is public records, in a public repository. A lone vault holds everything,
+# which is the shipped default. Adding a second store later requires `holds` on BOTH vaults —
+# enforced — so that migration is a real edit rather than a silent re-route.
+#
+# THERE IS NO `documents` ARTIFACT KIND, and BOSC should not ask for one. The `holds` vocabulary
+# is closed at catalog | index | embeddings | bundle, and a source document IS a catalog artifact in
+# yidam's model. Do not go looking for the missing kind.
+#
+# CREDENTIALS COME FROM THE ENVIRONMENT ONLY — this file is committed and must never carry one:
+#   YIDAM_VAULT_DEFAULT_ACCESS_KEY_ID / YIDAM_VAULT_DEFAULT_SECRET_ACCESS_KEY
+# Bare AWS_* would also be honoured, because upstream lets them fall through to the vault named
+# `default` and no other. Prefer the explicit form anyway: R2's S3 token is not the account's AWS
+# identity, and letting an ambient AWS_* satisfy this is how the wrong credential reaches the
+# right-looking store.
+
+[vault.default]
+url = "s3://watermark-documents/vault"
+audience = """
+Anyone who can read this corpus — a public-records corpus published under Ohio R.C. 149.43 and \
+U.S. Government work terms. The same readership as the repository itself, which is why there is \
+one store and not two.\
+"""
+region = "auto"
+endpoint = "https://ee26c477941559ca2dcd8af81d232d54.r2.cloudflarestorage.com"
+path_style = true
