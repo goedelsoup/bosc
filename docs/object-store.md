@@ -48,8 +48,13 @@ preview_bucket_name = "watermark-documents-dev"
 dashboard (R2 → Manage R2 API Tokens) create a token with object read/write on the
 buckets, and note the **Access Key ID**, **Secret Access Key**, and your **account id**.
 
-These are **secrets** — they live in the environment, never in `wrangler.toml` or git.
-Read through `watermark.config.get_settings()` (never `os.environ` directly):
+**The key and the secret are secrets; the account id is not.** The two credentials live in
+the environment and never in `wrangler.toml` or git. The **account id is an identifier** —
+it appears in every R2 dashboard URL, and a request carrying it without the key pair fails —
+so it is committable, and `.yidam/config.toml` commits it as part of the vault's S3 endpoint
+(#2144). This paragraph used to call all three secrets, which read as a prohibition on the
+one value that is not one. Read every one of them through
+`watermark.config.get_settings()` (never `os.environ` directly):
 
 ```sh
 export WATERMARK_DOCUMENTS_OBJECT_STORE_ACCOUNT_ID="<account-id>"

@@ -29,14 +29,38 @@ each gates a check that stays silent while the field is absent:
 * ``ttl_days``/``retrieved`` — ``catalog-expired`` (Warn) is a staleness gate, and BOSC
   already has one: ``watermark catalog check`` reads the same ``refresh.ttl_days`` from the
   same entries. Projecting it would report each stale dataset twice, in two vocabularies.
-* ``artifacts`` — RFC-0023 content addressing. Upstream writes those checks so that an empty
-  list is silent, explicitly so a corpus adopts them deliberately rather than by upgrading.
+* ``obtained`` — see below.
 * ``obtained`` — absent means *yes*. Every entry projected here is committed data on disk, so
   ``false`` would be a lie, and it is ``false`` that arms ``catalog-unobtained-but-cited``,
   the one Error-severity check of the four.
 
-Which leaves ``catalog-uncited`` (Info) as the only check this projection newly activates,
+Which leaves ``catalog-uncited`` (Info) as the only check the *dataset* half newly activates,
 plus the resolution target ``verified-unsourced`` was missing.
+
+**``artifacts`` is now written, and that is #2144's whole job.** RFC-0023 content addressing was
+listed above as a deliberate omission — upstream keeps those checks silent on an empty list
+precisely so a corpus adopts them on purpose rather than by upgrading. Epic #2141 is that purpose:
+the corpus is moving out of Git-LFS into a yidam artifact vault, and a vault only stores what the
+committed record names. :func:`vault_sources` projects the ``vault.yaml`` manifests
+(:mod:`watermark.documents.vault`, #2143) as one entry per document collection.
+
+Adopting it arms two Error-severity checks, and both are satisfied by construction:
+
+* ``catalog-artifact-malformed`` wants a 64-character lowercase-hex ``sha256``. The manifests hold
+  exactly that — a Git-LFS oid is the SHA-256 of the content. It *also* errors when ``from:`` names
+  a location index the entry does not have, which is why these entries write no ``from``: they
+  carry no ``location`` list, so any index would name nothing.
+* ``catalog-artifact-unroutable`` wants every ``vault:`` to name a store ``.yidam/config.toml``
+  declares. Writing the route explicitly rather than omitting it (absent is silent, and legal —
+  routing then falls back to ``holds``) is deliberate: it couples the projection to the committed
+  config, so a config that goes missing turns 3,662 artifacts loudly unroutable instead of quietly
+  routing them somewhere nobody chose.
+
+**These entries register no ``covers``, and that is not an oversight.** ``covers`` is what makes a
+path resolve to a citation (:func:`entry_for_path`), and a collection entry spans hundreds of files
+— so covering them would let a node "cite" the whole of ``documents/aedg`` when it means one deed.
+That is a weaker claim wearing a citation's clothes. Measured before deciding: no hypothesis cell
+cites a path under a vaulted root today, so registering them would have changed nothing anyway.
 """
 
 from __future__ import annotations
@@ -92,6 +116,23 @@ class CatalogLocation:
 
 
 @dataclass(frozen=True)
+class CatalogArtifact:
+    """One `artifacts:` entry — bytes the vault holds, addressed by content (RFC-0023).
+
+    ``vault`` names the store, and ``redistributable`` is the *other* question: a licensing fact
+    about the source that overrides the route. Both are always written. `retrieved` and `from` are
+    not: nothing in the manifests records when a given file was obtained, and a ``from`` index into
+    an entry with no ``location`` list would name nothing (an Error).
+    """
+
+    sha256: str  # 64 lowercase hex — the content address, and the Git-LFS oid
+    bytes: int
+    media_type: str
+    vault: str
+    redistributable: bool
+
+
+@dataclass(frozen=True)
 class CatalogSource:
     """One projected `.yidam/catalog/<slug>.md`."""
 
@@ -105,6 +146,9 @@ class CatalogSource:
     #: written into the file; it is how :func:`entry_for_path` resolves a node's source to a
     #: slug, and it is the reason a projected catalog can be *cited* rather than merely listed.
     covers: tuple[str, ...] = ()
+    #: The vaulted bytes this entry accounts for (#2144). Empty on every dataset entry: those
+    #: describe committed files, which need no vault.
+    artifacts: tuple[CatalogArtifact, ...] = ()
 
 
 def _oneline(text: str) -> str:
@@ -212,6 +256,118 @@ def project_entry(entry: CatalogEntry, slug: str) -> CatalogSource:
     )
 
 
+#: The vault every projected artifact routes to. One store, because this corpus has one
+#: audience — see `docs/artifact-vault.md` §5. `.yidam/config.toml` must declare this name or
+#: `catalog-artifact-unroutable` (Error) fires on every artifact.
+VAULT_NAME = "default"
+
+#: Slug prefix for the synthetic per-collection entries, keeping them clear of the 199 dataset
+#: entries projected from `data/catalog/**` and making their origin legible in a link target.
+VAULT_SLUG_PREFIX = "corpus-"
+
+
+def _collection_slug(collection: str) -> str:
+    """`documents/aedg` → `corpus-documents-aedg`."""
+    return VAULT_SLUG_PREFIX + collection.replace("/", "-")
+
+
+def vault_sources(settings: Settings | None = None) -> list[CatalogSource]:
+    """One catalog entry per vaulted collection, carrying its `artifacts:` (#2144).
+
+    Reads the committed `vault.yaml` manifests rather than `data/catalog/**`: the manifests are the
+    record of what the vault holds, and `data/catalog` is a register of *datasets*. Registering
+    3,662 files there as `StorageItem`s would inflate it five-fold to satisfy a storage layer and
+    wreck the thing it is actually for.
+
+    A document collection is a genuine source in yidam's sense — *where knowledge came from* — so
+    this is not a synthetic category invented to hold digests. What it does not do is claim to be
+    citable; see the module docstring on `covers`.
+    """
+    from watermark.documents.vault import MANIFEST_NAME, VAULTED_ROOTS, load_manifest
+    from watermark.site.documents import collection_title
+
+    settings = settings or get_settings()
+    data_dir = settings.data_dir
+
+    sources: list[CatalogSource] = []
+    for root in VAULTED_ROOTS:
+        root_dir = data_dir / root
+        if not root_dir.is_dir():
+            continue
+        for path in sorted(root_dir.glob(f"*/{MANIFEST_NAME}")):
+            collection = f"{root}/{path.parent.name}"
+            manifest = load_manifest(data_dir, collection)
+            if manifest is None or not manifest.artifacts:  # pragma: no cover - glob found it
+                continue
+            label = collection_title(path.parent.name)
+            total = sum(a.bytes for a in manifest.artifacts)
+            sources.append(
+                CatalogSource(
+                    slug=_collection_slug(collection),
+                    name=f"{label} — source bytes ({collection})",
+                    description=_oneline(
+                        f"{len(manifest.artifacts)} source file(s) under data/{collection}, "
+                        f"{total / 1_048_576:.0f} MiB, held in the `{VAULT_NAME}` artifact vault "
+                        "by content address."
+                    ),
+                    type="other",
+                    body=_vault_body(collection, manifest),
+                    artifacts=tuple(
+                        CatalogArtifact(
+                            sha256=a.sha256,
+                            bytes=a.bytes,
+                            media_type=a.media_type,
+                            vault=VAULT_NAME,
+                            redistributable=a.redistributable,
+                        )
+                        for a in manifest.artifacts
+                    ),
+                )
+            )
+    log.info(
+        "corpus_catalog.vault_sources",
+        collections=len(sources),
+        artifacts=sum(len(s.artifacts) for s in sources),
+    )
+    return sources
+
+
+def _vault_body(collection: str, manifest: object) -> str:
+    """The prose half of a vaulted-collection entry."""
+    artifacts = getattr(manifest, "artifacts", [])
+    total = sum(a.bytes for a in artifacts)
+    distinct = len({a.sha256 for a in artifacts})
+    lines = [
+        f"# data/{collection} — source bytes",
+        "",
+        "## What it is",
+        "",
+        f"The source documents under `data/{collection}`: {len(artifacts)} file(s) at "
+        f"{distinct} distinct content address(es), {total / 1_048_576:.0f} MiB. Kept in a yidam "
+        f"artifact vault (`{VAULT_NAME}`) rather than in git — the repository holds the record of "
+        "which bytes, and the vault holds the bytes.",
+        "",
+        "## Record",
+        "",
+        f"- **Manifest:** `data/{collection}/vault.yaml` "
+        "(`watermark documents manifest`, regenerable; `--check` verifies)",
+        "- **Addressing:** SHA-256 of the content, which is also the file's Git-LFS oid",
+        "- **Redistributable:** public records (Ohio R.C. 149.43 productions, U.S. Government "
+        "works), stated per artifact rather than defaulted",
+        "",
+        "## What it does not answer",
+        "",
+        "This entry accounts for *bytes*, not for what they say. The reviewed readings of these "
+        "documents live in `data/extracted/**` and are registered by their own catalog entries; a "
+        "claim rests on one of those, not on this. It also registers no `covers`, so it is not a "
+        "citable source: a collection spans hundreds of files, and citing the collection when you "
+        "mean one document would be a weaker claim wearing a citation's clothes.",
+        "",
+        "See `docs/artifact-vault.md` for the migration this is part of (epic #2141).",
+    ]
+    return "\n".join(lines) + "\n"
+
+
 def build_catalog(settings: Settings | None = None) -> list[CatalogSource]:
     """Every reviewed catalog entry, projected — network-wide, not per-site.
 
@@ -223,8 +379,15 @@ def build_catalog(settings: Settings | None = None) -> list[CatalogSource]:
     settings = settings or get_settings()
     entries = load_entries(settings=settings)
     sources = [project_entry(e, settings.site) for e in entries]
+    # Appended, not interleaved: `entry_for_path` returns the FIRST source covering a path, so a
+    # dataset entry keeps precedence over anything added here. These carry no `covers` today, and
+    # the ordering means that stays true even if they ever do.
+    sources += vault_sources(settings)
     log.info(
-        "corpus_catalog.built", sources=len(sources), covered=sum(len(s.covers) for s in sources)
+        "corpus_catalog.built",
+        sources=len(sources),
+        covered=sum(len(s.covers) for s in sources),
+        artifacts=sum(len(s.artifacts) for s in sources),
     )
     return sources
 
@@ -260,6 +423,17 @@ def _front_matter(source: CatalogSource) -> str:
             {"kind": loc.kind, "value": loc.value}
             | ({"description": loc.description} if loc.description else {})
             for loc in source.locations
+        ]
+    if source.artifacts:
+        body["artifacts"] = [
+            {
+                "sha256": a.sha256,
+                "bytes": a.bytes,
+                "media_type": a.media_type,
+                "vault": a.vault,
+                "redistributable": a.redistributable,
+            }
+            for a in source.artifacts
         ]
     return yaml.safe_dump(body, sort_keys=False, allow_unicode=True, width=100)
 
