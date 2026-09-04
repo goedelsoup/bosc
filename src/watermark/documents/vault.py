@@ -58,6 +58,7 @@ import hashlib
 import os
 import shutil
 import subprocess
+import tempfile
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -407,18 +408,34 @@ def _cache_address(path: Path) -> tuple[str, int] | None:
 
 
 def _copy_new(source: Path, target: Path) -> None:
-    """Copy *source* to *target*, refusing to touch an existing file.
+    """Place a copy of *source* at *target* atomically, refusing to touch an existing file.
 
-    ``shutil.copyfile`` opens the destination ``"wb"``, which truncates. That is unusable in a
-    tree whose contents are evidence: the one thing a copy fallback must not do is destroy what it
-    found. ``O_CREAT | O_EXCL`` makes the refusal the kernel's, not a check we could race.
+    Two ways a copy writes something wrong into a tree whose contents are evidence, and both are
+    excluded here:
+
+    * ``shutil.copyfile`` opens the destination ``"wb"``, which **truncates** what it finds;
+    * a copy that dies part-way — a full disk, an unreadable cache entry, a killed process —
+      leaves a **partial file under the real name**, which is a corrupt source byte wearing a
+      valid one's identity, and the next run reports it as a conflict for a human to untangle.
+
+    So the bytes land in a temporary sibling and the name is claimed from the *finished* file with
+    ``os.link``, which raises ``FileExistsError`` rather than replacing. The temporary is removed
+    on either outcome. Nothing partial is ever reachable under *target*: a process killed mid-copy
+    leaves an orphan ``.vault-*.part`` beside it, not a truncated record.
+
+    ``mkstemp`` rather than a name derived from the target's: several source filenames are long
+    enough that a derived prefix could exceed the 255-byte limit, and uniqueness has to hold when
+    two artifacts in one directory are placed at once.
     """
-    fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)
+    fd, tmp_name = tempfile.mkstemp(dir=target.parent, prefix=".vault-", suffix=".part")
+    tmp = Path(tmp_name)
     try:
-        with open(fd, "wb", closefd=False) as dest, source.open("rb") as src:
+        with open(fd, "wb") as dest, source.open("rb") as src:
             shutil.copyfileobj(src, dest)
+        tmp.chmod(0o644)  # mkstemp creates 0600; os.link carries the mode to the target
+        os.link(tmp, target)
     finally:
-        os.close(fd)
+        tmp.unlink(missing_ok=True)
 
 
 def hydrate(
@@ -452,10 +469,12 @@ def hydrate(
 
     settings = settings or get_settings()
     cache = cache_dir(settings)
-    # De-duplicated: `--paths-from` can name one rel twice (`data/x` and `./data/x` normalize to
-    # the same thing), and hydrating it twice reports it twice — inflating the counts a caller
-    # gates on. `recorded_rels` is already unique; `check` is what reports a doubly-recorded rel.
-    wanted = sorted(set(rels)) if rels is not None else sorted(recorded_rels(data_dir))
+    # De-duplicated on both paths, because both could double-count one artifact: `--paths-from`
+    # can name a rel twice (`data/x` and `./data/x` normalize to the same thing), and two
+    # manifests can record it twice. Hydrating it twice reports it twice — inflating the counts a
+    # caller gates on. `check` is what reports a doubly-recorded rel, and it reads the manifests
+    # directly, so de-duplicating here cannot hide one.
+    wanted = sorted(set(rels)) if rels is not None else recorded_rels(data_dir)
     by_rel = {a.rel: a for _, a in _iter_committed(data_dir)}
 
     outcomes: list[HydrateOutcome] = []
@@ -468,7 +487,11 @@ def hydrate(
             continue
         target = data_dir / rel
         address = content_address(target)
-        if address is not None and _is_pointer(target):
+        # The pointer's own address, or None when what is in place is not a pointer. Carried as a
+        # value rather than a bool so the unlink below can be gated on the same fact it was
+        # established from.
+        pointer_address = address if address is not None and _is_pointer(target) else None
+        if pointer_address is not None:
             # ⚠️ A pointer hash-MATCHES the record, because an oid is the content's sha256 — which
             # is what makes the manifest derivable without the bytes, and what would make a naive
             # "does it match?" check read an unmaterialized stub as satisfied. It is not: nothing
@@ -479,13 +502,13 @@ def hydrate(
             # pointer naming some OTHER digest is a divergence between two committed records —
             # the manifest and the pointer — and deleting it would resolve that divergence by
             # destroying half of it. Same refusal as bytes that disagree, in both modes.
-            if address[0] != artifact.sha256:
+            if pointer_address[0] != artifact.sha256:
                 outcomes.append(
                     HydrateOutcome(
                         action="conflict",
                         rel=rel,
                         detail=(
-                            f"pointer names {address[0][:12]}…, record says "
+                            f"pointer names {pointer_address[0][:12]}…, record says "
                             f"{artifact.sha256[:12]}… — left untouched"
                         ),
                     )
@@ -498,9 +521,7 @@ def hydrate(
                     )
                 )
                 continue
-            target.unlink()
-            address = None
-        if address is not None:
+        elif address is not None:
             if address[0] == artifact.sha256:
                 outcomes.append(HydrateOutcome(action="present", rel=rel))
             else:
@@ -515,6 +536,11 @@ def hydrate(
                     )
                 )
             continue
+        # ⚠️ The cache is resolved and VERIFIED before a pointer is unlinked, not after. Deleting
+        # the stub first and discovering the cache empty left the tree with neither the bytes nor
+        # the record of which bytes belong there — a command whose stated invariant is that a
+        # disagreement is reported and nothing is written, removing a file on its way to saying
+        # `absent-from-cache`.
         source = cache_path(cache, artifact.sha256)
         if not source.is_file():
             outcomes.append(
@@ -545,6 +571,9 @@ def hydrate(
         if check:
             outcomes.append(HydrateOutcome(action="linked", rel=rel, detail="would link"))
             continue
+        if pointer_address is not None:
+            # Safe now, and only now: the bytes the oid names are cached and verified.
+            target.unlink()
         target.parent.mkdir(parents=True, exist_ok=True)
         try:
             os.link(source, target)
@@ -573,6 +602,15 @@ def hydrate(
                         detail="a file is at the target that could not be read — left untouched",
                     )
                 )
+            except OSError as exc:
+                # A target filesystem with no hardlinks at all reaches here, since the atomic
+                # claim in `_copy_new` is itself a link. Reported rather than raised: one
+                # unplaceable artifact must not abort the other 3,661, and nothing was written.
+                outcomes.append(
+                    HydrateOutcome(
+                        action="conflict", rel=rel, detail=f"could not place the bytes: {exc}"
+                    )
+                )
             else:
                 outcomes.append(HydrateOutcome(action="copied", rel=rel, detail="cross-device"))
         else:
@@ -585,8 +623,13 @@ def recorded_rels(data_dir: Path) -> list[str]:
 
     Distinct from :func:`tracked_rels`, which asks Git-LFS: after #2147 that returns nothing and
     this is the only answer left. Which is the point of committing the record.
+
+    **De-duplicated.** Two manifests naming one rel is a real state — :func:`check` reports it as
+    ``duplicated``, reading the manifests directly so this cannot hide it — but it is still ONE
+    artifact. Returning it twice hydrated it twice (``1 linked`` then ``1 present`` for a single
+    file) and double-counted it in the post-untrack inventory this is also the answer for.
     """
-    return sorted(artifact.rel for _, artifact in _iter_committed(data_dir))
+    return sorted({artifact.rel for _, artifact in _iter_committed(data_dir)})
 
 
 class VaultFinding(BaseModel):
