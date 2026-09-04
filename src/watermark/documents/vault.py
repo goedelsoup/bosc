@@ -55,16 +55,22 @@ See `docs/artifact-vault.md` for the decisions behind all of the above.
 from __future__ import annotations
 
 import hashlib
+import os
+import shutil
 import subprocess
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path, PurePosixPath
+from typing import TYPE_CHECKING
 
 import yaml
 from pydantic import BaseModel, ConfigDict
 
 from watermark.logging import get_logger
+
+if TYPE_CHECKING:
+    from watermark.config import Settings
 
 log = get_logger(__name__)
 
@@ -338,6 +344,154 @@ def write(data_dir: Path, manifests: Iterable[VaultManifest]) -> list[Path]:
         )
         written.append(path)
     return written
+
+
+def _is_pointer(path: Path) -> bool:
+    """Whether *path* holds a Git-LFS pointer stub rather than the bytes it names."""
+    try:
+        with path.open("rb") as fh:
+            return parse_pointer(fh.read(256)) is not None
+    except OSError:
+        return False
+
+
+def cache_dir(settings: Settings | None = None) -> Path:
+    """Where the yidam vault keeps content-addressed bytes on this machine.
+
+    ``YIDAM_VAULT_CACHE``, else ``$XDG_CACHE_HOME/yidam/vault``, else ``~/.cache/yidam/vault`` —
+    yidam's own resolution order, read through :func:`watermark.config.get_settings` rather than
+    the environment so the two agree by construction rather than by coincidence.
+    """
+    from watermark.config import get_settings
+
+    settings = settings or get_settings()
+    if settings.yidam_vault_cache:
+        return Path(settings.yidam_vault_cache).expanduser()
+    base = Path(settings.xdg_cache_home).expanduser() if settings.xdg_cache_home else None
+    return (base or Path.home() / ".cache") / "yidam" / "vault"
+
+
+def cache_path(cache: Path, sha256: str) -> Path:
+    """``<cache>/sha256/<aa>/<64-hex>`` — the layout RFC-0023 fixes for the store and the cache."""
+    return cache / "sha256" / sha256[:2] / sha256
+
+
+class HydrateOutcome(BaseModel):
+    """What hydration did, or would do, for one artifact."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    # linked | copied | present | pointer | absent-from-cache | conflict
+    action: str
+    rel: str
+    detail: str = ""
+
+
+def hydrate(
+    data_dir: Path,
+    *,
+    rels: Iterable[str] | None = None,
+    settings: Settings | None = None,
+    check: bool = False,
+) -> list[HydrateOutcome]:
+    """Materialize vaulted bytes into the working tree under their **as-received** names.
+
+    This exists because ``yidam vault materialize`` does not. Upstream writes
+    ``.yidam/vault/<entry-slug>/<slug>-<hash8>.<ext-from-media_type>``, which is right for its
+    question — *give a person a real file to open* — and wrong for this corpus, where the filename
+    is evidence: three files carry no extension and several carry upper-case ones precisely because
+    a source name is never "fixed" (see ``filename-map.yaml``). Measured on ``cli/v0.8.0``,
+    ``1-12-26 minutes.docx`` materialized as ``multi-527ba1ba.bin``.
+
+    So this hardlinks ``<cache>/sha256/<aa>/<hex>`` to ``data/<rel>``, falling back to a copy across
+    devices. A hardlink is the point: the bytes are already on the disk once, and the corpus does
+    not need a second copy of 3.6 GB to be readable.
+
+    **It never overwrites a file whose bytes differ from the record.** A mismatch is reported as a
+    ``conflict`` and left alone, in either mode. Hydration must not be able to become the thing
+    that altered a source byte — that is the whole custody argument, and a tool that "fixes" a
+    divergence by overwriting it destroys the evidence that there was one.
+
+    Idempotent: an artifact already correct in place is ``present`` and untouched.
+    """
+    from watermark.config import get_settings
+
+    settings = settings or get_settings()
+    cache = cache_dir(settings)
+    wanted = sorted(rels) if rels is not None else sorted(recorded_rels(data_dir))
+    by_rel = {a.rel: a for _, a in _iter_committed(data_dir)}
+
+    outcomes: list[HydrateOutcome] = []
+    for rel in wanted:
+        artifact = by_rel.get(rel)
+        if artifact is None:
+            outcomes.append(
+                HydrateOutcome(action="conflict", rel=rel, detail=f"named by no {MANIFEST_NAME}")
+            )
+            continue
+        target = data_dir / rel
+        address = content_address(target)
+        if address is not None and _is_pointer(target):
+            # ⚠️ A pointer hash-MATCHES the record, because an oid is the content's sha256 — which
+            # is what makes the manifest derivable without the bytes, and what would make a naive
+            # "does it match?" check read an unmaterialized stub as satisfied. It is not: nothing
+            # can read it. Named separately so `--check` keeps the guard `bundle-freshness.yml`
+            # has today, where a pointer parsed as data yields zero rows rather than an error.
+            if check:
+                outcomes.append(
+                    HydrateOutcome(
+                        action="pointer", rel=rel, detail="unresolved Git-LFS pointer, not bytes"
+                    )
+                )
+                continue
+            target.unlink()
+            address = None
+        if address is not None:
+            if address[0] == artifact.sha256:
+                outcomes.append(HydrateOutcome(action="present", rel=rel))
+            else:
+                outcomes.append(
+                    HydrateOutcome(
+                        action="conflict",
+                        rel=rel,
+                        detail=(
+                            f"in place with {address[0][:12]}…, record says "
+                            f"{artifact.sha256[:12]}… — left untouched"
+                        ),
+                    )
+                )
+            continue
+        source = cache_path(cache, artifact.sha256)
+        if not source.is_file():
+            outcomes.append(
+                HydrateOutcome(
+                    action="absent-from-cache",
+                    rel=rel,
+                    detail=f"{artifact.sha256[:12]}… not cached — `yidam vault pull` fetches it",
+                )
+            )
+            continue
+        if check:
+            outcomes.append(HydrateOutcome(action="linked", rel=rel, detail="would link"))
+            continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            os.link(source, target)
+            outcomes.append(HydrateOutcome(action="linked", rel=rel))
+        except OSError:
+            # A cross-device cache (the documented case) cannot be hardlinked from.
+            shutil.copyfile(source, target)
+            outcomes.append(HydrateOutcome(action="copied", rel=rel, detail="cross-device"))
+    return outcomes
+
+
+def recorded_rels(data_dir: Path) -> list[str]:
+    """Every rel the committed manifests name — the hydration set, and the post-untrack inventory.
+
+    Distinct from :func:`tracked_rels`, which asks Git-LFS: after #2147 that returns nothing and
+    this is the only answer left. Which is the point of committing the record.
+    """
+    return sorted(artifact.rel for _, artifact in _iter_committed(data_dir))
 
 
 class VaultFinding(BaseModel):

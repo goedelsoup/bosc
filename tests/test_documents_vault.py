@@ -361,6 +361,162 @@ def test_the_same_rel_recorded_in_two_manifests_is_reported(data_dir: Path) -> N
     assert [(f.kind, f.rel) for f in findings] == [("duplicated", "documents/aedg/a.pdf")]
 
 
+# --- hydration ----------------------------------------------------------------
+
+
+@pytest.fixture
+def vaulted(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, Path]:
+    """A `data/` tree holding only manifests, plus a cache holding the bytes they name."""
+    from watermark.documents import vault as vault_mod
+
+    data_dir = tmp_path / "data"
+    cache = tmp_path / "cache"
+    files = {"documents/aedg/a b.pdf": _CONTENT, "documents/aedg/NO-EXTENSION": b"%PDF-x"}
+    for rel, payload in files.items():
+        path = data_dir / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(payload)
+    write(data_dir, build(data_dir, tmp_path, rels=list(files)))
+    for rel, payload in files.items():
+        sha = hashlib.sha256(payload).hexdigest()
+        blob = vault_mod.cache_path(cache, sha)
+        blob.parent.mkdir(parents=True, exist_ok=True)
+        blob.write_bytes(payload)
+        (data_dir / rel).unlink()  # the working tree is now empty of sources
+    monkeypatch.setattr(vault_mod, "cache_dir", lambda _s=None: cache)
+    return data_dir, cache
+
+
+def test_hydration_restores_an_empty_tree_under_the_as_received_names(
+    vaulted: tuple[Path, Path],
+) -> None:
+    """The acceptance criterion — and the reason this exists instead of `vault materialize`.
+
+    Upstream would have written `<slug>-<hash8>.<ext>`, turning `NO-EXTENSION` into `.bin` and
+    losing the space in `a b.pdf`. Both names survive here because the name is evidence.
+    """
+    from watermark.documents.vault import hydrate
+
+    data_dir, _ = vaulted
+    outcomes = hydrate(data_dir)
+
+    assert {o.action for o in outcomes} == {"linked"}
+    assert (data_dir / "documents/aedg/a b.pdf").read_bytes() == _CONTENT
+    assert (data_dir / "documents/aedg/NO-EXTENSION").read_bytes() == b"%PDF-x"
+
+
+def test_hydration_hardlinks_rather_than_copying(vaulted: tuple[Path, Path]) -> None:
+    """3.6 GB does not need a second copy on disk to be readable."""
+    from watermark.documents.vault import cache_path, hydrate
+
+    data_dir, cache = vaulted
+    hydrate(data_dir)
+    target = data_dir / "documents/aedg/a b.pdf"
+    assert target.stat().st_ino == cache_path(cache, _SHA).stat().st_ino
+
+
+def test_hydration_is_idempotent(vaulted: tuple[Path, Path]) -> None:
+    from watermark.documents.vault import hydrate
+
+    data_dir, _ = vaulted
+    hydrate(data_dir)
+    assert {o.action for o in hydrate(data_dir)} == {"present"}
+
+
+def test_hydration_refuses_to_overwrite_bytes_that_disagree_with_the_record(
+    vaulted: tuple[Path, Path],
+) -> None:
+    """The custody guarantee: hydration must never be the thing that altered a source byte.
+
+    A tool that resolved a divergence by overwriting it would destroy the evidence that there was
+    one — so a conflict is reported and the file is left exactly as found.
+    """
+    from watermark.documents.vault import hydrate
+
+    data_dir, _ = vaulted
+    target = data_dir / "documents/aedg/a b.pdf"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(b"tampered, and not what the manifest records")
+
+    outcomes = {o.rel: o for o in hydrate(data_dir)}
+    conflict = outcomes["documents/aedg/a b.pdf"]
+    assert conflict.action == "conflict"
+    assert "left untouched" in conflict.detail
+    assert target.read_bytes() == b"tampered, and not what the manifest records"
+
+
+def test_check_mode_writes_nothing(vaulted: tuple[Path, Path]) -> None:
+    from watermark.documents.vault import hydrate
+
+    data_dir, _ = vaulted
+    assert {o.action for o in hydrate(data_dir, check=True)} == {"linked"}
+    assert not (data_dir / "documents/aedg/a b.pdf").exists()
+
+
+def test_an_artifact_absent_from_the_cache_is_reported_not_invented(
+    vaulted: tuple[Path, Path],
+) -> None:
+    from watermark.documents.vault import cache_path, hydrate
+
+    data_dir, cache = vaulted
+    cache_path(cache, _SHA).unlink()
+    outcomes = {o.rel: o for o in hydrate(data_dir)}
+    assert outcomes["documents/aedg/a b.pdf"].action == "absent-from-cache"
+    assert "vault pull" in outcomes["documents/aedg/a b.pdf"].detail
+
+
+def test_an_unresolved_pointer_is_named_rather_than_read_as_satisfied(
+    vaulted: tuple[Path, Path],
+) -> None:
+    """⚠️ The trap this check exists for: a pointer HASH-MATCHES the record.
+
+    An oid is the sha256 of the content, which is what makes the manifest derivable without the
+    bytes — and would make a naive "does it match?" check read an unmaterialized stub as fine. It
+    is not fine: nothing can read it, and `bundle-freshness.yml` guards this today precisely
+    because a pointer parsed as data yields zero rows rather than an error.
+    """
+    from watermark.documents.vault import hydrate
+
+    data_dir, _ = vaulted
+    target = data_dir / "documents/aedg/a b.pdf"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(_pointer(_SHA, len(_CONTENT)))
+
+    checked = {o.rel: o for o in hydrate(data_dir, check=True)}
+    assert checked["documents/aedg/a b.pdf"].action == "pointer"
+    assert target.read_bytes().startswith(b"version https://git-lfs.github.com/spec/v1")
+
+
+def test_hydration_replaces_a_pointer_with_the_bytes_it_names(
+    vaulted: tuple[Path, Path],
+) -> None:
+    """Replacing a stub is not altering a source byte — the oid says which bytes belong there."""
+    from watermark.documents.vault import hydrate
+
+    data_dir, _ = vaulted
+    target = data_dir / "documents/aedg/a b.pdf"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(_pointer(_SHA, len(_CONTENT)))
+
+    outcomes = {o.rel: o for o in hydrate(data_dir)}
+    assert outcomes["documents/aedg/a b.pdf"].action == "linked"
+    assert target.read_bytes() == _CONTENT
+
+
+def test_recorded_rels_answers_after_git_lfs_stops_answering(vaulted: tuple[Path, Path]) -> None:
+    """`tracked_rels` asks Git-LFS, which returns nothing after #2147. This is what remains.
+
+    That the committed record still answers is the whole reason it is committed.
+    """
+    from watermark.documents.vault import recorded_rels
+
+    data_dir, _ = vaulted
+    assert recorded_rels(data_dir) == [
+        "documents/aedg/NO-EXTENSION",
+        "documents/aedg/a b.pdf",
+    ]
+
+
 # --- the real corpus ----------------------------------------------------------
 
 _HAS_GIT_LFS = shutil.which("git") is not None and (

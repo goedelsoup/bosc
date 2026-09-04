@@ -71,26 +71,24 @@ jobs:
             git lfs pull --include="$(paste -sd, /tmp/lfs-paths.txt)"
           fi
 
-      - name: Verify no observed LFS path is still a pointer
+      - name: Verify every observed path holds the bytes the record names
         # The include list is derived, but derivation can still miss (a renamed path, a partial
         # fetch). This checks the OUTCOME rather than trusting the input: an unmaterialized
         # object here would be silently hashed as a ~130-byte pointer stub into every bundle's
         # `catalog` feed, so the run stops instead.
+        #
+        # `hydrate --check` is a strict superset of the pointer grep this replaces: it reports a
+        # pointer, AND bytes that disagree with `vault.yaml`, AND a path the record does not name.
+        # It also survives #2147, when `git lfs pull` above goes away and the vault becomes the
+        # only source — the check does not change, only what fills the tree.
+        #
+        # ⚠️ Do NOT "simplify" this to a hash comparison. An unresolved pointer HASH-MATCHES its
+        # own record — a Git-LFS oid is the sha256 of the content, which is exactly what lets the
+        # manifest be built without the bytes — so a naive match would read a stub as satisfied.
+        # `hydrate` names the pointer case separately for that reason.
         run: |
           set -euo pipefail
-          unresolved=0
-          while IFS= read -r p; do
-            [ -f "$p" ] || continue
-            if head -c 43 "$p" | grep -q "^version https://git-lfs.github.com/spec/v1"; then
-              echo "::error::unmaterialized LFS pointer: $p"
-              unresolved=$((unresolved + 1))
-            fi
-          done < /tmp/lfs-paths.txt
-          if [ "$unresolved" -gt 0 ]; then
-            echo "::error::$unresolved catalog-observed path(s) are still pointers — refusing to export"
-            exit 1
-          fi
-          echo "all catalog-observed LFS paths materialized"
+          uv run watermark documents hydrate --check --paths-from /tmp/lfs-paths.txt
 
       - name: Report passage-index drift
         # Cheap and LFS-independent: it compares the published SET, opening no PDF. Reported
