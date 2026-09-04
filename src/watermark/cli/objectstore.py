@@ -102,3 +102,84 @@ def objectstore_sync_cmd(
         f"unchanged {len(plan.unchanged)} · lfs-skipped {len(plan.lfs_skipped)} "
         f"→ {target} bucket"
     )
+
+
+@objectstore_app.command("audit")
+def objectstore_audit_cmd(
+    base_url: str = typer.Option(
+        "", "--base", help="Origin to probe (default: WATERMARK_PUBLIC_SITE_BASE_URL)."
+    ),
+    via: str = typer.Option(
+        "api",
+        "--via",
+        help="'api' (probe /api/doc), 'store' (also HEAD the bucket — needs credentials).",
+    ),
+    limit: int = typer.Option(20, "--limit", help="How many findings of each kind to print."),
+    concurrency: int = typer.Option(8, "--concurrency", help="Parallel HEAD requests."),
+) -> None:
+    """Check that production serves every document the site publishes (#2149).
+
+    Compares three sets — what this commit's bundles offer, what the deployed allowlist admits,
+    what /api/doc actually returns — and names which one broke. Exits 1 when production offers a
+    download it cannot serve, or (with --via store) when an offered object is not in the bucket.
+    Deploy lag is REPORTED, never failed. See docs/object-store.md.
+    """
+    from watermark.site.doc_serving import GateUnavailableError, audit
+    from watermark.site.objectstore import (
+        ObjectStoreUnconfiguredError,
+        store_from_settings,
+    )
+
+    if via not in ("api", "store"):
+        console.print("[red]--via must be 'api' or 'store'.[/]")
+        raise typer.Exit(2)
+
+    settings = get_settings()
+    base = (base_url or settings.public_site_base_url).rstrip("/")
+
+    store_head = None
+    if via == "store":
+        try:
+            store_head = store_from_settings(settings, target="remote").head
+        except ObjectStoreUnconfiguredError as exc:
+            console.print(f"[red]{exc}[/]")
+            raise typer.Exit(1) from None
+
+    try:
+        result = audit(base_url=base, store_head=store_head, concurrency=concurrency)
+    except GateUnavailableError as exc:
+        console.print(f"[red]Publish gate unreadable — nothing could be compared:[/] {exc}")
+        raise typer.Exit(1) from None
+
+    console.print(
+        f"[bold]{base}[/] · offered {result.offered} · gate admits {result.gate_size} · "
+        f"served {result.served}"
+    )
+    for label, items, colour in (
+        ("unserved (production offers it and 404s)", result.unserved, "red"),
+        ("absent from the store (no deploy fixes this)", result.store_absent, "red"),
+        ("not yet in the deployed gate (deploy lag)", result.ungated, "yellow"),
+    ):
+        if not items:
+            continue
+        console.print(f"\n[{colour}]{len(items)} {label}:[/]")
+        for f in items[:limit]:
+            console.print(f"  [dim]{f.rel}[/] — {f.detail}")
+        if len(items) > limit:
+            console.print(f"  [dim]… {len(items) - limit} more[/]")
+
+    if result.gate_only:
+        console.print(
+            f"\n[dim]{len(result.gate_only)} rel(s) the gate admits that this commit does not "
+            "publish — the deploy is ahead of this checkout, or a clearance was reverted.[/]"
+        )
+
+    if result.ok:
+        console.print("\n[green]✓ every document production offers, production serves.[/]")
+        return
+    console.print(
+        "\n[red]✗ production cannot serve what it offers.[/] "
+        "Absent objects → `watermark objectstore sync --target remote`; "
+        "gate-admitted 404s → check the bucket and DOCS_ENABLED."
+    )
+    raise typer.Exit(1)

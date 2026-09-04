@@ -18,6 +18,7 @@
     "check:links": "node scripts/check-links.mjs",
     "check:routes": "node scripts/check-routes.mjs",
     "check:site-scope": "node scripts/check-site-scope.mjs",
+    "check:doc-gate": "node scripts/check-doc-gate.mjs",
     "gen:icons": "node scripts/gen-icons.mjs",
     "test": "vitest run",
     "lint": "biome ci src functions scripts packages",

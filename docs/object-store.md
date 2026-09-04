@@ -126,6 +126,76 @@ The Pages deploy (`.github/workflows/pages.yml`) carries the `DOCS` binding from
 remote`), the allowlist (C1) is in place, and a redaction pass (C2) has run, an operator
 flips `DOCS_ENABLED = "true"` to open `/api/doc` to the public for the allowlisted files.
 
+## Checking that production actually serves it — `watermark objectstore audit`
+
+```sh
+watermark objectstore audit                   # probe the production origin (no credentials)
+watermark objectstore audit --via store       # also HEAD the bucket: absent object vs gate rejection
+watermark objectstore audit --base https://<preview>.pages.dev
+```
+
+**Nothing verified the promise until #2149, and the promise was 93% false.** `DocumentItem.published`
+is an assertion about this store, and `available` is read from the *working tree* — where an
+unresolved LFS pointer counts as available on purpose, because the bytes are supposed to be here. So
+a published document renders as a download nothing has ever tried. Measured 2026-09-04: of the 392
+documents the deployed build offered, **26 could be downloaded.**
+
+The audit compares three sets and names which one broke, because the failures have different fixes:
+
+| | |
+|---|---|
+| **offered** | what this commit's `web/sites/<slug>` bundles publish, unioned over the exported sites |
+| **gate** | what the deployed `/published-documents.json` admits |
+| **served** | what `HEAD /api/doc/<rel>` answers `200` for |
+
+- **unserved** — in the gate, and 404. Production offers a download it cannot serve; always a bug.
+  **Exits 1.**
+- **absent from the store** (`--via store`) — no object at all. No deploy fixes this; a sync does.
+  **Exits 1.**
+- **not yet in the deployed gate** — the deploy is behind this commit. Routine, and **reported
+  rather than failed**: a merged clearance waiting on a manual deploy is this repo's normal state,
+  and a check that failed on it would be muted inside a week. A count far larger than recent commits
+  explain is the shape of a *scoping* bug — which is exactly how #2149 read.
+
+`/api/doc` answers 404 for both "not allowlisted" and "not in the store", so the API probe alone
+cannot tell those apart. That is what `--via store` is for, and why the two are never summed.
+
+⚠️ **A preview URL is not a valid target for the gate half.** `enforcePublishGate` only enforces
+when `CF_PAGES_BRANCH == "main"`, so a preview deployment serves whatever the bucket holds and the
+gate comparison reads as vacuously clean. Point `--base` at a preview to measure *store coverage*
+only.
+
+`.github/workflows/doc-serving.yml` runs the API probe daily. It needs no credentials and no LFS —
+it reads committed bundles and a public origin, and never opens a source byte.
+
+### Should the sync run in a workflow? Not yet — and #2141 is why
+
+#2149 asked whether populating the store belongs in CI "rather than a human's memory". The answer
+today is **no**, and the reason is not effort:
+
+- The sync needs the **real bytes**, so it cannot run on an `lfs: false` checkout. A workflow that
+  pulled them would move ~3.7 GB of metered Git-LFS bandwidth per run — which is a large part of why
+  this drifted in the first place.
+- The rel-keyed keyspace it fills is **being retired** (#2145): the corpus already lives in a
+  content-addressed yidam vault, and `/api/doc` moves to resolving `rel → sha256`. Automating an
+  upload path that is scheduled for deletion buys nothing.
+- After #2147 the working tree is filled **from the vault**, not from LFS. At that point a workflow
+  *can* hydrate cheaply, over the keyspace that is staying — so automation becomes worth building
+  exactly when it stops being expensive.
+
+What replaces the memory in the meantime is the audit above: a human still runs the sync, but a red
+workflow names the files rather than a reader finding them. That is the part that was missing.
+
+### The gate is network-global; the `documents` feed is per-site
+
+`/published-documents.json` is one asset at the domain root, and `documents` is a per-site feed.
+Until #2149 the route read it with a bare `loadFeed("documents")` — and a global route runs outside
+the active-site ALS, so that resolved **Lima's** bundle and the gate 404'd every other site's
+published documents before R2 was ever asked: 252 of 392 unreachable by construction, at any deploy
+freshness. `@watermark/core`'s `docGate.ts` now unions across `exportedSiteSlugs()`, and stops
+there — a non-selectable site mints no pages, so admitting its documents would open bytes no page
+links, which is the opposite of default-deny.
+
 ## Security notes
 
 - Credentials are S3 API tokens — environment only, never committed.

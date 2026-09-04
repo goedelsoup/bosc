@@ -512,6 +512,14 @@ jobs:
       - name: Check site scope
         run: pnpm run check:site-scope
 
+      # The #2149 publish-gate guard: `/published-documents.json` is the only thing between a
+      # reader and a source byte, it is network-global, and the feed it is built from is per-site —
+      # so it shipped carrying one site's set while the build offered every site's. Reads `dist/`
+      # for the same reason as the check above: a site whose export omits its documents feed drops
+      # out of the union in silence, and only the emitted asset knows.
+      - name: Check the publish gate reaches every site
+        run: pnpm run check:doc-gate
+
   # Repo-wide Markdown lint (markdownlint-cli2). Node, but separate from the Astro
   # frontend job — it lints hand-authored docs across the repo (data/, docs/, root, …),
   # not the site. Config + ignores (generated docs, frontend, notebooks) live in

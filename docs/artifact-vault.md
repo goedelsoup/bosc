@@ -20,7 +20,7 @@ and the runbook the later phases fill in.
 |---|---|
 | Decisions below | settled 2026-09-03 |
 | Implementation | not started — see #2143 through #2148 |
-| Store in use today | Git-LFS, plus the rel-keyed R2 store `/api/doc` serves (#2149) |
+| Store in use today | Git-LFS, plus the rel-keyed R2 store `/api/doc` serves (refilled 2026-09-04, #2149) |
 
 ## The decisions
 
@@ -94,6 +94,18 @@ now to make the document viewer work, once again under the content address when 
 corpus unservable for the length of an epic, and R2 storage and egress on 1.8 GB are cheap beside
 that. Recorded here so the second upload is not later read as a mistake, and so #2149 stays
 independent of #2144 / #2145 rather than blocked behind them.
+
+**Done, 2026-09-04: 2,260 objects / 1.8 GB uploaded, 1,585 already current, 0 LFS pointers skipped**
+— exactly the predicted queue. The rel-keyed store now holds every one of the 392 documents the
+build publishes, verified by `watermark objectstore audit --via store` (`store_absent` = 0). The
+second upload, under the content address, is #2145's.
+
+⚠️ **The store was only half of #2149**, and the other half is worth carrying into #2145: the R2 gap
+accounted for **9** of the 480 404s. The rest were the *publish gate* —
+`/published-documents.json` is one network-global asset built from a **per-site** feed, so it
+shipped carrying Lima's set alone and 404'd every other site's documents before R2 was ever asked.
+A `rel → sha256` map has exactly the same shape, and putting it in KV does not change that: if it
+is assembled per-site it will be wrong in the same way.
 
 ### 4. One bucket, one prefix
 
