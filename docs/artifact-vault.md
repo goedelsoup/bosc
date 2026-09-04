@@ -403,8 +403,20 @@ command — each one a path by which hydration could have written a byte nobody 
   content it names, which is the corruption being looked for.
 - **a file is at the target that could not be read.** `content_address` answers `None` for
   unreadable as well as absent, so that case reaches the link, where `os.link` raises
-  `FileExistsError`. The copy fallback creates its destination `O_CREAT | O_EXCL` — never
-  `shutil.copyfile`, which opens `"wb"` and truncates whatever it found.
+  `FileExistsError` — never `shutil.copyfile`, which opens `"wb"` and truncates whatever it found.
+
+Two orderings carry the same argument, and both were the second round of review on this command:
+
+- **the cache is resolved and verified *before* a pointer is unlinked.** Deleting the stub first
+  and finding the cache empty second left the tree with neither the bytes nor the record of which
+  bytes belong there — a command whose whole promise is "reported, nothing written" removing a file
+  on its way to saying `absent-from-cache`.
+- **the copy fallback is atomic.** Bytes land in a temporary sibling and the name is claimed from
+  the *finished* file with `os.link`, which refuses an existing target rather than replacing it. A
+  copy that dies part-way — full disk, unreadable entry, killed process — therefore leaves an
+  orphan `.vault-*.part`, never a half-written file wearing a source name. Copying straight into
+  the destination is what makes a partial file reachable under the real one's identity, and the
+  next run can only report that as a conflict for a human to untangle.
 
 ### ⚠️ A pointer hash-matches its own record
 

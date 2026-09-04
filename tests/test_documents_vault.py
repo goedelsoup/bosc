@@ -715,3 +715,100 @@ def test_paths_from_keeps_a_filename_that_ends_in_a_space(
     assert result.exit_code == 0, result.output
     assert "named by no" not in result.output
     assert "1 present" in result.output
+
+
+def test_a_pointer_survives_an_empty_cache(vaulted: tuple[Path, Path]) -> None:
+    """The stub is not deleted on the way to saying `absent-from-cache`.
+
+    Unlinking first and resolving the cache second left the tree with neither the bytes nor the
+    record of which bytes belong there — from a command whose stated invariant is that a
+    disagreement is reported and nothing is written.
+    """
+    from watermark.documents.vault import cache_path, hydrate
+
+    data_dir, cache = vaulted
+    target = data_dir / "documents/aedg/a b.pdf"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    stub = _pointer(_SHA, len(_CONTENT))
+    target.write_bytes(stub)
+    cache_path(cache, _SHA).unlink()
+
+    outcome = {o.rel: o for o in hydrate(data_dir)}["documents/aedg/a b.pdf"]
+    assert outcome.action == "absent-from-cache"
+    assert target.read_bytes() == stub
+
+
+def test_a_pointer_survives_a_corrupt_cache_entry(vaulted: tuple[Path, Path]) -> None:
+    """Same ordering, the other reason the cache cannot answer."""
+    from watermark.documents.vault import cache_path, hydrate
+
+    data_dir, cache = vaulted
+    target = data_dir / "documents/aedg/a b.pdf"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    stub = _pointer(_SHA, len(_CONTENT))
+    target.write_bytes(stub)
+    cache_path(cache, _SHA).write_bytes(b"not the recorded content")
+
+    outcome = {o.rel: o for o in hydrate(data_dir)}["documents/aedg/a b.pdf"]
+    assert outcome.action == "conflict"
+    assert target.read_bytes() == stub
+
+
+def test_a_copy_that_dies_part_way_leaves_no_file_at_the_target(
+    vaulted: tuple[Path, Path], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A half-written file must never wear a source name.
+
+    `copyfile`/`copyfileobj` straight into the destination leaves one there when the read or the
+    write fails — a corrupt source byte with a valid one's identity, which the next run can only
+    report as a conflict for a human to untangle. The bytes go to a temporary sibling and the name
+    is claimed from the finished file, so the partial state is unreachable under the real name.
+    """
+    import os as os_mod
+    import shutil as shutil_mod
+
+    from watermark.documents import vault as vault_mod
+
+    data_dir, _ = vaulted
+    target = data_dir / "documents/aedg/a b.pdf"
+
+    monkeypatch.setattr(os_mod, "link", lambda *a, **k: (_ for _ in ()).throw(OSError(18, "EXDEV")))
+    monkeypatch.setattr(
+        shutil_mod,
+        "copyfileobj",
+        lambda *a, **k: (_ for _ in ()).throw(OSError(28, "ENOSPC")),
+    )
+
+    outcome = {o.rel: o for o in vault_mod.hydrate(data_dir)}["documents/aedg/a b.pdf"]
+    assert outcome.action == "conflict"
+    assert "could not place the bytes" in (outcome.detail or "")
+    assert not target.exists()
+    # And no temporary is left behind either.
+    assert list(target.parent.glob(".vault-*")) == []
+
+
+def test_recorded_rels_counts_a_doubly_recorded_artifact_once(data_dir: Path) -> None:
+    """Two manifests naming one rel is a real state, reported by `check` — but it is ONE artifact.
+
+    Returned twice, it was hydrated twice (`1 linked` then `1 present` for a single file) and
+    double-counted in the post-untrack inventory this function is also the answer for.
+    """
+    from watermark.documents.vault import check, recorded_rels
+
+    _seed(data_dir, {"documents/aedg/a.pdf": _CONTENT})
+    written = build(data_dir, data_dir.parent, rels=["documents/aedg/a.pdf"])[0]
+    write(data_dir, [written])
+    write(
+        data_dir,
+        [
+            written.model_copy(
+                update={"meta": written.meta.model_copy(update={"collection": "reference/usgs"})}
+            )
+        ],
+    )
+
+    rels = recorded_rels(data_dir)
+    assert rels == ["documents/aedg/a.pdf"]
+    assert rels == sorted(set(rels))
+    # De-duplicating the inventory must not hide the duplication itself.
+    assert any(f.kind == "duplicated" for f in check(data_dir, data_dir.parent, rels=rels))
