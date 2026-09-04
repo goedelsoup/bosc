@@ -190,6 +190,23 @@ def test_fetch_gate_refuses_a_payload_with_no_rels_array() -> None:
         fetch_gate("https://x", client=client)
 
 
+@pytest.mark.parametrize(
+    "payload", [["a.pdf"], "nope", 42, None], ids=["list", "str", "int", "null"]
+)
+def test_fetch_gate_refuses_a_payload_that_is_not_a_mapping(payload: object) -> None:
+    """A malformed gate must be a NAMED refusal, not an AttributeError.
+
+    A JSON array or scalar has no `.get`, so the unguarded read escaped the caller's
+    `GateUnavailableError` handler and surfaced as a traceback — the one failure mode the
+    controlled error exists to prevent.
+    """
+    with (
+        _client(lambda r: httpx.Response(200, json=payload)) as client,
+        pytest.raises(GateUnavailableError),
+    ):
+        fetch_gate("https://x", client=client)
+
+
 # --- the probes ---------------------------------------------------------------
 def test_probe_api_heads_the_encoded_path_and_maps_each_status() -> None:
     seen: list[str] = []

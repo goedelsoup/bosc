@@ -93,15 +93,18 @@ describe("publishedRels, against the committed bundles", () => {
     for (const rel of lima) expect(rels.has(rel)).toBe(true);
   });
 
-  it("admits documents from every exported site that publishes any", () => {
-    // The regression in the form a reader hits it: a site whose documents render as available
-    // downloads while the gate has never heard of them.
+  it("admits EVERY published document of every exported site", () => {
+    // The regression in the form a reader hits it: a document that renders as an available
+    // download while the gate has never heard of it. Asserted as a set difference rather than
+    // "at least one per site" — the weaker form passes a gate that drops a single collection,
+    // which is the same silent partial the check exists to refuse. Exact is safe here because
+    // `publishedRels()` and this loop read the same `WATERMARK_BUNDLE_DIR` bundles.
     const missing: string[] = [];
     for (const slug of exportedSiteSlugs()) {
       const own = publishedRelsFrom([slug], (s) =>
         hasFeed("documents", s) ? loadFeed<DocumentCollectionItem[]>("documents", s) : null,
       );
-      if (own.length > 0 && !own.some((r) => rels.has(r))) missing.push(slug);
+      for (const rel of own) if (!rels.has(rel)) missing.push(`${slug}: ${rel}`);
     }
     expect(missing).toEqual([]);
   });

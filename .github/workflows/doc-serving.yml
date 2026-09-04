@@ -70,10 +70,17 @@ jobs:
         # `enforcePublishGate` only enforces when CF_PAGES_BRANCH == "main", so a preview URL
         # serves whatever the bucket holds and the gate comparison reads as vacuously clean. Point
         # `base` at a preview only to measure store coverage.
+        #
+        # `base` reaches the shell through the ENVIRONMENT, never `${{ }}` interpolation: an
+        # expression is pasted into the script before bash sees it, so a dispatch input carrying
+        # a quote or a `;` would be executed rather than passed. On a scheduled run `inputs` is
+        # null, which renders as the empty string — defined, so `set -u` is satisfied.
+        env:
+          AUDIT_BASE: ${{ inputs.base }}
         run: |
           set -euo pipefail
-          if [ -n "${{ inputs.base }}" ]; then
-            uv run watermark objectstore audit --base "${{ inputs.base }}"
+          if [ -n "$AUDIT_BASE" ]; then
+            uv run watermark objectstore audit --base "$AUDIT_BASE"
           else
             uv run watermark objectstore audit
           fi

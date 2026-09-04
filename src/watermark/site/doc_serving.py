@@ -125,9 +125,12 @@ def fetch_gate(base_url: str, *, client: httpx.Client) -> frozenset[str]:
         payload = resp.json()
     except (httpx.HTTPError, json.JSONDecodeError) as exc:
         raise GateUnavailableError(f"could not read {url}: {exc}") from exc
-    rels = payload.get("rels")
-    if not isinstance(rels, list):
+    # `isinstance(payload, dict)` first: a JSON array or scalar has no `.get`, and an
+    # AttributeError here escapes the caller's `GateUnavailableError` handler as a traceback —
+    # turning "the gate asset is malformed" from a named refusal into a crash.
+    if not isinstance(payload, dict) or not isinstance(payload.get("rels"), list):
         raise GateUnavailableError(f"{url} carries no `rels` array")
+    rels = payload["rels"]
     return frozenset(str(r) for r in rels)
 
 
