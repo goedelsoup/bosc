@@ -224,6 +224,28 @@ def _lfs_pointer_size(head: bytes) -> int | None:
     return None
 
 
+def _catalogued(rel_path: Path, documents_dir: Path) -> bool:
+    """Whether a ``documents_dir``-relative path belongs in the public document catalogue.
+
+    Applied to **both** witnesses — the filesystem walk and the committed ``vault.yaml`` — so that
+    what the feed contains never depends on which of them saw the file (#2147).
+    """
+    if rel_path.name in _SKIP_NAMES or rel_path.suffix.lower() in _SKIP_SUFFIXES:
+        return False
+    # A `-text` sidecar tree holds machine transcriptions of the legacy binaries beside it
+    # (#1757), not source bytes. The public document catalog lists records, so the derived
+    # text never appears in it — the .DOC is the document; its .txt is a reading aid.
+    if in_sidecar_tree(rel_path.as_posix(), documents_dir):
+        return False
+    # A collection is a first-level subdirectory; a file dropped directly under documents_dir
+    # has no collection and would otherwise become a single-file "collection" named after the
+    # file (#617). Skip it, surfaced for review.
+    if len(rel_path.parts) < 2:
+        log.warning("site.documents.uncollected_file", path=str(rel_path))
+        return False
+    return True
+
+
 def _recorded_sizes(documents_dir: Path) -> dict[str, int]:
     """``rel -> bytes`` for every artifact the committed ``vault.yaml`` manifests name (#2147).
 
@@ -338,25 +360,20 @@ def build_documents(
     for path in sorted(documents_dir.rglob("*")):
         if not path.is_file():
             continue
-        if path.name in _SKIP_NAMES or path.suffix.lower() in _SKIP_SUFFIXES:
-            continue
         rel_path = path.relative_to(documents_dir)
-        # A `-text` sidecar tree holds machine transcriptions of the legacy binaries beside it
-        # (#1757), not source bytes. The public document catalog lists records, so the derived
-        # text never appears in it — the .DOC is the document; its .txt is a reading aid.
-        if in_sidecar_tree(rel_path.as_posix(), documents_dir):
-            continue
-        # A collection is a first-level subdirectory; a file dropped directly under
-        # documents_dir has no collection and would otherwise become a single-file
-        # "collection" named after the file (#617). Skip it, surfaced for review.
-        if len(rel_path.parts) < 2:
-            log.warning("site.documents.uncollected_file", path=str(rel_path))
+        if not _catalogued(rel_path, documents_dir):
             continue
         walked[str(rel_path)] = path
 
+    # ONE predicate over both witnesses. Filtering only the walk would make the feed's CONTENTS
+    # depend on whether a file's bytes happen to be local — a `Thumbs.db` catalogued from the
+    # manifest and skipped from disk, say — which is the divergence this third witness exists to
+    # end, not to introduce. The two sets agree today (nothing in `_SKIP_*` is vaultable) and this
+    # is what keeps them agreeing.
     recorded = _recorded_sizes(documents_dir)
+    from_record = {rel for rel in recorded if _catalogued(Path(rel), documents_dir)}
 
-    for rel in sorted(set(walked) | set(recorded)):
+    for rel in sorted(set(walked) | from_record):
         path = walked.get(rel, documents_dir / rel)
         rel_path = Path(rel)
         slug = rel_path.parts[0]

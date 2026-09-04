@@ -166,16 +166,23 @@ jobs:
       # an informational note, never a failure.
       - name: Catalog check
         run: uv run watermark catalog check
-      # Sites-registry gate (#1027): YAML identity ↔ Python SITES ↔ sites-registry.json in sync.
-      # Vault-manifest gate (#2148): the check that REPLACES Git-LFS's implicit guarantee that a
-      # tracked file is a real, hashed object. It reads two witnesses — `git lfs ls-files` and the
+      # Vault-manifest gate (#2148), standing in for Git-LFS's implicit guarantee that a tracked
+      # file is a real, hashed object. It reads two witnesses — `git lfs ls-files` and the
       # filesystem — because the first goes silent at #2147 and an LFS-only inventory would not
       # degrade there, it would INVERT: `tracked - recorded` becomes empty and the gate reports a
       # clean corpus for the same reason it reports one when everything is fine. Needs no LFS
       # bytes: an unresolved pointer carries the oid, which IS the content's sha256.
+      #
+      # ⚠️ What it can RUN here is not what it can CATCH here. Once #2147 lands this runner holds
+      # no source bytes, so no file can be unrecorded and `unrecorded` has nothing to report — it
+      # passes by having nothing to ask about. It earns its keep where the bytes are: a
+      # developer's tree, an ingest, a hydrated runner. Closing that gap means R2 credentials in
+      # Actions, which is a separate decision. Kept because the manifests' own internal drift
+      # (duplicates, misfiled collections) is still checked, and because it costs seconds.
       - name: Vault manifest check
         run: uv run watermark documents manifest --check
 
+      # Sites-registry gate (#1027): YAML identity ↔ Python SITES ↔ sites-registry.json in sync.
       - name: Sites registry check
         run: uv run watermark sites check
       # Wiki cross-link gate (#1571, area:corpus-hygiene): fail on any unresolved [[wiki link]]
