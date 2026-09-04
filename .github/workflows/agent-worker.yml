@@ -48,7 +48,11 @@ jobs:
           app-id: ${{ secrets.RESEARCH_APP_ID }}
           private-key: ${{ secrets.RESEARCH_APP_PRIVATE_KEY }}
 
-      # lfs:false — data/documents is ~5.4 GB LFS; smudging fills the disk.
+      # lfs:false — data/documents is 3,643 files / 3,532 MiB of LFS; smudging fills the disk.
+      # Measured 2026-09-04 from the committed vault manifests, not estimated —
+      # re-derivable per docs/artifact-vault.md § Measurements.
+      # The ~5.4 GB this said overstated it by ~50%, and #2074 made a real deferral call on
+      # exactly this kind of number (#2148).
       - name: Checkout (no LFS)
         uses: actions/checkout@v4
         with:

@@ -126,6 +126,25 @@ questions where the binary saw 2, and nothing could detect the gap.
   (the rest is regenerable and ignored). It enumerates accepted inherited debt so only a
   *regression* fails; `orphan-in` is `info` upstream and never gates. Re-bless deliberately
   (`yidam lint --bless`) and review the diff, like an extraction.
+- **The corpus bytes live in a yidam artifact vault** (epic #2141, RFC-0023): one content-addressed
+  store, `.yidam/config.toml`'s lone `[vault.default]`, holding 3,662 files at 3,186 distinct
+  addresses. The load-bearing equivalence is that **a Git-LFS oid IS the sha256 of the content**,
+  so `data/*/*/vault.yaml` (`watermark documents manifest`) is derivable without materializing
+  3.5 GiB — which is what lets the record be written and checked on an `lfs: false` checkout.
+  `watermark documents hydrate` restores bytes into the working tree.
+  ⚠️ **BOSC declines `yidam vault materialize`, and this is the one upstream capability it
+  refuses.** That command writes `.yidam/vault/<entry-slug>/<slug>-<hash8>.<ext-from-media_type>`,
+  which is right for its question — give a person a real file to open — and wrong here, where the
+  **filename is evidence**: three sources carry no extension and several carry upper-case ones
+  because a received name is never "fixed". Measured on `cli/v0.8.0`, `1-12-26 minutes.docx`
+  materialized as `multi-527ba1ba.bin`. So `hydrate` places files under their as-received names,
+  and **refuses to overwrite anything that disagrees with the record** — a tool that settled a
+  divergence by writing over it would destroy the evidence there was one.
+  ⚠️ **`VAULTED_SUFFIXES` is the definition of what belongs in the vault, and `.gitattributes` is
+  its second copy only until #2147 deletes those lines.** A test proves the two agree while git can
+  still answer. `check` reads the filesystem *and* Git-LFS for the same reason: an LFS-only
+  inventory does not degrade at the untrack, it **inverts** — `tracked - recorded` goes empty and
+  the gate reports a clean corpus because nobody was asked.
 - **The graph exports (`graph_exports.py`) are the one surviving renderer replica**, and they
   stay: `web/sites/<slug>/exports/` is committed, so sourcing them from the binary would put Rust
   back in the export path. Their fidelity is enforced instead — CI runs the real binary over the

@@ -186,6 +186,19 @@ Taken 2026-09-03, at HEAD. The `~5.4 GB` in `agent-worker.yml`, the `~5 GB acros
 | distinct content addresses | 3,186 | — |
 | `.git/lfs` on disk | — | 4,500 MB |
 
+**Re-derive the totals from the committed record**, so a stale number in a workflow comment is a
+fixable fact rather than an argument (#2148 corrected seven of them, three of which understated the
+corpus and four overstated it):
+
+```sh
+python -c "import yaml,glob; print(sum(yaml.safe_load(open(f))['meta']['counts']['bytes'] \
+  for f in glob.glob('data/*/*/vault.yaml'))/2**20, 'MiB')"
+```
+
+At 2026-09-04 that reads **3,662 files / 3,586 MiB** — `data/documents` 3,643 / 3,532 MiB,
+`data/reference` 19 / 54 MiB, `.git/lfs` on disk 4,638 MiB. **State the unit:** the table above is
+MB (10⁶) and this is MiB (2²⁰), which is most of the apparent disagreement between them.
+
 Distribution: median 0.16 MB, p90 1.7 MB, p99 16 MB, max 141 MB — all under the vault's 5 GiB
 single-PUT cap (multipart is not implemented upstream).
 

@@ -812,3 +812,96 @@ def test_recorded_rels_counts_a_doubly_recorded_artifact_once(data_dir: Path) ->
     assert rels == sorted(set(rels))
     # De-duplicating the inventory must not hide the duplication itself.
     assert any(f.kind == "duplicated" for f in check(data_dir, data_dir.parent, rels=rels))
+
+
+# --- the inventory that survives the untrack (#2148) --------------------------
+
+
+@pytest.mark.skipif(not _HAS_GIT_LFS, reason="git-lfs unavailable; cannot enumerate tracked paths")
+def test_the_vaultable_predicate_reproduces_what_git_lfs_tracks() -> None:
+    """The handoff, proved while both witnesses can still answer.
+
+    `.gitattributes` is what defines "belongs in the vault" today, and #2147 deletes those lines.
+    `VAULTED_SUFFIXES` + `VAULTED_EXTENSIONLESS` is the copy that outlives them, so it is checked
+    against git NOW rather than asserted once git has stopped answering. Measured at HEAD: 3,662
+    both ways, no difference in either direction.
+    """
+    from watermark.documents.vault import present_rels
+
+    tracked = set(tracked_rels(REPO_ROOT))
+    if not tracked:  # after #2147 there is nothing left to compare against
+        pytest.skip("no Git-LFS-tracked paths at HEAD")
+    present = set(present_rels(REPO_ROOT / "data"))
+
+    assert present - tracked == set(), "the predicate claims files Git-LFS does not track"
+    assert tracked - present == set(), "Git-LFS tracks files the predicate does not claim"
+
+
+def test_vaultable_excludes_what_legitimately_lives_beside_the_sources() -> None:
+    """1,466 files under the vaulted roots are not vaulted, and must not read as unrecorded.
+
+    "Every file beneath these roots" is the wrong question: the text sidecars, `filename-map.yaml`,
+    the captured `.html` web evidence, each `README.md` and the `vault.yaml` records themselves are
+    all committed on purpose and all outside the vault.
+    """
+    from watermark.documents.vault import vaultable
+
+    assert vaultable("documents/aedg/PRR-01-bundle.ocr.pdf")
+    assert vaultable("documents/legal/x/3-3-16 Natale Revised Change Order")  # no extension at all
+    assert vaultable("documents/oepa/SCAN.PDF")  # case is evidence, and listed separately
+    for rel in (
+        "documents/aedg/vault.yaml",
+        "documents/aedg/README.md",
+        "documents/aedg/PRR-01-bundle.ocr.pdf.index.yaml",
+        "documents/bowling-green/commissioners/filename-map.yaml",
+        "documents/aedg/data-center-updates/google-to-build.html",
+        "documents/legal/prr-text/memo.doc.txt",  # a text sidecar, not a source
+    ):
+        assert not vaultable(rel), rel
+
+
+def test_check_still_sees_an_unrecorded_source_after_git_lfs_stops_answering(
+    data_dir: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The #2147 trap: an LFS-only inventory does not degrade, it INVERTS.
+
+    `check` derived "what should be recorded" from `git lfs ls-files`. After the untrack that
+    returns nothing, so `tracked - recorded` is empty and the check reports a clean corpus for the
+    same reason it reports one when everything is fine — a green that means *nobody was asked*. The
+    filesystem is the witness that still answers.
+    """
+    from watermark.documents import vault as vault_mod
+
+    _seed(data_dir, {"documents/aedg/a.pdf": _CONTENT})
+    write(data_dir, build(data_dir, data_dir.parent, rels=["documents/aedg/a.pdf"]))
+    _seed(data_dir, {"documents/aedg/unrecorded.pdf": b"%PDF-new source byte"})
+    monkeypatch.setattr(vault_mod, "tracked_rels", lambda *a, **k: [])
+
+    findings = vault_mod.check(data_dir, data_dir.parent)
+
+    assert [(f.kind, f.rel) for f in findings] == [("unrecorded", "documents/aedg/unrecorded.pdf")]
+    assert "present on disk" in findings[0].detail
+
+
+def test_orphaned_retires_with_git_lfs_instead_of_firing_on_every_artifact(
+    data_dir: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """After the untrack, `recorded - tracked` is the whole corpus and means nothing.
+
+    A recorded artifact that is not on this disk is UNHYDRATED — `hydrate --check` reports that —
+    so `orphaned` is gated on Git-LFS still answering rather than left to emit 3,662 findings on
+    the day of #2147.
+    """
+    from watermark.documents import vault as vault_mod
+
+    _seed(data_dir, {"documents/aedg/a.pdf": _CONTENT})
+    write(data_dir, build(data_dir, data_dir.parent, rels=["documents/aedg/a.pdf"]))
+    (data_dir / "documents/aedg/a.pdf").unlink()  # recorded, not hydrated here
+    monkeypatch.setattr(vault_mod, "tracked_rels", lambda *a, **k: [])
+
+    assert vault_mod.check(data_dir, data_dir.parent) == []
+
+    # While Git-LFS still answers, the same shape IS drift: a file left the corpus without its record.
+    monkeypatch.setattr(vault_mod, "tracked_rels", lambda *a, **k: ["documents/aedg/other.pdf"])
+    kinds = {f.kind for f in vault_mod.check(data_dir, data_dir.parent)}
+    assert "orphaned" in kinds

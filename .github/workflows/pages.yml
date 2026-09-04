@@ -75,11 +75,12 @@ jobs:
           persist-credentials: false
         # No LFS (intentional — don't add `lfs: true`): the site builds from the JSON
         # bundle emitted by the watermarkBundle Vite plugin (`uv run watermark --site
-        # <slug> export`) and never serves source bytes, so the ~5.4 GB corpus isn't
+        # <slug> export`) and never serves source bytes, so the 3,586 MiB corpus isn't
         # pulled. Document `available`/`size_bytes` are read from the Git-LFS *pointer*
         # text (bytes are served from R2, not the build tree) — see
         # watermark.site.documents._document_stat (#1347). Pulling LFS here would cost
-        # ~1.5 GB of bandwidth per deploy for no benefit.
+        # 3,586 MiB of bandwidth per deploy for no benefit — measured 2026-09-04, re-derivable
+        # per docs/artifact-vault.md § Measurements; the ~1.5 GB this said understated it (#2148).
 
       # 1. Python toolchain: the watermarkBundle Vite plugin shells out to
       #    `uv run watermark --site <slug> export` inside `pnpm run build`.

@@ -45,8 +45,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        # Deliberately NOT `lfs: true`: the full LFS tree is ~2.8 GB of metered bandwidth per
-        # run. Only the catalog-OBSERVED paths (~59 MB) affect a bundle, and they are pulled
+        # Deliberately NOT `lfs: true`: the full LFS tree is 3,662 files / 3,586 MiB of metered
+        # bandwidth per run — measured 2026-09-04, re-derivable per docs/artifact-vault.md
+        # § Measurements; the ~2.8 GB this said UNDERstated it. Only the catalog-OBSERVED
+        # paths (~59 MB) affect a bundle, and they are pulled
         # below from a list the catalog emits — a hardcoded include list is precisely the thing
         # that goes stale here.
 
@@ -92,8 +94,8 @@ jobs:
 
       - name: Report passage-index drift
         # Cheap and LFS-independent: it compares the published SET, opening no PDF. Reported
-        # rather than fixed here — rebuilding the index needs the real PDF bytes (the full 2.8 GB
-        # of LFS) and the tesseract binary, and a rebuild without tesseract would turn repaired
+        # rather than fixed here — rebuilding the index needs the real PDF bytes (the full
+        # 3,586 MiB of LFS) and the tesseract binary, and a rebuild without tesseract would turn repaired
         # pages back into damaged ones (#1966). So this names the work; a human does it.
         run: uv run watermark passages --check || true
 
