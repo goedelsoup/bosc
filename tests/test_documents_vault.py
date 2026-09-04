@@ -905,3 +905,63 @@ def test_orphaned_retires_with_git_lfs_instead_of_firing_on_every_artifact(
     monkeypatch.setattr(vault_mod, "tracked_rels", lambda *a, **k: ["documents/aedg/other.pdf"])
     kinds = {f.kind for f in vault_mod.check(data_dir, data_dir.parent)}
     assert "orphaned" in kinds
+
+
+# --- the untrack (#2147) ------------------------------------------------------
+
+_IGNORE_BEGIN = "# ── BEGIN vaulted corpus"
+_IGNORE_END = "# ── END vaulted corpus ──"
+
+
+def _gitignore_block() -> list[str]:
+    """The generated vaulted-corpus patterns from `.gitignore`, comments stripped."""
+    text = (REPO_ROOT / ".gitignore").read_text(encoding="utf-8")
+    # Past the remainder of the BEGIN line too: it carries no leading `#` of its own.
+    after_begin = text.split(_IGNORE_BEGIN, 1)[1].split("\n", 1)[1]
+    body = after_begin.split(_IGNORE_END, 1)[0]
+    return [
+        line.strip()
+        for line in body.splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+
+
+def test_the_gitignore_block_matches_the_vaulted_set() -> None:
+    """`.gitignore` and `VAULTED_SUFFIXES` are one definition in two places — hold them equal.
+
+    This is what makes the suffix-scoped ignore safe. A suffix in the constant but not the block is
+    a source byte that gets **committed with no manifest recording it** — the one state the vault
+    exists to make impossible, and one no other check would notice, because the manifest would
+    happily record the file it found.
+    """
+    from watermark.documents.vault import VAULTED_EXTENSIONLESS, VAULTED_ROOTS, VAULTED_SUFFIXES
+
+    expected = {
+        f"data/{root}/**/*{suffix}" for root in VAULTED_ROOTS for suffix in VAULTED_SUFFIXES
+    }
+    # A space is a glob character to gitignore, so the extensionless names bracket theirs.
+    expected |= {f"data/documents/**/{name.replace(' ', '[ ]')}" for name in VAULTED_EXTENSIONLESS}
+    assert set(_gitignore_block()) == expected
+
+
+@pytest.mark.skipif(not _HAS_GIT_LFS, reason="git-lfs unavailable")
+def test_nothing_vaultable_is_tracked_any_more() -> None:
+    """The #2147 acceptance criterion, asserted against the real index rather than a report.
+
+    `git ls-files` is the independent witness: whatever `.gitignore` says, this is what git actually
+    holds. An ignore rule does not untrack an already-tracked file, so a vaultable path surviving
+    here means one was committed after the untrack — and it would be a source byte outside the
+    record even though the manifests describe it.
+    """
+    from watermark.documents.vault import vaultable
+
+    out = subprocess.run(
+        ["git", "ls-files", "data/documents", "data/reference"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+    tracked = [line.removeprefix("data/") for line in out.splitlines() if line]
+    still_vaulted = sorted(rel for rel in tracked if vaultable(rel))
+    assert still_vaulted == [], f"{len(still_vaulted)} vaultable path(s) still tracked"
