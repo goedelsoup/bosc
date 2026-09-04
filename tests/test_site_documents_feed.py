@@ -344,6 +344,25 @@ def _vault_manifest(docs: Path, collection: str, entries: list[tuple[str, int]])
     )
 
 
+def _append_artifact(docs: Path, collection: str, name: str, size: int, *, at_root: bool) -> None:
+    """Add one more artifact to a written manifest — `at_root` makes it collection-less."""
+    import yaml
+
+    path = docs / collection / "vault.yaml"
+    doc = yaml.safe_load(path.read_text())
+    rel = f"{docs.name}/{name}" if at_root else f"{docs.name}/{collection}/{name}"
+    doc["artifacts"].append(
+        {
+            "rel": rel,
+            "sha256": "f" * 64,
+            "bytes": size,
+            "media_type": "application/pdf",
+            "redistributable": True,
+        }
+    )
+    path.write_text(yaml.safe_dump(doc, sort_keys=False), encoding="utf-8")
+
+
 def test_a_document_only_the_vault_record_names_is_catalogued(tmp_path: Path) -> None:
     """#2147: after the untrack a fresh checkout holds no source bytes — not even a pointer.
 
@@ -378,17 +397,59 @@ def test_real_bytes_win_over_the_record(tmp_path: Path) -> None:
     assert entry.available is True
 
 
-def test_a_file_nothing_records_and_nothing_holds_is_unavailable(tmp_path: Path) -> None:
-    """`available` still has a false case: only a document no witness knows about."""
+def test_a_file_nothing_records_and_nothing_holds_is_unavailable(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """`available` still has a false case: a document no witness can answer for.
+
+    The unreadability is injected rather than produced with `chmod(0o000)`: root ignores the mode
+    (many CI containers run as root) and some filesystems ignore `chmod` outright, so the real
+    thing would have made this pass for the wrong reason or fail for an unrelated one.
+    """
     docs = tmp_path / "documents"
     (docs / "aedg").mkdir(parents=True)
-    broken = docs / "aedg" / "unreadable.pdf"
-    broken.write_bytes(b"%PDF-x")
-    broken.chmod(0o000)
-    try:
-        entry = next(e for coll in build_documents(docs).collections for e in coll.entries)
-        assert entry.available is False
-        assert entry.size_bytes == 0
-        assert entry.download_url is None
-    finally:
-        broken.chmod(0o644)
+    unreadable = docs / "aedg" / "unreadable.pdf"
+    unreadable.write_bytes(b"%PDF-x")
+
+    real_open = Path.open
+
+    def deny(self: Path, *args: object, **kwargs: object) -> object:
+        if self == unreadable:
+            raise PermissionError(13, "Permission denied")
+        return real_open(self, *args, **kwargs)  # type: ignore[arg-type]
+
+    monkeypatch.setattr(Path, "open", deny)
+
+    entry = next(e for coll in build_documents(docs).collections for e in coll.entries)
+    assert entry.available is False
+    assert entry.size_bytes == 0
+    assert entry.download_url is None
+
+
+def test_the_record_cannot_smuggle_past_the_catalogue_filters(tmp_path: Path) -> None:
+    """The eligibility predicate applies to the MANIFEST too, not only to the walk (#2147).
+
+    Filtering one witness and not the other would make the feed's contents depend on whether a
+    file's bytes happen to be local — the same divergence the third witness exists to end. The two
+    agree today (nothing in `_SKIP_*` is vaultable); this is what keeps them agreeing.
+    """
+    docs = tmp_path / "documents"
+    (docs / "aedg" / "scan-text").mkdir(parents=True)
+    (docs / "aedg" / "scan").mkdir(parents=True)  # the sidecar tree's real source sibling
+    _vault_manifest(
+        docs,
+        "aedg",
+        [
+            ("real.pdf", 10),  # eligible
+            ("README.md", 11),  # _SKIP_NAMES
+            ("MANIFEST.yaml", 12),  # _SKIP_NAMES
+            ("notes.md", 13),  # _SKIP_SUFFIXES
+            ("scan-text/doc.doc.txt", 14),  # inside a sidecar tree
+        ],
+    )
+    # A rel with no collection component, which cannot be filed under one.
+    _append_artifact(docs, "aedg", "loose.pdf", 15, at_root=True)
+
+    rels = [e.rel for coll in build_documents(docs).collections for e in coll.entries]
+
+    assert rels == ["aedg/real.pdf"]

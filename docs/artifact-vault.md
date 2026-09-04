@@ -293,13 +293,20 @@ Four properties of that record are deliberate, and each one is a decision rather
   custody paths to one blob is a fact about the corpus, and collapsing them would lose one. Content
   addressing dedupes in the store, which is where dedup belongs.
 
-`--check` needs neither the real bytes nor the network — the same argument that makes the record free
-— so it gates in CI (#2148). It reports six kinds of drift, and the asymmetry between them matters:
-**`unrecorded`** (tracked but in no manifest) is the one that counts, because after the untrack a
-file no manifest names is a source byte with no record at all. **`orphaned`** is not automatically
-wrong: it is the expected state once nothing is LFS-tracked. **`address-changed`** means a source
-file was replaced, which chain of custody forbids outright. **`missing`** is reported rather than
-treated as drift, because an absent file on a partial checkout is not evidence the record is wrong.
+`--check` needs neither the real bytes nor the network — the same argument that makes the record
+free — so CI can run it, and the `catalog` job does (#2148). It reports six kinds of drift, and the
+asymmetry between them matters: **`unrecorded`** (a vaultable file that exists, or that Git-LFS
+tracks, and no manifest names) is the one that counts, because a file no manifest names is a source
+byte with no record at all. **`orphaned`** is not automatically wrong: it is the expected state once
+nothing is LFS-tracked. **`address-changed`** means a source file was replaced, which chain of
+custody forbids outright. **`missing`** is reported rather than treated as drift, because an absent
+file on a partial checkout is not evidence the record is wrong.
+
+⚠️ **What CI can run is not what CI can catch.** After the untrack a runner holds no source bytes, so
+there is no file that *could* be unrecorded and `unrecorded` has nothing to report — the run passes
+by having nothing to ask about, not by finding nothing wrong. The check earns its keep where the
+bytes are: a developer's tree, an ingest, a hydrated runner. See the ⚠️ at the end of *The third
+witness* for what closing that would cost.
 
 A run that cannot address a tracked file **refuses to write** rather than omitting it. A manifest
 with gaps is worse than none: it reads as complete.
