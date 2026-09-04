@@ -576,3 +576,142 @@ def test_every_tracked_path_is_recorded_exactly_once_at_the_oid_git_reports() ->
         if artifact.sha256 != oids.get(rel)
     }
     assert not mismatched, f"manifest sha256 != git-lfs oid for {len(mismatched)} path(s)"
+
+
+def test_a_pointer_naming_other_bytes_is_a_conflict_not_something_to_delete(
+    vaulted: tuple[Path, Path],
+) -> None:
+    """Two committed records disagreeing is not a licence to delete one of them.
+
+    A pointer hash-matching its record is the premise of replacing it — so the match has to be
+    checked, not assumed. Where the pointer names a different digest, the divergence is between
+    the manifest and the pointer, and unlinking the pointer would resolve it by destroying half.
+    """
+    from watermark.documents.vault import hydrate
+
+    data_dir, _ = vaulted
+    target = data_dir / "documents/aedg/a b.pdf"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    divergent = hashlib.sha256(b"some other bytes entirely").hexdigest()
+    target.write_bytes(_pointer(divergent, len(_CONTENT)))
+
+    for outcomes in (hydrate(data_dir, check=True), hydrate(data_dir)):
+        outcome = {o.rel: o for o in outcomes}["documents/aedg/a b.pdf"]
+        assert outcome.action == "conflict"
+        assert "left untouched" in (outcome.detail or "")
+    assert target.read_bytes() == _pointer(divergent, len(_CONTENT))
+
+
+def test_a_corrupt_cache_entry_is_refused_rather_than_written_into_the_tree(
+    vaulted: tuple[Path, Path],
+) -> None:
+    """The cache path ASSERTS a digest; it does not establish one.
+
+    Substituting the bytes at a content address leaves `is_file()` perfectly happy, and the old
+    code hardlinked them into `data/**` and reported `linked` — hydration writing a wrong source
+    byte, which is the one thing it must not be able to do.
+    """
+    from watermark.documents.vault import cache_path, hydrate
+
+    data_dir, cache = vaulted
+    cache_path(cache, _SHA).write_bytes(b"not the recorded content")
+
+    for outcomes in (hydrate(data_dir, check=True), hydrate(data_dir)):
+        outcome = {o.rel: o for o in outcomes}["documents/aedg/a b.pdf"]
+        assert outcome.action == "conflict"
+        assert "not materialized" in (outcome.detail or "")
+    assert not (data_dir / "documents/aedg/a b.pdf").exists()
+
+
+def test_a_cache_entry_holding_a_pointer_stub_is_refused(vaulted: tuple[Path, Path]) -> None:
+    """A stub parked at a content address must not be read as the content it names.
+
+    `content_address` would answer with the oid — the very digest being verified — so the cache is
+    hashed with a pointer-blind reader instead.
+    """
+    from watermark.documents.vault import cache_path, hydrate
+
+    data_dir, cache = vaulted
+    cache_path(cache, _SHA).write_bytes(_pointer(_SHA, len(_CONTENT)))
+
+    outcome = {o.rel: o for o in hydrate(data_dir)}["documents/aedg/a b.pdf"]
+    assert outcome.action == "conflict"
+    assert not (data_dir / "documents/aedg/a b.pdf").exists()
+
+
+def test_an_unreadable_target_is_a_conflict_rather_than_a_truncating_copy(
+    vaulted: tuple[Path, Path], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """`content_address` answers None for a file it cannot READ, not only for an absent one.
+
+    So `address is None` reaches the link, `os.link` raises `FileExistsError` — an `OSError` — and
+    the old bare handler called `shutil.copyfile`, which opens the destination `"wb"`. The bytes
+    that were there are gone. Simulated by forcing the cross-device branch, which is the path that
+    used to reach the truncating copy.
+    """
+    import os as os_mod
+
+    from watermark.documents import vault as vault_mod
+
+    data_dir, _ = vaulted
+    target = data_dir / "documents/aedg/a b.pdf"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(b"bytes that could not be read")
+
+    real_address = vault_mod.content_address
+    monkeypatch.setattr(
+        vault_mod,
+        "content_address",
+        lambda p: None if p == target else real_address(p),
+    )
+    monkeypatch.setattr(os_mod, "link", lambda *a, **k: (_ for _ in ()).throw(OSError(18, "EXDEV")))
+
+    outcome = {o.rel: o for o in vault_mod.hydrate(data_dir)}["documents/aedg/a b.pdf"]
+    assert outcome.action == "conflict"
+    assert target.read_bytes() == b"bytes that could not be read"  # not truncated
+
+
+def test_paths_from_keeps_a_filename_that_ends_in_a_space(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A source filename is evidence, trailing space included — so the list must not trim it.
+
+    `--paths-from` is line-oriented, so the parser removes only the two documented prefixes and
+    keeps the rest verbatim. `line.strip()` turned a recorded name into one no manifest names,
+    which `hydrate` then answers as "named by no vault.yaml" — a false conflict manufactured by
+    the reader. `.lstrip("./")` was the other half: it takes a CHARACTER SET, so it also ate the
+    leading dot of a dot-name.
+    """
+    from typer.testing import CliRunner
+
+    from watermark.cli import app
+    from watermark.config import Settings
+    from watermark.documents import vault as vault_mod
+
+    data_dir = tmp_path / "data"
+    cache = tmp_path / "cache"
+    # The name ENDS in a space — the one case `line.strip()` can actually reach in a
+    # line-oriented list, and the reason a fixture with the space anywhere else proves nothing.
+    rel = "documents/aedg/ends in a space "
+    path = data_dir / rel
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(_CONTENT)
+    write(data_dir, build(data_dir, tmp_path, rels=[rel]))
+    blob = vault_mod.cache_path(cache, _SHA)
+    blob.parent.mkdir(parents=True, exist_ok=True)
+    blob.write_bytes(_CONTENT)
+    monkeypatch.setattr(vault_mod, "cache_dir", lambda _s=None: cache)
+    # Inject the Settings rather than setting WATERMARK_DATA_DIR: `get_settings` is `lru_cache`d,
+    # so an env var set here is ignored once any earlier test has warmed it (tests/CLAUDE.md).
+    monkeypatch.setattr("watermark.cli.documents.get_settings", lambda: Settings(data_dir=data_dir))
+
+    listing = tmp_path / "paths.txt"
+    listing.write_text(f"data/{rel}\n./data/{rel}\n   \n", encoding="utf-8")
+
+    result = CliRunner().invoke(
+        app, ["documents", "hydrate", "--check", "--paths-from", str(listing)]
+    )
+
+    assert result.exit_code == 0, result.output
+    assert "named by no" not in result.output
+    assert "1 present" in result.output

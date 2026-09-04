@@ -384,11 +384,27 @@ Six outcomes, and the interesting ones are not the successes:
 | `present` | already correct in place; untouched |
 | `pointer` | an unresolved Git-LFS stub — see the warning below |
 | `absent-from-cache` | not on **this machine**; `yidam vault pull` fetches it. Not an error about the record |
-| `conflict` | the bytes in place disagree with the record. **Left untouched**, and the command exits non-zero |
+| `conflict` | something disagrees with the record. **Nothing is written**, and the command exits non-zero |
 
 **`conflict` never overwrites.** Hydration must not be able to become the thing that altered a
 source byte; a tool that resolved a divergence by overwriting it would destroy the evidence that
-there was one. The mismatching file stays exactly as found, and the exit code fails a gate.
+there was one. The file stays exactly as found, and the exit code fails a gate.
+
+Four disagreements reach it, and the last three were review findings on the first cut of this
+command — each one a path by which hydration could have written a byte nobody recorded:
+
+- **the bytes in place** hash to something other than the record. The original case.
+- **a pointer in place names a different digest.** The stub is deleted only once its oid is
+  confirmed to be `artifact.sha256`; a pointer naming other bytes is a divergence between two
+  *committed* records, and unlinking it would settle that by destroying half of it.
+- **the cache entry is not what its address claims.** A content-addressed path *asserts* a digest;
+  it does not establish one. The entry is hashed before it is materialized — with a
+  pointer-**blind** reader, because `content_address` would read a stub parked at an address as the
+  content it names, which is the corruption being looked for.
+- **a file is at the target that could not be read.** `content_address` answers `None` for
+  unreadable as well as absent, so that case reaches the link, where `os.link` raises
+  `FileExistsError`. The copy fallback creates its destination `O_CREAT | O_EXCL` — never
+  `shutil.copyfile`, which opens `"wb"` and truncates whatever it found.
 
 ### ⚠️ A pointer hash-matches its own record
 
