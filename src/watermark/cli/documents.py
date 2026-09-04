@@ -130,7 +130,15 @@ def documents_hydrate_cmd(
     rels: list[str] | None = None
     if paths_from:
         raw = Path(paths_from).read_text(encoding="utf-8").splitlines()
-        rels = [line.strip().lstrip("./").removeprefix("data/") for line in raw if line.strip()]
+        # Only the two prefixes are removed; the rest of the line is kept VERBATIM. A source
+        # filename is evidence here — three carry no extension, many carry spaces — so a name
+        # ending in one must reach `hydrate` unchanged and be answered by the record rather than
+        # quietly trimmed into a false conflict. A whitespace-only line is padding: no recorded
+        # rel is whitespace-only, so skipping those costs nothing.
+        #
+        # `removeprefix`, not `lstrip("./")`: lstrip takes a CHARACTER SET, so it also ate the
+        # leading dot of a legitimate dot-name and any run of slashes.
+        rels = [line.removeprefix("./").removeprefix("data/") for line in raw if line.strip()]
     elif collection:
         wanted = collection.strip("/")
         rels = [r for r in recorded_rels(data_dir) if collection_of(r) == wanted]

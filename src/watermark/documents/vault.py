@@ -387,6 +387,40 @@ class HydrateOutcome(BaseModel):
     detail: str = ""
 
 
+def _cache_address(path: Path) -> tuple[str, int] | None:
+    """``(sha256, bytes)`` of a cache entry, hashing unconditionally.
+
+    Deliberately **not** :func:`content_address`: that reads a Git-LFS pointer as the content it
+    names, which is right for the working tree and exactly wrong here. The cache stores bytes, so
+    a pointer sitting at a content address is one of the corruptions this is checking for — and
+    the pointer-aware reader would report it as the very digest it is standing in for.
+    """
+    digest = hashlib.sha256()
+    try:
+        with path.open("rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                digest.update(chunk)
+        size = path.stat().st_size
+    except OSError:
+        return None
+    return (digest.hexdigest(), size)
+
+
+def _copy_new(source: Path, target: Path) -> None:
+    """Copy *source* to *target*, refusing to touch an existing file.
+
+    ``shutil.copyfile`` opens the destination ``"wb"``, which truncates. That is unusable in a
+    tree whose contents are evidence: the one thing a copy fallback must not do is destroy what it
+    found. ``O_CREAT | O_EXCL`` makes the refusal the kernel's, not a check we could race.
+    """
+    fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)
+    try:
+        with open(fd, "wb", closefd=False) as dest, source.open("rb") as src:
+            shutil.copyfileobj(src, dest)
+    finally:
+        os.close(fd)
+
+
 def hydrate(
     data_dir: Path,
     *,
@@ -418,7 +452,10 @@ def hydrate(
 
     settings = settings or get_settings()
     cache = cache_dir(settings)
-    wanted = sorted(rels) if rels is not None else sorted(recorded_rels(data_dir))
+    # De-duplicated: `--paths-from` can name one rel twice (`data/x` and `./data/x` normalize to
+    # the same thing), and hydrating it twice reports it twice — inflating the counts a caller
+    # gates on. `recorded_rels` is already unique; `check` is what reports a doubly-recorded rel.
+    wanted = sorted(set(rels)) if rels is not None else sorted(recorded_rels(data_dir))
     by_rel = {a.rel: a for _, a in _iter_committed(data_dir)}
 
     outcomes: list[HydrateOutcome] = []
@@ -437,6 +474,23 @@ def hydrate(
             # "does it match?" check read an unmaterialized stub as satisfied. It is not: nothing
             # can read it. Named separately so `--check` keeps the guard `bundle-freshness.yml`
             # has today, where a pointer parsed as data yields zero rows rather than an error.
+            #
+            # But *hash-matches* is the premise, and it has to be checked rather than assumed. A
+            # pointer naming some OTHER digest is a divergence between two committed records —
+            # the manifest and the pointer — and deleting it would resolve that divergence by
+            # destroying half of it. Same refusal as bytes that disagree, in both modes.
+            if address[0] != artifact.sha256:
+                outcomes.append(
+                    HydrateOutcome(
+                        action="conflict",
+                        rel=rel,
+                        detail=(
+                            f"pointer names {address[0][:12]}…, record says "
+                            f"{artifact.sha256[:12]}… — left untouched"
+                        ),
+                    )
+                )
+                continue
             if check:
                 outcomes.append(
                     HydrateOutcome(
@@ -471,17 +525,58 @@ def hydrate(
                 )
             )
             continue
+        # The cache path ASSERTS the digest; it does not establish it. A corrupt or substituted
+        # entry would otherwise be hardlinked into `data/**` and reported `linked` — hydration
+        # becoming the thing that wrote a wrong source byte, which is the one outcome this
+        # module exists to make impossible. One hash of what is about to be written anyway.
+        cached = _cache_address(source)
+        if cached != (artifact.sha256, artifact.bytes):
+            held = "unreadable" if cached is None else f"{cached[0][:12]}… / {cached[1]} B"
+            outcomes.append(
+                HydrateOutcome(
+                    action="conflict",
+                    rel=rel,
+                    detail=(
+                        f"cache entry for {artifact.sha256[:12]}… holds {held} — not materialized"
+                    ),
+                )
+            )
+            continue
         if check:
             outcomes.append(HydrateOutcome(action="linked", rel=rel, detail="would link"))
             continue
         target.parent.mkdir(parents=True, exist_ok=True)
         try:
             os.link(source, target)
-            outcomes.append(HydrateOutcome(action="linked", rel=rel))
+        except FileExistsError:
+            # `address is None` does not prove the target is absent: `content_address` also
+            # answers None for a file it cannot READ. Falling through to a copy here would
+            # truncate whatever is actually there — the overwrite this module refuses.
+            outcomes.append(
+                HydrateOutcome(
+                    action="conflict",
+                    rel=rel,
+                    detail="a file is at the target that could not be read — left untouched",
+                )
+            )
         except OSError:
-            # A cross-device cache (the documented case) cannot be hardlinked from.
-            shutil.copyfile(source, target)
-            outcomes.append(HydrateOutcome(action="copied", rel=rel, detail="cross-device"))
+            # A cross-device cache is the documented case; a filesystem without hardlinks and an
+            # exhausted link count reach here too, and all three want the same fallback. The copy
+            # is EXCLUSIVE, so the narrowing that matters is at the destination, not the errno.
+            try:
+                _copy_new(source, target)
+            except FileExistsError:
+                outcomes.append(
+                    HydrateOutcome(
+                        action="conflict",
+                        rel=rel,
+                        detail="a file is at the target that could not be read — left untouched",
+                    )
+                )
+            else:
+                outcomes.append(HydrateOutcome(action="copied", rel=rel, detail="cross-device"))
+        else:
+            outcomes.append(HydrateOutcome(action="linked", rel=rel))
     return outcomes
 
 
