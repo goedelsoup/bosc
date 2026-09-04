@@ -23,6 +23,7 @@ from watermark.documents.vault import write as write_manifests
 from watermark.site import corpus_catalog
 from watermark.site.corpus_catalog import (
     VAULT_NAME,
+    VAULT_NONE,
     CatalogArtifact,
     CatalogSource,
     render_source,
@@ -117,6 +118,47 @@ def test_redistributable_is_carried_from_the_manifest_rather_than_assumed(
 
     aedg = next(s for s in vault_sources(settings) if s.slug == "corpus-documents-aedg")
     assert [a.redistributable for a in aedg.artifacts] == [False, True]
+    # And the ROUTE follows the licence. Until #2148 every artifact routed to `VAULT_NAME`
+    # unconditionally, so the record would have said `redistributable: false` and, one line down,
+    # sent the bytes to the one store this repository declares — the public one. `vault: none` is
+    # yidam's spelled "local cache and nowhere else", and its own `catalog-artifact-unroutable`
+    # accepts that literal, so this is a route rather than a hole.
+    assert [a.vault for a in aedg.artifacts] == [VAULT_NONE, VAULT_NAME]
+
+
+def test_no_artifact_the_corpus_may_not_redistribute_routes_to_the_public_store(
+    settings: Settings,
+) -> None:
+    """The invariant the routing exists for, stated over whatever the corpus holds.
+
+    Vacuous today — every one of the 3,662 artifacts is a public record — and that is exactly why
+    it is a test rather than an eyeball: a routing mistake is invisible from the pushing side, and
+    the first non-redistributable document is the one nobody will be watching for.
+    """
+    for source in vault_sources(settings):
+        for artifact in source.artifacts:
+            if not artifact.redistributable:
+                assert artifact.vault == VAULT_NONE, artifact.sha256
+            else:
+                assert artifact.vault == VAULT_NAME, artifact.sha256
+
+
+def test_every_declared_route_names_a_vault_the_committed_config_declares() -> None:
+    """`catalog-artifact-unroutable` is Error-severity, and both sides are committed.
+
+    Read from `.yidam/config.toml` rather than restated here: a route is only valid against what
+    that file declares, and a test carrying its own copy of the answer would keep passing after the
+    config stopped agreeing with it.
+    """
+    import tomllib
+
+    from watermark.config import _REPO_ROOT
+
+    config = tomllib.loads((_REPO_ROOT / ".yidam" / "config.toml").read_text(encoding="utf-8"))
+    declared = set(config.get("vault", {}))
+    assert VAULT_NAME in declared, f".yidam/config.toml declares {sorted(declared)}"
+    # `none` is not declared and must not be: upstream accepts the literal explicitly.
+    assert VAULT_NONE not in declared
 
 
 def test_a_vaulted_entry_registers_no_covers(settings: Settings) -> None:

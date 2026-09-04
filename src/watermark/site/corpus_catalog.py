@@ -261,6 +261,19 @@ def project_entry(entry: CatalogEntry, slug: str) -> CatalogSource:
 #: `catalog-artifact-unroutable` (Error) fires on every artifact.
 VAULT_NAME = "default"
 
+#: The route for bytes that may **not** leave: yidam's spelled "local cache and nowhere else".
+#: Not an omission — an omitted `vault:` means *nobody decided*, and this corpus needs *decided to
+#: keep it here* to be a different, visible state.
+#:
+#: ⚠️ Load-bearing the first time a document arrives under a licence to read rather than to host.
+#: Until #2148 every artifact routed to `VAULT_NAME` unconditionally, so `redistributable: false`
+#: would have been recorded on the artifact and then contradicted by the route beside it — the one
+#: store this repository declares being the PUBLIC one. `push` refuses a non-redistributable
+#: catalog artifact, so nothing would have leaked; the record would simply have said two things.
+#: Verified against upstream's own rule (`catalog_artifact_unroutable`): `none` is accepted
+#: explicitly and never counts as a route to nowhere.
+VAULT_NONE = "none"
+
 #: Slug prefix for the synthetic per-collection entries, keeping them clear of the 199 dataset
 #: entries projected from `data/catalog/**` and making their origin legible in a link target.
 VAULT_SLUG_PREFIX = "corpus-"
@@ -317,7 +330,7 @@ def vault_sources(settings: Settings | None = None) -> list[CatalogSource]:
                             sha256=a.sha256,
                             bytes=a.bytes,
                             media_type=a.media_type,
-                            vault=VAULT_NAME,
+                            vault=VAULT_NAME if a.redistributable else VAULT_NONE,
                             redistributable=a.redistributable,
                         )
                         for a in manifest.artifacts

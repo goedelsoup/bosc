@@ -153,7 +153,8 @@ jobs:
     steps:
       # fetch-depth: 0 gives the full commit graph the producer-drift gate needs to
       # merge-base against origin/main; filter: blob:none makes it a blobless partial
-      # clone, so the ~5.4 GB LFS-history repo doesn't pull historical file blobs — the
+      # clone, so the LFS-history repo doesn't pull historical file blobs — `.git/lfs` holds
+      # 4,638 MiB against 3,586 MiB at HEAD, the difference being objects only history names — the
       # missing blobs are fetched lazily only if a diff actually needs them (#682).
       - uses: actions/checkout@v4
         with:
@@ -166,6 +167,15 @@ jobs:
       - name: Catalog check
         run: uv run watermark catalog check
       # Sites-registry gate (#1027): YAML identity ↔ Python SITES ↔ sites-registry.json in sync.
+      # Vault-manifest gate (#2148): the check that REPLACES Git-LFS's implicit guarantee that a
+      # tracked file is a real, hashed object. It reads two witnesses — `git lfs ls-files` and the
+      # filesystem — because the first goes silent at #2147 and an LFS-only inventory would not
+      # degrade there, it would INVERT: `tracked - recorded` becomes empty and the gate reports a
+      # clean corpus for the same reason it reports one when everything is fine. Needs no LFS
+      # bytes: an unresolved pointer carries the oid, which IS the content's sha256.
+      - name: Vault manifest check
+        run: uv run watermark documents manifest --check
+
       - name: Sites registry check
         run: uv run watermark sites check
       # Wiki cross-link gate (#1571, area:corpus-hygiene): fail on any unresolved [[wiki link]]
@@ -373,6 +383,14 @@ jobs:
       # Gates against .yidam/lint-baseline.yml, not against zero. Inherited debt is
       # enumerable and only a REGRESSION fails — which is what keeps this gate switched on.
       # Re-bless deliberately with `yidam lint --bless` and review the diff.
+      # Re-hashes whatever the shared cache holds and exits non-zero on anything that is not
+      # what it claims. Cheap here and nearly always a no-op: a CI runner's cache is empty, so
+      # this passes trivially. Kept anyway — it is the one step that would catch a poisoned cache
+      # on a self-hosted or cache-restoring runner, and it costs nothing when there is nothing
+      # to check. `hydrate` verifies the entry it is about to materialize for the same reason.
+      - name: yidam vault verify (the cache is what it claims)
+        run: .yidam/bin/yidam vault verify
+
       - name: lint (baseline ratchet)
         run: .yidam/bin/yidam lint
 

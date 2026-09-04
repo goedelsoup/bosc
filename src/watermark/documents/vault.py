@@ -206,20 +206,120 @@ def tracked_rels(repo_root: Path, data_dirname: str = "data") -> list[str]:
     checkouts CI and the agent workers use.
 
     Sorted, so a manifest's ordering is a property of the corpus rather than of the filesystem.
+
+    **Degrades to no answer rather than raising** when git-lfs is not installed or the directory is
+    not a repository. Safe only because :func:`check` now reads the filesystem too (#2148): before
+    that, an empty answer here WAS the whole inventory and silence would have looked like a clean
+    corpus. It is the same state #2147 creates on purpose, so it has to be a supported one.
     """
-    out = subprocess.run(
-        ["git", "lfs", "ls-files", "--name-only"],
-        cwd=repo_root,
-        capture_output=True,
-        text=True,
-        check=True,
-    ).stdout
+    try:
+        proc = subprocess.run(
+            ["git", "lfs", "ls-files", "--name-only"],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        log.warning("vault.tracked_rels: git-lfs did not answer", error=str(exc))
+        return []
+    out = proc.stdout
     prefixes = tuple(f"{data_dirname}/{root}/" for root in VAULTED_ROOTS)
     rels = [
         line[len(data_dirname) + 1 :]
         for line in (raw.strip() for raw in out.splitlines())
         if line.startswith(prefixes)
     ]
+    return sorted(rels)
+
+
+#: The suffixes Git-LFS tracks under the vaulted roots, verbatim from ``.gitattributes`` —
+#: **case-sensitively**, because that file lists ``.pdf`` and ``.PDF`` as separate patterns and an
+#: as-received name's case is evidence, never normalized.
+#:
+#: ⚠️ **This is the definition of what belongs in the vault, and after #2147 it is the only copy.**
+#: Until then ``.gitattributes`` also carries it and
+#: ``test_the_vaultable_predicate_reproduces_what_git_lfs_tracks`` proves the two agree — which is
+#: the point of writing it down now rather than at the untrack: the handoff is *verified* against
+#: git while git can still answer, instead of asserted once the witness is gone.
+VAULTED_SUFFIXES: frozenset[str] = frozenset(
+    {
+        ".bmp",
+        ".db",
+        ".dbf",
+        ".doc",
+        ".docx",
+        ".dot",
+        ".flac",
+        ".gif",
+        ".jpeg",
+        ".jpg",
+        ".m4a",
+        ".mov",
+        ".mp3",
+        ".odg",
+        ".pdf",
+        ".png",
+        ".pptx",
+        ".rtf",
+        ".thmx",
+        ".tif",
+        ".tiff",
+        ".xls",
+        ".xlsx",
+        ".zip",
+        ".DOC",
+        ".JPG",
+        ".MOV",
+        ".MP3",
+        ".PDF",
+        ".PNG",
+    }
+)
+
+#: Vaulted files carrying **no extension at all** — named literally, because a pattern cannot
+#: reach them. Three files, two names: `Flow Calculations American-Bath feb 6, 2008` was produced
+#: twice in the sanitary PRR. ``.gitattributes`` spells the spaces `?` (git's single-character
+#: wildcard); here they are just spaces, which is what the filesystem holds.
+VAULTED_EXTENSIONLESS: frozenset[str] = frozenset(
+    {"Flow Calculations American-Bath feb 6, 2008", "3-3-16 Natale Revised Change Order"}
+)
+
+
+def vaultable(rel: str) -> bool:
+    """Does this ``data_dir``-relative path belong in the vault?
+
+    The predicate ``.gitattributes`` encodes today. 1,466 files under the vaulted roots are
+    legitimately *not* vaulted — the committed text sidecars, `filename-map.yaml`, the captured
+    `.html` web evidence, each `README.md`, the ``vault.yaml`` records themselves — so "every file
+    beneath these roots" is the wrong question and would report 1,466 phantom findings.
+    """
+    name = PurePosixPath(rel).name
+    if name in VAULTED_EXTENSIONLESS:
+        return True
+    return any(name.endswith(suffix) and name != suffix for suffix in VAULTED_SUFFIXES)
+
+
+def present_rels(data_dir: Path) -> list[str]:
+    """Every **vaultable file that exists on this disk**, as ``data_dir``-relative rels.
+
+    The witness that survives #2147. :func:`tracked_rels` asks Git-LFS and goes silent at the
+    untrack; this asks the filesystem, which answers in both worlds — and is the only thing that
+    can still say *a source byte is here that no record names*, the state the vault exists to make
+    impossible. What it cannot see is an artifact that is recorded and simply not hydrated, which
+    is why :func:`check` reads both.
+    """
+    rels: list[str] = []
+    for root in VAULTED_ROOTS:
+        root_dir = data_dir / root
+        if not root_dir.is_dir():
+            continue
+        for path in root_dir.rglob("*"):
+            if not path.is_file():
+                continue
+            rel = path.relative_to(data_dir).as_posix()
+            if vaultable(rel):
+                rels.append(rel)
     return sorted(rels)
 
 
@@ -665,12 +765,14 @@ def check(
 
     Six kinds, and the asymmetry between them is the point:
 
-    * ``unrecorded`` — tracked but in no manifest. **This is the one that matters most.** After the
-      untrack (#2147) a file the manifest does not name is a source byte with no record at all,
-      which is exactly the state the vault exists to make impossible.
-    * ``orphaned`` — recorded but no longer tracked. Not automatically wrong (it is the expected
-      state after #2147, when nothing is LFS-tracked any more), so callers pass ``rels`` explicitly
-      when that transition lands; today an orphan means a file left the corpus without its record.
+    * ``unrecorded`` — a vaultable file that exists, or that Git-LFS tracks, and no manifest names.
+      **This is the one that matters most**, and the reason the inventory is read from the
+      filesystem as well as from Git-LFS: after the untrack (#2147) a file the manifest does not
+      name is a source byte with no record at all — exactly the state the vault exists to make
+      impossible — and an LFS-only inventory would have stopped being able to see one.
+    * ``orphaned`` — recorded, and neither tracked nor on disk. Reported only while Git-LFS still
+      answers: after #2147 the same shape means *not hydrated here*, which ``hydrate --check``
+      reports and which is not drift.
     * ``address-changed`` / ``size-changed`` — the bytes are not what the record claims. Since the
       address is the identity, this means a source file was replaced, which chain of custody
       forbids outright.
@@ -686,6 +788,13 @@ def check(
     from watermark.site.documents import media_type_by_extension
 
     tracked = set(sorted(rels) if rels is not None else tracked_rels(repo_root, data_dir.name))
+    # Two witnesses, because each answers in a world the other cannot. Git-LFS is authoritative
+    # today and SILENT after #2147 — at which point `tracked` is empty and every check below that
+    # reads it goes vacuous, reporting a clean corpus because it asked a question nobody answers.
+    # The filesystem answers in both worlds; what it cannot see is a recorded artifact that is
+    # simply not hydrated here. An explicit `rels` overrides both (tests, a narrowed run).
+    present = set() if rels is not None else set(present_rels(data_dir))
+    inventory = tracked | present
     findings: list[VaultFinding] = []
     recorded: dict[str, VaultArtifact] = {}
 
@@ -701,25 +810,33 @@ def check(
             continue
         recorded[artifact.rel] = artifact
 
-    for rel in sorted(tracked - recorded.keys()):
+    for rel in sorted(inventory - recorded.keys()):
+        where = "Git-LFS tracked" if rel in tracked else "present on disk"
         findings.append(
             VaultFinding(
-                kind="unrecorded",
-                rel=rel,
-                detail=f"Git-LFS tracked but named by no {MANIFEST_NAME}",
+                kind="unrecorded", rel=rel, detail=f"{where} but named by no {MANIFEST_NAME}"
             )
         )
 
-    for rel in sorted(recorded.keys() - tracked):
-        findings.append(
-            VaultFinding(
-                kind="orphaned",
-                rel=rel,
-                detail=f"recorded in {MANIFEST_NAME} but no longer Git-LFS tracked",
+    # `orphaned` is keyed on Git-LFS and retires with it. After #2147 nothing is tracked, and a
+    # recorded artifact that is merely not on this disk is UNHYDRATED — which `hydrate --check`
+    # reports and which is not drift. Guarded rather than deleted so the finding keeps working
+    # through the transition instead of turning into 3,662 false positives on the day of it.
+    #
+    # An explicit `rels` still gets it, `rels=[]` included: a caller STATING the inventory is
+    # entitled to be told what the record holds outside it. The suppressed case is narrowly the
+    # DERIVED one where Git-LFS answered nothing — "not asked" rather than "asked and empty".
+    if rels is not None or tracked:
+        for rel in sorted(recorded.keys() - inventory):
+            findings.append(
+                VaultFinding(
+                    kind="orphaned",
+                    rel=rel,
+                    detail=f"recorded in {MANIFEST_NAME} but no longer Git-LFS tracked",
+                )
             )
-        )
 
-    for rel in sorted(tracked & recorded.keys()):
+    for rel in sorted(inventory & recorded.keys()):
         artifact = recorded[rel]
         address = content_address(data_dir / rel)
         if address is None:

@@ -14,6 +14,18 @@
 # Re-link: do NOT `git lfs prune` until these are safely in the bucket — history still
 # references the oids, so the objects stay in .git/lfs/objects and can be restored with
 # `git lfs checkout <path>` against an earlier commit, or read from .git/lfs/objects.
+#
+# ⚠️ THIS SHAPE IS NOW THE GENERAL ONE, and `target_bucket: TBD` below is answerable (#2148).
+# Epic #2141 moved the whole corpus onto a yidam artifact vault on exactly this argument — a
+# committed record naming digests, bytes in a content-addressed store — and `data/*/*/vault.yaml`
+# (`watermark documents manifest`) is this file generalized: the same sha256-is-the-Git-LFS-oid
+# equivalence, written per collection instead of by hand. See docs/artifact-vault.md.
+#
+# What has NOT happened: these four WAVs are still local-only. They are `.gitignore`d, so they are
+# not Git-LFS tracked and `watermark.documents.vault.vaultable` does not claim them — the vault's
+# inventory is the tracked/vaultable set, and this record deliberately sits outside it. Putting
+# 4.2 GiB of hearing audio into the vault is a decision to take on its own terms; the store it
+# would go to now exists, which is the part that was TBD.
 
 subject: Select Committee on Data Centers (2026) — 2026-06-04 hearing audio
 externalized_on: 2026-06-10
