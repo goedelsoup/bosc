@@ -122,6 +122,23 @@ def onboard_cmd(
     )
 
 
+def _require_bytes(doc: object) -> None:
+    """Refuse to extract a document whose bytes are in the vault and not on this disk (#2147).
+
+    Extraction renders pages; it cannot proceed on a record. Said plainly here rather than left to
+    fail somewhere inside pypdfium2 on a path that does not exist.
+    """
+    if getattr(doc, "available", True):
+        return
+    path = getattr(doc, "path", "?")
+    console.print(
+        f"[red]Not on this disk:[/] {path}\n"
+        "The corpus records it, the vault holds the bytes, and extraction needs them. Run "
+        "`watermark documents hydrate` (or `--collection <collection>` for just this one) first."
+    )
+    raise typer.Exit(code=1)
+
+
 @app.command(name="ingest")
 def ingest_cmd() -> None:
     """Inventory source documents under data/documents."""
@@ -129,10 +146,22 @@ def ingest_cmd() -> None:
     if not docs:
         console.print("[yellow]No source documents found.[/]")
         raise typer.Exit()
-    table = Table("doc_id", "collection", "file", "size")
+    table = Table("doc_id", "collection", "file", "size", "here")
     for d in docs:
-        table.add_row(d.doc_id, d.collection or "—", d.path.name, f"{d.size_bytes / 1e6:.1f} MB")
+        table.add_row(
+            d.doc_id,
+            d.collection or "—",
+            d.path.name,
+            f"{d.size_bytes / 1e6:.1f} MB",
+            "yes" if d.available else "[yellow]vaulted[/]",
+        )
     console.print(table)
+    absent = sum(1 for d in docs if not d.available)
+    if absent:
+        console.print(
+            f"[yellow]{absent} document(s) are recorded but not on this disk[/] — "
+            "`watermark documents hydrate` fetches them from the vault."
+        )
 
 
 @app.command()
@@ -345,6 +374,7 @@ def extract(
     if doc is None:
         console.print(f"[red]Unknown doc_id:[/] {doc_id}. Run `watermark ingest` to list ids.")
         raise typer.Exit(code=1)
+    _require_bytes(doc)
 
     # Document-level kinds (deed, npdes) read across pages — no --page needed.
     if kind in extract_stage.DOC_EXTRACTORS:
@@ -497,6 +527,7 @@ def extract_sweep(
     if doc is None:
         console.print(f"[red]Unknown doc_id:[/] {doc_id}. Run `watermark ingest` to list ids.")
         raise typer.Exit(code=1)
+    _require_bytes(doc)
     try:
         lo_s, hi_s = pages.split("-", 1)
         lo, hi = int(lo_s), int(hi_s)

@@ -1045,3 +1045,43 @@ def test_present_bytes_win_over_the_carried_record(data_dir: Path) -> None:
 
     assert rebuilt[0].artifacts[0].sha256 != _SHA
     assert {f.kind for f in vault_mod.check(data_dir, data_dir.parent)} >= {"address-changed"}
+
+
+@pytest.mark.skipif(not _HAS_GIT_LFS, reason="needs a git repo to ask `git check-ignore`")
+def test_vaultable_agrees_with_what_git_actually_ignores() -> None:
+    """The two halves must agree SEMANTICALLY, not just as matching pattern strings.
+
+    `test_the_gitignore_block_matches_the_vaulted_set` compares text and cannot see this: gitignore's
+    `*` matches the empty string and a leading dot, so `data/documents/**/*.pdf` matches a file named
+    exactly `.pdf`. A `name != suffix` guard in `vaultable` therefore made that file **ignored and
+    unrecorded** — a source byte in neither git nor the vault, the one state the design forbids.
+
+    `git check-ignore` is the real matcher, and it answers for paths that do not exist, so this asks
+    git rather than re-implementing wildmatch.
+    """
+    from watermark.documents.vault import VAULTED_EXTENSIONLESS, vaultable
+
+    probes = [
+        "documents/aedg/real.pdf",
+        "documents/aedg/.pdf",  # the whole name is the suffix
+        "documents/aedg/.hidden.pdf",
+        "documents/aedg/SCAN.PDF",
+        "documents/aedg/Thumbs.db",
+        "documents/aedg/README.md",
+        "documents/aedg/vault.yaml",
+        "documents/aedg/notes.txt",
+        "reference/usgs/low-flow/appendix1.csv",
+        "reference/imagery/x.tif",
+        f"documents/legal/{next(iter(sorted(VAULTED_EXTENSIONLESS)))}",
+    ]
+    disagree = []
+    for rel in probes:
+        ignored = (
+            subprocess.run(
+                ["git", "check-ignore", "-q", f"data/{rel}"], cwd=REPO_ROOT, capture_output=True
+            ).returncode
+            == 0
+        )
+        if ignored != vaultable(rel):
+            disagree.append((rel, f"git ignores={ignored} vaultable={vaultable(rel)}"))
+    assert disagree == []

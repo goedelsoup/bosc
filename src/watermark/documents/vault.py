@@ -297,7 +297,12 @@ def vaultable(rel: str) -> bool:
     name = PurePosixPath(rel).name
     if name in VAULTED_EXTENSIONLESS:
         return True
-    return any(name.endswith(suffix) and name != suffix for suffix in VAULTED_SUFFIXES)
+    # ⚠️ No `name != suffix` guard, deliberately. A file named exactly `.pdf` is matched by the
+    # generated `data/documents/**/*.pdf` ignore rule — gitignore's `*` matches the empty string and
+    # a leading dot alike — so excluding it here would make it **ignored AND unrecorded**: a source
+    # byte in neither git nor the vault, which is the one state this whole design forbids. The two
+    # halves must agree, and the glob is the half that is hard to qualify.
+    return any(name.endswith(suffix) for suffix in VAULTED_SUFFIXES)
 
 
 def present_rels(data_dir: Path) -> list[str]:
