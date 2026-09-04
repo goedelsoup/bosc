@@ -224,12 +224,42 @@ def _lfs_pointer_size(head: bytes) -> int | None:
     return None
 
 
-def _document_stat(path: Path) -> tuple[int, bool, bool]:
-    """Resolve ``(size_bytes, available, is_pointer)`` for a source file (#1347).
+def _recorded_sizes(documents_dir: Path) -> dict[str, int]:
+    """``rel -> bytes`` for every artifact the committed ``vault.yaml`` manifests name (#2147).
 
-    An unpulled Git-LFS pointer is **not** absent: its bytes live in LFS/R2 and are served
-    from the object store (``/api/doc``), not the build tree — so it counts as available,
-    with the true size read from the pointer text. Only an unreadable/missing file is absent.
+    The **third witness**, and after the Git-LFS untrack the only one. A fresh checkout will hold
+    no source bytes at all — not even a pointer — so a filesystem walk stops being able to see
+    that a document exists. Measured on the real corpus: the feed collapsed from 3,845 entries
+    across 31 collections to **202 across 8**, which would have deployed a site with almost no
+    documents and had `bundle-freshness.yml` open a PR deleting 3,643 rows.
+
+    Keys are ``documents_dir``-relative, matching :class:`DocumentEntry.rel`; the manifests record
+    ``data_dir``-relative paths, so the root component is stripped.
+    """
+    from watermark.documents.vault import recorded_sizes
+
+    root = documents_dir.name
+    return {
+        rel.partition("/")[2]: size
+        for rel, size in recorded_sizes(documents_dir.parent).items()
+        if rel.startswith(f"{root}/")
+    }
+
+
+def _document_stat(path: Path, recorded_bytes: int | None = None) -> tuple[int, bool, bool]:
+    """Resolve ``(size_bytes, available, is_pointer)`` for a source file (#1347, #2147).
+
+    Three witnesses, and the same sentence covers all of them: **the build tree is not where these
+    bytes are served from.** So a document is unavailable only when nothing knows about it.
+
+    * the real bytes are here — stat them;
+    * an unpulled Git-LFS pointer — not absent, its bytes are in LFS/R2, and the true size is in
+      the pointer text;
+    * neither, but a committed ``vault.yaml`` names it — not absent either, its bytes are in the
+      artifact vault, and the true size is in the manifest. This is the branch that survives
+      #2147, and it needs no credentials because the record is committed.
+
+    Only a file nothing records and nothing holds is ``available=False``.
     """
     try:
         with path.open("rb") as fh:
@@ -239,6 +269,8 @@ def _document_stat(path: Path) -> tuple[int, bool, bool]:
             return ptr_size, True, True
         return path.stat().st_size, True, False
     except OSError:
+        if recorded_bytes is not None:
+            return recorded_bytes, True, False
         return 0, False, False
 
 
@@ -302,6 +334,7 @@ def build_documents(
         log.warning("site.documents.no_dir", path=str(documents_dir))
         return DocumentsResult(collections=[])
 
+    walked: dict[str, Path] = {}
     for path in sorted(documents_dir.rglob("*")):
         if not path.is_file():
             continue
@@ -319,8 +352,14 @@ def build_documents(
         if len(rel_path.parts) < 2:
             log.warning("site.documents.uncollected_file", path=str(rel_path))
             continue
+        walked[str(rel_path)] = path
+
+    recorded = _recorded_sizes(documents_dir)
+
+    for rel in sorted(set(walked) | set(recorded)):
+        path = walked.get(rel, documents_dir / rel)
+        rel_path = Path(rel)
         slug = rel_path.parts[0]
-        rel = str(rel_path)
         coll = collections.get(slug)
         if coll is None:
             coll = DocumentCollection(
@@ -329,7 +368,7 @@ def build_documents(
                 description=_collection_description(documents_dir / slug),
             )
             collections[slug] = coll
-        size, available, is_pointer = _document_stat(path)
+        size, available, is_pointer = _document_stat(path, recorded.get(rel))
         suffix = path.suffix.lower().lstrip(".")
         media_type, render_class = _media_type_and_render_class(
             path, suffix, sniffable=not is_pointer

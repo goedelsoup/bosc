@@ -33,6 +33,7 @@ Pure and offline: path arithmetic plus ``Path.exists``. It imports no other cata
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from pathlib import Path
 
 from watermark.catalog import CatalogEntry
@@ -68,18 +69,25 @@ def resolved_for_site(entry: CatalogEntry, slug: str) -> list[str]:
 
 
 def site_members(
-    entry: CatalogEntry, slug: str, settings: Settings
+    entry: CatalogEntry,
+    slug: str,
+    settings: Settings,
+    *,
+    vaulted: Mapping[str, int] | None = None,
 ) -> tuple[list[tuple[str, Path]], list[str]]:
     """Resolve ``slug``'s members to ``(relpath, path)`` pairs that exist, plus absent concretes.
 
     The per-site peer of :func:`watermark.catalog.reconcile._members`, which does the same walk
-    across *every* registered slug at once.
+    across *every* registered slug at once — including its rule that a file the committed
+    ``vault.yaml`` names is present (#2147). The two must share that predicate: a site's record
+    diverging from its own aggregate *by rule* is how the two views drifted apart before.
     """
+    recorded = vaulted or {}
     found: list[tuple[str, Path]] = []
     missing: list[str] = []
     for rel, templated in _resolved(entry, slug):
         path = settings.data_dir / rel
-        if path.exists():
+        if path.exists() or rel in recorded:
             found.append((rel, path))
         elif not templated:
             missing.append(rel)
@@ -96,7 +104,19 @@ def member_exists(found: list[tuple[str, Path]], missing: list[str], *, has_stor
     return (not missing and len(found) >= 1) or not has_storage
 
 
-def present_for_site(entry: CatalogEntry, slug: str, settings: Settings) -> bool:
-    """Whether this dataset is present *for* ``slug`` — :func:`site_members` reduced."""
-    found, missing = site_members(entry, slug, settings)
+def present_for_site(
+    entry: CatalogEntry,
+    slug: str,
+    settings: Settings,
+    *,
+    vaulted: Mapping[str, int] | None = None,
+) -> bool:
+    """Whether this dataset is present *for* ``slug`` — :func:`site_members` reduced.
+
+    ``vaulted`` threads the vault's inventory so this agrees with the aggregate record (#2147).
+    A caller that omits it asks the narrower question "is it on this disk", and after the untrack
+    that answer is *no* for every vaulted file — which is how the per-site coverage table lost
+    ~6 present datasets per site while the aggregate said they were fine.
+    """
+    found, missing = site_members(entry, slug, settings, vaulted=vaulted)
     return member_exists(found, missing, has_storage=bool(entry.storage))
