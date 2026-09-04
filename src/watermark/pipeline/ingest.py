@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import hashlib
 from dataclasses import dataclass, field
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 import opentelemetry.trace
 
@@ -40,6 +40,10 @@ class SourceDocument:
     suffix: str
     size_bytes: int
     collection: str = field(default="")
+    #: Are the bytes readable HERE? False for a document the committed `vault.yaml` names whose
+    #: bytes are in the vault and not on this disk (#2147). Listing it is right — the corpus holds
+    #: it — but nothing that opens the file may proceed; `watermark documents hydrate` fetches it.
+    available: bool = field(default=True)
 
     @property
     def is_pdf(self) -> bool:
@@ -55,6 +59,38 @@ def _doc_id(path: Path) -> str:
     """Stable short id from the path (not the contents — files may be huge)."""
     digest = hashlib.sha256(str(path).encode("utf-8")).hexdigest()
     return f"{path.stem}-{digest[:8]}"
+
+
+def _recorded_only(root: Path, seen: set[str], site: str | None) -> list[SourceDocument]:
+    """Documents the committed manifests name that this disk does not hold.
+
+    Scoped by the same site rule as the walk, and `size_bytes` comes from the record — the one
+    number about an absent file that is knowable without it.
+    """
+    from watermark.documents.vault import recorded_sizes
+
+    out: list[SourceDocument] = []
+    for full_rel, size in recorded_sizes(root.parent).items():
+        prefix, _, rel = full_rel.partition("/")
+        if prefix != root.name or not rel or rel in seen:
+            continue
+        path = root / rel
+        if path.suffix.lower() not in SOURCE_SUFFIXES:
+            continue
+        parts = PurePosixPath(rel).parts
+        if site and site not in parts:
+            continue
+        out.append(
+            SourceDocument(
+                path=path,
+                doc_id=_doc_id(path),
+                suffix=path.suffix.lower(),
+                size_bytes=size,
+                collection=parts[0] if len(parts) > 1 else "",
+                available=False,
+            )
+        )
+    return out
 
 
 def discover(settings: Settings | None = None, site: str | None = None) -> list[SourceDocument]:
@@ -76,12 +112,14 @@ def discover(settings: Settings | None = None, site: str | None = None) -> list[
             return []
 
         docs: list[SourceDocument] = []
+        seen: set[str] = set()
         for path in sorted(root.rglob("*")):
             if not path.is_file() or path.suffix.lower() not in SOURCE_SUFFIXES:
                 continue
             rel = path.relative_to(root)
             if site and site not in rel.parts:
                 continue
+            seen.add(rel.as_posix())
             collection = rel.parts[0] if len(rel.parts) > 1 else ""
             docs.append(
                 SourceDocument(
@@ -93,5 +131,17 @@ def discover(settings: Settings | None = None, site: str | None = None) -> list[
                 )
             )
         span.set_attribute("pipeline.doc_count", len(docs))
-        log.info("ingest.discovered", count=len(docs), root=str(root))
+        # The committed record is the second witness (#2147). After the Git-LFS untrack a fresh
+        # checkout holds NO source bytes, so this walk alone answers "no documents" for a corpus of
+        # 3,662 — which is what it did, until the agent's `list_documents` said so out loud in CI.
+        # A recorded document is listed and marked `available=False`: the corpus has it, this disk
+        # does not, and anything that opens the file must say so rather than crash on the `open`.
+        docs.extend(_recorded_only(root, seen, site))
+        docs.sort(key=lambda d: d.path)
+        log.info(
+            "ingest.discovered",
+            count=len(docs),
+            unavailable=sum(1 for d in docs if not d.available),
+            root=str(root),
+        )
         return docs

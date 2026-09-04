@@ -1,6 +1,7 @@
 # Legal analysis — *State ex rel. Parent v. Allen County Board of Commissioners*
 
-**Document:** [allen-co-bosc-mandamus-draft-2026-05.pdf](../../data/documents/legal/prr-mandamus/allen-co-bosc-mandamus-draft-2026-05.pdf)
+**Document:** `allen-co-bosc-mandamus-draft-2026-05.pdf`, in the
+[`prr-mandamus/` production](../../data/documents/legal/prr-mandamus/README.md)
 (draft Complaint for Writ of Mandamus, Court of Appeals of Ohio, Third Appellate
 District, Allen County; Relator Cory Parent, pro se; Certificate of Service dated
 **May 31, 2026**). Drafted but **not filed** — Relator received the Clerk's
