@@ -14,9 +14,12 @@
 // continues, and the gate emerges smaller with nothing to show for it. Only the emitted asset knows
 // what the build actually put in the reader's way.
 //
-// The assertion is deliberately tolerant of drift: every exported site whose committed bundle
-// publishes any document must contribute AT LEAST ONE rel. A committed bundle that lags the corpus
-// still satisfies that; a gate that fell back to one site cannot.
+// The assertion is EXACT: every published rel in a committed bundle must appear in the shipped
+// gate, and a missing one is named. Exactness is safe because both places this runs — `mise run
+// //web:check` and the CI `frontend` job — set `WATERMARK_SKIP_EXPORT=1` and
+// `WATERMARK_BUNDLE_DIR=sites`, so the bundles the build read ARE the ones compared here. An
+// earlier draft only required one rel per site, which would have passed a gate that dropped a
+// single collection — the same silent partial the check exists to refuse.
 //
 // Run after `astro build`:  node scripts/check-doc-gate.mjs  (pnpm run check:doc-gate)
 
@@ -63,17 +66,18 @@ for (const slug of exported) {
     rows.push(`${slug}: no committed bundle`);
     continue;
   }
-  const reached = own.filter((rel) => admitted.has(rel)).length;
-  rows.push(`${slug}: ${reached}/${own.length} admitted`);
-  if (own.length > 0 && reached === 0) missing.push(slug);
+  const absent = own.filter((rel) => !admitted.has(rel));
+  rows.push(`${slug}: ${own.length - absent.length}/${own.length} admitted`);
+  for (const rel of absent) missing.push(`${slug}  ${rel}`);
 }
 
 console.log(`check-doc-gate: gate admits ${admitted.size} rel(s) · ${rows.join(" · ")}`);
 
 if (missing.length > 0) {
-  fail(
-    `the shipped gate names NO published document from ${missing.join(", ")} — ` +
-      "every one of that site's downloads will 404 before R2 is asked (#2149).",
-  );
+  const shown = missing.slice(0, 20);
+  console.error(`check-doc-gate: ${missing.length} published rel(s) the shipped gate does not name:`);
+  for (const row of shown) console.error(`  ${row}`);
+  if (missing.length > shown.length) console.error(`  … ${missing.length - shown.length} more`);
+  fail("each of those downloads will 404 before R2 is asked (#2149).");
 }
-console.log("check-doc-gate: OK — every exported site reaches the publish gate.");
+console.log("check-doc-gate: OK — every published document reaches the publish gate.");

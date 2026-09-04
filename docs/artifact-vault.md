@@ -100,12 +100,25 @@ independent of #2144 / #2145 rather than blocked behind them.
 build publishes, verified by `watermark objectstore audit --via store` (`store_absent` = 0). The
 second upload, under the content address, is #2145's.
 
-⚠️ **The store was only half of #2149**, and the other half is worth carrying into #2145: the R2 gap
-accounted for **9** of the 480 404s. The rest were the *publish gate* —
+⚠️ **The store was only half of #2149**, and the other half is worth carrying into #2145.
+
+Measured on production 2026-09-04, **before** the refill above. Two populations, kept apart because
+they answer different questions:
+
+| | offered | served | 404 |
+|---|---:|---:|---:|
+| every published rel across all 26 committed bundles | 506 | 26 | 480 |
+| **what the deployed build actually offers** (the 8 exported sites) | **392** | 26 | 366 |
+
+Of that 392: **9** were gate-admitted and absent from R2 — the cause #2149 named, and the whole of
+what the refill fixed. The other **357** were refused by the *publish gate*:
 `/published-documents.json` is one network-global asset built from a **per-site** feed, so it
 shipped carrying Lima's set alone and 404'd every other site's documents before R2 was ever asked.
-A `rel → sha256` map has exactly the same shape, and putting it in KV does not change that: if it
-is assembled per-site it will be wrong in the same way.
+(The 114 further 404s in the wider population are documents of non-exported sites, which no built
+page offers.) The daily audit reports against the 392 — the population a reader can reach.
+
+A `rel → sha256` map has exactly the same shape as that gate, and putting it in KV does not change
+that: if it is assembled per-site it will be wrong in the same way.
 
 ### 4. One bucket, one prefix
 

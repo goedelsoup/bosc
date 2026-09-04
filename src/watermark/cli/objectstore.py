@@ -114,7 +114,9 @@ def objectstore_audit_cmd(
         "--via",
         help="'api' (probe /api/doc), 'store' (also HEAD the bucket — needs credentials).",
     ),
-    limit: int = typer.Option(20, "--limit", help="How many findings of each kind to print."),
+    limit: int = typer.Option(
+        20, "--limit", min=0, help="How many findings of each kind to print."
+    ),
     concurrency: int = typer.Option(8, "--concurrency", help="Parallel HEAD requests."),
 ) -> None:
     """Check that production serves every document the site publishes (#2149).

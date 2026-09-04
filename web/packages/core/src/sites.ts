@@ -312,7 +312,16 @@ export function selectableSitePaths(): Array<{ params: { site: string }; props: 
  * twice is a filter that can differ once.
  */
 export function exportedSiteSlugs(): readonly string[] {
-  return SITES.filter((s) => s.selectable).map((s) => s.slug);
+  return selectableFrom(SITES).map((s) => s.slug);
+}
+
+/**
+ * The one `selectable` predicate. Both the route paths and the exported-bundle slugs derive from
+ * it, so a change to what "the build ships this site" means cannot reach route emission without
+ * also reaching bundle exports and the #2149 document gate.
+ */
+export function selectableFrom(sites: readonly NetworkSite[]): NetworkSite[] {
+  return sites.filter((s) => s.selectable);
 }
 
 /**
@@ -322,12 +331,10 @@ export function exportedSiteSlugs(): readonly string[] {
 export function selectablePathsFrom(
   sites: readonly NetworkSite[],
 ): Array<{ params: { site: string }; props: { slug: string } }> {
-  return sites
-    .filter((s) => s.selectable)
-    .map((s) => ({
-      params: { site: siteBase(s.slug).replace("/network/", "") },
-      props: { slug: s.slug },
-    }));
+  return selectableFrom(sites).map((s) => ({
+    params: { site: siteBase(s.slug).replace("/network/", "") },
+    props: { slug: s.slug },
+  }));
 }
 
 /**
