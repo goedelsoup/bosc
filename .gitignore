@@ -56,6 +56,93 @@ data/scratch/
 # stay committed.
 data/documents/**/*.wav
 
+# ── BEGIN vaulted corpus (generated from watermark.documents.vault; #2147) ──
+# The source corpus lives in a yidam artifact vault, not in git (epic #2141). `git stores the
+# record of them` is `data/*/*/vault.yaml`; the bytes are content-addressed in R2. Restore a
+# working tree with `watermark documents hydrate`. Losing the vault costs no knowledge claim —
+# every digest is in a commit — only the time to re-fetch.
+#
+# SUFFIX-SCOPED ON PURPOSE. #2147 proposed ignoring `data/documents/**` wholesale with a few
+# re-includes; measured against the real tree that list was incomplete and would have ignored 725
+# committed files — 191 `README.md` plus 534 others, including the 93 captured `.html`/`.htm` web
+# evidence files, the `.index.yaml` passage indexes, `SOURCES.md`, geojson and csv. Naming the
+# vaulted set instead touches exactly the 3,662 files that left, and needs no re-include list to
+# go stale. It also sidesteps the trailing-`/*` trap documented further down: nothing here
+# excludes a parent directory, so nothing needs re-including through one.
+#
+# ⚠️ GENERATED — these patterns ARE `VAULTED_SUFFIXES` + `VAULTED_EXTENSIONLESS`, and
+# `test_the_gitignore_block_matches_the_vaulted_set` fails if they drift. Add a new source type in
+# `watermark/documents/vault.py` and regenerate; editing only this block gets you a committed
+# source byte that the manifests do not name.
+
+# documents
+data/documents/**/*.DOC
+data/documents/**/*.JPG
+data/documents/**/*.MOV
+data/documents/**/*.MP3
+data/documents/**/*.PDF
+data/documents/**/*.PNG
+data/documents/**/*.bmp
+data/documents/**/*.db
+data/documents/**/*.dbf
+data/documents/**/*.doc
+data/documents/**/*.docx
+data/documents/**/*.dot
+data/documents/**/*.flac
+data/documents/**/*.gif
+data/documents/**/*.jpeg
+data/documents/**/*.jpg
+data/documents/**/*.m4a
+data/documents/**/*.mov
+data/documents/**/*.mp3
+data/documents/**/*.odg
+data/documents/**/*.pdf
+data/documents/**/*.png
+data/documents/**/*.pptx
+data/documents/**/*.rtf
+data/documents/**/*.thmx
+data/documents/**/*.tif
+data/documents/**/*.tiff
+data/documents/**/*.xls
+data/documents/**/*.xlsx
+data/documents/**/*.zip
+# reference
+data/reference/**/*.DOC
+data/reference/**/*.JPG
+data/reference/**/*.MOV
+data/reference/**/*.MP3
+data/reference/**/*.PDF
+data/reference/**/*.PNG
+data/reference/**/*.bmp
+data/reference/**/*.db
+data/reference/**/*.dbf
+data/reference/**/*.doc
+data/reference/**/*.docx
+data/reference/**/*.dot
+data/reference/**/*.flac
+data/reference/**/*.gif
+data/reference/**/*.jpeg
+data/reference/**/*.jpg
+data/reference/**/*.m4a
+data/reference/**/*.mov
+data/reference/**/*.mp3
+data/reference/**/*.odg
+data/reference/**/*.pdf
+data/reference/**/*.png
+data/reference/**/*.pptx
+data/reference/**/*.rtf
+data/reference/**/*.thmx
+data/reference/**/*.tif
+data/reference/**/*.tiff
+data/reference/**/*.xls
+data/reference/**/*.xlsx
+data/reference/**/*.zip
+# no extension at all — never renamed, so named exactly
+data/documents/**/3-3-16[ ]Natale[ ]Revised[ ]Change[ ]Order
+# no extension at all — never renamed, so named exactly
+data/documents/**/Flow[ ]Calculations[ ]American-Bath[ ]feb[ ]6,[ ]2008
+# ── END vaulted corpus ──
+
 # Agent run logs / transcripts
 runs/
 *.log

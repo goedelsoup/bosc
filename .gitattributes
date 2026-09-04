@@ -1,64 +1,23 @@
-data/documents/**/*.jpg filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.tif filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.tiff filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.pdf filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.doc filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.docx filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.xls filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.xlsx filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.rtf filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.png filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.odg filter=lfs diff=lfs merge=lfs -text
-# *.wav is intentionally NOT LFS-tracked: hearing audio is multi-GB and lives in an
-# evidence bucket, not git. It is git-ignored (see .gitignore) and recorded in
-# data/documents/legal/select-committee-2026/hearings-audio/hearings-audio-externalized.yaml.
-data/documents/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.m4a filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.flac filter=lfs diff=lfs merge=lfs -text
-# Sanitary Engineer PRR production (2026-07-24): a native departmental file-tree copy,
-# so the corpus gains legacy Office/media/browser formats. Binary types → LFS.
-data/documents/**/*.gif filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.bmp filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.zip filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.pptx filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.thmx filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.dot filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.db filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.dbf filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.mov filter=lfs diff=lfs merge=lfs -text
-# As-received filenames keep their original upper-case extensions (chain of custody:
-# never rename a source file) and .gitattributes globs are case-sensitive — cover the
-# upper-case variants actually present in the corpus.
-data/documents/**/*.JPG filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.DOC filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.PDF filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.PNG filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.MP3 filter=lfs diff=lfs merge=lfs -text
-data/documents/**/*.MOV filter=lfs diff=lfs merge=lfs -text
-# Three as-received files carry no extension (never rename): bind their binary bytes
-# (PDF / OLE2 Word) to LFS by exact name, `?`-escaping spaces for the glob.
-data/documents/**/Flow?Calculations?American-Bath?feb?6,?2008 filter=lfs diff=lfs merge=lfs -text
-data/documents/**/3-3-16?Natale?Revised?Change?Order filter=lfs diff=lfs merge=lfs -text
-# Captured web evidence (HTML/text): preserve the exact response bytes, including
-# CRLF line endings — never normalize a source byte under data/documents (chain of
-# custody). Small enough to stay in-repo (not LFS), unlike the scans above.
+# The source corpus is NOT in Git-LFS. It moved to a yidam artifact vault (epic #2141, #2147):
+# `data/*/*/vault.yaml` records which bytes exist, R2 holds them at their content address, and
+# `watermark documents hydrate` restores a working tree. The globs that used to bind
+# data/documents/** and data/reference/** to LFS are gone — the set they described now lives in
+# `watermark.documents.vault.VAULTED_SUFFIXES` and in the generated block in `.gitignore`.
+#
+# What survives here is the chain-of-custody rule that has nothing to do with LFS: the source
+# bytes that DO stay in the repository must never be line-ending-normalized.
+
+# Captured web evidence (HTML/text): preserve the exact response bytes, including CRLF line
+# endings — never normalize a source byte under data/documents (chain of custody). Small
+# enough to stay in the repository, unlike the vaulted scans.
 data/documents/**/*.html -text
 # Also covers the derived `<dir>-text/` sidecars (#1757) — small UTF-8 transcriptions of the
-# legacy binaries, in-repo like the captured evidence above, not LFS.
+# vaulted legacy binaries, committed like the captured evidence above.
 data/documents/**/*.txt -text
 # The sanitary production's native web/markup formats stay raw bytes like .html/.txt.
 data/documents/**/*.htm -text
 data/documents/**/*.HTM -text
 data/documents/**/*.xml -text
-# AOI-clipped satellite captures (`bosc imagery pull`) — committed reference evidence
-# GeoTIFFs; large binaries, so LFS like the scans above. (Small test-fixture COGs
-# under tests/fixtures/ deliberately stay in-repo so the suite is hermetic.)
-data/reference/imagery/**/*.tif filter=lfs diff=lfs merge=lfs -text
-data/reference/imagery/**/*.tiff filter=lfs diff=lfs merge=lfs -text
-
-# Reference PDFs (authoritative outside maps/datasets) are large binaries — LFS-track them too.
-data/reference/**/*.pdf filter=lfs diff=lfs merge=lfs -text
 
 # The published USGS low-flow appendix CSVs are the publisher's own files, committed as served
 # (CRLF line endings and all) — never a re-export. Preserve the exact response bytes, same rule
@@ -72,8 +31,8 @@ data/reference/usgs/low-flow/*.csv -text
 # only affect GitHub's display + language bar; they change no git, build, or LFS behavior.
 
 # The public-records corpus + authoritative reference datasets are primary source DATA,
-# not code. Exclude the YAML/JSON/Markdown/HTML/CSV evidence from language stats (the LFS
-# binaries above are already ignored by Linguist).
+# not code. Exclude the YAML/JSON/Markdown/HTML/CSV evidence from language stats (the
+# vaulted binaries are not in the repository at all).
 data/** linguist-vendored
 
 # The committed content-bundle fixtures are generated (trimmed) by `bosc export`.

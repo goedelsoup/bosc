@@ -305,8 +305,16 @@ questions where the binary saw 2, and nothing could detect the gap.
 
 ## Data discipline (important)
 
-- `data/documents/**` is raw, immutable, and **versioned via Git LFS** for large
-  binaries (see `.gitattributes`). Add new scan/PDF types to LFS tracking.
+- `data/documents/**` is raw, immutable, and **held in a yidam artifact vault, not in git**
+  (#2147). Nothing under it that matches `VAULTED_SUFFIXES` is tracked or committed: the bytes are
+  content-addressed in R2 and the repository holds the *record* of them in
+  `data/*/*/vault.yaml`. `watermark documents hydrate` fills a working tree; `git lfs pull` does
+  nothing here any more.
+  ⚠️ **A new source type goes in the collection manifest, not in LFS tracking.** Add its suffix to
+  `watermark.documents.vault.VAULTED_SUFFIXES`, regenerate the `.gitignore` block, then
+  `watermark documents manifest` — in that order, because a suffix the ignore block does not name
+  gets **committed as a source byte no manifest records**, which is the one state the vault exists
+  to make impossible. `watermark documents manifest --check` catches it wherever the bytes are.
   The `history/` sub-tree is for secondary/reference sources (public-domain books,
   surveys) and nests **by site** (`history/allen-oh/`, `history/allen-in/`, …) so
   books for different watershed points don't collide. All claims from `history/`
