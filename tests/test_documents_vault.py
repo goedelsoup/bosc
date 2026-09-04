@@ -965,3 +965,83 @@ def test_nothing_vaultable_is_tracked_any_more() -> None:
     tracked = [line.removeprefix("data/") for line in out.splitlines() if line]
     still_vaulted = sorted(rel for rel in tracked if vaultable(rel))
     assert still_vaulted == [], f"{len(still_vaulted)} vaultable path(s) still tracked"
+
+
+def test_the_recorder_can_record_a_newly_ingested_file_with_git_lfs_silent(
+    data_dir: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The regression #2147 introduced, and the question the whole epic exists to answer.
+
+    `build` enumerated from `git lfs ls-files` alone. After the untrack that returns nothing, so it
+    produced ZERO manifests: a newly ingested document could not be recorded, `--check` would report
+    it `unrecorded` forever, and the migration would have replaced a quota wall with a recorder that
+    cannot record.
+    """
+    from watermark.documents import vault as vault_mod
+
+    monkeypatch.setattr(vault_mod, "tracked_rels", lambda *a, **k: [])
+    _seed(data_dir, {"documents/aedg/a.pdf": _CONTENT})
+    write(data_dir, vault_mod.build(data_dir, data_dir.parent))
+    assert vault_mod.check(data_dir, data_dir.parent) == []
+
+    # Ingest.
+    _seed(data_dir, {"documents/aedg/arrived.pdf": b"%PDF-just arrived"})
+    assert [f.kind for f in vault_mod.check(data_dir, data_dir.parent)] == ["unrecorded"]
+
+    write(data_dir, vault_mod.build(data_dir, data_dir.parent))
+
+    assert vault_mod.check(data_dir, data_dir.parent) == []
+    assert vault_mod.recorded_rels(data_dir) == [
+        "documents/aedg/a.pdf",
+        "documents/aedg/arrived.pdf",
+    ]
+
+
+def test_the_recorder_carries_the_record_forward_for_bytes_it_does_not_hold(
+    data_dir: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A machine that has not hydrated must reproduce the manifests, not empty them.
+
+    It cannot hash 3,662 files it does not hold, and re-deriving is not the point: the committed
+    record already says what those bytes are. `redistributable` especially — an editorial statement
+    about a licence that no amount of hashing could recover, so a hand-written `false` must survive.
+    """
+    import yaml
+
+    from watermark.documents import vault as vault_mod
+
+    monkeypatch.setattr(vault_mod, "tracked_rels", lambda *a, **k: [])
+    _seed(data_dir, {"documents/aedg/a.pdf": _CONTENT})
+    write(data_dir, vault_mod.build(data_dir, data_dir.parent))
+    path = data_dir / "documents/aedg" / MANIFEST_NAME
+    raw = yaml.safe_load(path.read_text())
+    raw["artifacts"][0]["redistributable"] = False
+    path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+
+    (data_dir / "documents/aedg/a.pdf").unlink()  # the bytes are in the vault, not here
+
+    rebuilt = vault_mod.build(data_dir, data_dir.parent)
+
+    artifacts = [a for m in rebuilt for a in m.artifacts]
+    assert [a.rel for a in artifacts] == ["documents/aedg/a.pdf"]
+    assert artifacts[0].sha256 == _SHA
+    assert artifacts[0].redistributable is False  # not re-derived away
+
+
+def test_present_bytes_win_over_the_carried_record(data_dir: Path) -> None:
+    """The fallback never launders a replaced source file.
+
+    Chain of custody forbids a source byte changing, and `check` reports `address-changed` when one
+    has. `build` must therefore re-hash what is here rather than trusting the record — otherwise a
+    regeneration would quietly re-record the replacement as correct.
+    """
+    from watermark.documents import vault as vault_mod
+
+    _seed(data_dir, {"documents/aedg/a.pdf": _CONTENT})
+    write(data_dir, vault_mod.build(data_dir, data_dir.parent, rels=["documents/aedg/a.pdf"]))
+    (data_dir / "documents/aedg/a.pdf").write_bytes(b"%PDF-replaced, which custody forbids")
+
+    rebuilt = vault_mod.build(data_dir, data_dir.parent, rels=["documents/aedg/a.pdf"])
+
+    assert rebuilt[0].artifacts[0].sha256 != _SHA
+    assert {f.kind for f in vault_mod.check(data_dir, data_dir.parent)} >= {"address-changed"}

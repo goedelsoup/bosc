@@ -349,12 +349,25 @@ def load_manifest(data_dir: Path, collection: str) -> VaultManifest | None:
     return VaultManifest.model_validate(yaml.safe_load(path.read_text(encoding="utf-8")))
 
 
-def _artifact(data_dir: Path, rel: str) -> VaultArtifact | None:
+def _artifact(
+    data_dir: Path, rel: str, recorded: VaultArtifact | None = None
+) -> VaultArtifact | None:
+    """The record for one file: derived from its bytes, or carried forward when they are not here.
+
+    ``recorded`` is the artifact the committed manifest already holds. It is the fallback, never an
+    override — bytes on this disk are re-hashed, so a source file that was replaced still surfaces
+    (as ``address-changed`` from :func:`check`) rather than being quietly re-recorded as correct.
+
+    Carrying it forward is what makes this command work at all after #2147: a machine that has not
+    hydrated cannot hash 3,662 files it does not hold, and re-deriving is not the point — the
+    committed record already says what those bytes are, and ``redistributable`` is an editorial
+    statement about a licence that no amount of hashing could recover.
+    """
     from watermark.site.documents import media_type_by_extension
 
     address = content_address(data_dir / rel)
     if address is None:
-        return None
+        return recorded
     sha256, size = address
     return VaultArtifact(
         rel=rel,
@@ -362,8 +375,9 @@ def _artifact(data_dir: Path, rel: str) -> VaultArtifact | None:
         bytes=size,
         media_type=media_type_by_extension(_suffix(rel)),
         # True throughout: a public-records corpus. Stated per artifact all the same — see the
-        # module docstring on why this is not a default.
-        redistributable=True,
+        # module docstring on why this is not a default. An artifact already recorded keeps the
+        # statement it was given: a `false` written by hand must not be re-derived away.
+        redistributable=recorded.redistributable if recorded is not None else True,
     )
 
 
@@ -384,12 +398,33 @@ def build(
     *rels* overrides the Git-LFS enumeration (for tests, and for a narrowed run).
     """
     now = datetime.now(UTC).replace(microsecond=0).isoformat()
-    wanted = sorted(rels) if rels is not None else tracked_rels(repo_root, data_dir.name)
+    recorded = {a.rel: a for _, a in _iter_committed(data_dir)}
+    # THREE witnesses, and each one covers a case the others cannot (#2147):
+    #
+    #   * the filesystem — the only one that can see a NEWLY INGESTED file, and after the untrack
+    #     the only one that answers at all about what is here;
+    #   * Git-LFS — authoritative until #2147, silent after, kept so the two states agree;
+    #   * the committed manifests — what the vault already holds, which a machine that has not
+    #     hydrated cannot otherwise know and cannot re-derive.
+    #
+    # Reading only Git-LFS is what this used to do, and after the untrack it enumerated NOTHING:
+    # `manifest` produced zero manifests, so a newly ingested document could not be recorded and
+    # `--check` would report it `unrecorded` forever. The whole point of the migration is that
+    # ingest stops hitting a wall; a recorder that cannot record would have replaced one wall
+    # with another.
+    if rels is not None:
+        wanted = sorted(rels)
+    else:
+        wanted = sorted(
+            set(tracked_rels(repo_root, data_dir.name))
+            | set(present_rels(data_dir))
+            | set(recorded)
+        )
 
     by_collection: dict[str, list[VaultArtifact]] = {}
     unaddressable: list[str] = []
     for rel in wanted:
-        artifact = _artifact(data_dir, rel)
+        artifact = _artifact(data_dir, rel, recorded.get(rel))
         if artifact is None:
             unaddressable.append(rel)
             continue
