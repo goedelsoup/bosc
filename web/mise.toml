@@ -68,9 +68,10 @@ if [ "$built" = "1" ]; then
   step "links"                 pnpm run check:links     || true
   step "routes (#1887)"        pnpm run check:routes    || true
   step "site-scope (#2005)"    pnpm run check:site-scope || true
+  step "doc-gate (#2149)"      pnpm run check:doc-gate  || true
 else
-  printf '\n\033[33mskipped (no build artifact):\033[0m links, routes, site-scope\n'
-  failures="${failures}  - build failed, so links / routes / site-scope did not run
+  printf '\n\033[33mskipped (no build artifact):\033[0m links, routes, site-scope, doc-gate\n'
+  failures="${failures}  - build failed, so links / routes / site-scope / doc-gate did not run
 "
 fi
 
@@ -78,7 +79,7 @@ if [ -n "$failures" ]; then
   printf '\n\033[31m//web:check FAILED\033[0m\n%s' "$failures"
   exit 1
 fi
-printf '\n\033[32m//web:check passed\033[0m — all 8 steps.\n'
+printf '\n\033[32m//web:check passed\033[0m — all 9 steps.\n'
 '''
 
 [tasks.test]

@@ -4,7 +4,7 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import rehypeDocLinks from "@watermark/core/rehype-doc-links";
 import { SITE_BASE } from "@watermark/core/routes";
-import { SITES } from "@watermark/core/sites";
+import { exportedSiteSlugs } from "@watermark/core/sites";
 import { watermarkBundle } from "./plugins/watermark-bundle";
 
 // Static build (the default). `site`/`base` come from the environment so the
@@ -33,7 +33,11 @@ const limaBase = `${base}${SITE_BASE}`;
 // committed `web/sites/` fixtures are an explicit `WATERMARK_BUNDLE_DIR` opt-in (set only by
 // `mise run //web:check`) and NOT a fallback, the Pages build planned troy-piqua's routes and then
 // died in `loadManifest` with "No content bundle found". Promotion is now the only edit needed.
-const exportSites = SITES.filter((s) => s.selectable).map((s) => s.slug);
+//
+// The filter itself now lives in `exportedSiteSlugs()` (#2149), because a third caller appeared:
+// `/published-documents.json` is a network-global asset that has to read every exported site's
+// bundle, and a filter spelled out at each call site is one that can differ at one of them.
+const exportSites = [...exportedSiteSlugs()];
 
 export default defineConfig({
   site,

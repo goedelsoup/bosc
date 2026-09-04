@@ -303,6 +303,19 @@ export function selectableSitePaths(): Array<{ params: { site: string }; props: 
 }
 
 /**
+ * The slugs the build exports a content bundle for — `astro.config.ts`'s `watermarkBundle` list,
+ * and the set any **network-global** page must iterate to see the whole network (#2149).
+ *
+ * Identical to {@link selectableSitePaths}' filter by construction, which is the point: those are
+ * the sites whose pages are built, so those are the sites whose bundles must exist. Two callers
+ * derived that filter independently until a global asset needed it as well, and a filter written
+ * twice is a filter that can differ once.
+ */
+export function exportedSiteSlugs(): readonly string[] {
+  return SITES.filter((s) => s.selectable).map((s) => s.slug);
+}
+
+/**
  * The seam of {@link selectableSitePaths} (#746) over an explicit `sites` list — the testable core
  * that a two-selectable-site fixture exercises (each site keyed by its own `siteBase`).
  */

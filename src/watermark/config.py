@@ -504,6 +504,11 @@ class Settings(BaseSettings):
     documents_object_store_endpoint: str = (
         ""  # override; else https://<account>.r2.cloudflarestorage.com
     )
+    # The deployed origin `watermark objectstore audit` probes (#2149) — the same default the
+    # Pages build uses for `SITE_URL` (`.github/workflows/pages.yml`), so the audit and the
+    # deploy agree on what "production" means without a second variable to keep in step. A
+    # preview deployment is a URL, so this is a plain override rather than a `--target` flag.
+    public_site_base_url: str = "https://the-watermark-directory.pages.dev"
 
     # --- Retrieval (LanceDB corpus store + pluggable embeddings; #807-#810) -----
     # Embedding provider name (WATERMARK_EMBEDDING_PROVIDER). New providers are

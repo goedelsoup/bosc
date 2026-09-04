@@ -1,0 +1,79 @@
+# Does production serve the documents the site publishes? (daily, #2149)
+#
+# Why this exists: `DocumentItem.published` is an assertion about an object store the build never
+# touches, and `DocumentItem.available` is computed from the working tree — where an unresolved
+# Git-LFS pointer counts as available on purpose, because the bytes are supposed to be in R2. So
+# every published document renders as a download the feed has never verified, and nothing compared
+# the claim against the store that has to honour it.
+#
+# What that cost: on 2026-09-04, of the 392 documents the deployed build offered, 26 could be
+# downloaded. Two independent causes at once — a publish gate carrying only Lima's set, and 456
+# objects absent from the bucket — and both had been true for weeks. Not a crash: a confident green.
+#
+# The check reports three sets (offered / gated / served) and FAILS only on the one that is always
+# a bug: production admitting a document it cannot serve. Deploy lag is reported, because a merged
+# clearance waiting on a manual deploy is this repo's normal state and a check that fails on it
+# would be muted inside a week.
+#
+# Reading a failure:
+#   * "unserved"    — the deployed gate admits it and /api/doc 404s. The object is missing from the
+#                     prod bucket (or DOCS_ENABLED is off). Fix: `watermark objectstore sync
+#                     --target remote`, which needs the real LFS bytes, so it runs from a
+#                     workstation and not here.
+#   * "not yet in the deployed gate" — expected after a merge. A count much larger than recent
+#                     commits explain is the shape of a SCOPING bug, which is how #2149 read.
+#
+# No credentials: the probe reads only the public origin. `--via store` also HEADs the bucket and
+# separates "absent object" from "gate rejection", but that needs the R2 keys, so it stays an
+# operator command.
+
+name: Doc serving (daily)
+
+on:
+  schedule:
+    - cron: "41 6 * * *" # 06:41 UTC daily
+  workflow_dispatch:
+    inputs:
+      base:
+        description: "Origin to probe (default: the production Pages URL)"
+        type: string
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: doc-serving
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        # Deliberately NOT `lfs: true`. The audit reads the committed `web/sites/**` bundles for
+        # what this commit publishes and the live origin for what is served — it never opens a
+        # source byte, which is exactly why it can run on a cadence at all.
+
+      - name: Set up uv + Python
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Probe /api/doc for every published document
+        # ⚠️ A PREVIEW deployment is not a valid target for the gate half of this check:
+        # `enforcePublishGate` only enforces when CF_PAGES_BRANCH == "main", so a preview URL
+        # serves whatever the bucket holds and the gate comparison reads as vacuously clean. Point
+        # `base` at a preview only to measure store coverage.
+        run: |
+          set -euo pipefail
+          if [ -n "${{ inputs.base }}" ]; then
+            uv run watermark objectstore audit --base "${{ inputs.base }}"
+          else
+            uv run watermark objectstore audit
+          fi
