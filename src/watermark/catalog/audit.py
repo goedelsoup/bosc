@@ -22,7 +22,12 @@ from collections import defaultdict
 from pydantic import BaseModel, ConfigDict, Field
 
 from watermark.catalog import CatalogEntry, load_entries
-from watermark.catalog.reconcile import ObservedEntry, ObservedSnapshot, load_observed
+from watermark.catalog.reconcile import (
+    ObservedEntry,
+    ObservedSnapshot,
+    load_observed,
+    vault_recorded_sizes,
+)
 from watermark.catalog.resolve import present_for_site
 from watermark.catalog.sites import is_relevant
 from watermark.config import Settings, get_settings
@@ -108,11 +113,19 @@ class AuditReport(BaseModel):
 def _site_coverage(
     entries: list[CatalogEntry], snapshot: ObservedSnapshot | None, settings: Settings
 ) -> list[SiteCoverage]:
-    """Per-site present/missing from on-disk resolution (stable; pointer files count as present)."""
+    """Per-site present/missing from on-disk resolution.
+
+    A Git-LFS pointer counts as present, and so does a file the committed ``vault.yaml`` names
+    (#2147) — the same predicate the aggregate record uses. Reading only the disk made this table
+    the one place the untrack still showed up, as ~6 datasets per site turning "missing".
+    """
+    vaulted = vault_recorded_sizes(settings.data_dir)
     out: list[SiteCoverage] = []
     for slug in sorted(SITES):
         relevant = [e for e in entries if is_relevant(e, slug)]
-        present = sum(1 for entry in relevant if present_for_site(entry, slug, settings))
+        present = sum(
+            1 for entry in relevant if present_for_site(entry, slug, settings, vaulted=vaulted)
+        )
         out.append(
             SiteCoverage(
                 slug=slug, total=len(relevant), present=present, missing=len(relevant) - present

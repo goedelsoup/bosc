@@ -205,6 +205,58 @@ single-PUT cap (multipart is not implemented upstream).
 **476 files are byte-duplicates** (3,662 files, 3,186 addresses), which content addressing
 collapses at no cost.
 
+## The third witness: what happens when the bytes are simply not there
+
+The untrack (#2147) creates a state nothing in this repository had ever seen. Today an `lfs: false`
+checkout holds a **130-byte pointer** for every source file, and four separate consumers quietly
+depend on that: the pointer is a file, it has a size in its text, and it proves the document exists.
+After the untrack a fresh checkout holds **nothing at all** where those files were.
+
+Measured, by building exactly that tree:
+
+| | pointer tree (today's CI) | source-less tree, before | source-less tree, after |
+|---|---|---|---|
+| `documents` feed | 3,845 entries / 31 collections | **202 / 8** | 3,845 / 31 |
+| `catalog check` | 0 errors · 8 warnings | **9 `missing-files` errors** | 0 errors · 8 warnings |
+| per-site coverage | unchanged | **~6 datasets/site turn "missing"** | unchanged |
+| `lima` bundle drift | corpus-index · documents · exhibits | (as before) | **identical three** |
+
+The last row is the acceptance criterion: a post-untrack checkout is now **indistinguishable** from
+today's `lfs: false` checkout to every gate. Nothing the untrack does is a change that an
+un-hydrated CI run did not already see.
+
+**The fix is the argument that was already in the code, one witness later.**
+`watermark.site.documents._document_stat` has always said it:
+
+> An unpulled Git-LFS pointer is **not** absent: its bytes live in LFS/R2 and are served from the
+> object store, not the build tree.
+
+After the untrack the same sentence holds of a different record — *a file named by `vault.yaml` is
+not absent; its bytes are in the vault, and the true size is in the manifest.* `recorded_sizes()` is
+that lookup, and the consumers read it as a fallback, never an override: real bytes on disk always
+win. It needs **no credentials and no network**, because the record is committed — the same property
+that let the manifest be written without materializing 3.5 GiB.
+
+Four consumers, all of which had to learn it, and each one found by measurement rather than by
+reading:
+
+- **`site.documents`** — the walk enumerated the filesystem, so an absent file was not merely
+  mis-sized, it was **not in the feed at all**. Now the union of the walk and the manifest.
+- **`catalog.reconcile`** — a declared file absent from disk was `missing`, an **error**. Now
+  present-but-unmaterialized: exactly the state a pointer already produced, `sha256: None`
+  included, because the tree cannot prove content it does not hold.
+- **`catalog.resolve.present_for_site`** — the per-site coverage table read only the disk, and was
+  the one place the untrack still showed. The aggregate and the per-site record must share the
+  predicate; diverging *by rule* is how they drifted apart before (#2066).
+- **`site.exhibits`** — deliberately **not** changed. Slicing pages out of a PDF needs the actual
+  bytes, so `available: false` there is the truth, and it already reads false in today's CI.
+
+⚠️ **One consequence to state plainly: `watermark documents manifest --check` becomes vacuous in
+CI.** With no source bytes present, `present_rels` returns nothing and there is no file that could
+be unrecorded — so the gate passes by having nothing to ask about. It still bites where it matters
+(a developer's tree, an ingest, a hydrated runner). Making it bite in CI would mean hydrating there,
+which needs R2 credentials in Actions; that is a separate decision and not one this change assumes.
+
 ## The record: `watermark documents manifest`
 
 Implemented by #2143. One `vault.yaml` per first-level collection under each vaulted root — 31 under

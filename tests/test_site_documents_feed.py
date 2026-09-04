@@ -305,3 +305,90 @@ def test_build_doc_index_reads_published_from_entries(tmp_path: Path) -> None:
     index = build_doc_index(collections)
     assert index["aedg/a.pdf"] == ("pdf", True)
     assert index["aedg/b.html"] == ("html", False)
+
+
+def _vault_manifest(docs: Path, collection: str, entries: list[tuple[str, int]]) -> None:
+    """A committed `vault.yaml` under `docs/<collection>/`, recording rels data_dir-relatively."""
+    import yaml
+
+    path = docs / collection / "vault.yaml"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        yaml.safe_dump(
+            {
+                "meta": {
+                    "collection": f"{docs.name}/{collection}",
+                    "policy": "x",
+                    "generated_at": "2026-09-04T00:00:00+00:00",
+                    "generated_by": "test",
+                    "counts": {
+                        "artifacts": len(entries),
+                        "bytes": sum(b for _, b in entries),
+                        "distinct_addresses": len(entries),
+                    },
+                },
+                "artifacts": [
+                    {
+                        "rel": f"{docs.name}/{collection}/{name}",
+                        "sha256": f"{i:064x}",
+                        "bytes": size,
+                        "media_type": "application/pdf",
+                        "redistributable": True,
+                    }
+                    for i, (name, size) in enumerate(entries)
+                ],
+            },
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+
+
+def test_a_document_only_the_vault_record_names_is_catalogued(tmp_path: Path) -> None:
+    """#2147: after the untrack a fresh checkout holds no source bytes — not even a pointer.
+
+    The walk alone stopped being able to see that a document exists, and the feed collapsed from
+    3,845 entries across 31 collections to 202 across 8 (measured on the real corpus). That would
+    have deployed a site with almost no documents and had `bundle-freshness.yml` open a PR deleting
+    3,643 rows.
+    """
+    docs = tmp_path / "documents"
+    _vault_manifest(docs, "aedg", [("vaulted.pdf", 4096)])
+
+    result = build_documents(docs)
+
+    entries = {e.rel: e for coll in result.collections for e in coll.entries}
+    assert list(entries) == ["aedg/vaulted.pdf"]
+    entry = entries["aedg/vaulted.pdf"]
+    assert entry.available is True  # its bytes are in the vault, not the build tree
+    assert entry.size_bytes == 4096  # the recorded size, since nothing here can be stat'd
+    assert entry.media_type == "application/pdf"
+    assert entry.name == "vaulted.pdf"
+
+
+def test_real_bytes_win_over_the_record(tmp_path: Path) -> None:
+    """The manifest is the third witness, never an override of the first."""
+    docs = tmp_path / "documents"
+    (docs / "aedg").mkdir(parents=True)
+    (docs / "aedg" / "here.pdf").write_bytes(b"%PDF-1.4 real bytes")
+    _vault_manifest(docs, "aedg", [("here.pdf", 999_999)])
+
+    entry = next(e for coll in build_documents(docs).collections for e in coll.entries)
+    assert entry.size_bytes == len(b"%PDF-1.4 real bytes") != 999_999
+    assert entry.available is True
+
+
+def test_a_file_nothing_records_and_nothing_holds_is_unavailable(tmp_path: Path) -> None:
+    """`available` still has a false case: only a document no witness knows about."""
+    docs = tmp_path / "documents"
+    (docs / "aedg").mkdir(parents=True)
+    broken = docs / "aedg" / "unreadable.pdf"
+    broken.write_bytes(b"%PDF-x")
+    broken.chmod(0o000)
+    try:
+        entry = next(e for coll in build_documents(docs).collections for e in coll.entries)
+        assert entry.available is False
+        assert entry.size_bytes == 0
+        assert entry.download_url is None
+    finally:
+        broken.chmod(0o644)

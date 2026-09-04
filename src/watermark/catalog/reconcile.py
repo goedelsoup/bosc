@@ -23,6 +23,7 @@ fact). They were the same record until the aggregate was caught asserting 531,14
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Mapping
 from datetime import UTC, date, datetime
 from pathlib import Path
 
@@ -36,6 +37,19 @@ from watermark.sites import SITES
 
 # The committed observed snapshot, at the catalog root (``load_entries`` skips root-level files).
 OBSERVED_RELNAME = "_observed.yaml"
+
+
+def vault_recorded_sizes(data_dir: Path) -> Mapping[str, int]:
+    """The vault's inventory (``rel -> bytes``), imported lazily.
+
+    Deferred rather than module-level for the reason :func:`_is_lfs_pointer` is kept
+    self-contained: this is a core data path, and it should not drag a heavier tree in at import
+    time. :mod:`watermark.documents.vault` is light, but the direction of the dependency is worth
+    keeping explicit.
+    """
+    from watermark.documents.vault import recorded_sizes
+
+    return recorded_sizes(data_dir)
 
 
 def _is_lfs_pointer(path: Path) -> bool:
@@ -155,11 +169,19 @@ class ObservedSnapshot(BaseModel):
     entries: dict[str, ObservedEntry] = Field(default_factory=dict)
 
 
-def _members(entry: CatalogEntry, settings: Settings) -> tuple[list[tuple[str, Path]], list[str]]:
+def _members(
+    entry: CatalogEntry, settings: Settings, vaulted: Mapping[str, int]
+) -> tuple[list[tuple[str, Path]], list[str]]:
     """Resolve an entry's storage to (relpath, path) pairs that exist, plus absent concrete relpaths.
 
     A ``{site}`` template expands across the registered sites and keeps only the files that
     actually exist — per-site absence is expected, so it never contributes to ``missing``.
+
+    **Vaulted counts as present** (#2147). A file the committed ``vault.yaml`` names is not
+    missing: its bytes are in the artifact vault, exactly as an unmaterialized Git-LFS pointer's
+    are in LFS/R2 — and this function's caller already has the state for that, ``lfs_materialized:
+    false``. Without this, the untrack turned 9 entries into ``missing-files`` **errors** and failed
+    `watermark catalog check` on every fresh checkout, for 31 files nothing had lost.
     """
     found: list[tuple[str, Path]] = []
     missing: list[str] = []
@@ -169,15 +191,23 @@ def _members(entry: CatalogEntry, settings: Settings) -> tuple[list[tuple[str, P
             for slug in sorted(SITES):
                 actual = rel.replace("{site}", slug)
                 path = settings.data_dir / actual
-                if path.exists():
+                if path.exists() or actual in vaulted:
                     found.append((actual, path))
         else:
             path = settings.data_dir / rel
-            if path.exists():
+            if path.exists() or rel in vaulted:
                 found.append((rel, path))
             else:
                 missing.append(rel)
     return found, missing
+
+
+def _member_size(rel: str, path: Path, sizes: Mapping[str, int]) -> int:
+    """A member's byte count: from disk when it is here, from the vault record when it is not."""
+    try:
+        return path.stat().st_size
+    except OSError:
+        return sizes.get(rel, 0)
 
 
 def _summarize(
@@ -187,6 +217,7 @@ def _summarize(
     entry: CatalogEntry,
     now: date,
     has_storage: bool,
+    sizes: Mapping[str, int],
 ) -> dict[str, object]:
     """The observed fields for one resolved member set — the whole entry's, or one site's.
 
@@ -195,6 +226,10 @@ def _summarize(
     A site's record diverging from its own aggregate by *rule* rather than by data is how the
     two views would drift apart again.
     """
+    # A vaulted-but-absent member reads as a pointer here, and that is the right answer rather
+    # than a coincidence: `_is_lfs_pointer` is True for anything it cannot read, and both states
+    # mean *the bytes are recorded and are not local*. So `sha256` stays None and
+    # `lfs_materialized` stays false, unchanged from what CI records for a pointer today.
     pointers = [p for _, p in found if _is_lfs_pointer(p)]
 
     # sha256: the file's own hash for a single materialized file (so a pinned, file-level
@@ -220,7 +255,10 @@ def _summarize(
     return {
         "exists": member_exists(found, missing, has_storage=has_storage),
         "sha256": sha256,
-        "size_bytes": sum(p.stat().st_size for _, p in found),
+        # The recorded size for a member that is not on this disk — the same substitution
+        # `watermark.site.documents` makes, and the reason a bundle's byte totals do not move
+        # when a checkout stops carrying the sources.
+        "size_bytes": sum(_member_size(rel, p, sizes) for rel, p in found),
         "lfs_materialized": not pointers,
         "file_count": len(found),
         "asof": asof,
@@ -228,7 +266,9 @@ def _summarize(
     }
 
 
-def _observe_sites(entry: CatalogEntry, settings: Settings, now: date) -> dict[str, ObservedSite]:
+def _observe_sites(
+    entry: CatalogEntry, settings: Settings, now: date, sizes: Mapping[str, int]
+) -> dict[str, ObservedSite]:
     """One record per registered site that holds a copy of this ``slug-scoped`` dataset (#2066).
 
     Only for a slug-scoped entry **with storage** — a virtual node (no storage) has nothing
@@ -240,26 +280,35 @@ def _observe_sites(entry: CatalogEntry, settings: Settings, now: date) -> dict[s
         return {}
     out: dict[str, ObservedSite] = {}
     for slug in sorted(SITES):
-        found, missing = site_members(entry, slug, settings)
+        found, missing = site_members(entry, slug, settings, vaulted=sizes)
         if not found:
             continue
         out[slug] = ObservedSite.model_validate(
-            _summarize(found, missing, entry=entry, now=now, has_storage=True)
+            _summarize(found, missing, entry=entry, now=now, has_storage=True, sizes=sizes)
         )
     return out
 
 
-def _observe(entry: CatalogEntry, settings: Settings, now: date) -> ObservedEntry:
+def _observe(
+    entry: CatalogEntry, settings: Settings, now: date, sizes: Mapping[str, int]
+) -> ObservedEntry:
     # An entry with no declared storage is a *virtual* node (#1020/#1024) — a pure aggregate
     # in the dependency DAG (e.g. `onboard-bundle`) or a feed whose output is regenerable and
     # git-ignored (the bundle). Nothing on disk to observe, so it counts as present.
-    found, missing = _members(entry, settings)
+    found, missing = _members(entry, settings, sizes)
     return ObservedEntry.model_validate(
         {
-            **_summarize(found, missing, entry=entry, now=now, has_storage=bool(entry.storage)),
+            **_summarize(
+                found,
+                missing,
+                entry=entry,
+                now=now,
+                has_storage=bool(entry.storage),
+                sizes=sizes,
+            ),
             "missing": sorted(missing),
             "site_scope": entry.site_scope,
-            "sites": _observe_sites(entry, settings, now),
+            "sites": _observe_sites(entry, settings, now, sizes),
         }
     )
 
@@ -277,8 +326,12 @@ def reconcile(
     """
     settings = settings or get_settings()
     moment = now or datetime.now(UTC)
+    # Once, not once per entry: this parses 35 committed manifests, and calling it inside `_observe`
+    # made a ~2 s reconcile into 201 times that. Threaded rather than cached so it cannot go stale
+    # against a tree a test has just changed.
+    sizes = vault_recorded_sizes(settings.data_dir)
     entries = {
-        entry.id: _observe(entry, settings, moment.date())
+        entry.id: _observe(entry, settings, moment.date(), sizes)
         for entry in load_entries(settings=settings)
     }
     return ObservedSnapshot(

@@ -471,3 +471,96 @@ def test_committed_observed_is_in_sync_with_catalog() -> None:
             assert f.model_dump(exclude=_LFS_SENSITIVE) == c.model_dump(exclude=_LFS_SENSITIVE), eid
         else:
             assert f == c, eid
+
+
+def _vault_manifest(settings: Settings, collection: str, rel: str, size: int, sha: str) -> None:
+    """A committed `vault.yaml` naming one artifact — the record that survives #2147."""
+    import yaml
+
+    path = settings.data_dir / collection / "vault.yaml"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        yaml.safe_dump(
+            {
+                "meta": {
+                    "collection": collection,
+                    "policy": "x",
+                    "generated_at": "2026-09-04T00:00:00+00:00",
+                    "generated_by": "test",
+                    "counts": {"artifacts": 1, "bytes": size, "distinct_addresses": 1},
+                },
+                "artifacts": [
+                    {
+                        "rel": rel,
+                        "sha256": sha,
+                        "bytes": size,
+                        "media_type": "application/pdf",
+                        "redistributable": True,
+                    }
+                ],
+            },
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+
+
+def test_a_vaulted_file_is_present_not_missing(tmp_path: Path) -> None:
+    """#2147: a declared file the vault records is not lost, it is elsewhere.
+
+    Identical in kind to an unmaterialized Git-LFS pointer, which this function has always treated
+    as present — the bytes were never served from the build tree. Without this the untrack turned
+    9 catalog entries into `missing-files` ERRORS on every fresh checkout, for 31 files nothing had
+    lost.
+    """
+    settings = _settings(tmp_path)
+    rel = "documents/odd/tca/Meeting_Minutes_1.27.25.pdf"
+    _vault_manifest(settings, "documents/odd", rel, 4096, "a" * 64)
+    _entry(
+        settings,
+        "odd-tca",
+        _CONCRETE.format(name="odd-tca", relpath=rel, cadence="static"),
+    )
+
+    obs = reconcile(settings=settings, now=_FIXED).entries["odd-tca"]
+
+    assert obs.exists is True
+    assert obs.missing == []
+    assert obs.file_count == 1
+    # The record's byte count, since there is nothing on this disk to stat.
+    assert obs.size_bytes == 4096
+    # `lfs_materialized: false` is the state that already meant "recorded, not local here", and
+    # `sha256: None` for the same reason a pointer gets None — the tree cannot prove the content.
+    assert obs.lfs_materialized is False
+    assert obs.sha256 is None
+
+
+def test_a_file_neither_on_disk_nor_in_the_vault_is_still_missing(tmp_path: Path) -> None:
+    """The witness is the committed manifest, not optimism. An unrecorded absence is a gap."""
+    settings = _settings(tmp_path)
+    _vault_manifest(settings, "documents/odd", "documents/odd/other.pdf", 10, "b" * 64)
+    _entry(
+        settings,
+        "odd-tca",
+        _CONCRETE.format(name="odd-tca", relpath="documents/odd/gone.pdf", cadence="static"),
+    )
+
+    obs = reconcile(settings=settings, now=_FIXED).entries["odd-tca"]
+
+    assert obs.exists is False
+    assert obs.missing == ["documents/odd/gone.pdf"]
+
+
+def test_a_present_file_still_reports_its_real_size_and_sha(tmp_path: Path) -> None:
+    """The vault record is a fallback, never an override: real bytes here win."""
+    settings = _settings(tmp_path)
+    rel = "documents/odd/x.yaml"
+    f = _data(settings, rel, "hello: 1\n")
+    _vault_manifest(settings, "documents/odd", rel, 999_999, "c" * 64)
+    _entry(settings, "odd-x", _CONCRETE.format(name="odd-x", relpath=rel, cadence="static"))
+
+    obs = reconcile(settings=settings, now=_FIXED).entries["odd-x"]
+
+    assert obs.size_bytes == f.stat().st_size != 999_999
+    assert obs.sha256 == hashlib.sha256(f.read_bytes()).hexdigest()
+    assert obs.lfs_materialized is True

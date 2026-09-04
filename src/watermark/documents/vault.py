@@ -732,6 +732,22 @@ def recorded_rels(data_dir: Path) -> list[str]:
     return sorted({artifact.rel for _, artifact in _iter_committed(data_dir)})
 
 
+def recorded_sizes(data_dir: Path) -> dict[str, int]:
+    """``rel -> bytes`` for every artifact the committed manifests name (#2147).
+
+    The vault's inventory as a lookup, for the consumers that read a **Git-LFS pointer** to answer
+    the same question and stop being able to at the untrack: `watermark.site.documents` (is this
+    document available, and how big) and `watermark.catalog.reconcile` (is this declared file
+    present). Both already treat an unmaterialized pointer as present-with-a-known-size, because
+    the build tree was never where those bytes are served from. This is that record, one witness
+    later — and it needs no network and no credentials, because it is committed.
+
+    Keys are ``data_dir``-relative (``documents/…``, ``reference/…``), matching
+    :attr:`watermark.catalog.StorageItem.relpath`.
+    """
+    return {artifact.rel: artifact.bytes for _, artifact in _iter_committed(data_dir)}
+
+
 class VaultFinding(BaseModel):
     """One drift between the committed manifests and the tree they describe."""
 
