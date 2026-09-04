@@ -368,6 +368,16 @@ class Settings(BaseSettings):
     # boto3/AWS SDK reads AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_REGION. Absent
     # credentials => the AWS source degrades to a modeled assumption, never a crash. Cost
     # Explorer + CCFT are us-east-1-only endpoints, so that is the default region.
+    # The yidam artifact-vault cache (#2146, epic #2141) — where `yidam vault put/pull` keep
+    # content-addressed bytes, and where `watermark documents hydrate` reads them from. Carries
+    # yidam's OWN variable name rather than a WATERMARK_-prefixed one (the `ANTHROPIC_API_KEY`
+    # precedent above): a machine that has set it for the binary must not have to set it twice,
+    # and a second value would be a second answer to "where are the bytes". Empty resolves to
+    # `$XDG_CACHE_HOME/yidam/vault`, then `~/.cache/yidam/vault` — yidam's own default order.
+    # Deliberately NOT partitioned per repository: two corpora citing the same document share
+    # the blob, and a cache hit answers *do I have these bytes*, never *may I send them*.
+    yidam_vault_cache: str = Field(default="", alias="YIDAM_VAULT_CACHE")
+    xdg_cache_home: str = Field(default="", alias="XDG_CACHE_HOME")
     aws_access_key_id: str = Field(default="", alias="AWS_ACCESS_KEY_ID")
     aws_secret_access_key: str = Field(default="", alias="AWS_SECRET_ACCESS_KEY")
     aws_region: str = Field(default="us-east-1", alias="AWS_REGION")

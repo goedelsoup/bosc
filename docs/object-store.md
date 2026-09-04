@@ -1,5 +1,10 @@
 # Source-document object store (R2)
 
+> **The corpus bytes are also in a yidam artifact vault** (epic #2141). This file documents the
+> **rel-keyed** store the `/api/doc` Function streams; the content-addressed vault that replaces
+> Git-LFS, and the `watermark documents hydrate` dev loop for getting bytes back into a working
+> tree, are in [artifact-vault.md](artifact-vault.md).
+
 The corpus under `data/documents/**` is ~5 GB across ~1,600 files — too large to commit
 to the static build, but the new site needs to **serve the real bytes** so a reader can
 open the actual deed, permit, or plan (epic #274). The store that holds those bytes is

@@ -381,6 +381,55 @@ asserts this for four hearing WAVs; #2143 generalizes its shape to the whole cor
 holds real bytes for every LFS object — the first push needs no `git lfs pull`, and the exceeded
 quota does not gate it.
 
+## Getting the bytes back: `watermark documents hydrate`
+
+The dev loop (#2146). Restores vaulted bytes into the working tree under their **as-received**
+names, reading the manifests for what belongs where:
+
+```sh
+yidam vault pull                                   # fill the local cache from the store
+watermark documents hydrate                         # link every recorded artifact into place
+watermark documents hydrate --collection documents/aedg
+watermark documents hydrate --check                 # report; write nothing
+watermark documents hydrate --paths-from list.txt   # the selective set (one data/-relative path per line)
+```
+
+Credentials for the pull are the vault's, and the existing R2 token works unchanged:
+
+```sh
+export YIDAM_VAULT_DEFAULT_ACCESS_KEY_ID="$WATERMARK_DOCUMENTS_OBJECT_STORE_ACCESS_KEY_ID"
+export YIDAM_VAULT_DEFAULT_SECRET_ACCESS_KEY="$WATERMARK_DOCUMENTS_OBJECT_STORE_SECRET_ACCESS_KEY"
+```
+
+Six outcomes, and the interesting ones are not the successes:
+
+| outcome | meaning |
+|---|---|
+| `linked` / `copied` | placed from the cache — **hardlinked**, so 3.6 GB is on the disk once, not twice; copied only across devices |
+| `present` | already correct in place; untouched |
+| `pointer` | an unresolved Git-LFS stub — see the warning below |
+| `absent-from-cache` | not on **this machine**; `yidam vault pull` fetches it. Not an error about the record |
+| `conflict` | the bytes in place disagree with the record. **Left untouched**, and the command exits non-zero |
+
+**`conflict` never overwrites.** Hydration must not be able to become the thing that altered a
+source byte; a tool that resolved a divergence by overwriting it would destroy the evidence that
+there was one. The mismatching file stays exactly as found, and the exit code fails a gate.
+
+### ⚠️ A pointer hash-matches its own record
+
+This is the trap worth carrying forward. A Git-LFS oid **is** the sha256 of the content — the fact
+that makes the manifest derivable without the bytes — so an unresolved 130-byte stub satisfies any
+naive "do the hashes agree?" check while being unreadable to everything. `hydrate` therefore names
+`pointer` as its own outcome rather than folding it into `present`, and
+`.github/workflows/bundle-freshness.yml` gates on it. That workflow's older guard grepped for the
+pointer signature for the same reason: *a pointer parsed as data yields zero rows, not an error.*
+Do not simplify either one into a hash comparison.
+
+The cache location is read through `watermark.config.get_settings()` and honours yidam's **own**
+`YIDAM_VAULT_CACHE` / `XDG_CACHE_HOME` rather than a `WATERMARK_`-prefixed peer, so a machine that
+configured it for the binary does not configure it twice — a second value would be a second answer
+to *where are the bytes*.
+
 ## One capability this repository declines
 
 `yidam vault materialize` hardlinks cached artifacts into the working tree under

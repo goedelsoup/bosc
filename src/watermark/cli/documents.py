@@ -1,4 +1,4 @@
-"""``watermark documents manifest`` — the committed record of the corpus' vaulted bytes (#2143).
+"""``watermark documents`` — the corpus' vaulted bytes: their record, and their restoration.
 
 `data/documents/**` is moving out of Git-LFS and into a yidam artifact vault (epic #2141). A vault
 stores bytes; git stores the record of them, and this writes that record: one `vault.yaml` per
@@ -90,3 +90,71 @@ def documents_manifest_cmd(
         f"[green]{len(written)} manifest(s) rewritten[/], {unchanged} already current · "
         f"{artifacts} artifact(s) · {distinct} distinct address(es) · {total / 1_048_576:.0f} MiB"
     )
+
+
+@documents_app.command("hydrate")
+def documents_hydrate_cmd(
+    check: Annotated[
+        bool,
+        typer.Option("--check", help="Report what hydration would do; write nothing."),
+    ] = False,
+    collection: Annotated[
+        str,
+        typer.Option("--collection", help="Limit to one collection, e.g. 'documents/aedg'."),
+    ] = "",
+    paths_from: Annotated[
+        str,
+        typer.Option(
+            "--paths-from",
+            help="File of data/-relative paths (one per line) to hydrate — the selective-pull set.",
+        ),
+    ] = "",
+) -> None:
+    """Restore vaulted bytes into the working tree under their as-received names.
+
+    Hardlinks from the yidam vault cache to ``data/<rel>``, so the bytes are on disk once rather
+    than twice; copies where the cache is on another device. **Never overwrites a file whose bytes
+    differ from the record** — that is reported as a conflict and left alone, because a tool that
+    resolved a divergence by overwriting it would destroy the evidence that there was one.
+
+    Not ``yidam vault materialize``: that names its output ``<slug>-<hash8>.<ext>`` and this corpus'
+    filenames are evidence. See docs/artifact-vault.md.
+    """
+    from pathlib import Path
+
+    from watermark.documents.vault import collection_of, hydrate, recorded_rels
+
+    settings = get_settings()
+    data_dir = settings.data_dir
+
+    rels: list[str] | None = None
+    if paths_from:
+        raw = Path(paths_from).read_text(encoding="utf-8").splitlines()
+        rels = [line.strip().lstrip("./").removeprefix("data/") for line in raw if line.strip()]
+    elif collection:
+        wanted = collection.strip("/")
+        rels = [r for r in recorded_rels(data_dir) if collection_of(r) == wanted]
+        if not rels:
+            console.print(f"[red]No recorded artifact under[/] {wanted}")
+            raise typer.Exit(2)
+
+    outcomes = hydrate(data_dir, rels=rels, settings=settings, check=check)
+    counts: dict[str, int] = {}
+    for outcome in outcomes:
+        counts[outcome.action] = counts.get(outcome.action, 0) + 1
+
+    for outcome in outcomes:
+        if outcome.action in ("conflict", "absent-from-cache", "pointer"):
+            colour = "yellow" if outcome.action == "absent-from-cache" else "red"
+            console.print(f"[{colour}]{outcome.action}[/] {outcome.rel} — {outcome.detail}")
+
+    summary = " · ".join(f"{n} {action}" for action, n in sorted(counts.items()))
+    verb = "would hydrate" if check else "hydrated"
+    console.print(f"[green]{verb}[/] {len(outcomes)} artifact(s): {summary or 'nothing'}")
+
+    # A conflict is a source byte that disagrees with the committed record — the one outcome that
+    # must not pass silently. An uncached artifact is merely absent from THIS machine.
+    # A conflict is a source byte disagreeing with the record; a pointer is a stub nothing can
+    # read. Both must fail a gate. An uncached artifact is merely absent from THIS machine.
+    if counts.get("conflict") or counts.get("pointer"):
+        raise typer.Exit(1)
