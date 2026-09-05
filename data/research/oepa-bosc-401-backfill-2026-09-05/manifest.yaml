@@ -1,0 +1,191 @@
+meta:
+  subject: Project BOSC §401 water-quality certifications — the sweep rows never fetched
+  site: lima
+  generated_at: '2026-09-04'
+  derived_from: data/research/oepa-portal-bosc-2026-08-22/manifest.yaml
+  method: the ALLEN-county DSW401* rows of the *BOSC* portal sweep, minus every docid
+    already recorded in a vault manifest. A sweep manifest is evidence of a search,
+    not of an acquisition.
+  counts:
+    total: 18
+results:
+- docid: '3702677'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702677
+  status: new
+- docid: '3702678'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702678
+  status: new
+- docid: '3702679'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702679
+  status: new
+- docid: '3702680'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702680
+  status: new
+- docid: '3702681'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702681
+  status: new
+- docid: '3702682'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702682
+  status: new
+- docid: '3702684'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/2/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702684
+  status: new
+- docid: '3727545'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/17/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727545
+  status: new
+- docid: '3727546'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/17/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727546
+  status: new
+- docid: '3727547'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/17/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727547
+  status: new
+- docid: '3727548'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/17/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: APP251760W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727548
+  status: new
+- docid: '3727949'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/18/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727949
+  status: new
+- docid: '3728018'
+  entity: PROJECT BOSC
+  doc_type: Permit - Intermediate
+  doc_date: 7/18/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401251760W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3728018
+  status: new
+- docid: '3933660'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 12/9/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: APP252260W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3933660
+  status: new
+- docid: '3933661'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 12/9/2025
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: APP252260W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3933661
+  status: new
+- docid: '3974497'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 1/19/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: APP252260W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3974497
+  status: new
+- docid: '3974498'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 1/19/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: APP252260W
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3974498
+  status: new
+- docid: '4011312'
+  entity: PROJECT BOSC LVL 2 IWP
+  doc_type: Permit - Intermediate
+  doc_date: 2/18/2026
+  program: 401 WETLANDS
+  county: ALLEN
+  permit_id: DSW401252260W
+  description: null
+  url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4011312
+  status: new

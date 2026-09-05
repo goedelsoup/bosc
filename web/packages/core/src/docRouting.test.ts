@@ -114,7 +114,7 @@ describe("isRoutableDoc — measured against the committed Lima corpus", () => {
     // under `cross_corpus_duplicates` in
     // `data/extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.custody-manifest.yaml`.
     // The 54 exclusions are unchanged: every new entry is an ordinary routable PDF or XLSX.
-    expect(entries.length).toBe(3382);
+    expect(entries.length).toBe(3394);
     expect(entries.filter((e) => !isRoutableDoc(e))).toHaveLength(54);
   });
 

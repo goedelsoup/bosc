@@ -220,9 +220,13 @@ describe("the join, against the committed Lima bundle", () => {
     // `oepa/lima/edoc-4116228.pdf` (the county Sanitary Engineer's discharge authorization).
     // ⚠️ The denominator does NOT move for the eleven text sidecars added under
     // `lima/meetings-text/` and `lacrpc/meetings-text/`: a `-text` tree is derived content and
-    // `watermark.site.documents` excludes it by `in_sidecar_tree`. 3,382 is the same corpus.
-    expect(entries.length).toBe(3382);
-    expect(countExtracted(entries, index)).toBe(157);
+    // `watermark.site.documents` excludes it by `in_sidecar_tree`.
+    // 3,382 -> 3,394 (the §401 backfill): twelve documents from the two Project BOSC water-quality
+    // certifications that the *BOSC* portal sweep listed in August and nobody had fetched. The
+    // sweep named 18 rows; they are 12 distinct byte-streams, and the six duplicate docids are
+    // recorded in the shelf's filename-map rather than committed twice.
+    expect(entries.length).toBe(3394);
+    expect(countExtracted(entries, index)).toBe(158);
   });
 
   it("is near-complete on the small instrument collections, and thin across the big holdings", () => {
@@ -240,7 +244,11 @@ describe("the join, against the committed Lima bundle", () => {
     // corpus-wide, not introduced here: the three `oepa/lima/edoc-18403xx.engineering.yaml` reads
     // are invisible to this join for the same reason. Giving `record:` a group is a taxonomy
     // decision of the kind the comments in that file take deliberately, and it is NOT made here.
-    expect(counts.permits).toEqual([29, 37]);
+    // permits [29, 37] -> [30, 49]: twelve §401 documents in, one extraction out. The read covers
+    // all twelve — the delineation sheet, the Waters-of-the-US table, both ODNR letters and the
+    // withdrawal email — but the join is per `source_path`, and that names only `4011312.pdf`, the
+    // 2026-02-18 withdrawal. The other eleven are `companion_sources`: read, cited, not joined.
+    expect(counts.permits).toEqual([30, 49]);
     expect(counts.recorder).toEqual([7, 7]);
     // plans 4 -> 5 (#2072 follow-on): `4091285.pdf`, the NOI completing the `2GC08747` set.
     expect(counts.plans).toEqual([2, 5]);
@@ -314,7 +322,7 @@ describe("the join, against the committed Lima bundle", () => {
     // documents, for the reason given above.
     // 160 -> 162 (the TMDL allocation record and the 2DP00130 conveyance record), both
     // `permits-epa`, both naming their source document.
-    expect(records.length).toBe(162);
+    expect(records.length).toBe(163);
     // 5 -> 3, and this is the deliberate change the note below predicted. `_source_ref` now
     // resolves three further committed provenance shapes — `provenance.source_path` /
     // `provenance.sources`, the connector read's `meta.sources` (a dict of NAMED lists, so every
@@ -335,6 +343,6 @@ describe("the join, against the committed Lima bundle", () => {
     // documents of the package have no extraction at all and so reach neither side.
     // 155 -> 157: both new records name a source document, so the join and the record move
     // together — as at #2089 and unlike #2088.
-    expect(index.size).toBe(157);
+    expect(index.size).toBe(158);
   });
 });

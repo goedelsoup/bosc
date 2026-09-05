@@ -88,6 +88,9 @@ storage:
 - relpath: extracted/permits/4230068.sanitary.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/permits/bosc-401-certifications.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/permits/lma1a-npdes-cgp-coverage.epa.yaml
   media_type: application/x-yaml
   lfs: false
@@ -112,6 +115,29 @@ tags:
 - air-pti
 - wetland
 - npdes
-notes: Reviewed reads keyed by EPA Application ID — §401/PTI letters, the air Permit-to-Install P0138965
-  (draft + 2026-05-28 final), NPDES construction-stormwater coverage history, USACE wetland forms, and
-  Ohio SoS filings.
+notes: >-
+  Reviewed reads keyed by EPA Application ID — §401/PTI letters, the air Permit-to-Install P0138965
+  (draft + 2026-05-28 final), NPDES construction-stormwater coverage history, USACE wetland forms,
+  and Ohio SoS filings.
+
+  ADDENDUM 2026-09-05 — `bosc-401-certifications.epa.yaml`, the §401 backfill. The *BOSC* portal
+  sweep of 2026-08-22 listed 34 ALLEN-county rows across the two Project BOSC water-quality
+  certifications; 16 were in the corpus and 18 had never been fetched. Fetching them (12 distinct
+  byte-streams — see the shelf's filename-map) answered the disposition question left open on
+  permit DSW401252260W. The Level 2 Isolated Wetland Permit application was WITHDRAWN by the
+  applicant on 2026-02-18 — not denied, not granted. The stated reason is the larger find, because
+  it is the first dated primary-source statement tying AEP to the campus's own layout: "After
+  additional coordination with AEP, it was ultimately determined that the alignment of the high
+  voltage corridor to the onsite substation could be revised so as to fully avoid impacts to
+  Wetland A." An ON-SITE SUBSTATION and a high-voltage corridor, stated by the applicant's engineer
+  to the regulator — where the Lyka transmission attribution has stood at [inference] since #1476.
+  It remains a self-report; no AEP route drawing, easement or filing corroborates it, and no Ohio
+  EPA acknowledgement of the withdrawal is held.
+
+  TWO FURTHER CORRECTIONS TO CARRY. The delineation sheet records FIVE wetlands totalling 2.40
+  acres (A 1.86 / B 0.29 / C 0.21 / D 0.03 / E 0.01), materially more than the 0.29-ac forested
+  figure from permit 3788677 or the secondhand "0.7-ac forested wetland" — cite the sheet for the
+  delineation and the permit for what that permit covered. And the campus's own FEMA exhibit is
+  titled "AMERICAN AND SUGAR CREEK TOWNSHIPS", where the zoning work has read American Township's
+  instruments alone; that is a map extent rather than a parcel footprint, so it is raised as an
+  open question rather than a correction.

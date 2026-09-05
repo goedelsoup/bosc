@@ -101,7 +101,7 @@ describe("documentId — the corpus it has to address", () => {
     // corpus already holds from Ohio EPA and were not re-committed — both are pinned by sha256
     // under `cross_corpus_duplicates` in
     // `data/extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.custody-manifest.yaml`.
-    expect(rels.length).toBe(3382); // a corpus change should surface here, not a silent collision
+    expect(rels.length).toBe(3394); // a corpus change should surface here, not a silent collision
     const ids = new Set(rels.map(documentId));
     expect(ids.size).toBe(rels.length);
   });
