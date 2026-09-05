@@ -202,7 +202,7 @@ describe("the join, against the committed Lima bundle", () => {
   // `data/extracted/oepa/lima/2dp00130-surrogate-characterization.yaml`, which is deliberately
   // shaped so `corpus._classify` DECLINES it — it is a reading, not a record, and must never
   // count here.
-  it("extracts 155 of 3,382 documents — 4.6% of the corpus", () => {
+  it("extracts 158 of 3,394 documents — 4.7% of the corpus", () => {
     const entries = documents.flatMap((c) => c.entries);
     // 3,362 -> 3,382 (City of Lima PRR, #1536): the twenty committed files of the City's first
     // public-records production, under `legal/prr-mandamus/prr-production-2026-08-{22,24}-lima/`.
@@ -218,6 +218,11 @@ describe("the join, against the committed Lima bundle", () => {
     // Maumee TMDL's individual NPDES wasteload allocations, extracted for Lima's own rows — it was
     // already read for FINDLAY's, but Findlay's artifact is outside Lima's scope) and
     // `oepa/lima/edoc-4116228.pdf` (the county Sanitary Engineer's discharge authorization).
+    // 157 -> 158 (the §401 backfill): `permits/bosc-401-certifications.epa.yaml`, the read of the
+    // two Project BOSC water-quality certifications. ⚠️ ONE extraction against TWELVE new
+    // documents — it is a permit-sequence read across both certifications, not one artifact per
+    // exhibit, so it joins on the withdrawal email alone and the other eleven raise only the
+    // denominator. That is why the corpus moves by 12 and the numerator by 1.
     // ⚠️ The denominator does NOT move for the eleven text sidecars added under
     // `lima/meetings-text/` and `lacrpc/meetings-text/`: a `-text` tree is derived content and
     // `watermark.site.documents` excludes it by `in_sidecar_tree`.
@@ -320,8 +325,8 @@ describe("the join, against the committed Lima bundle", () => {
     // 159 -> 160 (#2089): `oepa/lima/edoc-4116201.npdes.yaml`, the indirect-discharge
     // application form, which publishes into `permits-npdes`. One record from twelve committed
     // documents, for the reason given above.
-    // 160 -> 162 (the TMDL allocation record and the 2DP00130 conveyance record), both
-    // `permits-epa`, both naming their source document.
+    // 160 -> 163: the TMDL allocation record, the 2DP00130 conveyance record and the BOSC §401
+    // certification record — all three `permits-epa`, all three naming their source document.
     expect(records.length).toBe(163);
     // 5 -> 3, and this is the deliberate change the note below predicted. `_source_ref` now
     // resolves three further committed provenance shapes — `provenance.source_path` /
@@ -341,8 +346,9 @@ describe("the join, against the committed Lima bundle", () => {
     // gains an index entry. Here the join and the record move together — unlike #2088, this
     // extraction both becomes a record and names its source. The other eleven committed
     // documents of the package have no extraction at all and so reach neither side.
-    // 155 -> 157: both new records name a source document, so the join and the record move
-    // together — as at #2089 and unlike #2088.
+    // 155 -> 158: all three new records — the TMDL allocation, the 2DP00130 conveyance and the
+    // BOSC §401 certifications — name a source document, so the join and the record move together
+    // — as at #2089 and unlike #2088.
     expect(index.size).toBe(158);
   });
 });

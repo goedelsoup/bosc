@@ -18,7 +18,7 @@ import yaml
 from tests.conftest import ExportedBundle
 from watermark.config import Settings
 from watermark.hypotheses import HYPOTHESES, HypothesisAssessment
-from watermark.site import corpus_catalog, corpus_mirror
+from watermark.site import corpus_catalog, corpus_mirror, corpus_records
 from watermark.site.corpus_mirror import (
     CLASSES,
     ONTOLOGY,
@@ -607,3 +607,46 @@ def test_every_record_asserting_verified_cites_a_source_or_is_a_known_gap() -> N
         f"{unsourced} assert `[verified]` and cite no registered source — either the catalog "
         "lost an entry, or the citation stopped resolving"
     )
+
+
+def test_a_record_s_title_comes_from_its_header_never_from_a_section_banner() -> None:
+    """Position is what separates a YAML header comment from a mid-file section rule.
+
+    `_title` matched `^#\\s+(.+)$` anywhere in any record and took whichever came first. Many
+    extractions open with a descriptive comment block, which is the best name the file has; many
+    also organise their middles with rules. So sixteen Lima records were named after a rule or a
+    buried aside — `--- the two certifications ------`, a bare row of `=`, and in one case a
+    truncated caveat about a grant. The mirror, the `corpus-index` feed and the wiki node-index
+    page all read that label, and a garbage label is still a valid string, so nothing failed.
+    """
+    from watermark.site.corpus_records import _title
+
+    # A banner BELOW the content names a section, not the record — fall back to the filename.
+    banner = "doc_id: x\n\n# --- the two certifications ---------------\n\nfoo: 1\n"
+    assert _title(Path("bosc-401-certifications.epa.yaml"), banner) == (
+        "bosc 401 certifications · epa"
+    )
+    # An OPENING comment block IS the file's own header, and is kept.
+    header = (
+        '# Tetra Tech "Opinion of Probable Project Cost" \u2014 Project BOSC Roadwork\n'
+        "# Source: PAAC PRR production, scanned exhibit pages 318-328.\n"
+        "kind: opc\n"
+    )
+    assert _title(Path("roundabouts.opc.yaml"), header) == (
+        'Tetra Tech "Opinion of Probable Project Cost" \u2014 Project BOSC Roadwork'
+    )
+    # Even inside the header block a rule is skipped rather than taken — six records opened with one.
+    ruled = "# ==========================\n# INDEX — Hyperscaler panel\n# ====\nkind: index\n"
+    assert _title(Path("hearing.yaml"), ruled) == "INDEX — Hyperscaler panel"
+    # Markdown keeps a heading wherever it sits: there `#` is a heading, not a comment.
+    assert _title(Path("a.analysis.md"), "text\n\n# H.B. 983 — the Act\n") == "H.B. 983 — the Act"
+    # A stated title still wins over any comment.
+    assert _title(Path("b.yaml"), "title: The stated one\n# --- banner ---\n") == "The stated one"
+
+
+def test_no_record_in_the_committed_corpus_is_labelled_with_a_rule() -> None:
+    """The measured half of the test above, over the real corpus rather than a fixture."""
+    records = corpus_records.load_records(Settings(site="lima", data_dir=REPO_ROOT / "data"))
+    assert records, "the record projection returned nothing — the scope predicate has moved"
+    ruled = [r.relpath for r in records if any(c * 3 in r.title for c in "-=_*\u2500\u2014")]
+    assert ruled == [], f"{ruled} are labelled with a comment rule rather than a name"

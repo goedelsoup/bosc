@@ -34,6 +34,7 @@ that flatter, which is the same error in the other direction.
 from __future__ import annotations
 
 import re
+from collections.abc import Iterator
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -54,6 +55,10 @@ _TAG_RE = {tag: re.compile(re.escape(f"[{tag}]")) for tag in _STANDINGS}
 
 #: Extraction file types that carry reviewed structured claims.
 _SUFFIXES = (".yaml", ".yml", ".md")
+
+# A comment that is a horizontal rule rather than a name — dashes, equals, box-drawing, and the
+# `--- words ---` form, whose words are a SECTION's name and not the record's.
+_RULE_RE = re.compile(r"[-=_*─—]{3,}.*|.*[-=_*─—]{3,}")
 
 #: Documentation that lives *in* the extracted tree without being a record of anything. These
 #: carry claim markers while describing the collection rather than asserting about the subject
@@ -89,13 +94,36 @@ def _title(path: Path, text: str) -> str:
 
     Read with a regex rather than by parsing: these files are large, many are markdown, and a
     mirror projection must never fail because one extraction has a YAML quirk.
+
+    ⚠️ A ``#`` line is only a title where it is the document's OWN opening line. In markdown it is
+    a heading anywhere; in YAML it is a comment, and **position is the whole difference between a
+    header and a section banner**. Many extractions open with a descriptive comment block — `#
+    Tetra Tech "Opinion of Probable Project Cost" — Project BOSC` — which is the best name the
+    file has. Many others *also* organise their middles with rules, and matching anywhere in the
+    file took whichever came first: seven records published `--- the two certifications ------`
+    or a bare row of dashes as their names. So a YAML comment is read only from the leading
+    comment block, and a candidate that is nothing but punctuation is refused wherever it sits.
     """
-    for pattern in (r"^title:\s*(.+)$", r"^name:\s*(.+)$", r"^#\s+(.+)$"):
+    for pattern in (r"^title:\s*(.+)$", r"^name:\s*(.+)$"):
         if (m := re.search(pattern, text, re.MULTILINE)) is not None:
             found = m.group(1).strip().strip("\"'")
             if found:
                 return found[:160]
+    for line in _heading_candidates(path, text):
+        if (m := re.fullmatch(r"#\s+(.+)", line)) is not None:
+            found = m.group(1).strip().strip("\"'")
+            if _RULE_RE.fullmatch(found) is None and found:
+                return found[:160]
     return path.stem.replace("-", " ").replace(".", " · ")
+
+
+def _heading_candidates(path: Path, text: str) -> Iterator[str]:
+    """The lines a ``#`` title may be read from: any line in markdown, the header block in YAML."""
+    for line in text.splitlines():
+        stripped = line.strip()
+        if path.suffix != ".md" and stripped and not stripped.startswith("#"):
+            return  # past the leading comment block; everything below is a section banner
+        yield stripped
 
 
 def load_records(settings: Settings | None = None) -> list[CorpusRecord]:

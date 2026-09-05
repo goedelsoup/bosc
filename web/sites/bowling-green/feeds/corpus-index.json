@@ -976,7 +976,7 @@
     "links_out": 1,
     "links_in": 0,
     "lines": 21,
-    "updated": "2026-08-05"
+    "updated": "2026-09-04"
   },
   {
     "id": "question/lead-construction-dewatering",
@@ -1334,22 +1334,22 @@
     "id": "record/oepa-bowling-green-2pd00009-fs-npdes",
     "node_class": "record",
     "kind": "record",
-    "label": "Method note (important, and different from the OCR-scan rule in CLAUDE.md): this is a",
+    "label": "2PD00009 · fs · npdes",
     "scope": "site",
     "links_out": 2,
     "links_in": 0,
-    "lines": 22,
+    "lines": 21,
     "updated": "2026-08-01"
   },
   {
     "id": "record/oepa-bowling-green-2pd00009-npdes",
     "node_class": "record",
     "kind": "record",
-    "label": "Reviewed transcription from this digitally generated PDF's embedded text layer. Page citations",
+    "label": "2PD00009 · npdes",
     "scope": "site",
     "links_out": 2,
     "links_in": 0,
-    "lines": 22,
+    "lines": 21,
     "updated": "2026-08-01"
   },
   {

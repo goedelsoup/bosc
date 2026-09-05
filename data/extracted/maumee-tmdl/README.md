@@ -11,7 +11,7 @@ slug-scoped subtree. This collection holds the reads made from the reference bui
 
 | file | subject |
 |---|---|
-| [`maumee-tp-wla-lima-loop.epa.yaml`](maumee-tp-wla-lima-loop.epa.yaml) | The eight Allen County allocations — Lima WWTP `2PE00000`, Shawnee II, Lima Refining, American-Bath, American II, Elida, Cridersville, Bluffton — from Appendix 4 and the general permit `OHP000001` that makes them enforceable; plus the ten Lima-loop allocations from the **near-field** Ottawa River (Lima Area) TMDL, via Appendix 5 |
+| [`maumee-tp-wla-lima-loop.epa.yaml`](maumee-tp-wla-lima-loop.epa.yaml) | The eight Allen County allocations — Lima WWTP `2PE00000`, Shawnee II, Lima Refining, American-Bath, American II, Elida, Cridersville, Bluffton — from Appendix 4, with the general permit `OHP000001` carrying the Table A4.1 allocations as enforceable Individual Load Limits; plus the ten allocations Appendix 5 lists from the **near-field** Ottawa River (Lima Area) TMDL |
 
 ## Reading these safely
 
@@ -24,7 +24,10 @@ Three things about the source tables have already caused, or would have caused, 
 - **Table A4.5's first numeric column is a 2008 baseline, not a reported year.** The seven columns
   are `2008 / WLA / 2017 / 2018 / 2019 / 2020 / 2021`.
 - **The CSO allocation (Table A4.3) is additional to the Table A4.1 allocation for the same
-  permit.** Lima WWTP carries both, and A4.1 says so in its own preamble.
+  permit.** Lima WWTP carries both, and A4.1 says so in its own preamble. ⚠️ But the two do not
+  have the same standing: `OHP000001` Part IV.A.1 carries the A4.1 allocation as an enforceable
+  Individual Load Limit, and **no instrument in this corpus carries the 0.083 MT CSO allocation**.
+  Cite it as the TMDL's allocation, never as a permit limit.
 
 These are digitally generated PDFs, so the embedded text layer carries the right digits — but a
 table's text layer does not reliably carry the *column* a digit sits in, and this appendix prints
@@ -36,8 +39,17 @@ from a 200 DPI render of its page before being written down.
 The far-field **Maumee Watershed Nutrient TMDL** (2023) is about Lake Erie's western-basin algal
 blooms and allocates a **spring-season** load. A separate **Ottawa River Watershed (Lima Area)
 TMDL** (approved 2014-04-15) is about in-stream aquatic life use in Lima's own river and allocates
-a **daily** load. Both reach every Lima-loop facility, and neither document says the other is
-superseded.
+a **daily** load. Neither document says the other is superseded.
+
+⚠️ **They do not reach the same facilities**, and this file said they did until 2026-09-05. Four
+carry an allocation under both — Lima WWTP `2PE00000`, Shawnee II `2PK00002`, Lima Refining
+`2IG00001`, Cridersville `2PB00048`. **American-Bath `2PH00007` and Elida `2PB00046` have no
+near-field allocation at all**, and they are the two Allen County plants over their far-field
+allocation in every reported year; American-Bath is also the POTW the campus's `2DP00130` names as
+its receiving system. Five near-field facilities have no far-field allocation. Bluffton `2PC00005`
+appears on both lists, but its near-field allocation belongs to the **Blanchard** TMDL, not Lima's.
+Whether the 2014 near-field TMDL simply did not reach American-Bath and Elida, or reached them and
+Appendix 5's summary omits them, needs the report itself.
 
 Their numbers are not directly comparable. Appendix 4's "Daily*" column is the spring load divided
 by 153 days — the footnote says in terms that "The total maximum daily load is not equivalent to a

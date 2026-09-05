@@ -3,7 +3,9 @@ subject: Ohio Joint/Select Committee on Data Centers (2026) — witness written 
 
 provenance:
   source_dir: data/documents/legal/select-committee-2026/witnesses/
-  content_verified: '2026-06-07'   # read from the submission PDFs (native text)
+  # First pass 2026-06-07; the three addendum submissions 2026-09-05. ⚠️ Not all native text —
+  # Pokladnik's PDF maps the `ti` ligature to `Ɵ`, so that entry was read from a 150 DPI render.
+  content_verified: '2026-09-05'
   evidence: written testimony / submissions to the Ohio Joint Committee on Data Centers
   committee: >-
     Ohio Joint/Select Committee on Data Centers, Co-Chairs Rep. Holmes and (Chavez); hearings late
@@ -234,7 +236,14 @@ cross_refs:
 relevance:
   tags: [verified, legal, select-committee, witnesses, google, qts, ratepayer, water, dcte, records-withholding, transparency]
   note: >-
-    The 16 witness submissions to Ohio's 2026 data-center committee. Most BOSC-material: Google's own
+    The shelf holds 19 PDFs, and they are not 19 submissions to this committee. SIXTEEN are:
+    fourteen read in the first pass, plus Petty and Pokladnik in the 2026-09-05 addendum. ONE is
+    not this committee's at all — Harper's is addressed to the House Technology and Innovation
+    Committee on H.B. 646, and is cited as that whatever directory it sits in. The remaining TWO
+    are not submissions: a PJM explainer carried as background, and the committee's own mission
+    statement. ⚠️ This note read "The 16 witness submissions" until 2026-09-05, which counted
+    those two as testimony and missed all three addendum files — the same convention-over-shelf
+    error as the digest itself. Most BOSC-material: Google's own
     testimony omits Lima/BOSC; ELPC/OCC/PUCO give concrete ratepayer figures contradicting Google's
     rate-relief claim; ODNR admits no visibility into data-center water use; ODOD describes the DCTE
     sales-tax exemption (a second subsidy layer beyond the CRA); Ohio EPA confirms the route-to-POTW

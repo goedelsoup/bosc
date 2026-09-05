@@ -118,6 +118,10 @@ describe("summarizeCollections — against the committed Lima corpus", () => {
     // Twenty-two were DELIVERED; the issued permit and the July 2026 NOV are byte-identical to
     // records already held from Ohio EPA and were not re-committed (pinned by sha256 in the
     // production's custody manifest).
+    // 3,382 -> 3,394 (the §401 backfill): twelve documents from the two Project BOSC
+    // water-quality certifications that the *BOSC* portal sweep listed in August and nobody had
+    // fetched. The sweep named 18 rows; they are 12 distinct byte-streams, and the six duplicate
+    // docids are recorded in the shelf's filename-map rather than committed twice.
     expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3394);
   });
 
