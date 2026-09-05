@@ -1,17 +1,17 @@
 meta:
   subject: lima meeting index (text-verified dates + corridor hits)
   slug: lima
-  generated_at: '2026-06-08'
-  text_extraction: 'PDF text layer (pypdf) / DOCX / HTML — NO OCR. An image-only scanned
-    PDF has text_method: none (date unverified, text unscanned); those need an OCR
-    pass not wired here.'
+  generated_at: '2026-09-05'
+  text_extraction: 'PDF text layer (pypdf) / DOCX / HTML, plus OCR (tesseract) on
+    6 image-only scan(s). 1 file(s) yielded no text (text_method: none — date unverified,
+    text unscanned); an image-only scan needs `index --ocr`.'
   date_evidence: date_verified is the listing date CONFIRMED in the file's own text;
     null means unconfirmed (date_listing still stands).
   counts:
     total: 50
-    text_extracted: 39
-    date_verified: 34
-    with_corridor_hits: 15
+    text_extracted: 49
+    date_verified: 44
+    with_corridor_hits: 18
 documents:
 - filename: 2024-05-06.pdf
   kind: agenda
@@ -21,8 +21,7 @@ documents:
   date_evidence: listing
   text_method: pdf_text
   char_count: 24184
-  hits:
-  - tax_abatement
+  hits: []
   title: City Council Agenda and Docket for May 6, 2024 Regular Council Meeting
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_05062024-853
   sha256: 751a1d1131eabef4c71f6c7034911ccfba90a444b8b928063d7e8f5c78f47d6a
@@ -51,7 +50,6 @@ documents:
   char_count: 24433
   hits:
   - rezoning
-  - tax_abatement
   title: null
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_04222024-852
   sha256: 2bc081619ec39207f0fa7b59c89cc3876ad8569ce7d4edfccf5991c756a0419d
@@ -235,10 +233,10 @@ documents:
   kind: agenda
   body: Board of Adjustment
   date_listing: '2023-11-08'
-  date_verified: null
-  date_evidence: listing
-  text_method: none
-  char_count: 0
+  date_verified: '2023-11-08'
+  date_evidence: sidecar
+  text_method: sidecar
+  char_count: 750
   hits: []
   title: Board of Adjustment agenda for November 8th, 2023
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_11082023-836
@@ -260,10 +258,10 @@ documents:
   kind: agenda
   body: Board of Adjustment
   date_listing: '2023-10-25'
-  date_verified: null
-  date_evidence: listing
-  text_method: none
-  char_count: 0
+  date_verified: '2023-10-25'
+  date_evidence: sidecar
+  text_method: sidecar
+  char_count: 897
   hits: []
   title: Board of Adjustment agenda for October 25th, 2023
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_10252023-835
@@ -285,10 +283,10 @@ documents:
   kind: agenda
   body: Board of Adjustment
   date_listing: '2023-08-23'
-  date_verified: null
-  date_evidence: listing
-  text_method: none
-  char_count: 0
+  date_verified: '2023-08-23'
+  date_evidence: sidecar
+  text_method: sidecar
+  char_count: 746
   hits: []
   title: Board of Adjustment agenda for August 23rd, 2023
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_08232023-834
@@ -309,10 +307,10 @@ documents:
   kind: agenda
   body: Board of Adjustment
   date_listing: '2023-06-28'
-  date_verified: null
-  date_evidence: listing
-  text_method: none
-  char_count: 0
+  date_verified: '2023-06-28'
+  date_evidence: sidecar
+  text_method: sidecar
+  char_count: 751
   hits: []
   title: Board of Adjustment agenda for June 28th, 2023.
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_06282023-808
@@ -324,7 +322,7 @@ documents:
   date_verified: '2023-06-28'
   date_evidence: docx
   text_method: docx
-  char_count: 9796
+  char_count: 2271
   hits: []
   title: null
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_06282023-808
@@ -348,7 +346,7 @@ documents:
   date_verified: '2025-08-20'
   date_evidence: docx
   text_method: docx
-  char_count: 12277
+  char_count: 5961
   hits: []
   title: null
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_08202025-879
@@ -429,11 +427,12 @@ documents:
   kind: agenda
   body: City Planning Commission
   date_listing: '2023-11-29'
-  date_verified: null
-  date_evidence: listing
-  text_method: none
-  char_count: 0
-  hits: []
+  date_verified: '2023-11-29'
+  date_evidence: sidecar
+  text_method: sidecar
+  char_count: 1008
+  hits:
+  - rezoning
   title: City Planning Commission meeting on November 29th, 2023
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_11292023-837
   sha256: c1db9aefa7c1ab75786541d819b026327cf6fc5b11357b0453546e421d23d86b
@@ -441,11 +440,12 @@ documents:
   kind: agenda
   body: City Planning Commission
   date_listing: '2023-09-27'
-  date_verified: null
-  date_evidence: listing
-  text_method: none
-  char_count: 0
-  hits: []
+  date_verified: '2023-09-27'
+  date_evidence: sidecar
+  text_method: sidecar
+  char_count: 898
+  hits:
+  - rezoning
   title: City Planning Commission meeting on September 27th, 2023
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_09272023-838
   sha256: dca63af5ae8bf2979666b207d0d8f25fc61d5871dc4b601cfbfeafee82bb7e61
@@ -456,7 +456,7 @@ documents:
   date_verified: '2023-09-27'
   date_evidence: docx
   text_method: docx
-  char_count: 29421
+  char_count: 5392
   hits:
   - rezoning
   title: null
@@ -466,10 +466,10 @@ documents:
   kind: agenda
   body: City Planning Commission
   date_listing: '2023-08-23'
-  date_verified: null
-  date_evidence: listing
-  text_method: none
-  char_count: 0
+  date_verified: '2023-08-23'
+  date_evidence: sidecar
+  text_method: sidecar
+  char_count: 826
   hits: []
   title: City Planning Commission meeting on August 23rd, 2023
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_08232023-839
@@ -481,7 +481,7 @@ documents:
   date_verified: '2023-08-23'
   date_evidence: docx
   text_method: docx
-  char_count: 19006
+  char_count: 1935
   hits:
   - easement
   title: null
@@ -491,11 +491,12 @@ documents:
   kind: agenda
   body: City Planning Commission
   date_listing: '2023-05-24'
-  date_verified: null
-  date_evidence: listing
-  text_method: none
-  char_count: 0
-  hits: []
+  date_verified: '2023-05-24'
+  date_evidence: sidecar
+  text_method: sidecar
+  char_count: 849
+  hits:
+  - rezoning
   title: City Planning Commission meeting on May 24th, 2023.
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_05242023-811
   sha256: 4dc0c35588587ba5c0a6e515da4d2da5ec645f181371f831adf7f83e23b2ba40
@@ -506,7 +507,7 @@ documents:
   date_verified: '2023-05-24'
   date_evidence: docx
   text_method: docx
-  char_count: 29408
+  char_count: 5389
   hits:
   - rezoning
   title: null
@@ -516,10 +517,10 @@ documents:
   kind: agenda
   body: City Planning Commission
   date_listing: '2023-02-08'
-  date_verified: null
-  date_evidence: listing
-  text_method: none
-  char_count: 0
+  date_verified: '2023-02-08'
+  date_evidence: sidecar
+  text_method: sidecar
+  char_count: 848
   hits: []
   title: City Planning Commission meeting on February 8th, 2023.
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_02082023-810
@@ -542,11 +543,12 @@ documents:
   kind: agenda
   body: City Planning Commission
   date_listing: '2023-01-11'
-  date_verified: null
-  date_evidence: listing
-  text_method: none
-  char_count: 0
-  hits: []
+  date_verified: '2023-01-11'
+  date_evidence: sidecar
+  text_method: sidecar
+  char_count: 828
+  hits:
+  - rezoning
   title: City Planning Commission meeting on January 11th, 2023.
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_01112023-809
   sha256: d48ec4c2b1c7b8b2a2387a28bf6b7001fdf77033444f270de64953f3f8ca231f

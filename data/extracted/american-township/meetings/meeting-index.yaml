@@ -1,17 +1,16 @@
 meta:
   subject: american-township meeting index (text-verified dates + corridor hits)
   slug: american-township
-  generated_at: '2026-06-08'
-  text_extraction: 'PDF text layer (pypdf) / DOCX / HTML — NO OCR. An image-only scanned
-    PDF has text_method: none (date unverified, text unscanned); those need an OCR
-    pass not wired here.'
+  generated_at: '2026-09-05'
+  text_extraction: PDF text layer (pypdf) / DOCX / HTML — NO OCR was run on this index.
+    Every file yielded text.
   date_evidence: date_verified is the listing date CONFIRMED in the file's own text;
     null means unconfirmed (date_listing still stands).
   counts:
     total: 49
     text_extracted: 49
     date_verified: 0
-    with_corridor_hits: 19
+    with_corridor_hits: 17
 documents:
 - filename: 1-2-26 Reorganizational Meeting.docx
   kind: minutes
@@ -20,7 +19,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 1850
+  char_count: 1833
   hits: []
   title: 01-02-2026 ROM
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_ba01be30ab9d47ed967869e87caa768c.docx?dn=1-2-26%20Reorganizational%20Meeting.docx
@@ -32,7 +31,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 5089
+  char_count: 5061
   hits:
   - rezoning
   title: 01-12-2026
@@ -45,7 +44,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 5298
+  char_count: 5098
   hits:
   - bosc
   - datacenter
@@ -60,7 +59,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3126
+  char_count: 3113
   hits:
   - datacenter
   - rezoning
@@ -74,9 +73,8 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3888
-  hits:
-  - tax_abatement
+  char_count: 3866
+  hits: []
   title: 03-09-2026
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_d7193ba6f8974c58890f500633ec2390.docx?dn=3-9-26%20minutes.docx
   sha256: 8ed00ee4738084834e3f09251239881385559ff2b27c9c677e45ec7645ca6ea9
@@ -87,7 +85,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2892
+  char_count: 2879
   hits:
   - datacenter
   - google
@@ -101,7 +99,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2268
+  char_count: 2247
   hits: []
   title: 01-02-2024 ROM
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_d435b82b5e9b4f158ab0452d0b26359d.docx?dn=1-2-24%20reorganizational%20minutes.docx
@@ -113,7 +111,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4332
+  char_count: 4309
   hits: []
   title: 01-08-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_54031871a0b54be68601b310f2d6edb8.docx?dn=1-8-24%20minutes.docx
@@ -125,7 +123,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 5184
+  char_count: 5160
   hits: []
   title: 01-29-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_c12640500e8e4bd99e723e9ec3eb61a7.docx?dn=1-29-24%20minutes.docx
@@ -137,7 +135,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2901
+  char_count: 2882
   hits: []
   title: 02-12-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_d3e748850766488dbf15777ee4428cdf.docx?dn=2-12-24%20minutes.docx
@@ -149,7 +147,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4788
+  char_count: 4774
   hits: []
   title: 02-26-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_d62c51e8ff7746aaa067bb2c611c39ac.docx?dn=2-26-24%20minutes.docx
@@ -161,7 +159,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4969
+  char_count: 4941
   hits: []
   title: 03-11-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_0e63286e4fb146a094f1b0ac5a50bae2.docx?dn=3-11-24%20minutes.docx
@@ -173,7 +171,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 5926
+  char_count: 5907
   hits:
   - rezoning
   title: 03-25-2024
@@ -186,7 +184,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3115
+  char_count: 2998
   hits: []
   title: 04-08-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_c64228fc7ea945a4bfcf6dec51acca43.docx?dn=4-8-24%20minutes.docx
@@ -198,7 +196,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2871
+  char_count: 2865
   hits: []
   title: 08-12-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_b1b6433a0c1c43abb8b0f4fc06f007fb.docx?dn=8-12-24%20minutes%20(2).docx
@@ -210,7 +208,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3451
+  char_count: 3433
   hits: []
   title: 04-29-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_e33cdae8034d43c5b3c375f08536dbc0.docx?dn=4-28-24%20minutes.docx
@@ -222,7 +220,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2595
+  char_count: 2372
   hits: []
   title: 08-26-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_653ca9c9077747ee83273ed21fbb8098.docx?dn=8-26-24%20minutes.docx
@@ -234,9 +232,8 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 5082
-  hits:
-  - tax_abatement
+  char_count: 5055
+  hits: []
   title: 05-13-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_936b9dddac854d498ac37e7d76a294b6.docx?dn=5-13-24%20minutes.docx
   sha256: dac50132d40ad34a3bf34e677ddea5bc6677affbd98d5b9e1fe88a2b829e3c9f
@@ -247,7 +244,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4654
+  char_count: 3955
   hits: []
   title: 09-09-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_6005c63723f24021bca215c243bd7b6f.docx?dn=9-9-24%20minutes.docx
@@ -259,7 +256,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3666
+  char_count: 3664
   hits: []
   title: 06-10-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_abf5f148ac9647ab8d3838ed92c7f2e1.docx?dn=6-10-24%20minutes.docx
@@ -271,7 +268,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 15355
+  char_count: 3951
   hits: []
   title: 09-30-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_151b16a391f84d9e80983e51f21fbbb0.docx?dn=9-30-24%20minutes.docx
@@ -283,7 +280,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 8564
+  char_count: 8526
   hits:
   - datacenter
   - rezoning
@@ -297,7 +294,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 1678
+  char_count: 1672
   hits: []
   title: 06-24-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_79fc82195e7047e5a97ea716a9983f9f.docx?dn=6-24-24%20minutes.docx
@@ -309,7 +306,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3026
+  char_count: 2788
   hits:
   - annexation
   title: 10-14-2024
@@ -322,7 +319,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 624
+  char_count: 618
   hits: []
   title: 07-08-2024BH
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_20e93aaff41246b1831ecd59b0c19938.docx?dn=7-18-24%20Budget%20Hearing%20Minutes.docx
@@ -334,7 +331,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3142
+  char_count: 3137
   hits: []
   title: 11-11-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_fbabeb3ba0c0401ca996f0626aee817d.docx?dn=11-11-24%20minutes.docx
@@ -346,10 +343,9 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4450
+  char_count: 4442
   hits:
   - solar
-  - tax_abatement
   title: 07-29-2024
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_c72a70000fe748d5befba66b4f9e514d.docx?dn=7-29-24%20minutes.docx
   sha256: 616ce40edb44e2bf9d986adcd4fd2ba7396111f552eed3efb492bfdb0b620b82
@@ -360,7 +356,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 47661
+  char_count: 34105
   hits:
   - amazon
   - bosc
@@ -379,7 +375,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2135
+  char_count: 2122
   hits: []
   title: 01-02-2025 ROM
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_bc3128a7f1db4d6e9fa73eaa3584c7eb.docx?dn=1-2-25%20reorgnizational%20meeting.docx
@@ -391,7 +387,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3843
+  char_count: 3827
   hits: []
   title: 03-31-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_b0952f21a80f45708cf5d6ebab8e2652.docx?dn=3-31-25%20minutes.docx
@@ -403,7 +399,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4447
+  char_count: 4436
   hits: []
   title: 07-14-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_d53a8105529e439cbd292fe59c800519.docx?dn=7-14-25%20minutes.docx
@@ -415,7 +411,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4001
+  char_count: 3539
   hits: []
   title: 10-27-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_a9f249ef82e8421587894e55088e7228.docx?dn=10-27-25%20minutes.docx
@@ -427,7 +423,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 5572
+  char_count: 5545
   hits:
   - datacenter
   title: 01-13-2025
@@ -440,7 +436,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4398
+  char_count: 4351
   hits: []
   title: 04-14-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_bf9075b3639942728e395ff2f8827074.docx?dn=4-14-25%20minutes.docx
@@ -452,7 +448,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2022
+  char_count: 2013
   hits: []
   title: 07-28-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_034add8e92df42df9b4537d46614b72b.docx?dn=7-29-25%20minutes.docx
@@ -464,7 +460,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2323
+  char_count: 2319
   hits: []
   title: 01-27-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_6bed98fdc4a04bb3a5d55bd1b653f87c.docx?dn=1-27-25%20minutes.docx
@@ -476,7 +472,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3344
+  char_count: 3060
   hits: []
   title: 02-10-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_7f97d90730e94c43bc294f008ef9cf8c.docx?dn=2-10-25%20minutes.docx
@@ -488,7 +484,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2045
+  char_count: 2029
   hits: []
   title: 04-28-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_e3d5e93d1bc84bffa708064e9421181a.docx?dn=4-28-25%20minutes.docx
@@ -500,7 +496,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2697
+  char_count: 2675
   hits: []
   title: 05-12-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_d297c2c5aa5741e1ac3dc3e5d6f1e1eb.docx?dn=5-12-25%20minutes.docx
@@ -512,7 +508,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2660
+  char_count: 2652
   hits:
   - datacenter
   - rezoning
@@ -526,7 +522,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3491
+  char_count: 3478
   hits:
   - datacenter
   - rezoning
@@ -540,7 +536,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3209
+  char_count: 3197
   hits:
   - datacenter
   title: 11-24-2025
@@ -553,7 +549,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4933
+  char_count: 4689
   hits: []
   title: 12-08-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_d01aef80748d4f9aa283d8281711edc7.docx?dn=12-8-25%20minutes.docx
@@ -565,7 +561,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 3740
+  char_count: 3721
   hits:
   - tax_abatement
   title: 02-24-2025
@@ -578,7 +574,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4433
+  char_count: 4425
   hits:
   - annexation
   - datacenter
@@ -592,7 +588,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 17174
+  char_count: 3648
   hits:
   - annexation
   - rezoning
@@ -607,7 +603,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 4928
+  char_count: 4913
   hits: []
   title: 03-11-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_d9979ed5e0c64bdc91b576445c511073.docx?dn=3-11-25%20minutes.docx
@@ -619,7 +615,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 2181
+  char_count: 2006
   hits:
   - datacenter
   title: 06-30-2025
@@ -632,7 +628,7 @@ documents:
   date_verified: null
   date_evidence: listing
   text_method: docx
-  char_count: 1550
+  char_count: 1322
   hits: []
   title: 10-13-2025
   source_url: https://www.amertwp.us/_files/ugd/64b7b9_470a1f6862fc403892812aa270116fe0.docx?dn=10-13-25%20minutes.docx

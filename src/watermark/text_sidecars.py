@@ -140,6 +140,30 @@ def sidecar_source_rel(rel: str | PurePosixPath, documents_dir: Path) -> PurePos
     return source if (documents_dir / source).is_file() else None
 
 
+def sidecar_for_source(rel: str | PurePosixPath, documents_dir: Path) -> PurePosixPath | None:
+    """The committed sidecar transcribing the source at *rel*, or ``None`` if there isn't one.
+
+    The inverse of :func:`sidecar_source_rel`, and the direction a *reader* needs: given a
+    legacy binary it cannot open, where is the text? :func:`sidecar_rel` already answers that,
+    but only once you know the tree's ``source_root`` — which a reader walking
+    ``data/documents`` does not. So find the root the same way :func:`_tree_split` does, from
+    the filesystem: the nearest ancestor of *rel* whose ``-text`` sibling exists. Nearest, not
+    outermost, because a nested tree would otherwise resolve against its grandparent's.
+
+    Returns a path only when the sidecar is actually on disk. A source with no sidecar (never
+    generated, or genuinely empty — see :attr:`SidecarEntry.sidecar`) is ``None``, which is the
+    same answer a caller gives when it cannot read the source at all.
+    """
+    path = PurePosixPath(rel)
+    for i in range(len(path.parts) - 1, 0, -1):
+        root = PurePosixPath(*path.parts[:i])
+        if not (documents_dir / sidecar_tree_rel(root)).is_dir():
+            continue
+        candidate = sidecar_rel(path, source_root=root)
+        return candidate if (documents_dir / candidate).is_file() else None
+    return None
+
+
 # --- the committed manifest ---------------------------------------------------------------------
 class SidecarEntry(BaseModel):
     """One source document and the text sidecar derived from it (or why there isn't one)."""

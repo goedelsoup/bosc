@@ -156,18 +156,50 @@ def test_kind_heuristic_still_reads_the_whole_href() -> None:
     assert [(d.kind, d.date) for d in docs] == [("minutes", "2026-06-02")]
 
 
-def test_tax_abatement_does_not_match_an_asbestos_abatement_bid() -> None:
-    """`tax_abatement` needs the tax sense (#1839).
+def test_tax_abatement_excludes_the_four_non_tax_senses_it_actually_meets() -> None:
+    """`abatement` means the tax sense unless it is one of the kinds that qualify themselves.
 
-    Hancock County's commissioners let 7 asbestos-abatement demolition bids through the old bare
-    `abatement` pattern, tagging two 2026-04-16 records as tax-abatement business they never
-    transacted. The named instruments (CRA/TIF/enterprise zone) still match on their own.
+    Measured over all 97 `abatement` mentions in every committed meetings tree: 86 tax, and 11
+    non-tax across four classes — asbestos (#1839's Hancock County demolition bids), lead (City
+    of Lima's Sherrod Brown CDS appropriations), nuisance/mowing (township lawn contracts), and
+    "abatement fees" cost recovery certified to the county auditor. All 11 name their own sense
+    next to the word; the tax sense usually names nothing. So exclude those and keep the rest.
     """
     from watermark.civic.keywords import scan_text
 
     assert scan_text("PY24 Asbestos Abatement Hancock County Demolition Program") == []
+    assert "tax_abatement" not in scan_text("expend FY25 funds for lead abatement")
+    assert "tax_abatement" not in scan_text("Cutting Edge Lawn Solutions for abatement mowing")
+    assert "tax_abatement" not in scan_text("use them for all abatement properties we must mow")
+    assert "tax_abatement" not in scan_text(
+        "certifying the abatement fees to the Allen County Auditor"
+    )
+    assert "tax_abatement" not in scan_text("Supplemental appropriation, Abatement Fees Fund 2406")
+    # The instruments still match on their own name.
     assert "tax_abatement" in scan_text("the tax abatement agreement was approved")
     assert "tax_abatement" in scan_text("Community Reinvestment Area (CRA) application")
+
+
+def test_tax_abatement_matches_the_prose_form_people_actually_speak() -> None:
+    """Requiring the word `tax` dropped the records that matter most.
+
+    Perry Township debated the data-center abatement across sixteen sentences in 2024 without
+    once saying "tax abatement" — "WHEN OUR PRESENT ABATEMENTS EXPIRE", "THE SCHOOL AND THE
+    TOWNSHIP WON'T SEE ANY MONEY", "ABATEMENTS ARE COMPETITIVE WITH OTHER AREAS" — and at the
+    2024-09-05 data-center public hearing a resident testified that their "LAND TAXES ARE
+    INCREASING TO PAY FOR THE ABATEMENT THAT WAS GIVEN TO THE DATA CENTERS". Requiring the two
+    words adjacent, or even co-sentential, loses every one of them.
+    """
+    from watermark.civic.keywords import scan_text
+
+    for said in (
+        "THEIR LAND TAXES ARE INCREASING TO PAY FOR THE ABATEMENT GIVEN TO THE DATA CENTERS",
+        "FRANK ASKED WHEN OUR PRESENT ABATEMENTS EXPIRE",
+        "ABATEMENTS ARE COMPETITIVE WITH OTHER AREAS",
+        "THEY WON'T SEE ANY MONEY UNTIL 2030 BECAUSE OF ABATEMENTS",
+        "GREG SAID WE TRY TO SHORTEN ABATEMENT TIMEFRAMES",
+    ):
+        assert "tax_abatement" in scan_text(said), said
 
 
 def test_one_power_needs_the_facility_s_own_name_not_a_bare_unit() -> None:

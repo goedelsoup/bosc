@@ -57,6 +57,11 @@ _OLE2_WORKBOOK_MARKERS = (
 )
 _OLE2_SNIFF_BYTES = 4 * 1024 * 1024
 
+# A ``.docx`` visible-text run: ``<w:t>`` or ``<w:t xml:space="preserve">``, and nothing whose
+# name merely STARTS with those bytes. The separator after ``w:t`` is what does the work — an
+# element name continues with a name character, an attribute list begins with whitespace.
+_W_RUN = re.compile(r"<w:t(?:\s[^>]*)?>(.*?)</w:t>", re.DOTALL)
+
 # A spreadsheet's used range can be inflated by stray formatting; bound the read so one
 # pathological sheet can't stall an index rebuild. Truncation is marked in the output, not silent.
 _MAX_SHEET_ROWS = 10_000
@@ -163,6 +168,15 @@ def docx_text(path: Path) -> str:
     the paragraph boundaries, so joining runs within a paragraph and paragraphs with newlines
     preserves the block structure the chunker splits on. A file that isn't a readable zip (a
     Git-LFS pointer, a truncated copy) yields ``""``.
+
+    ⚠️ The run pattern must not treat ``w:t`` as a *prefix*. WordprocessingML is full of elements
+    that begin with those bytes — ``w:tab``, ``w:tabs``, ``w:tbl``, ``w:tblPr``, ``w:tc``,
+    ``w:tcPr``, ``w:tr`` — so a ``<w:t[^>]*>`` open pattern matches ``<w:tabs>`` and then runs
+    non-greedily to the *next* ``</w:t>``, splicing every tab stop and table property in between
+    into the document's text. Measured on one committed Lima Planning Commission minute
+    (``_05242023-811.docx``): 29,409 "characters" of which 12,441 were markup. The damage was
+    bounded only by the paragraph split, which is why it read as plausible text rather than
+    obvious garbage.
     """
     try:
         with zipfile.ZipFile(path) as z:
@@ -170,8 +184,7 @@ def docx_text(path: Path) -> str:
     except (zipfile.BadZipFile, KeyError, OSError):
         return ""
     paragraphs = [
-        _html.unescape("".join(re.findall(r"<w:t[^>]*>(.*?)</w:t>", block, re.DOTALL))).strip()
-        for block in re.split(r"</w:p>", xml)
+        _html.unescape("".join(_W_RUN.findall(block))).strip() for block in re.split(r"</w:p>", xml)
     ]
     return "\n".join(p for p in paragraphs if p)
 

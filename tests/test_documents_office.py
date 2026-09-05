@@ -47,6 +47,35 @@ def test_docx_text_drops_empty_paragraphs(tmp_path: Path) -> None:
     assert docx_text(path) == "One\nTwo"
 
 
+def test_docx_text_does_not_read_w_tabs_and_w_tbl_as_visible_text(tmp_path: Path) -> None:
+    """``w:t`` is an element name, not a prefix — the bug that spliced markup into the corpus.
+
+    ``<w:t[^>]*>`` matches ``<w:tabs>``, ``<w:tbl>``, ``<w:tc>`` and every other element whose
+    name merely begins with those bytes; the non-greedy body then runs to the NEXT ``</w:t>``,
+    so a paragraph's tab stops and a table's properties arrive as document text. On one
+    committed Lima minute that inflated 5,389 real characters to 29,409, and the keyword
+    scanner read every one of them.
+    """
+    path = _docx(
+        tmp_path / "a.docx",
+        '<w:p><w:pPr><w:tabs><w:tab w:val="left" w:pos="720"/></w:tabs></w:pPr>'
+        "<w:t>Case #23-05 Re-Zoning</w:t></w:p>"
+        '<w:tbl><w:tr><w:tc><w:tcPr><w:tcW w:w="4675"/></w:tcPr>'
+        "<w:p><w:t>Approved</w:t></w:p></w:tc></w:tr></w:tbl>",
+    )
+    assert docx_text(path) == "Case #23-05 Re-Zoning\nApproved"
+
+
+def test_docx_text_keeps_a_space_preserving_run(tmp_path: Path) -> None:
+    # The attribute form must still match: `<w:t xml:space="preserve">` carries the spaces Word
+    # would otherwise collapse, and it is the one legitimate `<w:t ...>` with attributes.
+    path = _docx(
+        tmp_path / "a.docx",
+        '<w:p><w:t xml:space="preserve">Ordinance </w:t><w:t>217-23</w:t></w:p>',
+    )
+    assert docx_text(path) == "Ordinance 217-23"
+
+
 def test_docx_text_on_a_non_zip_is_a_gap_not_a_crash(tmp_path: Path) -> None:
     path = tmp_path / "broken.docx"
     path.write_bytes(b"not a zip at all")
