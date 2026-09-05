@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "b605db039b8cc52e927fa8ad77a1aa3cbae4a56d82e651fafaec3346d3b133ac",
+  "catalog_version": "9c0794ef93f41995949a3eaca4ed2646b360ee64d0bce3d60cf66d211aee2fa3",
   "contract_version": "2.4.0",
   "atoms": [
     {
@@ -4884,6 +4884,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:permits/bosc-401-certifications.epa.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "permits/bosc-401-certifications.epa.yaml",
+      "title": "Project BOSC",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:permits/lma1a-npdes-cgp-coverage.epa.yaml",
       "kind": "record",
       "site": "lima",
@@ -5185,6 +5193,14 @@
       "site": "lima",
       "local_id": "DSW401251760W",
       "title": "Isolated Wetland Permit DSW401251760W — incomplete (Project Bosc)",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:DSW401251760W (isolated wetland) · DSW401252260W (Level 2 IWP, application 495612045)",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "DSW401251760W (isolated wetland) · DSW401252260W (Level 2 IWP, application 495612045)",
+      "title": "Section 401 water quality certification / isolated wetland permit DSW401251760W (isolated wetland) · DSW401252260W (Level 2 IWP, application 495612045) — Level 2 isolated-wetland permit application withdrawn by the applicant (Project BOSC)",
       "feed": "timeline"
     },
     {

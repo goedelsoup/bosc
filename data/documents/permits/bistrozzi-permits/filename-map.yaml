@@ -1,11 +1,13 @@
 meta:
   subject: >-
     Canonical filename map for permits/bistrozzi-permits/ — the DSWPTI-260597 (BOSC-1A Rev. 1)
-    acquisition of 2026-08-23 only
+    acquisition of 2026-08-23, and the §401 water-quality-certification backfill of 2026-09-05
   scope: >-
-    PARTIAL BY DESIGN. This map covers ONLY the four eDocuments of the 2026-08-14 DSWPTI-260597
-    permit action, fetched 2026-08-23 under issue #2088. The other 35 files on this shelf predate
-    it and carry their provenance in the shelf README and in their own extractions; their absence
+    PARTIAL BY DESIGN, AND NOW COVERING TWO ACQUISITIONS. The first is the four eDocuments of the
+    2026-08-14 DSWPTI-260597 permit action, fetched 2026-08-23 under issue #2088. The second is
+    the 2026-09-05 §401 backfill: the ALLEN-county DSW401* rows of the *BOSC* portal sweep, which
+    that sweep listed and nobody had ever fetched. The other 35 files on this shelf predate both
+    and carry their provenance in the shelf README and in their own extractions; their absence
     from this map is not a gap in their custody. Do not read a missing row here as "not acquired."
   policy: >-
     Non-destructive. The eDocument portal serves these by query string with no Content-Disposition,
@@ -75,6 +77,229 @@ documents:
 # deferral, not an absence of the record. Each is re-fetchable by docid at the URL below and
 # its bytes are pinned by the sha256 recorded here, so a later commit can be proven identical
 # to what was read. Stating them explicitly so this map is not misread as full coverage.
+  # --- the 2026-09-05 §401 backfill -------------------------------------------------------------
+  # Sweep rows, never fetched. `data/research/oepa-portal-bosc-2026-08-22/manifest.yaml` listed 38
+  # ALLEN-county rows across three permits: the four storm-outfall rows were already in the corpus,
+  # and of the 34 §401 rows, 16 were held and 18 were not. Those 18 were fetched 2026-09-05 and are
+  # 12 DISTINCT byte-streams — the portal serves several exhibits at more than one docid, and one
+  # exhibit under BOTH certifications. Deduplicated to 12 per the #2089 precedent for portal
+  # packages and the root CLAUDE.md rule that a removal is only OK for a checksum-verified
+  # byte-identical duplicate; all 18 docids are recorded in `also_served_as`, so the portal's own
+  # structure survives the dedup.
+  # NOT PUBLISHED. This shelf is default-deny — only 4132514.pdf sits on the publish allowlist —
+  # so committing these makes them corpus, not public. Publication stays a separate review.
+  # source_sweep: data/research/oepa-bosc-401-backfill-2026-09-05/manifest.yaml · fetched 2026-09-05
+
+  - edoc_id: '3702677'
+    filename: 3702677.pdf
+    also_served_as: ['3727545']
+    status: committed
+    type: wetland-delineation-photograph-log
+    permit_id: DSW401251760W
+    applicant: BISTROZZI LLC
+    project: Project BOSC — isolated-wetland §401 water quality certification
+    pages: 10
+    bytes: 7084718
+    sha256: 9bebe8deee44c4f4e40914a9b7c0ae5130cf93f49d28ce609af2c87b1a2305d2
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702677
+    content_verified: text-layer
+    content_verified_date: null
+    notes: >-
+      "Project BOSC - Delineation Photograph Log" — field photographs of Wetlands A-E, each
+      captioned with a view direction and an EMH&T capture date (earliest read: 3/20/24). The log
+      carries no document date of its own, so content_verified_date is null rather than guessed:
+      the captions date the FIELDWORK, not the filing.
+
+  - edoc_id: '3702678'
+    filename: 3702678.pdf
+    also_served_as: ['3727546']
+    status: committed
+    type: agency-coordination-letter
+    permit_id: DSW401251760W
+    pages: 3
+    bytes: 576753
+    sha256: c72bad8fb2433a80974152267cc6596e7d741aed60c4ce42cb683f479b998f0c
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702678
+    content_verified: text-layer
+    content_verified_date: '2024-04-26'
+    notes: >-
+      Ohio DNR Office of Real Estate (Tara Paciorek, Chief) — the state-agency coordination
+      response for the delineation. A SECOND agency's record living inside an Ohio EPA filing.
+
+  - edoc_id: '3702679'
+    filename: 3702679.pdf
+    also_served_as: ['3727547', '3974498']
+    status: committed
+    type: site-location-map
+    permit_id: DSW401251760W
+    pages: 1
+    bytes: 814713
+    sha256: 98d0bf51f1d397a1b30974538bdf07bd30134ad652ba3efe37065a7bad833e61
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702679
+    content_verified: text-layer
+    content_verified_date: '2024-04-10'
+    notes: >-
+      ⚠️ THE ONE EXHIBIT SERVED UNDER BOTH CERTIFICATIONS. Byte-identical at docid 3727547
+      (DSW401251760W, the isolated-wetland filing) and at 3974498 (DSW401252260W, the Level 2
+      filing five months later) — the Level 2 application re-used this exhibit rather than
+      redrawing it. Recorded because the reuse is a fact about how the two filings relate, and it
+      becomes invisible the moment the duplicate bytes are dropped.
+
+  - edoc_id: '3702680'
+    filename: 3702680.pdf
+    also_served_as: ['3727548']
+    status: committed
+    type: flood-insurance-rate-map-exhibit
+    permit_id: DSW401251760W
+    pages: 1
+    bytes: 5067105
+    sha256: 65667e0e810e575e205fe5c07bfa5c8c4fb34c12db2ab33af780fdb97e3fc4a4
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702680
+    content_verified: text-layer
+    content_verified_date: '2024-04-01'
+    notes: >-
+      "Project Bosc Flood Insurance" exhibit over N Cole St / W Bluelick Rd / Irvin Rd / Beery Rd
+      / Hopewell St / Thorndyke Dr. ⚠️ Its own title block reads "AMERICAN AND SUGAR CREEK
+      TOWNSHIPS, ALLEN COUNTY, OHIO" — TWO townships, where the corpus's zoning and comprehensive-
+      plan work has treated the campus as American Township's.
+
+  - edoc_id: '3702681'
+    filename: 3702681.pdf
+    status: committed
+    type: usgs-topographic-exhibit
+    permit_id: DSW401251760W
+    pages: 1
+    bytes: 942323
+    sha256: 53ea98c965b31b3a5ebb6a04c89b519e503871428e1a67efbfba4671eb4b7ec4
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702681
+    content_verified: text-layer
+    content_verified_date: '2024-04-10'
+    notes: >-
+      "Exhibit 2 - USGS", 1" = 1,000'. The sheet's own path stamp carries the consultant's project
+      number and dates the engagement — J:\20240241\GIS\Exhibit 2 - USGS.mxd, last updated
+      2024-04-10.
+
+  - edoc_id: '3702682'
+    filename: 3702682.pdf
+    status: committed
+    type: nrcs-soils-exhibit
+    permit_id: DSW401251760W
+    pages: 1
+    bytes: 5152883
+    sha256: d05d7a9f5be8edfdcf38ec42fec391e491d413250e35d016926e020857e68858
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702682
+    content_verified: text-layer
+    content_verified_date: '2024-04-01'
+    notes: >-
+      NRCS soil-survey exhibit over the site — map units WeA, AkA, GaA/GaB/GaC, CyA, ReA, SrA,
+      SfB, PmA, TkA, HrB, GuB, SkA, Blg1B1 and W. An independent read on the SSURGO inputs the
+      runoff and infiltration work depends on.
+
+  - edoc_id: '3702684'
+    filename: 3702684.pdf
+    status: committed
+    type: wetland-delineation-map
+    permit_id: DSW401251760W
+    pages: 1
+    bytes: 5075325
+    sha256: f9b64cbd8b32f81ff52de0d3732633c1160a66dd3202ac8c7253af159dd3d7d1
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3702684
+    content_verified: text-layer
+    content_verified_date: '2024-09-18'
+    notes: >-
+      THE DELINEATION ITSELF, with the acreages printed on the sheet: Wetland A 1.86 AC, B 0.29
+      AC, C 0.21 AC, D 0.03 AC, E 0.01 AC — five wetlands totalling 2.40 acres, plus upland
+      sample points UP-1 / UP-4 / UP-5. The corpus previously held only the 0.29-ac forested
+      figure (from permit 3788677) and a secondhand "0.7-ac forested wetland"; this is the
+      primary sheet, and the delineated total is materially larger than either. Wetland A is the
+      one the Level 2 permit was filed over and then withdrawn to avoid.
+
+  - edoc_id: '3727949'
+    filename: 3727949.pdf
+    status: committed
+    type: waters-of-the-us-investigation-table
+    permit_id: DSW401251760W
+    pages: 1
+    bytes: 113599
+    sha256: c69636efff6b201bb7dfe74e7f6d30fbeab20c6ad9d10668f88343c02b6a6c6a
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3727949
+    content_verified: text-layer
+    content_verified_date: null
+    notes: >-
+      "Project BOSC 1 — Investigation of Waters of the United States, TABLE 2: Extent of Onsite
+      Surface Water Features". The bare one-page table; 3728018 is the same table with its
+      surrounding text and is the one to cite.
+
+  - edoc_id: '3728018'
+    filename: 3728018.pdf
+    status: committed
+    type: waters-of-the-us-investigation-table
+    permit_id: DSW401251760W
+    pages: 2
+    bytes: 527694
+    sha256: 81964bb9430161bfff60771cd9232387cb6dfc705a76000e33ed7fef314cd5e4
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3728018
+    content_verified: text-layer
+    content_verified_date: '2024-08-15'
+    notes: >-
+      TABLE 2 with its surrounding text, dated 2024-08-15 and referring back to the 2024-03-20
+      fieldwork. With 3727949 this is the stream-and-ditch side of the delineation — the feature
+      classifications the campus's storm routing is argued over.
+
+  - edoc_id: '3933660'
+    filename: 3933660.pdf
+    status: committed
+    type: section-401-application
+    permit_id: DSW401252260W
+    application_id: '495612045'
+    pages: 3
+    bytes: 232229
+    sha256: 589adb261846b08076891dbd77ac875aff4588125999cbb66c1fc446a84cd12f
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3933660
+    content_verified: text-layer
+    content_verified_date: '2025-12-09'
+    notes: >-
+      The Level 2 Isolated Wetland Permit application form itself (Application ID 495612045, form
+      Rev. 8/2014), filed 2025-12-09 — the day after the documented start of clearing, and the
+      filing the corpus previously knew only as "found incomplete 2025-12-23".
+
+  - edoc_id: '3933661'
+    filename: 3933661.pdf
+    also_served_as: ['3974497']
+    status: committed
+    type: agency-coordination-letter
+    permit_id: DSW401252260W
+    pages: 3
+    bytes: 307640
+    sha256: e4c6bea3251e1861826fef938c813fca7ebd65f41c3f4d3d43f94ec67011c563
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=3933661
+    content_verified: text-layer
+    content_verified_date: '2025-12-03'
+    notes: >-
+      Ohio DNR Office of Real Estate & Land Management (Mary Mertz, Director; Tara Paciorek,
+      Chief) — the Level 2 filing's ODNR coordination response, 2025-12-03. Re-served unchanged at
+      docid 3974497 in the 2026-01-19 batch.
+
+  - edoc_id: '4011312'
+    filename: 4011312.pdf
+    status: committed
+    type: withdrawal-correspondence
+    permit_id: DSW401252260W
+    pages: 1
+    bytes: 44118
+    sha256: 7641e4ceb2ff762249193ac46c3c3f33acbde0f65cf4bdafc81aa1f4255d3a07
+    source_url: https://edocpub.epa.ohio.gov/publicportal/ViewDocument.aspx?docid=4011312
+    content_verified: text-layer
+    content_verified_date: '2026-02-18'
+    notes: >-
+      THE DISPOSITION, and the reason this backfill was worth doing. A 2026-02-18 email from
+      EMH&T to Ohio EPA withdrawing the Level 2 Isolated Wetland Permit application: "After
+      additional coordination with AEP, it was ultimately determined that the alignment of the
+      high voltage corridor to the onsite substation could be revised so as to fully avoid
+      impacts to Wetland A. Therefore, this permit is no longer necessary for the project."
+      WITHDRAWN — not denied, not approved, not still pending. Read in
+      data/extracted/permits/bosc-401-certifications.epa.yaml.
+
 deferred:
   - edoc_id: '4230061'
     status: deferred_lfs_budget

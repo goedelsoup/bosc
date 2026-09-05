@@ -118,7 +118,7 @@ describe("summarizeCollections — against the committed Lima corpus", () => {
     // Twenty-two were DELIVERED; the issued permit and the July 2026 NOV are byte-identical to
     // records already held from Ohio EPA and were not re-committed (pinned by sha256 in the
     // production's custody manifest).
-    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3382);
+    expect(summaries.reduce((n, s) => n + s.count, 0)).toBe(3394);
   });
 
   it("finds the one production that is half the catalog", () => {

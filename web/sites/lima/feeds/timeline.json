@@ -4160,6 +4160,27 @@
     }
   },
   {
+    "date": "2026-02-18",
+    "category": "epa_permit_action",
+    "title": "Section 401 water quality certification / isolated wetland permit DSW401251760W (isolated wetland) · DSW401252260W (Level 2 IWP, application 495612045) — Level 2 isolated-wetland permit application withdrawn by the applicant (Project BOSC)",
+    "ref": "DSW401251760W (isolated wetland) · DSW401252260W (Level 2 IWP, application 495612045)",
+    "parties": [
+      "Bistrozzi LLC"
+    ],
+    "detail": "affected five delineated on-site wetlands (A-E) and the on-site surface-water features of Table 2; Wetland A is the one the Level 2 permit was filed over",
+    "source": "permits/bosc-401-certifications.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/bosc-401-certifications.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2026-02-19",
     "category": "county_resolution",
     "title": "Res #113-26: Enter into contract with Garman/Miller & Associates, Inc. DBA Access Engineering Services for the Shawnee Oaks Sewer System Project.",

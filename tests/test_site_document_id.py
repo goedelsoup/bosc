@@ -141,7 +141,16 @@ def test_no_collision_across_the_committed_corpus() -> None:
     # an LFS deferral.
     # Reviewed: 3382 rels, 3382 distinct rels, 3382 distinct handles — zero collisions, checked as
     # a set rather than inferred from the delta.
-    assert len(rels) == 3382, "a corpus change belongs in review, not a silent collision"
+    # 3382 → 3394 (the §401 backfill): the Project BOSC water-quality certifications
+    # `DSW401251760W` and `DSW401252260W`, shelved on the existing `permits/bistrozzi-permits/`
+    # shelf under its established bare-`<docid>.pdf` naming. ⚠️ THE SWEEP LISTED 18 ROWS AND THIS
+    # NUMBER MOVES BY TWELVE, WHICH IS THE POINT: the portal serves several exhibits at more than
+    # one docid — and one exhibit under BOTH certifications — so the 18 rows are 12 distinct
+    # byte-streams. The six duplicate docids are recorded in `also_served_as` in that shelf's
+    # `filename-map.yaml`, which accounts for all 18. Complete coverage, not a deferral.
+    # Reviewed: 3394 rels, 3394 distinct rels, 3394 distinct handles — zero collisions, checked as
+    # a set rather than inferred from the delta.
+    assert len(rels) == 3394, "a corpus change belongs in review, not a silent collision"
     assert len({document_id(rel) for rel in rels}) == len(rels)
     # The count alone is a weak proxy: a delete-one-add-one leaves it at 3362. Name the two
     # committed BOSC-1A eDocs, and assert the two DEFERRED plan sets are absent — the deferral
@@ -151,6 +160,34 @@ def test_no_collision_across_the_committed_corpus() -> None:
     shelf = "permits/bistrozzi-permits/"
     assert {f"{shelf}4230060.pdf", f"{shelf}4230068.pdf"} <= set(rels)
     assert not {f"{shelf}4230061.pdf", f"{shelf}4230062.pdf"} & set(rels)
+    # The §401 backfill, held to the same discipline, and here the ABSENT set carries the weight:
+    # the six duplicate docids must never be committed, because the shelf already holds those exact
+    # bytes under the docid the portal served them at first. Committing one would inflate the
+    # corpus with bytes its own filename-map says it already has. Fix a failure by updating
+    # `also_served_as` in that map, never by editing this.
+    committed_401 = {
+        f"{shelf}{d}.pdf"
+        for d in (
+            "3702677",
+            "3702678",
+            "3702679",
+            "3702680",
+            "3702681",
+            "3702682",
+            "3702684",
+            "3727949",
+            "3728018",
+            "3933660",
+            "3933661",
+            "4011312",
+        )
+    }
+    duplicates_401 = {
+        f"{shelf}{d}.pdf"
+        for d in ("3727545", "3727546", "3727547", "3727548", "3974497", "3974498")
+    }
+    assert committed_401 <= set(rels)
+    assert not duplicates_401 & set(rels)
     # Same discipline for the 2DP00130 package, and here the absent set is the load-bearing half:
     # committing a duplicate would inflate the corpus with bytes the manifest says it already
     # holds. Fix a failure by updating that manifest in the same change, never by editing this.

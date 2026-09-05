@@ -1,0 +1,191 @@
+doc_id: bosc-401-certifications-2024-2026
+source_path: data/documents/permits/bistrozzi-permits/4011312.pdf
+companion_sources:
+- data/documents/permits/bistrozzi-permits/3702684.pdf   # the delineation map, with acreages
+- data/documents/permits/bistrozzi-permits/3933660.pdf   # the Level 2 application form
+- data/documents/permits/bistrozzi-permits/3728018.pdf   # Waters of the U.S. investigation, Table 2
+- data/documents/permits/bistrozzi-permits/3702678.pdf   # ODNR coordination (isolated-wetland filing)
+- data/documents/permits/bistrozzi-permits/3933661.pdf   # ODNR coordination (Level 2 filing)
+- data/documents/permits/bistrozzi-permits/3702680.pdf   # FIRM exhibit — American AND Sugar Creek
+kind: epa
+pages_read: [0]
+image_pages_read: []
+dpi: 0
+method: >-
+  Reviewed read of the twelve §401 water-quality-certification documents fetched 2026-09-05, which
+  the *BOSC* portal sweep had listed since 2026-08-22 and which nobody had fetched. All are
+  digitally generated PDFs read from their embedded text layers; provenance, sha256 and the six
+  duplicate docids are in `data/documents/permits/bistrozzi-permits/filename-map.yaml`.
+source_text_excerpt: >-
+  edoc-4011312 (2026-02-18, EMH&T to Ohio EPA): "At this time, Bistrozzi LLC wishes to withdraw the
+  Level 2 Isolated Wetland Permit application for Project Bosc. After additional coordination with
+  AEP, it was ultimately determined that the alignment of the high voltage corridor to the onsite
+  substation could be revised so as to fully avoid impacts to Wetland A. Therefore, this permit is
+  no longer necessary for the project." edoc-3702684 (delineation map): "Wetland A 1.86 AC /
+  Wetland B 0.29 AC / Wetland C 0.21 AC / Wetland D 0.03 AC / Wetland E 0.01 AC". edoc-3702680
+  (FIRM exhibit title block): "AMERICAN AND SUGAR CREEK TOWNSHIPS, ALLEN COUNTY, OHIO".
+action:
+  confidence: high
+  warnings:
+  - >-
+    WITHDRAWN is not DENIED and not APPROVED. The applicant withdrew; Ohio EPA neither refused the
+    certification nor granted it, and the withdrawal email asks "let me know if you need me to do
+    anything further to officially withdraw". No Ohio EPA acknowledgement of the withdrawal is in
+    the corpus, so the administrative closure itself is [open].
+  - >-
+    The reason for the withdrawal is the APPLICANT'S stated reason, in the applicant's engineer's
+    words, to the regulator. It is a strong contemporaneous statement and it is still a self-report:
+    no AEP document, route drawing or substation record in this corpus corroborates the revised
+    alignment. A self-report does not upgrade the source.
+  - >-
+    The delineated acreages are from the delineation SHEET, which is the primary record of the
+    consultant's field determination. They are not a jurisdictional determination — whether each
+    feature is an isolated wetland or a water of the United States is what the §401 and the USACE
+    process decide, and Table 2 (3728018) is the investigation, not the ruling.
+  agency: Ohio Environmental Protection Agency, Division of Surface Water
+  program: Section 401 water quality certification / isolated wetland permit
+  permit_no: DSW401251760W (isolated wetland) · DSW401252260W (Level 2 IWP, application 495612045)
+  action: Level 2 isolated-wetland permit application withdrawn by the applicant
+  action_date: '2026-02-18'
+  applicant: Bistrozzi LLC
+  facility: Project BOSC data center, 4110 N Cole St, Lima, Allen County
+  project_name: Project BOSC
+  affected_resource: five delineated on-site wetlands (A-E) and the on-site surface-water features
+    of Table 2; Wetland A is the one the Level 2 permit was filed over
+  note: >-
+    [verified] On 2026-02-18 Bistrozzi LLC withdrew the Level 2 Isolated Wetland Permit application
+    for Project BOSC. The stated reason, in EMH&T's email to Ohio EPA: "After additional
+    coordination with AEP, it was ultimately determined that the alignment of the high voltage
+    corridor to the onsite substation could be revised so as to fully avoid impacts to Wetland A.
+    Therefore, this permit is no longer necessary for the project."
+    [verified] The delineation sheet records FIVE wetlands totalling 2.40 acres — A 1.86, B 0.29,
+    C 0.21, D 0.03, E 0.01 — materially more than the 0.29-ac forested figure the corpus held from
+    permit 3788677 or the secondhand "0.7-ac forested wetland".
+    [verified] The campus's own flood-insurance exhibit places it in AMERICAN AND SUGAR CREEK
+    TOWNSHIPS, not American Township alone.
+    [open] No AEP or utility record in this corpus documents the revised high-voltage alignment or
+    the on-site substation, and no Ohio EPA acknowledgement of the withdrawal is held.
+
+# --- the two certifications ---------------------------------------------------------------------
+
+certifications:
+- permit_no: DSW401251760W
+  name: Project BOSC — isolated wetland §401 water quality certification
+  filed: '2025-07'          # the portal's own row dates; the exhibits themselves date to 2024
+  documents_held: 9
+  disposition: '[open] — not established by these documents'
+  exhibits:
+  - {docid: '3702684', what: delineation map with acreages, date: '2024-09-18'}
+  - {docid: '3702677', what: delineation photograph log (Wetlands A-E), date: null}
+  - {docid: '3728018', what: 'Waters of the U.S. investigation, Table 2', date: '2024-08-15'}
+  - {docid: '3727949', what: the same Table 2, one-page form, date: null}
+  - {docid: '3702678', what: ODNR Office of Real Estate coordination letter, date: '2024-04-26'}
+  - {docid: '3702680', what: FEMA flood-insurance exhibit, date: '2024-04-01'}
+  - {docid: '3702682', what: NRCS soils exhibit, date: '2024-04-01'}
+  - {docid: '3702681', what: USGS topographic exhibit (Exhibit 2), date: '2024-04-10'}
+  - {docid: '3702679', what: site location map, date: '2024-04-10'}
+- permit_no: DSW401252260W
+  name: Project BOSC Lvl 2 IWP — Level 2 isolated wetland permit
+  application_id: '495612045'
+  filed: '2025-12-09'
+  found_incomplete: '2025-12-23'   # from the corpus's existing permit-sequence record, not these documents
+  withdrawn: '2026-02-18'
+  documents_held: 3
+  disposition: >-
+    WITHDRAWN by the applicant. Ohio EPA neither denied nor granted the certification.
+  exhibits:
+  - {docid: '3933660', what: the Level 2 application form, date: '2025-12-09'}
+  - {docid: '3933661', what: ODNR Office of Real Estate & Land Management coordination letter,
+     date: '2025-12-03'}
+  - {docid: '4011312', what: the withdrawal email, date: '2026-02-18'}
+  note: >-
+    ⚠️ The Level 2 filing re-used an exhibit from the earlier certification rather than redrawing
+    it: docid 3974498 on this permit is byte-identical to 3702679 on DSW401251760W (the site
+    location map). Recorded in the filename map, because the reuse is invisible once the duplicate
+    bytes are deduplicated.
+
+delineation:
+  source: data/documents/permits/bistrozzi-permits/3702684.pdf
+  what: the consultant's delineation sheet, acreages printed on the map
+  content_verified_date: '2024-09-18'
+  wetlands:
+    A: 1.86
+    B: 0.29
+    C: 0.21
+    D: 0.03
+    E: 0.01
+  units: acres
+  total_acres: 2.40
+  upland_sample_points: [UP-1, UP-4, UP-5]
+  reconciliation: >-
+    [verified] The corpus previously held two smaller figures for the campus's wetlands: permit
+    3788677's "0.29 acres forested and 0.04 acres non-forested", and a "0.7-ac forested wetland"
+    that the completeness audit carried secondhand. Both are consistent with this sheet as
+    PARTIAL — 3788677 is a permit over particular features, not over the delineation — but the
+    delineated extent is 2.40 acres and Wetland A alone is 1.86. Cite this sheet for the
+    delineation and the permit for what that permit covered.
+  note: >-
+    Wetland A is the feature the Level 2 permit was filed over and then withdrawn to avoid, so its
+    1.86 acres is the acreage the high-voltage corridor was rerouted around.
+
+withdrawal:
+  source: data/documents/permits/bistrozzi-permits/4011312.pdf
+  date: '2026-02-18'
+  from: Melissa Queen Darby, EMH&T
+  to: Joseph Loucek, Ohio EPA
+  copied:
+    ohio_epa: [Rachel Secrest, EPA DSW Permits Processing, EPA eBusiness Center]
+    applicant_side: [EMH&T (Jeremy Eisele, Allison Ansari)]
+    other: >-
+      A google.com address and a vorys.com address are on the cc line. Recorded as ORGANISATIONS —
+      Google and Vorys, Sater, Seymour and Pease — because who is copied on a filing is the fact
+      that matters here; naming the individuals is a #274/#281 publication decision, not an ingest
+      side effect, and no person record is created by this extraction.
+  quote: >-
+    "At this time, Bistrozzi LLC wishes to withdraw the Level 2 Isolated Wetland Permit application
+    for Project Bosc. After additional coordination with AEP, it was ultimately determined that the
+    alignment of the high voltage corridor to the onsite substation could be revised so as to fully
+    avoid impacts to Wetland A. Therefore, this permit is no longer necessary for the project."
+  what_it_establishes:
+  - '[verified] The disposition of DSW401252260W: withdrawn 2026-02-18, by the applicant.'
+  - '[verified] An ON-SITE SUBSTATION is part of the project, and a HIGH VOLTAGE CORRIDOR runs to
+    it. The applicant states this to a regulator, in writing, on a dated public record.'
+  - '[verified] AEP coordination drove a route change on the campus. This is the first
+    primary-source, dated statement in this corpus that ties AEP to the campus''s own layout — the
+    Lyka transmission attribution has stood at [inference] since #1476.'
+  what_it_does_not_establish:
+  - The revised alignment itself — no route drawing, easement or AEP filing is in the corpus.
+  - The substation's capacity, ownership, or interconnection status.
+  - That Ohio EPA processed the withdrawal; no acknowledgement is held.
+  - Any connection to the OPSB case docket, which as of the corpus's last check had not been filed.
+
+geography:
+  source: data/documents/permits/bistrozzi-permits/3702680.pdf
+  finding: >-
+    [verified] The campus's own FEMA flood-insurance exhibit is titled "AMERICAN AND SUGAR CREEK
+    TOWNSHIPS, ALLEN COUNTY, OHIO" and spans N Cole St, W Bluelick Rd, Irvin Rd, Beery Rd,
+    Hopewell St and Thorndyke Dr.
+  why_it_matters: >-
+    The corpus's zoning and comprehensive-plan work reads American Township's instruments for this
+    site. If the footprint reaches into Sugar Creek Township, a second jurisdiction's zoning
+    resolution may bind part of it. [open] — this exhibit shows the MAP EXTENT, which is not the
+    same as the parcel footprint, and settling it needs the parcel geometry rather than a
+    title block.
+
+relevance:
+  tags: [verified, open, oepa, lima, allen-county, bistrozzi, 401, isolated-wetland, wetlands,
+         delineation, aep, substation, transmission, emht, sugar-creek-township]
+  note: >-
+    Closes the disposition question on the Level 2 isolated-wetland permit — withdrawn, not denied
+    — and does it from the applicant's own words to the regulator. The withdrawal reason is the
+    larger find: it puts an on-site substation and an AEP-driven high-voltage realignment on a
+    dated public record, where the corpus previously had only inference. It also replaces a
+    secondhand wetland acreage with the delineation sheet, and raises a jurisdiction question the
+    corpus had not asked.
+  cross_refs:
+  - data/extracted/permits/3788677.epa.yaml
+  - data/extracted/permits/3796349.epa.yaml
+  - data/extracted/permits/lma1a-npdes-cgp-coverage.epa.yaml
+  - data/extracted/legal/prr-mandamus/bosc-site-permit-sequence.yaml
+  - data/extracted/grid/aep-lyka-transmission-2026.project.yaml
+  - data/extracted/plans/4091286.engineering.yaml

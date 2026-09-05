@@ -6288,6 +6288,11 @@
         "lfs": false
       },
       {
+        "relpath": "extracted/permits/bosc-401-certifications.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
         "relpath": "extracted/permits/lma1a-npdes-cgp-coverage.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -6315,10 +6320,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9d264613f08de27d1c66ccab8071cd744ef18432ba93088234fecd7719ce8ce2",
-      "size_bytes": 108421,
+      "sha256": "ce75b5f48d50e286688e670024aeb29ac59f939a36d3d61a7426dc37b1c1c515",
+      "size_bytes": 120179,
       "lfs_materialized": true,
-      "file_count": 31,
+      "file_count": 32,
       "stale": false,
       "asof": null
     },

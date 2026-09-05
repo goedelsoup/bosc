@@ -46,7 +46,7 @@
       "delaware"
     ],
     "roles": {
-      "epa_applicant": 24,
+      "epa_applicant": 25,
       "grantee": 4,
       "firm": 4,
       "meeting_participant": 3,
@@ -108,6 +108,7 @@
       "permits/4074551.epa.yaml",
       "permits/4132514.epa.yaml",
       "permits/4230060.epa.yaml",
+      "permits/bosc-401-certifications.epa.yaml",
       "perry-township/meetings/meeting-summaries.yaml",
       "recorder/202508130008300.deed.yaml",
       "recorder/202508130008312.deed.yaml",

@@ -12622,6 +12622,42 @@
     "source_doc_published": false
   },
   {
+    "rel": "permits/bosc-401-certifications.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project BOSC",
+    "confidence": "high",
+    "warnings": [
+      "WITHDRAWN is not DENIED and not APPROVED. The applicant withdrew; Ohio EPA neither refused the certification nor granted it, and the withdrawal email asks \"let me know if you need me to do anything further to officially withdraw\". No Ohio EPA acknowledgement of the withdrawal is in the corpus, so the administrative closure itself is [open].",
+      "The reason for the withdrawal is the APPLICANT'S stated reason, in the applicant's engineer's words, to the regulator. It is a strong contemporaneous statement and it is still a self-report: no AEP document, route drawing or substation record in this corpus corroborates the revised alignment. A self-report does not upgrade the source.",
+      "The delineated acreages are from the delineation SHEET, which is the primary record of the consultant's field determination. They are not a jurisdictional determination — whether each feature is an isolated wetland or a water of the United States is what the §401 and the USACE process decide, and Table 2 (3728018) is the investigation, not the ruling."
+    ],
+    "fields": {
+      "agency": "Ohio Environmental Protection Agency, Division of Surface Water",
+      "program": "Section 401 water quality certification / isolated wetland permit",
+      "permit_no": "DSW401251760W (isolated wetland) · DSW401252260W (Level 2 IWP, application 495612045)",
+      "action": "Level 2 isolated-wetland permit application withdrawn by the applicant",
+      "action_date": "2026-02-18",
+      "applicant": "Bistrozzi LLC",
+      "facility": "Project BOSC data center, 4110 N Cole St, Lima, Allen County",
+      "project_name": "Project BOSC",
+      "affected_resource": "five delineated on-site wetlands (A-E) and the on-site surface-water features of Table 2; Wetland A is the one the Level 2 permit was filed over",
+      "note": "[verified] On 2026-02-18 Bistrozzi LLC withdrew the Level 2 Isolated Wetland Permit application for Project BOSC. The stated reason, in EMH&T's email to Ohio EPA: \"After additional coordination with AEP, it was ultimately determined that the alignment of the high voltage corridor to the onsite substation could be revised so as to fully avoid impacts to Wetland A. Therefore, this permit is no longer necessary for the project.\" [verified] The delineation sheet records FIVE wetlands totalling 2.40 acres — A 1.86, B 0.29, C 0.21, D 0.03, E 0.01 — materially more than the 0.29-ac forested figure the corpus held from permit 3788677 or the secondhand \"0.7-ac forested wetland\". [verified] The campus's own flood-insurance exhibit places it in AMERICAN AND SUGAR CREEK TOWNSHIPS, not American Township alone. [open] No AEP or utility record in this corpus documents the revised high-voltage alignment or the on-site substation, and no Ohio EPA acknowledgement of the withdrawal is held."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/bosc-401-certifications.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/4011312.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "permits/lma1a-npdes-cgp-coverage.epa.yaml",
     "group": "permits-epa",
     "title": "LMA 1A (BOSC / Bistrozzi data-center campus)",
