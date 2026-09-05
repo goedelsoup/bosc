@@ -23,7 +23,7 @@ from __future__ import annotations
 
 import re
 from datetime import UTC, datetime
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 import yaml
@@ -36,6 +36,7 @@ from watermark.config import Settings, get_settings
 from watermark.documents import office
 from watermark.documents.pdf import PdfDocument
 from watermark.logging import get_logger
+from watermark.text_sidecars import sidecar_for_source
 
 log = get_logger(__name__)
 
@@ -68,7 +69,7 @@ class IndexedDoc(BaseModel):
     date_listing: str | None  # from the records-page listing (provisional)
     date_verified: str | None  # listing date confirmed in the file's own text, else null
     date_evidence: str  # pdf_text | docx | html | listing (unconfirmed) | none
-    text_method: str  # pdf_text | docx | html | none
+    text_method: str  # pdf_text | docx | html | sidecar | ocr | none
     char_count: int
     hits: list[str]  # corridor topic/subject slugs found in the text
     title: str | None
@@ -144,11 +145,42 @@ def ocr_pdf(path: Path, *, dpi: int = _OCR_DPI, max_pages: int = _MAX_PAGES) -> 
     return "\n".join(pages)
 
 
-def extract_text(path: Path, *, ocr: bool = False) -> tuple[str, str]:
+def _sidecar_text(path: Path, documents_dir: Path | None) -> str:
+    """The committed ``-text`` sidecar's transcription of *path*, or ``""``.
+
+    A legacy Office binary (``.doc``/``.dot``/``.xls``/``.rtf``) has no in-process reader, so
+    without this it indexes as ``text_method: none`` — indistinguishable from an image-only
+    scan, and silently unsearchable. The bytes ARE readable; the text just lives in a committed
+    sidecar (:mod:`watermark.text_sidecars`, #1757) that this indexer never consulted.
+    """
+    if documents_dir is None:
+        return ""
+    try:
+        rel = path.resolve().relative_to(documents_dir.resolve())
+    except ValueError:
+        return ""  # not under data/documents — a test fixture or an ad-hoc path
+    sidecar = sidecar_for_source(PurePosixPath(rel), documents_dir)
+    if sidecar is None:
+        return ""
+    try:
+        return (documents_dir / sidecar).read_text(encoding="utf-8")
+    except OSError as exc:
+        log.warning("civic.index.sidecar_error", path=str(sidecar), error=str(exc))
+        return ""
+
+
+def extract_text(
+    path: Path, *, ocr: bool = False, documents_dir: Path | None = None
+) -> tuple[str, str]:
     """``(text, method)`` for a downloaded file. ``method`` is ``none`` when empty.
 
     For a PDF with no embedded text layer (an image-only scan), ``ocr=True`` renders
     + OCRs it (``method='ocr'``); otherwise such a file returns ``("", "none")``.
+
+    ``documents_dir`` lets a legacy Office binary be read from its committed ``-text`` sidecar
+    (``method='sidecar'``). Omit it and such a file is ``none`` — which is what this function did
+    for every ``.doc`` in the corpus, conflating "needs a converter we already ran" with "needs
+    OCR nobody has wired". The distinction matters: only one of the two is already answerable.
     """
     suffix = path.suffix.lower()
     if suffix not in {".pdf", ".docx", ".htm", ".html"}:
@@ -166,6 +198,8 @@ def extract_text(path: Path, *, ocr: bool = False) -> tuple[str, str]:
         text, method = office.docx_text(path), "docx"
     elif suffix in {".htm", ".html"}:
         text, method = office.html_text(path), "html"
+    elif suffix in office.SIDECAR_SOURCE_SUFFIXES:
+        text, method = _sidecar_text(path, documents_dir), "sidecar"
     else:
         text, method = "", "none"
     # Normalize whitespace: PDF/DOCX/OCR runs split words and inject newlines, which
@@ -276,7 +310,11 @@ def index_meetings(
     for entry in _dedup_entries(entries):
         filename = str(entry["filename"])
         path = docs_dir / filename
-        text, method = extract_text(path, ocr=ocr) if path.exists() else ("", "none")
+        text, method = (
+            extract_text(path, ocr=ocr, documents_dir=settings.documents_dir)
+            if path.exists()
+            else ("", "none")
+        )
         listing = entry.get("date")
         verified, evidence = _verify_date(text, listing, method)
         indexed.append(

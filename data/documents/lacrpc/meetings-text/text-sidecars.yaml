@@ -1,0 +1,25 @@
+meta:
+  source_dir: lacrpc/meetings
+  sidecar_dir: lacrpc/meetings-text
+  policy: 'derived, not evidence: every .txt here is a machine transcription of the source file named
+    in `source`, produced by the converter in meta.converter_version and regenerable with `watermark text-sidecars
+    <source-dir>`. Never hand-edit one — the next run reverts it; a correction belongs in a reviewed artifact
+    under data/extracted/. The source bytes are untouched and remain the citable record.'
+  converter_version: LibreOffice 26.2.4.2 0229ac93fcf0d7cbc6376066c6f35021cef002dc
+  generated_at: '2026-09-05T00:50:40Z'
+  generated_by: watermark text-sidecars
+  counts:
+    sources: 1
+    sidecars: 1
+    no_text: 0
+    failed: 0
+    lfs_pointers: 0
+files:
+- source: lacrpc/meetings/_01202026-268.doc
+  sidecar: lacrpc/meetings-text/_01202026-268.doc.txt
+  source_sha256: 5954c0c398943941089529405e8bba0a5eba3d3d3a6b37a571b65446ce9b38c2
+  source_bytes: 91136
+  chars: 3444
+  converter: libreoffice-writer
+  sidecar_sha256: b8c842c7bfa1742be49617a7d7466649a8b60a2a97ad17f99f12b02c417d10d8
+  note: null

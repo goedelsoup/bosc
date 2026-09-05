@@ -11,6 +11,29 @@ from __future__ import annotations
 import re
 from collections.abc import Collection, Iterable
 
+# Pieces of the `tax_abatement` pattern — the one term whose senses are distinguished by context
+# rather than by wording, and the one worth measuring instead of guessing at.
+#
+# Measured over every `abatement` mention in every committed meetings tree (97 of them): 2 are
+# asbestos abatement, 3 lead abatement, 3 nuisance/mowing, 3 "abatement fees" cost recovery — and
+# the remaining 86 are tax abatements. Every one of the 8 non-tax mentions QUALIFIES the word
+# locally ("asbestos abatement", "lead abatement", "abatement mowing", "abatement fees"), while
+# the tax sense routinely does not: Perry Township's entire 2024 data-center abatement debate
+# ("WHEN OUR PRESENT ABATEMENTS EXPIRE", "THE SCHOOL AND THE TOWNSHIP WON'T SEE ANY MONEY",
+# "ABATEMENTS ARE COMPETITIVE WITH OTHER AREAS") says `tax` in not one of its sixteen sentences.
+#
+# So name the other senses and let the rest be the tax one. Requiring the tax word instead — the
+# #1839 correction — dropped that whole debate, including the 2024-09-05 public hearing where a
+# resident testified their "LAND TAXES ARE INCREASING TO PAY FOR THE ABATEMENT THAT WAS GIVEN TO
+# THE DATA CENTERS". Re-measure before widening either list; the classes are local vocabulary,
+# not universal truth.
+_NOT_TAX_BEFORE = (
+    r"(?<!asbestos )(?<!asbestos-)(?<!lead )(?<!lead-)"
+    r"(?<!nuisance )(?<!weed )(?<!grass )(?<!vegetation )"
+)
+_NOT_TAX_AFTER = r"(?!\s+(?:fee|fees|mowing|propert|invoice))"
+_ABATEMENT = rf"\b{_NOT_TAX_BEFORE}abatements?\b{_NOT_TAX_AFTER}"
+
 # slug -> case-insensitive pattern. Subjects (named parties) + topics (corridor acts).
 _TERMS: dict[str, str] = {
     # subjects
@@ -41,13 +64,8 @@ _TERMS: dict[str, str] = {
     "bess": r"\bbess\b|battery\s+energy\s+storage",
     "solar": r"\bsolar\b",
     "setback": r"set\s*back",
-    # A bare `abatement` is not a tax term. Hancock County's commissioners let 7 asbestos-
-    # abatement demolition bids through it before anyone noticed (#1839) — so require the tax
-    # sense explicitly, or one of the named instruments.
-    "tax_abatement": (
-        r"tax\s+abatement|abatement\s+(?:agreement|application|schedule)"
-        r"|\bcra\b|\btif\b|enterprise\s+zone"
-    ),
+    # See _ABATEMENT above — the exclusions are measured, not assumed.
+    "tax_abatement": rf"{_ABATEMENT}|\bcra\b|\btif\b|enterprise\s+zone",
 }
 _COMPILED: dict[str, re.Pattern[str]] = {k: re.compile(v, re.IGNORECASE) for k, v in _TERMS.items()}
 

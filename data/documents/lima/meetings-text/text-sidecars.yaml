@@ -1,0 +1,97 @@
+meta:
+  source_dir: lima/meetings
+  sidecar_dir: lima/meetings-text
+  policy: 'derived, not evidence: every .txt here is a machine transcription of the source file named
+    in `source`, produced by the converter in meta.converter_version and regenerable with `watermark text-sidecars
+    <source-dir>`. Never hand-edit one — the next run reverts it; a correction belongs in a reviewed artifact
+    under data/extracted/. The source bytes are untouched and remain the citable record.'
+  converter_version: LibreOffice 26.2.4.2 0229ac93fcf0d7cbc6376066c6f35021cef002dc
+  generated_at: '2026-09-05T00:50:26Z'
+  generated_by: watermark text-sidecars
+  counts:
+    sources: 10
+    sidecars: 10
+    no_text: 0
+    failed: 0
+    lfs_pointers: 0
+files:
+- source: lima/meetings/2023.01.11 Agenda.doc
+  sidecar: lima/meetings-text/2023.01.11 Agenda.doc.txt
+  source_sha256: d48ec4c2b1c7b8b2a2387a28bf6b7001fdf77033444f270de64953f3f8ca231f
+  source_bytes: 215040
+  chars: 839
+  converter: libreoffice-writer
+  sidecar_sha256: c5f9c366696f46803677d9bde9f7250e2b0df821919cf73cccd26db92d1c0b35
+  note: null
+- source: lima/meetings/2023.02.08 Agenda.doc
+  sidecar: lima/meetings-text/2023.02.08 Agenda.doc.txt
+  source_sha256: 6f11158868127ac14dbd383c041efc33cd06c909edf9ea967ebce85c08e180d8
+  source_bytes: 215040
+  chars: 859
+  converter: libreoffice-writer
+  sidecar_sha256: 00033c42269b2ead8c5b1db7c85a7b5da9da731f31f19924deb440a4e3a5a0a2
+  note: null
+- source: lima/meetings/2023.05.24 Agenda.doc
+  sidecar: lima/meetings-text/2023.05.24 Agenda.doc.txt
+  source_sha256: 4dc0c35588587ba5c0a6e515da4d2da5ec645f181371f831adf7f83e23b2ba40
+  source_bytes: 215040
+  chars: 860
+  converter: libreoffice-writer
+  sidecar_sha256: 931aed0a00f9118a538d7525ecea4e94915df2e279170cb72c4f346b8e65de25
+  note: null
+- source: lima/meetings/2023.06.28 Agenda.doc
+  sidecar: lima/meetings-text/2023.06.28 Agenda.doc.txt
+  source_sha256: a3444f8a472255386cbe0b3b20b162dceba31d8c398d7c1693d5fc45e72452e6
+  source_bytes: 215040
+  chars: 780
+  converter: libreoffice-writer
+  sidecar_sha256: f8588959edd167259d6e9ada5bcebe48d3e8b26c6de53fadbc04a1141ad9b117
+  note: null
+- source: lima/meetings/2023.08.23 BOA Agenda.doc
+  sidecar: lima/meetings-text/2023.08.23 BOA Agenda.doc.txt
+  source_sha256: 8f319fdbf1529629ebf71ddb4eda95485980ecba3056b5f2c6779fe05c5dd447
+  source_bytes: 216064
+  chars: 775
+  converter: libreoffice-writer
+  sidecar_sha256: a7c3910f75ca820a53b82daf527309665c95b3086f21cc777466635889906035
+  note: null
+- source: lima/meetings/2023.08.23 CPC Agenda.doc
+  sidecar: lima/meetings-text/2023.08.23 CPC Agenda.doc.txt
+  source_sha256: 3530242b23e68fbdef19e5b105f0225100da6bdd0ae376744869299e64761b0a
+  source_bytes: 215040
+  chars: 837
+  converter: libreoffice-writer
+  sidecar_sha256: 994dfd2ba6b7a45b83d9a05e73fd19847f836aa73f3e0aac1009ffcf5d31fb13
+  note: null
+- source: lima/meetings/2023.09.27 CPC Agenda.doc
+  sidecar: lima/meetings-text/2023.09.27 CPC Agenda.doc.txt
+  source_sha256: dca63af5ae8bf2979666b207d0d8f25fc61d5871dc4b601cfbfeafee82bb7e61
+  source_bytes: 214528
+  chars: 909
+  converter: libreoffice-writer
+  sidecar_sha256: d0d64fffcfa35c2b87e00102f58581a60affd82cf4731acfbeece0acf7ad2c3b
+  note: null
+- source: lima/meetings/2023.10.25 BOA Agenda.doc
+  sidecar: lima/meetings-text/2023.10.25 BOA Agenda.doc.txt
+  source_sha256: 9a2735cb96cc34a39ad4f6f403cfed003e394f2ad4352b0e2d52515617aaea00
+  source_bytes: 216576
+  chars: 939
+  converter: libreoffice-writer
+  sidecar_sha256: 360ea8e6eb59a996e413e43d2028acaf74333cd4340b76339cc1c62843413ecf
+  note: null
+- source: lima/meetings/2023.11.08 BOA Agenda.doc
+  sidecar: lima/meetings-text/2023.11.08 BOA Agenda.doc.txt
+  source_sha256: 65d3d206029e481e6ba350f3b0dd50494f6bc4344b45dc1b1fbaa8e1f7b0d158
+  source_bytes: 216064
+  chars: 780
+  converter: libreoffice-writer
+  sidecar_sha256: db76057ceae2c2740f7b7d012befffafad590f2c039c02d23cda48827123e2f0
+  note: null
+- source: lima/meetings/2023.11.29 CPC Agenda.doc
+  sidecar: lima/meetings-text/2023.11.29 CPC Agenda.doc.txt
+  source_sha256: c1db9aefa7c1ab75786541d819b026327cf6fc5b11357b0453546e421d23d86b
+  source_bytes: 216064
+  chars: 1025
+  converter: libreoffice-writer
+  sidecar_sha256: 1a2422376c2f77431cf8ca98e5d9a2f34fc5636bc6d60b1edb0d2ea72de66f9e
+  note: null

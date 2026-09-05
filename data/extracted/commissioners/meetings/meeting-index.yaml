@@ -1,17 +1,16 @@
 meta:
   subject: commissioners meeting index (text-verified dates + corridor hits)
   slug: commissioners
-  generated_at: '2026-06-12'
-  text_extraction: 'PDF text layer (pypdf) / DOCX / HTML — NO OCR. An image-only scanned
-    PDF has text_method: none (date unverified, text unscanned); those need an OCR
-    pass not wired here.'
+  generated_at: '2026-09-05'
+  text_extraction: PDF text layer (pypdf) / DOCX / HTML, plus OCR (tesseract) on 486
+    image-only scan(s). Every file yielded text.
   date_evidence: date_verified is the listing date CONFIRMED in the file's own text;
     null means unconfirmed (date_listing still stands).
   counts:
-    total: 991
-    text_extracted: 991
+    total: 988
+    text_extracted: 988
     date_verified: 969
-    with_corridor_hits: 270
+    with_corridor_hits: 267
 documents:
 - filename: M032526-Special.pdf
   kind: minutes
@@ -832,8 +831,7 @@ documents:
   date_evidence: ocr
   text_method: ocr
   char_count: 12090
-  hits:
-  - tax_abatement
+  hits: []
   title: Minutes of February 12, 2026
   source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M021226.pdf
   sha256: a68519c78c360af65dae044b61a8d4059cb68833f8c3bb52a41f8f55a25e579c
@@ -970,18 +968,6 @@ documents:
   title: Minutes of March 11, 2026-Special Session
   source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M031126-Special.pdf
   sha256: 284050ae61a968bca9366bc7d3c6a262eff7382e40af954f374ef6a08bfa07ab
-- filename: M031126-Special-1.pdf
-  kind: minutes
-  body: null
-  date_listing: '2026-03-12'
-  date_verified: null
-  date_evidence: listing
-  text_method: ocr
-  char_count: 713
-  hits: []
-  title: Minutes of March 12, 2026
-  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M031126-Special-1.pdf
-  sha256: 284050ae61a968bca9366bc7d3c6a262eff7382e40af954f374ef6a08bfa07ab
 - filename: M031726.pdf
   kind: minutes
   body: null
@@ -1011,20 +997,6 @@ documents:
   - hume
   title: Minutes of March 19, 2026
   source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M031926.pdf
-  sha256: 1df31e1bab81e2940d079ea2f0e5e205f40cc1f04687510c11025896f4dc122e
-- filename: M031926-1.pdf
-  kind: minutes
-  body: null
-  date_listing: '2026-03-23'
-  date_verified: null
-  date_evidence: listing
-  text_method: ocr
-  char_count: 9801
-  hits:
-  - easement
-  - hume
-  title: Minutes of March 23, 2026-Special Session
-  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M031926-1.pdf
   sha256: 1df31e1bab81e2940d079ea2f0e5e205f40cc1f04687510c11025896f4dc122e
 - filename: M032426.pdf
   kind: minutes
@@ -2143,18 +2115,6 @@ documents:
   title: Minutes of September 9, 2025
   source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/03/Board-of-Commissioners-General-Session-September-9-2025-Meeting-Minutes.pdf
   sha256: a85b7c44bc6a9804c8b3069d6889b4dbbcd2c88241941dc36dae739ba93f62b6
-- filename: M090825-Special-Session-1.pdf
-  kind: minutes
-  body: null
-  date_listing: '2025-09-09'
-  date_verified: null
-  date_evidence: listing
-  text_method: ocr
-  char_count: 1090
-  hits: []
-  title: Minutes of September 9, 2025-Special Session
-  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2025/11/M090825-Special-Session-1.pdf
-  sha256: 491886f87475a0fac9c08772f34dfb5255b1d90cdc02c709528cf10cc755067b
 - filename: M091025-Special-Session.pdf
   kind: minutes
   body: null
@@ -4011,7 +3971,6 @@ documents:
   char_count: 11207
   hits:
   - annexation
-  - tax_abatement
   title: Minutes of September 26, 2024
   source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2024/10/M092624.pdf
   sha256: cbc87d2cc78e15209803e623519a1a2785ea36e4b805a9318609cbe6c8bfe904
@@ -5079,7 +5038,7 @@ documents:
   date_verified: '2023-04-06'
   date_evidence: docx
   text_method: docx
-  char_count: 59782
+  char_count: 7614
   hits:
   - pump_station
   title: Minutes of April 6, 2023
@@ -6653,8 +6612,7 @@ documents:
   date_evidence: pdf_text
   text_method: pdf_text
   char_count: 3382
-  hits:
-  - tax_abatement
+  hits: []
   title: February 12, 2026
   source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/02/A021226.pdf
   sha256: 03302e064a958e732ca79acd16e818bd3fa9ff13a180eff06a053fca346d5210
@@ -9195,7 +9153,7 @@ documents:
   date_verified: '2024-04-23'
   date_evidence: docx
   text_method: docx
-  char_count: 45371
+  char_count: 4739
   hits:
   - easement
   - forcemain
@@ -9270,7 +9228,7 @@ documents:
   date_verified: '2024-05-08'
   date_evidence: docx
   text_method: docx
-  char_count: 22665
+  char_count: 1015
   hits: []
   title: May 8, 2024-Special Session
   source_url: http://commissioners.allencountyohio.com/wp-content/uploads/2024/05/A050824-Special.docx
