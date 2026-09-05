@@ -1,0 +1,43 @@
+kind: collection_index
+subject: Ohio Department of Transportation (ODOT) reference corpus — read status
+
+provenance:
+  source_dir: data/documents/odot/
+  content_verified: '2026-09-05'
+  evidence: ODOT / DriveOhio technical specification — a public agency publication
+  method: full read of the embedded text layer, then a search for the corridor subjects.
+
+headline: >-
+  [verified negative] THE COLLECTION'S ONE DOCUMENT IS NOT ABOUT DATA CENTERS IN THIS CORPUS'S
+  SENSE, DESPITE SAYING "DATA CENTER" THREE TIMES. It is Ohio's connected/automated-vehicle system
+  specification, and its "data center" is the back end of a CV/AV platform — the layer that edge
+  roadside units report to. Recorded so a keyword sweep does not resurface it as a corridor
+  document.
+
+documents:
+- file: 15-Core Service Requirements.pdf
+  title: Ohio CV/AV System Requirements — Core Service Requirements
+  pages: 7
+  corridor_subjects: [datacenter]
+  corridor_subjects_are_false_positives: true
+  note: >-
+    A numbered requirements matrix (Core CS-1 … CS-6) for a connected/automated-vehicle platform:
+    Core Authorization, Infrastructure Management, Object Registration and Discovery. The three
+    "data center" occurrences are architectural — monitoring hardware "in the field & data
+    center", horizontal scaling "at the data center layer", and object registration "from the edge
+    to the data center". None refers to a data-center FACILITY, and the document names no
+    jurisdiction, project or company in this corpus.
+  why_the_collection_exists: >-
+    ODOT is in the corpus for the roadwork side of the corridor — the Berry Road / Cole Street
+    roundabout and the AEDG/PAAC roadway program. This specification is not part of that thread.
+    If ODOT roadwork records are pulled later they belong in this collection; this one document
+    is simply not them.
+
+relevance:
+  tags: [verified, odot, documented-negative]
+  note: >-
+    A documented negative, filed so the read is not repeated. The corridor's actual ODOT-adjacent
+    record lives with the roundabout plan set and the Roadway Development Agreement.
+  cross_refs:
+  - data/extracted/plans/4091286.engineering.yaml
+  - data/extracted/aedg/roadwork-development-agreement.rda.yaml

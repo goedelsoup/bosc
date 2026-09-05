@@ -1,0 +1,48 @@
+id: odd-odot
+title: ODD / ODOT Reference Collections — Read Status and Documented Negatives (Extractions)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Ohio Department of Development publications and Ohio Tax Credit Authority meeting minutes
+    (`data/documents/odd/`), and the ODOT/DriveOhio connected-vehicle specification
+    (`data/documents/odot/`). Every PDF in both collections read from its embedded text layer —
+    all are digitally generated — then searched for the corridor subjects.
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:lima
+provenance: document
+storage:
+- relpath: extracted/odd/collection-index.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/odot/collection-index.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+tags:
+- odd
+- odot
+- tax-credit-authority
+- incentives
+- statewide
+- documented-negative
+notes: >-
+  Two collection indexes, and both are read-status records rather than instrument extractions —
+  the same shape as `lacrpc/collection-index.yaml`. Their headline is a documented negative: NOT
+  ONE document in either collection names Lima, Allen County, Project BOSC or Bistrozzi, across
+  six Ohio Tax Credit Authority meetings spanning January 2025 to June 2026. That is consistent
+  with the campus's incentives being LOCAL — the Allen County CRA agreement and the
+  commissioners' resolution ledger — while the TCA administers state credits under R.C. 122.17.
+  What the read did surface belongs to other threads: the Authority added The Constant Company
+  Procurements LLC (Springfield's operator) and two Vantage entities as grantees on 2026-03-30,
+  and recorded the same FEIN (85-1505619) against two differently named Vantage grantees — left
+  open, for the Ohio SOS registry pull to settle. It also terminated a data-center agreement on
+  2025-06-02 with no credits ever issued, against a company whose name the text layer truncates.
+  ⚠️ TWO KEYWORD TRAPS ARE RECORDED HERE BECAUSE THEY WILL RECUR. `Final_PY25-29_Con_Plan.pdf`
+  returns 27 hits for `bosc` and every one is "BoSCoC" — the Ohio Balance of State Continuum of
+  Care, a HUD homelessness-services structure with no relation to the project. And the ODOT
+  specification says "data center" three times, every one of them the back end of a
+  connected/automated-vehicle platform rather than a facility. A codename is a name, never a key.

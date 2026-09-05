@@ -10968,6 +10968,86 @@
     "source_doc_published": false
   },
   {
+    "rel": "maumee-tmdl/maumee-tp-wla-lima-loop.epa.yaml",
+    "group": "permits-epa",
+    "title": "Maumee Watershed Nutrient TMDL — Lima loop total-phosphorus wasteload allocations",
+    "confidence": "high",
+    "warnings": [
+      "Table A4.1 and Table A4.5 disagree, and A4.1 is the operative one. A4.5's second column is headed \"WLA\" but restates several allocations differently from the table that assigns them — Shawnee II reads 0.51 MT against A4.1's 0.75, and Elida reads 0.21 against A4.1's 0.34. The general permit settles it: OHP000001 Part IV.A.1 sets Shawnee II at 750 kg and Elida at 340 kg, matching A4.1. Cite A4.1 (or the permit) for an allocation and A4.5 only for the reported loads beside it. Reading a limit out of A4.5 would understate Shawnee II's by a third.",
+      "Table A4.5's seven numeric columns are, in order, 2008 / WLA / 2017 / 2018 / 2019 / 2020 / 2021. The first column is a 2008 baseline load, not a reported year; reading the row left-to-right as a time series misreports both ends of it.",
+      "The spring-season metric tons and the general permit's kilograms are the SAME allocation in two units, not two allocations. Lima WWTP's 4.0 MT and its 4,000 kg limit are one number.",
+      "The CSO allocation in Table A4.3 is ADDITIONAL to the Table A4.1 allocation for the same permit, and A4.1 says so (\"does not include the combined sewage overflows\"). Lima WWTP carries both: 4.0 MT for the regular effluent and 0.083 MT for the overflows.",
+      "The most recent per-facility spring load on this record is 2021. No post-2021 figure for any of these plants is asserted here; the annual Season Report required by OHP000001 Part IV.D is the record that would carry one, and none is in the corpus."
+    ],
+    "fields": {
+      "agency": "Ohio Environmental Protection Agency",
+      "program": "TMDL wasteload allocation + NPDES watershed general permit (total phosphorus)",
+      "permit_no": "OHP000001 (general) / 2PE00000 (individual) / OH0026069 (application)",
+      "action": "allocation assigned and made enforceable through a watershed general permit",
+      "action_date": "2023-09-28",
+      "expiration_date": "2028-10-31",
+      "applicant": "City of Lima",
+      "facility": "City of Lima WWTP, NPDES 2PE00000 / OH0026069",
+      "project_name": "Maumee Watershed Nutrient TMDL — Lima loop total-phosphorus wasteload allocations",
+      "affected_resource": "Ottawa River → Auglaize River → Maumee River → Lake Erie Western Basin",
+      "note": "[verified] The Maumee Watershed Nutrient TMDL assigns the City of Lima WWTP a spring-season total-phosphorus wasteload allocation of 4.0 metric tons (4,000 kg) plus a separate 0.083 MT for its combined sewer overflows, and OHP000001 makes both enforceable. Lima's is the third-largest allocation in the 39-facility grouped load, behind Toledo Bay View (27.9) and Lucas County WRRF (4.8); its CSO allocation is the second largest in the basin, behind only Toledo. On the TMDL's own record Lima WWTP exceeded 4.0 MT in one of five reported years (5.0 in 2018; 2.9 / 3.3 / 3.0 / 2.4 in the other four). [verified] Seven Allen County dischargers hold allocations under the same permit, and two of them were over in most or all reported years: American-Bath WWTP (370 kg) reported 590, 390, 620, 520 and 500 kg in 2017-2021 — above its limit in all five — and Elida WWTP (340 kg) reported 860, 890, 910, 990 and 390 kg, also above in all five. Shawnee II WWTP (750 kg) was above in three of five. [open] Whether any of that is a violation depends on the group, not the plant: OHP000001 Part IV.C.3 makes an individual exceedance a violation ONLY when the 39-facility cumulative load also exceeds its cap, and in the one season published (2024) the group reported 43,304 kg against a 64,170 kg limit — 20,866 kg under. [verified] A SECOND TMDL also allocates phosphorus to these same facilities: the Ottawa River Watershed (Lima Area) near-field TMDL, approved by U.S. EPA 2014-04-15 for in-stream aquatic life use, gives Lima WWTP 5.33 kg/day, Shawnee II 2.31, Lima Refinery 1.58, Cridersville 0.61 and names three Lima industrial dischargers this corpus did not hold. See `nearfield_tmdl`. [open] That report itself is NOT in the corpus — only Appendix 5's summary of it. Ohio EPA publishes it; acquiring it is a named gap."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "maumee-tmdl/maumee-tp-wla-lima-loop.epa.yaml",
+      "source_kind": "document",
+      "page": 1,
+      "pages": [
+        1,
+        8,
+        10
+      ],
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "maumee-tmdl/Appendix-4-Individual-NPDES-Wasteload-Allocations-Final.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/lima/2dp00130-conveyance-and-authorization.yaml",
+    "group": "permits-epa",
+    "title": "Project BOSC — Data Center",
+    "confidence": "high",
+    "warnings": [
+      "The authorization is the POTW's, not Ohio EPA's, and it says so: it is \"provided in fulfillment of the requirements for a new permit application\" and is expressly \"contingent upon the applicant's compliance with all applicable federal, state, and local statutes\". It does not grant, and does not predict, the Indirect Discharge Permit — the letter itself requires a valid IDP \"prior to the initial discharge\".",
+      "The flow schematic is an application exhibit, not an engineering drawing. It carries three labels and one box. Read it as the applicant's own statement of the flow path, not as evidence about equipment that is or is not installed.",
+      "The site plan's pipe sizes and structure numbers are transcribed from the drawing's text layer, which on a CAD export carries the labels without carrying which line each belongs to. The sizes present in the drawing are recorded as a SET below; no size is attributed to a named run, because that attribution cannot be made from this read."
+    ],
+    "fields": {
+      "agency": "Allen County Sanitary Engineering Department (POTW) / Ohio Environmental Protection Agency (permitting)",
+      "program": "Indirect discharge (pretreatment) — permit application 2DP00130, APP285104563",
+      "permit_no": "2DP00130",
+      "action": "POTW authorization of non-domestic wastewater discharge, filed in support of an indirect-discharge permit application",
+      "action_date": "2025-12-03",
+      "applicant": "Bistrozzi LLC",
+      "facility": "Project BOSC data center, near Cole Street and Beery Road, Lima, Allen County",
+      "site_address": "4110 N Cole St, Lima, OH 45801",
+      "project_name": "Project BOSC — Data Center",
+      "affected_resource": "Allen County American-Bath POTW (NPDES 2PH00007) → Pike Run → Ottawa River",
+      "note": "[verified] On 2025-12-03 the Allen County Sanitary Engineer, Brad Niemeyer PE, wrote to Jeremey Eisele PE of EMH&T formally authorizing the American-Bath POTW to receive \"industrial or other non-domestic wastewater\" from the Project BOSC data center. The authorization is contingent, and it requires the applicant to hold a valid OEPA Indirect Discharge Permit before any regulated wastewater is discharged. [verified] The applicant's own Wastewater Flow Schematic for that discharge is a single junction: non-contact cooling tower blowdown and sanitary flow both enter one lift station, and the lift station discharges to the sanitary sewer. No treatment, metering, equalization or separation of the two streams is shown anywhere on the drawing. [verified] The site plan shows the sanitary connection built in two stages — a TEMPORARY LIFT STATION with temporary gravity and force mains, all three annotated \"REMOVE AFTER LIFT STATION (BY OTHERS) IS OPERATIONAL\", alongside a \"FUTURE LIFT STATION (BY OTHERS)\". [open] Because the schematic commingles blowdown with sanitary flow upstream of the only measurement point the system has, no monitoring at American-Bath can separate the campus's cooling stream from its domestic stream. That is the structural reason the cycles-of- concentration work has only a back-solve and the discharge characterisation had to borrow a different site's data — but whether any instrument measures the blowdown separately is not settled by these three documents."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima/2dp00130-conveyance-and-authorization.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "oepa/lima/edoc-4116228.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "oepa/lima/edoc-2479808.epa.yaml",
     "group": "permits-epa",
     "title": "City of Lima WWTP",

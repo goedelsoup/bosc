@@ -1,0 +1,198 @@
+doc_id: 2dp00130-conveyance-and-authorization
+kind: epa
+source_path: data/documents/oepa/lima/edoc-4116228.pdf
+sources:
+- document: data/documents/oepa/lima/edoc-4116228.pdf
+  what: Allen County Sanitary Engineer's written authorization of wastewater discharge
+  pages_read: [0]
+  text_method: pdf_text
+- document: data/documents/oepa/lima/edoc-4116227.pdf
+  what: the applicant's Wastewater Flow Schematic
+  pages_read: [0]
+  image_pages_read: [0]
+  dpi: 200
+- document: data/documents/oepa/lima/edoc-4116229.pdf
+  what: the campus utility site plan (sanitary layout)
+  pages_read: [0]
+  image_pages_read: [0]
+  dpi: 170
+dpi: 200
+method: >-
+  Reviewed read of the three documents in the 2DP00130 application package (APP285104563,
+  2026-05-13) that #2089 did not reach. #2089 characterised the package's SAMPLING data and cited
+  nine of its twelve committed documents; these three carry the conveyance side — who authorised
+  the discharge, what the applicant says the flow path is, and how the pipe is actually laid. The
+  letter was read from its embedded text layer (a digitally generated PDF); the schematic and the
+  site plan are drawings and were read from renders.
+source_text_excerpt: >-
+  edoc-4116228: "Please allow this letter to serve as a formal written statement from the Allen
+  County – American-Bath POTW authorizing the discharge of industrial or other non-domestic
+  wastewater from the proposed Project BOSC – Data Center, located near the intersection of Cole
+  Street and Beery Road into our sanitary sewer system." / "The applicant must be in possession of
+  a valid Indirect Discharge Permit issued by the OEPA prior to the initial discharge of regulated
+  wastewater into the sanitary sewer system." edoc-4116227 (entire drawing): "Wastewater Flow
+  Schematic — NON-CONTACT COOLING TOWER BLOWDOWN → LIFT STATION; SANITARY FLOW → LIFT STATION;
+  LIFT STATION → TO SANITARY SEWER".
+action:
+  confidence: high
+  warnings:
+  - >-
+    The authorization is the POTW's, not Ohio EPA's, and it says so: it is "provided in
+    fulfillment of the requirements for a new permit application" and is expressly "contingent
+    upon the applicant's compliance with all applicable federal, state, and local statutes". It
+    does not grant, and does not predict, the Indirect Discharge Permit — the letter itself
+    requires a valid IDP "prior to the initial discharge".
+  - >-
+    The flow schematic is an application exhibit, not an engineering drawing. It carries three
+    labels and one box. Read it as the applicant's own statement of the flow path, not as
+    evidence about equipment that is or is not installed.
+  - >-
+    The site plan's pipe sizes and structure numbers are transcribed from the drawing's text
+    layer, which on a CAD export carries the labels without carrying which line each belongs to.
+    The sizes present in the drawing are recorded as a SET below; no size is attributed to a
+    named run, because that attribution cannot be made from this read.
+  agency: Allen County Sanitary Engineering Department (POTW) / Ohio Environmental Protection
+    Agency (permitting)
+  program: Indirect discharge (pretreatment) — permit application 2DP00130, APP285104563
+  permit_no: 2DP00130
+  action: POTW authorization of non-domestic wastewater discharge, filed in support of an
+    indirect-discharge permit application
+  action_date: '2025-12-03'
+  applicant: Bistrozzi LLC
+  facility: Project BOSC data center, near Cole Street and Beery Road, Lima, Allen County
+  site_address: 4110 N Cole St, Lima, OH 45801
+  project_name: Project BOSC — Data Center
+  affected_resource: Allen County American-Bath POTW (NPDES 2PH00007) → Pike Run → Ottawa River
+  note: >-
+    [verified] On 2025-12-03 the Allen County Sanitary Engineer, Brad Niemeyer PE, wrote to
+    Jeremey Eisele PE of EMH&T formally authorizing the American-Bath POTW to receive "industrial
+    or other non-domestic wastewater" from the Project BOSC data center. The authorization is
+    contingent, and it requires the applicant to hold a valid OEPA Indirect Discharge Permit
+    before any regulated wastewater is discharged.
+    [verified] The applicant's own Wastewater Flow Schematic for that discharge is a single
+    junction: non-contact cooling tower blowdown and sanitary flow both enter one lift station,
+    and the lift station discharges to the sanitary sewer. No treatment, metering, equalization or
+    separation of the two streams is shown anywhere on the drawing.
+    [verified] The site plan shows the sanitary connection built in two stages — a TEMPORARY LIFT
+    STATION with temporary gravity and force mains, all three annotated "REMOVE AFTER LIFT STATION
+    (BY OTHERS) IS OPERATIONAL", alongside a "FUTURE LIFT STATION (BY OTHERS)".
+    [open] Because the schematic commingles blowdown with sanitary flow upstream of the only
+    measurement point the system has, no monitoring at American-Bath can separate the campus's
+    cooling stream from its domestic stream. That is the structural reason the cycles-of-
+    concentration work has only a back-solve and the discharge characterisation had to borrow a
+    different site's data — but whether any instrument measures the blowdown separately is not
+    settled by these three documents.
+
+# --- what each document says ------------------------------------------------------------------
+
+authorization:
+  document: data/documents/oepa/lima/edoc-4116228.pdf
+  docid: '4116228'
+  date: '2025-12-03'
+  from:
+    name: Brad Niemeyer, PE
+    title: Sanitary Engineer — Allen County
+    department: Allen County Sanitary Engineering Department
+    address: 3230 N. Cole Street, Lima, Ohio 45801
+    phone: (419) 996-4670
+    email: bniemeyer@allencountyohio.com
+  to:
+    name: Jeremey Eisele, PE
+    title: Project Manager
+    organization: EMH&T
+    address: 5500 New Albany Road, Columbus, OH 43054
+  subject: Authorization of Wastewater Discharge for Project BOSC – Data Center
+  receiving_potw: Allen County – American-Bath POTW
+  authorizes: discharge of industrial or other non-domestic wastewater from the proposed Project
+    BOSC data center into the county sanitary sewer system
+  purpose_stated: '"in fulfillment of the requirements for a new permit application with the Ohio
+    Environmental Protection Agency (OEPA)"'
+  conditions:
+  - '"contingent upon the applicant''s compliance with all applicable federal, state, and local
+    statutes, ordinances, and regulations"'
+  - '"The applicant must be in possession of a valid Indirect Discharge Permit issued by the OEPA
+    prior to the initial discharge of regulated wastewater into the sanitary sewer system."'
+  note: >-
+    The named engineer of record is EMH&T — the same firm the county's own PRR item 19 asked about
+    and the same submitter contact carried on the earlier BOSC-1A sanitary permit application. The
+    contact-of-record delta recorded for permit 4230060 (a Google address on the ISSUED permit
+    only) does not appear here: this is a county officer writing to the applicant's engineer.
+
+flow_schematic:
+  document: data/documents/oepa/lima/edoc-4116227.pdf
+  docid: '4116227'
+  title: Wastewater Flow Schematic
+  pages: 1
+  inputs:
+  - NON-CONTACT COOLING TOWER BLOWDOWN
+  - SANITARY FLOW
+  unit: LIFT STATION
+  output: TO SANITARY SEWER
+  shown_but_absent:
+    treatment: none depicted
+    metering: none depicted
+    equalization_or_storage: none depicted
+    stream_separation: none — both inputs enter the same lift station
+  finding: >-
+    [verified] The entire drawing is two labelled arrows into one box and one arrow out. The
+    campus's cooling-tower blowdown and its domestic sewage are commingled at the lift station,
+    which is upstream of everything downstream of it.
+  bears_on: >-
+    The blowdown stream's own volume and chemistry cannot be read off any downstream
+    measurement once it is mixed. This is a fact about the filed flow path, not an inference
+    about instrumentation; see the open question in `action.note`.
+
+site_plan:
+  document: data/documents/oepa/lima/edoc-4116229.pdf
+  docid: '4116229'
+  pages: 1
+  subject: campus sanitary utility layout, Bistrozzi LLC, 4110 N Cole St
+  staged_construction:
+    temporary_lift_station: >-
+      A "TEMPORARY LIFT STATION" is drawn, served by a "TEMP SANITARY GRAVITY MAIN" and a "TEMP
+      SANITARY FORCE MAIN". All three temporary elements carry the annotation "REMOVE AFTER LIFT
+      STATION (BY OTHERS) IS OPERATIONAL".
+    future_lift_station: >-
+      A "FUTURE LIFT STATION (BY OTHERS)" is shown. "(BY OTHERS)" is the drawing's own term and
+      identifies work outside this contractor's scope; it does not name who.
+    reading: >-
+      [verified] The sanitary connection is drawn in two stages, a temporary one to be removed
+      once a permanent lift station built by another party is operational.
+      [open] Which party, under which instrument, and on what schedule, is not on this drawing.
+      The BOSC-1A sanitary permit record (DSWPTI-260597 / DSW-7312 and its application) is where
+      that would be settled.
+  buildings_labelled: [PROP BLDG 1A, PROP HUB]
+  sanitary_pipe_sizes_present:
+    values_in: [8, 10, 12, 15, 24]
+    units: inches
+    note: >-
+      The set of sanitary-sewer sizes appearing anywhere on the drawing. Deliberately NOT
+      attributed to particular runs: the text layer of a CAD export carries the size labels
+      without carrying which line each labels, and reading a 24-inch main onto the wrong run
+      would be a material error. Attributing them needs a measured read of the drawing geometry.
+  also_shown:
+  - BADGE and FIRE ACCESS LANE - NO PARKING annotations (site circulation)
+  - numbered structures and cleanouts (CO2, CO3, CO8-CO13, and numbered nodes)
+  publication_note: >-
+    This sheet carries site-circulation detail of the kind the deferred plan sets 4230061/4230062
+    were flagged for. It is nonetheless already public: Ohio EPA serves it on its own portal, and
+    the `oepa` collection is cleared as a whole. Recorded here so the clearance is a noted
+    decision rather than an unexamined consequence of the standing rule.
+
+relevance:
+  tags: [verified, open, oepa, lima, allen-county, 2dp00130, indirect-discharge, pretreatment,
+         american-bath, pike-run, cooling, blowdown, bistrozzi, emht]
+  note: >-
+    The conveyance half of the 2DP00130 application, completing the read #2089 began on its
+    sampling half. It supplies the instrument by which the campus's non-domestic wastewater
+    enters the American-Bath POTW — the plant that the Maumee TMDL record shows over its
+    total-phosphorus allocation in all five reported years — and it shows, from the applicant's
+    own drawing, that the cooling stream is commingled with the sanitary stream before it leaves
+    the site.
+  cross_refs:
+  - data/extracted/oepa/lima/2dp00130-surrogate-characterization.yaml
+  - data/extracted/oepa/2DP00130.npdes.yaml
+  - data/extracted/oepa/oepa-2PH00007-american-bath-permit.npdes.yaml
+  - data/extracted/maumee-tmdl/maumee-tp-wla-lima-loop.epa.yaml
+  - data/extracted/permits/4230060.epa.yaml
+  - data/extracted/permits/4230068.sanitary.yaml

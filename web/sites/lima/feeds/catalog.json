@@ -403,8 +403,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "28aec4100f031f3a8756360fc4997522814f461eb34f682524824f2033c4c057",
-      "size_bytes": 81377,
+      "sha256": "e3e28ba7de8b2453985be2e5670ad11dc5b4f57e1e8cc73eafeab375c19327fc",
+      "size_bytes": 81246,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -967,8 +967,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "46e475304779ed0170e3afb54961050c534fcf787abce1fe85c7128d8785714a",
-      "size_bytes": 938915,
+      "sha256": "47ece7ba8a9433350355b25aec385c694e64eed977591ad19a52c8ee53deeaf8",
+      "size_bytes": 937536,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -2565,8 +2565,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d50f46910df0f7063c0006483b12c236b6621398753bebc93e8b6aaa6981f8fa",
-      "size_bytes": 47182,
+      "sha256": "2848c26dc2a717e5bbd8751a27a5fc9b82a769099cad2d091558032afd595079",
+      "size_bytes": 45918,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -3365,8 +3365,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "edd1222c67b88e5bd6ab20b110c48990a7940f86255cd664c2e16e6eca60a405",
-      "size_bytes": 32488,
+      "sha256": "f4819dc71b545ef320a554b57a698b75c9552e85823b7c0c8078aff8ac5a8128",
+      "size_bytes": 39526,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -3982,6 +3982,69 @@
     }
   },
   {
+    "id": "maumee-tmdl-lima-loop",
+    "title": "Maumee Watershed Nutrient TMDL — Lima Loop Total-Phosphorus Allocations (Extraction)",
+    "scope": "extracted",
+    "collection": "maumee-tmdl",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Maumee Watershed Nutrient TMDL, Appendix 4 \"Individual NPDES Wasteload Allocations\" (Tables A4.1, A4.3 and A4.5), read together with Ohio EPA general permit OHP000001 (Parts I.C.1, IV.A.1, IV.B, IV.C, IV.D) and the December 2024 TMDL Biennial Report (pp. 17-18). A reviewed transcription of the Allen County / Ottawa River rows: each figure was read from the PDF's embedded text layer and then RE-READ from a 200 DPI render of the same page, because a table's text layer carries the digits without carrying the column they sit in. The same appendix supplies Findlay's rows under `findlay-discharge-record`; this entry covers the reference build's scope, and neither derives from the other.",
+    "external_url": null,
+    "license": "public record / public domain",
+    "access_tier": "public",
+    "site_scope": "site:lima",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "tmdl",
+      "phosphorus",
+      "oepa",
+      "lima",
+      "allen-county",
+      "ottawa-river",
+      "pike-run",
+      "dug-run",
+      "ohp000001",
+      "general-permit",
+      "cso",
+      "lake-erie"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/maumee-tmdl/maumee-tp-wla-lima-loop.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/maumee-tmdl/README.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "92e3afa170a5bd0234c6e2fcdf0a4c9ad150fec0157d72f05d42ce28fa9eaa51",
+      "size_bytes": 27638,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Maumee Watershed Nutrient TMDL, Appendix 4 \"Individual NPDES Wasteload Allocations\" (Tables A4.1, A4.3 and A4.5), read together with Ohio EPA general permit OHP000001 (Parts I.C.1, IV.A.1, IV.B, IV.C, IV.D) and the December 2024 TMDL Biennial Report (pp. 17-18). A reviewed transcription of the Allen County / Ottawa River rows: each figure was read from the PDF's embedded text layer and then RE-READ from a 200 DPI render of the same page, because a table's text layer carries the digits without carrying the column they sit in. The same appendix supplies Findlay's rows under `findlay-discharge-record`; this entry covers the reference build's scope, and neither derives from the other.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "meetings",
     "title": "Per-Site Civic Meeting Records (Slug-Scoped)",
     "scope": "extracted",
@@ -4018,8 +4081,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "120e7875d271cb9ee515ae71e986aa3dad1317f69af21c26dea9c0494007980c",
-      "size_bytes": 46166,
+      "sha256": "ea7823207a661733c38a9aa76300919ca3a7534edf3f8cff920b0f53786a233a",
+      "size_bytes": 46336,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -4037,6 +4100,63 @@
       "confidence": "medium",
       "note": "watermark subdivisions download",
       "verified": true
+    }
+  },
+  {
+    "id": "odd-odot",
+    "title": "ODD / ODOT Reference Collections — Read Status and Documented Negatives (Extractions)",
+    "scope": "extracted",
+    "collection": "odd",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio Department of Development publications and Ohio Tax Credit Authority meeting minutes (`data/documents/odd/`), and the ODOT/DriveOhio connected-vehicle specification (`data/documents/odot/`). Every PDF in both collections read from its embedded text layer — all are digitally generated — then searched for the corridor subjects.",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:lima",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "odd",
+      "odot",
+      "tax-credit-authority",
+      "incentives",
+      "statewide",
+      "documented-negative"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/odd/collection-index.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/odot/collection-index.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4ef6b31a31f4cf5d54946f75e39f9c97f035becd43a9951fd76997bf9b19ecce",
+      "size_bytes": 8071,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "observed_network": null,
+    "citation": {
+      "source": "Ohio Department of Development publications and Ohio Tax Credit Authority meeting minutes (`data/documents/odd/`), and the ODOT/DriveOhio connected-vehicle specification (`data/documents/odot/`). Every PDF in both collections read from its embedded text layer — all are digitally generated — then searched for the corridor subjects.",
+      "source_kind": "reference",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {
@@ -4457,14 +4577,19 @@
         "relpath": "extracted/oepa/lima/2dp00130-surrogate-characterization.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/oepa/lima/2dp00130-conveyance-and-authorization.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "03c4c78c2b8c86630e1b80750965af81363578c24daa61bc9b24ff3c3a800e2c",
-      "size_bytes": 25106,
+      "sha256": "b2127df818f32a14ef1b8d8954d7d857b4d15bb5eb393b7f5cfa53c224199ba3",
+      "size_bytes": 36312,
       "lfs_materialized": true,
-      "file_count": 2,
+      "file_count": 3,
       "stale": false,
       "asof": null
     },
@@ -4959,8 +5084,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4087aeca7dd171373af0a433bbe7627ea7c0c171a73846cde05a9929201653be",
-      "size_bytes": 457144,
+      "sha256": "e0c5bbcd457d5c4aad4931fdb37a9829b57cd5f6c8d9d5af9637dc532cab099e",
+      "size_bytes": 457845,
       "lfs_materialized": true,
       "file_count": 90,
       "stale": false,
@@ -6352,8 +6477,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "c3ee47a2a2b3a618b4523c05bc84a498b3e7949a82690a7df4bc407a1b048818",
-      "size_bytes": 335897,
+      "sha256": "87d0c9b8734597519af4303f4ec24a116c42c2109eb0bc38d34cbe011caa1ada",
+      "size_bytes": 335816,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -6418,8 +6543,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "e6c9a85f0a3cd6c168419b7b6363cb98cb94ec9067688a105db00053f61e55f9",
-      "size_bytes": 17367,
+      "sha256": "a97253dba7210aa09a542913006bcf7d910599592e5696c499ee91f4200c6ca4",
+      "size_bytes": 20708,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,
@@ -6672,8 +6797,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9d91af38f8f7617604eac3653000f401571cb2012ec64061291c3d92f4ec57db",
-      "size_bytes": 22502,
+      "sha256": "ed741f93776d987c496e693cc32a3a38dd59bdb6684dbee35f13e95cce9ab8d9",
+      "size_bytes": 22435,
       "lfs_materialized": true,
       "file_count": 4,
       "stale": false,

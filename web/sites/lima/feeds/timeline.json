@@ -1438,6 +1438,27 @@
     }
   },
   {
+    "date": "2023-09-28",
+    "category": "epa_permit_action",
+    "title": "TMDL wasteload allocation + NPDES watershed general permit (total phosphorus) OHP000001 (general) / 2PE00000 (individual) / OH0026069 (application) — allocation assigned and made enforceable through a watershed general permit (Maumee Watershed Nutrient TMDL — Lima loop total-phosphorus wasteload allocations)",
+    "ref": "OHP000001 (general) / 2PE00000 (individual) / OH0026069 (application)",
+    "parties": [
+      "City of Lima"
+    ],
+    "detail": "affected Ottawa River → Auglaize River → Maumee River → Lake Erie Western Basin",
+    "source": "maumee-tmdl/maumee-tp-wla-lima-loop.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "maumee-tmdl/maumee-tp-wla-lima-loop.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
     "date": "2023-12-05",
     "category": "subdivision_meeting",
     "title": "Perry Township — minutes (corridor: google)",
@@ -3578,6 +3599,27 @@
     "also_sources": [],
     "citation": {
       "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "pages": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-03",
+    "category": "epa_permit_action",
+    "title": "Indirect discharge (pretreatment) — permit application 2DP00130, APP285104563 2DP00130 — POTW authorization of non-domestic wastewater discharge, filed in support of an indirect-discharge permit application (Project BOSC — Data Center)",
+    "ref": "2DP00130",
+    "parties": [
+      "Bistrozzi LLC"
+    ],
+    "detail": "affected Allen County American-Bath POTW (NPDES 2PH00007) → Pike Run → Ottawa River",
+    "source": "oepa/lima/2dp00130-conveyance-and-authorization.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/lima/2dp00130-conveyance-and-authorization.yaml",
       "source_kind": "document",
       "page": null,
       "pages": null,
