@@ -1,0 +1,63 @@
+id: maumee-tmdl-lima-loop
+title: Maumee Watershed Nutrient TMDL — Lima Loop Total-Phosphorus Allocations (Extraction)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Maumee Watershed Nutrient TMDL, Appendix 4 "Individual NPDES Wasteload Allocations" (Tables
+    A4.1, A4.3 and A4.5), read together with Ohio EPA general permit OHP000001 (Parts I.C.1,
+    IV.A.1, IV.B, IV.C, IV.D) and the December 2024 TMDL Biennial Report (pp. 17-18). A reviewed
+    transcription of the Allen County / Ottawa River rows: each figure was read from the PDF's
+    embedded text layer and then RE-READ from a 200 DPI render of the same page, because a
+    table's text layer carries the digits without carrying the column they sit in. The same
+    appendix supplies Findlay's rows under `findlay-discharge-record`; this entry covers the
+    reference build's scope, and neither derives from the other.
+license: public record / public domain
+access_tier: public
+site_scope: site:lima
+storage:
+- relpath: extracted/maumee-tmdl/maumee-tp-wla-lima-loop.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/maumee-tmdl/README.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- tmdl
+- phosphorus
+- oepa
+- lima
+- allen-county
+- ottawa-river
+- pike-run
+- dug-run
+- ohp000001
+- general-permit
+- cso
+- lake-erie
+notes: >-
+  One permits-epa row. The TMDL assigns the City of Lima WWTP (2PE00000) a spring-season
+  total-phosphorus wasteload allocation of 4.0 metric tons — third-largest of the 39 facilities in
+  the grouped load — plus a separate 0.083 MT for its combined sewer overflows, which is the
+  second-largest CSO allocation in the basin behind only Toledo. OHP000001 restates both as
+  enforceable kilogram limits. Seven Ottawa-basin dischargers hold allocations under the same
+  permit and two ran over in every reported year: American-Bath WWTP (370 kg; 590/390/620/520/500)
+  and Elida WWTP (340 kg; 860/890/910/990/390). American-Bath is the plant the campus's own
+  2DP00130 indirect-discharge application names as its receiving system — recorded as an open
+  question, not a finding, because a phosphorus allocation is not a hydraulic capacity and no
+  committed record gives the campus stream's phosphorus concentration.
+  THREE CAVEATS TO CARRY. (1) Tables A4.1 and A4.5 disagree on several allocations and A4.1 is the
+  operative one — A4.5 states Shawnee II as 0.51 MT against A4.1's 0.75 and Elida as 0.21 against
+  0.34, and OHP000001 Part IV.A.1 settles both in A4.1's favour (750 kg, 340 kg). Reading a limit
+  out of A4.5 understates Shawnee II's by a third. (2) Table A4.5's first numeric column is a 2008
+  baseline, not a reported year; the seven columns are 2008 / WLA / 2017 / 2018 / 2019 / 2020 /
+  2021. (3) The Table A4.3 CSO allocation is ADDITIONAL to the Table A4.1 allocation for the same
+  permit, as A4.1's own preamble says. Whether any exceedance is a violation turns on the group,
+  not the plant: Part IV.C.3 makes an individual overage a violation only when the 39-facility
+  cumulative load also breaches its cap, and in the one published season (2024) the group reported
+  43,304 kg against 64,170 kg. No Season Report for any Allen County facility is in the corpus —
+  they are the records that would say whether American-Bath and Elida are still over.

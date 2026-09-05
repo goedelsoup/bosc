@@ -12,8 +12,16 @@ provenance:
     impacts of Ohio data-center development. The relator (Cory Parent) testified 2026-06-01
     (see relator-testimony/).
   note: >-
-    Per-witness digest of the 16 submissions. Figures/quotes transcribed from the PDFs. The
+    Per-witness digest of the submissions. Figures/quotes transcribed from the PDFs. The
     BOSC-relevance synthesis is tagged inference; the witnesses' own statements are document.
+  addendum_2026_09_05: >-
+    THREE SUBMISSIONS WERE MISSED BY THE FIRST PASS, AND THE FILENAMES ARE WHY. The digest was
+    built over the sixteen files following this shelf's `witness-date.pdf` convention; three
+    arrived under their as-received names — "FreshWater Accountability Project Ohio Leatra J
+    Harper.pdf", "Ohio Valley Environmental Advocates-Randi Pokladnik.pdf", "Stephen Petty Data
+    Center Committe Testimony.pdf" (the misspelling is the source's) — and a set built by
+    convention did not see them. They are added below. Chain of custody forbids renaming them, so
+    the lesson is the general one: enumerate a shelf, never a naming pattern.
 
 # ---- The cross-cutting findings that matter to BOSC ----
 bosc_relevant_findings:
@@ -232,3 +240,96 @@ relevance:
     sales-tax exemption (a second subsidy layer beyond the CRA); Ohio EPA confirms the route-to-POTW
     wastewater pattern; and a governance expert urges repealing ORC 9.66(D) -- the exact shield behind
     the withheld cost-benefit analysis.
+
+# --- added 2026-09-05: the three as-received-name submissions ---------------------------------
+# Each was read from its own PDF. Where a figure is the witness's, it is the witness's: these are
+# advocacy and expert submissions to a legislature, so their generic industry numbers are
+# [reference] and carry no weight against a measured campus figure.
+witnesses_addendum:
+- file: Stephen Petty Data Center Committe Testimony.pdf
+  witness: Stephen E. Petty, P.E., C.I.H., C.S.P. — President, EES Group, Inc.
+  date: '2026-06-01'
+  category: expert (industrial hygiene / forensic engineering)
+  pages: 30
+  structure: >-
+    A four-page written statement followed by a slide deck whose footer reads "Exhibit 140" — a
+    deck carried over from litigation practice, not prepared for this committee. Read that
+    label before citing a slide as testimony written for Ohio.
+  text_method: pdf_text
+  key_points:
+  - Qualifications: B.S./M.S. chemical engineering, ~10 years each at Battelle and Columbia Gas,
+      P.E. in six states (OH, PA, KY, WV, FL, TX), C.I.H., C.S.P., nine US patents, expert witness
+      in ~400 cases including PFAS, benzene, Roundup and the East Palestine derailment.
+  - '[reference] Ohio data-center count rose from 150 (2024) to 191 (2026) — +41, +27% in two
+      years.'
+  - '[reference] Using 3,000 North American data centers as a lower bound for 2024: ~21 billion
+      gallons of water consumed and ~6 billion gallons of wastewater discharged to public waters.
+      A medium-sized facility ~100 million gallons/year, "the equivalent of ~1,000 U.S.
+      households annually".'
+  - '[reference] A typical cooling-tower BLOWDOWN concentration table: TDS 1,000-5,000 ppm;
+      calcium carbonate 350-800 ppm and silica <150 ppm; free residual chlorine/bromine 0.2-1.0
+      ppm; TOTAL PHOSPHATES 5-30 ppm; copper and zinc 0.05-2.0 ppm; waste heat 30-40 °C (86-104
+      °F) above ambient. Plus Legionella from cooling towers.'
+  - '"The most common effluent from data center cooling systems is a high concentration of
+      dissolved minerals and salts, like chlorides. This can put stress on local wastewater
+      treatment plants, which are often not designed to handle a large volume of these
+      concentrated pollutants."'
+  bosc_relevance: >-
+    The most directly on-point submission in the whole set for this corpus, and the one whose
+    numbers must be handled most carefully. Petty's phosphate range (5-30 ppm in blowdown) names
+    the analyte the Maumee TMDL allocates and the POTW is over on — but it is a GENERIC INDUSTRY
+    RANGE offered in advocacy, not a measurement of this campus, and the campus's own Group A
+    sampling block was returned blank. It is a reason to want the measurement, not a substitute
+    for it. Same for the thermal range against the CWA §316(a) thread and the Legionella point.
+- file: Ohio Valley Environmental Advocates-Randi Pokladnik.pdf
+  witness: Randi Pokladnik — Ohio Valley Environmental Advocates
+  date: '2026-05-30'
+  category: advocacy (environmental, SE Ohio / Ohio River Valley)
+  pages: 5
+  addressed_to: Ohio Select Committee on Data Centers
+  text_method: >-
+    RENDER. ⚠️ This PDF's text layer maps the `ti` ligature to `Ɵ` — "CommiƩee", "CommuniƟes",
+    "polluƟon" — so a grep over it misses those words entirely and a quote taken from it is
+    corrupt. Every quotation here was read from a 150 DPI render and checked against it. (The
+    "Jeferson" spelling IS the source's own, and is preserved.)
+  key_points:
+  - Southeast Ohio and the Ohio River counties bear the upstream and downstream burden — fracked
+      gas for power, and Class VI carbon-storage wells in Harrison, "Jeferson" and Carroll
+      counties if operators pursue carbon capture.
+  - 'Community concerns enumerated: noise, water usage, farmland converted to industrial use, air
+      pollution from power generation, high-voltage transmission through communities and
+      farmland, and utility-bill increases.'
+  - '[reference] Direct air cooling is inadequate for hyperscale facilities, "leading to hotspots,
+      inefficiencies, and reduced equipment lifespans", and degrades further at high ambient
+      temperature; cites ScienceDirect S221313882500342X.'
+  bosc_relevance: >-
+    Regional rather than Lima-specific. Its value here is the cooling-method argument, which
+    bears on whether a "closed-loop"/air-cooled characterisation is durable under Ohio summer
+    conditions — the same question the cooling-cycling reconciliation asks from the water side.
+- file: FreshWater Accountability Project Ohio Leatra J Harper.pdf
+  witness: Leatra J. Harper — FreshWater Accountability Project Ohio
+  date: '2026-05-31'
+  category: advocacy (water, fracking / frack-waste)
+  pages: 5
+  addressed_to: >-
+    ⚠️ NOT THIS COMMITTEE. The document opens "Dear Chair Claggett, Vice Chair Workman, Ranking
+    Member Mohamed, and members of the HOUSE TECHNOLOGY AND INNOVATION COMMITTEE" and is
+    subject-lined "Testimony on H.B. 646". It is shelved under `select-committee-2026/witnesses/`
+    but was written to a different body about a different bill. The shelf is not the attribution
+    — cite it as House Technology and Innovation testimony on H.B. 646, whatever directory it
+    sits in.
+  text_method: pdf_text
+  key_points:
+  - Calls for a cumulative environmental risk assessment and health impact assessment, and a full
+      baseline analysis of air and water quality, BEFORE further data-center construction.
+  - 'Names the Bowling Green Meta campus and its behind-the-meter Title V gas plant "Apollo" as a
+      Northwest Ohio example whose potential pollution "has not been fully characterized";
+      references the group''s own comments on what it calls an extremely deficient draft air
+      permit, including inadequate rules for equipment that could produce emission spikes.'
+  - Frames the build-out as a bubble, and the tax treatment as an unnecessary loss of "much-needed
+      tax revenue".
+  bosc_relevance: >-
+    Corroborates the Bowling Green / Apollo thread from an outside party and dates a specific
+    criticism of the draft air permit. It says nothing about Lima. Its main value to this corpus
+    is the attribution warning above — a submission filed on this shelf that belongs to another
+    committee and another bill.

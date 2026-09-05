@@ -214,8 +214,15 @@ describe("the join, against the committed Lima bundle", () => {
     // notification pair, an application, a letter series, an agreement) rather than one artifact
     // per source file. Those twenty documents are read and analysed; they are not per-document
     // joined, so they raise the denominator only.
+    // 155 -> 157: two reads of documents the corpus already held. `maumee-tmdl/Appendix-4` (the
+    // Maumee TMDL's individual NPDES wasteload allocations, extracted for Lima's own rows — it was
+    // already read for FINDLAY's, but Findlay's artifact is outside Lima's scope) and
+    // `oepa/lima/edoc-4116228.pdf` (the county Sanitary Engineer's discharge authorization).
+    // ⚠️ The denominator does NOT move for the eleven text sidecars added under
+    // `lima/meetings-text/` and `lacrpc/meetings-text/`: a `-text` tree is derived content and
+    // `watermark.site.documents` excludes it by `in_sidecar_tree`. 3,382 is the same corpus.
     expect(entries.length).toBe(3382);
-    expect(countExtracted(entries, index)).toBe(155);
+    expect(countExtracted(entries, index)).toBe(157);
   });
 
   it("is near-complete on the small instrument collections, and thin across the big holdings", () => {
@@ -273,7 +280,12 @@ describe("the join, against the committed Lima bundle", () => {
     // oepa 96 -> 97 extracted of 111 -> 123 (#2089): the 2DP00130 application package. The gap
     // widens on purpose — see the note above the previous test for why eleven of these twelve
     // documents have no extraction and should not.
-    expect(counts.oepa).toEqual([97, 123]);
+    // oepa 97 -> 98: `2dp00130-conveyance-and-authorization.yaml` reads THREE of the package's
+    // remaining documents — the authorization letter, the flow schematic and the utility site plan
+    // — but the join is per `source_path`, so it moves the count by one. The other two are named
+    // in the artifact's `sources:` list and are read, not joined; the same asymmetry the City-of-
+    // Lima production note describes above. Eleven-of-twelve is now ten-of-twelve unread.
+    expect(counts.oepa).toEqual([98, 123]);
   });
 
   it("counts distinct documents, not records — 3 records name no source file", () => {
@@ -300,7 +312,9 @@ describe("the join, against the committed Lima bundle", () => {
     // 159 -> 160 (#2089): `oepa/lima/edoc-4116201.npdes.yaml`, the indirect-discharge
     // application form, which publishes into `permits-npdes`. One record from twelve committed
     // documents, for the reason given above.
-    expect(records.length).toBe(160);
+    // 160 -> 162 (the TMDL allocation record and the 2DP00130 conveyance record), both
+    // `permits-epa`, both naming their source document.
+    expect(records.length).toBe(162);
     // 5 -> 3, and this is the deliberate change the note below predicted. `_source_ref` now
     // resolves three further committed provenance shapes — `provenance.source_path` /
     // `provenance.sources`, the connector read's `meta.sources` (a dict of NAMED lists, so every
@@ -319,6 +333,8 @@ describe("the join, against the committed Lima bundle", () => {
     // gains an index entry. Here the join and the record move together — unlike #2088, this
     // extraction both becomes a record and names its source. The other eleven committed
     // documents of the package have no extraction at all and so reach neither side.
-    expect(index.size).toBe(155);
+    // 155 -> 157: both new records name a source document, so the join and the record move
+    // together — as at #2089 and unlike #2088.
+    expect(index.size).toBe(157);
   });
 });

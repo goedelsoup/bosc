@@ -84,7 +84,7 @@
     "scope": "site",
     "links_out": 1,
     "links_in": 14,
-    "lines": 42,
+    "lines": 43,
     "updated": "2026-08-23"
   },
   {
@@ -128,7 +128,7 @@
     "scope": "site",
     "links_out": 1,
     "links_in": 2,
-    "lines": 20,
+    "lines": 21,
     "updated": "2026-08-23"
   },
   {
@@ -633,7 +633,7 @@
     "label": "Lima",
     "scope": "site",
     "links_out": 3,
-    "links_in": 348,
+    "links_in": 352,
     "lines": 14,
     "updated": null
   },
@@ -2900,7 +2900,7 @@
     "scope": "site",
     "links_out": 2,
     "links_in": 0,
-    "lines": 13,
+    "lines": 15,
     "updated": "2026-06-07"
   },
   {
@@ -2992,6 +2992,39 @@
     "updated": "2026-07-30"
   },
   {
+    "id": "record/maumee-tmdl-maumee-tp-wla-lima-loop-epa",
+    "node_class": "record",
+    "kind": "record",
+    "label": "--- Lima WWTP's own allocation, as each instrument states it ----------------------------------",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 19,
+    "updated": null
+  },
+  {
+    "id": "record/odd-collection-index",
+    "node_class": "record",
+    "kind": "record",
+    "label": "collection index",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 19,
+    "updated": null
+  },
+  {
+    "id": "record/odot-collection-index",
+    "node_class": "record",
+    "kind": "record",
+    "label": "collection index",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 13,
+    "updated": null
+  },
+  {
     "id": "record/oepa-2dp00130-npdes",
     "node_class": "record",
     "kind": "record",
@@ -3012,6 +3045,17 @@
     "links_in": 0,
     "lines": 13,
     "updated": "2026-07-14"
+  },
+  {
+    "id": "record/oepa-lima-2dp00130-conveyance-and-authorization",
+    "node_class": "record",
+    "kind": "record",
+    "label": "--- what each document says ------------------------------------------------------------------",
+    "scope": "site",
+    "links_out": 2,
+    "links_in": 0,
+    "lines": 19,
+    "updated": null
   },
   {
     "id": "record/oepa-lima-2dp00130-surrogate-characterization",
@@ -4502,11 +4546,11 @@
     "id": "record/plans-4091286-engineering",
     "node_class": "record",
     "kind": "record",
-    "label": "4091286 · engineering",
+    "label": "--- the NOI form itself (eDoc 4091285) --------------------------------------------------------",
     "scope": "site",
     "links_out": 2,
     "links_in": 0,
-    "lines": 13,
+    "lines": 19,
     "updated": "2026-08-12"
   },
   {

@@ -1,0 +1,448 @@
+doc_id: maumee-tp-wla-lima-loop-2023
+source_path: data/documents/maumee-tmdl/Appendix-4-Individual-NPDES-Wasteload-Allocations-Final.pdf
+companion_sources:
+- data/documents/maumee-tmdl/Appendix-5-Nearfield-TMDLs-Final.pdf          # the near-field TMDLs
+- data/documents/oepa/OHP000001.pdf                                       # the general permit
+- data/documents/maumee-tmdl/2024_Maumee_Biennial_Report_Final_clean.pdf   # the 2024 group total
+kind: epa
+pages_read: [0, 7, 9]
+image_pages_read: [0, 7, 9]
+dpi: 200
+method: >-
+  Reviewed transcription of the Allen County / Ottawa River rows from TWO committed Ohio EPA
+  instruments: the Maumee Watershed Nutrient TMDL's Appendix 4 (the allocation) and the watershed
+  general permit OHP000001 (the enforceable limit). The appendix is a digitally generated PDF, so
+  its text layer was read first — and then EVERY transcribed figure was re-read from a 200 DPI
+  render of the same page, because a table's text layer preserves the digits without preserving
+  the column they sit in. That check is what caught the Table A4.5 discrepancy recorded below.
+  Nothing here is derived, averaged, or carried between instruments except where a field says so.
+source_text_excerpt: >-
+  Table A4.1 (Appendix 4, p. A4-1): "2PE00000 Lima WWTP 4.0 25.9". Table A4.3 (p. A4-8):
+  "2PE00000 Lima WWTP 0.083 0.54". Table A4.5 (p. A4-10): "2PE00000 Lima WWTP 2.1 4.0 2.9 5.0 3.3
+  3.0 2.4". OHP000001 Part IV.A.1 (p. 8): "City of Lima WWTP 4000", "Allen County Shawnee II WWTP
+  750", "Lima Refining Company 600", "Allen County American-Bath WWTP 370", "Village of Elida
+  WWTP 340", "Village of Cridersville WWTP 340", "Allen County American II WWTP 300". OHP000001
+  Part I.C.1 (p. 2): "City of Lima WWTP  OH0026069  2PE00000  Ottawa River".
+action:
+  confidence: high
+  warnings:
+  - >-
+    Table A4.1 and Table A4.5 disagree, and A4.1 is the operative one. A4.5's second column is
+    headed "WLA" but restates several allocations differently from the table that assigns them —
+    Shawnee II reads 0.51 MT against A4.1's 0.75, and Elida reads 0.21 against A4.1's 0.34. The
+    general permit settles it: OHP000001 Part IV.A.1 sets Shawnee II at 750 kg and Elida at 340
+    kg, matching A4.1. Cite A4.1 (or the permit) for an allocation and A4.5 only for the reported
+    loads beside it. Reading a limit out of A4.5 would understate Shawnee II's by a third.
+  - >-
+    Table A4.5's seven numeric columns are, in order, 2008 / WLA / 2017 / 2018 / 2019 / 2020 /
+    2021. The first column is a 2008 baseline load, not a reported year; reading the row
+    left-to-right as a time series misreports both ends of it.
+  - >-
+    The spring-season metric tons and the general permit's kilograms are the SAME allocation in
+    two units, not two allocations. Lima WWTP's 4.0 MT and its 4,000 kg limit are one number.
+  - >-
+    The CSO allocation in Table A4.3 is ADDITIONAL to the Table A4.1 allocation for the same
+    permit, and A4.1 says so ("does not include the combined sewage overflows"). Lima WWTP
+    carries both: 4.0 MT for the regular effluent and 0.083 MT for the overflows.
+  - >-
+    The most recent per-facility spring load on this record is 2021. No post-2021 figure for any
+    of these plants is asserted here; the annual Season Report required by OHP000001 Part IV.D is
+    the record that would carry one, and none is in the corpus.
+  agency: Ohio Environmental Protection Agency
+  program: TMDL wasteload allocation + NPDES watershed general permit (total phosphorus)
+  permit_no: OHP000001 (general) / 2PE00000 (individual) / OH0026069 (application)
+  action: allocation assigned and made enforceable through a watershed general permit
+  action_date: '2023-09-28'   # US EPA approval of the Maumee Watershed Nutrient TMDL
+  expiration_date: '2028-10-31'   # OHP000001's own expiration
+  # Bare permittee name on purpose: the cross-document entity graph keys on this field, and a
+  # parenthetical facility gloss forks the City of Lima into a second node.
+  applicant: City of Lima
+  facility: City of Lima WWTP, NPDES 2PE00000 / OH0026069
+  project_name: Maumee Watershed Nutrient TMDL — Lima loop total-phosphorus wasteload allocations
+  affected_resource: Ottawa River → Auglaize River → Maumee River → Lake Erie Western Basin
+  note: >-
+    [verified] The Maumee Watershed Nutrient TMDL assigns the City of Lima WWTP a spring-season
+    total-phosphorus wasteload allocation of 4.0 metric tons (4,000 kg) plus a separate 0.083 MT
+    for its combined sewer overflows, and OHP000001 makes both enforceable. Lima's is the
+    third-largest allocation in the 39-facility grouped load, behind Toledo Bay View (27.9) and
+    Lucas County WRRF (4.8); its CSO allocation is the second largest in the basin, behind only
+    Toledo. On the TMDL's own record Lima WWTP exceeded 4.0 MT in one of five reported years
+    (5.0 in 2018; 2.9 / 3.3 / 3.0 / 2.4 in the other four).
+    [verified] Seven Allen County dischargers hold allocations under the same permit, and two of
+    them were over in most or all reported years: American-Bath WWTP (370 kg) reported 590, 390,
+    620, 520 and 500 kg in 2017-2021 — above its limit in all five — and Elida WWTP (340 kg)
+    reported 860, 890, 910, 990 and 390 kg, also above in all five. Shawnee II WWTP (750 kg) was
+    above in three of five.
+    [open] Whether any of that is a violation depends on the group, not the plant: OHP000001 Part
+    IV.C.3 makes an individual exceedance a violation ONLY when the 39-facility cumulative load
+    also exceeds its cap, and in the one season published (2024) the group reported 43,304 kg
+    against a 64,170 kg limit — 20,866 kg under.
+    [verified] A SECOND TMDL also allocates phosphorus to these same facilities: the Ottawa River
+    Watershed (Lima Area) near-field TMDL, approved by U.S. EPA 2014-04-15 for in-stream aquatic
+    life use, gives Lima WWTP 5.33 kg/day, Shawnee II 2.31, Lima Refinery 1.58, Cridersville 0.61
+    and names three Lima industrial dischargers this corpus did not hold. See `nearfield_tmdl`.
+    [open] That report itself is NOT in the corpus — only Appendix 5's summary of it. Ohio EPA
+    publishes it; acquiring it is a named gap.
+
+# --- Lima WWTP's own allocation, as each instrument states it ----------------------------------
+
+allocation:
+  permit_no: 2PE00000
+  facility_as_named: Lima WWTP
+  season: spring — March through July inclusive
+  regular_discharge:
+    spring_total_phosphorus_metric_tons: 4.0
+    daily_total_phosphorus_kg: 25.9
+    source: data/documents/maumee-tmdl/Appendix-4-Individual-NPDES-Wasteload-Allocations-Final.pdf
+    table: A4.1 — wasteload allocations for individual discharging NPDES permits in the grouped
+      load category
+    page: A4-1
+    rank: 3rd of 39, behind Toledo Bay View Park WWTP (27.9) and Lucas Co WRRF (4.8)
+  combined_sewer_overflows:
+    spring_total_phosphorus_metric_tons: 0.083
+    daily_total_phosphorus_kg: 0.54
+    source: data/documents/maumee-tmdl/Appendix-4-Individual-NPDES-Wasteload-Allocations-Final.pdf
+    table: A4.3 — wasteload allocations for combined sewer overflows
+    page: A4-8
+    rank: 2nd of 24, behind only Toledo Bay View Park WWTP (0.17)
+    note: >-
+      A separate, additional allocation for the authorized CSOs. It is the phosphorus counterpart
+      of the SSO/CSO compliance schedule in the plant's own NPDES renewal application — the
+      schedule that names the Simmons Field, Allentown, West Street, Koop, Lost Creek and Cole
+      Street basins. This allocation says what the overflows are allowed to carry; it does not
+      say anything about their volume, timing or the schedule's dates.
+  general_permit_limit:
+    seasonal_individual_load_limit_kg: 4000
+    source: data/documents/oepa/OHP000001.pdf
+    part: IV.A.1 — Individual Load Limits and Reporting
+    page: 8
+  coverage_row:
+    facility_name: City of Lima WWTP
+    application_no: OH0026069
+    ohio_npdes_no: 2PE00000
+    receiving_stream: Ottawa River
+    source: data/documents/oepa/OHP000001.pdf
+    part: I.C.1 — Eligibility (the 39 identified facilities)
+    page: 2
+
+existing_loads:   # Table A4.5, "Existing loads for NPDES permits in the grouped load category"
+  source: data/documents/maumee-tmdl/Appendix-4-Individual-NPDES-Wasteload-Allocations-Final.pdf
+  table: A4.5
+  page: A4-10
+  units: metric tons of total phosphorus, spring season
+  permit_no: 2PE00000
+  baseline_2008: 2.1
+  wla: 4.0          # agrees with Table A4.1 for this facility; see the warning for those it does not
+  reported:
+    '2017': 2.9
+    '2018': 5.0
+    '2019': 3.3
+    '2020': 3.0
+    '2021': 2.4
+  years_above_wla: 1    # of 5 reported — 2018 only
+  ratio_to_wla_range: [0.60, 1.25]   # 2.4/4.0 .. 5.0/4.0, computed from the transcribed row
+  note: >-
+    Lima's 2008 baseline (2.1 MT) is roughly half its allocation, so unlike Findlay — whose
+    baseline was already above its WLA — the TMDL did not assign Lima a reduction. Four of five
+    reported years sit below the allocation.
+
+# --- the rest of the Allen County / Ottawa River set ------------------------------------------
+# Every facility below discharges to the Lima loop's own reaches and holds its own allocation
+# under the same general permit. Their limits are read from OHP000001 Part IV.A.1 (p. 8), their
+# receiving streams from Part I.C.1 (p. 2), and their reported loads from Table A4.5 (p. A4-10).
+
+lima_loop_facilities:
+- permit_no: 2PE00000
+  facility: City of Lima WWTP
+  application_no: OH0026069
+  receiving_stream: Ottawa River
+  limit_kg: 4000
+  wla_metric_tons_a4_1: 4.0
+  baseline_2008: 2.1
+  reported: {'2017': 2.9, '2018': 5.0, '2019': 3.3, '2020': 3.0, '2021': 2.4}
+  years_above_limit: 1
+- permit_no: 2PK00002
+  facility: Allen County Shawnee II WWTP
+  application_no: OH0023850
+  receiving_stream: Ottawa River
+  limit_kg: 750
+  wla_metric_tons_a4_1: 0.75
+  baseline_2008: 0.79
+  reported: {'2017': 1.1, '2018': 0.66, '2019': 0.87, '2020': 0.78, '2021': 0.69}
+  years_above_limit: 3
+  note: >-
+    Table A4.5 states this facility's WLA as 0.51 MT. The allocation table and the general permit
+    both say 0.75 MT / 750 kg. This is the plant the BOSC-1A sanitary forcemain and the Shawnee
+    Oaks / Hamlet of Hume reroutes are being built toward.
+- permit_no: 2IG00001
+  facility: Lima Refining Company
+  application_no: OH0002623
+  receiving_stream: Ottawa River
+  limit_kg: 600
+  wla_metric_tons_a4_1: 0.6
+  baseline_2008: 0.46
+  reported: {'2017': 0.55, '2018': 0.51, '2019': 0.15, '2020': 0.24, '2021': 0.02}
+  years_above_limit: 0
+  note: >-
+    The only industrial discharger in the Lima loop's allocation set, and the only facility in
+    the whole grouped load whose daily allocation carries a footnote: Table A4.1's "**" records
+    that the refinery "is operated as an intermittent discharge", so its daily maximum loading
+    limit is to be reconsidered "and adjusted as needed if they are developed". Not previously in
+    the corpus under this permit number.
+- permit_no: 2PH00007
+  facility: Allen County American-Bath WWTP
+  application_no: OH0023841
+  receiving_stream: Pike Run
+  limit_kg: 370
+  wla_metric_tons_a4_1: 0.37
+  baseline_2008: 0.69
+  reported: {'2017': 0.59, '2018': 0.39, '2019': 0.62, '2020': 0.52, '2021': 0.50}
+  years_above_limit: 5
+  note: >-
+    Above its allocation in every reported year — by 5% (2018) to 68% (2019). This is the plant named in the
+    2DP00130 indirect-discharge application as the receiving system for the campus's sanitary
+    waste and non-contact cooling water. What that means for the allocation is NOT asserted here:
+    a phosphorus allocation is not a hydraulic capacity, the application's flow figures are
+    stated in MGD rather than as a phosphorus load, and no committed record gives the campus
+    stream's total-phosphorus concentration. Open question, not a finding.
+- permit_no: 2PB00046
+  facility: Village of Elida WWTP
+  application_no: OH0024996
+  receiving_stream: Ottawa River
+  limit_kg: 340
+  wla_metric_tons_a4_1: 0.34
+  baseline_2008: 0.65
+  reported: {'2017': 0.86, '2018': 0.89, '2019': 0.91, '2020': 0.99, '2021': 0.39}
+  years_above_limit: 5
+  note: >-
+    Above its allocation in every reported year — by 15% (2021) and by 153-191% in 2017-2020,
+    the largest proportional overage in the Allen County set. Table A4.5 states its WLA as 0.21
+    MT; A4.1 and the permit both say 0.34 MT / 340 kg.
+- permit_no: 2PB00048
+  facility: Village of Cridersville WWTP
+  application_no: OH0020222
+  receiving_stream: unnamed tributary to —   # the permit's own row is truncated at these words
+  receiving_stream_per_echo: Little Ottawa River   # data/reference/echo, not this instrument
+  limit_kg: 340
+  wla_metric_tons_a4_1: 0.34
+  baseline_2008: 0.80
+  reported: {'2017': 0.43, '2018': 0.25, '2019': 0.28, '2020': 0.34, '2021': 0.20}
+  years_above_limit: 1
+- permit_no: 2PH00006
+  facility: Allen County American II WWTP
+  application_no: OH0037338
+  receiving_stream: Dug Run
+  limit_kg: 300
+  wla_metric_tons_a4_1: 0.30
+  baseline_2008: 0.31
+  reported: {'2017': 0.08, '2018': 0.15, '2019': 0.16, '2020': 0.21, '2021': 0.24}
+  years_above_limit: 0
+- permit_no: 2PC00005
+  facility: Village of Bluffton WWTP
+  application_no: OH0020851
+  receiving_stream: Riley Creek        # Blanchard basin, NOT the Ottawa — see grouped_load
+  limit_kg: 470
+  wla_metric_tons_a4_1: 0.47
+  baseline_2008: 0.05
+  reported: {'2017': 0.03, '2018': 0.07, '2019': 0.10, '2020': 0.09, '2021': 0.11}
+  years_above_limit: 0
+
+grouped_load:
+  source: data/documents/maumee-tmdl/Appendix-4-Individual-NPDES-Wasteload-Allocations-Final.pdf
+  table: A4.1 (header row) + A4.5 (final row)
+  page: A4-1, A4-10
+  proposed_grouped_load_metric_tons: 64.1
+  proposed_grouped_load_daily_kg: 418.8
+  allowance_for_future_growth_metric_tons: 1.4
+  facilities: 39
+  lima_loop_share_of_grouped_load: >-
+    The seven OTTAWA RIVER basin facilities above — Lima WWTP, Shawnee II, Lima Refining, Elida,
+    American-Bath (Pike Run), American II (Dug Run) and Cridersville — hold 6.70 MT of the 64.1 MT
+    grouped load, 10.5%, of which Lima WWTP alone is 4.0 MT (6.2%). Bluffton is Allen County but
+    discharges to Riley Creek in the BLANCHARD basin, so it is listed above for completeness and
+    excluded from this subtotal; including it gives 7.17 MT (11.2%). Computed by summing the Table
+    A4.1 allocations transcribed above — the TMDL publishes no county or sub-basin subtotal.
+
+general_permit:
+  permit_no: OHP000001
+  title: General Permit Authorization to Discharge Total Phosphorus from Point Source Facilities
+    in the Maumee Watershed under the NPDES
+  issued: '2023-11-01'          # printed as the Effective Date on p. 1
+  expires: '2028-10-31'
+  signed_by: Anne M. Vogel, Director, Ohio Environmental Protection Agency
+  facilities_covered: 39
+  source: data/documents/oepa/OHP000001.pdf
+  cumulative_load_limit:
+    part: IV.B
+    page: 8
+    definition: >-
+      "The Cumulative Load Limit is defined as the sum of the Individual Load Limits of all
+      facilities authorized under this permit, plus an allowance for future growth."
+    allowance_for_future_growth_kg: 1400
+    note: >-
+      The Director sets the season's specific value and notices it to permittees before each
+      season, so the cap is not a fixed number in the permit text.
+  compliance_rule:
+    part: IV.C
+    page: 8-9
+    individual_violation: >-
+      "For any given season, individual permittees are in violation of their Individual Load
+      Limit only if: a. The Cumulative Load exceeds the Cumulative Load Limit and; b. The
+      permittee's Individual Load exceeds their respective Individual Load Limit."
+    consequence_for_this_record: >-
+      An Allen County plant running 68% over its own allocation is not, on this rule, in
+      violation of anything unless the whole 39-facility group is also over. That is the
+      mechanism, stated by the permit — not a criticism of it.
+  season_report:
+    part: IV.D
+    due: September 1 of each year
+    status: '[open] — no Season Report for any Allen County facility is in the corpus. They are
+      the records that would say whether American-Bath and Elida are still over. A
+      records-request lead.'
+
+# --- the OTHER TMDL: the Ottawa River (Lima Area) near-field allocations -----------------------
+# Appendix 5 of the far-field TMDL summarises six approved NEAR-FIELD TMDLs in the basin and
+# tabulates their NPDES wasteload allocations. One of them is Lima's own, and it was not in this
+# corpus at all before this read.
+
+nearfield_tmdl:
+  source: data/documents/maumee-tmdl/Appendix-5-Nearfield-TMDLs-Final.pdf
+  table: A5.1 — individual NPDES permitted facilities with total phosphorus wasteload allocations
+    from near-field TMDL reports
+  pages: A5-1 to A5-3
+  read_from: 200 DPI renders of pages 2 and 3 (the text layer truncates a row at the page break)
+  report:
+    title: Ottawa River Watershed (Lima Area) TMDL Report
+    approved_by: U.S. EPA
+    approved: '2014-04-15'
+    project_area: the Ottawa River mainstem and tributaries
+    phosphorus_tmdls_calculated: 7
+    npdes_permits_in_the_wla: 10
+    major_sources_named: [agriculture, CSOs, point source discharges]
+    impairment_quote: >-
+      "the enrichment and excess algal production caused diel high and low dissolved oxygen (DO)
+      fluctuations (and sometimes high pH values) that were exacerbated by chronic low flow
+      conditions"
+    url_published_in_appendix: epa.ohio.gov/static/Portals/35/tmdl/OttawaLima_Report_Final.pdf
+    in_corpus: false
+    lead: >-
+      [open] ⚠️ THE REPORT ITSELF IS NOT IN THIS CORPUS. Everything recorded below is Appendix 5's
+      SUMMARY of it, which gives the allocations but not their derivation, their critical
+      conditions, the seven TMDL segments, or the implementation plan. Ohio EPA publishes it at
+      the URL above. Acquiring it is a concrete, cheap, named gap in Lima's own record.
+  lima_loop_allocations:
+  - facility: Lima WWTP
+    permit_no: 2PE00000
+    project_area: Ottawa (Lima)
+    total_phosphorus_wla: 5.33 kg/day
+  - facility: Shawnee No 2 WWTP
+    permit_no: 2PK00002
+    project_area: Ottawa (Lima)
+    total_phosphorus_wla: 2.31 kg/day
+  - facility: Columbus Grove WWTP
+    permit_no: 2PC00004
+    project_area: Ottawa (Lima)
+    total_phosphorus_wla: 2.16 kg/day
+  - facility: Ada WWTP
+    permit_no: 2PB00050
+    project_area: Ottawa (Lima)
+    total_phosphorus_wla: 0.85 kg/day
+  - facility: Cridersville WWTP
+    permit_no: 2PB00048
+    project_area: Ottawa (Lima)
+    total_phosphorus_wla: 0.61 kg/day
+  - facility: Lima Refinery
+    permit_no: 2IG00001
+    project_area: Ottawa (Lima)
+    total_phosphorus_wla: 1.58 kg/day
+  - facility: PCS Nitrogen Ohio LP
+    permit_no: 2IF00004
+    project_area: Ottawa (Lima)
+    total_phosphorus_wla: 1.25 kg/day
+    note: printed TWICE in Table A5.1, identically. Transcribed once; the repetition is the
+      source's (so is StoneCo Maumee Quarry's, in the Swan Creek rows).
+  - facility: Chemtrade Logistics Inc
+    permit_no: 2IF00008
+    project_area: Ottawa (Lima)
+    total_phosphorus_wla: 0.30 kg/day
+    note: not previously in this corpus under any permit number.
+  - facility: National Lime & Stone Co Lima Plant No 1
+    permit_no: 2IJ00013
+    project_area: Ottawa (Lima)
+    total_phosphorus_wla: 0.11 kg/day
+    note: not previously in this corpus under any permit number.
+  - facility: Bluffton WWTP
+    permit_no: 2PC00005
+    project_area: Blanchard        # Allen County, but the Blanchard near-field TMDL, not Lima's
+    total_phosphorus_wla: 119 kg/year
+  finding: >-
+    [verified] TWO TMDLs REACH THE LIMA LOOP, NOT ONE. The far-field Maumee Watershed Nutrient
+    TMDL (2023, Lake Erie western-basin algal blooms) allocates a SPRING-SEASON load; the
+    near-field Ottawa River Watershed (Lima Area) TMDL (2014, in-stream aquatic life use)
+    allocates a DAILY load. They address different impairments, were approved nine years apart,
+    and neither document says the other is superseded. Every Lima-loop facility appears in both.
+  comparability_warning: >-
+    ⚠️ DO NOT COMPARE 5.33 kg/day AGAINST THE FAR-FIELD TABLE'S "25.9 kg/day" AS IF THEY WERE THE
+    SAME KIND OF NUMBER. Appendix 4's daily column is arithmetic, not a limit: its own footnote
+    says the daily loads are "equivalent to the total springtime load (March – July) divided by
+    the total number of days in the season (153 days)" and that "The total maximum daily load is
+    not equivalent to a maximum daily limit". It exists because "The Clean Water Act, as
+    interpreted by courts firmly establishes that TMDLs require an expression of daily load".
+    (The division is against the UNROUNDED allocation — 4,000/153 is 26.1, not the printed 25.9 —
+    so the metric-ton column is the rounded one.)
+    What CAN be said, on a common basis: the near-field allocation of 5.33 kg/day is 815 kg across
+    a 153-day spring season, against a far-field spring allocation of 4,000 kg — roughly a FIFTH.
+    Whether the near-field number therefore binds tighter in practice depends on how each is
+    implemented, and only one of the two has a permit instrument in this corpus (OHP000001, for
+    the far-field). The Ottawa River (Lima Area) report would answer it; it is not here.
+  bears_on: >-
+    The near-field TMDL's own stated impairment — DO swings and algal production "exacerbated by
+    chronic low flow conditions" in the Ottawa River — is the same low-flow assimilative-capacity
+    question the routed water balance screens. That is a documented Ohio EPA finding about this
+    reach, from 2014, that the corpus did not previously hold.
+
+group_performance_2024:
+  source: data/documents/maumee-tmdl/2024_Maumee_Biennial_Report_Final_clean.pdf
+  document: Maumee Watershed Nutrient TMDL Biennial Report, December 2024
+  page: 17-18
+  season: March – July 2024
+  facilities_covered: 39
+  cumulative_load_limit_kg_tp: 64170
+  allowance_for_future_growth_kg_tp: 1400
+  cumulative_load_reported_kg_tp: 43304
+  headroom_kg_tp: 20866
+  quote: >-
+    "The Cumulative Load reported by facilities covered under the general permit for the 2024
+    spring season was 43,304 kg-TP (Figure 9), which is 20,866 kg-TP below the Cumulative Load
+    Limit."
+  finding: >-
+    The group bubble had 20,866 kg of headroom in its first reported season, so under OHP000001
+    Part IV.C.3 no covered facility was in violation of its individual limit that season —
+    including American-Bath and Elida, whichever way their 2024 loads fell.
+  note: >-
+    The report publishes the group total only, not per-facility 2024 loads, so it neither
+    confirms nor refutes a continuing Allen County exceedance.
+  unit_note: >-
+    The permit's Cumulative Load Limit (64,170 kg) and Table A4.1's "Proposed grouped load"
+    (64.1 MT = 64,100 kg) are close but not identical. Both are transcribed as printed; no
+    reconciliation between them is asserted, because neither instrument shows its arithmetic and
+    the per-facility limits in the permit are rounded.
+
+relevance:
+  tags: [verified, open, tmdl, phosphorus, oepa, lima, allen-county, ottawa-river, pike-run,
+         dug-run, ohp000001, general-permit, lake-erie, western-basin, cso, near-field,
+         aquatic-life-use, low-flow]
+  note: >-
+    The phosphorus half of the Lima loop's receiving-water record, and the first TMDL instrument
+    read for Lima. The same appendix was already extracted for Findlay's 2PD00008 allocation;
+    this reads the Allen County rows of the same tables. It supplies the allocation side of the
+    dilution/assimilation screen, gives the Cole Street CSO basin a phosphorus number for the
+    first time, and puts an over-allocation figure on American-Bath — the plant the campus's own
+    indirect-discharge application names as its receiving system.
+  cross_refs:
+  - data/extracted/oepa/2PE00000.npdes.yaml
+  - data/extracted/oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml
+  - data/extracted/oepa/oepa-2PH00007-american-bath-permit.npdes.yaml
+  - data/extracted/oepa/oepa-2PH00006-american-ii-permit.npdes.yaml
+  - data/extracted/oepa/lima/2dp00130-surrogate-characterization.yaml
+  - data/extracted/findlay/tmdl/maumee-tp-wla-2PD00008.epa.yaml   # the same tables, Findlay's rows

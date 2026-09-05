@@ -1,0 +1,104 @@
+kind: collection_index
+subject: Ohio Department of Development (ODD) reference corpus — read status and what each document
+  does and does not say about the Lima corridor
+
+provenance:
+  source_dir: data/documents/odd/
+  content_verified: '2026-09-05'
+  evidence: Ohio Department of Development publications and Ohio Tax Credit Authority meeting
+    minutes — public agency records, not litigation evidence
+  method: >-
+    Every PDF in the collection read from its embedded text layer (all are digitally generated),
+    then searched for the corridor subjects — bosc, bistrozzi, google, lima, allen county, data
+    center. This index records the result for each, so a later reader does not re-open a document
+    to rediscover that it is silent.
+
+purpose: >-
+  ODD is statewide CONTEXT, not Lima evidence, and this index says so per document. Its value to
+  this corpus is twofold: the Tax Credit Authority minutes are the register in which Ohio's
+  data-center incentive agreements are actually granted, amended and terminated — so they name
+  operators at other network sites — and the collection carries the Governor's 2026-05-27 pause of
+  the data-center sales-tax exemption.
+
+headline: >-
+  [verified negative] NOT ONE DOCUMENT IN THIS COLLECTION NAMES LIMA, ALLEN COUNTY, PROJECT BOSC
+  OR BISTROZZI. Six Tax Credit Authority meetings spanning January 2025 to June 2026 record no
+  incentive action on the Lima campus. That is a finding about the collection, not about the
+  campus: the county-level abatement thread runs through the Allen County CRA agreement and the
+  commissioners' resolution ledger, which are county instruments, and the TCA administers STATE
+  credits under R.C. 122.17. Absence here is consistent with the campus's incentives being local.
+
+documents:
+- file: tca/Meeting_Minutes_1.27.25.pdf
+  body: Ohio Tax Credit Authority
+  meeting_date: '2025-01-27'
+  pages: 6
+  corridor_subjects: none
+  note: No data-center matter of any kind.
+- file: tca/Meeting_Minutes_6.2.2025.pdf
+  body: Ohio Tax Credit Authority
+  meeting_date: '2025-06-02'
+  pages: 3
+  corridor_subjects: [datacenter]
+  note: >-
+    [verified] Under OTHER BUSINESS the Authority TERMINATED the tax credit agreement with a
+    data-center company "with the company's written consent", recording that "The company has not
+    been issued any tax credits". ⚠️ The company's name is truncated in the PDF's text layer to
+    "…ark data centers, LLC" — most likely Newark, but the full name was NOT read off a render and
+    is therefore [open]. Do not cite the name from this index.
+- file: tca/Meeting_Minutes_TCA_1.28.2026_gyzb8y.pdf
+  body: Ohio Tax Credit Authority
+  meeting_date: '2026-01-28'
+  pages: 5
+  corridor_subjects: none
+  note: >-
+    No data-center matter. The `_gyzb8y` suffix is part of the as-received filename (a CDN cache
+    token) and is kept — the name is evidence.
+- file: tca/Meeting_Minutes_TCA_3.30.2026.pdf
+  body: Ohio Tax Credit Authority
+  meeting_date: '2026-03-30'
+  pages: 4
+  corridor_subjects: [datacenter]
+  note: >-
+    [verified] Three grantee-structure actions bearing on other network sites. (1) THE CONSTANT
+    COMPANY, LLC — the Authority added "The Constant Company Procurements LLC", FEIN 93-4867670,
+    as a grantee; Lindner moved, Garczyk seconded, Kelly abstained, 4-0. Constant is the operator
+    named in the Springfield thread. (2) VANTAGE DATA CENTERS MANAGEMENT COMPANY, LLC — added
+    "Vantage Data Centers OH21, LLC", FEIN 85-1505619, as a grantee, 5-0. (3) The same company —
+    added "Lancaster Newark Road OH 21, LLC" as a grantee, 5-0.
+    ⚠️ The minutes record FEIN 85-1505619 for BOTH "Vantage Data Centers OH21, LLC" and "Lancaster
+    Newark Road OH 21, LLC". Transcribed as printed. Whether that is one entity under two names, a
+    disregarded-entity structure, or an error in the minutes is [open] and is not resolvable from
+    this document; the Ohio SOS registry pull (#1950) is where it would be settled.
+- file: 11062023-PIA-Decade.pdf
+  pages: 1
+  corridor_subjects: none
+  note: Statewide economic-development publication. Silent on the corridor.
+- file: Final_PY25-29_Con_Plan.pdf
+  pages: 127
+  corridor_subjects: none
+  note: >-
+    ⚠️ A KEYWORD TRAP, and the reason this index exists. A case-insensitive search for `bosc`
+    returns 27 hits in this document and every one is "BoSCoC" — the Ohio Balance of State
+    Continuum of Care, a HUD homelessness-services structure. There is no reference to Project
+    BOSC anywhere in the file. A corpus-wide grep for the project codename will surface these; the
+    codename is a name, never a key. Same class as the three-county "Project Galaxy" collision.
+- file: 2026-05-27-governor-dewine-announces-pause-of-data-center-tax-exemption.governor-ohio-gov.html
+  corridor_subjects: not-read-here
+  note: >-
+    Captured web evidence, not a PDF, and outside this read. It is the Governor's 2026-05-27
+    announcement pausing the data-center sales-tax exemption — the directive the README describes
+    as governing what the Tax Credit Authority may consider. Left for its own read.
+
+relevance:
+  tags: [verified, open, odd, tax-credit-authority, incentives, statewide, springfield, lancaster,
+         documented-negative]
+  note: >-
+    Closes the ODD collection's read status. Its two useful outputs are a documented negative for
+    Lima across six Tax Credit Authority meetings, and two cross-site grantee observations —
+    Constant (Springfield) and Vantage (Lancaster) — that belong to the SOS registry thread rather
+    than to this site.
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml
+  - data/extracted/commissioners/bosc-resolution-ledger.yaml
+  - data/extracted/legal/datacenter-legislation/hb983-3744.digest.yaml

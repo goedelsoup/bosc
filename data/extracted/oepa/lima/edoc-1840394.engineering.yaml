@@ -325,4 +325,13 @@ record:
     processing, bio-solids storage, and land application, with multiple chemical addition
     points (Ferrous Chloride alternates, Polymer, Sodium Hypochlorite, Sodium Bisulfite,
     Lime, Alkaline Material) shown throughout.
-  note: null
+  note: >-
+    The Ohio EPA portal serves this identical PDF at THREE docids on permit 2PE00000 —
+    `edoc-1840394`, `edoc-1840395` and `edoc-1840398`, all sha256
+    7ad0ba7bec6db222d67a76cb5cfa4417966a1cf94c322469c156228d4500d7e3, all listed as
+    "Permit - Intermediate", 2022-06-09, application APP256207483. This extraction covers all
+    three; 1840395 and 1840398 are the same bytes and need no separate read. Recorded here
+    because a portal row count is not a document count, and the sibling docids around them
+    (1840393 / 1840396 / 1840397) ARE distinct documents — which makes this duplication
+    invisible to an inspection of the numbering alone.
+  duplicate_docids: ['1840395', '1840398']

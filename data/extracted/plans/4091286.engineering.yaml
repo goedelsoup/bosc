@@ -3,6 +3,7 @@ source_path: data/documents/plans/4091286.pdf
 companion_sources:
 - data/documents/plans/4091289.pdf   # Ohio EPA NPDES CGP Approval Letter (the SWP3 Appendix A NOI authorization), eDoc 4091289
 - data/documents/plans/4091287.pdf   # SWP3 appendix sheet (NRCS soils / contaminated soils / on-site streams = Point 1 Pike Run), eDoc 4091287
+- data/documents/plans/4091285.pdf   # the NOI form itself (EPA 4494, Application ID 287501125) — see `noi_form` below, eDoc 4091285
 kind: engineering
 pages_read:
 - 0
@@ -176,3 +177,59 @@ plan:
     Permit Number 2GC08747*AG, effective 2026-04-22 under OHC000006 (record.npdes_coverage).
     Two new corridor parties surface here: George J. Igel & Co. (contractor) and WSP USA
     (engineer — also named on the campus architectural sheets per docs/COMPUTE.md).'
+
+# --- the NOI form itself (eDoc 4091285) --------------------------------------------------------
+# Added after the SWP3 read. The form is the instrument the approval letter answers, and most of
+# what it states was already read from the SWP3 and the letter. Recorded here is only what the
+# form adds or says differently — a companion source, not a second record of the same project.
+noi_form:
+  source: data/documents/plans/4091285.pdf
+  docid: '4091285'
+  form: EPA 4494 (Rev. 4/13) — Division of Surface Water Notice of Intent for coverage under an
+    Ohio EPA general NPDES permit
+  application_id: '287501125'
+  pages: 2
+  text_method: pdf_text
+  applicant: George J. Igel & Co., Inc., 3500 Alum Creek Drive, Columbus OH 43207
+  applicant_contact: Christopher Batdorff, (614) 580-1907, chris.batdorff@igelco.com
+  facility_name: Berry Road and Cole Street Roundabout/BOSC Storm Outfall
+  facility_address: 1363 Berry Road, Elida, OH 45807, Allen County
+  latitude: 40.794819
+  longitude: -84.128202
+  general_permit_number: OHC000006
+  coverage_type: New
+  existing_npdes_facility_permit_number: 2GC08747*AG
+  total_land_disturbance_acres: 5.7100
+  attachments_named:
+  - SWP3-Beery Rd.  Cole St. Roundabout.pdf          # the facility/map attachment
+  - SWP3-Beery Rd.  Cole St. Roundabout_Sealed.pdf   # the additional-information attachment
+  adds:
+    receiving_stream_as_filed: Cole Ditch, Storm Sewer, Pike Run
+    note: >-
+      [verified] The NOI names the conveyance chain in the applicant's own words — **Cole Ditch**,
+      then storm sewer, then Pike Run. The SWP3 read recorded the terminus (Pike Run) and the
+      mechanism ("subsurface tile"), but not Cole Ditch, which is a named drainage feature rather
+      than a generic tile. This is the storm-side counterpart of the Cole Street name that runs
+      through the sanitary record. What Cole Ditch's legal status is — county ditch, petition
+      ditch, or a local name for an unnamed tributary — is [open]; this form does not say.
+  declared_permit_negatives:
+    note: >-
+      [verified] Section III asks which other authorizations the project needs. The applicant
+      answered NO to every one. These are the APPLICANT'S declarations on a signed form, not
+      agency determinations — the distinction matters because the campus's own 401 / isolated-
+      wetland thread (permits/3788677, 3796349, 3949585) turns on exactly this question for a
+      different footprint.
+    pti_required: false
+    individual_401_water_quality_certification_required: false
+    individual_npdes_required: false
+    isolated_wetland_permit_required: false
+    usace_nationwide_permit_required: false
+  schedule_discrepancy:
+    noi_estimated_completion: '2027-12-13'
+    swp3_estimated_completion: '2027-12-31'
+    start_date_agrees: '2026-05-15'
+    note: >-
+      [open] The NOI gives December 13, 2027 and the SWP3 gives December 31, 2027 for the same
+      project. Eighteen days, on estimated dates, in two documents filed within a month of each
+      other — almost certainly clerical. Recorded rather than reconciled because neither document
+      corrects the other, and the extraction above carries the SWP3's date.

@@ -25,6 +25,9 @@ storage:
 - relpath: extracted/oepa/lima/2dp00130-surrogate-characterization.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/lima/2dp00130-conveyance-and-authorization.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: static
 notes: |
@@ -74,3 +77,20 @@ notes: |
   exact byte-duplicates and four text-identical re-submissions whose PDF bytes differ, each pinned
   by sha256 (and by the hash of its extracted text where the bytes differ). That is complete
   coverage of the package, not a storage deferral, and the map states every docid either way.
+
+  ADDENDUM — the conveyance half (`2dp00130-conveyance-and-authorization.yaml`). The first pass
+  read the package's SAMPLING documents and cited nine of the twelve committed; three were left.
+  They carry who authorised the discharge and how it is plumbed: the Allen County Sanitary
+  Engineer's 2025-12-03 letter (edoc-4116228) formally authorizing the American-Bath POTW to
+  receive the campus's industrial / non-domestic wastewater, contingent on a valid OEPA Indirect
+  Discharge Permit before any discharge; the applicant's own Wastewater Flow Schematic
+  (edoc-4116227), which is one lift station taking non-contact cooling tower blowdown AND
+  sanitary flow and discharging both to the sanitary sewer, with no treatment, metering or
+  stream separation drawn anywhere; and the utility site plan (edoc-4116229), which builds the
+  connection in two stages — a temporary lift station and temporary mains, all annotated "REMOVE
+  AFTER LIFT STATION (BY OTHERS) IS OPERATIONAL", beside a "FUTURE LIFT STATION (BY OTHERS)".
+  The site plan's sanitary pipe sizes are recorded as a SET (8/10/12/15/24 inch) and deliberately
+  not attributed to named runs: a CAD export's text layer carries the labels without carrying
+  which line each belongs to. Separately, the portal serves ONE process-flow diagram at three
+  docids on permit 2PE00000 — edoc-1840394 / -1840395 / -1840398 are byte-identical, and the
+  duplication is now recorded on the extraction that covers them.
