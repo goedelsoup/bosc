@@ -233,3 +233,36 @@ def test_prompt_hits_are_filtered_to_the_active_site_s_subjects(tmp_path: Path) 
     prompt = str(sent["messages"][0]["content"][0]["text"]).split("--- Document text ---")[0]
     assert "corridor subjects: datacenter" in prompt
     assert "easement" not in prompt
+
+
+def test_summarize_reads_a_legacy_office_binary_from_its_committed_sidecar(tmp_path: Path) -> None:
+    """A `.doc` agenda is summarized from its `-text` sidecar, not skipped as textless (#1757).
+
+    `indexer.extract_text` grew a `documents_dir=` branch so a legacy Office binary reads from
+    its committed sidecar; this caller did not pass it, so every `.doc` came back `none` and
+    landed in `skipped`. That is not a cosmetic miss — ten of the eleven corridor-hit Lima
+    meetings are `.doc` agendas, so the summarizer silently declined to read the exact set it
+    exists for, and reported them as having no extractable text.
+    """
+    settings = _seed(
+        tmp_path,
+        [
+            {
+                "filename": "agenda.doc",
+                "kind": "agenda",
+                "date_verified": "2026-02-09",
+                "hits": ["datacenter"],
+            }
+        ],
+        {},
+    )
+    docs_dir = settings.documents_dir / "american-township" / "meetings"
+    (docs_dir / "agenda.doc").write_bytes(b"\xd0\xcf\x11\xe0legacy OLE2 bytes no reader opens")
+    sidecar = settings.documents_dir / "american-township" / "meetings-text" / "agenda.doc.txt"
+    sidecar.parent.mkdir(parents=True, exist_ok=True)
+    sidecar.write_text("Rezoning hearing for the data center campus.", encoding="utf-8")
+
+    report = summarize_corridor_meetings(_body(), settings=settings, extractor=_extractor())
+
+    assert report.skipped == []
+    assert [e.filename for e in report.entries] == ["agenda.doc"]

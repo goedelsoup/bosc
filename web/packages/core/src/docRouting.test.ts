@@ -100,7 +100,7 @@ describe("isRoutableDoc — measured against the committed Lima corpus", () => {
   // and recorded by sha256 in `data/documents/permits/bistrozzi-permits/filename-map.yaml`.
   // Committing either moves this number again and SHOULD.
   // The 54 exclusions are unchanged: both new entries are ordinary routable PDFs.
-  it("excludes exactly 54 of 3,382 entries (1.6%)", () => {
+  it("excludes exactly 54 of 3,394 entries (1.6%)", () => {
     const entries = limaEntries();
     // 3,350 -> 3,362 (#2089): the twelve committed eDocuments of the 2DP00130 / APP285104563
     // indirect-discharge application package under `oepa/lima/`. The portal serves 23 rows; the
@@ -114,6 +114,11 @@ describe("isRoutableDoc — measured against the committed Lima corpus", () => {
     // under `cross_corpus_duplicates` in
     // `data/extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.custody-manifest.yaml`.
     // The 54 exclusions are unchanged: every new entry is an ordinary routable PDF or XLSX.
+    // 3,382 -> 3,394 (the §401 backfill): twelve documents from the two Project BOSC
+    // water-quality certifications that the *BOSC* portal sweep listed in August and nobody had
+    // fetched. The sweep named 18 rows; they are 12 distinct byte-streams, and the six duplicate
+    // docids are recorded in the shelf's filename-map rather than committed twice.
+    // The 54 exclusions are unchanged again: all twelve are ordinary routable PDFs.
     expect(entries.length).toBe(3394);
     expect(entries.filter((e) => !isRoutableDoc(e))).toHaveLength(54);
   });

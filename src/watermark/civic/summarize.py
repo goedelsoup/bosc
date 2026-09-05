@@ -165,7 +165,14 @@ def summarize_corridor_meetings(
     for d in docs:
         filename = str(d.get("filename", ""))
         path = docs_dir / filename
-        text, method = extract_text(path, ocr=ocr) if path.exists() else ("", "none")
+        # ``documents_dir`` is what lets a legacy Office binary be read from its committed
+        # ``-text`` sidecar. Omit it and every ``.doc`` agenda lands in ``skipped`` — which is
+        # most of Lima's corridor-relevant meetings, the exact set this function exists to read.
+        text, method = (
+            extract_text(path, ocr=ocr, documents_dir=settings.documents_dir)
+            if path.exists()
+            else ("", "none")
+        )
         if method == "none" or not text:
             skipped.append(filename)
             continue

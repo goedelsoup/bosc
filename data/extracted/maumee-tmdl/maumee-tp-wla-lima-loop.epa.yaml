@@ -62,8 +62,14 @@ action:
   affected_resource: Ottawa River → Auglaize River → Maumee River → Lake Erie Western Basin
   note: >-
     [verified] The Maumee Watershed Nutrient TMDL assigns the City of Lima WWTP a spring-season
-    total-phosphorus wasteload allocation of 4.0 metric tons (4,000 kg) plus a separate 0.083 MT
-    for its combined sewer overflows, and OHP000001 makes both enforceable. Lima's is the
+    total-phosphorus wasteload allocation of 4.0 metric tons (4,000 kg), which OHP000001 Part
+    IV.A.1 carries as the plant's enforceable Individual Load Limit, and — separately, in Table
+    A4.3 — an allocation of 0.083 MT for its combined sewer overflows.
+    ⚠️ [open] The two allocations do NOT have the same standing, and an earlier reading of this
+    record said they did. The 4,000 kg figure is in the permit. The CSO figure is the TMDL's
+    allocation only: no condition of OHP000001, and no condition of the plant's own NPDES permit,
+    is held in this corpus that carries it. What instrument makes the 0.083 MT enforceable — and
+    whether any does — is unestablished. Lima's is the
     third-largest allocation in the 39-facility grouped load, behind Toledo Bay View (27.9) and
     Lucas County WRRF (4.8); its CSO allocation is the second largest in the basin, behind only
     Toledo. On the TMDL's own record Lima WWTP exceeded 4.0 MT in one of five reported years
@@ -77,10 +83,12 @@ action:
     IV.C.3 makes an individual exceedance a violation ONLY when the 39-facility cumulative load
     also exceeds its cap, and in the one season published (2024) the group reported 43,304 kg
     against a 64,170 kg limit — 20,866 kg under.
-    [verified] A SECOND TMDL also allocates phosphorus to these same facilities: the Ottawa River
+    [verified] A SECOND TMDL allocates phosphorus to FOUR of these facilities: the Ottawa River
     Watershed (Lima Area) near-field TMDL, approved by U.S. EPA 2014-04-15 for in-stream aquatic
-    life use, gives Lima WWTP 5.33 kg/day, Shawnee II 2.31, Lima Refinery 1.58, Cridersville 0.61
-    and names three Lima industrial dischargers this corpus did not hold. See `nearfield_tmdl`.
+    life use, gives Lima WWTP 5.33 kg/day, Shawnee II 2.31, Lima Refinery 1.58 and Cridersville
+    0.61, and names five dischargers with no far-field allocation, three of which this corpus did
+    not hold under any permit number. It does NOT allocate to American-Bath or Elida — the two
+    plants over their far-field allocation every reported year. See `nearfield_tmdl`.
     [open] That report itself is NOT in the corpus — only Appendix 5's summary of it. Ohio EPA
     publishes it; acquiring it is a named gap.
 
@@ -380,7 +388,22 @@ nearfield_tmdl:
     TMDL (2023, Lake Erie western-basin algal blooms) allocates a SPRING-SEASON load; the
     near-field Ottawa River Watershed (Lima Area) TMDL (2014, in-stream aquatic life use)
     allocates a DAILY load. They address different impairments, were approved nine years apart,
-    and neither document says the other is superseded. Every Lima-loop facility appears in both.
+    and neither document says the other is superseded.
+    ⚠️ THEY DO NOT COVER THE SAME FACILITIES, and an earlier reading of this record claimed they
+    did. On this record's own two tables, FOUR facilities carry an allocation under both — Lima
+    WWTP 2PE00000, Shawnee II 2PK00002, Lima Refining 2IG00001 and Cridersville 2PB00048, all in
+    the near-field's "Ottawa (Lima)" project area. Bluffton 2PC00005 is in both lists but its
+    near-field allocation is the BLANCHARD TMDL's, not Lima's, so it is not a common-basis
+    overlap. Three far-field facilities have NO near-field allocation at all: American-Bath
+    2PH00007, Elida 2PB00046 and American II 2PH00006. Five near-field facilities have no
+    far-field one: Columbus Grove 2PC00004, Ada 2PB00050, PCS Nitrogen 2IF00004, Chemtrade
+    2IF00008 and National Lime & Stone 2IJ00013.
+    ⚠️ The gap runs the wrong way for this corpus's central thread. AMERICAN-BATH — the plant the
+    campus's 2DP00130 names as its receiving system — and ELIDA are the two Allen County plants
+    over their far-field allocation in every reported year, and NEITHER holds a near-field
+    allocation. Whether that is because the 2014 near-field TMDL did not reach them, or because
+    it did and this appendix's summary does not list them, is [open]: it needs the Ottawa River
+    (Lima Area) report, which this corpus does not hold.
   comparability_warning: >-
     ⚠️ DO NOT COMPARE 5.33 kg/day AGAINST THE FAR-FIELD TABLE'S "25.9 kg/day" AS IF THEY WERE THE
     SAME KIND OF NUMBER. Appendix 4's daily column is arithmetic, not a limit: its own footnote

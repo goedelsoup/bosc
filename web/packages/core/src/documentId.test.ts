@@ -88,7 +88,7 @@ describe("documentId — the corpus it has to address", () => {
   // `4230062` (14.45 MB sanitary plan & profile) — deliberately NOT committed on Git-LFS budget
   // and recorded by sha256 in `data/documents/permits/bistrozzi-permits/filename-map.yaml`.
   // Committing either moves this number again and SHOULD.
-  it("mints a distinct handle for all 3,382 committed Lima rels", () => {
+  it("mints a distinct handle for all 3,394 committed Lima rels", () => {
     const rels = limaRels();
     // 3,350 -> 3,362 (#2089): the twelve committed eDocuments of the 2DP00130 / APP285104563
     // indirect-discharge application package under `oepa/lima/`. The portal serves 23 rows; the
@@ -101,6 +101,10 @@ describe("documentId — the corpus it has to address", () => {
     // corpus already holds from Ohio EPA and were not re-committed — both are pinned by sha256
     // under `cross_corpus_duplicates` in
     // `data/extracted/legal/prr-mandamus/bosc-prr-production-2026-08-lima.custody-manifest.yaml`.
+    // 3,382 -> 3,394 (the §401 backfill): twelve documents from the two Project BOSC
+    // water-quality certifications that the *BOSC* portal sweep listed in August and nobody had
+    // fetched. The sweep named 18 rows; they are 12 distinct byte-streams, and the six duplicate
+    // docids are recorded in the shelf's filename-map rather than committed twice.
     expect(rels.length).toBe(3394); // a corpus change should surface here, not a silent collision
     const ids = new Set(rels.map(documentId));
     expect(ids.size).toBe(rels.length);
